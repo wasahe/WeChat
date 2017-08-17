@@ -1,0 +1,97 @@
+{php $title='我的余额'}
+{template 'inc/header'}
+
+<style>
+	body{background:#F4F4F4;}
+	#members_sum{background:#FFFFFF;text-align:center;padding:20px 0;position:relative;}
+	#btn_member_recruit{position:absolute;right:15px;top:15px;} 
+	.weui_cell_ft:after{display:none !important;}
+	#income_list .minus{color:#ef4f4f;}
+	#income_list .plus{color:#04be02;}
+</style> 
+
+{template 'inc/header'}
+
+
+
+<div class="weui_cells" style="text-align:center;padding:30px 10px 10px 10px;margin-top:0px;border-top:0px none;">
+	<img src="{MODULE_URL}/static/mobile/images/icon_rmb.png" style="width:64px;"/>
+	<!--<h4 style="margin:10px 0;">累计收入{php echo $mine['income']/100}元</h4>-->
+	<h2 style="font-size:36px;padding:15px 0">{php echo $mine['money']/100}元</h2>
+	<!--<h4 style="margin-bottom:10px;">未提现</h4>-->
+	<a id="btn_outcash"  class="weui_btn weui_btn_primary" data-url="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('mine',array('cmd'=>'outcash','rid'=>pencode($rank['id']))), 2)}">提现至微信钱包</a>
+	<h4 style="padding:10px 0 0 0;">每次提现上限200元，自动扣除{php echo $rank['settings']['cash_rate']*100}%服务费</h4>
+
+	<p style="padding:15px 0 10px 0px;"><a href="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('mine',array('cmd'=>'outcashs','rid'=>pencode($rank['id']))), 2)}">提现记录</a></p>
+</div>
+
+<div class="weui_cells_title">收入记录</div>
+<div id="income_list" class="weui_cells weui_cells_access" data-url="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('mine',array('cmd'=>'income','submit'=>'list','rid'=>pencode($rank['id']))), 2)}" data-loading=false data-start=0 data-more=1 >
+</div>
+<div id="income_list_loader" class="weui-infinite-scroll"><div class="infinite-preloader"></div>加载中...</div>
+
+
+{template 'inc/script'}
+<script type="text/javascript">
+
+
+	var list = $("#income_list");
+	var loadList=function(){
+		if(list.attr('data-loading')==true){
+			return;
+		}
+		
+		list.attr('data-loading',true);
+		
+		$.post(list.attr('data-url'), {
+			start:list.attr('data-start')
+		},function(resp) {
+			list.attr('data-loading',false);
+			if(resp.status==0){
+				alert(resp.info);
+			}else{
+				list.attr('data-start',resp.data.start);
+				list.attr('data-more',resp.data.more);
+				if(list.attr('data-more')==0){
+					$(document.body).destroyInfinite();
+					$('#income_list_loader').hide();
+				}
+				for(i=0;i<resp.data.list.length;i++){
+					var item=resp.data.list[i];
+					 $("#income_list").append('<a class="weui_cell" href="javascript:;"><div class="weui_cell_bd weui_cell_primary"><p><span class="plus">+'+item.money/100+'元</span></p></div><div class="weui_cell_ft"><h4>'+item.biz_text+'</h4><h4>'+VP_FORMAT(item.create_time,'YYYY-MM-dd h:m:s')+'</h4><p></p></div></a>');
+				}
+			}
+		});	
+	}
+	$(document.body).infinite().on("infinite", loadList);
+
+	loadList();
+
+
+	// 提钱
+	$('#btn_outcash').on('click',function(){
+		$.showLoading("正在提交...");
+		var url=$(this).data('url');
+		$.post(url,'',function(resp) {
+			$.hideLoading();
+			if(resp.status==0){
+				$.alert(resp.info);
+			}else{
+				$.confirm(resp.info, '提现确认',function(){
+					$.showLoading("正在提交...");
+					$.post(url,resp.data,function(resp) {
+						if(resp.status==0){
+							$.hideLoading();
+							$.alert(resp.info);
+						}else{
+							$.alert(resp.info,'已收到提现申请',function(){
+								location.href="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('mine',array('cmd'=>'outcashs','rid'=>pencode($rank['id']))), 2)}";
+							});
+						}
+					});
+				});
+			}
+		});
+	});	
+</script>
+{template 'inc/footer'}

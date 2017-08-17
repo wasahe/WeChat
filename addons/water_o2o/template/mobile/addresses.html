@@ -1,0 +1,57 @@
+{template 'header'}
+<body ontouchstart="" class="platform_mobile">
+	<div class="qsc-alert" style="display: none;">
+		<i class="info-base64"></i><span></span>
+	</div>
+	<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading"
+		tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog middle">
+			<div class="modal-content">
+				<i class="icon-white icon-loading-base64"><i
+					class="icon-white icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+			</div>
+		</div>
+	</div>
+	<div class="modal qsc-modal qsc-modal-loading"
+		id="qsc-modal-loading-new">
+		<div class="modal-dialog middle">
+			<div class="modal-content">
+				<i class="icon-loading-base64"><i
+					class="icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+			</div>
+		</div>
+	</div>
+	<div class="content top bottom">
+		<div class="qsc-list-group user-address">
+			<a href="{php echo $this->createMobileUrl('address',array('id'=>1))}"
+				class="list-item list-thumb list-thumb-md-sm first"> <span>
+					<i class="icon icon-address-md"></i> 林夕霞 <small>(0755-61910103)</small>
+			</span>
+				<p>山东潍坊诸城 人民东路41号</p> <label> <i
+					class="icon icon-arrow-right"></i>
+			</label>
+			</a> <a href="{php echo $this->createMobileUrl('address')}"
+				class="list-item list-thumb list-thumb-md-sm"> <span> <i
+					class="icon icon-address-md-o"></i> 在 <small>(0755-61910103)</small>
+			</span>
+				<p>天津天津和平区 在家的小伙伴吗！</p> <label> <i
+					class="icon icon-arrow-right"></i>
+			</label>
+			</a>
+		</div>
+		<div class="qsc-list-group">
+			<a href="{php echo $this->createMobileUrl('addresses')}"
+				class="list-item list-thumb list-thumb-sm first"> <span>
+					<i class="icon icon-add"></i> 添加新地址
+			</span> <label> <i class="icon icon-arrow-right"></i>
+			</label>
+			</a>
+		</div>
+	</div>
+	{template 'footer'}
+	<script type="text/javascript"
+		src="../addons/water_o2o/template/js/user.min.js"></script>
+
+</body>
+</html>

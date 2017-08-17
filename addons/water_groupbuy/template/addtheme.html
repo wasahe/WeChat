@@ -1,0 +1,270 @@
+{template 'common/header'}
+<div class="main">
+    <ul class="nav nav-tabs">
+        <li><a href="{php echo $this->createWebUrl('theme');}">主题活动列表</a></li>
+        <li class="active"><a href="{php echo $this->createWebUrl('addtheme');}">新增主题活动</a></li>
+    </ul>
+</div>       
+<style>
+.table td span{display:inline-block;margin-top:4px;}
+.table td input{margin-bottom:0;}
+</style>
+<div class="clearfix">
+<form class="form-horizontal form" action="" method="post" enctype="multipart/form-data">
+    <div class="panel panel-default">
+        <div class="panel-heading">第一部分：主题活动信息设置</div>
+        <div class="panel-body">
+                <input type="hidden" name="themeid" value="{$theme['id']}">
+                {if $theme['id'] > 0}
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">URL</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control"  readonly="readonly"  value="{$themeurl}">
+                    	<span class="help-block">本活动的微信端链接地址</span>
+                    </div>
+                </div>
+                {/if}
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">排序</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control"  placeholder="例如：1" name="displayorder"  value="{$theme['displayorder']}">
+                    	<span class="help-block">填正整数，数字越小排序越靠前</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">活动标题</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control"  placeholder="" name="title"  value="{$theme['title']}">
+                    	<span class="help-block">主题活动名称，展示在屏幕最顶部的信息</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">关键字</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control"  placeholder="" name="keyword"  value="{$theme['keyword']}">
+                    	<span class="help-block">回复规则处需设置同名规则，粉丝可以回复关键字进入活动</span>
+                    </div>
+                </div>                               
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">顶部图片</label>
+                    <div class="col-sm-8 col-xs-12">
+                       {php echo tpl_form_field_image('headlogo',$theme['headlogo']);}
+                       <span class="help-block">活动页面最上方的图片，一般为宣传图片，建议宽度640，高度(1009)不限</span>
+                    </div>
+                </div>
+               <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">中部图片组</label>
+                    <div class="col-sm-8 col-xs-12">
+                       {php echo tpl_form_field_multi_image('centerimg',$centerimg);}
+                       <span class="help-block">展示于活动人数信息下方，用于说明活动人数与折扣信息,,建议尺寸640*500</span>
+                    </div>
+                </div>                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">图标活动图片</label>
+                    <div class="col-sm-8 col-xs-12">
+                       {php echo tpl_form_field_image('iconimg',$theme['iconimg']);}
+                       <span class="help-block">展示于点亮图标下方，用于说明点亮图标的活动礼品信息，建议宽度640，高度不限</span>
+                    </div>
+                </div>                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">活动描述</label>
+                    <div class="col-sm-8 col-xs-12">
+                    	<textarea style="height:100px; width:88%;" id='rule' class="form-control span7 richtext" name="desc" cols="70">{$theme['desc']}</textarea>
+                    	<span class="help-block">主题活动描述，活动的实时进度信息.30汉字内</span>
+                    </div>
+                </div> 
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">底部左侧分享提示</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control"  placeholder="" name="bottomlefttip"  value="{$theme['bottomlefttip']}">
+                    	<span class="help-block">最底部的文字提示，点击它弹出分享图片，例如:分享赢某某礼物、点亮图标送XX礼物</span>
+                    </div>
+                </div>
+              <!--   <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">底部分享礼品名称</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control"  placeholder="" name="bottomshare"  value="{$theme['bottomshare']}">
+                    	<span class="help-block">分享多少次可获的奖品名称</span>
+                    </div>
+                </div> -->
+              
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">顾问姓名</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control"  placeholder="" name="themelxr"  value="{$theme['themelxr']}">
+                    	<span class="help-block">底部电话图标点击出现的活动联系人姓名.</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">顾问电话</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control"  placeholder="" name="themetel"  value="{$theme['themetel']}">
+                    	<span class="help-block">活动联系人的电话</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">技术支持名称</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control"  placeholder="" name="tsupport"  value="{$theme['tsupport']}">
+                    	<span class="help-block">底部技术支持</span>
+                    </div>
+                </div> 
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">技术支持电话</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control"  placeholder="" name="tsupporturl"  value="{$theme['tsupporturl']}">
+                    	<span class="help-block">底部技术支持的电话</span>
+                    </div>
+                </div>                                                                                                  
+                <div class="form-group">
+          			<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span>活动起止时间</label>
+            		<div class="col-sm-9 col-xs-12">
+               		{php echo tpl_form_field_daterange('themetime', array('start'=>$theme['begintime'],'end'=>$theme['endtime']), true)}
+            		<span class="help-block">活动的起止时间</span>
+            		</div>
+        		</div>  
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">下方图文编辑</label>
+                    <div class="col-sm-8 col-xs-12">
+                       {php echo tpl_ueditor('content', $theme['content']);}
+                       <span class="help-block">图文编辑,和下方图片组二选一即可</span>
+                    </div>
+                </div>	       		              
+               <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">下方图片组</label>
+                    <div class="col-sm-8 col-xs-12">
+                       {php echo tpl_form_field_multi_image('imgs',$imgs);}
+                       <span class="help-block">一般为各种产品或者活动的宣传图片，建议宽度640，高度500</span>
+                    </div>
+                </div>	                                                          
+        </div>
+    </div>
+    
+    <div class="panel panel-default">
+        <div class="panel-heading">第二部分：转发点亮图标设置</div>
+        <div class="panel-body">
+     <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">暗色图标</label>
+                    <div class="col-sm-8 col-xs-12">
+                       {php echo tpl_form_field_image('darkicon',$theme['darkicon']);}
+                       <span class="help-block">尺寸大小:138*138</span>
+                       
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">亮色图标</label>
+                    <div class="col-sm-8 col-xs-12">
+                       {php echo tpl_form_field_image('lighticon',$theme['lighticon']);}
+                       <span class="help-block">尺寸大小:138*138</span>
+                    </div>
+                </div> 
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">图标名称</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control"  placeholder="" name="iconname"  value="{$theme['iconname']}">
+                    	<span class="help-block">图标图片代表的名称，例如粽子</span>
+                    </div>
+                </div>                                               
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">图标个数</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control"  placeholder="" name="iconnum"  value="{$theme['iconnum']}">
+                    	<span class="help-block">图标的个数代表转发朋友圈次数（一天内的分享算一次，点亮一个图标）</span>
+                    </div>
+                </div>                  
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">赠送奖品信息</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control"  placeholder="" name="icongift"  value="{$theme['icongift']}">
+                    	<span class="help-block">点亮全部图标赠送的奖品名称信息，例如：点亮图标赠送1斤粽子</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">赠送奖品库存</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control"  placeholder="" name="icongiftsum"  value="{$theme['icongiftsum']}">
+                    	<span class="help-block">点亮全部图标赠送的奖品库存总数</span>
+                    </div>
+                </div>                              
+       </div>
+    </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">第三部分：参团设置</div>
+        <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">选择价格组</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <select class="form-control" name="pricegroupid">
+                        <option value="0">不使用支付价格</option>
+                   		{loop $grouplist $item}
+			         		<option value="{$item['id']}" {if $theme['pricegroupid'] == $item['id'] }selected="selected"{/if}>{$item['groupname']}</option>
+			       		{/loop}
+			     		 </select>
+                    	<span class="help-block">选择主题活动对应的价格分组</span>
+                    </div>
+                </div>
+     			<div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">最低价格人数</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control" readonly="readonly"  value="{$theme['target']}">
+                    	<span class="help-block">享受最低价格的参团人数，自动获取</span>
+                    </div>
+                </div>                  
+     			<div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">假数据</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control"  placeholder="" name="fake"  value="{$theme['fake']}">
+                    	<span class="help-block">假数据，活动展示的参与人数 = 假数据+真实</span>
+                    </div>
+                </div>                 
+     			<div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">预付金额</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control"  placeholder="" name="payfee"  value="{$theme['payfee']}">
+                    	<span class="help-block">底部右侧，预付款的金额，单位：元</span>
+                    </div>
+                </div>                                                                               
+       </div>
+    </div>  
+    <div class="panel panel-default">
+        <div class="panel-heading">第四部分：奖品核销二维码</div>
+        <div class="panel-body">
+             	<div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">提示</label>
+                    <div class="col-sm-8 col-xs-12">
+                    	<span class="help-block">配置完完全部活动信息保存后会自动生成</span>
+                    </div>
+                </div> 
+     			<div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">核销礼品</label>
+                    <div class="col-sm-8 col-xs-12">
+                        {if !empty($theme['verifigift'])}
+                        <img style="width: 120px;" src="{$theme['verifigift']}">{/if}
+                    	<span class="help-block">粉丝要领取礼品时扫码此二维码</span>
+                    </div>
+                </div>                                              
+       </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">活动开启控制</div>
+        <div class="panel-body">
+                <div class="form-group">
+                	<label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">是否启用</label>
+                	<div class="col-sm-8 col-xs-12">
+                    <label class="checkbox">
+					  <input type="checkbox" name="state" value="1" {if $theme['state'] == 1}checked="checked"{/if}>勾选则表示启用(请先完善三个部分的设置信息再开启活动)
+					</label>
+					 </div>
+                </div> 
+       </div>
+    </div>  
+    <div class="form-group">
+        <div class="col-sm-12">
+            <input name="submit" type="submit" value="提交" class="btn btn-primary col-lg-1">
+            <input type="hidden" name="token" value="{$_W['token']}" />
+        </div>
+    </div>
+</form>
+</div>
+{template 'common/footer'}

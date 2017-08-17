@@ -1,0 +1,351 @@
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="format-detection" content="telephone=no">
+	<title>修改资料</title>
+	<link href="{MODULE_URL}assets/styles/font-awesome.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="{MODULE_URL}assets/scripts/jquery.js"></script>
+	<script type="text/javascript" src="{MODULE_URL}assets/scripts/elink-framework.js"></script>
+	<script type="text/javascript" src="{MODULE_URL}assets/scripts/noty/packaged/jquery.noty.packaged.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+	<style type="text/css">*{font-family:"Microsoft YaHei",Arial,Helvetica,sans-serif,"宋体";}</style>
+	<link href="{MODULE_URL}assets/styles/weui.css" rel="stylesheet" type="text/css">
+    <script>
+        var jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || {};
+        // 是否启用调试
+        jssdkconfig.debug = false;
+        jssdkconfig.jsApiList = [
+            'checkJsApi',
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage',
+            'onMenuShareQQ',
+            'onMenuShareWeibo',
+            'hideMenuItems',
+            'showMenuItems',
+            'hideAllNonBaseMenuItem',
+            'showAllNonBaseMenuItem',
+            'translateVoice',
+            'startRecord',
+            'stopRecord',
+            'onRecordEnd',
+            'playVoice',
+            'pauseVoice',
+            'stopVoice',
+            'uploadVoice',
+            'downloadVoice',
+            'chooseImage',
+            'previewImage',
+            'uploadImage',
+            'downloadImage',
+            'getNetworkType',
+            'openLocation',
+            'getLocation',
+            'hideOptionMenu',
+            'showOptionMenu',
+            'closeWindow',
+            'scanQRCode',
+            'chooseWXPay',
+            'openProductSpecificView',
+            'addCard',
+            'chooseCard',
+            'openCard',
+			'translateVoice',
+            'openAddress'
+        ];
+        wx.config(jssdkconfig);
+        var _TUTOR_URL = "{php echo $this->createMobileUrl('tutor')}";
+        var _follow = "{php echo intval($_W['fans']['follow'])}";
+        var _openid = "{php echo $_W['openid']}";
+        var _qrcode = "{php echo $_W['account']['qrcode']}";
+    </script>
+	
+	<style type="text/css">
+		.imagesShowArea{ 
+			float:right;
+			width:20%;
+			height:50px;
+			padding-left:3px;
+		} 
+		.imagesUploadArea{ 
+			float:right;
+			width:20%;
+			height:50px;
+		} 
+		.images-content{
+			position: absolute; 
+			z-index: 1;
+			color: #fff; 
+			background: rgba(0,0,0,.7); 
+			overflow: hidden; 
+			margin-top:36px;
+			opacity:0.8;filter:alpha(opacity=80);
+			width:46px;
+			line-height:15px;
+			font-size:12px;
+			padding-left:4px;
+		} 
+		</style> 
+</head> 
+<link href="css/weui.css" rel="stylesheet" type="text/css">
+<body bgcolor="#ebebeb">
+<form method="post" action="" id="contactForm" class="contactForm" enctype="multipart/form-data">
+		<div class="weui-cells" style="border-bottom:1px solid #F0F0F0">
+            <a class="weui-cell weui-cell_access" href="javascript:;">
+                <div class="weui-cell__bd">
+                    <p>头像</p>
+                </div>
+				<span id='imagesTr2' style="width:40%;border:0px">
+				<div class='imagesUploadIcon2'>
+								<img style="width:50px;height:50px;float:right"src="{php echo $member['avatar']}">
+								</div>
+				</span>
+          
+				<div class="weui-cell__ft"></div>
+            </a>
+			<a class="weui-cell weui-cell_access" href="javascript:;">
+                <div class="weui-cell__bd">
+                    <p>昵称</p>
+                </div>
+                <div class="weui-cell__ft">
+					<input value="{$member['realname']}" type="text" name="realname" id="realname"  style="border:0;text-align:right;color:#8E8E8E;font-size:16px">
+				</div>
+            </a>
+			<a class="weui-cell weui-cell_access" href="javascript:;">
+                <div class="weui-cell__bd">
+                    <p>性别</p>
+                </div>
+                <div class="weui-cell__ft">
+					<div class="weui-cell__bd" >
+						<select class="weui-select" id="sex" style="color:#A4A4A4">
+							<option {if $member['sex']=='1'}selected{/if} value="1">男</option>
+							<option {if $member['sex']=='2'}selected{/if} value="2">女</option>
+						</select>
+					</div>
+				</div>
+            </a>
+            <a class="weui-cell weui-cell_access" href="javascript:;">
+                <div class="weui-cell__bd">
+                    <p>分类</p>
+                </div>
+				<div class="weui-cell__ft" >
+					<span id="title" style="text-align:right">
+					{php $labels = explode(',',$member['labels'])}
+					{loop $labels $lt}
+					{if !empty($lt)}	 
+					{php $c = M('category')->getInfo($lt)}
+					{$c['title']}&nbsp;
+					{/if}
+					{/loop}
+					</span>
+				</div>
+            </a>
+			<div id="loadingDiv" style="position:fixed;display:none;z-index:50;top:0px;left:0px;width:100%;height:100%;"></div>
+			<div id="popup" align=center style="position:fixed;top:240px;display:none;background-color:#FFF;z-index:500;border-top:1px solid #F0F0F0;">
+		
+					{php $category = M('category')->getall()}
+					{loop $category $c}
+					<a data-id="{$c['id']}" class="option weui-grid"  style="color:#8E8E8E;padding:15px;height:50px;width:25%;" href="javascript:;">
+					{$c['title']}
+					</a>
+					{/loop}
+					<a id="ok" class="weui-grid"  style="color:#8E8E8E;padding:15px;height:50px;width:100%;" href="javascript:;">
+					确定
+					</a>
+			</div>
+		
+			<script type="text/javascript">
+			var labels = ',';
+			$(function(){
+				$("#title").click(function(){ 
+					$('#popup').toggle(100);
+					$('#loadingDiv').toggle(100); 
+				}); 
+				$("#ok").click(function(){ 
+					var html = ''; 
+					$('.option.selected').each(function(){
+						html += $(this).html()+"&nbsp;";
+					});
+					$("#title").html(html); 
+					$('#loadingDiv').hide(100);
+					$('#popup').hide(100);
+				}); 
+				$(".option").click(function(){
+					if($(this).hasClass("selected")){
+						$(this).removeClass("selected");
+						$(this).css("color","#8E8E8E");
+						$(this).css("background-color","#FFF");
+						labels = labels.replace(','+$(this).data("id")+',', ',');
+					}else{
+						if($('.option.selected').length>=3){
+							warn("最多可以选择3个标签！");
+						}else{
+							$(this).addClass("selected");
+							$(this).css("background-color","#8E8E8E");
+							$(this).css("color","#FFF");
+							labels += $(this).data("id")+',';
+						}
+					}
+				});
+				$("#loadingDiv").click(function(){
+					$('#loadingDiv').hide(100);
+					$('#popup').hide(100);
+				}); 
+			});
+			</script>
+		</div>
+		
+		<div class="weui-cells" style="border-bottom:1px solid #F0F0F0">
+			<a class="weui-cell weui-cell_access" href="javascript:;">
+			<div class="weui-cell__bd">
+                    自我介绍
+            </div>
+			</a>
+			<div class="weui-cell weui-cell_access" style="margin-top:5px;">
+				<div class="weui-cell" style="width:100%;padding-left:0;">
+					<div class="weui-cell__bd">
+						<textarea maxlength="166" class="weui-textarea" style="font-size:14px;color:#A4A4A4" name="desc" id="desc" placeholder="例如：任职于XX，XX年工作经验，获得过XX比赛XX奖项。参与多次XX活动，得到XX的普遍认可与反馈，希望通过自己能帮助到更多人..." rows="4">{$member['desc']}</textarea>
+						<span class="weui-textarea-counter" style="float:right;font-size:13px;"><span id="saveStatus"></span><span class="weui-textarea-counter" id="count">0</span>/166</span>
+					</div>
+				</div>
+			</div>
+        </div>
+		</form>
+		<div  class="weui-btn-area">
+			<button type="button" class="weui-btn weui-btn_primary" id="save">{if '0' == $member['status']}开始申请{else}保存信息{/if}</button>
+		</div>
+		
+		
+		
+		
+		
+		
+				
+		<script>
+			$("#count").html($("#desc").val().length);
+			window.setInterval(countChar, 500); 
+			function countChar(){
+				$content = $("#desc").val();
+				if($content.length>0 && $content.length<=166){
+					$("#count").html($("#desc").val().length);
+					if($content.length>10){
+						$.post("{php echo $this->createMobileUrl('making')}&openid={$member['openid']}",{act:'saveQuestionContent',type:'pro',content:$("#desc").val()},function(data){
+							if(data.status == 1){
+								$("#saveStatus").html("");
+							}
+						},'json');
+					}
+				}else{
+					$("#desc").val($("#desc").val().substr(0,166));
+					$("#count").html($("#desc").val().length);
+					return;
+				}
+			}
+				
+		var images = {
+			localId: [],
+			serverId: []
+		};
+		var avatarPath = '';
+		var imagePath = '';
+		
+		
+		
+		
+		$("#imagesTr2").delegate(".imagesUploadIcon2,.imagesUploadArea2","click",function(){
+			var that =$(this);
+			// 删除已上传的图片
+			if(that.data('edit')=='1'){
+				that.remove();
+				$(".imagesUploadIcon2").show();
+				return false;
+			}
+			
+			images.localId = [];
+			var canChooseCount = 1;
+			$('.imagesUploadArea2').each(function(){
+				if($(this).data('edit')=='1') canChooseCount--;
+			});
+			wx.chooseImage({
+				count: canChooseCount,
+				sizeType: ['original', 'compressed'],
+				sourceType: ['album', 'camera'],
+				success: function (res) {
+				images.localId = res.localIds;
+				if (images.localId.length == 0) {
+					warn('请先使用 chooseImage 接口选择图片');
+					return;
+				}
+				if(images.localId.length > 1) {
+					warn('最多支持1张照片,请重新选择');
+					images.localId = [];
+					return;
+				}
+				var i = 0, length = images.localId.length;
+				images.serverId = [];
+				$('.imagesUploadDesc2').hide();
+				function upload() {
+					wx.uploadImage({
+						localId: images.localId[i],
+						success: function (res) {			
+							$('.imagesUploadIcon2').before('<div align="right" class="imagesUploadArea2" data-sid="'+res.serverId+'" data-edit="1">'
+								+'<img id="imagePreview" src="'+images.localId[i]+'" style="display:block;width:50px;height:50px;float:right"><span class="images-content" style="text-align: center;">删除<span></div>');			
+							avatarPath = res.serverId;
+							i++;
+							if (i < length) {
+								upload();
+							}
+							var count = 0;
+							$('.imagesUploadArea2').each(function(){
+								if($(this).data('edit')=='1'){
+									count++;
+								}
+							});
+							if(count>=1){
+								$(".imagesUploadIcon2").hide();
+							}
+						},
+						fail: function (res) {
+							warn(JSON.stringify(res));
+						}
+					});
+				}
+				upload();
+			  } 
+			});
+		});
+		
+
+		var post = {};
+		$('#save').click(function(){
+			_b = $(this);
+			post.realname= $('#realname').val();
+			post.desc = $('#desc').val();
+			post.sex = $('#sex').val();
+			post.credit = parseFloat($('#credit').val());
+			post.avatar = avatarPath;
+			if($(".option.selected").length>0){
+				post.labels = labels;
+			}
+			console.log(labels);
+			if(!post.realname){ 
+				warn("请填写您的真实姓名");
+				return '';
+			}
+			if(!post.desc){
+				warn("请填写您的介绍");
+				return '';
+			}
+			_b.attr("disabled", "disabled");
+			_b.html("数据传输中，请稍等...");
+			$.post('',post,function(data){
+				bingo(data.message,function(){
+					window.location.href = "{php echo $this->createMobileUrl('home')}";
+				});
+			},'json');
+			return false;
+		});
+		</script>
+</body>
+</html>

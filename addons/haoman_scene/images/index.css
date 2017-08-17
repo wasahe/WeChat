@@ -1,0 +1,696 @@
+@charset "UTF-8";
+* {
+    margin: 0 auto;
+    padding: 0;
+}
+
+
+html,
+body {
+    width: 750px;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    font-size: 62.5%;
+    font-family: Helvetica Neue, Arial, Hiragino Sans GB, STHeiti, Microsoft Yahei, WenQuanYi Micro Hei, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #fff;
+    -webkit-transform-style: preserve-3d;
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+}
+
+img {
+    /*zoom:0.5;*/
+}
+
+li {
+    list-style: none;
+}
+
+i {
+    font-style: normal;
+}
+
+#loading {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 1000000;
+    top: 0;
+    left: 0;
+    /*background-color: #fff;*/
+    background: rgba(0,0,0,.75);
+}
+
+#loading p {
+    width: 100%;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate3d(-50%, -60%, 0);
+    transform: translate3d(-50%, -60%, 0);
+}
+
+.wrap {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    z-index: 10;
+    background-color: #040f27;
+}
+
+.cover {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 100;
+}
+
+.cover_bg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    -webkit-animation: fadeIn 1s ease 0s both;
+}
+
+.cover_bg img {
+    width: 100%;
+    min-height: 100%;
+}
+
+.cover_p1,
+.cover_p2,
+.cover_p3 {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 100;
+    display: none;
+}
+
+.cover_p1 {
+    display: block;
+}
+
+.cover_p1 .title {
+    width: 100%;
+    position: relative;
+    margin-top: 35%;
+}
+
+.cover_p1 .title img {
+    position: absolute;
+}
+
+.cover_p1 .title .w1 {
+    position: relative;
+    top: -130px;
+    -webkit-animation: zoomInSmall .6s ease 1s both;
+    width: 75%;
+}
+
+.cover_p1 .mark {
+    width: 100%;
+    position: absolute;
+    bottom: 10%;
+    -webkit-animation: bounceInLeft 1s ease 2.2s both;
+}
+
+.cover_p1 .word {
+    width: 100%;
+    position: absolute;
+    bottom: 10%;
+    z-index: 10;
+    -webkit-animation: fadeInUpBack 1s ease 2.5s both;
+}
+
+.cover_p1 .tip,
+.cover_p2 .tip ,.cover_p3 .tip{
+    width: 100%;
+    position: absolute;
+    bottom: 2%;
+    z-index: 10;
+    -webkit-animation: fadeInUp 1s ease 1s both;
+}
+
+.cover_p1 .tip img {
+    -webkit-animation: tip 1s linear 0s infinite;
+}
+
+.cover_p2 .tip img {
+    -webkit-animation: tip 1s linear 0s infinite;
+}
+
+.cover_p3 .tip img {
+    -webkit-animation: tip 1s linear 0s infinite;
+}
+
+@-webkit-keyframes tip {
+    0%,
+    100% {
+        -webkit-transform: translateY(0px);
+        transform: translateY(0px);
+    }
+    50% {
+        -webkit-transform: translateY(-10px);
+        transform: translateY(-10px);
+    }
+}
+
+
+
+.cover_p2 .title {
+    width: 100%;
+    position: relative;
+    margin-top: 30%;
+}
+
+.cover_p2 .title img {
+    display: block;
+    margin-bottom: 20px;
+}
+
+.cover_p2 .title img.w1 {
+    -webkit-animation: fadeInUpBack .6s linear 0s both;
+}
+
+.cover_p2 .title img.w2 {
+    -webkit-animation: fadeInUpBack .6s linear .2s both;
+}
+
+.cover_p3 .hand {
+    width: 100%;
+    position: absolute;
+    bottom: 10%;
+    -webkit-animation: fadeInUpBack .6s linear .6s both;
+}
+
+.cover_p3 .hand img {
+    display: block;
+    margin-bottom: 20px;
+}
+
+.cover_p3 .hand img.hand_con {
+    -webkit-animation: tada 1s linear 1.6s infinite;
+}
+
+
+
+
+
+
+.nothingbg{
+    width: 80%;
+    height: 90px;
+    background: rgba(0,0,0,0.6);
+    border-radius: 50px;
+    display: none;
+    text-align: center;
+    color: #fff;
+    line-height: 90px;
+    position: fixed;
+    z-index: 9999;
+    bottom: 10%;
+    left: 50%;
+    margin-left: -40%;
+    font-size: 125%;
+}
+
+
+.pw{
+    width: 80%;
+    height: 180px;
+    background:rgba(0,0,0,0.6);
+    border-radius: 15px;
+    display: none;
+    text-align: center;
+    color: #fff;
+    line-height: 80px;
+    position: fixed;
+    z-index: 9999;
+    bottom: 40%;
+    left:50%;
+    margin-left: -40%;
+}
+
+.start .title {
+    width: 100%;
+    position: absolute;
+    top: 5%;
+    z-index: 10;
+    -webkit-animation: fadeIn 1s linear 1s both;
+}
+
+.start .info {
+    width: 100%;
+    position: absolute;
+    bottom: 30%;
+    z-index: 10;
+    -webkit-animation: fadeInUpBack 1s linear 1.3s both;
+}
+
+.start .info p {
+    color: #eeeeee;
+    font-size: 30px;
+}
+
+.start .btn {
+    width: 100%;
+    position: absolute;
+    bottom: 5%;
+    z-index: 100;
+    -webkit-animation: fadeInUpBack 1s linear 1.6s both;
+}
+
+.start .btn .btn1 {
+    width: 300px;
+    color: #eee;
+    font-size: 36px;
+    margin-bottom: 30px;
+}
+
+.start .btn .btn1 span {
+    padding: 0 5px;
+}
+
+.start .btn .btn1 span {
+    -webkit-animation: btn_span .6s linear 1s infinite;
+}
+
+@-webkit-keyframes btn_span {
+    0%,
+    100% {
+        padding: 0 5px;
+    }
+    50% {
+        padding: 0 15px;
+    }
+}
+
+.rule,
+.choose {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 20000;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: none;
+}
+
+.rule_title,
+.choose_title {
+    width: 100%;
+    padding: 50px 0;
+}
+
+.rule_con,
+.choose_con {
+    width: 100%;
+}
+
+.result_btn,.rule_btn,
+.choose_btn {
+    width: 100%;
+    margin-top: 80px;
+}
+
+.rule_mark {
+    width: 100%;
+    position: absolute;
+    bottom: 10%;
+    z-index: -1;
+}
+
+.rule_mark img {
+    width: 100%;
+}
+
+.choose_off {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 100;
+    padding: 20px;
+}
+
+.booking {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 100;
+    background: url(bookbg.jpg) center bottom no-repeat;
+    background-size: cover;
+    display: none;
+}
+
+.booking_title {
+    width: 100%;
+    position: absolute;
+    top: 12%;
+}
+
+.booking_con {
+    width: 100%;
+    position: absolute;
+    top: 35%;
+    color: #eee;
+    font-size: 26px;
+}
+
+.booking_con .role {
+    width: 75%;
+    position: relative;
+    text-align: left;
+}
+
+.booking_con .role img {}
+
+.booking_con .role span {
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.booking_con .role span b {
+    font-size: 40px;
+    font-weight: normal;
+}
+
+.booking_con .info {
+    width: 74%;
+    margin: 40px auto;
+}
+
+.booking_con .info p {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 34px;
+}
+
+.booking_con .click {
+    width: 74%;
+    height: 75px;
+}
+
+.booking_con .click div {
+    width: 100%;
+    height: 75px;
+    border-radius: 10px;
+    border: 1px solid #faaa43;
+    margin-bottom: 30px;
+}
+
+.booking_con .click div p {
+    width: 84%;
+    line-height: 75px;
+    text-align: left;
+}
+
+.booking_con .click div p span {
+    width: 38%;
+    line-height: 75px;
+    float: right;
+    border-left: 1px solid #faaa43;
+    text-align: right;
+}
+
+.booking_con .click div p span img {
+    margin-right: 10px;
+    vertical-align: middle;
+    -webkit-animation: tada .6s linear 1s infinite;
+}
+
+.booking_btn {
+    width: 100%;
+    position: absolute;
+    bottom: 5%;
+}
+
+.booking_put,
+.share,.gz,.result {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 20000;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: none;
+}
+
+.booking_put_off {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 100;
+    padding: 80px;
+}
+
+.booking_put_title {
+    width: 100%;
+    margin-top: 40%;
+}
+
+.booking_put_con {
+    width: 100%;
+    margin-top: 40px;
+}
+
+.booking_put_con input {
+    width: 550px;
+    line-height: 100px;
+    color: #eee;
+    font-size: 30px;
+    border-radius: 10px;
+    border: 1px solid #faaa43;
+    background-color: transparent;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.mine {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 100;
+    background: url(minebg.jpg) center bottom no-repeat;
+    background-size: 100% 100%;
+    display: none;
+}
+
+.mine_top {
+    width: 100%;
+    font-size: 30px;
+    margin-top: 55px;
+}
+
+.mine_top b {
+    color: #faaa43;
+    font-weight: normal;
+    margin-right: 30px;
+}
+
+.mine_top i {
+    color: #eee;
+}
+
+.mine_money {
+    width: 100%;
+    color: #21262d;
+    font-size: 40px;
+    margin-top: 95px;
+}
+
+.mine_money p {
+    color: #f7d279;
+    font-size: 40px;
+    padding: 10px 0;
+}
+
+.mine_money p b {
+    color: #da2151;
+    font-size: 100px;
+    font-weight: normal;
+}
+
+.mine_money p i {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+    background-color: #da2151;
+    margin-left: 10px;
+}
+
+.mine_money span {
+    display: inline-block;
+    width: 136px;
+    line-height: 50px;
+    color: #da2151;
+    font-size: 26px;
+    border-radius: 10px;
+    border: 1px solid #da2151;
+    position: relative;
+}
+
+.mine_money span img {
+    position: absolute;
+    top: 30px;
+    left: 100px;
+    z-index: 100;
+    -webkit-animation: span_hand 1.3s linear 0s infinite;
+}
+
+@-webkit-keyframes span_hand {
+    0%,
+    100% {
+        -webkit-transform: translate(0px, 0px);
+        transform: translate(0px, 0px);
+    }
+    50% {
+        -webkit-transform: translate(20px, 20px);
+        transform: translate(20px, 20px);
+    }
+}
+
+.mine_info {
+    width: 100%;
+    position: absolute;
+    top: 46%;
+}
+
+.mine_info_con {
+    width: 630px;
+    border-radius: 10px;
+    background-color: #900b2a;
+    padding-top: 20px;
+}
+
+.mine_info_con p,
+.now_pople_num {
+    width: 98%;
+    line-height: 95px;
+    color: #eee;
+    font-size: 30px;
+    text-align: center;
+}
+
+.now_pople_num {
+    width: 410px;
+    line-height: 80px;
+    border-radius: 10px;
+    border: 1px solid #fff;
+}
+
+.mine_info_con p.p1 {
+    border-bottom: 1px solid #da2151;
+}
+
+.mine_info_con p b,
+.now_pople_num b {
+    color: #faaa43;
+}
+
+.mine_info_con p span {
+    line-height: 95px;
+    font-size: 22px;
+    float: right;
+    margin-right: 10px;
+}
+
+.mine_info_ts {
+    width: 100%;
+    color: #eee;
+    font-size: 30px;
+    margin-top: 20px;
+}
+
+.mine_info_ts b {
+    color: #faaa43;
+}
+
+
+.mine_btn {
+    width: 100%;
+    position: absolute;
+    bottom: 5%;
+    z-index: 100;
+}
+
+.mine .btn1 {
+    width: 700px;
+    color: #eee;
+    font-size: 36px;
+    margin-bottom: 30px;
+}
+
+.mine .btn1 b {
+    display: inline-block;
+    width: 320px;
+}
+
+.mine .btn1 span {
+    padding: 0 5px;
+}
+
+.mine .btn1 span {
+    -webkit-animation: btn_span .6s linear 1s infinite;
+}
+
+.share img {
+    margin-right: -40px;
+    margin-top: 20px;
+}
+
+.music_btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 10000;
+    padding: 30px;
+}
+
+@media only screen and (min-width: 481px) {
+    html,
+    body {
+        font-size: 94%!important;
+    }
+}
+
+@media only screen and (min-width: 561px) {
+    html,
+    body {
+        font-size: 109%!important;
+    }
+}
+
+@media only screen and (min-width: 641px) {
+    html,
+    body {
+        font-size: 125%!important;
+    }
+}

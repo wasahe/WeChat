@@ -1,0 +1,186 @@
+{template 'common/header'}
+<style type="text/css">
+.table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td{
+  white-space:normal;
+}
+</style>
+
+<ul class="nav nav-tabs">
+	<li {if $_GPC['do'] =='' ||$_GPC['do'] == 'question_manage'}class="active"{/if}><a href="{php echo $this->createWebUrl('question_manage')}">普通问题管理</a></li>
+	<li {if $_GPC['do'] == 'reward_manage'}class="active"{/if}><a href="{php echo $this->createWebUrl('reward_manage')}">悬赏问题管理</a></li>
+</ul>
+<div class="main">
+
+<div class="panel panel-info">
+		<div class="panel-heading">筛选</div>
+		<div class="panel-body">
+			<form  method="post" class="form-horizontal" role="form">				
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">问题状态</label>
+					<div class="col-sm-6 col-lg-8">
+					<input type="hidden" name="c" value="site">
+					<input type="hidden" name="a" value="entry">
+					<input type="hidden" name="do" value="reward_manage">
+					<input type="hidden" name="m" value="dg_ask">
+						<select name="is_answer" class="form-control">
+							<option value="" selected="selected">不限</option>
+							<option value="0"{if '0' == $is_answer} selected="selected"{/if}>还没有人回答</option>
+							<option value="1"{if '1' == $is_answer} selected="selected"{/if}>已有人回答</option>
+							<option value="-2"{if '-2' == $is_answer} selected="selected"{/if}>已退款</option>
+						</select>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">是否超时</label>
+					<div class="col-sm-6 col-lg-8">
+						<select name="is_timeout" class="form-control">
+							<option value="" selected="selected">不限</option>
+							<option value="1"{if '1' == $is_timeout} selected="selected"{/if}>已超时</option>
+							<option value="2"{if '2' == $is_timeout} selected="selected"{/if}>未超时</option>
+						</select>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">是否选标了</label>
+					<div class="col-sm-6 col-lg-8">
+						<select name="is_selected" class="form-control">
+							<option value="" selected="selected">不限</option>
+							<option value="1"{if '1' == $is_selected} selected="selected"{/if}>已选标</option>
+							<option value="2"{if '2' == $is_selected} selected="selected"{/if}>未选标</option>
+						</select>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">查询关键词</label>
+					<div class="col-sm-6 col-lg-8">
+						<input class="form-control" name="keyword" id="" type="text" value="{$_GPC['keyword']}" placeholder="请输入用户昵称或者姓名或者问题关键字">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">提问时间范围</label>
+					<div class="col-sm-6 col-lg-8">
+						{php echo tpl_form_field_daterange('time', array('starttime'=>date('Y-m-d', $starttime),'endtime'=>date('Y-m-d', $endtime)));}
+					</div>
+					<div class="pull-right col-xs-12 col-sm-3 col-lg-2">
+						<button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div class="panel panel-default">
+	<div class="panel-heading">	
+			<div class="row-fluid">
+				<div class="span8 control-group">
+					共计 {$total} 条数据
+				</div>
+			</div>
+		</div>
+		<div class="panel-body table-responsive">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:65px;" align="center">头像</th>
+					<th>提问者昵称</th>
+					<th>中标人</th>
+					<th>分类</th>
+					<th style="width:200px;">问题</th>
+					<th>悬赏金额</th>
+					<th align="center">提问时间</th>
+					<th>状态</th>
+					<th style="width:150px;">快捷操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $records $row}
+				<tr id="row_{$row['id']}">
+					<td><img alt="" src="{$row['pay_avatar']}" width='auto' style="max-width:50px; max-height:50px;" height='auto'></td>
+					<td>{$row['pay_nickname']}</td>
+					<td>{$row['real_name']}</td>
+					<td>{if $row['ask_type']=='public'}公开{else if $row['ask_type']=='private'}悄悄问{else}悬赏{/if}</td>
+					<td>{$row['ask_content']}</td>
+					<td>{$row['pay_money']}</td>
+					<td>{php echo date('Y/m/d H:i:s', $row['pay_time']);}</td>
+					<td>
+					{if $row['is_answer']==1}已回答{else if $row['is_answer']==-2}超时-已退款{else}未回答{/if}</td>
+					<td>
+					
+					<a class="btn btn-default" data="{$row['id']}" onclick="setQuestion(this,'del')" data-toggle="tooltip" data-placement="top" href="javascript:"  title="删除" data-original-title="删除">
+					删除</a>
+					
+					{if $is_timeout==1 && $is_answer==0}
+					 <a class="btn btn-default" data="{$row['id']}" onclick="refund(this)" data-toggle="tooltip" data-placement="top" href="javascript:"  title="退款" data-original-title="退款">退款</a>
+					{/if}
+					
+					
+					{if $is_timeout==1 && $is_selected==2 && $is_answer==1}
+					 <a class="btn btn-default" data="{$row['id']}" onclick="tips(this)" data-toggle="tooltip" data-placement="top" href="javascript:"  title="提醒选标" data-original-title="提醒选标">提醒</a>
+					{/if}
+					
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+		</table>
+	</div>
+	</div>
+	{$pager}
+</div>
+<script type="text/javascript">
+var refund_url="{php echo $this->createWebUrl('refund_ajax')}";
+var tips_url="{php echo $this->createWebUrl('tips_ajax')}";
+function setQuestion(obj,op,id){
+	var row_id=$(obj).attr('data');
+	if(!confirm("确认删除吗?")){return false;}
+	$.post(location.href,{id:row_id,op:op},function(result){
+		if(result.success==1){
+			$("#row_"+result.id).remove();
+		}
+	});
+	return false;
+}
+/退款操作/
+function refund(obj){
+	if(!confirm("确认退款吗?")){return false;}
+	var row_id=$(obj).attr('data');
+	$.post(refund_url,{id:row_id},function(result){
+		if(result.success==1){
+			$("#row_"+result.id).children().eq(6).text("已退款");
+			$(obj).remove();
+		}
+	});
+	return false;
+}
+
+
+function tips(obj){
+	if(!confirm("确认提醒选标吗?")){return false;}
+	var row_id=$(obj).attr('data');
+	$.post(tips_url,{id:row_id},function(result){
+		if(result.success==1){
+			alert("提醒成功");
+		}
+	});
+	return false;
+}
+
+$(function(){
+	$(".del_all").click(function(){
+		if(!confirm("确认清空数据吗？清空后将不能恢复"))
+			return;
+		$.post(location.href,{'del':'all'},function(result){
+			if(result.success==1){
+				location.href=location.href;
+			}
+		});
+		return false;
+	});
+});
+
+</script>
+{template 'common/footer'}

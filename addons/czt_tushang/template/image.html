@@ -1,0 +1,44 @@
+{template 'common/header'}
+<div class="main">
+    <div class="panel panel-default">
+        <div class="panel-body table-responsive">
+            <table class="table table-hover">
+                <thead class="navbar-inner">
+                    <tr>
+                        <th style="width:50px;">ID</th>
+                        <th style="width:100px;">发布者</th>
+                        <th>标题</th>
+                        <th style="width:100px;">缩略图</th>
+                        <th style="width:60px;">价格</th>
+                        <th style="width:72px;">打赏人数</th>
+                        <th style="width:130px;">创建时间</th>
+                        <th style="width:310px;">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {loop $list $row}
+                    <tr>
+                        <td>{$row['id']}</td>
+                        <td><a href="{php echo $this->createWebUrl('user_post', array( 'uid' => $row['uid']))}"><img src="{$row['headimgurl']}" height="50px" width="50px" /><br>{$row['nickname']}</a></td>
+                        <td>{$row['title']}</td>
+                        <td><img src="{$settings['qiniu']['host']}{$row['url']}{if ($row['qiniu_stat']==1)}!icon{else}?imageMogr2/thumbnail/640x/blur/50x40/gravity/North/crop/120x120{/if}" width="80px;" /></td>
+                        <td>{$row['price']}</td>
+                        <td>{$row['show_times']}</td>
+                        <td>{php echo date("Y-m-d H:i", $row['create_time'])}</td>
+                        <td>
+                            <a target="_blank" href="{$settings['qiniu']['host']}{$row['url']}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="查看原图" ><i class="fa fa-search"></i> 原图</a>
+                            <a class="btn btn-default btn-sm" href="{php echo $this->createWebUrl('edit', array('type' => 1, 'id' => $row['id']))}"><i class="fa fa-edit"></i> 修改数据</a>
+                            <a href="{php echo $this->createWebUrl('record', array('op' => 'record', 'id' => $row['id']))}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="打赏记录" ><i class="fa fa-thumbs-up"></i> 打赏记录</a>
+                            <a href="{php echo $this->createWebUrl('image', array('op' => 'delete', 'id' => $row['id']))}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="删除" onclick="return confirm('此操作不可恢复，确认删除吗？');"><i class="fa fa-times"></i> 删除</a>
+                        </td>
+                    </tr>
+                    {/loop}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {$pager}
+</div>
+</div>
+{template 'common/footer'}
+<!---bbs_heirui_cn-->

@@ -1,0 +1,859 @@
+<!doctype html>
+<html class="no-js">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
+<title>蜂客联盟</title>
+<style>
+    .whole{
+        margin-bottom:4.9rem;
+    }
+    .rankingNav{
+        padding:0;
+        margin:0;
+        width:100%;
+    }
+    .rankingNav li{
+        list-style: none;
+    }
+    .rankingNav li a{
+    	color:#8f8f8f;
+    }
+
+    .wholeMargin .rankingNav li a{
+        padding:0;
+        margin:0;
+    }
+    #can{
+        margin:0 auto;
+        max-width:100rem;
+    }
+    .navBox,.ranking{
+        margin:0 auto;
+        width:95%;
+    }
+    .same{
+        width:33.33333%;
+        border:1px solid #CCC;
+    }
+    .same button{
+        outline: none;
+    }
+    .dif1{
+        border-right:0;
+        border-top-left-radius:.4rem;
+        border-bottom-left-radius: .4rem;  
+    }
+    .dif3{
+        border-left:0;
+        border-top-right-radius:.4rem;
+        border-bottom-right-radius: .4rem;
+    }
+    li.active{
+        background-color:#F54D23;
+        border-color:#F54D23;
+    }
+    .rankingNav li.active button{
+        color:#fff;
+    }
+    .headimg{
+        width:3rem;
+        height:3rem;
+    }
+    .shareHead{
+    	background-image:url(Public/assets/mobile/images/sign/background.png);
+    	background-repeat: no-repeat;
+    	background-size:cover;
+    }
+   	.headimgH{
+   		width:60px;
+   		height:60px;
+   		border-radius: 0.5rem;
+   	}
+   	.gold{
+   		border:#f2d618 0.2rem solid;
+   	}
+
+   	.silver{
+   		border:#aaade9 0.2rem solid;
+   	}
+
+   	.copper{
+   		border:#f5a323 0.2rem solid;
+   	}
+
+   	.shareHead ul li a.return{
+   		border:1px solid #FFF;
+   		color:#FFF;
+   		border-radius:.5rem;
+   	}
+
+   	.btnNav{
+
+   		border:0;
+
+   		background:transparent;
+
+   		color:#8f8f8f;
+
+   	}
+
+    .clearPM{
+
+        padding:0;
+
+        margin:0;
+
+    }
+
+    .textcolor{
+
+        color:#8f8f8f;
+
+    }
+
+</style>
+
+
+<link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/amazeui/2.7.2/css/amazeui.css"/>
+<link rel="stylesheet" type="text/css" href="Public/assets/mobile/css/style.css?t=4" />
+
+<script type="text/javascript" src="http://cdn.bootcss.com/jquery/2.2.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://cdn.bootcss.com/amazeui/2.7.2/js/amazeui.min.js"></script>
+<script type="text/javascript" src="http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+<script>$(function() {FastClick.attach(document.body);});</script>
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+<!-- 微信自定义接口 -->
+<script>
+	wx.config();
+	wx.ready(function(){
+		wx.onMenuShareAppMessage({
+			title: document.title,
+			desc: "",
+			link: window.location.href ,
+			imgUrl: ""
+		}); 
+		wx.onMenuShareTimeline({
+			title: document.title,
+			desc: "",
+			link: window.location.href,
+			imgUrl: ""
+		});
+	});
+</script><!-- 微信自定义接口 -->
+
+<script src="http://192.168.100.80:9977/target/target-script-min.js#anonymous"></script></head>
+
+<body>
+
+<div class="am-modal am-modal-alert" tabindex="-1" id="fq_alert">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd" id="fq_alert_title"></div>
+    <div class="am-modal-bd" id="fq_alert_info">
+    </div>
+    <div class="am-modal-footer">
+      <span class="am-modal-btn">确定</span>
+    </div>
+  </div>
+</div>
+
+<div class="am-modal am-modal-confirm" tabindex="-1" id="fq_confirm">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd" id="fq_confirm_title"></div>
+    <div class="am-modal-bd" id="fq_confirm_info"></div>
+    <div class="am-modal-footer">
+      <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+    </div>
+  </div>
+</div>
+
+
+<div id="can">
+
+<div class="whole">
+    <header class="am-padding-vertical am-padding-horizontal-sm shareHead">
+		<ul class="am-avg-sm-2 ">
+            <li style="width:62%;">
+                <div class="user_info">
+                    <img class="am-fl am-margin-right-xs" src="http://wx.qlogo.cn/mmopen/ajNVdqHZLLDUw3IPQ8yTLCRhOsXLVUic3zw0jc3htFc9Y7RaGjoDiaaHic5wb0YA9lae9uwTZtIMS4kx6TMWIQCvA/0" style="width: 60px; height: 60px; border-radius: 0.5rem;" />
+                    <div class="clearPM">
+                        <span style="color:#FFF;"></span>
+                    </div>
+                    <div class="clearPM">
+                        <span class="am-text-xs" style="color:#fff;">晒单积分：</span><span class="am-text-xs am-inline-block" style="color:#fff;">0 分</span>
+                    </div>
+                    <div class="clearPM">
+                        <span class="am-text-xs" style="color:#fff;">积分排名：</span><span class="am-text-xs am-inline-block" style="color:#fff;">7805 </span>
+                    </div>
+                </div>
+            </li>
+            <li class="am-text-right am-padding-top am-fr" style="width:38%;">
+                <a class="am-padding-vertical-xs am-padding-horizontal-sm return am-text-sm" href="/share/index.html">返回晒单广场</a>
+            </li>
+        </ul>
+    </header>
+
+    <div class="am-tab wholeMargin am-margin-horizontal-sm am-margin-top-lg">
+        <ul class="rankingNav am-text-center">
+            <li class="am-fl same dif1 active">
+            	<button type="button" class="am-padding-vertical-sm btnNav am-text-sm">积分排行</button>
+            </li>
+            <li class="am-fl same dif2">
+            	<button type="button" class="am-padding-vertical-sm btnNav am-text-sm">次数排行</button>
+            </li>
+            <li class="am-fl same dif3">
+                <button type="button" class="am-padding-vertical-sm btnNav am-text-sm">月排行</button>
+            </li>
+        </ul>
+    </div>
+
+    <div class="am-cf"></div>
+
+    <div class="ranking am-margin-top-sm am-text-sm">
+
+        <div class="shareScoreBox rankingBox js_box1">
+
+            <ul class="  am-avg-sm-3 am-text-center am-padding-xs ">
+
+                <li>排行</li>
+
+                <li>用户</li>
+
+                <li>积分</li>
+
+            </ul>
+
+            <ul class="am-avg-sm-3 am-text-center am-padding-xs">
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">1</li>
+                    <li>
+                        <ul class=" am-avg-sm-2">
+                            <li class=" am-text-right am-padding-right-xs">
+                                <img src="http://wx.qlogo.cn/mmopen/pqdmJVmhZtbGpIfSk9SDmAproQ8icXqDDPX1miaicyZ6l1PD60librsic6cABTjQC5Y93d5eFboiaQaY1VqJD250oumxric6KCkeqkh/0" class=" am-round am-img headimg gold" />
+                            </li>
+                            <li class="am-midd am-vertical-align-middle am-text-left am-text-sm am-padding-top-xs">猫**猫</li>
+                        </ul>
+                    </li>
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">60</li>
+                </ul><ul class="am-avg-sm-3 am-text-center am-padding-xs">
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">2</li>
+                    <li>
+                        <ul class=" am-avg-sm-2">
+                            <li class=" am-text-right am-padding-right-xs">
+                                <img src="http://wx.qlogo.cn/mmopen/Q3auHgzwzM4c8tZ1qgIibzjrn1PZfrEmYxhMl6Kxc7wBoGHydZXoGmiaVxqEuuDVKZDovKRTJ6t4iboibSLKkMblibw/0" class=" am-round am-img headimg  silver" />
+                            </li>
+                            <li class="am-midd am-vertical-align-middle am-text-left am-text-sm am-padding-top-xs">林**玖</li>
+                        </ul>
+                    </li>
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">30</li>
+                </ul><ul class="am-avg-sm-3 am-text-center am-padding-xs">
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">3</li>
+                    <li>
+                        <ul class=" am-avg-sm-2">
+                            <li class=" am-text-right am-padding-right-xs">
+                                <img src="http://wx.qlogo.cn/mmopen/qRgIM7eGSEKARkFXwZib1ohEa6RSOicoI2R4ZR295xxPA4aa4gggGM0ibyiaQFmudTYZgqg8Vfm0BowicUpiciavQicU5IEPVr5zFWnr/0" class=" am-round am-img headimg copper" />
+                            </li>
+                            <li class="am-midd am-vertical-align-middle am-text-left am-text-sm am-padding-top-xs">仲**媛</li>
+                        </ul>
+                    </li>
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">0</li>
+                </ul><ul class="am-avg-sm-3 am-text-center am-padding-xs">
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">4</li>
+                    <li>
+                        <ul class=" am-avg-sm-2">
+                            <li class=" am-text-right am-padding-right-xs">
+                                <img src="http://wx.qlogo.cn/mmopen/Q3auHgzwzM76w2dAAByrricRL3cccrTh8koFR4OSK5C7mYficw8OVAMVb31icqynHrfrtSbcdsyJllYsLDiaKCEN5bujP22iaUooTG1WG2kByQQo/0" class=" am-round am-img headimg " />
+                            </li>
+                            <li class="am-midd am-vertical-align-middle am-text-left am-text-sm am-padding-top-xs">五**）</li>
+                        </ul>
+                    </li>
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">0</li>
+                </ul><ul class="am-avg-sm-3 am-text-center am-padding-xs">
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">5</li>
+                    <li>
+                        <ul class=" am-avg-sm-2">
+                            <li class=" am-text-right am-padding-right-xs">
+                                <img src="http://wx.qlogo.cn/mmopen/ajNVdqHZLLDKibQFNbkb9WV2YhIcjuicIia9mk1P9TnSY1G2RibH9uDiaLPpW1tRJkhQ3EUayOwyLS4BVGyO1IL2JgA/0" class=" am-round am-img headimg " />
+                            </li>
+                            <li class="am-midd am-vertical-align-middle am-text-left am-text-sm am-padding-top-xs">凹**糖</li>
+                        </ul>
+                    </li>
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">0</li>
+                </ul><ul class="am-avg-sm-3 am-text-center am-padding-xs">
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">6</li>
+                    <li>
+                        <ul class=" am-avg-sm-2">
+                            <li class=" am-text-right am-padding-right-xs">
+                                <img src="http://wx.qlogo.cn/mmopen/ajNVdqHZLLAkw7Go0YeDtuTxMlSC328HYf23ibGUXsfib94UpicUfvddId2iaUERibGNyiatrlDv3a1G4Vv2c9HlAQUQ/0" class=" am-round am-img headimg " />
+                            </li>
+                            <li class="am-midd am-vertical-align-middle am-text-left am-text-sm am-padding-top-xs">M**n</li>
+                        </ul>
+                    </li>
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">0</li>
+                </ul><ul class="am-avg-sm-3 am-text-center am-padding-xs">
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">7</li>
+                    <li>
+                        <ul class=" am-avg-sm-2">
+                            <li class=" am-text-right am-padding-right-xs">
+                                <img src="http://wx.qlogo.cn/mmopen/pqdmJVmhZtbGpIfSk9SDmDLnjye1QFobUqCJtgLAKWXic8N1r8tZqhiaibib2xELctIRxGoa0BkmfAjCRIhZRHu9fXOBlKIVa0EI/0" class=" am-round am-img headimg " />
+                            </li>
+                            <li class="am-midd am-vertical-align-middle am-text-left am-text-sm am-padding-top-xs">一**恒</li>
+                        </ul>
+                    </li>
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">0</li>
+                </ul><ul class="am-avg-sm-3 am-text-center am-padding-xs">
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">8</li>
+                    <li>
+                        <ul class=" am-avg-sm-2">
+                            <li class=" am-text-right am-padding-right-xs">
+                                <img src="http://wx.qlogo.cn/mmopen/W3svIUeAYicpP3voiaYocZYRywY3maeVicCQsmDJ7hO4RWaCSL29wRddZhOY0jPVzNYRBrokMmdG5t17MFMFeibB17Ov9VZylQta/0" class=" am-round am-img headimg " />
+                            </li>
+                            <li class="am-midd am-vertical-align-middle am-text-left am-text-sm am-padding-top-xs">利**福</li>
+                        </ul>
+                    </li>
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">0</li>
+                </ul><ul class="am-avg-sm-3 am-text-center am-padding-xs">
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">9</li>
+                    <li>
+                        <ul class=" am-avg-sm-2">
+                            <li class=" am-text-right am-padding-right-xs">
+                                <img src="http://wx.qlogo.cn/mmopen/pqdmJVmhZtYcxTaibRbX2ibR8EwbGqCVgKf95FFQ1agUmluwwcSJnBc9nic3hiaibibAbGZiakPXB1ADVGXb0k4aCEcWIgZ2nYORibku/0" class=" am-round am-img headimg " />
+                            </li>
+                            <li class="am-midd am-vertical-align-middle am-text-left am-text-sm am-padding-top-xs">F**a</li>
+                        </ul>
+                    </li>
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">0</li>
+                </ul><ul class="am-avg-sm-3 am-text-center am-padding-xs">
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">10</li>
+                    <li>
+                        <ul class=" am-avg-sm-2">
+                            <li class=" am-text-right am-padding-right-xs">
+                                <img src="http://wx.qlogo.cn/mmopen/pqdmJVmhZtZf8xk8TVg6NUXkcdzBgFpnwvGPyxOz5Hh2GImRYqVMQHQvxX586t9azXRRAVA5gzYv61H5EdDP1oiagIZuqtf1Y/0" class=" am-round am-img headimg " />
+                            </li>
+                            <li class="am-midd am-vertical-align-middle am-text-left am-text-sm am-padding-top-xs">博**翰</li>
+                        </ul>
+                    </li>
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">0</li>
+                </ul>
+            <div class="am-text-center am-margin-bottom-sm">
+            	<ul class="am-avg-sm-3 am-text-center am-padding-xs selfShare">
+	            		<li class="am-vertical-align-middle am-text-sm am-padding-top-xs">7805</li>
+	                    <li>
+	                        <ul class=" am-avg-sm-2">
+	                            <li class=" am-text-right am-padding-right-xs">
+	                                <img src="http://wx.qlogo.cn/mmopen/ajNVdqHZLLDUw3IPQ8yTLCRhOsXLVUic3zw0jc3htFc9Y7RaGjoDiaaHic5wb0YA9lae9uwTZtIMS4kx6TMWIQCvA/0" class="am-round am-img headimg" /></li>
+	                            <li class="am-midd am-vertical-align-middle am-text-left am-text-sm am-padding-top-xs">**</li>
+	                        </ul>
+	                    </li>
+	                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">0</li>
+	                </ul>                                    <span class="js_more1 am-margin-top-xs am-inline-block" data-count="10" data-p="1">点击查看更多</span>            </div>
+        </div>
+
+        <div class="contributeBox am-hide rankingBox js_box2">
+            <ul class="  am-avg-sm-3 am-text-center am-padding-xs ">
+                <li>排行</li>
+                <li>用户</li>
+                <li>次数</li>
+            </ul>
+            <ul class="am-avg-sm-3 am-text-center am-padding-xs">
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">1</li>
+                    <li>
+                        <ul class=" am-avg-sm-2">
+                            <li class=" am-text-right am-padding-right-xs">
+                                <img src="http://wx.qlogo.cn/mmopen/Q3auHgzwzM4c8tZ1qgIibzjrn1PZfrEmYxhMl6Kxc7wBoGHydZXoGmiaVxqEuuDVKZDovKRTJ6t4iboibSLKkMblibw/0" class="am-round am-img headimg gold" /></li>
+                            <li class="am-midd am-vertical-align-middle am-text-left am-text-sm am-padding-top-xs">林**玖</li>
+                        </ul>
+                    </li>
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">1</li>
+                </ul><ul class="am-avg-sm-3 am-text-center am-padding-xs">
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">2</li>
+                    <li>
+                        <ul class=" am-avg-sm-2">
+                            <li class=" am-text-right am-padding-right-xs">
+                                <img src="http://wx.qlogo.cn/mmopen/pqdmJVmhZtbGpIfSk9SDmAproQ8icXqDDPX1miaicyZ6l1PD60librsic6cABTjQC5Y93d5eFboiaQaY1VqJD250oumxric6KCkeqkh/0" class="am-round am-img headimg  silver" /></li>
+                            <li class="am-midd am-vertical-align-middle am-text-left am-text-sm am-padding-top-xs">猫**猫</li>
+                        </ul>
+                    </li>
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">1</li>
+                </ul><ul class="am-avg-sm-3 am-text-center am-padding-xs">
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">3</li>
+                    <li>
+                        <ul class=" am-avg-sm-2">
+                            <li class=" am-text-right am-padding-right-xs">
+                                <img src="http://wx.qlogo.cn/mmopen/qRgIM7eGSEKARkFXwZib1ohEa6RSOicoI2R4ZR295xxPA4aa4gggGM0ibyiaQFmudTYZgqg8Vfm0BowicUpiciavQicU5IEPVr5zFWnr/0" class="am-round am-img headimg copper" /></li>
+                            <li class="am-midd am-vertical-align-middle am-text-left am-text-sm am-padding-top-xs">仲**媛</li>
+                        </ul>
+                    </li>
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">0</li>
+                </ul><ul class="am-avg-sm-3 am-text-center am-padding-xs">
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">4</li>
+                    <li>
+                        <ul class=" am-avg-sm-2">
+                            <li class=" am-text-right am-padding-right-xs">
+                                <img src="http://wx.qlogo.cn/mmopen/Q3auHgzwzM76w2dAAByrricRL3cccrTh8koFR4OSK5C7mYficw8OVAMVb31icqynHrfrtSbcdsyJllYsLDiaKCEN5bujP22iaUooTG1WG2kByQQo/0" class="am-round am-img headimg " /></li>
+                            <li class="am-midd am-vertical-align-middle am-text-left am-text-sm am-padding-top-xs">五**）</li>
+                        </ul>
+                    </li>
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">0</li>
+                </ul><ul class="am-avg-sm-3 am-text-center am-padding-xs">
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">5</li>
+                    <li>
+                        <ul class=" am-avg-sm-2">
+                            <li class=" am-text-right am-padding-right-xs">
+                                <img src="http://wx.qlogo.cn/mmopen/ajNVdqHZLLDKibQFNbkb9WV2YhIcjuicIia9mk1P9TnSY1G2RibH9uDiaLPpW1tRJkhQ3EUayOwyLS4BVGyO1IL2JgA/0" class="am-round am-img headimg " /></li>
+                            <li class="am-midd am-vertical-align-middle am-text-left am-text-sm am-padding-top-xs">凹**糖</li>
+                        </ul>
+                    </li>
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">0</li>
+                </ul><ul class="am-avg-sm-3 am-text-center am-padding-xs">
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">6</li>
+                    <li>
+                        <ul class=" am-avg-sm-2">
+                            <li class=" am-text-right am-padding-right-xs">
+                                <img src="http://wx.qlogo.cn/mmopen/ajNVdqHZLLAkw7Go0YeDtuTxMlSC328HYf23ibGUXsfib94UpicUfvddId2iaUERibGNyiatrlDv3a1G4Vv2c9HlAQUQ/0" class="am-round am-img headimg " /></li>
+                            <li class="am-midd am-vertical-align-middle am-text-left am-text-sm am-padding-top-xs">M**n</li>
+                        </ul>
+                    </li>
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">0</li>
+                </ul><ul class="am-avg-sm-3 am-text-center am-padding-xs">
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">7</li>
+                    <li>
+                        <ul class=" am-avg-sm-2">
+                            <li class=" am-text-right am-padding-right-xs">
+                                <img src="http://wx.qlogo.cn/mmopen/pqdmJVmhZtbGpIfSk9SDmDLnjye1QFobUqCJtgLAKWXic8N1r8tZqhiaibib2xELctIRxGoa0BkmfAjCRIhZRHu9fXOBlKIVa0EI/0" class="am-round am-img headimg " /></li>
+                            <li class="am-midd am-vertical-align-middle am-text-left am-text-sm am-padding-top-xs">一**恒</li>
+                        </ul>
+                    </li>
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">0</li>
+                </ul><ul class="am-avg-sm-3 am-text-center am-padding-xs">
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">8</li>
+                    <li>
+                        <ul class=" am-avg-sm-2">
+                            <li class=" am-text-right am-padding-right-xs">
+                                <img src="http://wx.qlogo.cn/mmopen/W3svIUeAYicpP3voiaYocZYRywY3maeVicCQsmDJ7hO4RWaCSL29wRddZhOY0jPVzNYRBrokMmdG5t17MFMFeibB17Ov9VZylQta/0" class="am-round am-img headimg " /></li>
+                            <li class="am-midd am-vertical-align-middle am-text-left am-text-sm am-padding-top-xs">利**福</li>
+                        </ul>
+                    </li>
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">0</li>
+                </ul><ul class="am-avg-sm-3 am-text-center am-padding-xs">
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">9</li>
+                    <li>
+                        <ul class=" am-avg-sm-2">
+                            <li class=" am-text-right am-padding-right-xs">
+                                <img src="http://wx.qlogo.cn/mmopen/pqdmJVmhZtYcxTaibRbX2ibR8EwbGqCVgKf95FFQ1agUmluwwcSJnBc9nic3hiaibibAbGZiakPXB1ADVGXb0k4aCEcWIgZ2nYORibku/0" class="am-round am-img headimg " /></li>
+                            <li class="am-midd am-vertical-align-middle am-text-left am-text-sm am-padding-top-xs">F**a</li>
+                        </ul>
+                    </li>
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">0</li>
+                </ul><ul class="am-avg-sm-3 am-text-center am-padding-xs">
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">10</li>
+                    <li>
+                        <ul class=" am-avg-sm-2">
+                            <li class=" am-text-right am-padding-right-xs">
+                                <img src="http://wx.qlogo.cn/mmopen/pqdmJVmhZtZf8xk8TVg6NUXkcdzBgFpnwvGPyxOz5Hh2GImRYqVMQHQvxX586t9azXRRAVA5gzYv61H5EdDP1oiagIZuqtf1Y/0" class="am-round am-img headimg " /></li>
+                            <li class="am-midd am-vertical-align-middle am-text-left am-text-sm am-padding-top-xs">博**翰</li>
+                        </ul>
+                    </li>
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">0</li>
+                </ul>
+            <div class="am-text-center am-margin-bottom-sm">
+            	                                    <span class="js_more2 am-margin-top-xs am-inline-block" data-count="10" data-p="1">点击查看更多</span>
+            </div>
+        </div>
+        
+        <div class="contributeBox am-hide rankingBox js_box3">
+            <ul class="  am-avg-sm-3 am-text-center am-padding-xs ">
+                <li>排行</li>
+                <li>用户</li>
+                <li>积分</li>
+            </ul>
+            <ul class="am-avg-sm-3 am-text-center am-padding-xs">
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">1</li>
+                    <li>
+                        <ul class=" am-avg-sm-2">
+                            <li class=" am-text-right am-padding-right-xs">
+                                <img src="http://wx.qlogo.cn/mmopen/qRgIM7eGSEKARkFXwZib1ohEa6RSOicoI2R4ZR295xxPA4aa4gggGM0ibyiaQFmudTYZgqg8Vfm0BowicUpiciavQicU5IEPVr5zFWnr/0" class="am-round am-img headimg gold" /></li>
+                            <li class="am-midd am-vertical-align-middle am-text-left am-text-sm am-padding-top-xs">仲**媛</li>
+                        </ul>
+                    </li>
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">0</li>
+                </ul><ul class="am-avg-sm-3 am-text-center am-padding-xs">
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">2</li>
+                    <li>
+                        <ul class=" am-avg-sm-2">
+                            <li class=" am-text-right am-padding-right-xs">
+                                <img src="http://wx.qlogo.cn/mmopen/Q3auHgzwzM76w2dAAByrricRL3cccrTh8koFR4OSK5C7mYficw8OVAMVb31icqynHrfrtSbcdsyJllYsLDiaKCEN5bujP22iaUooTG1WG2kByQQo/0" class="am-round am-img headimg  silver" /></li>
+                            <li class="am-midd am-vertical-align-middle am-text-left am-text-sm am-padding-top-xs">五**）</li>
+                        </ul>
+                    </li>
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">0</li>
+                </ul><ul class="am-avg-sm-3 am-text-center am-padding-xs">
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">3</li>
+                    <li>
+                        <ul class=" am-avg-sm-2">
+                            <li class=" am-text-right am-padding-right-xs">
+                                <img src="http://wx.qlogo.cn/mmopen/Q3auHgzwzM4c8tZ1qgIibzjrn1PZfrEmYxhMl6Kxc7wBoGHydZXoGmiaVxqEuuDVKZDovKRTJ6t4iboibSLKkMblibw/0" class="am-round am-img headimg copper" /></li>
+                            <li class="am-midd am-vertical-align-middle am-text-left am-text-sm am-padding-top-xs">林**玖</li>
+                        </ul>
+                    </li>
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">0</li>
+                </ul><ul class="am-avg-sm-3 am-text-center am-padding-xs">
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">4</li>
+                    <li>
+                        <ul class=" am-avg-sm-2">
+                            <li class=" am-text-right am-padding-right-xs">
+                                <img src="http://wx.qlogo.cn/mmopen/pqdmJVmhZtbGpIfSk9SDmAproQ8icXqDDPX1miaicyZ6l1PD60librsic6cABTjQC5Y93d5eFboiaQaY1VqJD250oumxric6KCkeqkh/0" class="am-round am-img headimg " /></li>
+                            <li class="am-midd am-vertical-align-middle am-text-left am-text-sm am-padding-top-xs">猫**猫</li>
+                        </ul>
+                    </li>
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">0</li>
+                </ul><ul class="am-avg-sm-3 am-text-center am-padding-xs">
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">5</li>
+                    <li>
+                        <ul class=" am-avg-sm-2">
+                            <li class=" am-text-right am-padding-right-xs">
+                                <img src="http://wx.qlogo.cn/mmopen/ajNVdqHZLLDKibQFNbkb9WV2YhIcjuicIia9mk1P9TnSY1G2RibH9uDiaLPpW1tRJkhQ3EUayOwyLS4BVGyO1IL2JgA/0" class="am-round am-img headimg " /></li>
+                            <li class="am-midd am-vertical-align-middle am-text-left am-text-sm am-padding-top-xs">凹**糖</li>
+                        </ul>
+                    </li>
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">0</li>
+                </ul><ul class="am-avg-sm-3 am-text-center am-padding-xs">
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">6</li>
+                    <li>
+                        <ul class=" am-avg-sm-2">
+                            <li class=" am-text-right am-padding-right-xs">
+                                <img src="http://wx.qlogo.cn/mmopen/ajNVdqHZLLAkw7Go0YeDtuTxMlSC328HYf23ibGUXsfib94UpicUfvddId2iaUERibGNyiatrlDv3a1G4Vv2c9HlAQUQ/0" class="am-round am-img headimg " /></li>
+                            <li class="am-midd am-vertical-align-middle am-text-left am-text-sm am-padding-top-xs">M**n</li>
+                        </ul>
+                    </li>
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">0</li>
+                </ul><ul class="am-avg-sm-3 am-text-center am-padding-xs">
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">7</li>
+                    <li>
+                        <ul class=" am-avg-sm-2">
+                            <li class=" am-text-right am-padding-right-xs">
+                                <img src="http://wx.qlogo.cn/mmopen/pqdmJVmhZtbGpIfSk9SDmDLnjye1QFobUqCJtgLAKWXic8N1r8tZqhiaibib2xELctIRxGoa0BkmfAjCRIhZRHu9fXOBlKIVa0EI/0" class="am-round am-img headimg " /></li>
+                            <li class="am-midd am-vertical-align-middle am-text-left am-text-sm am-padding-top-xs">一**恒</li>
+                        </ul>
+                    </li>
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">0</li>
+                </ul><ul class="am-avg-sm-3 am-text-center am-padding-xs">
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">8</li>
+                    <li>
+                        <ul class=" am-avg-sm-2">
+                            <li class=" am-text-right am-padding-right-xs">
+                                <img src="http://wx.qlogo.cn/mmopen/W3svIUeAYicpP3voiaYocZYRywY3maeVicCQsmDJ7hO4RWaCSL29wRddZhOY0jPVzNYRBrokMmdG5t17MFMFeibB17Ov9VZylQta/0" class="am-round am-img headimg " /></li>
+                            <li class="am-midd am-vertical-align-middle am-text-left am-text-sm am-padding-top-xs">利**福</li>
+                        </ul>
+                    </li>
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">0</li>
+                </ul><ul class="am-avg-sm-3 am-text-center am-padding-xs">
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">9</li>
+                    <li>
+                        <ul class=" am-avg-sm-2">
+                            <li class=" am-text-right am-padding-right-xs">
+                                <img src="http://wx.qlogo.cn/mmopen/pqdmJVmhZtYcxTaibRbX2ibR8EwbGqCVgKf95FFQ1agUmluwwcSJnBc9nic3hiaibibAbGZiakPXB1ADVGXb0k4aCEcWIgZ2nYORibku/0" class="am-round am-img headimg " /></li>
+                            <li class="am-midd am-vertical-align-middle am-text-left am-text-sm am-padding-top-xs">F**a</li>
+                        </ul>
+                    </li>
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">0</li>
+                </ul><ul class="am-avg-sm-3 am-text-center am-padding-xs">
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">10</li>
+                    <li>
+                        <ul class=" am-avg-sm-2">
+                            <li class=" am-text-right am-padding-right-xs">
+                                <img src="http://wx.qlogo.cn/mmopen/pqdmJVmhZtZf8xk8TVg6NUXkcdzBgFpnwvGPyxOz5Hh2GImRYqVMQHQvxX586t9azXRRAVA5gzYv61H5EdDP1oiagIZuqtf1Y/0" class="am-round am-img headimg " /></li>
+                            <li class="am-midd am-vertical-align-middle am-text-left am-text-sm am-padding-top-xs">博**翰</li>
+                        </ul>
+                    </li>
+                    <li class="am-vertical-align-middle am-text-sm am-padding-top-xs">0</li>
+                </ul>
+            <div class="am-text-center am-margin-bottom-sm">
+                                                    <span class="js_more3 am-margin-top-xs am-inline-block" data-count="10" data-p="1">点击查看更多</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="menu">
+        <ul class="am-avg-sm-3 am-text-center am-padding-top-xs">
+            <li class="am-vertical-align">
+                <a href="/index/index.html">
+                    <img src="Public/assets/mobile/images/personal/home-page-unact.png" class="am-text-center am-vertical-align-middle"/>
+                    <br />               
+                    <span class=" am-text-center am-vertical-align-middle">首页</span>
+                </a>
+            </li>
+            <li  class="am-vertical-align">
+                <a href="/share/index.html">
+                    <img src="Public/assets/mobile/images/personal/Inordertoshare-act.png" class="am-text-center am-vertical-align-middle" />
+                    <br />
+                    <span class=" am-text-center am-vertical-align-middle">晒单广场</span>
+                </a>
+            </li>
+            <li  class="am-vertical-align">
+                <a href="/user/index.html">
+                    <img src="Public/assets/mobile/images/personal/per-center-unact.png" class="am-text-center am-vertical-align-middle" />
+                    <br />
+                    <span class=" am-text-center am-vertical-align-middle">个人中心</span>
+                </a>
+            </li>
+        </ul>
+    </div><style>
+.menu{
+        width:100%;
+        position:absolute;
+        position:fixed;
+
+        bottom:0;
+        background:#fff;
+        border-top:.1rem solid #F3E7E3;
+        z-index:999;
+    }
+    .menu img {
+        width:1.5rem;
+        height:1.5rem;
+        margin-bottom:.2rem;
+    }
+
+    .menu a {
+        display:inline-block;
+        color:#3d0505;
+
+    }
+
+    .menu a span {
+        font-size:1.2rem;
+    }
+</style>
+
+<div class="am-hide"></div>		
+</body>
+</html> 
+
+</div>
+
+<script>
+
+    $(function(){
+
+        //选项卡
+
+        $('.same').click(function(){
+            $('.same').removeClass('active');
+            $(this).addClass('active');
+            if($(this).hasClass('dif1')){
+                $('.rankingBox').addClass('am-hide');
+                $('.js_box1').removeClass('am-hide');
+            }
+
+            if($(this).hasClass('dif2')){
+                $('.rankingBox').addClass('am-hide');
+                $('.js_box2').removeClass('am-hide');
+            }
+
+            if($(this).hasClass('dif3')){
+                $('.rankingBox').addClass('am-hide');
+                $('.js_box3').removeClass('am-hide');
+            }
+
+        });
+
+
+
+
+
+        //晒单排行查看更多
+
+        $('.ranking').on('click','.js_more1',function(){
+
+            $(this).text('获取数据中...').prop('disabled',true);
+
+            var count = $(this).attr('data-count');
+
+            if(count < 10){
+
+                $(this).replaceWith('<span class="am-margin-top-xs am-inline-block">没有更多数据了</span>');
+
+                return false;
+
+            }
+
+            var p = $(this).attr('data-p');//当前页码
+
+            var me = $(this);
+
+            $.ajax({
+
+                data:{"p":p},
+
+                dataType:'json',
+
+                type:'post',
+
+                url:'/share/sharepage.html',
+
+                success:function(res){
+
+                    if(res.status == 1){
+
+                        var key,html='';
+
+                        var len = res.list.length;
+
+                        for(var i = 0; i< len ;i++){
+
+                            key = p * 10 + i + 1;
+
+                            html +='<ul class="am-avg-sm-3 am-text-center am-padding-xs"><li class="am-vertical-align-middle am-text-sm am-padding-top-xs">'+key+'</li><li><ul class=" am-avg-sm-2"><li class=" am-text-right am-padding-right-xs"><img src="'+res['list'][i]['headimgurl']+'" class=" am-round am-img headimg" /></li><li class="am-midd am-vertical-align-middle am-text-left am-text-sm am-padding-top-xs">'+res['list'][i]['nickname'].substr(0,1)+'**'+res['list'][i]['nickname'].substr(-1,1)+'</li></ul></li><li class="am-vertical-align-middle am-text-sm am-padding-top-xs">'+res['list'][i]['sharescore']+'</li></ul>';
+
+                        }
+
+                        if(res.check == 1){
+
+                        	$('.selfShare').remove();
+
+                        }
+
+                        me.parent().before(html);
+
+                        me.attr('data-p',res.p).attr('data-count',res.count).text('点击查看更多');
+
+                    }else if(res.status == -1){
+
+                        me.text(res.info);
+
+                    }else{
+
+                        me.replaceWith('<span  class="am-margin-top-xs am-inline-block">'+res.info+'</span>');
+
+                    }
+
+                },
+
+                complete:function(XMLHttpRequest,status){
+
+                    if(XMLHttpRequest.status != 200){
+
+                        me.text('获取失败，点击重试')
+
+                    }
+
+                    me.prop('disabled',false);
+
+                }
+
+            });
+
+
+
+        });
+
+
+
+
+
+        //贡献排行查看更多
+
+        $('.ranking').on('click','.js_more2',function(){
+            $(this).text('获取数据中...').prop('disabled',true);
+            var count = $(this).attr('data-count');
+            if(count < 10){
+                $(this).replaceWith('<span class="am-margin-top-xs am-inline-block">没有更多数据了</span>');
+                return false;
+            }
+            var p = $(this).attr('data-p');//当前页码
+            var me = $(this);
+            $.ajax({
+                data:{"p":p},
+                dataType:'json',
+                type:'post',
+                url:'/share/contributepage.html',
+                success:function(res){
+                    if(res.status == 1){
+                        var key,html='';
+                        var len = res.list.length;
+                        for(var i = 0; i< len ;i++){
+                            key = p * 10 + i + 1;
+                            if(res['list'][i]['contribute'] == null){
+                                res['list'][i]['contribute'] = 0;
+                            }
+                            html +='<ul class="am-avg-sm-3 am-text-center am-padding-xs"><li class="am-vertical-align-middle am-text-sm am-padding-top-xs">'+key+'</li><li><ul class=" am-avg-sm-2"><li class=" am-text-right am-padding-right-xs"><img src="'+res['list'][i]['headimgurl']+'" class=" am-round am-img headimg" /></li><li class="am-midd am-vertical-align-middle am-text-left am-text-sm am-padding-top-xs">'+res['list'][i]['nickname'].substr(0,1)+'**'+res['list'][i]['nickname'].substr(-1,1)+'</li></ul></li><li class="am-vertical-align-middle am-text-sm am-padding-top-xs">'+res['list'][i]['contribute']+'</li></ul>';
+                        }
+
+                        if(res.check == 1){
+                        	$('.selfContribute').remove();
+                        }
+                        me.parent().before(html);
+                        me.attr('data-p',res.p).attr('data-count',res.count).text('点击查看更多');
+                    }else if(res.status == -1){
+                        me.text(res.info);
+                    }else{
+                        me.replaceWith('<span class="am-margin-top-xs am-inline-block">'+res.info+'</span>');
+                    }
+                },
+                complete:function(XMLHttpRequest,status){
+                    if(XMLHttpRequest.status != 200){
+                        me.text('获取失败，点击重试')
+                    }
+                    me.prop('disabled',false);
+                }
+            });
+        });
+
+        //月排行
+        $('.ranking').on('click','.js_more3',function(){
+            $(this).text('获取数据中...').prop('disabled',true);
+            var count = $(this).attr('data-count');
+            if(count < 10){
+                $(this).replaceWith('<span class="am-margin-top-xs am-inline-block">没有更多数据了</span>');
+                return false;
+            }
+            var p = $(this).attr('data-p');//当前页码
+            var me = $(this);
+            $.ajax({
+                data:{"p":p},
+                dataType:'json',
+                type:'post',
+                url:'/share/monthpage.html',
+                success:function(res){
+                    if(res.status == 1){
+                        var key,html='';
+                        var len = res.list.length;
+                        for(var i = 0; i< len ;i++){
+                            key = p * 10 + i + 1;
+                            if(res['list'][i]['total'] == null){
+                                res['list'][i]['total'] = 0;
+                            }
+                            html +='<ul class="am-avg-sm-3 am-text-center am-padding-xs"><li class="am-vertical-align-middle am-text-sm am-padding-top-xs">'+key+'</li><li><ul class=" am-avg-sm-2"><li class=" am-text-right am-padding-right-xs"><img src="'+res['list'][i]['headimgurl']+'" class=" am-round am-img headimg" /></li><li class="am-midd am-vertical-align-middle am-text-left am-text-sm am-padding-top-xs">'+res['list'][i]['nickname'].substr(0,1)+'**'+res['list'][i]['nickname'].substr(-1,1)+'</li></ul></li><li class="am-vertical-align-middle am-text-sm am-padding-top-xs">'+res['list'][i]['total']+'</li></ul>';
+                        }
+
+                        if(res.check == 1){
+                            $('.selfMonth').remove();
+                        }
+                        me.parent().before(html);
+                        me.attr('data-p',res.p).attr('data-count',res.count).text('点击查看更多');
+                    }else if(res.status == -1){
+                        me.text(res.info);
+                    }else{
+                        me.replaceWith('<span class="am-margin-top-xs am-inline-block">'+res.info+'</span>');
+                    }
+                },
+                complete:function(XMLHttpRequest,status){
+                    if(XMLHttpRequest.status != 200){
+                        me.text('获取失败，点击重试')
+                    }
+                    me.prop('disabled',false);
+                }
+            });
+        });
+
+
+
+    });
+
+</script>

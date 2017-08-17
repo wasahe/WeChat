@@ -1,0 +1,6 @@
+<ul class="nav nav-tabs">
+	<li {if $op == 'display'}class="active"{/if}><a href="{php echo $this->createWebUrl('goods', array('op' => 'display'))}">项目管理</a></li>
+	<li {if $op == 'post'}class="active"{/if}><a href="{php echo $this->createWebUrl('goods', array('op' => 'post'))}">创建项目</a></li>
+    <li {if $op == 'cate'}class="active"{/if}><a href="{php echo $this->createWebUrl('goods', array('op' => 'cate'))}">项目分类</a></li>
+	
+</ul>

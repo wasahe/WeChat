@@ -1,0 +1,94 @@
+{template 'header'}
+<script type="text/javascript">
+var pagename="orderlist";
+</script>
+</head>
+<body>
+<div id="page0" class="ub ub-ver bga">
+	<input type="hidden" id="posturl" value="{$posturl}">
+	<input type="hidden" id="app" value="{$app}">
+    <input type="hidden" id="plat_name" value="{$msgbase['plat_name']}">
+    <input type="hidden" id="plat_pwd" value="{$msgbase['plat_pwd']}">
+    <input type="hidden" id="message2" value="{$msgbase['message2']}">
+    <input type="hidden" id="phone" value="{$mobile}">
+    <input type="hidden" id="c" value="{$c}">
+    <div class="ub-f1 ub ub-ac ub-pc ub-ver tx-c connn">
+    	<div><i class="iconfont icon-kafei t-gre1" style="font-size:5rem"></i> </div>
+        <div class="umar-t1 ulev2 t-gre1">妥了</div>
+        <div class="umar-t t-gre1">请耐心等候服务人员上门</div>
+        <div class="uinn8 t-gra ulev-1" style="">服务人员可能会电话联系您<br>请您保持电话畅通</div>
+        <div class="uinn8 ub">
+            <a href="{php echo $this->createMobileUrl('Order',array())}" class="uba b-gre1 ub ub-pc uc-a1 ub-f1 btnn" style="margin-bottom:0.5em; padding:0.5rem 3rem"><span class="ulev-1 t-gre1">查看订单</span></a>
+            
+        </div>
+    </div>
+    <div class="ub ub-ver connn">
+        <div class=""><!--推荐服务-->
+        	<div class="ub ub-ac">
+            	<div class="ubb b-bla01 ub-f1"></div>
+                <div class="ulev-1 t-dgra" style="padding:0 0.5rem">试试我们的其他服务</div>
+                <div class="ubb b-bla01 ub-f1"></div>
+            </div>
+            <div class="tj-ser  swiper-container">
+                <div class="swiper-wrapper tx-c">
+                    {loop $list $vo}
+                    <div class="swiper-slide ub ub-ver" style="width:5.5rem;">
+                        <a href="{php echo $this->createMobileUrl('project',array('id'=>$vo['id']))}" class="uinn213 ub ub-ver ub-ac block" >
+                            <div class="uc-a1 uba b-bla01 ub ub-ac ub-pc" style="width:3rem; height:3rem">
+                                <img src="{$_W['attachurl']}{$vo['icon']}" style="width:2rem"> 
+                            </div>
+                            <div class="ulev-4 t-gra" style="padding-top:0.2rem">{$vo['type_name']}</div>
+                        </a >
+                    </div>
+                    {/loop}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="" style="height:3.125rem"></div>
+    
+    {template 'footer'}
+    
+</div>
+
+<script type="text/javascript" src="{MODULE_URL}/template/mobile/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="{MODULE_URL}/template/mobile/js/main.js"></script>
+<script type="text/javascript" src="{MODULE_URL}/template/mobile/js/swiper307.min.js"></script>
+<script type="text/javascript">
+var Scroll0 = new Swiper('.con0', {
+        pagination: '.con0 .swiper-pagination',
+		autoplay: 7000,
+		watchSlidesProgress : true,
+		watchSlidesVisibility : true,
+		lazyLoading: true,
+		lazyLoadingInPrevNext: true,
+});
+var tjser = new Swiper('.tj-ser', {
+    slidesPerView: 4,
+	autoplay: 5000,
+  });
+  
+  $(document).ready(function(){  
+	var message3 = document.getElementById('message3').value;
+	if(message3 == 1){
+		var posturl = document.getElementById('posturl').value;
+		var app = document.getElementById('app').value;
+		var plat_name = document.getElementById('plat_name').value;
+		var plat_pwd = document.getElementById('plat_pwd').value;
+		var phone = document.getElementById('phone').value;
+		var c = document.getElementById('c').value;
+		$.ajax({
+			url: posturl,
+			type:"POST",
+			data:{"app":app,"u":plat_name,"p":plat_pwd,"m":phone,"c":c},
+			dataType:"json",
+			success: function(res){
+				alert(res);
+			}
+		});
+	}
+}); 
+</script>
+
+</body>
+</html>

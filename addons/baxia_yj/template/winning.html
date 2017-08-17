@@ -1,0 +1,36 @@
+{template 'common/header'}
+<style>
+td{text-align:center;}
+.title{font-size:14px;font-weight:bold;}
+</style>
+<ul class="nav nav-tabs">
+	<li class="active"><a href="javascript:;">{$module['title']}</a></li>
+</ul>
+
+	<div class="clearfix">
+		<div class="panel panel-info">
+			<div class="panel-heading">中奖名单</div>
+			<div class="panel-body">
+				{php $p=1;}
+				{php $t=1;}
+				{loop $datas $key $value}
+					<table width="70%">
+						<tr style="height:50px;line-height:50xp;">
+								<td width="15%" class="title" colspan="10">第{$t}轮中奖者</td>
+						</tr>
+						{loop $value $v}
+						<tr style="line-height:40px;background-color:{php echo $p%2!=0 ? '#fafafa' : '#ffffff'};">
+							<td style="padding:15px 0;"><img src="{$v['headurl']}" width="80"/></td>
+							<td><?php echo base64_decode($v['nickname']);?></td>
+							<td><?php echo date("Y-m-d H:i:s", $v['addtime']);?></td>
+						</tr>
+						{php $p++;}
+						{/loop}
+					</table>
+					{php $t++;}
+				{/loop}
+			</div>
+		</div>
+	</div>
+
+{template 'common/footer'}

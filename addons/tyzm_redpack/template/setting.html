@@ -1,0 +1,157 @@
+{template 'common/header'}
+<div class="panel panel-info">
+  <div class="panel-heading"> 必须配置红包相关参数后，才能正常使用红包功能！ </div>
+</div>
+<form id="reply-form" class="form-horizontal form"  method="post" enctype="multipart/form-data">
+<div class="panel panel-success">
+  <div class="panel-heading"> 参数设置 </div>
+  <div class="panel-body">
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">关注公众号</label>
+      <div class="col-sm-9">
+        <label class="radio-inline">
+          <input type="radio" name="isfollow" value="1" {if $settings['isfollow']==1}checked="true"{/if}>
+          是 </label>
+        <label class="radio-inline">
+          <input type="radio" name="isfollow" value="0" {if $settings['isfollow']!=1}checked="true"{/if} >
+          否 </label>
+        <span class="help-block">选择“是”时，必须关注公众号才能领取红包，否则不关注也能领取红包。</span> </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">手续费</label>
+      %
+      <div class="col-sm-9 col-xs-12">
+        <input type="text" name="FEE" class="form-control" value="{$settings['FEE']}" onKeyUp="value=value.replace(/[^\d]/g,'')" />
+        <div class="help-block">例如：收取5%手续费时，请填写5，正整数，不填默认5%！</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">引导关注二维码</label>
+      <div class="col-sm-9 col-xs-12"> {php echo tpl_form_field_image('followqrcode',$settings['followqrcode']);}
+        <div class="help-block">建议结合“带参数二维码”使用，<a href="{$_W['siteroot']}/web/index.php?c=platform&a=qr&">点击设置</a>。默认读取系统二维码。</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">发红包帮助URL</label>
+      <div class="col-sm-9 col-xs-12">
+        <input type="text" name="pluspelp" class="form-control" value="{$settings['pluspelp']}"  />
+        <div class="help-block">定义发红包帮助链接，url带http:// ,例如： http://www.baidu.com 。</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">提现模式</label>
+      <div class="col-sm-9">
+        <label class="radio-inline">
+          <input type="radio" name="gettype" value="1" {if $settings['gettype']==1}checked="true"{/if}>
+          是 </label>
+        <label class="radio-inline">
+          <input type="radio" name="gettype" value="0" {if $settings['gettype']!=1}checked="true"{/if} >
+          否 </label>
+        <span class="help-block">提现模式可以发小于1元红包，用户抢到红包后，需要累积大于1元才能手动提现；非提现模式，红包金额1-200，抢到立即发送现金红包。</span> </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">最小提现金额</label>
+      元
+      <div class="col-sm-9 col-xs-12">
+        <input type="text" name="jelimit" class="form-control" value="{$settings['jelimit']}"/>
+        <div class="help-block">例如：默认为1元，设置额度要大于1元，否则会提现失败。</div>
+      </div>
+    </div>
+	<a name="apikey">
+		<div class="panel-body">
+		<div class="form-group">
+				  <label class="col-xs-12 col-sm-3 col-md-2 control-label">地区接口apikey</label>
+				  <div class="col-sm-9">
+					<input class="form-control" type="text" value="{$settings['baiduapikey']}" class="span2" name="baiduapikey">
+					<div class="help-block">设置地区限制时，请至”<a href="http://apistore.baidu.com/astore/usercenter" target="_blank" >百度apistore</a>“获取apikey，注册按照引导获取apikey填到上面即可。<a href="http://apistore.baidu.com/astore/usercenter" target="_blank">点击获取</a></div>
+				  </div>
+				</div>	
+		</div>
+	</a>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">模板风格</label>
+      <div class="col-sm-9">
+        <label class="radio-inline">
+          <input type="radio" name="template" value="0" {if $settings['template']==0}checked="true"{/if}>
+          新版 </label>
+        <label class="radio-inline">
+          <input type="radio" name="template" value="1" {if $settings['template']==1}checked="true"{/if} >
+          经典 </label>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">口令匹配值</label>
+      %
+      <div class="col-sm-9 col-xs-12">
+        <input type="text" name="matching" class="form-control" value="{$settings['matching']}" onKeyUp="value=value.replace(/[^\d]/g,'')" />
+        <div class="help-block">例如：默认为85，数字（1-100）越大，越难念对口令。</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">红包数据管理员</label>
+      <div class="col-sm-9">
+        <textarea name="mebilemanage" id="mebilemanage" class="form-control js-a" cols="30" rows="2">{$settings['mebilemanage']}</textarea>
+        <span class="help-block">管理员openid，多个管理用“,”分割，查看粉丝信息获取openid <br />
+        手机查看数据地址：<a id="needCopy" href="javascript:">{$_W['siteroot']}app/{php echo $this->createMobileUrl('Mobilemanage')}</a> <script type="text/javascript">require(['jquery', 'util'], function($, util){	$(function(){		util.clip($('#needCopy')[0], $('#needCopy').text());	});});</script> </span> </div>
+    </div>
+	    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">仅允许以下用户发红包</label>
+      <div class="col-sm-9">
+        <textarea name="senduser" id="senduser" class="form-control js-a" cols="30" rows="2">{$settings['senduser']}</textarea>
+        <span class="help-block">发红包用户openid，多个用户用“,”分割，查看粉丝信息获取openid，若是允许所有人发红包，留空！
+        </span> </div>
+    </div>
+  </div>
+</div>
+<div class="panel panel-success">
+<div class="panel-heading"> 红包证书配置 </div>
+<form id="reply-form" class="form-horizontal form"  method="post" enctype="multipart/form-data">
+  <div class="panel-body">
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label"><span class="text-danger">*</span>证书安全随机码</label>
+      <div class="input-group  col-sm-9 col-sm-8 col-xs-12" style="padding-left:15px;">
+        <input type="text" name="certkey" class="form-control" value="{$settings['certkey']}" >
+        <span class="input-group-addon" style="cursor:pointer" onClick="tokenGen();">生成新的</span> </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">商户支付证书</label>
+      <div class="col-sm-8 col-xs-12">
+        <textarea class="form-control" name="apiclient_cert" rows="5" placeholder="为保证安全性, 不显示证书内容. 若要修改, 请直接输入"></textarea>
+        <span class="help-block">从商户平台上下载支付证书, 解压并取得其中的
+        <mark>apiclient_cert.pem</mark>
+        用记事本打开并复制文件内容, 填至此处</span> </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">支付证书私钥</label>
+      <div class="col-sm-8 col-xs-12">
+        <textarea class="form-control" name="apiclient_key" rows="5" placeholder="为保证安全性, 不显示证书内容. 若要修改, 请直接输入"></textarea>
+        <span class="help-block">从商户平台上下载支付证书, 解压并取得其中的
+        <mark>apiclient_key.pem</mark>
+        用记事本打开并复制文件内容, 填至此处</span> </div>
+    </div>
+  </div>
+  </div>
+  <div class="form-group">
+    <label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+    <div class="col-sm-4">
+      <input name="submit" type="submit" value="保存" class="btn btn-success btn-block" />
+      <input type="hidden" name="token" value="{$_W['token']}" />
+    </div>
+  </div>
+  </div>
+</form>
+<script type="text/javascript">
+
+function tokenGen() {
+		var letters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+		var token = '';
+		for(var i = 0; i < 32; i++) {
+			var j = parseInt(Math.random() * (31 + 1));
+			token += letters[j];
+		}
+		$(':text[name="certkey"]').val(token);
+	}
+
+</script>
+</div>
+{template 'common/footer'}

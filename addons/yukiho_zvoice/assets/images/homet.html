@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="format-detection" content="telephone=no">
+	<title>我</title>
+	<script type="text/javascript" src="{MODULE_URL}assets/scripts/jquery.js"></script>
+	<script type="text/javascript" src="{MODULE_URL}assets/scripts/elink-framework.js"></script>
+	<script type="text/javascript" src="{MODULE_URL}assets/scripts/noty/packaged/jquery.noty.packaged.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+	<style type="text/css">*{font-family:"Microsoft YaHei",Arial,Helvetica,sans-serif,"宋体";}</style>
+	<link href="{MODULE_URL}assets/styles/weui.css" rel="stylesheet" type="text/css">
+
+    <script>
+        var jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || {};
+        // 是否启用调试
+        jssdkconfig.debug = false;
+
+        jssdkconfig.jsApiList = [
+            'checkJsApi',
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage',
+            'onMenuShareQQ',
+            'onMenuShareWeibo',
+            'hideMenuItems',
+            'showMenuItems',
+            'hideAllNonBaseMenuItem',
+            'showAllNonBaseMenuItem',
+            'translateVoice',
+            'startRecord',
+            'stopRecord',
+            'onRecordEnd',
+            'playVoice',
+            'pauseVoice',
+            'stopVoice',
+            'uploadVoice',
+            'downloadVoice',
+            'chooseImage',
+            'previewImage',
+            'uploadImage',
+            'downloadImage',
+            'getNetworkType',
+            'openLocation',
+            'getLocation',
+            'hideOptionMenu',
+            'showOptionMenu',
+            'closeWindow',
+            'scanQRCode',
+            'chooseWXPay',
+            'openProductSpecificView',
+            'addCard',
+            'chooseCard',
+            'openCard',
+			'translateVoice',
+            'openAddress'
+        ];
+        wx.config(jssdkconfig);
+        var _TUTOR_URL = "{php echo $this->createMobileUrl('tutor')}";
+        var _follow = "{php echo intval($_W['fans']['follow'])}";
+        var _openid = "{php echo $_W['openid']}";
+        var _qrcode = "{php echo $_W['account']['qrcode']}";
+    </script>
+</head> 
+<body bgcolor="#efeff4">
+
+		<div style="height:85px;border:1px solid #E0E0E0;margin-top:15px;background-color:#FFF">
+            <div class="weui-cell">
+                <div class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+                    <img src="{php echo $member['avatar']}" style="width: 65px;display: block"/>
+                    <!--<span class="weui-badge" style="position: absolute;top: -.4em;right: -.4em;">8</span>-->
+                </div>
+                <div class="weui-cell__bd">
+                    <p>{$member['realname']}</p>
+                    <p style="margin-top:5px;font-size: 13px;">微信号：{$member['nickname']}</p>
+                </div>
+				<div style="line-height:16px;padding-right: 13px;position: relative;">
+					<a style="font-size:16px">修改</a><img src="{MODULE_URL}assets/images/ico_erwei.png" style="margin:0 0 0 5px;height:16px;">
+					
+				</div>
+				
+            </div>
+        </div>
+		
+		<div style="border:1px solid #E0E0E0;margin-top:20px;background-color:#FFF">
+
+		 <a style="display:block ;text-decoration:none;color:#000" href="{php echo $this->createMobileUrl('income')}">
+		 <div class="weui-cell weui-cell_access" style="height:24px">
+                
+				<div class="weui-cell__bd" style="border:1px sol #E0E0E0">
+					<span style="vertical-align: middle"><img src="{MODULE_URL}assets/images/ico_l1.png" style="color:#000;margin-right:10px;width:20px;"/>我的收入</span>
+                </a>
+				</div>
+
+                <div class="weui-cell__ft"></div>
+				
+           </div>
+
+			
+			<a style="display:block ;text-decoration:none;color:#000" href="{php echo $this->createMobileUrl('answer')}">
+			 <div class="weui-cell weui-cell_access" style="height:24px">
+				<div class="weui-cell__bd" >
+                    <span style="vertical-align: middle"><img src="{MODULE_URL}assets/images/ico_l2.png" style="color:#000;vertical-align:top;margin-right:10px;width:20px;"/>我的回答</span>
+                </a>
+				</div>
+                <div class="weui-cell__ft"></div>
+            </div>
+			
+
+			
+			<a style="display:block ;text-decoration:none;color:#000" href="{php echo $this->createMobileUrl('follow')}">
+			 <div class="weui-cell weui-cell_access" style="height:24px">
+				<div class="weui-cell__bd">
+					<span style="vertical-align: middle"><img src="{MODULE_URL}assets/images/ico_l3.png" style="color:#000;margin-right:10px;width:20px;"/>我的关注</span>
+                   </a>
+                </div>
+                <div class="weui-cell__ft"></div>
+            </div>
+
+			
+			<a style="display:block ;text-decoration:none;color:#000" href="{php echo $this->createMobileUrl('ask')}">
+			<div class="weui-cell weui-cell_access" style="height:24px">
+				<div class="weui-cell__bd">
+					<span style="vertical-align: middle"><img src="{MODULE_URL}assets/images/ico_l4.png" style="color:#000;margin-right:10px;width:20px;"/>我的查看</span>
+                </a>
+				</div>
+                <div class="weui-cell__ft"></div>
+            </div>
+		</div>
+    </div>
+			 
+
+	<!--<div style="border:1px solid #E0E0E0;margin-top:20px;background-color:#FFF">
+		 <div class="weui-cell weui-cell_access" style="height:24px">
+                <div class="weui-cell__bd">
+                    
+					<span style="vertical-align: middle"><img src="images/ico_l5.png" style="margin-right:10px;width:20px;"/>表情</span>
+                    
+                </div>
+                <div class="weui-cell__ft"></div>
+            </div>
+			
+	</div>-->
+	
+	
+	<div style="border:1px solid #E0E0E0;margin-top:20px;background-color:#FFF">
+		  <a style="display:block ;text-decoration:none;color:#000" href="{php echo $this->createMobileUrl('help')}">
+		 <div class="weui-cell weui-cell_access" style="height:24px">
+                <div class="weui-cell__bd">
+					<span style="vertical-align: middle"><img src="{MODULE_URL}assets/images/ico_l6.png" style="color:#000;margin-right:10px;width:20px;"/>帮助</span>
+                </a></div>
+                <div class="weui-cell__ft"></div>
+         </div>
+	</div>
+
+
+
+
+<!--菜单栏-->
+   <div class="page">
+            <div class="weui-tabbar">
+                <a  onclick="changeSrc1" href="javascript:;" class="weui-tabbar__item ">
+                    <span style="display: inline-block;position: relative;">
+                        <img id="icon1" src="{MODULE_URL}assets/images/icon_11.png" alt="" class="weui-tabbar__icon">
+                        <!--<span class="weui-badge" style="position: absolute;top: -2px;right: -13px;"></span>-->
+                    </span>
+                    <p class="weui-tabbar__label">中韩汇</p>
+                </a>
+                <a id=""  onclick="changeSrc2"  href="javascript:;" class="weui-tabbar__item">
+                    <img id="icon2" src="{MODULE_URL}assets/images/icon_21.png" alt="" class="weui-tabbar__icon">
+                    <p class="weui-tabbar__label">提问</p>
+                </a>
+                <a href="javascript:;" class="weui-tabbar__item">
+                    <span style="display: inline-block;position: relative;">
+                        <img id="icon3" src="{MODULE_URL}assets/images/icon_31.png" alt="" class="weui-tabbar__icon">
+                        <!--<span class="weui-badge weui-badge_dot" style="position: absolute;top: 0;right: -6px;"></span>-->
+                    </span>
+                    <p class="weui-tabbar__label">搜索</p>
+                </a>
+                <a href="javascript:;" class="weui-tabbar__item">
+                    <img id="icon4" src="{MODULE_URL}assets/images/icon_41.png" alt="" class="weui-tabbar__icon">
+                    <p class="weui-tabbar__label">我</p>
+                </a>
+            </div>
+
+</div>
+
+
+</body>
+</html>

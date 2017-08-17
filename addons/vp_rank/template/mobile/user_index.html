@@ -1,0 +1,247 @@
+{php $title=$rank['name']}
+{template 'inc/header'}
+
+<style>
+	body{background:#f8f8f8;}
+	.weui_panel:before{display:none;}
+	.weui_media_appmsg_thumb{border-radius:18px;}
+	.weui_media_title{color:#FFFFFF;}
+	
+	.login{margin-top:3px;}
+	.authority{margin-top:3px;}
+	.authority a{display:inline-block;padding:3px 8px;background:#FFFFFF;border-radius:3px;color:#009cff;}
+	.authority i{display:inline-block;height:20px;vertical-align:-5px;}
+	.authority i img{height:20px;}
+
+	.sums{}
+	.sums h3{color:#FFFFFF;}
+	.sums h4{color:#FFFFFF;}
+
+	
+	.weui_cell p{color:#666666;}
+	.weui_cell .weui_cell_ft{color:#444444;}
+</style> 
+
+<div id="authoritys_block" class="weui-popup-container fullscreen" style="z-index:11">
+  <div class="weui-popup-modal">
+	<a class='close-popup'></a>
+	<p class="popup-title">关于权威称号</p>
+	<div class='popup-main'>
+
+		<div class="weui_cells">
+			{loop $rank['authoritys'] $aut}
+				{if !empty($aut) && !empty($aut['name'])}
+				<div class="weui_cell">
+					<div class="weui_cell_hd"><img src="{$aut['flag']}" alt="" style="width:40px;margin-right:5px;display:block"></div>
+					<div class="weui_cell_bd weui_cell_primary">
+						<p>{$aut['name']}</p>
+						{if !empty($aut['intro'])}<h4>{$aut['intro']}</h4>{/if}
+					</div>
+					<div class="weui_cell_ft"><h3>{$aut['credit']}</h3><h4>所需权威</h4></div>
+				</div>
+				{/if}
+			{/loop}
+		</div>
+			
+		<div style="padding:15px 15px 0 15px;color:#666666;">
+			<div>
+				<h4>权威称号是用户在该圈子里的身份象征，用户的权威数值越高，所获得的称号等级就越稀有。</h4>
+				<h4>每获得别人一次赞同，权威+1</h4>
+				<h4>每获得别人一次反对，权威-1</h4>
+			</div>
+		</div>
+	</div>
+  </div>
+</div>
+
+<div id="credit_block" class="weui-popup-container fullscreen" style="z-index:11">
+  <div class="weui-popup-modal">
+	<a class='close-popup'></a>
+	<p class="popup-title">关于积分</p>
+	<div class='popup-main'>
+
+		<div class="weui_cells">
+			<div class="weui_cell">
+				<div class="weui_cell_hd"><img src="{MODULE_URL}/static/mobile/images/good.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
+				<div class="weui_cell_bd weui_cell_primary">
+					<p>每发布一个好评</p>
+				</div>
+				<div class="weui_cell_ft">+{$rank['settings']['credit_award_new_good']}积分</div>
+			</div>
+			<div class="weui_cell">
+				<div class="weui_cell_hd"><img src="{MODULE_URL}/static/mobile/images/bad.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
+				<div class="weui_cell_bd weui_cell_primary">
+					<p>每发布一个差评</p>
+				</div>
+				<div class="weui_cell_ft">+{$rank['settings']['credit_award_new_bad']}积分</div>
+			</div>
+			<div class="weui_cell">
+				<div class="weui_cell_hd"><img src="{MODULE_URL}/static/mobile/images/agree.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
+				<div class="weui_cell_bd weui_cell_primary">
+					<p>每赞同一次</p>
+				</div>
+				<div class="weui_cell_ft">+{$rank['settings']['credit_award_gree']}积分</div>
+			</div>
+			<div class="weui_cell">
+				<div class="weui_cell_hd"><img src="{MODULE_URL}/static/mobile/images/disagree.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
+				<div class="weui_cell_bd weui_cell_primary">
+					<p>每反对一次</p>
+				</div>
+				<div class="weui_cell_ft">+{$rank['settings']['credit_award_gree']}积分</div>
+			</div>
+			<!--
+			<div class="weui_cell">
+				<div class="weui_cell_hd"><img src="{MODULE_URL}/static/mobile/images/like.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
+				<div class="weui_cell_bd weui_cell_primary">
+					<p>回复每被赞一次</p>
+				</div>
+				<div class="weui_cell_ft">+1积分</div>
+			</div>
+			-->
+		</div>
+		<div style="padding:15px 15px 0 15px;color:#666666;">
+			<div>
+				<h4>积分是对用户参与圈子互动的奖励，累计到一定数量可兑换奖品哦~</h4>
+			</div>
+		</div>
+	</div>
+  </div>
+</div>
+
+{if $you['uid']==$mine['uid']}<!-- 本人需要显示底层菜单 -->
+<div class="weui_tab">
+	<div class="weui_tab_bd">
+		<div class="weui_tab_bd_item weui_tab_bd_item_active">
+{/if}
+
+					 <div class="weui_panel" style="margin-top:0px; background:#009cff;">
+						<div class="weui_panel_bd">
+							<div href="javascript:void(0);" class="weui_media_box weui_media_appmsg">
+								<div class="weui_media_hd">
+									<img class="weui_media_appmsg_thumb" src="{php echo VP_AVATAR($you['avatar'],'m')}" alt="">
+								</div>
+								<div class="weui_media_bd">
+									<h3 class="weui_media_title">{php echo empty($you['nickname'])?('用户_'.$you['id']):$you['nickname']} </h3>
+									{if $you['uid']==$mine['uid'] && !$is_user_infoed}
+										<h3 class="weui_media_desc login"><a href="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('login'), 2)}" class="weui_btn weui_btn_mini weui_btn_primary">一键微信授权登录</a></h3>
+									{else}
+										<h3 class="weui_media_desc authority"><a href="javascript:;" class="open-popup" data-target="#authoritys_block"><i><img src="/attachment/{$you['_authority']['flag']}"/></i> {$you['_authority']['name']}</a></h3>
+									{/if}
+								</div>
+							</div>
+						</div>
+						<div class="weui_panel_ft">
+							<div class="weui-row sums" style="text-align:center;">
+							  <div class="weui-col-33"><h3>{$you['authority']}</h3><h4>权威</h4></div>
+							  <div class="weui-col-33"><h3>{$you['agreeds']}</h3><h4>被赞同</h4></div>
+							  <div class="weui-col-33"><h3>{$you['disagreeds']}</h3><h4>被反对</h4></div>
+							</div>
+						</div>
+					</div>
+
+					<div class="mine_menu">
+						
+						{if $you['uid']==$mine['uid']}<!-- 本人显示 -->
+
+							
+							<div class="weui_cells weui_cells_access">
+								<a class="weui_cell"  href="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('mine',array('cmd'=>'money','rid'=>pencode($rank['id']))), 2)}" >
+									<div class="weui_cell_hd"><img src="{MODULE_URL}/static/mobile/images/icon_rmb.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
+									<div class="weui_cell_bd weui_cell_primary">
+										<p>我的余额</p>
+									</div>
+									<div class="weui_cell_ft">{php echo $you['money']/100}元</div>
+								</a>
+							</div>
+			
+
+							{if !empty($rank['settings']['credit_type'])}
+							<div class="weui_cells weui_cells_access">
+								<a class="weui_cell open-popup"  href="javascript:;" class="" data-target="#credit_block">
+									<div class="weui_cell_hd"><img src="{MODULE_URL}/static/mobile/images/credit.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
+									<div class="weui_cell_bd weui_cell_primary">
+										<p>我的积分</p>
+									</div>
+									<div class="weui_cell_ft">{$user[$rank['settings']['credit_type']]}</div>
+								</a>
+								{if !empty($rank['settings']['credit_mall'])}
+								<a class="weui_cell" href="{$rank['settings']['credit_mall']}">
+									<div class="weui_cell_hd"><img src="{MODULE_URL}/static/mobile/images/exchange.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
+									<div class="weui_cell_bd weui_cell_primary">
+										<p>积分兑换</p>
+									</div>
+									<div class="weui_cell_ft"></div>
+								</a>
+								{/if}
+							</div>
+							{/if}
+						{/if}
+
+
+
+						<div class="weui_cells weui_cells_access">
+							<a class="weui_cell" href="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('user',array('cmd'=>'goods','rid'=>pencode($rank['id']),'uid'=>pencode($you['uid']))), 2)}">
+								<div class="weui_cell_hd"><img src="{MODULE_URL}/static/mobile/images/good.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
+								<div class="weui_cell_bd weui_cell_primary">
+									<p>发表的好评</p>
+								</div>
+								<div class="weui_cell_ft"></div>
+							</a>
+							<a class="weui_cell" href="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('user',array('cmd'=>'bads','rid'=>pencode($rank['id']),'uid'=>pencode($you['uid']))), 2)}">
+								<div class="weui_cell_hd"><img src="{MODULE_URL}/static/mobile/images/bad.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
+								<div class="weui_cell_bd weui_cell_primary">
+									<p>发表的差评</p>
+								</div>
+								<div class="weui_cell_ft"></div>
+							</a>
+						</div>
+
+					   <div class="weui_cells weui_cells_access">
+							<a class="weui_cell" href="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('user',array('cmd'=>'agrees','rid'=>pencode($rank['id']),'uid'=>pencode($you['uid']))), 2)}">
+								<div class="weui_cell_hd"><img src="{MODULE_URL}/static/mobile/images/agree.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
+								<div class="weui_cell_bd weui_cell_primary">
+									<p>赞同过的</p>
+								</div>
+								<div class="weui_cell_ft"></div>
+							</a>
+							<a class="weui_cell" href="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('user',array('cmd'=>'disagrees','rid'=>pencode($rank['id']),'uid'=>pencode($you['uid']))), 2)}">
+								<div class="weui_cell_hd"><img src="{MODULE_URL}/static/mobile/images/disagree.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
+								<div class="weui_cell_bd weui_cell_primary">
+									<p>反对过的</p>
+								</div>
+								<div class="weui_cell_ft"></div>
+							</a>
+						</div>
+					</div>
+
+					{if $you['uid']==$mine['uid'] && $mine['admin']>0}<!-- 管理员菜单 -->
+						<div class="weui_cells_title">管理员操作</div>
+						<div class="weui_cells weui_cells_access">
+							<a class="weui_cell"  href="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('admin',array('cmd'=>'report','rid'=>pencode($rank['id']))), 2)}" >
+								<div class="weui_cell_hd"><img src="{MODULE_URL}/static/mobile/images/icon_alarm.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
+								<div class="weui_cell_bd weui_cell_primary">
+									<p>举报管理</p>
+								</div>
+								<div class="weui_cell_ft"></div>
+							</a>
+						</div>
+					{/if}
+
+
+{if $you['uid']==$mine['uid']}<!-- 本人需要显示底层菜单 -->
+		</div>
+	</div>
+	
+	{php $menu='mine'}
+	{template 'inc/menu'}
+</div>
+{/if}
+
+{template 'inc/script'}
+<script type="text/javascript">
+$(function(){
+	
+
+});
+</script>
+{template 'inc/footer'}

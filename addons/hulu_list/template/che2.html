@@ -1,0 +1,44 @@
+<div class="panel panel-default">
+<div class="panel-heading">
+<div class="panel-title">
+<h3>人找车</h3>
+</div>
+</div>
+<div class="panel-body table-responsive">
+<table class="table">
+<thead>
+<tr>
+<th>信息编号</th>
+<th>出发地</th>
+<th>目的地</th>
+<th>有几人</th>
+<th>电话</th>
+<th>出发效期</th>
+<th>发布时间</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+{loop $che2 $key $che2}
+<tr>
+<td>
+<a href="{php echo $this->createMobileUrl('job',array('vid'=>$zhaopin['id']));}" target="_blank">{$che2['id']}</a> | {if $che2['pid'] == 1}未审核
+{elseif $che2['pid'] == 2}真实
+{elseif $che2['pid'] == 3}假
+{else}未审核
+{/if}
+</td>
+<td>{$che2['chestart']}</td>
+<td>{$che2['cheend']}</td>
+<td>{$che2['cheperson']}</td>
+<td>{$che2['tel']}</td>
+<td>{php echo date("Y-m-d H:i:s",strtotime($che2['validity']));}</td>
+<td>{php echo date('Y-m-d H:i:s',$che2['time'])}</td>
+<td><a href="{php echo $this->createWebUrl('infoedit',array('vid'=>$che2['id'],'pid'=>'2'));}">真</a> | <a href="{php echo $this->createWebUrl('infoedit',array('vid'=>$che2['id'],'pid'=>'3'));}">假</a> | <a href="{php echo $this->createWebUrl('infoedit',array('vid'=>$che2['id'],'pid'=>'4'));}">删除</a> | 编辑</td>
+</tr>
+{/loop}
+</tbody>
+</table>
+</div>
+</div>
+

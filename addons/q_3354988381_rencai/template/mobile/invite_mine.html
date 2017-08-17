@@ -1,0 +1,56 @@
+{template 'common_header'}
+    <!-- 基本信息 -->
+    <div class="am-g" style="background-color:#FFF;">
+        <div class="am-u-sm-12" style="margin-top:5px">
+		  <table class="am-table">
+		    <thead>
+		        <tr>
+		            <th style="width:45%">申请企业</th>
+		            <th style="width:30%">申请时间</th>
+                    <th style="width:25%">操作</th>
+		        </tr>
+		    </thead>
+		    <tbody>
+		    	{loop $invites $invite}
+		        <tr>
+		            <td><a href="{php echo $this->createMobileUrl('CompanyShow', array('companyid' => $invite['company_id']));}"><span style="color:#00F">{$invite['comany_name']}</span></a></td>
+		            <td>{php echo date('Y/m/d', strtotime($invite['createat']));}</td>
+                    <td id="td_{$invite['id']}">
+                    {if $invite['person_agree'] == 'Y'}
+                   	已同意
+                    {elseif $invite['person_agree'] == 'N'}
+                    已拒绝
+                    {else}
+                    <a id="yes_{$invite['id']}" href="javascript:;" onclick="invite_agree('Y', {$invite['id']}, '{$invite['comany_name']}')">同意</a> | 
+                    <a  id="no_{$invite['id']}" href="javascript:;" onclick="invite_agree('N', {$invite['id']}, '{$invite['comany_name']}')">拒绝</a>
+                    {/if}
+                    </td>
+		        </tr>
+		        {/loop}
+		   </tbody>
+		 </table>
+	   </div>
+	 </div>
+<script>
+function invite_agree(val, id, comany_name) {
+	$.ajax({
+		url:"<?php echo $this->createMobileUrl('invitemine');?>&val="+val+'&inviteid='+id+'&comany_name='+comany_name,
+		type: 'post',
+		dataType: 'json',
+		success:function(data){
+			if (data.error == 0) {
+				if (val == 'Y') {
+					$('#td_' + id).html('已同意');
+					alert(data.msg);
+				} else if (val == 'N') {
+					$('#td_' + id).html('已拒绝');
+				}				
+			} else {
+				alert(data.msg);
+			}
+
+		}
+	});	
+}
+</script>
+{template 'common_footer'}	 

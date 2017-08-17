@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no" />
+    <title>{$replyinfo['titile']}</title>
+    {php echo register_jssdk();}
+    <link rel="stylesheet" href="../addons/dg_newzl/resource/css/glide.core.css">
+    <script type="text/javascript" src="../addons/dg_newzl/resource/js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="../addons/dg_newzl/resource/js/glide.min.js"></script>
+</head>
+
+<body>
+<div class="header">
+    <h2>{$replyinfo['titile']}</h2>
+    <p>{$start}~{$end}</p>
+    <span class="c1"></span>
+    <span class="c2"></span>
+    <span class="c3"></span>
+    <span class="c4"></span>
+    <span class="c5"></span>
+    <span class="c6"></span>
+</div>
+<div id="Carousel" class="glide">
+    <div class="glide__arrows">
+        <span class="glide__arrow prev" data-glide-dir="<"></span>
+        <span class="glide__arrow next" data-glide-dir=">"></span>
+    </div>
+    <div class="glide__wrapper">
+        <ul class="glide__track">
+            {loop $piclist $adv}
+            <li class="glide__slide" data-glide-autoplay="3000">
+                <a href="#"><img src="{php echo tomedia($adv['thumb']);}" width="100%"></a>
+            </li>
+            {/loop}
+        </ul>
+    </div>
+    <div class="glide__bullets"></div>
+</div>
+<script>
+    var carousel = $('#Carousel').glide({
+        type: 'carousel',
+        startAt: 1,
+        touchDistance: 2
+    });
+</script>
+{if !empty($fromid)}
+<div class="info">
+    <span><img src="{$fromheadimg}" width="80" height="80"></span>
+    <p>{$fromusername}的专属页面</p>
+</div>
+{/if}
+<style>
+    .infos{text-align: center; font-size: 14px; color: #666; padding: 8px 0 0;}
+    .infos span{ font-size: 18px; padding:0 5px;}
+    .infos font{ font-weight: bold; color: #000;}
+</style>
+
+<div class="btn">
+    <div class="infos">
+        <p>已有<span>{$sum}</span>人参加，总传播量为<span>{$countsum}</span></p>
+    </div>
+    {if !empty($userinfo)}
+    <div class="infos">
+        <p><font>{$fromusername}</font> 传播量<span>{$usercount}<span>,第<span>{$rank}<span>名</p>
+    </div>
+    <a href="{php echo $this->createMobileUrl('index')}&id={$usid}&rid={$rid}" class="s2">我的专属页</a>
+    {else}
+    <a href="javaScritp:;" class="s1">我要参加</a>
+    {/if}
+</div>
+
+<div class="tit">
+    <span>活动介绍</span>
+</div>
+<div class="con">
+ {$replyinfo['desc']}
+</div>
+
+<div class="tit">
+    <span>排行榜</span>
+</div>
+<div class="phb">
+    <table width="100%">
+        <thead>
+        <tr>
+            <th width="20%">排名</th>
+            <th width="60%">姓名</th>
+            <th>支持数</th>
+        </tr>
+        </thead>
+        <tbody>
+        {loop $userinfo2 $index $user}
+        <tr>
+            <td><?php echo $index+1 ?></td>
+            <td><img src="{$user['headimg']}" width="40" height="40"><span>{$user['username']}</span></td>
+            <td>{$user['count']}</td>
+        </tr>
+        {/loop}
+        </tbody>
+    </table>
+</div>
+<div class="imInfo" style="display: none;">
+    <div class="box">
+        <h2>完善个人信息</h2>
+        <div class="txt">联系信息作为活动获奖后领奖凭证。请据实填写！</div>
+        <ul>
+            <li><input type="text" id="username" name="username" placeholder="请输入姓名" value=""></li>
+            <li><input type="tel" id="userphone" name="userphone" placeholder="请输入手机号码" value=""></li>
+            <input type="hidden" id="rid" name="rid" value="{$rid}">
+        </ul>
+        <div class="btn"><a href="javaScritp:;" onclick="add();">提交</a></div>
+    </div>
+</div>
+
+
+<script>
+    $("a.s1").click(function(){
+        $(".imInfo").show(0);
+    })
+</script>
+</body>
+
+
+<script type="text/javascript">
+    function add(){
+        var username=$("#username").val();
+        var userphone=$("#userphone").val();
+        var rid=$("#rid").val();
+        $.ajax({type:"post",
+            data:{"username":username,"userphone":userphone,"rid":rid},
+            url:"{php echo $this->createMobileUrl('add')}",
+            datatype:'json',
+            success:function(data){
+                if(data.success==1){
+                    alert(data.msg);
+                   window.location.reload();
+//                    $(".imInfo").hide(0);
+                }else{
+                    alert(data.msg);
+                }
+            }
+        });
+    }
+</script>
+<script>
+
+    wx.ready(function (){
+
+        var sharedata = {
+
+            title: "{$replyinfo['share_title']}",
+
+            desc: "{$replyinfo['share_desc']}",
+
+            link: "{$shareurl}",
+
+            imgUrl: "{$_W['attachurl']}{$replyinfo['share_img']}",
+
+        };
+
+        wx.onMenuShareAppMessage(sharedata);
+        //转发给朋友
+        wx.onMenuShareTimeline(sharedata);
+        //分享到朋友圈
+    });
+
+</script>
+</html>

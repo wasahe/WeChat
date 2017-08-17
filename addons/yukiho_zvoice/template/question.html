@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+{if empty($_W['isajax'])} 
+{template 'common/top'} 
+{/if}
+  <style type="text/css">
+  .table-responsive { overflow: visible; } 
+  .table-responsive .dropdown-menu, .table-responsive .dropdown-toggle { position: static !important; }
+  </style>
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Main content -->
+    <section class="content">
+		<div class="row"> 
+        {php $total = M('question')->totalcredit()}
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-aqua"><i class="fa fa-plus"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">问题总数</span>
+              <span class="info-box-number">{$total['all']['sum']}</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-red"><i class="fa fa-check-square-o"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">今日新增</span>
+              <span class="info-box-number">{$total['day']['sum']}</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+ 
+        <!-- fix for small devices only -->
+        <div class="clearfix visible-sm-block"></div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-green"><i class="fa fa-line-chart"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">本周新增</span>
+              <span class="info-box-number">{$total['week']['sum']}</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-yellow"><i class="fa fa-flag-checkered"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">本月新增</span>
+              <span class="info-box-number">{$total['month']['sum']}</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+				<h3 class="box-title">问题列表</h3>
+				<div class="box-tools">
+					<a href="{php echo $this->createWebUrl('question',array('act'=>'edit'))}" class="btn btn-info">新增问题</a>
+					<a data-href="{php echo $this->createWebUrl('question',array('act'=>'mutdelete'))}" href="javascript:;" class="btn btn-danger mutdelete">删除选中</a>
+				</div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive">
+              <table id="example2" class="table table-drop table-hover">
+                <thead>
+                  <tr>
+                    <th class='col-md-1 hidden-xs hidden-s'>
+                      <input type="checkbox" id="checkall" />类型</th>
+                    <th class='col-md-3 col-xs-3 col-sm-3'>问题</th>
+                    <th class='col-md-1 hidden-xs hidden-s'>分类</th>
+                    <th class='col-md-1 hidden-xs hidden-s'>提问人</th>
+                    <th class='col-md-1 hidden-xs hidden-s'>价格</th>
+                    <th class='col-md-1 col-xs-2 col-sm-2'>状态</th>
+                    <th style="col-md-1 hidden-xs hidden-s">日期</th>
+                    <th>操作</th></tr>
+                </thead>
+                <tbody>{loop $list['list'] $li}
+                  <tr>
+                    <td class='col-md-1 hidden-xs hidden-s'>
+                      <input type="checkbox" name="ids[]" value="{$li['id']}" />
+                      <label class="label label-{if $li['istask']==1}warning{else}success{/if}">{if $li['istask']==1}悬赏{else}专家{/if}</label></td>
+                    <td class='col-md-3 col-xs-7 col-sm-7'>{$li['title']}</td>
+                    <td class='col-md-1 hidden-xs hidden-s'>{php $category = M('category')->getInfo($li['category_id'])}
+                      <label class="label label-info">{$category['title']}</label></td>{php $member = M('member')->getInfo($li['openid'])}
+                    <td class='col-md-1 hidden-xs hidden-s'>{$member['nickname']}</td>
+                    <td class='col-md-1 hidden-xs hidden-s'>
+                      <label class="label label-info">{$li['credit']}</label></td>
+                    <td class='col-md-1 col-xs-2 col-sm-2'>
+                      <label class="label label-{if $li['status']==1}warning{else if $li['status']==2}success{else}danger{/if}">{if $li['istask']==1} {if $li['status']==1}未结束{else if $li['status']==2}已结束{else}未支付{/if} {else} {if $li['status']==1}未回答{else if $li['status']==2}已回答{else}未支付{/if} {/if}</label></td>
+					<td>
+						<label class="label label-success">{php echo date('Y-m-d H:i',$li['create_time'])}</label>
+					</td>
+				   <td class='col-md-2 col-xs-4 col-sm-4'>
+                      <a href="{php echo $this->createWebUrl('question',array('act'=>'edit','id'=>$li['id']))}" class="btn btn-success btn-sm">编辑</a>
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-info">更多</button>
+                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                          <span class="caret"></span>
+                          <span class="sr-only">Toggle Dropdown</span></button>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="{php echo $this->createWebUrl('answer',array('act'=>'to_question','question_id'=>$li['id']))}">答案</a></li>
+                          <li><a href="{php echo $this->createWebUrl('listen_log',array('question_id'=>$li['id']))}">偷听</a></li>
+						  {if $li['istask']!=1 && $li['status']==1}
+                          <li><a href="{php echo $this->createWebUrl('question',array('act'=>'remind','id'=>$li['id']))}">提醒</a></li>
+						  {/if} 
+						  {if $li['isrecommend']!='1'}
+                          <li><a href="{php echo $this->createWebUrl('question',array('act'=>'recommend','id'=>$li['id']))}">推荐</a></li>
+						  {/if}
+                          <li><a href="{php echo $this->createWebUrl('question',array('act'=>'delete','id'=>$li['id']))}">删除</a></li>
+                        </ul>
+                      </div>
+                    </td>
+                  </tr>{/loop}</tbody>
+              </table>
+            </div>
+            <div class="box-footer">{php echo $list['pager']}</div>
+            <!-- /.box-body --></div>
+          <!-- /.box -->
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">问题搜索</h3></div>
+            <!-- /.box-header -->
+            <form action="./index.php" method="get"  class="form-horizontal">
+			<input type="hidden" name="c" value="{php echo $_GPC['c']}"/>
+			<input type="hidden" name="a" value="{php echo $_GPC['a']}"/>
+			<input type="hidden" name="m" value="{php echo $_GPC['m']}"/>
+			<input type="hidden" name="do" value="{php echo $_GPC['do']}"/>
+			<input type="hidden" name="act" value="{php echo $_GPC['act']}"/>
+            <div class="box-body">
+              <div class="form-group">
+                <label class="col-sm-2 control-label">问题分类</label>
+                <div class="col-sm-10">
+                  <select name="category_id" id="" class="form-control">
+                    <option value="0">请选择</option>{php $options = M('category')->getall(array('fid'=>0))} {loop $options $option}
+                    <option value="{$option['id']}" {if $_GPC[ 'category_id']==$option[ 'id']}selected{/if}>{$option['title']}</option>{/loop}</select>
+                  <span class="help-block"></span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">问题状态</label>
+                <div class="col-sm-10">
+                  <select name="status" id="" class="form-control">
+                    <option value="">请选择</option>
+                    <option value="0" {if $_GPC[ 'status']=='0' }selected{/if}>未支付</option>
+                    <option value="1" {if $_GPC[ 'status']=='1' }selected{/if}>未回答</option>
+                    <option value="2" {if $_GPC[ 'status']=='2' }selected{/if}>已回答</option></select>
+                  <span class="help-block"></span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">问题类型</label>
+                <div class="col-sm-10">
+                  <select name="istask" id="" class="form-control">
+                    <option value="">请选择</option>
+                    <option value="0" {if $_GPC[ 'istask']=='0' }selected{/if}>专家问题</option>
+                    <option value="1" {if $_GPC[ 'istask']=='1' }selected{/if}>悬赏问题</option></select>
+                  <span class="help-block"></span>
+                </div>
+              </div>
+            </div>
+            <div class="box-footer">
+              <input type="hidden" name="token" value="{$_W['token']}" />
+              <button type="submit" class="btn btn-info center-block">搜索</button></div>
+            <!-- /.box-body -->
+			</div>
+            </form>
+          <!-- /.box -->
+		  </div>
+      </div>
+      <!-- /.row --></section>
+    <!-- /.content --></div>
+  </div>
+  <!-- ./wrapper -->{if empty($_W['isajax'])} {template 'common/foot'}
+  <script>
+  $('.table-responsive tbody tr').slice( - 2).find('.dropdown').addClass('dropup');
+    $('.mutdelete').click(function() {
+      var url = $(this).data('href');
+      var ids = [];
+      var idss = [];
+      $('input:checkbox[name="ids[]"]').each(function() {
+        var _that = $(this)[0];
+        if (_that.checked) {
+          ids = ids.concat($(this).val());
+        } else {
+          idss = idss.concat($(this).val());
+        }
+      });
+      console.log(ids);
+      if (confirm("您确定要删除么？")) {
+        $.post(url, {
+          ids: ids
+        },
+        function(data) {
+          util.message("删除成功", "{php echo $_W['siteurl']}", 'success');
+        },
+        'json');
+      }
+    });
+    $('.unmutdelete').click(function() {
+      var ids = [];
+      var idss = [];
+      $('input:checkbox[name="ids[]"]').each(function() {
+        var _that = $(this)[0];
+        if (_that.checked) {
+          ids = ids.concat($(this).val());
+        } else {
+          idss = idss.concat($(this).val());
+        }
+      });
+      console.log(idss);
+      if (confirm("您确定要删除么？")) {
+        $.post(url, {
+          ids: idss
+        },
+        function(data) {
+          util.message("删除成功", "{php echo $_W['siteurl']}", 'success');
+        },
+        'json');
+      }
+    })
+    $("#checkall").click(function() {
+      console.log('checkall');
+      $('input[name="ids[]"').each(function() {
+        var _that = $(this)[0];
+        if (_that.checked) {
+          _that.checked = false;
+        } else {
+          _that.checked = true;
+        }
+      });
+    });
+    $('body').on('click', '.open_modal',
+    function() {
+      var title = '';
+      var url = $(this).data('href');
+      var name = $(this).data('name');
+      console.log(url);
+      $.get(url,
+      function(data) {
+        var content = data;
+        var footer = '<button class="btn btn-danger close2">关闭</button>';
+        var options = {
+          containerName: '' + name
+        };
+        var model = name + '_modal';
+        eval(model + '=util.dialog(title, content, footer,options);');
+        eval(model + '.show();');
+        eval(model + '.removeClass("fade");');
+        eval(model + '.find(".close2").click(function(){' + model + '.hide();})');
+      },
+      'html');
+    });</script>{/if}

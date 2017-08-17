@@ -1,0 +1,484 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com" versionCode="0.6">
+	<application setting="true">
+		<name><![CDATA[微人才微招聘]]></name>
+		<identifie><![CDATA[q_3354988381_rencai]]></identifie>
+		<version><![CDATA[7.4.8]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[微人才微招聘]]></ability>
+		<description><![CDATA[微人才微招聘]]></description>
+		<author><![CDATA[微赞]]></author>
+		<url><![CDATA[http://www.012wz.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="使用说明必读" do="readme" />
+			<entry title="首页主题设置" do="index_theme" />
+			<entry title="行业分类管理" do="Industry" />
+			<entry title="职位分类管理" do="category" />
+			<entry title="分享设置管理" do="share" />
+			<entry title="招聘企业管理" do="zhaounit" />
+			<entry title="招聘信息管理" do="zhaoinfo" />
+			<entry title="求职简历管理" do="Resume" />
+			<entry title="消息通知管理" do="notify" />
+			<entry title="幻灯图片广告" do="ADSlider" />
+			<entry title="广告浏览统计" do="adtj" />
+			<entry title="表单管理" do="form" />
+			<entry title="评论管理" do="comments" />
+			<entry title="充值套餐" do="youhui_set" />
+		</menu>
+	</bindings>
+	<install><![CDATA[CREATE TABLE IF NOT EXISTS `ims_q_3354988381_rencai_adslider` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` smallint(6) NOT NULL,
+  `name` varchar(50) NOT NULL COMMENT '广告名称',
+  `position` tinyint(1) NOT NULL COMMENT '幻灯、ad在的位置',
+  `url` varchar(250) NOT NULL,
+  `link` varchar(250) NOT NULL COMMENT '链接地址',
+  `isshow` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否显示',
+  `display` smallint(6) NOT NULL DEFAULT '0' COMMENT '排序',
+  `dateline` int(11) NOT NULL DEFAULT '0',
+  `exprtime` varchar(50) NOT NULL DEFAULT '0' COMMENT '过期时间',
+  PRIMARY KEY (`id`),
+  KEY `weid` (`weid`,`position`,`isshow`,`display`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='幻灯、广告投放管理' AUTO_INCREMENT=2 ;
+
+CREATE TABLE IF NOT EXISTS `ims_q_3354988381_rencai_adtj` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `ad_id` int(10) NOT NULL,
+  `user_from` varchar(60) NOT NULL COMMENT 'openid关联用户表提出信息',
+  `link_url` varchar(100) NOT NULL,
+  `createtime` datetime NOT NULL,
+  `weid` int(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `article_id` (`ad_id`),
+  KEY `weid` (`weid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='浏览统计' AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_q_3354988381_rencai_apply_jobs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL COMMENT '公众号',
+  `person_id` int(11) NOT NULL COMMENT '求职者个人id',
+  `company_id` int(11) NOT NULL COMMENT '公司id',
+  `job_id` int(11) NOT NULL COMMENT '职位id',
+  `dateline` int(11) NOT NULL COMMENT '申请时间',
+  PRIMARY KEY (`id`),
+  KEY `weid` (`weid`,`person_id`,`job_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='求职者申请职位表' AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_q_3354988381_rencai_category` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL DEFAULT '0',
+  `parent_id` int(11) NOT NULL,
+  `name` varchar(250) NOT NULL,
+  `isshow` smallint(1) NOT NULL DEFAULT '1' COMMENT '是否显示',
+  `display` smallint(1) NOT NULL DEFAULT '0' COMMENT '排序',
+  `ishot` smallint(6) NOT NULL DEFAULT '0' COMMENT '是否热门',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='职位分类表' AUTO_INCREMENT=5 ;
+
+CREATE TABLE IF NOT EXISTS `ims_q_3354988381_rencai_company` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL DEFAULT '0',
+  `from_user` varchar(50) NOT NULL DEFAULT '',
+  `province` varchar(64) NOT NULL,
+  `city` varchar(64) NOT NULL,
+  `district` varchar(64) NOT NULL,
+  `name` varchar(100) DEFAULT NULL COMMENT '公司名称',
+  `invite_id` int(10) NOT NULL,
+  `industry` smallint(1) DEFAULT NULL COMMENT '公司所属行业类别',
+  `address` varchar(250) DEFAULT NULL COMMENT '公司地址',
+  `contact` varchar(20) DEFAULT NULL COMMENT '联系人',
+  `mobile` char(20) DEFAULT NULL COMMENT '手机',
+  `scale` smallint(1) NOT NULL DEFAULT '0' COMMENT '规模',
+  `type` tinyint(1) DEFAULT '0' COMMENT '企业类型',
+  `description` text COMMENT '公司简介',
+  `logo` varchar(250) DEFAULT NULL,
+  `avatar` varchar(250) DEFAULT NULL COMMENT '企业封面',
+  `license` varchar(250) DEFAULT NULL COMMENT '公司营业执照',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否通过审核',
+  `isauth` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否认证',
+  `position` tinyint(1) NOT NULL DEFAULT '0' COMMENT '推荐位',
+  `position_sort` int(4) NOT NULL,
+  `view_resume_nums` smallint(6) NOT NULL DEFAULT '0' COMMENT '已经查看简历数',
+  `view_resume_total` smallint(6) NOT NULL DEFAULT '0' COMMENT '查看简历数上限',
+  `coordinate` varchar(50) NOT NULL DEFAULT '0',
+  `dateline` int(11) NOT NULL,
+  `sort` int(10) NOT NULL,
+  `cant_resume` int(1) NOT NULL COMMENT '为1不可以看个人简历',
+  PRIMARY KEY (`id`),
+  KEY `weid_from_user` (`weid`,`from_user`),
+  KEY `invite_id` (`invite_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+CREATE TABLE IF NOT EXISTS `ims_q_3354988381_rencai_company_lookresume` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `company_id` int(10) NOT NULL,
+  `person_id` int(10) NOT NULL,
+  `fee` decimal(8,2) NOT NULL,
+  `person_agree_payflag` char(1) NOT NULL,
+  `createat` datetime NOT NULL,
+  `person_agree` char(1) NOT NULL,
+  `award_of_send_resume` decimal(8,2) NOT NULL,
+  `weid` int(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `company_id` (`company_id`,`person_id`,`weid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='企业查看简历记录表不重复扣钱' AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_q_3354988381_rencai_company_money` (
+  `company_id` int(10) NOT NULL,
+  `money` decimal(8,2) NOT NULL,
+  `money_youhui_get` decimal(8,2) NOT NULL,
+  `updatetime` datetime NOT NULL,
+  UNIQUE KEY `company_id` (`company_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_q_3354988381_rencai_fhb_sendrec` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `weid` int(10) NOT NULL,
+  `openid_service` varchar(32) NOT NULL,
+  `cost_credit1` varchar(32) NOT NULL,
+  `cost_credit2` varchar(32) NOT NULL,
+  `openid` varchar(32) NOT NULL,
+  `memberid` int(10) NOT NULL COMMENT '微信平台会员id',
+  `user_info_id` int(10) NOT NULL COMMENT '第三方平台用户id',
+  `money` int(10) NOT NULL COMMENT '单位：分',
+  `send_res` varchar(100) NOT NULL COMMENT '发放结果',
+  `bill_no` varchar(32) NOT NULL,
+  `send_finish` char(1) NOT NULL COMMENT '是否完成，是不可再修改',
+  `receive_flag` char(1) NOT NULL COMMENT '用户提取状态Y/n',
+  `remark` varchar(200) NOT NULL,
+  `send_time` datetime NOT NULL,
+  `createtime` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `weid` (`weid`,`openid`),
+  KEY `memberid` (`memberid`),
+  KEY `user_info_id` (`user_info_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='发放红包记录' AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_q_3354988381_rencai_form` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) NOT NULL,
+  `field` varchar(32) NOT NULL,
+  `label` varchar(64) NOT NULL,
+  `user_label` varchar(64) NOT NULL,
+  `show` int(1) NOT NULL,
+  `sort` int(4) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `uniacid` (`uniacid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='表单管理' AUTO_INCREMENT=28 ;
+
+INSERT INTO `ims_q_3354988381_rencai_form` (`id`, `uniacid`, `field`, `label`, `user_label`, `show`, `sort`) VALUES
+(1, 2, 'person_province', '所在城市', '', 1, 0),
+(2, 2, 'person_username', '姓名', '', 1, 0),
+(3, 2, 'person_headimgurl', '头像', '', 1, 0),
+(4, 2, 'person_sex', '性别', '', 1, 0),
+(5, 2, 'person_mobile', '手机', '', 1, 0),
+(6, 2, 'person_qq', 'QQ', '', 1, 0),
+(7, 2, 'person_age', '年龄', '', 1, 0),
+(8, 2, 'person_educational', '学历', '', 1, 0),
+(9, 2, 'person_professional', '专业', '', 1, 0),
+(10, 2, 'person_workexperience', '工作经验', '', 1, 0),
+(11, 2, 'person_cid', '应聘职位', '', 1, 0),
+(12, 2, 'person_payroll', '期望薪资', '', 1, 0),
+(13, 2, 'person_workaddress', '期望工作地点', '', 1, 0),
+(14, 2, 'person_assessment', '自我评价', '', 1, 0),
+(15, 2, 'person_outline', '显示状态', '', 1, 0),
+(16, 2, 'person_attach_a', '预置字段A', '', 1, 0),
+(17, 2, 'person_attach_b', '预置字段B', '', 1, 0),
+(18, 2, 'person_attach_c', '预置字段C', '', 1, 0),
+(19, 2, 'person_attach_d', '预置字段D', '', 1, 0),
+(20, 2, 'person_attach_e', '预置字段E', '', 1, 0),
+(21, 2, 'person_price', '查看费用', '', 1, 0),
+(22, 2, 'sys_position', '名企推荐', '', 1, 0),
+(23, 2, 'sys_nav_index', '首页', '', 1, 0),
+(24, 2, 'sys_nav_zhao', '招聘', '', 1, 0),
+(25, 2, 'sys_nav_fabu', '发布', '', 1, 0),
+(26, 2, 'sys_nav_person', '求职', '', 1, 0),
+(27, 2, 'sys_nav_my', '我的', '', 1, 0);
+
+CREATE TABLE IF NOT EXISTS `ims_q_3354988381_rencai_industry` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL COMMENT '行业名称',
+  `parent_id` int(11) NOT NULL COMMENT '父id',
+  `display` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+  `ishot` smallint(1) DEFAULT '0' COMMENT '是否热门',
+  `isshow` smallint(1) DEFAULT '1' COMMENT '是否显示',
+  `dateline` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='行业分类表' AUTO_INCREMENT=24 ;
+
+CREATE TABLE IF NOT EXISTS `ims_q_3354988381_rencai_invite_award` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `weid` int(10) NOT NULL,
+  `type` char(1) NOT NULL,
+  `inviter` int(10) NOT NULL,
+  `invited` int(10) NOT NULL,
+  `award_price` decimal(8,2) NOT NULL,
+  `create_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `weid` (`weid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_q_3354988381_rencai_invite_person` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL COMMENT '公众号',
+  `company_id` int(11) NOT NULL COMMENT '公司id',
+  `person_id` int(11) NOT NULL COMMENT '邀请来面试的求职者id',
+  `invite_count` int(11) NOT NULL COMMENT '邀请次数',
+  `dateline` int(11) NOT NULL COMMENT '邀请时间',
+  PRIMARY KEY (`id`),
+  KEY `weid` (`weid`,`company_id`,`person_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='企业发出邀请面试' AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_q_3354988381_rencai_job` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `mid` int(11) NOT NULL COMMENT '企业id',
+  `title` varchar(100) NOT NULL COMMENT '职位名称',
+  `cid` int(11) NOT NULL COMMENT '职位类别id',
+  `end_time` varchar(20) NOT NULL COMMENT '岗位截止日期',
+  `payroll` smallint(6) NOT NULL COMMENT '薪资',
+  `educational` tinyint(4) NOT NULL COMMENT '学历',
+  `workexperience` tinyint(4) NOT NULL COMMENT '工作经验',
+  `welfare` varchar(50) NOT NULL COMMENT '福利保障',
+  `positiontype` tinyint(4) NOT NULL COMMENT '职位类型',
+  `nums` int(11) NOT NULL COMMENT '招聘人数',
+  `workaddress` varchar(50) NOT NULL COMMENT '工作地点',
+  `description` text NOT NULL COMMENT '职位信息描述',
+  `views` int(11) NOT NULL DEFAULT '0' COMMENT '浏览次数',
+  `istop` smallint(1) NOT NULL DEFAULT '0' COMMENT '是否置顶',
+  `ishot` smallint(1) NOT NULL DEFAULT '0' COMMENT '是否热门',
+  `expiration` int(11) NOT NULL DEFAULT '0' COMMENT '置顶过期时间',
+  `dateline` int(11) NOT NULL COMMENT '发布时间',
+  `updatetime` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `weid_from_dateline` (`dateline`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='公司职位信息' AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_q_3354988381_rencai_jobs_comments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` smallint(6) DEFAULT NULL,
+  `mid` int(11) DEFAULT NULL COMMENT '用户id可以是求职者也可以是招聘者',
+  `jobid` int(11) DEFAULT NULL COMMENT '如果1jobid如果2resumeid',
+  `content` varchar(250) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT '0',
+  `dateline` int(11) DEFAULT NULL,
+  `from_user` varchar(32) NOT NULL,
+  `check_res` char(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='评论表' AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_q_3354988381_rencai_joinin_money` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `company_id` int(10) NOT NULL,
+  `year_money` decimal(8,2) NOT NULL,
+  `to_day` date NOT NULL,
+  `price` int(11) NOT NULL,
+  `create_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `company_id` (`company_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='企业年费详情表' AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_q_3354988381_rencai_member` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT NULL,
+  `from_user` varchar(50) DEFAULT NULL,
+  `type` tinyint(1) DEFAULT NULL COMMENT '是1企业还是2个人',
+  `status` smallint(1) DEFAULT '1' COMMENT '状态。是否可用',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='注册用户表含企业、个人。作快速查询使用' AUTO_INCREMENT=2 ;
+
+CREATE TABLE IF NOT EXISTS `ims_q_3354988381_rencai_notify` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `weid` int(10) NOT NULL,
+  `type` char(1) NOT NULL DEFAULT 'M' COMMENT 'M T',
+  `content_type` varchar(100) NOT NULL COMMENT '内容类型如求职者的',
+  `content` text NOT NULL,
+  `tpl_id` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `weid` (`weid`),
+  KEY `content_type` (`content_type`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='消息通知管理' AUTO_INCREMENT=3 ;
+
+CREATE TABLE IF NOT EXISTS `ims_q_3354988381_rencai_person` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `from_user` varchar(100) NOT NULL,
+  `province` varchar(64) NOT NULL,
+  `city` varchar(64) NOT NULL,
+  `district` varchar(64) NOT NULL,
+  `username` varchar(50) DEFAULT NULL,
+  `invite_id` int(10) NOT NULL,
+  `headimgurl` varchar(250) DEFAULT NULL,
+  `sex` smallint(1) DEFAULT NULL,
+  `mobile` varchar(11) DEFAULT NULL,
+  `qq` varchar(20) DEFAULT NULL,
+  `age` smallint(6) DEFAULT NULL,
+  `educational` tinyint(1) DEFAULT NULL COMMENT '我的学历',
+  `professional` varchar(50) DEFAULT NULL COMMENT '我的专业',
+  `workexperience` varchar(20) DEFAULT NULL COMMENT '工作经验',
+  `cid` int(10) NOT NULL,
+  `payroll` int(10) NOT NULL,
+  `workaddress` varchar(50) DEFAULT NULL COMMENT '期望工作地点',
+  `assessment` varchar(255) DEFAULT NULL COMMENT '自我评价',
+  `istop` smallint(1) NOT NULL DEFAULT '0' COMMENT '是否置顶该简历',
+  `expiration` int(11) NOT NULL DEFAULT '0',
+  `outline` int(1) NOT NULL,
+  `attach_a` varchar(200) NOT NULL,
+  `attach_b` varchar(200) NOT NULL,
+  `attach_c` varchar(200) NOT NULL,
+  `attach_d` varchar(200) NOT NULL,
+  `attach_e` varchar(200) NOT NULL,
+  `dateline` int(11) NOT NULL,
+  `views` int(11) NOT NULL COMMENT '被浏览数',
+  `buy_virtual_total` int(10) NOT NULL,
+  `price` decimal(8,2) NOT NULL COMMENT '查看简历费用',
+  `updatetime` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `weid_from_user` (`weid`,`from_user`),
+  KEY `cid` (`cid`,`payroll`),
+  KEY `invite_id` (`invite_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='求职个人表' AUTO_INCREMENT=2 ;
+
+CREATE TABLE IF NOT EXISTS `ims_q_3354988381_rencai_person_collect` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT NULL,
+  `person_id` int(11) DEFAULT NULL,
+  `company_id` int(11) DEFAULT NULL,
+  `job_id` int(11) DEFAULT NULL COMMENT '职位id',
+  `dateline` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='收藏职位表' AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_q_3354988381_rencai_person_money` (
+  `person_id` int(10) NOT NULL,
+  `money` decimal(8,2) NOT NULL,
+  `updatetime` datetime NOT NULL,
+  UNIQUE KEY `person_id` (`person_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_q_3354988381_rencai_person_resume` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `person_id` int(11) DEFAULT NULL,
+  `weid` int(11) DEFAULT NULL,
+  `company_name` varchar(50) DEFAULT NULL COMMENT '公司名称',
+  `start_time` char(11) DEFAULT NULL COMMENT '开始时间',
+  `end_time` char(11) DEFAULT NULL COMMENT '结束时间',
+  `wage` int(11) DEFAULT NULL COMMENT '税前工资',
+  `work_description` text COMMENT '工作描述',
+  `dateline` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='个人简历' AUTO_INCREMENT=3 ;
+
+CREATE TABLE IF NOT EXISTS `ims_q_3354988381_rencai_positiontype` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `weid` int(10) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  `sort` int(4) NOT NULL,
+  `logo` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `weid` (`weid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='职业类型设置' AUTO_INCREMENT=3 ;
+
+CREATE TABLE IF NOT EXISTS `ims_q_3354988381_rencai_profile` (
+  `weid` int(10) NOT NULL,
+  `key` varchar(32) NOT NULL,
+  `val` varchar(64) NOT NULL,
+  `remark` varchar(64) NOT NULL,
+  KEY `weid` (`weid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='参数说明';
+
+CREATE TABLE IF NOT EXISTS `ims_q_3354988381_rencai_recharge` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `weid` int(10) NOT NULL,
+  `type` char(1) NOT NULL COMMENT 'PC公司个人',
+  `company_id` int(10) NOT NULL,
+  `pay_info` varchar(32) NOT NULL,
+  `order` varchar(32) NOT NULL,
+  `pay_type` varchar(64) NOT NULL,
+  `fee` decimal(8,2) NOT NULL,
+  `status` int(1) NOT NULL COMMENT '1成功0失败',
+  `out_trade_no` varchar(32) NOT NULL,
+  `result_code` varchar(32) NOT NULL,
+  `transaction_id` varchar(64) NOT NULL,
+  `rand_auth_code` int(10) NOT NULL,
+  `create_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `weid` (`weid`,`company_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='企业充值记录表' AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_q_3354988381_rencai_reply` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `acid` int(11) DEFAULT NULL,
+  `rid` int(11) DEFAULT NULL,
+  `title` varchar(250) DEFAULT NULL,
+  `avatar` varchar(250) DEFAULT NULL,
+  `description` varchar(250) DEFAULT NULL,
+  `dateline` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+CREATE TABLE IF NOT EXISTS `ims_q_3354988381_rencai_share` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) NOT NULL DEFAULT '0' COMMENT '统一公众号',
+  `mobile_title` varchar(255) DEFAULT NULL COMMENT '手机端title',
+  `index_title` varchar(250) NOT NULL COMMENT '首页title',
+  `index_desc` varchar(250) NOT NULL COMMENT '首页描述',
+  `index_pic` varchar(250) NOT NULL,
+  `zhao_title` varchar(250) NOT NULL COMMENT '招聘列表页title',
+  `zhao_desc` varchar(250) NOT NULL COMMENT '招聘列表页描述',
+  `zhao_pic` varchar(250) NOT NULL,
+  `qiu_title` varchar(250) NOT NULL COMMENT '求职列表页title',
+  `qiu_desc` varchar(250) NOT NULL COMMENT '求职列表页描述',
+  `qiu_pic` varchar(250) NOT NULL,
+  `share_index_award_score` int(10) NOT NULL,
+  `share_zhao_award_score` int(10) NOT NULL,
+  `share_qiu_award_score` int(10) NOT NULL,
+  `my_title` varchar(200) NOT NULL,
+  `my_desc` varchar(200) NOT NULL,
+  `my_pic` varchar(200) NOT NULL,
+  `share_my_award_score` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='设置分享' AUTO_INCREMENT=2 ;
+
+CREATE TABLE IF NOT EXISTS `ims_q_3354988381_rencai_tixian` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `weid` int(10) NOT NULL,
+  `type` char(1) NOT NULL DEFAULT 'P' COMMENT 'PC公司个人',
+  `from_user` varchar(100) NOT NULL,
+  `scores` int(10) NOT NULL COMMENT '所提现积分总数',
+  `credits2` int(10) NOT NULL COMMENT '所提现余额总数',
+  `money` decimal(8,2) NOT NULL,
+  `tixian_msg` varchar(100) NOT NULL COMMENT '提现信息+1.01元',
+  `tixian_money` decimal(8,2) NOT NULL,
+  `user_alipay` varchar(100) NOT NULL COMMENT '支付宝帐号',
+  `username` varchar(32) NOT NULL,
+  `tel` varchar(64) NOT NULL,
+  `finish_flag` char(1) NOT NULL COMMENT '返现后将其置为已处理N新/F失败/S成功',
+  `createtime` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `weid` (`weid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='提现申请' AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_q_3354988381_rencai_youhuiset` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `weid` int(10) NOT NULL,
+  `addmoney` decimal(8,2) NOT NULL,
+  `givemoney` decimal(8,2) NOT NULL,
+  `givescore` int(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `weid` (`weid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

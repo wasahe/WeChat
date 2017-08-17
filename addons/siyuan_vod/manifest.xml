@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com" versionCode="0.6,0.7,0.8">
+	<application setting="false">
+		<name><![CDATA[思远视频]]></name>
+		<identifie><![CDATA[siyuan_vod]]></identifie>
+		<version><![CDATA[2.72]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[思远视频]]></ability>
+		<description><![CDATA[思远视频]]></description>
+		<author><![CDATA[折翼天使资源社区]]></author>
+		<url><![CDATA[http://www.012wz.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+		</handles>
+		<rule embed="false" />
+		<card embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="首页" do="index" state="" direct="false" />
+		</cover>
+		<menu>
+			<entry title="控制面板" do="kongzhi" state="" direct="false" />
+		</menu>
+	</bindings>
+	<permissions>
+	</permissions>
+	<install><![CDATA[install.php]]></install>
+	<uninstall><![CDATA[DROP TABLE IF EXISTS `siyuan_vod`;
+DROP TABLE IF EXISTS `siyuan_vod_bug`;
+DROP TABLE IF EXISTS `siyuan_vod_fenlei`;
+DROP TABLE IF EXISTS `siyuan_vod_flash`;
+DROP TABLE IF EXISTS `siyuan_vod_kv`;
+DROP TABLE IF EXISTS `siyuan_vod_menu`;
+DROP TABLE IF EXISTS `siyuan_vod_play_set`;
+DROP TABLE IF EXISTS `siyuan_vod_setting`;
+DROP TABLE IF EXISTS `siyuan_vod_so`;
+]]></uninstall>
+	<upgrade><![CDATA[upgrade.php]]></upgrade>
+</manifest>

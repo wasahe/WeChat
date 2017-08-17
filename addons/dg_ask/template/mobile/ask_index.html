@@ -1,0 +1,302 @@
+<!doctype html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="{TEMPLATE_PATH}/images/ux/iconfont.css" />
+		<link rel="stylesheet" href="{TEMPLATE_PATH}/css/animate.css" />
+		<link rel="stylesheet" href="{TEMPLATE_PATH}/css/style.css" />
+		<script src="//cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+		<script type="text/javascript" src="{TEMPLATE_PATH}/js/script.js" ></script>
+		<script src="{TEMPLATE_PATH}/js/glide.min.js"></script>
+		<link rel="stylesheet" href="{TEMPLATE_PATH}/css/glide.core.css" />				<link rel="stylesheet" href="{TEMPLATE_PATH}/css/bootstrap-switch.min.css" />		
+		<script src="{TEMPLATE_PATH}/js/ask_main.js?v=33"></script>
+		<title>{$index_name}</title>
+		{php echo register_jssdk();}		<style>		input[type=checkbox]{border: 1px solid #ccc; border-radius:50px; width: 18px; height:18px; position: relative; -webkit-transition: all ease 0.25s; background: #fff; vertical-align: top;}		input[type=checkbox]:checked{ border: none; background:#09BB07;}		input[type=checkbox]:after{ content:""; display: block; border:2px solid; border-color: transparent transparent #fff #fff; width:8px; height:4px; position: absolute; left: 50%; top: 50%; -webkit-transform: translate(-75%,-60%) rotate(-45deg);transform: translate(-75%,-60%) rotate(-45deg); -webkit-transform-origin: center top;transform-origin: center top; border-radius: 3px;}		</style>
+		<script type="text/javascript">
+		var globalObj=new Object();
+		var pindex=1;
+		var answer_url="{php echo $this->createMobileUrl('ask_answer')}";
+		var ask_detailurl="{php echo $this->createMobileUrl('ask_detail')}";
+		var reward_detailurl="{php echo $this->createMobileUrl('reward_detail')}";
+		var get_user_url="{php echo $this->createMobileUrl('ask_index_ajax')}";
+		var my_ask_index="{php echo $this->createMobileUrl('my_ask_index')}";
+		var follow_url="{php echo $this->createMobileUrl('ask_follow_ajax')}";
+		var listen_money={$cfg['listen_money']};
+		var send_url="{php echo $this->createMobileUrl('my_ask_sendnotice')}";
+		var ask_pay_url="{php echo $this->createMobileUrl('ask_pay_ajax')}";
+		var is_myindex=false;
+		var ask_type="all";
+		var keyword="";
+		$(function(){
+			voicePlay();
+			QuestionBind();
+			pageLoadCommon($(document),ajax_ask_list);
+			
+			$(".barWrap ul li").click(function(){
+				$(".barWrap ul li").removeClass('active');
+				$(this).addClass('active');
+				ask_type=$(this).attr('attr-type');
+				pindex=0;
+				globalObj.isloading=false;
+				$(".itemList ul").empty();
+				ajax_ask_list();
+			});
+			
+			$("#btn_search").click(function(){
+				keyword=$("#keyword").val();
+				pindex=0;
+				globalObj.isloading=false;
+				$(".itemList ul").empty();
+				$(".search,body").toggleClass("active");
+				ajax_ask_list();
+			});
+			
+			$(".mytag").click(function(){
+				$(".mytag").removeClass('active');
+				$(this).toggleClass('active');
+				globalObj.isloading=false;
+				pindex=0;
+				$(".itemList ul").empty();
+				ajax_ask_list();
+			});
+			
+			var carousel = $('#Carousel').glide({
+				type: 'carousel',
+				startAt: 1, //起始
+				autoplay: 3000, //自动轮播时间
+				animationDuration: 600, //每轮播一个模块所需时间
+				touchDistance: 60
+			});
+			
+			$(".reward_tag").click(function(){
+				var size=$(".reward_tag.active").size();
+				if(size==3){
+					alert("最多只能选择2个标签");
+					$(this).removeClass('active');
+					return;
+				}
+			});
+			//发送悬赏信息
+			$(".sendBtn").click(function(){
+				var reward_desc=$("#reward_desc").val();
+				if(reward_desc==''){
+					alert("请输入您要悬赏的问题");
+					return;
+				}
+				var reward_money=$("#reward_money").val();				var is_nm=$("#is_nm").val();
+				if(reward_money==''){
+					alert("请输入您要悬赏的金额");
+					return;
+				}
+				if(reward_money<1){
+					alert("悬赏金额不能小于1元");
+					return;
+				}
+				var reward_days=$("#reward_days li.active").attr('attr-value');
+				$("#confirm_money").text("悬赏金额"+reward_money+"元");
+				$("#confirm_days").text("时间"+reward_days+"天");
+				var reward_tags=new Array();
+				$(".reward_tag.active").each(function(){
+					reward_tags.push($(this).attr('attr-id'));
+				});
+				 
+				reward_tags=reward_tags.join(',');
+
+				var submitdata={
+						op:'reward',
+						reward_days:reward_days,
+						reward_desc:reward_desc,
+						reward_tags:reward_tags,
+						reward_money:reward_money,												is_nm:is_nm
+				};
+				
+				$.post(get_user_url,submitdata,function(json){
+					callpay(json,'reward'); 
+				});
+			});
+		});
+		
+		wx.ready(function () {
+		    sharedata = {
+		        title: "{$sharedata['title']}",
+		        desc: "{$sharedata['desc']}",
+		        link: "{$sharedata['link']}",
+		        imgUrl: "{$sharedata['imgUrl']}",
+		        success:function(){
+		        	//ajax
+		        }
+		    };
+		    wx.onMenuShareAppMessage(sharedata);
+		    wx.onMenuShareTimeline(sharedata);
+		});
+</script>
+	</head>
+
+	<body>
+	<audio id="dgAudioPlayer" >Your browser does not support the audio element.您的浏览器不支持 audio 标签。</audio>
+	<div class="main">
+		<!--轮播图 start-->
+		{if $pic_record}
+		<div id="Carousel" class="glide">
+						<div class="glide__arrows">
+							<span class="glide__arrow prev" data-glide-dir="<"></span>
+							<span class="glide__arrow next" data-glide-dir=">"></span>
+						</div>
+						<div class="glide__wrapper">
+							<ul class="glide__track">
+							{loop $pic_record $precord}
+								<li class="glide__slide" data-glide-autoplay="3000">
+									<a href="{$precord['link']}"><img src="{$precord['thumb']}" width="100%"></a>
+								</li>
+							{/loop}
+							</ul>
+						</div>
+			<div class="glide__bullets"></div>
+		</div>
+	 {/if}
+		
+		<!--轮播图 end-->
+		{if $tag_record}		
+		<!--分类 start-->
+		<div class="homeTags">
+			<div class="tagCon">
+				<div class="list">
+					<ul>
+						<li class="mytag active" attr-id="0">全部</li>
+						{loop $tag_record  $trecord}
+						 <li class="mytag" attr-id="{$trecord['id']}">{$trecord['tag_name']}</li>
+						{/loop}
+					</ul>
+				</div>
+				<div class="more"></div>
+			</div>
+			<div class="bg floatBox blackBg animated fadeIn"></div>
+		</div>
+		<!--分类 end-->
+		{/if}
+		<?php 
+			/*菜单*/
+			$menu=pdo_fetch("select * from ".tablename("chat_menu")." where uniacid=:uniacid",array(":uniacid"=>$uniacid));
+			$menu_hall=empty($menu["menu_hall"])?"大厅":$menu["menu_hall"];
+			$menu_reward=empty($menu["menu_reward"])?"悬赏":$menu["menu_reward"];
+			$menu_sense=empty($menu["menu_sense"])?"定向":$menu["menu_sense"];
+		?>
+		<div class="barWrap">
+			<ul class="flex">
+				<li class="active" attr-type="all">{$menu_hall}</li>
+				<li attr-type="reward">{$menu_reward}</li>
+				<li attr-type="public">{$menu_sense}</li>
+			</ul>
+		</div>
+		
+  <div class="itemList mt20">
+	<ul>
+		{loop $records $record}
+			{if $record['ask_type']=='reward'}
+					{template temp_reward}
+				{else}
+				    {template temp_public}
+			{/if}
+		{/loop}
+		 </ul>
+	</div>
+		
+		<div class="loading gray" style="display:none;">
+			<span class="f18"><i class="iconfont">&#xe61a;</i></span>正在加载中…
+		</div>
+		
+		<div class="noMore gray" style="display:none;">
+			没有更多内容了！
+		</div>
+
+	</div>
+	
+	<!--搜索及发布悬赏-->
+	<div class="fastNav">
+		<ul>
+			<li class="s"><i class="iconfont">&#xe61b;</i></li>
+			<li class="release">发布<br>悬赏</li>
+		</ul>
+	</div>
+	
+	<!--搜索-->
+	<div class="floatBox search">
+		<div class="floatBox blackBg animated slideInRight"></div>
+		<div class="box flex2 animated fadeInDown">
+			<div class="close"></div>
+			<label class="sub">
+				<input type="text" id="keyword" value="" placeholder="搜索最想了解的问题">
+				<button class="f18" id="btn_search"><i class="iconfont">&#xe61b;</i></button></label>
+		</div>
+	</div>
+	
+	<!--发布悬赏 start-->
+	<div class="releaseBox animated slideInRight">
+	
+		<!--发布按钮 start-->
+		<div class="topSend">
+			<button class="btn fr sendBtn">发布</button>
+			<div class="close"></div>
+		</div>
+		<!--发布按钮 end-->
+		<div class="scroll">
+			<div class="textarea">
+				<textarea id="reward_desc" class="f16" placeholder="请输入详细的问题"></textarea>
+			</div>
+			<div class="item">
+				<ul>
+				{if $tag_record}
+				<li>
+					<h3><span class="fr gray f12">最多选择2个类别</span>问题分类</h3>
+					<div class="tagSelect clearfix">
+					{loop $tag_record  $trecord}
+						 <span class="reward_tag" attr-id="{$trecord['id']}">{$trecord['tag_name']}</span>
+					{/loop}
+					</div>
+					</li>
+				{/if}	
+					
+					<li>
+						<h3><span class="fr gray f12">单位：人民币</span>悬赏金额</h3>
+						<div class="input"><input id="reward_money" class="f16" type="number" placeholder="请输入悬赏金额" value=""></div>
+					</li>
+					<li>
+						<h3>悬赏期限</h3>
+						<div class="deadline">
+							<ul class="flex" id="reward_days">
+								<li attr-value='1' class="active"><span>1天</span></li>
+								<li attr-value='3'><span>3天</span></li>
+								<li attr-value='7'><span>7天</span></li>
+							</ul>
+						</div>
+					</li>										<li>							<h3><input id="is_nm" type="checkbox" value="1"/>匿名？</h3>					</li>
+				</ul>
+			</div>
+			<div class="btn pt10">
+				<button class="f20 sendBtn">发布</button>
+			</div>
+		</div>
+	
+		<!--发布悬赏成功提示 start-->
+		<div class="releaseSuc">
+			<div class="box tc">
+				<p><i class="iconfont">&#xe61f;</i></p>
+				<p class="f18 mt10">发布悬赏成功</p>
+				<p><span id="confirm_money">悬赏金额0元</span>
+				<span id="confirm_days">时间0天</span></p>
+			</div>
+			<div class="btn">
+				<button class="f16 sure">确定</button>
+			</div>
+		</div>
+		<!--发布悬赏成功提示 start-->
+	
+	</div>
+	<!--发布悬赏 end-->
+		
+	{template footer}
+
+	</body>
+
+</html>

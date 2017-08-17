@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>员工管理端</title>
+ <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+  <link rel="stylesheet" href="../addons/water_groupbuy/template/css/weui.min.css"/>
+  <link rel="stylesheet" href="../addons/water_groupbuy/template/css/weui2.min.css"/>
+  <style>
+  body{
+    font-size: 14px;
+  }
+  .head{
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .own_list{
+    width: 100%;
+    margin-top: 10px;
+  }
+  .own_list li{
+    width: 100%;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    border-bottom: 1px dashed #e5e5e5;
+  }
+  .mean:nth-child(n+2) {
+    -webkit-box-flex: 3;
+    -moz-box-flex: 3;
+    -ms-box-flex: 3;
+    box-flex: 3;
+    flex:3;
+  }
+  .mean:nth-child(1) {
+    -webkit-box-flex: 2;
+    -moz-box-flex: 2;
+    -ms-box-flex: 2;
+    box-flex: 2;
+    flex:2;
+  }
+  .mean .mean_top .warp_img{
+    width: 40px;
+    border-radius: 40px;
+    overflow: hidden;
+    margin: 0 0 0 10px;
+  }
+  .mean_top{
+    overflow: hidden;
+    padding-top: 10px;
+  }
+  .warp_content,.warp_img{
+    float: left;
+    height: 40px;
+    line-height: 40px;
+  }
+  .mean_bottom, .warp_content{
+    margin: 5px 0 0 10px;
+  }
+  .head_left,.head_right{
+    width: 45%;
+    height: 40px;
+    float: left;
+    background: #eee;
+    margin-left: 3%;
+    text-align: center;
+    line-height: 40px;
+    margin-top: 5px;
+    color: #777;
+  }
+  </style>
+</head>
+<body>
+<!-- <div class="head">
+  <div class="head_left">已支付</div>
+  <div class="head_right">未支付</div>
+</div> -->
+<div class="own_list" style="background-color: #48D1CC;">
+  <ul>
+  {loop $list $item}
+    <li>
+      <div class="mean">
+        <div class="mean_top">
+          <div class="warp_img">
+            <img src="{$item['headimgurl']}" height="67" width="69">
+          </div>
+          <div class="warp_content">{$item['fname']}</div>
+        </div>
+        <div class="mean_bottom">{$item['fmobile']}</div>
+      </div>
+      <div class="mean">
+        <div class="mean_top">
+        <div class="warp_content">分享:{if empty($item['sharecount'])}0{else}{$item['sharecount']}{/if}次 {if $item['sverify'] == 1}已{else}未{/if}核销</div>
+        </div>
+        <div class="mean_bottom">状态:{if $item['paystate'] == 0}未付款{else}已付款 {if $item['overify'] == 1}已{else}未{/if}核销{/if}</div>
+      </div>
+      <div class="mean">
+        <div class="mean_top">
+        <div class="warp_content">来源：{$fans['fname']}</div>
+        </div>
+        <div class="mean_bottom">{$item['addtime']}</div>
+      </div>
+    </li>
+    {/loop}
+    
+  </ul>
+</div>
+    <script>
+    </script>
+</body>
+</html>

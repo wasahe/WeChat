@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <title>业务进度查询</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" name="viewport" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+
+    <script src="../addons/ruifan_qiyeyewu/images/jquery-1.11.3.min.js"></script>
+    <link rel="stylesheet" href="../addons/ruifan_qiyeyewu/images/css.css?v=543345454">
+    <link rel="stylesheet" href="../addons/ruifan_qiyeyewu/images/bootstrap.min.css">
+    <link rel="stylesheet" href="../addons/ruifan_qiyeyewu/images/layout.css">
+    <style type="text/css">
+        div.check_code_div{width:100%; height:125px;}
+    </style>
+
+    <style type="text/css" media="screen">
+    .prize_btn1 {
+        width: 44%;
+        margin: 0;
+        position: absolute;
+        left: 50%;
+        margin-left: -22%;
+        top: 55%;
+    }
+    </style>
+</head>
+
+<body>
+<div style="margin-bottom: 15px;">
+    <a href="{$cs['top_adurl']}" style="font-size: 16px;color: #FCEF59;">
+    <img src="{if empty($cs['top_adimg'])}../addons/ruifan_qiyeyewu/images/topbanner.jpg{else}{php echo toimage($cs['top_adimg'])}{/if}" style="width:100%;height:auto;"></a>
+</div>
+
+    <div class="col-xs-12 col-sm-12" style="margin-bottom: 15px;">
+        <span style='color:red'>*</span> 公司名称
+    </div>
+    <div class="col-sm-12 col-xs-12" style="margin-bottom: 15px;">
+        <input type="text" id="companyname" class="form-control" placeholder="" name="companyname" value="">
+    </div>
+
+    <div class="col-xs-12 col-sm-12" style="margin-bottom: 15px;">
+        <span style='color:red'>*</span> 业务类型
+    </div>
+
+    <div class="col-sm-12 col-xs-12" style="margin-bottom: 15px;">
+        <select id="type" name="type" class="form-control" >
+            <option class="form-control" value="">请选择业务类型</option>
+            {loop $lxxx $row}
+            <option class="form-control" value="{$row['type']}">{$row['typename']}</option>
+            {/loop}
+        </select>
+
+    </div>
+
+
+
+    <div class="col-sm-12 col-xs-12" style="margin-bottom: 15px;">
+        <p>
+            <input style="height: 29px;" placeholder="请输入右侧验证码" type="text" id="code_num_text" value="" maxlength="4" />
+            <img src="../addons/ruifan_qiyeyewu/codecheck-master/CodeFactory.php?type=num" id="code_num_img" title="看不清，点击换一张" onClick="changeImg(this)" style="cursor:pointer;width: 80px;height: 29px;display: inline-block;margin-left: 5px;">
+        </p>
+        
+    </div>
+
+    <div class="col-sm-12 col-xs-12" style="margin-bottom: 15px;">
+        <p>
+            <input class="btn btn-primary btn-block" type="button" id="code_num_btn" value="查询" onClick="verify(this.id)"/>
+			<input class="btn btn-primary btn-block" type="button" id="jifeng_btn" value="积分商城" onClick="location.href='{php echo $this->createMobileUrl('Rhsc')}'"/>
+        </p>
+    </div>
+
+    <!-- <div id="show" class="panel-body table-responsive" style="border: 0px solid #ddd;display:none">
+        
+    </div> -->
+    <!--{if $cs['btm_adimg'] && $cs['btm_adtype'] == 0 }
+    <div class="col-sm-12 col-xs-12" style="margin-bottom: 15px;">
+        <img src="{php echo toimage($cs['btm_adimg'])}" style="width:100%;height:auto;">
+    </div>
+    {/if}-->
+
+{if $cs['btm_adtype'] == 1 || $cs['btm_adtype'] == 0  }
+    <div class="col-sm-12 col-xs-12" style="margin-bottom: 15px;">
+        <a href="{$advert['adurl']}" style="font-size: 16px;color: #FCEF59;">
+        <img src="{php echo toimage($advert['adimg'])}" style="width:100%;height:auto;">
+        </a>
+    </div>
+{/if}
+
+        <div style="text-align:center;">
+            {if empty($reply['copyright'])} &copy;{$_W['account']['name']}{else}&copy;{$reply['copyright']}{/if}
+        </div>
+
+
+
+
+
+
+    <div class="animated zoomin" id="shadow" {if $nofollow == 1 && $erwematype == 1} style="display: block" {/if}></div>
+    <div class="rules_tip animated zoomin" id="rules_tip" {if $nofollow == 1 && $erwematype == 1} style="display: block" {/if}>
+    <div class="share" style="width: 90%;height: 100%;overflow-y: auto;margin-left: 5%;margin-right: 5%">
+        <div class="r" style="margin-top: 20px;">
+
+            <div style="text-align: center;margin-top: 40%;">
+                <img src="{$erwemaimg}" style="margin-left: 20%;width: 60%;height: auto" alt="">
+                <span style="display: inline-block;width: 62%;line-height: 24px;margin-top: 15px;">{$erwemaword}</span>
+            </div>
+
+        </div>
+    </div>
+    </div>
+
+
+
+    <div class="result_tip animated zoomin" style="overflow-y: auto;" id="result_tip">
+		<div class="share" style="width: 100%;height: 100%;overflow-y: auto;color: #efd804;">
+			<div class="r" style="margin-top: 20px;">
+				<div style="text-align: center; font-size: 28px;margin-bottom: 25px;">查询结果</div>
+
+				<table class="table table-hover"  style="text-align: center;font-size: 14px;">
+					<thead class="navbar-inner">
+					<tr>
+						<!-- <th style="width:150px;">操作类型</th> -->
+						<th style="width:50%;text-align: center">步骤名称</th>
+						<!-- <th style="width:20%;text-align: center">状态</th> -->
+						<th style="width:50%;text-align: center">完成时间</th>
+					</tr>
+					</thead>
+					<tbody id="lc" name="lc">
+
+					</tbody>
+				</table>
+
+			</div>
+
+			<div class="yes" style="margin-bottom: 30px;">
+				<button class="back" id="rulesclose">关闭</button>
+			</div>
+		</div>
+    </div>
+
+    
+
+</body>
+
+
+<script>
+
+$("#rulesclose").click(function(){
+    location.href = "{php echo $this->createMobileUrl('Cx')}";
+})
+
+    //点击鼠标改变验证码图片
+    function changeImg(currentImg){
+        currentImg.src=currentImg.src;//这里只是重新请求了一个新的验证码图片
+    }
+
+
+    //点击提交按钮发送验证码
+    function verify(code_btn){
+        var text_id = code_btn.replace(/btn/,"text");
+        var code_text = document.getElementById(text_id).value;
+        var xmlHttp = getXMLHttpRequest();
+        if(xmlHttp){
+            var url="../addons/ruifan_qiyeyewu/codecheck-master/CodeCheck.php";
+            var postBody = text_id+"="+code_text;
+            xmlHttp.open("POST",url,true);
+            xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xmlHttp.send(postBody);
+            xmlHttp.onreadystatechange=function(){
+                if (xmlHttp.readyState==4){
+                    if(xmlHttp.responseText == 1){
+//                        alert("验证码正确！");
+                        var $companyname = $("#companyname").val();
+                        var $type = $("#type").val();
+
+                        if ($companyname == "" || $companyname == undefined) {
+                            alert("请填写公司全称");
+                            return
+                        }
+                        if ($type == "" || $type == undefined) {
+                            alert("请选择业务类型");
+                            return
+                        }
+
+                        var submitData = {
+                            companyname: $companyname,
+                            type: $type,
+                        };
+//                    alert($companyname);
+
+
+
+                        $.post('{php echo $this->createMobileUrl('chaxun')}', submitData, function (data) {
+                            if (data.success == 1) {
+                                 $("#lc").html("");
+                                //alert(data.arr.length);
+                                for (var i = 0; i < data.arr.length; i++) {
+                                    if(data.arr[i].endtime == 0){data.arr[i].endtime = "暂未完成"}
+                                    $("#lc").append("<tr style='text-align: center;height: 15px;'>");
+                                    $("#lc").append("<td width='50%'>" + data.arr[i].lcname + "</td>");
+                                    // $("#lc").append("<td width='20%'>" + data.arr[i].state + "</td>");
+                                    $("#lc").append("<td width='50%'>" + data.arr[i].endtime + "</td>");
+                                    $("#lc").append("</tr>");
+                                }
+                                setTimeout(function(){
+                                    $("#shadow").show();
+                                    $("#result_tip").show();
+                                },800);
+                            } else {
+                                $("#lc").html("");
+                                alert(data.msg);
+                            }
+                        }, "json");
+//        });
+                    }else{
+                        alert("验证码错误！");
+                        location.reload();
+                    }
+                }
+            };
+        }
+    }
+
+
+    function getXMLHttpRequest(){
+        var xmlHttp = false;
+        try{
+            // Firefox, Opera 8.0+, Safari
+            xmlHttp=new XMLHttpRequest();
+        }catch (e){
+            // Internet Explorer
+            try{
+                xmlHttp=new ActiveXObject("Msxml2.XMLHTTP");
+            }catch (e){
+                try{
+                    xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+                }catch (e){
+                    alert("您的浏览器不支持AJAX！");
+                    xmlHttp = false;
+                }
+            }
+        }
+        return xmlHttp;
+    }
+
+
+
+
+
+
+
+</script>
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+<script type="text/javascript">
+    wx.config({
+        debug:false,
+        appId: '{$package["appId"]}',
+        timestamp: '{$package["timestamp"]}',
+        nonceStr: '{$package["nonceStr"]}',
+        signature: '{$package["signature"]}',
+        jsApiList: [
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage',
+            'onMenuShareWeibo',
+            {if $base['isallowip'] == 3}
+            'getLocation'
+            {/if}
+    ]
+    });
+
+    var shareMeta  = {
+        title: '{$sharetitle}',
+        desc: '{$sharedesc}',
+        link: "{$sharelink}",
+        imgUrl: "{$shareimg}"
+    };
+
+    wx.ready(function(){
+        {if $base['isallowip'] == 3}
+        wx.getLocation({
+            type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+            success: function (res) {
+                var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                var speed = res.speed; // 速度，以米/每秒计
+                var accuracy = res.accuracy; // 位置精度
+
+
+                var submitData = {
+                    lat: latitude,
+                    lon: longitude,
+                    lbsip:"{$base['allowip']}"
+                };
+                $.post('{php echo $this->createMobileUrl('getlbs', array('id' => $id))}', submitData, function(idata) {
+                    if (idata.success == 1) {
+                        $("#loading").fadeOut(10);
+                    } else {
+                        alert(idata.msg);
+
+                    }
+                },"json");
+
+            },
+            fail:function(){
+                alert("获取位置失败,请打开GPS功能！");
+            }
+        });
+        {/if}
+        wx.onMenuShareTimeline(shareMeta);
+        wx.onMenuShareAppMessage(shareMeta);
+        wx.onMenuShareWeibo(shareMeta);
+    });
+    </script>
+
+</html>

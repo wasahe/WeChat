@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>{$title}</title>
+<link rel="stylesheet" href="{$_W['siteroot']}addons/siyuan_vod/img/css.css?={TIMESTAMP}">
+<style>
+.m-head{border-bottom: 2px solid {$set['color']}}
+.submit{background: {$set['color']};}
+a.pages:link,a.pages:visited{color:{$set['color']};}
+.m-ban-client .app-install-btn::before,.m-cd-i .ico-app,.zxd-dialog-btn {background:{$set['color']};}
+.v-player-func .current,.m-head .current,.m-ban-client .tip1 {color:{$set['color']};}
+.v-player-func .quality.current {border:1px solid {$set['color']};}
+.m-h2-tit .tit {border-left: 4px solid {$set['color']};}
+.v-torr-grid .current a {color:#fff;background:{$set['color']};border:1px solid {$set['color']};}
+{if $set['fengge']=="0"}
+.m-cd-i-wrap.poster{width: 33.3333%;}
+.m-cd-i-wrap.poster .pic{padding-bottom: 132%;}
+{/if}
+</style>
+</head>
+<body>
+<div class="j-pg-container pg-wrap">
+<header class="g-hd">
+<div class="m-head z-app-head">
+<a href="{php echo $this->createMobileUrl('index')}" class="f-fl f-pdlr-10"><img class="top_logo" src="{$_W['attachurl']}{$set['top_logo']}"></a>
+<div class="icons-wrap f-pdlr-12">
+<a class="i-search f-pdlr-12" href="javascript:;" data-h-toggle="__h_search" data-h-cls="current"></a>
+<a class="i-channel" href="javascript:;" data-h-toggle="__h_list" data-h-cls="current"></a>
+</div>
+</div>
+<div class="i-drop-wrap i-nav-wrap z-act f-none" data-h-wrap="__h_list">
+<div class="wrap">
+<div class="j-content ch-wrap f-cb">
+{loop $menu $caidan}
+<a href="{$caidan['url']}" class="ch-item">
+<div class="img-wrap"><img src="{$_W['attachurl']}{$caidan['thumb']}"></div>
+<p class="tit">{$caidan['title']}</p></a>
+{/loop}
+</div>
+</div>
+<div class="bar f-cb">
+<span class="btn">
+<i></i>
+</span>
+</div>
+</div>
+<div class="search-layer i-drop-wrap i-s-wrap z-act f-none" data-h-wrap="__h_search">
+<div class="wrap">
+<form action="{php echo $this->createmobileUrl('so')}" class="am-form" data-am-validator method="post">
+<div class="j-search m-search">
+<div class="j-search-input-wrap search-input">
+<button type="submit" class="submit z-1" style="border:solid 0px;height:36px;">搜索</button>
+<div class="input-wrap">
+<div class="input">
+<input type="text" class="j-input txt" name="keyword" id="keyword" placeholder="请输入影片名称..."/>
+</form>
+</div>
+<span class="j-close i-close"></span>
+</div>
+<div class="reg-list">
+<p class="search-tit">热门搜索</p>
+<ul class="word-list">
+{loop $so $row}
+<li class="item"><a href="{php echo $this->createmobileUrl('news',array('id' => $row['id']))}">{$row['title']}</a></li>
+{/loop}
+</ul>
+</div>
+</div>
+<ul class="j-so-auto word-list-auto hidden"></ul>
+</div>
+</div>
+</div>
+</div>
+</header>
+<div class="g-nav" block="nav">
+<div id="navWrap" class="m-tab m-nav z-app-head" data-tab-wrap="swipe">
+<ul class="tabs-wrap f-cb" data-tab-scroll="1" >
+{loop $menu $caidan}
+<li class="f-fl" data-tab-item="1"><a class="tab" href="{$caidan['url']}">{$caidan['title']}</a></li>
+{/loop}
+</ul>
+<div class="mask"></div>
+</div>
+</div>

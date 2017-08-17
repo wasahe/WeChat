@@ -1,0 +1,61 @@
+<?php
+
+$sql =<<<EOF
+CREATE TABLE IF NOT EXISTS `ims_aj_webjump` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `rid` int(10) NOT NULL,
+  `uniacid` int(10) NOT NULL,
+  `content` varchar(50) NOT NULL,
+  `title` varchar(100) NOT NULL,
+  `thumb` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `bgpic` varchar(255) NOT NULL,
+  `headthumb` varchar(255) NOT NULL,
+  `head` varchar(100) NOT NULL,
+  `head2` varchar(100) NOT NULL,
+  `minhead` varchar(100) NOT NULL,
+  `minhead2` varchar(100) NOT NULL,
+  `button` varchar(50) NOT NULL,
+  `success_otitle` varchar(100) NOT NULL,
+  `success_otitle2` varchar(100) NOT NULL,
+  `success_ttitle` varchar(100) NOT NULL,
+  `success_ttitle2` varchar(100) NOT NULL,
+  `success_stitle` varchar(100) NOT NULL,
+  `success_stitle2` varchar(100) NOT NULL,
+  `qrcode` varchar(255) NOT NULL,
+  `sharetitle` varchar(100) NOT NULL,
+  `sharepic` varchar(255) NOT NULL,
+  `sharedes` varchar(255) NOT NULL,
+  `key` varchar(10) NOT NULL,
+  `matitle` varchar(100) NOT NULL,
+  `malucky` varchar(10) NOT NULL,
+  `mades` varchar(100) NOT NULL,
+  `mades2` varchar(100) NOT NULL,
+  `copyrighturl` varchar(255) NOT NULL,
+  `logo` varchar(255) NOT NULL,
+  `tiaozhuan` varchar(255) NOT NULL,
+  `fxz1` varchar(50) NOT NULL,
+  `fxz2` varchar(50) NOT NULL,
+  `fxz3` varchar(50) NOT NULL,
+  `formpic` varchar(255) NOT NULL,
+  `mintips` varchar(100) NOT NULL,
+  `formbutton` varchar(10) NOT NULL,
+  `copyright` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_aj_webjump_player` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `rid` int(11) NOT NULL,
+  `status` int(1) NOT NULL,
+  `openid` varchar(50) NOT NULL,
+  `realname` varchar(50) NOT NULL,
+  `mobile` varchar(50) NOT NULL,
+  `avatar` varchar(200) NOT NULL,
+  `nickname` varchar(50) NOT NULL,
+  `usertime` varchar(100) NOT NULL,
+  `lasttime` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+EOF;
+pdo_run($sql);

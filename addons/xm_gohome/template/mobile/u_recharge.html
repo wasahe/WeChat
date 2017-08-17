@@ -1,0 +1,64 @@
+
+{template 'header'}
+
+</head>
+<body>
+<div id="page0" class="ub ub-ver bga">
+    <div class="c-gre3 ub ub-ver ub-ac ub-pc" style=" padding:2rem 0rem 3rem 0rem ">
+    	<div><i class="iconfont icon-ayiluru t-yel" style="font-size:5rem"></i> </div>
+        <div class="umar-t ulev1 t-yel">充值</div>
+        
+    </div>
+    <div class="ub-f1">
+    	<form class="form-horizontal ub ub-f1 ub-ver" id="form1" action="{php echo $this->createMobileUrl('rechargeok', array())}" method="post" onSubmit="return checkform()">
+        <div class="uinn8 umar-t1 tx-c">
+            <ul class="userlist c-wh uc-a15 umar-b">
+                <li class="ub ub-ac">
+                    <div style="width:3.5rem">
+                        <i class="iconfont icon-phone ulev2 umar-r1 umar-l1 t-gre1"></i>
+                    </div>
+                    <div class="ub ub-f1 ub-ac ubb ubl b-bla01 uinn">
+                        <div class="ub ulev0 ub-f1 ">
+                            <input type="tel" name="money" id="money" placeholder="充值金额" class="uinn ulev0 ub-f1 block" />
+                        </div>
+                    </div>
+                </li>
+            </ul>
+    	</div>
+        <div class="uinn8 ub">
+            <div class="c-gre3 ub ub-pc uc-a1 ub-f1 btnn block" style="margin-bottom:0.5em; padding:0.75rem 3rem">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+            	<div class="col-md-2 col-lg-1">
+                	<input name="submit" type="submit" value="充值" class="c-gre3 ub ub-pc uc-a1 ub-f1 btnn" style="margin-bottom:0.5em; padding:0.75rem 3rem" />
+                    <input type="hidden" name="token" value="{$_W['token']}" />
+                 </div>
+            </div>
+        </div>
+        </form>
+    </div>
+    
+    {template 'footer'}
+    
+</div>
+
+<script type="text/javascript" src="{MODULE_URL}/template/mobile/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="{MODULE_URL}/template/mobile/js/main.js"></script>
+<script type="text/javascript" src="{MODULE_URL}/template/mobile/js/jquery_min.js"></script>
+<script type="text/javascript" src="{MODULE_URL}/template/mobile/js/main.js"></script>
+<script type="text/javascript">
+function checkform(){
+	var money = document.getElementById('money').value;	
+				
+	if(money == ''){
+		alert("请输入充值金额");
+		return false;
+	}	
+	if(money <= 0){
+		alert("充值金额必须大于0");
+		return false;
+	}			
+}
+</script>
+
+</body>
+</html>

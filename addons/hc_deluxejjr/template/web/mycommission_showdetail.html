@@ -1,0 +1,94 @@
+{template 'common/header'}
+<style type="text/css">
+table li{padding:5px 0;}
+small a{color:#999;}
+</style>
+<ul class="nav nav-tabs">
+	<li  class="active"><a href="">用户详细信息</a></li>
+</ul>
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">	
+		<input type="hidden" name="mid" value="{$user['id']}">
+		<input type="hidden" name="flag" value="2">
+		<input type="hidden" name="op" value="send">
+		<input type="hidden" name="c" value="site" />
+		<input type="hidden" name="a" value="entry" />
+		<input type="hidden" name="m" value="hc_deluxejjr" />
+		<input type="hidden" name="do" value="commission" />
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				用户详细信息
+			</div>
+			<div style="padding-top:10px;">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">真实姓名</label>
+					<div class="col-sm-4">
+						{if $user['realname']!=""} {$user['realname']}{else}未完善{/if}
+					</div>
+				</div>
+			</div>
+			<div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">手机号码</label>
+					<div class="col-sm-4">
+						{if $user['mobile']!=""} {$user['mobile']}{else}未完善{/if}
+					</div>
+				</div>
+			</div>
+			<div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">已结佣金</label>
+					<div class="col-sm-4">
+						{$user['commission']}
+					</div>
+				</div>
+			</div>
+			<div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">可结佣金</label>
+					<div class="col-sm-4">
+						<input name="commission" class="form-control" type="text" placeholder="{$comm}" value="" />
+					</div>
+				</div>
+			</div>
+			<div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">备注</label>
+					<div class="col-sm-4">
+						<textarea style="height:120px;" class="form-control" name="content" >{$user['content']}</textarea>
+					</div>
+				</div>
+			</div>
+			<div class="form-group col-sm-12">
+				<input type="button" class="btn btn-primary col-lg-1" name="submit" onclick="history.go(-1)" value="返回" />
+				<input type="submit" class="btn btn-primary col-lg-1" name="send"  value="充值" />
+			</div>
+		</div>
+	</form>
+</div>
+<table class="table table-hover">
+	<thead class="navbar-inner">
+		<tr>
+			<th class="row-hover" style="text-align: center;">支付佣金</th>
+			<th class="row-hover" style="text-align: center;">支付时间</th>
+			<th class="row-hover" style="text-align: center;">备注</th>
+			
+		</tr>
+	</thead>
+	<tbody>
+		{loop $list $v}
+		<tr>
+			<td style="text-align: center;">
+				{$v['commission']}
+			</td>
+			<td style="text-align: center;">
+				{php echo date('Y-m-d H:i:s',$v['createtime'])}
+			</td>
+			<td style="text-align: center;">
+				{if empty($v['content'])}无{else}{$v['content']}{/if}
+			</td>
+		</tr>
+		{/loop}
+	</tbody>
+</table>
+{template 'common/footer'}

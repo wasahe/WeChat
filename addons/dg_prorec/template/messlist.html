@@ -1,0 +1,197 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+    <li {if $op=='display'}class="active"{/if}><a href="{php echo $this->createWebUrl('messlist',array('op'=>'display'));}">管理</a></li>
+    <li {if $op =='post'&&empty($id)}class="active"{/if}><a href="{php echo $this->createWebUrl('messlist', array('op' => 'post','parentid'=>$parentid));}">添加产品</a></li>
+    {if !empty($id) && $op=='post'}
+    <li class="active"> <a href="{php echo $this->createWebUrl('messlist',array('op'=>'post','id'=>$id,'parentid'=>$parentid));}">编辑产品</a></li>
+    {/if}
+</ul>
+{if $op=='post'}
+
+<div class="main">
+    <form action="" method="post" class="form-horizontal form" id="form1">
+        <input type="hidden" name="id" value="{$category['id']}" />
+        <div class="panel panel-default">
+            <div class="panel-heading">分类详细设置</div>
+            <div class="panel-body">
+                {if !empty($category['name'])}
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">访问地址</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <div class="form-control-static"><a href= " target="_blank">
+                            <a class="preview_url" href="{php echo $_W['siteroot'].'app/'.substr($this->createMobileUrl('index',array('cid'=>$category[id]),true),2);}" target="_blank">
+                                {php echo $_W['siteroot'].'app/'.substr($this->createMobileUrl('index',array('cid'=>$category[id]),true),2);}
+                            </a>
+                        </div>
+                        <span class="help-block">您可以根据此地址，添加回复规则，设置访问。</span>
+                    </div>
+                </div>
+                {/if}
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">排序</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" name="displayid" class="form-control" value="{$category['displayid']}" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">产品名称</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" name="name" class="form-control" value="{$category['name']}" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">产品图标</label>
+                    <div class="col-sm-8 col-xs-12">
+                        {php echo tpl_form_field_image('icon', $category['icon'])}
+                        <span class="help-block">
+                            建议图片大小为：200*200
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">产品介绍：</label>
+                    <div class="col-sm-8">
+                        {php echo tpl_ueditor('attpro', $category['attpro']);}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">购买地址</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" name="buyurl" class="form-control" value="{$category['buyurl']}" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">自定义更改购买标签</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" name="rename" class="form-control" value="{$category['rename']}" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">虚拟关注人数</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" name="fcount" class="form-control" value="{$category['fcount']}" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">真实订阅人数</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" name="subcount" class="form-control" value="{$subcount}" disabled="true" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">订阅总人数</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" name="count" class="form-control" value="{$category['count']}" disabled="true" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">选择标签</label>
+                    <div class="col-sm-8 col-xs-12">
+                        {loop $tags $index $row}
+                        <div class="col-md-3">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" id="inlineCheckbox1" name="tags[]" value="{$row['id']}"
+                                       {if in_array( $row['id'],$catetag)}
+                                checked='true'
+                                {/if}> {$row['tag_name']}
+                            </label>
+                        </div>
+                        {/loop}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">设置付费订阅金额</label>
+                    <div class="col-sm-9 col-xs-6">
+                        <div class="input-group">
+                            <span class="input-group-addon">订阅需要支付</span>
+                            <input type="text" class="form-control" name="money" value="{$category['money']}">
+                            <span class="input-group-addon">元</span>
+                        </div>
+                        <div class="help-block">这里的金额最低不能低于0.01元,如果是免费的订阅,可以不用设置该值</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-12">
+                <input name="submit" type="submit" value="提交" class="btn btn-primary col-lg-1">
+                <input type="hidden" name="token" value="{$_W['token']}" />
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    <!--
+    require(['jquery', 'util'], function($, u){
+        $("#form1").submit(function(){
+            if($("input[name='cname']").val() == '') {
+                u.message('请输入分类名称', '', 'error');
+                return false;
+            }
+        });
+    });
+    //-->
+</script>
+{elseif $op == 'display'}
+<div class="main">
+    <div class="messlist">
+        <form action="" method="post" onsubmit="return formcheck(this)">
+            <div class="panel panel-default">
+                <div class="panel-body table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th style="width:10%;">显示顺序</th>
+                            <th style="width:20%;">分类名称</th>
+                            <th style="width:50%;">链接</th>
+                            <th style="width:20%">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {loop $category $row}
+                        <tr>
+                            <td>
+                            <input type="text" class="form-control" name="displayid[{$row['id']}]" value="{$row['displayid']}">
+                            </td>
+
+                            <td>
+                                <div style="height:30px;line-height:30px">{$row['name']}&nbsp;&nbsp;</div>
+                            </td>
+                            <td>
+                                <a class="preview_url" href="{php echo $_W['siteroot'].'app/'.substr($this->createMobileUrl('index',array('cid'=>$row[id]),true),2);}" target="_blank">
+                                    {php echo $_W['siteroot'].'app/'.substr($this->createMobileUrl('index',array('cid'=>$row[id]),true),2);}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{php echo $this->createWebUrl('messlist', array('op' => 'post', 'id' => $row['id']))}" title="编辑" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top"><i class="fa fa-edit"></i></a>
+                                <a href="{php echo $this->createWebUrl('messlist', array('op' => 'delete','id' => $row['id']))}" onclick="return confirm('确认删除此分类吗？');return false;" title="删除" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top"><i class="fa fa-times"></i></a>
+                            </td>
+                        </tr>
+                        {/loop}
+                        <tr>
+                            <td colspan="5">
+                                <a href="{php echo $this->createWebUrl('messlist', array('op' => 'post'))}"><i class="fa fa-plus"></i> 添加新产品</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="form-group col-sm-12">
+                <input name="submit" type="submit" class="btn btn-primary col-lg-1" value="提交">
+                <input type="hidden" name="token" value="{$_W['token']}" />
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    require(['bootstrap'],function($){
+        $('.btn').hover(function(){
+            $(this).tooltip('show');
+        },function(){
+            $(this).tooltip('hide');
+        });
+    });
+</script>
+{/if}
+{template 'common/footer'}

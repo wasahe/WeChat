@@ -1,0 +1,69 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li  ><a href="{php echo $this->createWebUrl('member',array('op'=>'showdetail','id' => $_GPC['id']));}">经纪人信息</a></li>
+	<li  class="active"><a href="">经纪人团队</a></li>
+</ul>
+<div class="main">
+	<div class="stat">
+		<div class="stat-div">
+			<div class="sub-item" id="table-list">
+				<h4 class="sub-title" style="float:right;color:red;">总数：<?php echo $total;?>&nbsp;&nbsp;&nbsp;<a href="">刷新</a></h4>
+				<h4 class="sub-title">经纪人名单</h4>
+
+				<form action="" method="post" onsubmit="">
+				<div class="sub-content">
+					<table class="table table-hover">
+						<thead class="navbar-inner">
+							<tr>
+								<th class="row-hover">真实姓名</th>
+								<th class="row-hover">电话号码</th>
+								<th class="row-hover">身份类型</th>
+								<th class="row-hover">注册时间</th>
+								<th class="row-hover">贡献佣金</th>
+								<th class="row-hover">状态</th>
+								<th class="row-hover">操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							{loop $list $v}
+							<tr>
+								<td>
+									{$v['realname']}
+								</td>
+								<td>
+									{$v['mobile']}
+								</td>
+								<td>
+									{$identitys[$v['identity']]}
+								</td>
+								<td>
+									{php echo date('Y-m-d',$v['createtime'])}
+								</td>
+								<td>
+									{if empty($commissions[$v['id']])}0{else}{$commissions[$v['id']]}{/if}
+								</td>
+								<td>
+								{if $v['status']==0}
+									<span class="label label-important">未审核</span>
+								{else}
+									<span class="label label-success">已审核</span>
+								{/if}
+								</td>
+								<td>
+									<a href="{php echo $this->createWebUrl('member',array('op'=>'del','id' => $v['id']));}" onclick="return confirm('确定要删除该经济人吗？');">删除</a>
+									<a href="{php echo $this->createWebUrl('member',array('op'=>'showdetail','id' => $v['id']));}">详情</a>		
+									<a href="{php echo $this->createWebUrl('customer', array('op'=>'mycustomer', 'id'=>$v['id']));}">客户</a>		
+									<a href="{php echo $this->createWebUrl('commission', array('op'=>'mycommission', 'id'=>$v['id']));}">结佣</a>		
+								</td>
+							</tr>
+							{/loop}
+						</tbody>
+					</table>
+				</div>
+				</form>
+				{$pager}
+			</div>
+		</div>
+	</div>
+</div>
+{template 'common/footer'}

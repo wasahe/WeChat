@@ -1,0 +1,40 @@
+{template 'common/header'}
+<div class="main">
+    <ul class="nav nav-tabs">
+        <li {if ($status==0)}class="active"{/if}><a href="{php echo $this->createWebUrl('cash');}">待审核提现</a></li>
+        <li {if ($status==1)}class="active"{/if}><a href="{php echo $this->createWebUrl('cash',array('status'=>1));}">成功提现</a></li>
+        <li {if ($status==2)}class="active"{/if}><a href="{php echo $this->createWebUrl('cash',array('status'=>2));}">失败提现</a></li>
+    </ul>
+    <div class="panel panel-default">
+        <div class="panel-body table-responsive">
+            <table class="table table-hover">
+                <thead class="navbar-inner">
+                    <tr>
+                        <th>ID</th>
+                        <th>申请人</th>
+                        <th>提现</th>
+                        <th>到账</th>
+                        <th style="width:160px;">申请时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {loop $list $row}
+                    <tr>
+                        <td>{$row['id']}</td>
+                        <td><a href="{php echo $this->createWebUrl('user_post', array( 'uid' => $row['uid']))}"><img src="{$row['headimgurl']}" height="50px" width="50px" /><br>{$row['nickname']}</a></td>
+                        <td>{$row['fee']}</td>
+                        <td>{$row['amount']}</td>
+                        <td>{php echo date("Y-m-d H:i:s", $row['create_time'])}</td>
+                        <td>{if ($row['status']!=1)}<a class="btn btn-default" data-toggle="tooltip" data-placement="top" href="{php echo $this->createWebUrl('cash', array( 'id' => $row['id'], 'op' => 'do'))}" onclick="return confirm('确认要手动进行提现吗？');return false;" title="手动进行提现">手动提现</a>{else}已完成{/if}</td>
+                    </tr>
+                    {/loop}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {$pager}
+</div>
+</div>
+{template 'common/footer'}
+<!---bbs_heirui_cn-->

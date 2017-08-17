@@ -1,0 +1,101 @@
+{template 'common/header'}
+<link rel="stylesheet" type="text/css" href="../addons/qwx_shangmen/template/resource/css/animate.min.css">
+<link rel="stylesheet" type="text/css" href="../addons/qwx_shangmen/template/resource/css/style.css">
+<link rel="stylesheet" type="text/css" href="../addons/qwx_shangmen/template/resource/css/order.css">
+<script src="../addons/qwx_shangmen/template/resource/js/jquery.esn.autobrowse.js"></script>
+<script src="../addons/qwx_shangmen/template/resource/js/date.js"></script>
+<script src="../addons/qwx_shangmen/template/resource/js/iscroll.js"></script>
+<link rel="stylesheet" type="text/css" href="../addons/qwx_shangmen/template/resource/css/time.css">
+
+<script type="text/javascript">
+$(function(){
+    $('#yuyue_time').date({theme:"datetime"});
+});
+</script>
+
+
+
+<body>
+    <!-- 头部导航栏 -->
+    {template 'header'}
+    <section>
+            <div class="mrsList" id="mrsList">
+
+
+            </div>
+        </section>
+
+        <input id="yuyue_time" class="kbtn" type="text" value="" style="display: none" />
+        <input id="staff_id" type="text" value="" style="display: none" />
+        <div id="datePlugin"></div>
+
+        <script>  
+         $(function(){ 
+            $("#mrsList").autobrowse(
+                {
+                    url: function (offset)
+                    {
+                        return "{php echo $this->createMobileUrl('staff',array('page'=>'OFFSET','is_ajax'=>1,'store_id'=>$store_id))}".replace(/OFFSET/, offset+1);
+                    },
+                    template: function (response)
+                    {
+                        var markup=response.item;
+                        return markup;
+                    },
+                    itemsReturned: function (response) { 
+                        // alert(response.total);
+                        if (response.page == 0 && response.total == 0){
+                            $('#mrsList').html('<div class="noitem" style="padding-bottom:50px;"> <i></i> <span>还没有{php echo $this->getFieldsLabel('staff_name');}的资料。</span>  </div>');
+
+                        }
+                        return response.page; 
+                    },
+                    offset: 0,
+                    max: 100,
+                    loader: '<div class="loading" style="display:block"><i></i>努力加载中...</div>',
+                    useCache: false,
+                    expiration: 0
+                }
+            );
+         });   
+        </script>
+
+        {if $source == 'order'}
+        <script>
+        function select_staff(staff_id){
+            // alert(staff_id);return false;
+            //选择时间：
+           $('#staff_id').val(staff_id);
+           $('#yuyue_time').click();
+           return false;
+            
+        }
+
+        function submit_select_staff(){
+            var staff_id = $('#staff_id').val();
+            var yuyue_time = $('#yuyue_time').val();
+            $.ajax({
+                url:'{php echo $this->createMobileUrl('staff',array('op'=>'select_staff'))}',
+                type:'post',
+                data:{'staff_id':staff_id,'yuyue_time':yuyue_time},
+                success:function(data){
+                    if (data.code == 1){
+                        //back order:
+                        var url = '{php echo $this->createMobileUrl('order')}';
+                        window.location.href=url;
+                        return false;
+                    }else{
+                        alert(data.msg);
+                    }
+                },
+                dataType:'json'
+            })
+            return false;
+        }
+        
+            
+        </script>
+        {/if}
+
+</body>
+</html>

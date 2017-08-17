@@ -1,0 +1,57 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li><a href="{php echo  $this->createWebUrl('Version', array());}">系统更新</a></li>
+    <li class="active"><a href="{php echo  $this->createWebUrl('reset', array());}">重置系统</a></li>
+    <li><a href="{php echo  $this->createWebUrl('xiu', array());}">字段修复</a></li>
+</ul>
+
+<div class="clearfix">
+<div><strong>注意：系统重制将清空业务数据库中所有数据</strong></div>    
+    <!--
+    <form id="theform" class="form form-horizontal" action="{php echo $this->createWebUrl('Resetok',array())}" method="post" onsubmit="return check()">
+    -->
+            <div class="panel-body">
+              
+            </div>    
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+                    <div class="col-md-2 col-lg-1">
+                        
+                        <div id="show_11">
+                        <input name="submit" type="submit" onclick="check()" value="确定重置" class="btn btn-primary btn-block" />
+                       
+                        </div>
+                    </div>
+                </div>
+    <!--            
+    </form>
+    -->
+</div>
+
+<script>
+function check(){
+	var str=prompt("请输入大写的OK","");
+    if(str)
+    {
+        if(str == 'OK'){
+			$.ajax({
+				url: "{php echo $this->createWebUrl('Resetok', array());}",
+				type:"POST",
+				data:{},
+				dataType:"json",
+				success: function(res1){
+					if(res1 == 1){
+						alert('重置成功！');
+					}else{
+						alert('重置失败！');
+					}
+				}
+			});
+		}else{
+			alert('输入错误，不能重置！');
+			return false;
+		}
+    }
+}
+</script>
+{template 'common/footer'}

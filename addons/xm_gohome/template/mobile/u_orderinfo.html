@@ -1,0 +1,595 @@
+{template 'header'}
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Kcfo7IHPvRA75sKRElGLaLNQ"></script>
+
+<style>
+img{vertical-align:middle;}
+#QuacorGrading input{background:url('{MODULE_URL}template/mobile/images/grading.png') no-repeat scroll right center;cursor:pointer;height:30px;width:30px;padding:0;border:0;}
+#QuacorGrading1 input{background:url('{MODULE_URL}template/mobile/images/grading.png') no-repeat scroll right center;cursor:pointer;height:30px;width:30px;padding:0;border:0;}
+</style>
+</head>
+<body>
+<div id="page0" class="ub ub-ver bga">
+	<div class="c-gre3 ub ub-ver ub-ac ub-pc" style=" padding:2rem 0rem">
+    	<div class="uc-a15 t-yel uba b-yel absolute ulev-4" style="left:1rem; top:1rem; padding:0.2rem 0.5rem;">
+        {if $item['state'] == 1}上门中{/if}
+        {if $item['state'] == 2}已完工{/if}
+        </div>
+        <!--
+        <div class="uc-a15 t-yel uba b-yel absolute ulev-4" style="right:1rem; top:1rem; padding:0.2rem 0.5rem;">取消订单</div>
+        -->
+        <div class="ub ub-ac ub-pc" style="height:5rem; width:5rem;">
+        {if $this->getTypeIcon($item['serve_type']) == ''}
+        	<img src="{MODULE_URL}/template/mobile/images/icon-nv.png" style="width: 90%">
+        {else}
+        	<img src="{$_W['attachurl']}{php echo $this->getTypeIcon($item['serve_type']);}" style="width: 90%"> 
+        {/if} 
+        </div>
+        <div class="umar-t ulev1 t-yel font-b">{php echo $this->getServeType($item['serve_type']);}</div>
+    </div>
+    <div class="c-gre3 ubt b-bla01">
+        <div class="ub ub-ac uinn11">
+        	<div class="tx-c" style="width:50%">
+            	<div class="ulev-4 t-bla04">上门时间</div>
+                <div class="t-yel"><span class="ulev1">{php echo $this->getOrderTime($item['table_name'],$item['other_id'],'ftime')}</span><span class="ulev1"></span></div>
+            </div>
+            <div class="ubl b-bla01 tx-c" style="width:50%">
+            	<div class="ulev-4 t-bla04">预计费用</div>
+                <div class="t-yel"><span class="ulev-1">￥</span><span class="ulev1">{php echo $this->getOrderInfo($item['table_name'],$item['other_id'],'dealprice')}</span></div>
+            </div>
+        </div>
+    </div>
+    <div class="ub-f1 uinn8">
+    	<div class="umar-b c-wh ub uinn11 uc-a15">
+        	<div class="ub-f1 tx-c ulev-2">
+            	<div class="t-gra">已预约</div>
+                <div class="ub ub-ac" style="padding:0.2rem 0">
+                    <div class="ub-f1"></div>
+                    <div class="uc-a50 uba2 b-bla02">
+                        <div class="uc-a50 c-gra" style="height:0.5rem; width:0.5rem;"></div>
+                    </div>
+                    <div class="ub-f1 ubb b-gra"></div>
+                </div>
+                <div class="t-gra">{php echo substr($this->getOrderTime($item['table_name'],$item['other_id'],'addtime'),0,11)}</div>
+            </div>
+            <div class="ub-f1 tx-c ulev-2">
+            	<div class="t-gra">竞单中</div>
+                <div class="ub ub-ac" style="padding:0.2rem 0">
+                    <div class="ub-f1 ubb b-gra"></div>
+                    <div class="uc-a50 uba2 b-bla02">
+                        <div class="uc-a50 c-gra" style="height:0.5rem; width:0.5rem;"></div>
+                    </div>
+                    <div class="ub-f1 ubb b-gra"></div>
+                </div>
+                <div class="t-gra">{php echo substr($this->getGrabInfo($item['id'],'addtime'),5,11)}</div>
+            </div>
+            <div class="ub-f1 tx-c ulev-2">
+            	<div class="t-gra">选定人</div>
+                <div class="ub ub-ac" style="padding:0.2rem 0">
+                    <div class="ub-f1 ubb b-gra"></div>
+                    <div class="uc-a50 uba2 b-bla02">
+                        <div class="uc-a50 c-gra" style="height:0.5rem; width:0.5rem;"></div>
+                    </div>
+                    <div class="ub-f1 ubb b-gra"></div>
+                </div>
+                <div class="t-gra">{php echo substr($this->getGrabInfo($item['id'],'selectedtime'),5,11)}</div>
+            </div>
+            <div class="ub-f1 tx-c ulev-2">
+            	<div class="t-gra">上门中</div>
+                <div class="ub ub-ac" style="padding:0.2rem 0">
+                    <div class="ub-f1 ubb b-gra"></div>
+                    <div class="uc-a50 uba2 b-bla02">
+                        <div class="uc-a50 {if $item['state'] == 1} c-gre1 {else} c-gra {/if}" style="height:0.5rem; width:0.5rem;"></div>
+                    </div>
+                    <div class="ub-f1 ubb b-gra"></div>
+                </div>
+                <div class="t-gra">{php echo substr($this->getOrderTime($item['table_name'],$item['other_id'],'ftime'),0,11)}</div>
+            </div>
+            <div class="ub-f1 tx-c ulev-2">
+            	<div class="t-gra">已完工</div>
+                <div class="ub ub-ac" style="padding:0.2rem 0">
+                    <div class="ub-f1 ubb b-gra"></div>
+                    <div class="uc-a50 uba2 b-bla02">
+                        <div class="uc-a50 {if $item['state'] == 2} c-gre1 {else} c-gra {/if}" style="height:0.5rem; width:0.5rem;"></div>
+                    </div>
+                    <div class="ub-f1"></div>
+                </div>
+                <div class="t-gra">{php echo substr($this->getOrderOver($item['id'],'overtime'),5,11)}</div>
+            </div>
+        </div>
+        
+        <ul class="uc-a15 c-wh uinn3 ulev-1" style="">
+        	{loop $list $vo}
+            <li class="uinn3 ubb-blaimg ub">
+                <div class="tx-r uinn3 t-gra" style="width:4.5rem">{$vo['input_laber']}</div>
+                <div class="ub-f1 uinn3">
+                {if $vo['input_type'] == 'radio' || $vo['input_type'] == 'checkbox' || $vo['input_type'] == 'select'}
+                {php echo $this->getOrderInfoValue($item['table_name'],$item['other_id'],''.$vo[input_name].'',$item['temp_id'])}
+                {else}
+                {php echo $this->getOrderInfo($item['table_name'],$item['other_id'],''.$vo[input_name].'')}
+                {/if}
+                </div>
+            </li>
+            {/loop}
+        </ul>
+        
+        {if $listpic[0][pic] != ''}
+        <ul class="userlist c-wh uc-a15 umar-t">
+            <li class="ub ub-ac">
+            
+                {loop $listpic $vopic}
+                <div class="ub ub-ver ub-ac block"  style="padding:0.5rem 0.5rem 0.3rem 0.5rem">
+                	<div class="uc-a1 c-blu ub ub-ac ub-pc iconn ub-img1 hide" style=" width:3rem; height:3rem; background-image:url({$_W['attachurl']}gohome/pic/{$vopic[pic]})">
+                    </div>
+                </div>
+                {/loop}
+        </ul>
+        {/if}
+        
+        <ul class="userlist c-wh uc-a15 umar-t">
+            <li class="ub ub-ac">
+                <div style="width:4rem; padding:0 1rem" class="tx-c t-gra ulev-1">接单报价</div>
+                <div class="ub ub-f1 ub-ac ubb ubl b-bla01 uinn">
+                    <div>￥</div>
+                    <div class="ub ulev0 ub-f1 ">
+                        <input type="tel" name="offer" placeholder="" value="{php echo $this->getGrabInfo($item['id'],'offer')}"  id="" class="uinn ulev0 ub-f1 block t-gre1" readonly />
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <ul class="userlist c-wh uc-a15 umar-t">
+            <li class="ub ub-ac">
+                <div style="width:4rem; padding:0 1rem" class="tx-c t-gra ulev-1">接单人员</div>
+                <div class="ub ub-ac ubb ubl b-bla01 uinn">
+                    <div class="ub ulev0 ub-f1 uinn11">{php echo $this->getStaffInfo($item['staff_id'],'staff_name')}</div>
+                </div>
+                {if $this->getStaffInfo($item['staff_id'],'sex') == '1'}
+                	<div class="ulev-4 t-gra ub-f1">先生</div>                
+                {else}
+                	<div class="ulev-4 t-gra ub-f1">女士</div>
+                {/if}
+                <div class="uinn">
+                	<a href="javascript:void(0)" onClick="openPe2()" class="block uba b-gre1 ulev-4 t-gre1 uc-a15" style="padding:0.2rem 0.5rem">资料</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="userlist c-wh uc-a15 umar-t">
+            <li class="ub ub-ac">
+                <div style="width:4rem; padding:0 1rem" class="tx-c t-gra ulev-1">服务电话</div>
+                <div class="ub ub-f1 ub-ac ubb ubl b-bla01 uinn">
+                    <div class="ub ulev0 ub-f1 uinn11">{php echo $this->getStaffInfo($item['staff_id'],'staff_mobile')}</div>
+                </div>
+                <div class="uinn">
+                	<a href="tel:{php echo $this->getStaffInfo($item['staff_id'],'staff_mobile')}" class="block uba b-gre1 ulev-4 t-gre1 uc-a15" style="padding:0.2rem 0.5rem">呼叫</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="userlist c-wh uc-a15 umar-t">
+            <li class="ub ub-ac">
+                <div style="width:4rem; padding:0 1rem" class="tx-c t-gra ulev-1">服务地址</div>
+                <div class="ub ub-f1 ub-ac ubb ubl b-bla01 uinn">
+                    <div class="ub ulev-1 ub-f1 uinn11">{php echo $this->getOrderInfo($item['table_name'],$item['other_id'],'fadr')}</div>
+                </div>
+                <input type="hidden" id="adr" value="{php echo $this->getOrderInfo($item['table_name'],$item['other_id'],'fadr')}" />
+                <input type="hidden" id="lat" value="{$item[lat]}">
+                <input type="hidden" id="lng" value="{$item[lng]}">
+                <div class="" style="padding-right:0.5rem">
+                	<div onClick="getMap()" class="uc-a1 block btnn t-gre1" style=""><i class="iconfont icon-dingweiicon01 ulev3"></i></div>
+                </div>
+            </li>
+        </ul>
+        
+    </div> 
+    <div class="" style="height:4.125rem"></div>
+    <div id="footer" class="fix0 c-foot" style="width:100%; bottom:0; z-index:999">
+        <div class="ub">
+            <a href ="{php echo $this->createMobileUrl('Order',array())}" class="ub ub-pc block" style="width:33.33%">
+                <div class="ub ub-ver ub-ac ub-pc">
+                    <i class="iconfont icon-dingdan ulev1"></i> 
+                    <span class="block ulev-1" style="">订单</span>
+                </div>
+            </a>
+            <div class="ub ub-pc block t-gre1 t-wh" style="width:33.33%">
+                <!--如果在竞单状态中则显示-->
+                {if $item['state'] == 1}
+                	{if $this->getGrabInfo($item['id'],'suremoney') == 0}
+                    	<div class="ub ub-ver uc-a50 c-gre3 ub-ac ub-pc uba2 b-bla02 t-yel block" style="height:4rem; width:4rem; top:-1.125rem">
+                            <i class="iconfont icon-succeed-dd ulev2"></i> 
+                            <span class="block ulev-1" style="">等待价格</span>
+                        </div>
+                    {else}
+                    	<div onClick="openPe()" class="ub ub-ver uc-a50 c-gre3 ub-ac ub-pc uba2 b-bla02 t-yel block" style="height:4rem; width:4rem; top:-1.125rem">
+                            <i class="iconfont icon-succeed-dd ulev2"></i> 
+                            <span class="block ulev-1" style="">完工</span>
+                        </div>
+                    {/if}
+                {/if}
+                
+                {if $item['state'] == 2}
+                	{if $check['id'] == ''}
+                    <div onClick="openPe3()" class="ub ub-ver uc-a50 c-gre3 ub-ac ub-pc uba2 b-bla02 t-yel block" style="height:4rem; width:4rem; top:-1.125rem">
+                        <i class="iconfont icon-pinglun ulev2"></i> 
+                        <span class="block ulev-1" style="">点评</span>
+                    </div><!--如果支付完成则显示"点评"-->
+                    {else}
+                    <div class="ub ub-ver uc-a50 c-gre3 ub-ac ub-pc uba2 b-bla02 t-yel block" style="height:4rem; width:4rem; top:-1.125rem">
+                        <i class="iconfont icon-pinglun ulev2"></i> 
+                        <span class="block ulev-1" style="">已点评</span>
+                    </div><!--如果支付完成则显示"点评"-->
+                    {/if}
+                {/if}
+            </div>
+            <a href ="{php echo $this->createMobileUrl('Myinfo',array())}" class="ub ub-pc block" style="width:33.33%">
+                <div class="ub ub-ver ub-ac ub-pc">
+                    <i class="iconfont icon-nan ulev1"></i> 
+                    <span class="block ulev-1" style="">我的</span>
+                </div>
+            </a>
+        </div>
+    </div>
+    
+    <div class="loginmask c-bla80"><!--支付弹出-->
+        <div class="ub ub-ac ub-pc mban" style="width:100%; height:100%;top:-800px">
+            <div class="c-wh uc-a15 ub ub-ver" style="height:80%; width:90%;">
+                <div class="absolute c-wh uc-a100 uinn3" style="top:-2.1rem; left:50%; margin-left:-2.1rem; z-index:2">
+                    <div class="uc-a100 c-gre1 t-yel tx-c" style="width:4rem; height:4rem;">
+                        <i class="iconfont icon-succeed-dd" style=" font-size:2rem; line-height:4rem;"></i> 
+                    </div>
+                </div>
+                <div class=" bga uc-t15" style="padding-bottom:1rem;">
+                    <div class="ub" style="height:2.5rem">
+                        <div class="ub-f1"></div>
+                        <div class="closealert"  style="padding:0.3rem 0.5rem"><i class="iconfont icon-guanbi ulev2 t-gra"></i></div>
+                    </div>
+                    <div class="tx-c font-b">完工结算</div>
+                    <div class="ulev-4 t-gra tx-c ">确认支付后将会获得超值积分</div>
+                </div>
+                <form action="{php echo $this->createMobileUrl('payok',array())}" method="post">
+                <input type="hidden" name="order_id" id="order_id" value="{$item['id']}" />
+				<input type="hidden" name="staff_id" id="staff_id" value="{$item['staff_id']}" />
+                <div class="uinn8">
+                    <div class="tx-c uinn11 ubb b-bla01 ulev-1 t-gra">请确认实际结算金额</div>
+                    <ul class="userlist c-wh uc-a15 umar-t">
+                        <li class="ub ub-ac">
+                            <div class="ub-f1"></div>
+                            <div class="ub ub-f1 ub-ac uinn">
+                                <div class="tx-r" style="">&nbsp;￥&nbsp;</div>
+                                <div class="ub ulev0 ub-f1 uba b-gre1 uc-a15">
+                                    <input type="tel" name="money" id="money" placeholder="成交价格" value="{php echo $this->getGrabInfo($item['id'],'suremoney')}" class="uinn ulev2 ub-f1 block t-gre1 uc-a15" style="width:6rem"  readonly/>
+                                </div>
+                            </div>
+                            <div class="ub-f1"></div>
+                        </li>
+                        
+                        <li class="ub ub-ac">
+                            <div class="ub-f1"></div>
+                            <div class="ub ub-f1 ub-ac uinn">
+                                <div class="tx-r" style="">备注</div>
+                                <div class="ub ulev0 ub-f1 uba b-gre1 uc-a15">
+                                    <textarea name="remark" id="remark" class="uinn ulev2 ub-f1 block t-gre1 uc-a15" style="width:6rem"></textarea>
+                                </div>
+                            </div>
+                            <div class="ub-f1"></div>
+                        </li>
+                    </ul>
+                    <div>
+                        <div class="tx-c uinn11 ubt b-bla01 ulev-1 umar-t t-gra">选择支付方式</div>
+                        <div class="ub ub-pc">
+                            <div class=" kk-check t-gra">
+                                <input name="zf_type" type="radio" id="cc1" value="1" checked>
+                                <label class="block uinn uba b-gra umar-b umar-r ufl ulev-1 uc-a15" for="cc1">现金支付<i class="iconfont icon-dagouxuanzhong ulev0 t-org"></i></label>
+                                <input name="zf_type" type="radio" id="cc2" value="2">
+                                <label class="block uinn uba b-gra umar-b umar-r ufl ulev-1 uc-a15" for="cc2">微信支付<i class="iconfont icon-dagouxuanzhong ulev0 t-org"></i></label>
+                                <input name="zf_type" type="radio" id="cc3" value="3">
+                                <label class="block uinn uba b-gra umar-b umar-r ufl ulev-1 uc-a15" for="cc3">余额支付<i class="iconfont icon-dagouxuanzhong ulev0 t-org"></i></label>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="uinn8 ub">
+                    	<div class="c-gre3 ub ub-pc uc-a1 ub-f1 btnn" style="margin-bottom:0.5em; padding:0.75rem 3rem">
+                            <label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+                            <div class="col-md-2 col-lg-1">
+                                <input name="submit" type="submit" value="确认支付" class="c-gre3 ub ub-pc uc-a1 ub-f1 btnn" style="margin-bottom:0.5em; padding:0.75rem 3rem" />
+                                <input type="hidden" name="token" value="{$_W['token']}" />
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+                </form>           
+                <div class="ub-f1"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="loginmask2 c-bla80"><!--资料弹出-->
+        <div class="ub ub-ac ub-pc mban2" style="width:100%; height:100%;top:-800px">
+            <div class="c-wh uc-a15 ub ub-ver" style="height:80%; width:90%;">
+                <div class="absolute c-wh uc-a100 uinn3" style="top:-2.1rem; left:50%; margin-left:-2.1rem; z-index:2">
+                {if $this->getStaffInfo($item['staff_id'],'avatar') == ''}
+                    <div class="uc-a100 ub-img1 c-check" style="width:4rem; height:4rem; background-image:url({MODULE_URL}/template/mobile/images/bb.jpg);"></div>
+                {else}
+                	{if substr($this->getStaffInfo($item['staff_id'],"avatar"),0,6) == 'images'}
+                    <div class="uc-a100 ub-img1 c-check" style="width:4rem; height:4rem; background-image:url({$_W['attachurl']}{php echo $this->getStaffInfo($item['staff_id'],'avatar');});"></div>
+                    {else}
+                    <div class="uc-a100 ub-img1" style="background-image:url({$_W['attachurl']}home/avatar/{php echo $this->getStaffInfo($item['staff_id'],"avatar");}); height:3rem; width:3rem;" ></div>
+                    {/if}
+                {/if}
+                </div>
+                <div class=" bga uc-t15">
+                    <div class="ub" style="height:2.5rem">
+                    	<!--
+                        <div class="tx-c" style="padding:0.3rem 0.5rem">
+                            <i class="iconfont icon-anquanbaozhang ulev3 t-red"></i>
+                            <div class="ulev-2 t-org"><span>实名认证</span></div>
+                        </div>
+                        -->
+                        <div class="ub-f1"></div>
+                        <div class="closealert2"  style="padding:0.3rem 0.5rem"><i class="iconfont icon-guanbi ulev2 t-gra"></i></div>
+                    </div>
+                    <div class="tx-c font-b">{php echo $this->getStaffInfo($item['staff_id'],'staff_name')}</div>
+                    <div class="tx-c" style="padding-bottom:0.5rem">
+                    	<div class="uba b-org uc-a15 absolute" style="padding:0.2rem 0.5rem; right:0.5rem; bottom:0.5rem">
+                            <i class="iconfont icon-jifen ulev-1 t-org"></i> <span class="ulev-4">收藏</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="tx-c" style="padding:0 0.5rem">
+                    <div class="ubb b-bla01 ub"  style="padding: 0.5rem 0">
+                        <div class="ub-f1 ubr b-bla01">
+                            <div>{php echo $this->getStaffInfo($item['staff_id'],'get_order')}</div>
+                            <div class="ulev-4">总接单</div>
+                        </div>
+                        <div class="ub-f1 ubr b-bla01">
+                            <div>{php echo $this->getStaffInfo($item['staff_id'],'good')}</div>
+                            <div class="ulev-4">好评</div>
+                        </div>
+                        <div class="ub-f1 ubr b-bla01">
+                            <div>{php echo $this->getStaffInfo($item['staff_id'],'center')}</div>
+                            <div class="ulev-4">中评</div>
+                        </div>
+                        <div class="ub-f1">
+                            <div>{php echo $this->getStaffInfo($item['staff_id'],'bad')}</div>
+                            <div class="ulev-4">差评</div>
+                        </div>
+                    </div>
+                </div>
+                <ul class="ulev-4 uinn t-gra" style="padding-top:0">
+                    <li class="uinn3 ubb-blaimg ub">
+                        <div class="ub-f1 ub">
+                            <div class="tx-r uinn3" style="width:4.5rem">年龄：</div>
+                            <div class="ub-f1 uinn3">{php echo $this->getStaffInfo($item['staff_id'],'age')}岁</div>
+                        </div>
+                        <div class="ub-f1 ub">
+                            <div class="tx-r uinn3" style="">性别：</div>
+                            {if $this->getStaffInfo($item['staff_id'],'sex')==1}
+                            	<div class="ub-f1 uinn3">男</div>
+                            {else}
+                            	<div class="ub-f1 uinn3">女</div>
+                            {/if}
+                        </div>
+                        <div class="ub-f1 ub">
+                            <div class="tx-r uinn3" style="">工龄：</div>
+                            <div class="ub-f1 uinn3">{php echo $this->getStaffInfo($item['staff_id'],'year')}个月</div>
+                        </div>
+                    </li>
+                    
+                    <li class="uinn3 ubb-blaimg ub">
+                        <div class="tx-r uinn3" style="width:4.5rem">服务保障：</div>
+                        <div class="ub-f1 uinn3">已缴纳1000元服务保证金</div>
+                    </li>
+                    <li class="uinn3 ubb-blaimg ub">
+                        <div class="tx-r uinn3" style="width:4.5rem">已投保险：</div>
+                        <div class="ub-f1 uinn3">100万意外险 / 10万财产险</div>
+                    </li>
+                    <li class="uinn3 ubb-blaimg ub">
+                        <div class="tx-r uinn3" style="width:4.5rem">健康证明：</div>
+                        <div class="ub-f1 uinn3">已核验</div>
+                    </li>
+                    <li class="uinn3 ubb-blaimg ub">
+                        <div class="tx-r uinn3" style="width:4.5rem">所属公司：</div>
+                        <div class="ub-f1 uinn3">{php echo $this->getStaffInfo($item['staff_id'],'company_name')}</div>
+                    </li>
+                </ul>
+                <div class="ub-f1"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="loginmask3 c-bla80"><!--点评弹出-->
+        <div class="ub ub-ac ub-pc mban3" style="width:100%; height:100%;top:-800px">
+            <div class="c-wh uc-a15 ub ub-ver block" style="height:80%; width:90%;">
+                <div class="absolute c-wh uc-a100 uinn3" style="top:-2.1rem; left:50%; margin-left:-2.1rem; z-index:2">
+                    <div class="uc-a100 c-gre1 t-yel tx-c" style="width:4rem; height:4rem;">
+                        <i class="iconfont icon-pinglun" style=" font-size:2rem; line-height:4rem;"></i> 
+                    </div>
+                </div>
+                <div class=" bga uc-t15" style="padding-bottom:1rem;">
+                    <div class="ub" style="height:2.5rem">
+                        <div class="ub-f1"></div>
+                        <div class="closealert3"  style="padding:0.3rem 0.5rem"><i class="iconfont icon-guanbi ulev2 t-gra"></i></div>
+                    </div>
+                    <div class="tx-c font-b">服务点评</div>
+                    <div class="ulev-4 t-gra tx-c ">请对本次服务给予评分</div>
+                </div>
+                <div class="uinn8">
+                    <!--<div class="tx-c uinn11 ubb b-bla01 ulev-1 t-gra">请对本次服务给予评分</div>-->
+                    <ul class="userlist c-wh uc-a15 umar-t">
+                        <li class="ub ub-ac">
+                            <!--<div style="min-width:3rem; padding:0 1rem" class="tx-c t-gra ulev-1">我的报价</div>-->
+                            <div class="ub-f1"></div>
+                            <div class="uinn">
+                                <div class="ub ub-ac ub-pc">
+                                	<div class="t-org ulev3" id="QuacorGradingValue"><font>4</font></div>
+                                    <div>分</div>
+                                    <input type="hidden" id="xing" value="" />
+                                </div>
+                                <div class="tx-c" id="QuacorGrading">
+                                    <input name="1" type="button" />
+                                    <input name="2" type="button" />
+                                    <input name="3" type="button" />
+                                    <input name="4" type="button" />
+                                    <input name="5" type="button" />
+                                </div>
+                            </div>
+                            <div class="ub-f1"></div>
+                        </li>
+                    </ul>
+                    <div>
+                        <div class="ub ub-pc">
+                            <div class="ub ulev0 ub-f1 tx-c uba b-gra">
+                                <textarea name="comment" id="comment" rows="2" placeholder="请输入点评语" class="uinn ulev0 ub-f1 block"></textarea>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="uinn8 ub">
+                        <button  onClick="goComment()" class="c-gre3 ub ub-pc uc-a1 ub-f1 btnn" style="margin-bottom:0.5em; padding:0.75rem 3rem"><span class="t-wh">提交点评</span></button>
+                    </div>
+                    
+                </div>            
+                <div class="ub-f1"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="allmap"></div>
+<script type="text/javascript" src="{MODULE_URL}/template/mobile/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="{MODULE_URL}/template/mobile/js/main.js"></script>
+<script type="text/javascript" src="{MODULE_URL}/template/mobile/js/jquery_min.js"></script>
+
+<script type="text/javascript">
+function getMap(){
+	var adr = document.getElementById('adr').value;
+	localStorage['adr'] = adr;
+	window.location.href = "{php echo $this->createMobileUrl('map', array('name'=>'xm_gohome'))}";
+	
+}
+</script>
+	
+<script type="text/javascript">
+$(".closealert").click(function() {
+	 $(".mban").animate({top:'-800px'})
+	 $(".loginmask").fadeOut(500);
+});
+function openPe(){
+	$(".loginmask").fadeIn(500), $(".mban").animate({top:'0px'})
+}
+$(".closealert2").click(function() {
+	 $(".mban2").animate({top:'-800px'})
+	 $(".loginmask2").fadeOut(500);
+});
+function openPe2(){
+	$(".loginmask2").fadeIn(500), $(".mban2").animate({top:'0px'})
+}
+$(".closealert3").click(function() {
+	 $(".mban3").animate({top:'-800px'})
+	 $(".loginmask3").fadeOut(500);
+});
+function openPe3(){
+	$(".loginmask3").fadeIn(500), $(".mban3").animate({top:'0px'})
+}
+</script>
+<script type="text/javascript">
+var GradList = document.getElementById("QuacorGrading").getElementsByTagName("input");
+for(var di=0;di<parseInt(document.getElementById("QuacorGradingValue").getElementsByTagName("font")[0].innerHTML);di++){
+	GradList[di].style.backgroundPosition = 'left center';
+};
+for(var i=0;i < GradList.length;i++){
+	//GradList[i].onmouseover = function(){
+	GradList[i].onclick = function(){
+		for(var Qi=0;Qi<GradList.length;Qi++){
+			GradList[Qi].style.backgroundPosition = 'right center';
+		}
+		for(var Qii=0;Qii<this.name;Qii++){
+			GradList[Qii].style.backgroundPosition = 'left center';
+		}
+		document.getElementById("QuacorGradingValue").innerHTML = '<font>'+this.name+'</font>';
+		document.getElementById("xing").value = this.name;
+	}
+};
+</script>
+
+<script type="text/javascript">
+function pay(){
+	var money = document.getElementById('money').value;
+	
+	var radio=document.getElementsByName("zf_type");
+	var selectvalue = null;
+    for(var i=0;i<radio.length;i++){
+		if(radio[i].checked==true) {
+			selectvalue=radio[i].value;
+			break;
+		}
+	}
+	
+	if(selectvalue == 1){
+		if(window.confirm('你确定选择现金支付'+money+'元来完成交易吗？')){
+			insertPay(1,money);
+		}else{
+			return false;
+        }
+	}
+	if(selectvalue == 2){
+		if(window.confirm('你确定选择微信支付'+money+'元来完成交易吗？')){
+			//insertPay(2,money);
+		}else{
+			return false;
+        }
+	}
+	if(selectvalue == 3){
+		if(window.confirm('你确定选择余额支付'+money+'元来完成交易吗？')){
+			insertPay(3,money);
+		}else{
+			return false;
+        }
+	}	
+}
+
+function insertPay(type,money){
+	var order_id = document.getElementById('order_id').value;
+	var staff_id = document.getElementById('staff_id').value;
+	$.ajax({
+		url: "{php echo $this->createMobileUrl('payok', array());}",
+		type:"POST",
+		data:{"type":type,"order_id":order_id,"staff_id":staff_id,"money":money},
+		dataType:"json",
+		success: function(res){
+			if(res == "0"){
+				alert('对不起，付款失败！请稍后再试！');
+			}else{
+				alert('付款成功！');
+				//WeixinJSBridge.call('closeWindow'); 
+				window.location.reload();
+			}
+		}
+	});	
+}
+
+function goComment(){
+	var order_id = document.getElementById('order_id').value;
+	var staff_id = document.getElementById('staff_id').value;
+	var xing = document.getElementById('xing').value;
+	var comment = document.getElementById('comment').value;
+	
+	$.ajax({
+		url: "{php echo $this->createMobileUrl('Pingjia', array());}",
+		type:"POST",
+		data:{"order_id":order_id,"staff_id":staff_id,"xing":xing,"comment":comment},
+		dataType:"json",
+		success: function(res){
+			if(res == "0"){
+				alert('对不起，评论失败！请稍后再试！');
+			}else if(res == '1'){
+				alert('评论成功！');
+				window.location.href = "{php echo $this->createMobileUrl('Index', array('name'=>'xm_gohome'))}";
+			}else{
+				alert('你已评论！');	
+			}
+		}
+	});	
+}
+</script>
+</body>
+</html>

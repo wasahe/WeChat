@@ -1,0 +1,451 @@
+<!doctype html>
+<html class="no-js">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
+<title>蜂客联盟</title>
+
+<link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/amazeui/2.7.2/css/amazeui.css"/>
+<link rel="stylesheet" type="text/css" href="Public/assets/mobile/css/style.css?t=4" />
+
+<script type="text/javascript" src="http://cdn.bootcss.com/jquery/2.2.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://cdn.bootcss.com/amazeui/2.7.2/js/amazeui.min.js"></script>
+<script type="text/javascript" src="http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+<script>$(function() {FastClick.attach(document.body);});</script>
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+<!-- 微信自定义接口 -->
+<script>
+	wx.config();
+	wx.ready(function(){
+		wx.onMenuShareAppMessage({
+			title: document.title,
+			desc: "",
+			link: window.location.href ,
+			imgUrl: ""
+		}); 
+		wx.onMenuShareTimeline({
+			title: document.title,
+			desc: "",
+			link: window.location.href,
+			imgUrl: ""
+		});
+	});
+</script><!-- 微信自定义接口 -->
+
+<script src="http://192.168.100.80:9977/target/target-script-min.js#anonymous"></script></head>
+
+<body>
+
+<div class="am-modal am-modal-alert" tabindex="-1" id="fq_alert">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd" id="fq_alert_title"></div>
+    <div class="am-modal-bd" id="fq_alert_info">
+    </div>
+    <div class="am-modal-footer">
+      <span class="am-modal-btn">确定</span>
+    </div>
+  </div>
+</div>
+
+<div class="am-modal am-modal-confirm" tabindex="-1" id="fq_confirm">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd" id="fq_confirm_title"></div>
+    <div class="am-modal-bd" id="fq_confirm_info"></div>
+    <div class="am-modal-footer">
+      <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+    </div>
+  </div>
+</div>
+
+
+<div class="move">
+    <header style="position:relative;z-index:999;background:#F54D23;">
+
+    <a href="javascript:void(0);"  onclick="back();" style="position:absolute;top:2px;color:#fff;width:45px;height:100%;padding-left:10px;font-size:25px;" class="am-inline-block am-text-middle am-icon-angle-left"><!-- <img src="Public/assets/mobile/images/left.png" />--></a><div class="am-per-center am-text-center am-padding-vertical-sm" style="color:#fff;font-size:16px;">我的晒单</div>
+
+</header>
+
+<script language="javascript">
+
+
+
+  
+
+</script>
+
+
+<script>
+
+    function back(){
+       var last_page_url = (document.referrer);
+       if(last_page_url){
+          	window.history.back();
+		}else{
+			window.location.href ='/index/index.html';
+		}
+    }
+
+</script>
+    <ul class="am-tabs-nav am-nav am-nav-tabs" id="nav2">
+        <li style="padding-left:0;padding-right:0;"><a href="/share/index.html">晒单广场</a></li> 
+        <li style="padding-left:0;padding-right:0;" class="am-active"><a href="/share/myshare.html">我的晒单</a></li>
+        <li style="padding-left:0;padding-right:0;"><a href="/share/ranking.html">晒单排行</a></li>
+        <li style="float:right;"><a class="am-fr am-text-sm am-padding-horizontal-xs top_refer" style="background-color:#FFF;border:.1rem solid #F3E7E3;padding-top:3px;padding-bottom:3px;margin-top:6px;margin-bottom:3px;" href="/share/refer.html">晒单奖励</a></li>
+    </ul>
+    <style>
+        html,body{
+            overflow-x:hidden;
+        }
+
+        .move{
+
+            margin-bottom:49px;
+
+            font-family:'Microsoft YaHei';
+
+        }
+
+        .top_nav{
+
+            margin:0;
+
+            padding:5px 0 0 10px;
+
+            list-style:none;
+
+        }
+
+         .top_nav li{
+
+            float:left;
+
+            
+
+        }
+
+        .top_nav li a.am-active{
+
+            border-bottom:2px solid #F54D23;
+
+        }
+
+        .top_hr{
+
+            margin:5px 0 10px;
+
+            background-color:#f8f8f8;
+
+            border:0;height:.5rem;
+
+        }
+
+        .nav.am-active{
+
+            color:#F54D23;
+
+        }
+
+        .nav{
+
+            color:#3d0505;
+
+            display:inline-block;
+
+        }
+
+        .box{
+
+            position:relative;
+
+            z-index:1;
+
+        }
+
+        .box ul{
+
+            margin:0;
+
+            padding:0;
+
+            list-style:none;
+
+        }
+
+        .move .box ul li{
+
+            padding:0;
+
+        }
+
+        .image_show img{
+
+            margin-bottom:5px;
+
+        }
+
+        .star{
+
+            color:#3d0505;
+
+        }
+
+        .star i{
+
+            color:rgb(255,215,000);
+
+        }
+
+        .price{
+
+            font-weight:400;
+
+            color:#f54d23;
+
+        }
+
+
+
+        .am-nav-tabs{
+
+            border-bottom:0.1rem solid #f3e7e3;
+
+        }
+
+        #nav2{
+
+            margin:0;
+
+        }
+
+        #nav2 li{
+
+            padding:0 .5rem;
+
+        }
+
+        #nav2 li.am-active{
+
+            border-bottom:.3rem solid #F54D23;
+
+        }
+
+        #nav2 li.am-active a{
+
+            color:#F54D23;
+
+        }
+
+        #nav2 li a{
+
+            border:0;
+
+            padding:10px 7px 7px 7px;
+
+            font-size:1.4rem;
+
+            color:#3d0505;
+
+        }
+
+        #nav{
+
+            border:0;
+
+        }
+
+        #nav li{
+
+        	padding-bottom:0;
+
+        }
+
+        #nav li a{
+
+            color:#3d0505;
+
+            border-color:#f8f8f8;
+
+            padding:0.6rem;
+
+            font-size:1.4rem;
+
+            background:transparent;
+
+        }
+
+        #nav li.am-active a{
+
+        	color:#F54D23;
+
+        }
+
+        .box{
+
+        	background:#FFF;
+
+        }
+
+    </style>
+
+    <div style="background:#f8f8f8;">
+
+       
+
+        <ul class="am-avg-sm-4 am-thumbnails am-block" id="nav">
+
+	    	<li class="am-text-center am-inline-block am-active"><a class="am-block" href="/share/myshare.html" >全部</a></li>
+
+	    	<li class="am-text-center am-inline-block "><a class="am-block" href="/share/myshare/status/1.html">待审核</a></li>
+
+	    	<li class="am-text-center am-inline-block "><a class="am-block" href="/share/myshare/status/2.html">已通过</a></li>
+
+	    	<li class="am-text-center am-inline-block "><a class="am-block" href="/share/myshare/status/3.html">已拒绝</a></li>
+
+		</ul>
+
+    </div>
+
+    <div class="am-padding-horizontal-sm am-margin-top-sm am-text-center am-text-sm am-hide" style="background:#FFF;">
+
+    	您还没发布过晒单,点击按钮可进行晒单操作
+
+    	<br />
+
+    	<button type="button" onclick="share_refer();" class="am-btn am-radius am-center am-margin-top-xs refer" style="background-color:#F54D23;color:#fff;border-radius:4px; padding:5px 12px;">晒单奖励</button>
+
+	</div>
+
+    <div class="am-text-center am-padding-vertical-sm am-hide" style="background:#FFF;">
+
+    	暂无晒单信息
+
+    </div>
+
+    <div class="am-cf"></div>
+
+    <div class="am-text-sm box am-padding-top-sm">
+        <ul>
+            <li style="">
+            	<div class="am-padding-horizontal-sm am-inline-block">
+                	<span class="am-text-success"><i class="am-icon-info-circle"></i> 待审核</span>                </div>
+                <span style="margin-left:6px;">奖励积分: 0</span>
+                <div class="am-padding-horizontal-sm am-fr" style="color:#3d0505;">
+
+		            <div class="am-inline-block" style="color:#8f8f8f;">
+
+		                <span>
+
+		                    
+		                    41秒前
+
+		                    
+		                </span>
+
+		            </div>
+		        </div>
+                <div class="am-cf"></div>
+                <div class="am-margin-horizontal-sm" style="color:#3d0505;">
+
+                	<p style="color:#F53D23;" class="am-hide">拒绝理由:</p>
+
+                    <div class="am-margin-vertical-xs">
+
+                        啊啊啊啊啊
+                    </div>
+
+                    <div class="image_show am-margin-top-xs am-gallery am-gallery-default" data-am-widget="gallery" data-am-gallery="{ pureview: true }" style="color:#3d0505;padding-left:0;margin-left:0;">
+
+                        
+                        
+                                <img src="http://img.fqapps.com/147808595932230900.png-600" style="max-width:200px;" />
+                    </div>
+
+                    <div class="am-margin-top-xs star">
+                        <div class="am-inline am-margin-right-xs">
+                            <span>评分: </span>
+                            <i class="am-icon-star"></i> 
+                            <i class="am-icon-star"></i> 
+                            <i class="am-icon-star"></i> 
+                            <i class="am-icon-star"></i> 
+                            <i class="am-icon-star"></i>
+                        </div>
+                        <div class="am-inline am-fr">
+                            <span style="margin-left:0px;">到手价: <span class="am-text-sm price">19.66</span>元</span></span>
+                        </div>
+                    </div>
+                    <div>
+                        <span>订单号：</span><span>1234567890123556</span>
+                    </div>
+                </div>
+                <div class="am-cf"></div>
+            </li>
+            <hr data-am-widget="divider" style="margin:10px;color:#f3e7e3;" class="am-divider am-divider-solid" />        </ul>
+        <ul class="am-pagination am-pagination-centered am-text-xs" id="page">    </ul>
+    </div>
+</div>
+
+<div class="menu">
+        <ul class="am-avg-sm-3 am-text-center am-padding-top-xs">
+            <li class="am-vertical-align">
+                <a href="/index/index.html">
+                    <img src="Public/assets/mobile/images/personal/home-page-unact.png" class="am-text-center am-vertical-align-middle"/>
+                    <br />               
+                    <span class=" am-text-center am-vertical-align-middle">首页</span>
+                </a>
+            </li>
+            <li  class="am-vertical-align">
+                <a href="/share/index.html">
+                    <img src="Public/assets/mobile/images/personal/Inordertoshare-act.png" class="am-text-center am-vertical-align-middle" />
+                    <br />
+                    <span class=" am-text-center am-vertical-align-middle">晒单广场</span>
+                </a>
+            </li>
+            <li  class="am-vertical-align">
+                <a href="/user/index.html">
+                    <img src="Public/assets/mobile/images/personal/per-center-unact.png" class="am-text-center am-vertical-align-middle" />
+                    <br />
+                    <span class=" am-text-center am-vertical-align-middle">个人中心</span>
+                </a>
+            </li>
+        </ul>
+    </div><style>
+.menu{
+        width:100%;
+        position:absolute;
+        position:fixed;
+
+        bottom:0;
+        background:#fff;
+        border-top:.1rem solid #F3E7E3;
+        z-index:999;
+    }
+    .menu img {
+        width:1.5rem;
+        height:1.5rem;
+        margin-bottom:.2rem;
+    }
+
+    .menu a {
+        display:inline-block;
+        color:#3d0505;
+
+    }
+
+    .menu a span {
+        font-size:1.2rem;
+    }
+</style>
+
+<div class="am-hide"></div>		
+</body>
+</html>
+
+<script>
+	function share_refer(){
+		window.location.href = '/share/refer.html';
+	}
+</script>

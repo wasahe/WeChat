@@ -1,0 +1,220 @@
+<style>
+    .publish-btn {
+        position: fixed;
+        bottom: 10px;
+        right: 5px;
+        z-index: 100;
+        width: 40px;
+        height: 40px;
+        background: url({MODULE_URL}public/images/wechat.png);
+        background-size: 100% 100%;
+    }
+    .recive-btn {
+        position: fixed;
+        bottom: 60px;
+        right: 5px;
+        z-index: 100;
+        width: 40px;
+        height: 40px;
+        background: url({MODULE_URL}public/images/recive.png);
+        background-size: 100% 100%;
+    }
+</style>
+<div class="publish-btn"></div>
+<a class="recive-btn open-popup" href="javascript:;" @click="openPopup()"></a>
+<div id="popup" class="weui-popup-container popup-bottom" style="z-index: 999;">
+    <div class="weui-popup-overlay"></div>
+    <div class="weui-popup-modal">
+        <div class="toolbar">
+            <div class="toolbar-inner">
+                <a href="javascript:;" class="picker-button close-popup">关闭</a>
+                <h1 class="title">请选择您要的操作</h1>
+            </div>
+        </div>
+        <style>
+            .weui_grid_icon{
+                text-align: center;
+            }
+            .weui_grid_icon .icon{
+                font-size: 1.5em;
+                color: #080808;
+            }
+        </style>
+        <div class="modal-content">
+            <div class="weui_grids">
+                <a href="tel:{{order.detail.receivemobile}}" class="weui_grid js_grid" data-id="dialog">
+                    <div class="weui_grid_icon">
+                        <i class="icon iconfont icon-31dianhua"></i>
+                    </div>
+                    <p class="weui_grid_label">
+                        电话沟通
+                    </p>
+                </a>
+                <!--<a href="javascript:;" @click="updateLocation()" class="weui_grid js_grid" data-id="msg">
+                    <div class="weui_grid_icon">
+                        <i class="icon iconfont icon-31dingwei"></i>
+                    </div>
+                    <p class="weui_grid_label">
+                        更新位置
+                    </p>
+                </a>-->
+                <a href="javascript:;" @click="cuiyicui()" class="weui_grid js_grid" data-id="dialog">
+                    <div class="weui_grid_icon">
+                        <i class="icon iconfont icon-jisutuikuan"></i>
+                    </div>
+                    <p class="weui_grid_label">
+                        催一催
+                    </p>
+                </a>
+                <a href="javascript:;" v-if="role == 'runner' && order.status == 2" class="weui_grid js_grid" data-id="progress">
+                    <div class="weui_grid_icon">
+                        <i class="icon iconfont icon-31saoma"></i>
+                    </div>
+                    <p class="weui_grid_label">
+                        扫码核销
+                    </p>
+                </a>
+                <a href="javascript:;" v-if="role == 'runner' && order.status == 2" class="weui_grid js_grid" data-id="msg">
+                    <div class="weui_grid_icon">
+                        <i class="icon iconfont icon-31mima"></i>
+                    </div>
+                    <p class="weui_grid_label">
+                        手工核销
+                    </p>
+                </a>
+                <a href="javascript:;" v-if="role == 'runner' && order.status == 2" class="weui_grid js_grid" data-id="msg">
+                    <div class="weui_grid_icon">
+                        <i class="icon iconfont icon-tuikuantuihuo"></i>
+                    </div>
+                    <p class="weui_grid_label">
+                        放弃任务
+                    </p>
+                </a>
+                <a href="javascript:;" v-if="role == 'runner' && order.status == 2" class="weui_grid js_grid" data-id="msg">
+                    <div class="weui_grid_icon">
+                        <i class="icon iconfont icon-31daishouhuo"></i>
+                    </div>
+                    <p class="weui_grid_label">
+                        完成任务
+                    </p>
+                </a>
+                <a href="javascript:;" v-if="role == 'owener' && order.status == 1" class="weui_grid js_grid" data-id="msg">
+                    <div class="weui_grid_icon">
+                        <i class="icon iconfont icon-31shanchu"></i>
+                    </div>
+                    <p class="weui_grid_label">
+                        撤销任务
+                    </p>
+                </a>
+                <a href="javascript:;" v-if="role == 'owener' && order.status == 1" class="weui_grid js_grid" data-id="msg">
+                    <div class="weui_grid_icon">
+                        <i class="icon iconfont icon-31jifen"></i>
+                    </div>
+                    <p class="weui_grid_label">
+                        任务延时
+                    </p>
+                </a>
+                <a href="javascript:;" v-if="role == 'owener' && order.status == 1" class="weui_grid js_grid" data-id="msg">
+                    <div class="weui_grid_icon">
+                        <i class="icon iconfont icon-31tianmaobao"></i>
+                    </div>
+                    <p class="weui_grid_label">
+                        增加赏金
+                    </p>
+                </a>
+                <a href="javascript:;" v-if="order.status == 1" class="weui_grid js_grid" data-id="msg">
+                    <div class="weui_grid_icon">
+                        <i class="icon iconfont icon-31guanzhuxuanzhong"></i>
+                    </div>
+                    <p class="weui_grid_label">
+                        立即抢单
+                    </p>
+                </a>
+                <a href="javascript:;" class="weui_grid js_grid" data-id="msg">
+                    <div class="weui_grid_icon">
+                        <i class="icon iconfont icon-chakan"></i>
+                    </div>
+                    <p class="weui_grid_label">
+                        任务详情
+                    </p>
+                </a>
+                <a href="javascript:;" v-if="role=='runner'" class="weui_grid js_grid" data-id="msg">
+                    <div class="weui_grid_icon">
+                        <i class="icon iconfont icon-guanyuwo"></i>
+                    </div>
+                    <p class="weui_grid_label">
+                        任务主名片
+                    </p>
+                </a>
+                <a href="javascript:;" v-if="role == 'owener'" class="weui_grid js_grid" data-id="msg">
+                    <div class="weui_grid_icon">
+                        <i class="icon iconfont icon-guanyuwo"></i>
+                    </div>
+                    <p class="weui_grid_label">
+                        快递员名片
+                    </p>
+                </a>
+                <a href="javascript:;" v-if="role == 'owener'" class="weui_grid js_grid" data-id="msg">
+                    <div class="weui_grid_icon">
+                        <i class="icon iconfont icon-31erweima"></i>
+                    </div>
+                    <p class="weui_grid_label">
+                        二维码
+                    </p>
+                </a>
+
+                <a href="javascript:;" class="weui_grid js_grid" data-id="msg">
+                    <div class="weui_grid_icon">
+                        <i class="icon iconfont icon-kefuyouxian"></i>
+                    </div>
+                    <p class="weui_grid_label">
+                        平台客服
+                    </p>
+                </a>
+
+                <a href="javascript:;" class="weui_grid js_grid" data-id="msg">
+                    <div class="weui_grid_icon">
+                        <i class="icon iconfont icon-tuikuan"></i>
+                    </div>
+                    <p class="weui_grid_label">
+                        红包抽奖
+                    </p>
+                </a>
+                <a href="{php echo $this->createMobileUrl('tasks')}" class="weui_grid js_grid" data-id="msg">
+                    <div class="weui_grid_icon">
+                        <i class="icon iconfont icon-31shouye"></i>
+                    </div>
+                    <p class="weui_grid_label">
+                        任务大厅
+                    </p>
+                </a>
+                <a href="javascript:;" class="weui_grid js_grid" data-id="msg">
+                    <div class="weui_grid_icon">
+                        <i class="icon iconfont icon-wodezichan"></i>
+                    </div>
+                    <p class="weui_grid_label">
+                        我的佣金
+                    </p>
+                </a>
+
+                <a href="javascript:;" class="weui_grid js_grid" data-id="msg">
+                    <div class="weui_grid_icon">
+                        <i class="icon iconfont icon-tabulation1"></i>
+                    </div>
+                    <p class="weui_grid_label">
+                        推荐给好友
+                    </p>
+                </a>
+
+                <a href="javascript:;" class="weui_grid js_grid" data-id="msg">
+                    <div class="weui_grid_icon">
+                        <i class="icon iconfont icon-31pinglun"></i>
+                    </div>
+                    <p class="weui_grid_label">
+                        任务互评
+                    </p>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

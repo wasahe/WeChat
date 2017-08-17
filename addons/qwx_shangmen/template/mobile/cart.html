@@ -1,0 +1,111 @@
+{template 'common/header'}
+<link rel="stylesheet" type="text/css" href="../addons/qwx_shangmen/template/resource/css/animate.min.css">
+<link rel="stylesheet" type="text/css" href="../addons/qwx_shangmen/template/resource/css/style.css">
+<link rel="stylesheet" type="text/css" href="../addons/qwx_shangmen/template/resource/css/cart.css">
+
+<body>
+	<!-- 头部导航栏 -->
+    {template 'header'}
+    <section class="choose">
+        <div class="chosen j_single">
+            <div class="item_tit">已选项目</div>
+            {loop $cart_goods $key $cart}
+            <dl class="item">
+                <dt>
+                    <a href="{php echo $this->createMobileUrl('goods',array('id'=>$cart[goods][id])); }"><img src="{$_W['attachurl']}{$cart[goods][photo]}" alt="{$cart[goods][photo]}"></a>
+                </dt>
+                <dd>
+                    <h3>{$cart[goods][title]}</h3>
+                    <p>
+                        <i></i>{$cart[goods][shijian]}分钟
+                        &nbsp;{if $cart[daojia] == 1}上门服务{else}到店服务{/if}
+                    </p>
+                    <p> ￥{$cart[buy_price]} {if ($cart[params]['is_vip'])}<span class='vip_span' style='text-decoration: none;display: inline-block'>/&nbsp;vip</span>{/if} </p> 
+                </dd>
+                <dd>
+                    <a class="add" href="javascript:void(0);">+</a>
+                    <span data-price="{$cart[buy_price]}" data-duration="{$cart[goods][shijian]}" data-id="{$cart[goods_id]}" data-discount="" data-num1="{$cart[buy_num]}">{$cart[buy_num]}</span>
+                    <a class="minus" href="javascript:void(0);"></a>
+                </dd>
+            </dl>
+            {/loop}
+        </div>
+    </section>
+    <aside>
+        <div id="mb" class="hide"></div>
+        <div class="bookArea">
+            <?php /*
+            <ul class="items hide">
+                {loop $cart_goods $key $cart}
+                <li>
+                <p>{$cart[goods][title]}</p>
+                <p><i></i>{$cart[goods][shijian]}分钟</p>
+                <p>￥{$cart[buy_price]}</p>
+                    <p>
+                        <span class="edit">
+                            <a class="add" href="javascript:void(0);">+</a>
+                            <span data-price="{$cart[buy_price]}" data-duration="{$cart[goods][shijian]}" data-id="{$cart[goods_id]}" data-discount="">{$cart[buy_num]}</span>
+                            <a class="minus" href="javascript:void(0);"></a>
+                        </span>
+
+                    </p>
+                </li>
+                {/loop}
+            </ul> */?>
+            <ul class="order">
+                <li id="orderNum">
+                    <i style="display: none;"><b></b></i><span id="sumNum" data-num="{$sum_num}" data-duration="{$sum_time}">{$sum_item}个项目<br>{$sum_time}分钟</span>
+                </li>
+                <li>合计:<span>￥</span><span id="sumMoney">{$sum_money}</span></li>
+                <li><a id="bookBtn" href="javascript:;">预约</a></li>
+            </ul>
+        </div>
+        <div id="loading" class="hide"></div>
+    </aside>
+
+
+<script src="../addons/qwx_shangmen/template/resource/js/zepto.min.js"></script>
+<script src="../addons/qwx_shangmen/template/resource/js/choose.min12.js"></script>
+
+<script>
+function update_cart(goods_id,price,buy_num){
+    // alert(goods_id+','+price+','+buy_num);return false;
+    $.ajax({
+            url:'{php echo $this->createMobileUrl('cart',array('is_ajax'=>1,'op'=>'add_cart'))}',
+            type:'post',
+            data:{'goods_id':goods_id,'price':price,'buy_num':buy_num,'html':1},
+            success:function(data){
+                if (data.code == 1){
+                    var sum_num_html = data.sum_item + "个项目<br>"+data.sum_time+"分钟";
+                    $('#sumNum').html(sum_num_html);
+                    $('#sumMoney').html(data.sum_money);
+
+                }else{
+                    alert(data.msg);
+                }
+            },
+            dataType:'json'
+    })    
+}
+
+$('#bookBtn').click(function(){
+    //开始预约：
+    var sumNum = parseInt($('#sumNum').text());
+    // alert(sumNum);
+    if (sumNum == 0){
+        alert('没有选购项目，请先选购！');
+        var url = '{php echo getHomeUrl();}';
+        window.location.href=url;
+        // return false;
+    }else{
+        var url = '{php echo $this->createMobileUrl('order',array())}';
+        window.location.href=url;
+    }
+});
+
+</script>
+
+</body>
+</html>
+
+

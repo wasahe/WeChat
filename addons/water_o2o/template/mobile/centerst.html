@@ -1,0 +1,127 @@
+{template 'header'}
+<body ontouchstart="" class="platform_mobile">
+	<div class="qsc-alert" style="display: none;">
+		<i class="info-base64"></i><span></span>
+	</div>
+	<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading"
+		tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog middle">
+			<div class="modal-content">
+				<i class="icon-white icon-loading-base64"><i
+					class="icon-white icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+			</div>
+		</div>
+	</div>
+	<div class="modal qsc-modal qsc-modal-loading"
+		id="qsc-modal-loading-new">
+		<div class="modal-dialog middle">
+			<div class="modal-content">
+				<i class="icon-loading-base64"><i
+					class="icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+			</div>
+		</div>
+	</div>
+	<div class="mod-user-my">
+		<div class="content top bottom">
+			<div class="qsc-list-group">
+				<div class="webPicPicker webuploader-container">
+					<div class="webuploader-pick">
+						<div class="list-item list-thumb list-avatar-form">
+							<span> <i class="icon uploader-list"><img
+									class="lazy-load"
+									src="http://wx.qlogo.cn/mmopen/TqF5M9icicMRpe3gFjAJwsMpsNQbr1U3TVujCjGibPbkiaWrIau6KEhWeeibBs1kNMegiccZqwRlDe9W7gSVrYBGTkRg/96"
+									width="36" height="36" alt=""></i> 我的头像
+							</span> <label>
+							</label>
+						</div>
+					</div>
+				</div>
+				<a href="javascript:void(0);" data-toggle="modal"
+					data-target="#modal-change-name" class="list-item"> <span>
+						用户名 </span> <label> <em>Water</em> <i
+						class="icon icon-arrow-right"></i>
+				</label>
+				</a> <a href="javascript:void(0);" class="list-item"> <span>
+						更改手机 </span> <label> <em>+86 153****1079</em>
+				</label>
+				</a> <a href="{php echo $this->createMobileUrl('addresses')}"
+					class="list-item"> <span> 收件地址 </span> <label> <i
+						class="icon icon-arrow-right"></i>
+				</label>
+				</a>
+			</div>
+			<div class="qsc-list-group">
+				<a href="/page/app" class="list-item"> <span> APP下载 </span> <label>
+						<i class="icon icon-arrow-right"></i>
+				</label>
+				</a> <a href="{php echo $this->createMobileUrl('about')}"
+					class="list-item"> <span> 关于轻松筹 </span> <label> <i
+						class="icon icon-arrow-right"></i>
+				</label>
+				</a>
+			</div>
+			<div class="qsc-list-group list-item-logout">
+				<a href="javascript:void(0);" data-toggle="modal"
+					data-target="#exit-confirm" class="list-item first"> <span
+					class="text-danger"> 退出账号 </span>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="modal qsc-modal qsc-modal-dialog" id="exit-confirm"
+		tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog middle">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title text-center">温馨提示</h4>
+				</div>
+				<div class="modal-body text-center">你确认要退出当前账号吗？</div>
+				<div class="modal-footer clearfix" role="group">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<a href="{php echo $this->createMobileUrl('exit')}"
+						class="btn btn-default"><strong>确认</strong></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal qsc-modal qsc-modal-dialog qsc-modal-dialog-form"
+		id="modal-change-name" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog middle">
+			<div class="modal-content qsc-form">
+				<form action="" method="POST" name="change-name"
+					id="change-name-form">
+					<div class="modal-header">
+						<h4 class="modal-title text-center">修改用户名</h4>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<div class="form-control-input">
+								<input type="text" name="name" class="form-control"
+									placeholder="用户名" value="Water">
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer clearfix" role="group">
+						<a href="javascript:void(0);" class="btn btn-default"
+							data-dismiss="modal">取消</a>
+						<button type="submit" name="submit" class="btn btn-default">
+							<strong>确定</strong>
+						</button>
+						<input name="csrf" type="hidden"
+							value="7a5910326367be5fe394c70cc9e86f77"><input
+							name="token" type="hidden"
+							value="9ccbucmyZyv1nqBeQE3PDbbrG4KAC8/VTFnV61pfN9yGI0IygX0teRU4HjFY/z/Lqn9fJ7Cki3psdLb+o7VmQ9/3fPINQYC2">
+						<input name="origin" type="hidden" value="Water">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	{template 'footer'}
+	<script type="text/javascript"
+		src="../addons/water_o2o/template/js/user.min.js"></script>
+
+</body>
+</html>

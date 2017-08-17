@@ -1,0 +1,65 @@
+{template 'common/header'}
+<style>
+.datetimepicker{width:30%;}
+</style>
+<ul class="nav nav-tabs">
+	<li class="active"><a href="javascript:;">{$module['title']}</a></li>
+</ul>
+<form action="" method="post" class="form-horizontal">
+	<div class="clearfix">
+		<div class="panel panel-info">
+			<div class="panel-heading">参数配置</div>
+			<div class="panel-body">
+				
+
+					<div class="form-group">
+						<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label" style="width:15%;">摇奖页面标题</label>
+						<div class="col-sm-8 col-xs-12">
+								<input class="form-control" style="width:30%;" name="param[title]" id="" type="text" value="{$settings['title']}">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label" style="width:15%;">头像列表离顶部距离</label>
+						<div class="col-sm-8 col-xs-12">
+								<input class="form-control" style="width:30%;" name="param[height]" id="" type="text" value="{$settings['height']}">
+								（单位为:px）
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label" style="width:15%;">默认显示数</label>
+						<div class="col-sm-8 col-xs-12">
+								<input class="form-control" style="width:30%;" name="param[nums]" id="" type="text" value="{$settings['nums']}">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label" style="width:15%;">中奖设置</label>
+						<div class="col-sm-8 col-xs-12">
+								<select class="form-control" style="width:30%;" name="param[winning]">
+									<option value="2" {if $settings['winning']==2}selected="selected"{/if}>可中多次</option>
+									<option value="1" {if $settings['winning']==1}selected="selected"{/if}>只中一次</option>
+								</select>
+								（如果选择'只中一次'，那每一次中奖者在下一轮中进行过滤，此时确保参赛人员足够多！）
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label" style="width:15%;">摇奖背景图</label>
+						<div class="col-sm-8 col-xs-12">
+								{php echo tpl_form_field_image('param[imgsrc]', $settings['imgsrc']);}
+						</div>
+					</div>
+
+
+			</div>
+		</div>
+	</div>
+
+	<div>
+		<input type="submit" name="submit" value="保存" class="btn btn-primary col-lg-1">
+		<input type="hidden" name="token" value="{$_W['token']}"/>
+	</div>
+</form>
+{template 'common/footer'}

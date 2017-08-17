@@ -1,0 +1,81 @@
+{template 'header'}
+<body ontouchstart="" class="platform_mobile">
+<div class="qsc-alert" style="display: none;">
+<i class="info-base64"></i><span id="info"></span>
+</div>
+<script type="text/javascript">
+
+function tx(){
+	 var yuestr = $("#yue").val();
+	 var yue  = parseFloat(yuestr);
+	 if(yue < 1){
+		tishi('余额满1元才可以提现');
+	 }else{
+		var openid = $("#openid").val();
+	     $.ajax({
+	  	    	type:'POST',
+	  	    	url:'{php echo $this->createMobileUrl('transferqb')}',
+	  	    	data:{openid:openid},
+	  	    	success:function(data){
+	  	    		data  = eval("(" + data +")");
+	  	            if(data.state == "0"){
+	  	            	tishi(data.msg);
+	  	            }else{
+	  	            	$("#showyue").html('0元');
+	  	            	tishi('提现成功，请在您的微信钱包余额查看！');
+	  	            	//window.location.href= data.url;
+	  	                 
+	  	            }
+	  	        }    
+	  	    });
+	 }
+}
+
+function tishi(content){
+	 $("#info").text(content);
+	 $(".qsc-alert").fadeIn(300).delay(1300).fadeOut(700);
+}
+</script>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-white icon-loading-base64"><i class="icon-white icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading-new">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-loading-base64"><i class="icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+	<div class="content top bottom">
+		<div class="qsc-list-group">
+			<div class="list-item">
+				<span> 账户余额 </span> <label> <em id="showyue">{php echo  $this->getSumCanFlowfeeByWid($worker['id']);}元</em>
+				</label><input type="hidden" id="yue"  value="{php echo  $this->getSumCanFlowfeeByWid($worker['id']);}">
+				<input type="hidden" id="openid"  value="{$worker['openid']}">
+			</div>
+		</div>
+		<div class="qsc-list-group">
+			<a href="javascript:void(0);" onclick="tx()" class="list-item"> <span> 余额转出(提现) </span> <label>
+					<i class="icon icon-arrow-right"></i>
+			</label>
+			</a>
+		</div>
+		<!-- <div class="qsc-list-group">
+<a href="/user/bank" class="list-item">
+<span>
+我的银行卡
+</span>
+<label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+</div> -->
+	</div>
+	{template 'workfooter'}
+<script type="text/javascript" src="../addons/water_3jzc/template/js/user.min.js"></script>
+
+</body></html>

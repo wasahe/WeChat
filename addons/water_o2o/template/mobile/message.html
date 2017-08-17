@@ -1,0 +1,68 @@
+{template 'header'}
+<body ontouchstart="" class="platform_mobile">
+<div class="qsc-alert" style="display: none;">
+<i class="info-base64"></i><span></span>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-white icon-loading-base64"><i class="icon-white icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading-new">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-loading-base64"><i class="icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<div class="content top bottom">
+<div class="qsc-list-group mod-message-item">
+<a href="{php echo $this->createMobileUrl('messagepl')}" class="list-item list-thumb badgeProjectComments">
+<span>
+<i class="icon icon-bg icon-comments_bg"></i>
+评论
+</span>
+<label>
+<span class="badge badge-danger"></span>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+<a href="{php echo $this->createMobileUrl('messagexw')}" class="list-item list-thumb badgeOfficialNews">
+<span>
+<i class="icon icon-bg icon-dynamic_bg"></i>
+官方动态
+</span>
+<label>
+<span class="badge badge-danger"></span>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+</div>
+</div>
+<script type="text/template" id="J_message_index_tpl">
+<a href="${link}" class="list-item list-thumb list-thumb-md J_tpl message_item" data-id="${objectId}">
+    <span>
+        {@if number > 0}
+        <span class="badge badge-danger">${number}</span>
+        {@/if}
+        {@if avatar != 'group'}
+        <i class="icon">
+            <img class="lazy-load" src="http://static.qingsongchou.com/img/grey.png" data-original="${avatar}" width="36" height="36" alt="">
+        </i>
+        {@else}
+        <i class="icon icon-friend icon-group"></i>
+        {@/if}
+        ${name}
+    </span>
+    <p>${msg}</p>
+    <label class="list-chat-time">
+        ${readtime}
+    </label>
+</a>
+</script> 
+{template 'footer'}
+<script type="text/javascript" src="../addons/water_o2o/template/js/project.min.js"></script>
+
+</body></html>

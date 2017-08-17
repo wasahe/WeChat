@@ -1,0 +1,106 @@
+{php $title=$rank['name']}
+{template 'inc/header'}
+
+<script type="text/javascript">
+	// 微信JSSDK相关
+	wx.ready(function () {
+		wx.onMenuShareAppMessage({
+			title:"{$rank['settings']['share_title']}",
+			desc:"{$rank['settings']['share_desc']}",
+			imgUrl:"{php echo tomedia($rank['settings']['share_img'])}"
+		});
+		wx.onMenuShareTimeline({
+			title:"{$rank['settings']['share_line']}",
+			imgUrl:"{php echo tomedia($rank['settings']['share_img'])}"
+		});
+	});
+</script>
+
+<style>
+	body{background:#f8f8f8;}
+
+</style> 
+
+<div id="feeds_list" class="weui_cells" data-url="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('index',array('cmd'=>'feeds','rid'=>pencode($rank['id']))), 2)}" data-loading=0 data-start=0 data-more=1 >
+</div>
+<script id="feeds_list_tpl" type="text/template" >
+	<%
+		if(!list){
+			return;
+		}
+		for(var i=0;i<list.length;i++){
+			var item = list[i];
+			var imgs = item['images'];
+	%>
+		<div class="feed weui_cell">
+			<p><%=item.content%></p>
+		</div>
+	<%  } %>
+</script>
+
+
+<div class="weui-infinite-scroll" id='infinite-demo-1'>
+  <div class="infinite-preloader"></div>
+  正在加载...
+</div>
+
+
+
+	
+
+
+
+{template 'inc/script'}
+
+<script type="text/javascript">
+
+
+
+	$(function(){
+		
+
+		var list = $("#feeds_list");
+		var list_tpl=baidu.template($('#feeds_list_tpl').html());
+		var loadList=function(refresh){
+			if(list.attr('data-loading')==1 || list.attr('data-more')==0){
+				return;
+			}
+			if(refresh){
+				list.attr('data-start',0);
+				list.attr('data-more',1);
+			}
+			list.attr('data-loading',1);
+			$.post(list.attr('data-url'), {
+				start:list.attr('data-start')
+			},function(resp) {
+				list.attr('data-loading',0);
+				//$('#feeds_list_container').pullToRefreshDone();
+				if(resp.status==0){
+					alert(resp.info);
+				}else{
+					list.attr('data-start',resp.data.start);
+					list.attr('data-more',resp.data.more);
+					if(list.attr('data-more')==0){
+						//$('#feeds_list_container').destroyInfinite();
+						//$('#feeds_list_loader').hide();
+					}
+					if(refresh){
+						 list.html('');
+					}
+					var html=list_tpl(resp.data);
+					list.html(list.html()+html);
+					//$("#list").append(html);
+				}
+			});	
+		}
+
+		//var loading = false;
+		$(document.body).infinite().on("infinite", function() {
+			loadList(false);
+		});
+
+		loadList(true);
+
+	});
+</script>
+{template 'inc/footer'}

@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+	<title>客户楼盘</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="../addons/hc_deluxejjr/style/css/style.css?ver233"/>
+	<link rel="apple-touch-icon-precomposed" href="/img/ico-startup-57x57.png" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" />
+	<meta name="mobileOptimized" content="width" />
+	<meta name="handheldFriendly" content="true" />
+	<meta http-equiv="Cache-Control" content="max-age=0" />
+	<meta name="apple-touch-fullscreen" content="yes" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<style>
+.pagination li{
+	margin-left:10px;
+	background-color: #fa614b;
+	display: inline-block;
+	padding: 0 5px;
+	border-radius: 5px;
+}
+.pagination li .pager-nav{
+	color: #fff;
+}
+</style>
+</head>
+<body>
+	<section class="main animated fadeInDown">
+		<div class="main-box">
+			<div class="client my-client-title">
+				<ul class="rb-row fn-clear">
+					<li style="width:30%;">姓名</li>
+					<li style="width:33%;">意向产品</li>
+					<li style="width:30%;">状态</li>
+				</ul>
+			</div>
+			<div class="client my-client-list">
+			{loop $customer $row}
+				<a href="{php echo $this->createMobileurl('myestimate',array('op'=>'detail','cid'=>$row['id']))}" class="rb-row my-client">
+					<ul class="fn-clear">
+						<li style="width:30%;">{$row['realname']}</li>
+						<li class="texthidden" style="width:33%;">{$pan[$row['loupan']]}</li>
+						<li style="width:30%;">
+							<span class="{if $row['status']==2}invalid{else}visit{/if}">{$status[$row['status']]}</span>
+						</li>
+					</ul>
+				</a>
+			{/loop}	
+			<ul class="fn-clear">
+				{$pager}
+			</ul>
+			</div>
+		</div>
+	</section>
+<footer class="foot"><a>&copy; {$_W['account']['name']}</a></footer>
+<nav class="nav fn-clear">
+	<a href="{php echo $this->createMobileUrl('index')}"><i class="icon-angle-left"></i>首页</a>
+	<a href="{php echo $this->createMobileUrl('customer')}" class="active"><i class="icon-users"></i>我的客户</a>
+	<a href="{php echo $this->createMobileUrl('my')}"><i class="icon-adult"></i>个人中心</a>
+</nav>
+</body>
+</html>

@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com" versionCode="0.6">
+	<application setting="false">
+		<name><![CDATA[疯狂摇圣诞树抽奖]]></name>
+		<identifie><![CDATA[truein_sdcj]]></identifie>
+		<version><![CDATA[1.2]]></version>
+		<type><![CDATA[wdlgame]]></type>
+		<ability><![CDATA[圣诞节马上就要到了，来款小游戏活跃一下气氛！]]></ability>
+		<description><![CDATA[圣诞节马上就要到了，来款小游戏活跃一下气氛！]]></description>
+		<author><![CDATA[悟空源码网]]></author>
+		<url><![CDATA[http://www.012wz.com/]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="false" />
+		<card embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="疯狂摇圣诞树抽奖" do="sdcj" state="" direct="true" />
+		</cover>
+	</bindings>
+	<install><![CDATA[]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[upgrade.php]]></upgrade>
+</manifest>

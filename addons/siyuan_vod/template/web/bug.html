@@ -1,0 +1,39 @@
+{template 'common/header'}
+{if $op == 'display'}
+
+<div class="panel panel-default">
+  <div class="table-responsive panel-body">
+    <table class="table">
+      <thead>
+        <tr>
+          <th style="width:80px">ID</th>
+          <th style="width:380px">标题</th>
+		  <th style="width:120px;">处理</th>
+		  <th style="width:120px;">访问</th>
+          <th style="width:80px;">openid</th>
+		  <th style="width:120px;">处理</th>
+          <th style="width:200px;">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        {loop $list $item}
+        <tr>
+          <td>{$item['id']}</td>
+          <td>{$item['title']}</td>
+		  <td><a target="_blank" href="{php echo url('site/entry/news',array('op'=>'post', 'id' => $item['vid'],'m'=>'siyuan_vod'))}"><button type="button" class="btn btn-danger"><i class="fa fa-paper-plane"></i>修复</button></a></td>
+		  <td><a target="_blank" href="{$_W['siteroot']}app/{php echo $this->createMobileUrl('news', array('id' => $item['vid'], 'weid' => $_W['weid']))}"><button type="button" class="btn btn-info"><i class="fa fa-paper-plane"></i>直接访问</button></a></td>
+          <td class="text-center">{if $item['openid']==''}<span class="label label-default">无</span>{else}<span class="label btn-success">有</span>{/if}</td>
+		  <td>{if $item['bug']=='0'}<span class="label label-default">未处理</span>{else}<span class="label label-info">已处理</span>{/if}</td>
+          <td style="text-align:left;">{if $item['openid'] and $item['bug']=="0"}<a href="{php echo url('site/entry/bug',array('op'=>'send', 'id' => $item['id'],'m'=>'siyuan_vod'))}"><button type="button" class="btn btn-primary"><i class="fa fa-paper-plane"></i>处理</button></a>{elseif $item['bug']=="0"}<a href="{php echo url('site/entry/bug',array('op'=>'ok', 'id' => $item['id'],'m'=>'siyuan_vod'))}"><button type="button" class="btn btn-primary"><i class="fa fa-paper-plane"></i>处理</button></a>{/if}
+           <!-- <a href="{php echo url('site/entry/bug',array('op'=>'post', 'id' => $item['id'],'m'=>'siyuan_vod'))}" title="编辑" class="btn btn-default btn-sm"><i class="fa fa-edit"></i></a>
+            <a href="{php echo url('site/entry/bug',array('op'=>'delete', 'id' => $item['id'],'m'=>'siyuan_vod'))}" title="删除" data-toggle="tooltip" data-placement="top" class="btn btn-default btn-sm"><i class="fa fa-times"></i></a>-->
+          </td>
+        </tr>
+        {/loop}
+      </tbody>
+    </table>
+    {$pager}
+  </div>
+</div>
+{/if}
+{template 'common/footer'}

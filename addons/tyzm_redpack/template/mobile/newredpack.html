@@ -1,0 +1,532 @@
+{template 'header'}
+	<style>
+.div-img{
+	position: relative;
+	width: 80px;
+	height: 80px;
+	margin: 0 auto;
+	overflow: hidden;
+	border: 3px solid #FF5500;
+	border-radius: 50%;margin-top: 20px;
+}
+.box{
+	position: relative;
+	width: 100%;
+	height: auto;
+	margin: 0px;
+	overflow: hidden;
+}	
+.pop-box{
+	position: relative;
+	width: 60px;
+	height: 60px;
+	margin: 0 auto;
+	overflow: hidden;
+	border: 3px solid #FF5500;
+	border-radius: 50%;margin-top: 10px;
+}
+/*摇晃动画*/
+.dh {
+	animation: myfirst 3s infinite;
+	-moz-animation: myfirst 3s infinite;
+	/* Firefox */
+	-webkit-animation: myfirst 3s infinite;
+	/* Safari and Chrome */
+	-o-animation: myfirst 3s infinite;
+	/* Opera */
+}
+
+
+@keyframes myfirst {
+	0% {
+margin-left: 0px;
+	}
+	30% {
+		margin-right: 30px;
+	}
+	40% {
+		margin-left: 0px;
+	}
+	50% {
+		margin-left: 60px;
+	}
+	60% {
+		margin-left: 0px;
+	}
+	70% {
+		margin-left: 60px;
+	}
+	80% {
+		margin-left: 0px;
+	}
+	90% {
+		margin-left: 60px;
+	}
+	100% {
+		margin-right: 0px;
+	}
+}
+
+@-moz-keyframes myfirst {
+	0% {
+margin-left: 0px;
+	}
+	30% {
+		margin-right: 30px;
+	}
+	40% {
+		margin-left: 0px;
+	}
+	50% {
+		margin-left: 60px;
+	}
+	60% {
+		margin-left: 0px;
+	}
+	70% {
+		margin-left: 60px;
+	}
+	80% {
+		margin-left: 0px;
+	}
+	90% {
+		margin-left: 60px;
+	}
+	100% {
+		margin-right: 0px;
+	}
+}
+
+@-webkit-keyframes myfirst {
+	0% {
+margin-left: 0px;
+	}
+	30% {
+		margin-right: 30px;
+	}
+	40% {
+		margin-left: 0px;
+	}
+	50% {
+		margin-left: 60px;
+	}
+	60% {
+		margin-left: 0px;
+	}
+	70% {
+		margin-left: 60px;
+	}
+	80% {
+		margin-left: 0px;
+	}
+	90% {
+		margin-left: 60px;
+	}
+	100% {
+		margin-right: 0px;
+	}
+}
+
+@-o-keyframes  myfirst {
+	0% {
+margin-left: 0px;
+	}
+	30% {
+		margin-right: 30px;
+	}
+	40% {
+		margin-left: 0px;
+	}
+	50% {
+		margin-left: 60px;
+	}
+	60% {
+		margin-left: 0px;
+	}
+	70% {
+		margin-left: 60px;
+	}
+	80% {
+		margin-left: 0px;
+	}
+	90% {
+		margin-left: 60px;
+	}
+	100% {
+		margin-right: 0px;
+	}
+}
+.plus_box{
+	position: absolute;
+	height: 27px;
+	font-size: 12px;
+    LINE-HEIGHT: 27PX;
+	color: white;
+	top: 16px;
+	padding:0 5px;
+	left: 16px;
+	border-radius: 2px;
+	background: rgba(0,0,0,.6);
+}
+.edit{
+	position: absolute;
+	padding: 4px 6px;
+	font-size: 12px;
+	color: white;
+	top: 16px;
+	right: 16px;
+	border-radius: 2px;
+	background: rgba(0,0,0,.6);
+}
+.close{
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	width: 32px;
+	height: 32px;
+	color: white;
+	font-weight: bolder;
+	
+	border-radius: 50%;
+	text-align: center; line-height: 32px;
+}
+
+@-webkit-keyframes gogogo {
+    0%{
+        -webkit-transform: rotate(0deg);
+    }
+    100%{
+        -webkit-transform: rotate(360deg);
+    }
+}
+.openpack,.openpacking{position: relative; overflow: hidden; width: 70px; height: 70px; margin: 0 auto; line-height: 70px; background-color: #FFA00A; color: white; border-radius: 50%;}
+.openpacking{display:none;-webkit-animation:gogogo 2s infinite linear;}
+.footer{ display:none}
+	</style>
+</head>
+<body id="main" style="background: url({$redata['adbg']}) no-repeat; background-color: #F73F29; background-size: 100%;">
+<!--[if lte IE 9]>
+<p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a
+  href="http://browsehappy.com/" target="_blank">升级浏览器</a>
+  以获得更好的体验！</p>
+<![endif]-->
+<header class="am-g am-padding am-text-center" style="position: relative; padding-top: 48px; color:#F73F29">
+{if $issend==1}
+	<div class="edit" onclick="window.location.href='{php echo $this->createMobileUrl('Plus')}'" style="">我也发红包</div>
+	{/if}
+	<div class="plus_box" onclick="$('#plus_box').modal('open')">菜单</div>
+</header>
+
+<div class="am-g am-text-center" style="position: relative;position: fixed;bottom: 0;background: url({php echo MODULE_URL;}/template/static/images/showredbag.png);background-size: 100%;line-height: 25px;">	
+    <div class="div-img">
+					<img src="{$redata['addimg']}" width="100%" height="100%">	</div>
+	<div style="color: #FFFFFF;font-weight: bold;">{$redata['act_name']}</div>
+	<div style="color: #D7FE00;">{$redata['wishing']}</div>
+
+
+	
+	<div style="font-size: 12px; margin-bottom: 8px; text-align: center;color: #BABABA;">
+		摇一摇，获取“{$redata['send_name']}”送的红包<br />记得分享给小伙伴们哦
+	</div>
+	{if !empty($redata['adurl'])}
+	<div onclick="Count_succes('adclick');" style="position: absolute; left: 0px; top: -25px; width: auto; color: white; background: rgba(0,0,0,.6);; color: #888888; padding: 0px 8px; border-radius: 0px 2px 2px 0px; font-size: 12px;" >点击支持{$redata['send_name']}</div>
+	{/if}
+</div>
+
+
+
+<div class="am-g am-text-center yaoyao"  style="position: relative; margin-top: 32px;">
+	<img class="dh" src="{php echo MODULE_URL;}/template/static/images/hand.png" width="100">
+	<br>
+	<span class="am-text-sm dh" style="width: auto; color: white; background: rgba(0,0,0,.6);; color: #888888; padding: 0px 8px; border-radius: 2px; font-size: 12px;">摇一摇抢红包</span>
+</div>
+
+
+
+<audio class="am-hide" id="music">
+	<source src="{php echo MODULE_URL;}/template/static/images/shake_result.wav" type="audio/mpeg"> 你的浏览器不支持播放器
+</audio>
+
+<!--隐藏的领取红包开始-->
+
+
+
+<!--隐藏的领取红包开始-->
+	<div class="am-modal am-modal-alert" id="openpacket">
+	{if $redata['status']==1 && $isexist!=1}
+	<!-- 抽中一个 -->
+	<div class="am-g" style="position: relative;  background:url({php echo MODULE_URL;}/template/static/images/packetbg.jpg); background-size: 100% 100%;background-color: brown;  border-radius: 8px;">
+		<div class="am-u-sm-12 am-text-center am-margin-top-xl" style="position: relative; margin-bottom: 60px; color: white;">
+			<div class="div-img">
+					<img src="{$redata['addimg']}" width="100%" height="100%"></div>
+			<div class="am-text-sm">{$redata['send_name']}红包</div>
+			<h3>{$redata['wishing']}</h3>
+	  </div>
+	   
+	  <div class="openpack">
+			<span>拆红包</span>
+	  </div>
+	  <div class="openpacking">
+			<span>拆包中</span>
+	  </div>
+	  <div onclick="window.location.href='{php echo $this->createMobileUrl('Redpack',array('ty'=>'lucky','tid'=>$_GPC['tid'],'tokenkey'=>$_GPC['tokenkey']))}'" class="luckylist" style="color: #F0C040; font-size: 14px; margin: 35px 0; text-align: center; display:none"> 
+	    		看看大家的手气
+	   </div>
+	  <br>
+	  </div>
+	<!-- 抽中一个end -->
+	{/if}
+	{if $redata['status']==2 && $isexist!=1}
+	<!-- 没有了 -->
+	  
+	  	<div class="am-g" style="position: relative; height: auto; background: url({php echo MODULE_URL;}/template/static/images/packet_bg.jpg) no-repeat; background-color: rgb(237, 237, 237); background-size: 100%; border-radius: 8px; overflow:hidden;">
+	    <div class="box" id="gg_img">
+		    	<div class="pop-box">
+					<img src="{$redata['addimg']}" width="100%" height="100%">	</div>
+	<div style="color: #FFFFFF;font-weight: bold;font-size: 1rem;padding: 5px 0;}">{$redata['act_name']}</div>
+	<div style="color: #D7FE00;font-size: 1.6rem;">{$redata['wishing']}</div>
+		    			    	
+		    	<div style="width: auto;color: white;color: #888888;padding: 5px;margin: 2rem 0 1rem;font-size: 12px;"  onclick="Count_succes('adclick');">查看{$redata['act_name']}详情</div>
+	    </div>
+
+	    <div class="am-u-sm-12" style="padding: 0px 8px;color: white;">
+
+	    	<div class="box" style="padding: 8px 0px;color: #505050;">
+	    		<span style="color: #D03020;">红包已摇完，请下次早点过来哦</span>
+			</div>
+			{if $issend==1}
+	    	<button onclick="window.location.href='{php echo $this->createMobileUrl('Plus')}'" class="am-margin-bottom-sm am-radius am-btn am-btn-block" style="background-color: #D03020;">我也要发红包</button>
+	    	{/if}
+	    	<div onclick="window.location.href='{php echo $this->createMobileUrl('Redpack',array('ty'=>'lucky','tid'=>$_GPC['tid'],'tokenkey'=>$_GPC['tokenkey']))}'" class="box" style="color: #D03020; font-size: 12px; margin-bottom: 8px; text-align: center;"> 
+	    		看看大家的手气
+	    	</div>   
+	    </div>
+	    <div onclick="$('#openpacket').modal('close');" class="close"><i class="am-icon-close"></i></div>
+	    </div>
+	  <!-- 没有了end -->
+	  {/if}
+	   
+	  {if $isexist==1}
+	<!-- 没有了 -->
+
+	  
+	  
+
+		<div class="am-g" style="position: relative; height: auto; background: url({php echo MODULE_URL;}/template/static/images/packet_bg.jpg) no-repeat; background-color: rgb(237, 237, 237); background-size: 100%; border-radius: 8px; overflow:hidden;">
+	    <div class="box" id="gg_img">
+		    	<div class="pop-box">
+					<img src="{$redata['addimg']}" width="100%" height="100%">	</div>
+	<div style="color: #FFFFFF;font-weight: bold;font-size: 1rem;padding: 5px 0;}">{$redata['act_name']}</div>
+	<div style="color: #D7FE00;font-size: 1.6rem;">{$redata['wishing']}</div>
+		    			    	
+		    	<div style="width: auto;color: white;color: #888888;padding: 5px;margin: 2rem 0 1rem;font-size: 12px;"  onclick="Count_succes('adclick');">查看{$redata['act_name']}详情</div>
+	    </div>
+
+	    <div class="am-u-sm-12" style="padding: 0px 8px;color: white;">
+
+	    	<div class="box" style="padding: 8px 0px;color: #505050;">
+	    		谢谢<span style="color: #D03020;">{$redata['send_name']}</span>的红包
+			</div>
+			{if $issend==1}
+	    	<button onclick="window.location.href='{php echo $this->createMobileUrl('Plus')}'" class="am-margin-bottom-sm am-radius am-btn am-btn-block" style="background-color: #D03020;">我也要发红包</button>
+	    	{/if}
+	    	<div onclick="window.location.href='{php echo $this->createMobileUrl('Redpack',array('ty'=>'lucky','tid'=>$_GPC['tid'],'tokenkey'=>$_GPC['tokenkey']))}'" class="box" style="color: #D03020; font-size: 12px; margin-bottom: 8px; text-align: center;"> 
+	    		看看大家的手气
+	    	</div>   
+	    </div>
+	    <div onclick="$('#openpacket').modal('close');" class="close"><i class="am-icon-close"></i></div>
+	    </div>
+	</div>
+	  <!-- 没有了end -->
+	  {/if}
+	</div>
+<div class="am-modal am-modal-alert" id="alert">
+		<div class="am-modal-dialog" style="border-radius: 3px;">
+			<div class="am-modal-hd" id="alert_title"></div>
+	    <div class="am-modal-bd" id="alert_content">
+
+	    </div>
+			<div class="am-modal-footer">
+	      <span class="am-modal-btn">确定</span>
+	    </div>
+		</div>
+</div>
+	
+<div class="am-modal am-modal-loading am-modal-no-btn" tabindex="-1" id="my-modal-loading">
+		<div class="am-modal-dialog" style="border-radius: 2px;">
+			<div class="am-modal-bd am-text-secondary">      
+	    	<span class="am-icon-spinner am-icon-spin"></span>
+	    	拆红包中...
+	    </div>
+		</div>
+</div>
+
+<!--二维码关注开始-->
+<div class="am-modal am-modal-alert" tabindex="-1" id="plus_box">
+  <div class="am-modal-dialog" style="border-radius: 2px;">
+    <div class="am-modal-bd">
+    	<div class="am-g am-text-center">
+    		<div class="am-u-sm-12 am-text-center am-text-sm" style="text-align: justify;">
+			{if $issend==1}
+			    <button class="am-btn am-btn-secondary am-radius am-btn-block" style="margin-top: 20px;" onclick="window.location.href='{php echo $this->createMobileUrl('Mypack')}'">我已发的红包</button>
+				{/if}
+    			<button onclick="$('#share').modal('open');$('#plus_box').modal('close');" class="am-margin-top-sm am-btn am-btn-success am-radius am-btn-block"style="margin-top: 20px; color: white; ">转给我的朋友们</button>	
+				{if $issend==1}
+				<button onclick="window.location.href='{php echo $this->createMobileUrl('Plus')}'" class="am-btn am-radius am-btn-block" style="margin: 20px 0; color: white; background-color: #ff8610;">我也要发红包</button>
+				{/if}
+    		</div>
+    	</div>
+    </div>
+  </div>
+</div>
+<!--二维码关注结束-->
+<!--隐藏的分享开始-->
+<div class="am-modal-actions" style="top: 0px;" id="share" onclick="$('#share').modal('close')" >
+		<img width="100%"  src="{php echo MODULE_URL;}/template/static/images/share.png">
+</div>
+<!--隐藏的分享结束-->
+
+<script type="text/javascript">
+//界面优化
+$('#gg_img').css("max-height", ($(window).height()*0.6)+'px');
+
+
+wx.ready(function () {
+	wx.showOptionMenu();
+});
+
+
+
+/*关闭刷新方法*/
+function openpacket_close(){
+	$('#openpacket').modal('close');
+}
+
+function alertwindow(content) {
+	$('#alert_content').text(content);
+	$('#alert').modal('open');
+}
+
+
+var myVideo = document.getElementById("music");
+
+/*重力感应方法*/
+function deviceMotionHandler(eventData) {
+	var acceleration = eventData.accelerationIncludingGravity;
+
+	//将手机按照这个样子『』（正面朝上）放在桌子上
+	//acceleration.x	左右（左右移动手机）
+	//acceleration.y	上下（上下移动手机）
+	//acceleration.z	里外（拿起放下手机）
+
+	var tiltFB = Math.round(acceleration.y * 100);
+
+	if (tiltFB > 1000 || tiltFB < -1000) {
+	    
+		$("#openpacket").modal('open');
+		myVideo.play();
+	}
+}
+
+if(window.DeviceMotionEvent){
+	window.addEventListener('devicemotion', deviceMotionHandler, false);
+}else{
+	alertwindow('本设备不支持摇一摇功能，请点击摇一摇手势抢红包');
+}
+
+$('.yaoyao').click( function () { 
+   myVideo.play();
+   $("#openpacket").modal('open');
+ });
+
+ 
+$('.openpack').click( function () {
+   $(this).hide(); 
+   $('.openpacking').show(); 
+   openpacket();
+}); 
+//拆红包
+function openpacket(){
+	$.ajax({
+		type : "post",
+		url : "{php echo $this->createMobileUrl('Openpack',array('tid'=>$_GPC['tid'],'tokenkey'=>$_GPC['tokenkey']))}",
+		{if $_GPC['ticket']!=""}
+		data : {
+			ticket : '{$_GPC['ticket']}',
+		},
+		{/if}
+		dataType : "json",
+		beforeSend : function(XMLHttpRequest) {
+			$('.openpack').hide();
+			$('.openpacking').show();
+		},
+		success : function(res) {
+			$("#my-modal-loading").modal('close');
+			    
+			if (res.status == 200 || res.status == 201) {
+				window.location.href = "{php echo $this->createMobileUrl('Redpack',array('ty'=>'show','tid'=>$_GPC['tid'],'tokenkey'=>$_GPC['tokenkey']))}";
+			}else if(res.status == 0){
+			    $("#openpacket h3").text(res.errmsg);
+				$('.openpacking').hide(); 
+				$('.luckylist').show(); 
+			}else{
+			    $("#openpacket h3").text(res.errmsg);
+			}
+		},
+		error : function(res, type) {
+			$("#my-modal-loading").modal('close');
+			alertwindow(res.errmsg);
+		}
+	});
+}
+$(document).on('click', '#previewImage img',function(event) {
+        var imgArray = [];
+        var curImageSrc = $(this).attr('data-img');
+        var oParent = $(this).parent();
+        if (curImageSrc && !oParent.attr('href')) {
+            $('#previewImage img').each(function(index, el) {
+                var itemSrc = $(this).attr('data-img');
+                imgArray.push(itemSrc);
+            });
+            wx.previewImage({
+                current: curImageSrc,
+                urls: imgArray
+            });
+        }
+});
+/**
+ * 转发统计
+ */
+function Count_succes(ty){
+	$.ajax({
+		type : "post",
+		url : "{php echo $this->createMobileUrl('Count',array('tid'=>$_GPC['tid'],'tokenkey'=>$_GPC['tokenkey']))}",
+		data : {
+			ty:ty,
+		},
+		dataType : "json",
+		beforeSend : function(XMLHttpRequest) {
+		},
+		success : function(res) {
+		},
+		error : function(res, type) {
+		}
+	});
+
+	{if !empty($redata['adurl'])}
+		window.location.href="{$redata['adurl']}"; 
+	{else}
+	    var imgArray = [];
+		var itemSrc = "{$redata['adbg']}";
+		imgArray.push(itemSrc);
+	    wx.previewImage({
+                current: itemSrc,
+                urls: imgArray
+        });
+	{/if}
+}
+</script>
+
+
+
+{template 'footer'}

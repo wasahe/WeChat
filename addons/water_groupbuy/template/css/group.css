@@ -1,0 +1,73 @@
+﻿
+@charset "utf-8";
+/*
+*/
+/*通用样式库*/
+body {padding-top: 0 !important;}
+.tuangou_list {margin-top: 15px; float: left;}
+.tuangou_jieshao {line-height: 25px; height: 25px; padding-left: 1.5%; padding-bottom: 25px;}
+
+.qixi_taocan {width: 100%; height: auto; margin-bottom: 5px;}
+.qixi_sbutton {width: 100%; height: 48px; overflow: hidden; background: #6734ff;}
+.qixi_sbutton b {line-height: 52px; float: left; font-size: 14px; color: #fff; margin-left: 5px;}
+.qixi_sbutton span {line-height: 48px; float: left; height: 48px; font-size: 24px; color: #fff; margin-left: 5px;}
+.qixi_sbutton em {line-height: 54px; font-size: 14px; text-decoration: line-through; color: #fff; margin-left: 5px;}
+.qixi_sbutton a {float: right; background: #1fc1b4; padding: 0 10px; line-height: 48px; font-size: 20px; color: #fff;}
+.main_tittle a {display: inline-block; padding: 0 45px; font-size: 22px; background: #939393; color: #fff;}
+.main_tittle a:hover,.main_tittle a.linkth {background: #da0000; color: #fff;}
+ul.yomi li.split {color: #fff !important;}
+/*进度*/
+.this_jindu {height: auto; padding: 20px 20px 5px 20px;}
+.jindu_ng {width: 100%; height: 15px; background: #efbe00;}
+.jindu_ng span {display: block; float: left; height: 15px; background: #d02e3d; border-radius: 0 5px 5px 0;}
+.jindu {padding: 0 5% 25px 5%; position: relative; z-index: 1;}
+.jndubg {background: rgba(0,0,0,0.4); border-radius: 20px; padding: 4px; height: 20px;}
+.show {height: 20px; background: url(../images/02.jpg); background-size: 32px; background-repeat: repeat-x; border-radius: 10px;}
+
+.jindu_text {margin-top: 10px;}
+.jindu_text span {float: left; width: 33.33%; height: 22px; line-height: 22px; font-size: 14px; color: #fff; text-align: center;}
+.grounp_back {background: #189ab2; padding: 15px 0;}
+.grounp_back p {text-align: center; color: #fff; font-size: 22px; margin-bottom: 10px;}
+
+/*底部参与*/
+.bottom > div {padding: 10px 5px 2px 5px;}
+.bottom_left {position: absolute; top: 10px; left: 10px;}
+.bottom_left img {width: 38px; height: 38px; border-radius: 5px; padding: 2px;}
+.bottom_right {color: #fff; line-height: 26px; font-size: 16px; padding-left: 72px;}
+.bottom_right span {color: #ffb40b; position: relative; top: 2px;}
+.name {display: inline-block; max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; line-height: 16px;}
+.bottom_button {font-size: 14px; width: 100%; text-align: center; margin-top: 10px;}
+.bottom_button a {display: inline-block; color: #fff; border-radius: 5px; padding: 8px 0; margin: 8px 0 2px 0; width: 67%; text-align: center; font-size: 16px; overflow: hidden; height: 21px; line-height: 21px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.bottom_button a.bm_left {width: 30%; background: #ff4040;}
+.bottom_button a:visited,.bottom_button a:hover {color: #fff;}
+.fr {height: 46px; line-height: 46px;}
+.tittle {width: 100%; height: 52px; line-height: 52px; background: #336cb1; font-size: 22px; text-align: center; color: #fff; font-weight: normal;}
+.round_star {width: 0; height: 0; overflow: hidden; position: fixed; left: 10px; bottom: 20px; -webkit-animation: rotating 1.2s linear infinite; z-index: 96;}
+@-webkit-keyframes rotating{from{-webkit-transform:rotate(0deg)}to{-webkit-transform:rotate(360deg)}}
+
+/*弹出登录注册*/
+.s_bottom p {padding-bottom: 8px;}
+.b_input li {width: 100%; float: left; height: 48px;}
+.b_input li span {float: left; height: 40px; line-height: 40px; width: 30%; text-align: center; color: #fff; font-size: 16px;}
+.b_input li input {float: left; outline: none; background: #ddd; border: none; padding: 0; height: 40px; line-height: 40px; width: 70%; text-indent: 5px;}
+.chips_tanchu {width: 100%; position: fixed; z-index: 1000; background-color: #fff; bottom: 0; left: 0; display: none; height: auto; padding-bottom: 80px;}
+.chips_tanchu_bottom {width: 100%; position: fixed; z-index: 1003; background-color: #fff; height: 80px; line-height: 80px; bottom: 0; left: 0; text-align: center; display: none;}
+.chips_tanchu_bottom a,.chips_tanchu_bottom a:hover,.chips_tanchu_bottom a:active {width: 90%; height: 48px; display: inline-block; color: #fff; font-size: 26px; line-height: 48px; border-radius: 5px;}
+.layout-title {border-bottom: 1px solid #e5e5e5; padding: 8px 0 6px;}
+.thumb {width: 40px;height: 40px;margin: 2px 0 0 10px;float: left;position: relative;overflow: hidden;background-size: cover;}
+.thumb img {position: absolute;margin: auto;top: 0;left: 0;right: 0;bottom: 0;width: auto;height: 40px;max-width: 100%;max-height: 100%;}
+.detail {margin-left: 10px; width: auto; position: relative;}
+.m_titles {padding-right: 10px;line-height: 22px;position: relative;font-size: 16px; height: auto; margin: 0 0 2px; color: #000; overflow: hidden;}
+.new_price {float: left;}
+.new_price span {color: #ed155b;}
+.new_price i {color: #ed155b; font-size: 18px;}
+.sku-layout {position: absolute; right: 3px; top: 2px; padding: 2px;}
+.s_bottom {border-bottom: 1px solid #e5e5e5; padding: 10px;}
+.s_bottom dl {padding: 7px 0 18px 0;}
+.s_bottom dl dt {width: 15%;line-height: 42px;padding-top: 3px; font-size: 14px; float: left;}
+.s_bottom dl dd {float: right;}
+.quantity {float: right; margin-top: 10px;}
+.minus {width: 42px;height: 36px;background-color: white;border: 1px solid #999; position: relative; border-right: 0px none; border-radius: 2px 0 0 2px;font-size: 16px;font-weight: bold;color: #666;margin: 0;outline: none !important;text-align: center;overflow: hidden; float: left; -webkit-appearance: none;-moz-appearance: none;}
+.txt {width: 33px;height: 32px;padding: 1px;border: 1px solid #999;-webkit-box-sizing: content-box;-moz-box-sizing: content-box;box-sizing: content-box; font-size: 14px; text-align: center; vertical:middle; float: left;}
+input.right_none {border-left: none; border-radius: 0 2px 2px 0; border-right: 1px solid #999;}
+.base_tcdiv_mobile1 {position: fixed; display: none; display: block; top: 0px; right: 0px; bottom: 0px; left: 0px; z-index: 97; width: 100%; height: 100%; filter:alpha(opacity=50); -moz-opacity:0.5; -khtml-opacity: 0.5; opacity: 0.5; background: none repeat scroll 0% 0% rgb(0, 0, 0);}

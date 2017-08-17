@@ -1,0 +1,212 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="description">
+<meta name="keywords">
+<meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+<meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+<meta content="no-cache" http-equiv="pragma">
+<meta content="0" http-equiv="expires">
+<meta content="telephone=no, address=no" name="format-detection">
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>登录</title>
+<script type="text/javascript" src="../addons/water_o2o/template/js/jquery-1.7.2.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../addons/water_o2o/template/css/login.css">
+</head>
+<body class="unrecieve-code" id="bodycls"><!-- alert-show -->
+<style>
+.wklogin{
+	padding: 0;
+	margin: 0;
+}
+.wklogin img {
+    width: auto;
+    height: 120px;
+	vertical-align: middle;
+	    border: 0;
+}
+</style>
+<div class="wklogin">
+<img src="{$_W['attachurl']}{$system['banner2']}">
+</div>
+	<div class="login sections" style="padding-top: 4px;">
+		<div class="form-items">
+			<dl>
+				<dt>手机号码</dt>
+				<dd>
+					<i></i><input id="tel" type="tel" name="tel" placeholder="输入手机号码" maxlength="11"  class="">
+				</dd>
+				<dd class="r">
+					<button id="btn_getcode" class="getvcode tapable ">获取验证码</button><!-- colddown -->
+				</dd>
+			</dl>
+			<dl>
+				<dt>验证码</dt>
+				<dd>
+					<i></i><input id="vcode" type="tel" name="vcode" class="vcode" maxlength="4" placeholder="输入验证码">
+				</dd>
+			</dl>
+			<dl>
+				<dt>邀请码</dt>
+				<dd>
+					<i></i><input id="yqcode" type="tel" name="yqcode" class="vcode" maxlength="20" placeholder="输入邀请码,没有可不填">
+				</dd>
+			</dl>			
+		</div>
+		<div class="submit">
+			<button id="btn_submit" class="tapable disabled">验 证 手 机</button>  <!--  -->
+		</div>
+		<div class="hotline">
+			<button href="tel:{$system['kfdh']}">
+				<i class="icon-phone-sign"></i>客服热线 {$system['kfdh']}
+			</button>
+		</div>
+	</div>
+
+	<div id="alert_mask" class="alert-mask "></div>
+	<div id="alert" class="alert ">
+		<div class="alert-body">
+			<h3 id="tsinfo">输入错误!!</h3>
+			<ul class="buttons">
+				<li style="width: 100%;">
+				<button class="tapable alert-btn btn-primary" onclick="tsok()">确定</button></li>
+			</ul>
+		</div>
+	</div>
+	<div id="alert_pop" class="alert-pop">验证码已发送至你的手机.</div>
+
+
+	<div class="net-loading" id="yhts">
+		<u></u>
+		<div>
+				<span id="yhtsinfo">正在获取验证码</span>
+		</div>
+	</div>
+		<script type="text/javascript"> 
+		
+	  var InterValObj; //timer变量，控制时间  
+	  var count = 60; //间隔函数，1秒执行  
+	  var curCount;//当前剩余秒数 
+	  var re = /^[0-9]{11}$/;
+	  var sw = 1;
+	  var user_type = 20;
+		
+	  function SetRemainTime() {  
+		if (curCount == 0) {  
+			sw = 1;               
+			window.clearInterval(InterValObj);//停止计时器  
+			$("#btn_getcode").attr("class", 'getvcode tapable');
+			$("#btn_getcode").text("重新发送验证码");   
+		}  
+		else {  
+			curCount--;  
+			$("#btn_getcode").text("重新发送(" + curCount+")" );  
+		}  
+	  }	
+		
+	  function verification_code(){
+	    $("#btn_getcode").attr("class", 'getvcode tapable colddown');
+		$("#btn_getcode").text("重新发送(" + curCount + ")");  
+		InterValObj = window.setInterval(SetRemainTime, 1000); //启动计时器，1秒执行一次  
+	  }
+		
+		
+	  function alertToUrl(info,url) {
+		    $("#yhtsinfo").text(info); 
+			$("#yhts").attr("class", 'net-loading processing');
+			setTimeout('tsinfook()',800);
+		    setTimeout("window.location.href='" + url + "'", 800);
+		  }
+		
+		$(document).ready(function(){
+			$('input').bind('input propertychange', function() { 
+				var vcode = $('#vcode').val();
+				var tel = $('#tel').val();
+				if(vcode.length > 3 && tel.length == 11){
+					var mobile = !!tel.match(/^(0|86|17951)?(13[0-9]|15[012356789]|17[0-9]|18[0-9]|14[57])[0-9]{8}$/);
+					if (mobile){
+						$("#btn_submit").removeClass("disabled");
+					}else{
+						tserror('请输入正确的手机号码');
+					}
+				}else{
+					$("#btn_submit").attr("class", 'disabled');
+				}	
+			});
+	
+		      $("#btn_getcode").click(
+		    	        function(){
+		    	        	var tel = $('#tel').val();
+		    				if(tel.length == 11){
+		    					var mobile = !!tel.match(/^(0|86|17951)?(13[0-9]|15[012356789]|17[0-9]|18[0-9]|14[57])[0-9]{8}$/);
+		    					if (mobile){
+								       if(sw == 1){
+										   sw = 0;
+										   curCount = count; 
+										   $.ajax({
+												 type:'GET',
+												 data:{tel : $("#tel").val().trim()},
+												 url:'{php echo $this->createMobileUrl("SendVerifyCode");}',
+												 success:function(data){
+													  var json = eval("("+data+")");
+													  if(json.result == 0){
+														  tsinfo(json.msg);
+														   sw = 1;
+													  }else if(json.result == 1){
+														 
+														  tsinfo(json.msg);
+														  verification_code();
+													  }
+												 }
+											 });									    
+									   }
+
+		    					}else{
+		    						tserror('请输入正确的手机号码');
+		    					}
+		    				}else{
+		    					tserror('请输入正确的手机号码');
+		    				}
+				    	          
+			  });
+			
+			
+		      $("#btn_submit").click(
+		    		  
+    	        function(){
+    	          $.ajax({
+    	     		 type:'GET',
+    	     		 data:{tel : $("#tel").val().trim(), code : $("#vcode").val().trim()},
+    	     		 url:'{php echo $this->createMobileUrl("VerifyCode");}',
+    	     		 success:function(data){
+    	     			  var json = eval("("+data+")");
+    		      	  	  if(json.result == 1){
+    		      	  		  alertToUrl(json.msg,json.url);
+    		       		  }else if(json.result == 0){
+    		       			  tsinfo(json.msg);
+    		       			  
+    		       		  }
+    	     		 }
+    	     	 }); 
+		    	          
+		     });
+			
+		});
+		function tsok(){
+			$("#bodycls").removeClass("alert-show");
+		}
+		function tserror(info){
+			$("#tsinfo").text(info); 
+			$("#bodycls").attr("class", 'alert-show');
+		}
+		function tsinfo(info){
+			$("#yhtsinfo").text(info); 
+			$("#yhts").attr("class", 'net-loading processing');
+			setTimeout('tsinfook()',1500);
+		}
+		function tsinfook(){
+			$("#yhts").attr("class", 'net-loading');
+		}
+		</script>  
+</body>
+</html>

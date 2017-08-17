@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com" versionCode="0.6">
+	<application setting="true">
+		<name><![CDATA[微教育|微排课|微早教]]></name>
+		<identifie><![CDATA[qw_microedu]]></identifie>
+		<version><![CDATA[1.1.8]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[微教育|微排课|微早教]]></ability>
+		<description><![CDATA[微教育|微排课|微早教]]></description>
+		<author><![CDATA[微赞]]></author>
+		<url><![CDATA[http://www.012wz.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+			
+			<message type="subscribe" />
+			
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="false" />
+		<card embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="微早教首页" do="index" state="" direct="false" />
+		</cover>
+		<menu>
+            <entry title="教务管理" do="campus" state="" direct="false" />
+			<entry title="会员管理" do="user" state="" direct="false" />
+            <entry title="系统管理" do="system" state="" direct="false" />
+		</menu>
+		<profile>
+			<entry title="微早教首页" do="index" state="" direct="false" />
+		</profile>
+	</bindings>
+	<permissions>
+	</permissions>
+	<install><![CDATA[install.php]]></install>
+	<uninstall><![CDATA[unintall.php]]></uninstall>
+	<upgrade><![CDATA[upgrade.php]]></upgrade>
+</manifest>
+

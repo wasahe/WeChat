@@ -1,0 +1,134 @@
+{php $g_title='最近解答'}
+{php $menu='4'}
+{template 'common/header1'}
+{template 'common/menu'}
+		<div id="content" class="snap-content">
+			<div class="content half-bottom half-top">
+				<div class="home-tabs">
+					<a style="width:50%;" class="activate-tab-1" href="{php echo $this->createMobileUrl('focus')}">关注我的</a>
+					<a style="width:50%;" class="activate-tab-2 active-home-tab" href="{php echo $this->createMobileUrl('refeed')}">最近提问</a>
+					<div class="clear"></div>
+				</div>
+			</div>
+			<div class="content">
+				<div class="portfolio-filter">
+					{if !empty($questions['list'])}
+					<div id="append" class="portfolio-filter-wrapper" style="margin-left:5px;">
+						{loop $questions['list'] $li} 
+						{php $to_member = M('member')->getInfo($li['to_openid'])}
+						{if $li['istask']=='1'}
+						<div class="blog-sidebar-text" onclick="window.location.href='{php echo $this->createMobileUrl('task_answer',array('id'=>$li['id']))}'">
+							{php $quser = M('member')->getInfo($li['openid'])}
+							<h5 style="font-size:15px;">
+								{php $cate = M('category')->getInfo($li['category_id'])}
+								<span class="answer-tag">{$cate['title']}</span>
+								{$li['title']}
+							</h5>
+						</div>
+						<div class="container one-third-responsive">
+							{php $ans = M('answer')->getone(array('question_id'=>$li['id']))}
+							{php $user = M('member')->getInfo($ans['openid'])}
+							{php $count = M('answer')->getTotal(array('question_id'=>$li['id']))}
+							<p class="user-list-follow">
+								{if $li['isanonymous']=='1'}
+								<img class='avatar' src="{MODULE_URL}assets/images/anonymous_avatar.jpg" alt="img">
+								<strong {if $li['credit']<=0 && $count<=0}style='padding-top:10px;'{/if}>匿名用户提问
+								{else}
+								<img class='avatar' src="{php echo $quser['avatar']}" alt="img">
+								<strong {if $li['credit']<=0 && $count<=0}style='padding-top:10px;'{/if}>{$quser['nickname']}提问
+								{/if}
+									{php $time = $hour2-intval((time()-$li['create_time'])/3600)}
+									{php $mark = $li['status']=='2' || $time<=0}
+									<em>
+										{if $li['credit']>0}赏金{$li['credit']}元&nbsp;&nbsp;&nbsp;{/if}{if $count>0}{$count}人已抢答{/if}
+									</em>
+								</strong>
+								{if !$mark}
+								<a href="{php echo $this->createMobileUrl('task_answer',array('id'=>$li['id']))}" style='margin-bottom:10px;' class="follow2 button-green"><span class="tip">还剩{$time}小时</span></a>
+								{else}
+								<a href="{php echo $this->createMobileUrl('task_answer',array('id'=>$li['id']))}" style='margin-bottom:10px;' class="follow2 button-orange"><span class="tip">已结束</span></a>
+								{/if}
+							</p>
+							<div class="decoration"></div>
+						</div>
+						{else}
+						<div class="blog-sidebar-text" onclick="window.location.href='{php echo $this->createMobileUrl('question',array('id'=>$li['id']))}'">
+							{php $quser = M('member')->getInfo($li['openid'])}
+							<h5 style="font-size:15px;">
+								{php $cate = M('category')->getInfo($li['category_id'])}
+								<span class="answer-tag">{$cate['title']}</span>
+								{$li['title']}
+							</h5>
+						</div>
+						<div class="container one-third-responsive">
+							{php $ans = M('answer')->getone(array('question_id'=>$li['id']))}
+							{php $user = M('member')->getInfo($ans['openid'])}
+							<p class="user-list-follow">
+								<a href="{php echo $this->createMobileUrl('tutor',array('openid'=>$to_member['openid']))}">
+									<img src="{php echo $to_member['avatar']}" alt="img">
+									{if $to_member['isrecommend']=='1'}<i class="icon icon_vip"></i>{/if}
+									<strong>{$to_member['realname']}
+										<em class="split-title">{$to_member['tags']}</em>
+									</strong>
+								</a> 
+								{if !empty($li['isfree'])}
+									<a data-id="{$ans['id']}" data-mode="{$ans['mode']}" data-timelong="{$ans['timelong']}" data-question_id="{$li['id']}" class="lookup follow2 button-orange">
+										<span class="tip">{php echo $this->template['limitFree']}</span>
+									</a>
+								{else}
+									{php $now = M('member')->getInfo($_W['openid'])}
+									{php $listen_log = M('listen_log')->getOpenid($li['id'],$_W['openid'])}
+									{if $ans['mode']=='0'}
+									<a data-id="{$ans['id']}" data-mode="{$ans['mode']}" data-timelong="{$ans['timelong']}" data-question_id="{$li['id']}" class="listen follow2 button-green">
+										{if empty($listen_log) || $listen_log['status'] == 0}
+											{if ($now['admin']=='1' || $li['openid']==$_W['openid'] || $li['to_openid'] == $_W['openid'])}
+											<span class="tip">播放解答 {$ans['timelong']}''</span>
+											{else}
+											<span class="tip">{php echo $this->system['listen_price']}元{php echo $this->template['learnName']} {$ans['timelong']}''</span>
+											{/if}
+										{else}
+											<span>播放解答 {$ans['timelong']}''</span>
+										{/if}
+									</a>
+									{else}
+									<a data-id="{$ans['id']}" data-mode="{$ans['mode']}" data-question_id="{$li['id']}" class="lookup follow2 button-green">
+										{if empty($listen_log) || $listen_log['status'] == 0}
+										{if ($now['admin']=='1' || $li['openid']==$_W['openid'] || $li['to_openid'] == $_W['openid'])}
+											<span class="tip">查看解答</span>
+										{else}
+											<span class="tip">{php echo $this->system['listen_price']}元{php echo $this->template['learnName']}</span>
+										{/if}
+										{else}
+											<span>查看解答</span>
+										{/if}
+									</a>
+									{/if}
+								{/if}
+							</p>
+						<div class="decoration"></div>
+						</div>
+						{/if}
+						{/loop}
+					</div>
+					{else}
+					<div class="content" style="margin-top:150px;">
+						<div class="show-no-detection device-detected">
+							<h5>关注您的人最近没有提问过哦</h5>
+							<a href="{php echo $this->createMobileUrl('home')}" class="button-small button-orange button-center" style="margin-top:20px;">返回个人中心</a>
+						</div>
+					</div>
+					{/if}
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="{MODULE_URL}public/js/loadmore.js"></script>
+	<script>
+	function callback(html){
+		$('#append').append(html);
+	}
+	initload("",callback);
+	loadmore("",callback);
+	</script>
+</body>

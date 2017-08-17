@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta charset="utf-8">
+	    <link rel="stylesheet" href="{TEMPLATE_PATH}/images/ux/iconfont.css" />
+		<link rel="stylesheet" href="{TEMPLATE_PATH}/css/animate.css" />
+		<link rel="stylesheet" href="{TEMPLATE_PATH}/css/style.css" />
+		<script src="//cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+		<script type="text/javascript" src="{TEMPLATE_PATH}/js/script.js" ></script>
+		<script src="{TEMPLATE_PATH}/js/ask_main.js?v=1"></script>
+		<title>我的收听</title>
+		<script type="text/javascript">
+		var globalObj=new Object();
+		var pindex=1;
+		var upindex=1;
+		var answer_url="{php echo $this->createMobileUrl('ask_answer')}";
+		var ask_detailurl="{php echo $this->createMobileUrl('ask_detail')}";
+		var get_user_url=location.href;
+		var my_ask_index="{php echo $this->createMobileUrl('my_ask_index')}";
+		var follow_url="{php echo $this->createMobileUrl('ask_follow_ajax')}";
+		var listen_money={$cfg['listen_money']};
+		var send_url="{php echo $this->createMobileUrl('my_ask_sendnotice')}";
+		var is_myindex=false;
+		var keyword="";
+
+		 $(function(){
+		     pageLoadCommon($(document),ajax_users_list);
+		     Follow();
+		 });
+ </script>
+	</head>
+
+	<body id="mbody">
+	<div class="main">
+		<!--专家列表 start-->
+		<div class="expertList">
+			<ul>
+			 {loop $records $guest}
+			
+				<li class="flex2">
+					<div class="avatar">
+					<a href="{php echo $this->createMobileUrl('my_ask_index',array('uid'=>$guest['id']));}">
+						<img src="{$guest['avatar']}" width="60" height="60">
+					</a>
+					</div>
+					
+					<div class="info sub">
+						<div class="indro">
+
+							<h3 class="f16">
+								<span class="green"><i class="iconfont"></i> {$guest['follow_num']}人</span>
+								<span class="yel"><i class="iconfont"></i> {$guest['pay_money']}</span>
+<a href="{php echo $this->createMobileUrl('my_ask_index',array('uid'=>$guest['id']));}">
+								   {$guest['real_name']}
+								</a> 
+							</h3>
+							<p class="mt5 f12">{$guest['user_title']}</p>
+							<p class="mt5 gray f12">
+							    {$guest['user_desc']}
+							</p>
+						</div>
+						<div class="tags mt10 clearfix">
+						{if $guest['tags']}
+						   {loop $guest['tags'] $tag}
+							<span>{$tag}</span>
+						   {/loop}
+						{/if}
+						</div>
+						<div class="mt10 btn">
+							<a href="{php echo $this->createMobileUrl('my_ask_index',array('uid'=>$guest['id']));}" class="putQ">向TA提问</a>
+							<a href="javaScript:;" data="{$guest['id']}" class="listen ml10  active">收听 <i class="iconfont">&#xe617;</i></a>
+						</div>
+					</div>
+				</li>
+				{/loop}
+				
+			</ul>
+		</div>
+		<!--专家列表 end-->
+
+
+		<div class="loading gray" style="display:none;">
+			<span class="f18"><i class="iconfont">&#xe61a;</i></span>正在加载中…
+		</div>
+		
+		<div class="noMore gray" style="display:none;">
+			没有更多内容了！
+		</div>
+
+	</div>
+	
+	
+	{template footer}
+
+	</body>
+
+</html>

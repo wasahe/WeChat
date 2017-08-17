@@ -1,0 +1,236 @@
+{template 'header'}
+<body ontouchstart="" class="platform_mobile">
+<div class="qsc-alert" style="display: none;">
+<i class="info-base64"></i><span></span>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-white icon-loading-base64"><i class="icon-white icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading-new">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-loading-base64"><i class="icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<header class="qsc-bar bar-fixed bar-tab bar-line line headroom headroom--top" id="headroom">
+<a href="{php echo $this->createMobileUrl('index')}" class="tab-item active"><span>预约到店</span></a>
+<a href="{php echo $this->createMobileUrl('homesvs')}" class="tab-item"><span>上门项目</span></a>
+<a href="{php echo $this->createMobileUrl('homewks')}" class="tab-item"><span>上门技师</span></a>
+</header>
+<div class="content-fixed top-inline">
+		<div class="lib-banner swiper-container">
+		<div class="swiper-wrapper" 
+		style="padding-left: 0px; padding-right: 0px; transform: translate3d(-1242px, 0px, 0px); transition-duration: 0.3s; width: 2070px; height: 120px;">
+			<div class="swiper-slide swiper-slide-visible swiper-slide-active">
+				<a href="javascript:void(0);"><img src="{$_W['attachurl']}{$system['banner1']}"></a>
+			</div>
+			<div class="swiper-slide swiper-slide-visible">
+				<a href="javascript:void(0);"><img src="{$_W['attachurl']}{$system['banner2']}"></a>
+			</div>
+			<div class="swiper-slide swiper-slide-visible">
+				<a href="javascript:void(0);"><img src="{$_W['attachurl']}{$system['banner3']}"></a>
+			</div>
+		</div>
+		<div class="banner-pagination">
+			<span class="swiper-pagination-switch swiper-visible-switch swiper-active-switch"></span>
+			<span class="swiper-pagination-switch"></span>
+			<span class="swiper-pagination-switch"></span>		
+		</div>
+	</div>
+</div>
+<div class="content-main bottom">
+{php $pm = 1;}	
+{loop $list $item}
+<div class="mod-project-card funding">
+	<div class="mod-project-card_header clearfix">
+		<?php $zb = unserialize($item['slocation2']); ?>
+		<div class="mod-project-card_header__avatar" onclick="getOpenLocation({$zb['lat']},{$zb['lng']},'{$item['stitle']}','{$item['saddress']}')">
+			<a href="javascript:void(0)">
+			<img class="lazy-load"
+				src="../addons/water_o2o/template/img/grey.png" data-original="{$_W['attachurl']}{$item['slogo']}"
+				style="display: inline;width: 60px;height: 60px;">
+			</a>
+		</div>
+		<div class="mod-project-card_header__user">
+			<a href="tel:{$item['smobile']}"> <span>{$item['stitle']}</span>
+				<p class="mod-project-card_header__time">{$item['smobile']}</p>
+			</a>
+		</div>
+	</div>
+	<div class="mod-project-card_content">
+		<a href="{php echo $this->createMobileUrl('shop',array('shopid'=>$item['id'],'type'=>$type))}">
+		<header class="mod-project-card_content__header">
+				<span class="ribbon labels">距 <b id="shopid{$item['id']}">未知</b></span>
+				<h2>{$item['stitle']}</h2><span>{$item['saddress']}</span>
+			</header>
+		
+		<div class="mod-project-card_content__detail">
+			<p class="description">{$item['sdesc']}</p>
+			<p>
+			<?php $simgs = unserialize($item['simgs']);?>
+			{loop $simgs $img}
+			<img class="lazy-load" data-original="{$_W['attachurl']}{$img}" 
+					src="../addons/water_o2o/template/img/grey.png"
+					width="23%" style="display: inline;">
+			{/loop}
+			</p>
+		</div>
+		</a>
+		<div class="mod-project-card_content__status">
+			<span>技师<strong>{$item['totalw']}</strong>位</span><span style="text-align:center;">服务次数<strong>{$item['totals']}</strong>次</span><span style="text-align:right;">排名<strong>No.{php echo $pm++;}</strong></span>
+		</div>
+	</div>
+</div>
+{/loop}
+		
+		<ul class="pager">
+			<li class="previous disabled"><a href="{if $left == 0}javascript:void(0);{else}{php echo $this->createMobileUrl('index',array('page'=>$left))}{/if}">←
+					上一页</a></li>
+			<li class="active"><select name="pager"
+				onchange="document.location.href=this.options[this.selectedIndex].getAttribute('rel')">
+				{loop $pagearray $item}
+				
+				<option value="{$item}" {if $item == $pageNumber}selected="selected"{/if} rel="{php echo $this->createMobileUrl('index',array('page'=>$item))}">第 {$item} 页</option>
+				{/loop}
+			</select></li>
+			<li class="next"><a href="{if $right == 0}javascript:void(0);{else}{php echo $this->createMobileUrl('index',array('page'=>$right))}{/if}">下一页 →</a></li>
+		</ul>
+	</div>
+	{template 'footer'}
+	
+	
+	{php $shareurl = $_W['siteroot'].'app/'.$this->createMobileUrl('index');}
+	{php $imgurl = $_W['attachurl'].$system['sharepic'];}
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+    <script>
+        var appid = '{$_W['account']['jssdkconfig']['appId']}';
+        var timestamp = '{$_W['account']['jssdkconfig']['timestamp']}';
+        var nonceStr = '{$_W['account']['jssdkconfig']['nonceStr']}';
+        var signature = '{$_W['account']['jssdkconfig']['signature']}';
+
+        wx.config({
+            debug: false,
+            appId: appid,
+            timestamp: timestamp,
+            nonceStr: nonceStr,
+            signature: signature,
+            jsApiList: [
+                'checkJsApi',
+                'onMenuShareTimeline',
+                'onMenuShareAppMessage',
+                'onMenuShareQQ',
+                'onMenuShareWeibo',
+                'getLocation',
+                'openLocation',
+            ]
+        });
+        
+        
+
+        var shareData = {
+            title: '{$system['sharetitle']}',
+            desc: '{$system['sharedesc']}',
+            link: '{php echo $shareurl}',
+            imgUrl: '{php echo $imgurl}'
+        };
+
+        wx.ready(function () {
+        	
+            wx.onMenuShareAppMessage({
+                title: shareData.title,
+                desc: shareData.desc,
+                link: shareData.link,
+                imgUrl: shareData.imgUrl,
+                trigger: function (res) {
+                },
+                success: function (res) {
+                },
+                cancel: function (res) {
+                },
+                fail: function (res) {
+                }
+            });
+
+            wx.onMenuShareTimeline({
+                title: shareData.title,
+                link: shareData.link,
+                imgUrl: shareData.imgUrl,
+                success: function () {
+                },
+                cancel: function () {
+                }
+            });
+        	
+            wx.getLocation({
+				type: 'gcj02',
+			    success: function (res) {
+			        var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+			        var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+			        var speed = res.speed; // 速度，以米/每秒计
+			        var accuracy = res.accuracy; // 位置精度
+			        // 更新用户坐标为实时坐标
+					doSynclnglat(longitude,latitude);
+			    },
+			    fail:function() {
+			    	alert('fail');
+			    }
+			});
+
+
+        });
+
+        wx.error(function (res) {
+        });
+        
+        function getOpenLocation(latitude,longitude,name,address){
+
+         	wx.openLocation({
+        	    latitude: latitude, // 纬度，浮点数，范围为90 ~ -90
+        	    longitude: longitude, // 经度，浮点数，范围为180 ~ -180。
+        	    name: name, // 位置名
+        	    address: address, // 地址详情说明
+        	    scale: 14, // 地图缩放级别,整形值,范围从1~28。默认为最大
+        	    infoUrl: '' // 在查看位置界面底部显示的超链接,可点击跳转
+        	});
+        }
+        
+        
+     // 获取当前用户的坐标直接更新到数据表
+    	function doSynclnglat(lng,lat) {
+    		$.ajax({
+    		 	async:true,
+    		 	type:'post',
+    		 	data:{'lat':lat,'lng':lng},
+    		 	url:"{php echo $this->createMobileUrl('shopsjl')}",
+    		 	success:function(data){
+    		 		var json = eval("("+data+")");
+		      	  	if(json.result == 1){
+		      	  		for(var i=0;i<json.jllist.length;i++){
+		      	  		$("#shopid"+json.jllist[i].id).text(json.jllist[i].jl); 
+		      	  		}
+		       		  }else{
+		       			  alert(json.msg);
+		       			  
+		       		}
+    	        }
+    		})
+    	}
+
+    </script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+<script type="text/javascript" src="../addons/water_o2o/template/js/index.min.js"></script>
+</body></html>

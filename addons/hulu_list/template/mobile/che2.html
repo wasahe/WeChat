@@ -1,0 +1,44 @@
+{template 'top'}
+
+<div id="add_title">
+<div class="add_title_a"><a href="javascript:history.go(-1);"><div class="add_title_a_1"><img src="{MODULE_URL}template/mobile/images/a.png"/></div></a></div>
+
+<div class="add_title_b">发布人找顺风车信息</div>
+
+<div class="add_title_c"><a href="{php echo $this->createMobileUrl('fengmian');}"><div class="add_title_c_1"><img src="{MODULE_URL}template/mobile/images/b.png"/></div></a></div>
+</div>
+
+
+<div id="zhaopin_one">
+<form action="" method="POST">
+
+<div class="zhaopin_one_a">出发地：</div>
+<div class="zhaopin_one_b"><input type="text" name="chestart" placeholder="请输入出发地（如：武汉）" required="required"/></div>
+
+<div class="zhaopin_one_a">目的地：</div>
+<div class="zhaopin_one_b"><input type="text" name="cheend" placeholder="请输入目的地" required="required"/></div>
+
+<div class="zhaopin_one_a">有几人：</div>
+<div class="zhaopin_one_b">
+<select name="cheperson">
+<option value="1">1人</option>
+<option value="2">2人</option>
+<option value="3">3人</option>
+<option value="4">4人</option>
+<option value="5">5人</option>
+</select>
+</div>
+
+<div class="zhaopin_one_a">联系电话：</div>
+<div class="zhaopin_one_b"><input type="text" name="tel" placeholder="请输入联系电话" required="required"/></div>
+
+<div class="zhaopin_one_a">出发日期：</div>
+<div class="zhaopin_one_b"><input type="datetime-local" name="validity" required="required"/></div>
+
+</div>
+
+<div id="add_ok"><input type="submit" value="发 布"/></div>
+
+</form>
+
+{template 'foot'}

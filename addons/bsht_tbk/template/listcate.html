@@ -1,0 +1,258 @@
+{template 'header'}
+{if $op == 'display'}
+<script src="../addons/bsht_tbk/res/js/MagicZoom.js"></script>
+<div class='container' style='padding: 0 5px 10px; margin: 0; width: 100%'>
+	<ul class="nav nav-tabs">
+		<li class="active"><a href="{php echo $this->createWebUrl('listcate');}">分类列表</a></li>
+
+		<li><a href="{php echo $this->createWebUrl('listcate',array('op'=>'post'));}">添加/编辑分类</a></li>
+	</ul>
+
+<div class="panel panel-info">
+	<div class="panel-heading"><a class="btn btn-sm btn-danger" href="{php echo $this->createWebUrl('autocate')}"><i class="fa fa-mail-forward"></i> 初始化分类</a>
+</div>
+</div>
+
+<div class="panel panel-info">
+	<!--div class="panel-heading">筛选</div>
+	<div class="panel-body">
+		<form action="./index.php" method="get" class="form-horizontal" role="form">
+			<input type="hidden" name="c" value="site" />
+			<input type="hidden" name="a" value="entry" />
+        	<input type="hidden" name="m" value="bsht_tbk" />
+        	<input type="hidden" name="do" value="listcate" />
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">关键字</label>
+				<div class="col-sm-8 col-lg-3">
+					<input class="form-control" name="keyword" id="" placeholder="输入ID、名称" type="text" value="{$_GPC['keyword']}">
+				</div>
+				
+
+                                <div class=" col-xs-12 col-sm-2 col-lg-2">
+					<button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+				</div>
+			</div>
+ 			<div class="form-group">
+			</div>
+		</form>
+		
+	</div-->
+ 
+    </div>
+<form action="./index.php" method="get" class="form-horizontal" role="form">
+			<input type="hidden" name="c" value="site" />
+			<input type="hidden" name="a" value="entry" />
+        	<input type="hidden" name="m" value="bsht_tbk" />
+        	<input type="hidden" name="do" value="listcate" />
+    <div style="padding:15px;">
+        <table class="table table-hover">
+            <thead class="navbar-inner">
+                <tr style="width:100%">
+				    <th style="width:3em;">
+                        <input type="checkbox" id="checkall"/>
+                    </th>
+					<th style="width:90px;">序号</th>
+				    <th width="80" style="text-align:center">ID</th>
+					<th width="100" style="text-align:center">图标</th>
+					<th width="auto" style="text-align:left">名称</th>
+					<th style="width:90px">首页显示</th>
+					<th style="width:90px">状态</th>
+					<th width="20%" style="text-align:right">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {loop $list $row}
+
+
+                <tr>
+				   <td><input type="checkbox" name="ids[]" value="{$row['id']}"/></td>
+                   <td><input type="text" name="displayorder[{$row['id']}]" value="{$row['displayorder']}"  style="width:50px;font-size:10px;text-align: center;"></td>
+                    <td style="text-align:center">{$row['id']}</td>
+					<td style="text-align:center">{if $row['pic']}<img src="{php echo tomedia($row['pic']);}" style="width:50px">{/if}</td>
+					<td style="text-align:left">{$row['name']}</span></td>
+					
+
+<td>{if $row['isindex']}<label class="label label-success isindex" data-id='{$row["id"]}'>首页</label>{else}<label class="label label-default isindex" data-id='{$row["id"]}'>非首页</label>{/if}</td>	
+
+
+<td>{if $row['status']}<label class="label label-success isstatus" data-id='{$row["id"]}'>启用</label>{else}<label class="label label-default isstatus" data-id='{$row["id"]}'>禁用</label>{/if}</td>	
+
+<td style="text-align:right">
+
+					
+
+					<a class="btn   btn-default" title="编辑" href="{php echo $this->createWebUrl('listcate',array('op'=>'post','id'=>$row['id']))}" ><i class="fa fa-edit"></i> 编辑</a>
+					
+					<a class="btn  btn-danger" rel="tooltip" href="javascript:void();" onclick="drop_confirm('您确定要删除吗?删除不可恢复，同时删除所有相关数据！', '{php echo $this->createWebUrl('listcate',array('op'=>'del','id'=>$row['id']))}');" title="删除"><i class="fa fa-times"></i></a>
+</td>
+                </tr>
+                {/loop}
+
+				<tr>
+	                <td colspan="9" style="text-align: left !important;">
+	                	<input name="token" type="hidden" value="{$_W['token']}" />
+	                    <!--input type="submit" class="btn btn-primary" name="submit" value="提交排序" /-->
+
+						<a data-href="{php echo $this->createWebUrl('listcate',array('op'=>'delall'))}" href="javascript:;" class="btn btn-danger mutdelete">删除选中</a>
+	                </td>
+	            </tr>
+            </tbody>
+        </table>
+        {$pager}
+    </div>
+</form>
+</div>
+<script>
+function drop_confirm(msg, url){
+            if (confirm(msg)){
+            window.location = url;
+            }
+            }
+
+require(['util'],function(util){
+
+$('.mutdelete').click(function(){
+            var url = $(this).data('href');
+            var ids = [];
+            var idss = [];
+            $('input:checkbox[name="ids[]"]').each(function() {
+                var _that = $(this)[0];
+                if(_that.checked){
+                    ids = ids.concat($(this).val());
+                }else{
+                    idss = idss.concat($(this).val());
+                }
+            });
+            console.log(ids);
+            if(confirm("您确定要删除么？")){
+                $.post(url,{ids:ids},function(data){
+                    util.message("删除成功","{php echo $_W['siteurl']}",'success');
+                },'json');
+            }
+        });
+
+
+
+
+$("#checkall").click(function(){
+            console.log('checkall');
+            $('input[name="ids[]"').each(function(){
+                var _that = $(this)[0];
+                if(_that.checked){
+                    _that.checked = false;
+                }else{
+                    _that.checked = true;
+                }
+            });
+        });
+
+
+$("#checkallbottom").click(function(){
+            $("#checkall").click();
+        });
+
+
+
+$('.isstatus').click(function(){
+	var label = $(this);
+	$.ajax({
+		url:'{php echo $this->createWebUrl("listcate",array("op"=>"status"))}',
+		type:'post',
+		data:{id:label.attr('data-id')},
+		success:function(status){
+			if(status == '1'){
+				if(label.hasClass('label-success')){
+					label.removeClass('label-success').addClass('label-default');
+					label.text('禁用');
+				}else{
+					label.removeClass('label-default').addClass('label-success');
+					label.text('启用');
+				}
+			}
+		}
+	});
+  });
+
+
+$('.isindex').click(function(){
+	var label = $(this);
+	$.ajax({
+		url:'{php echo $this->createWebUrl("listcate",array("op"=>"isindex"))}',
+		type:'post',
+		data:{id:label.attr('data-id')},
+		success:function(status){
+			if(status == '1'){
+				if(label.hasClass('label-success')){
+					label.removeClass('label-success').addClass('label-default');
+					label.text('非首页');
+				}else{
+					label.removeClass('label-default').addClass('label-success');
+					label.text('首页');
+				}
+			}
+		}
+	});
+  });
+
+
+
+});
+</script>
+{elseif $op == 'post'}
+<div class='container' style='padding: 0 5px 10px; margin: 0; width: 100%'>
+	<ul class="nav nav-tabs">
+		<li><a href="{php echo $this->createWebUrl('listcate');}">分类列表</a></li>
+
+		<li class="active"><a href="{php echo $this->createWebUrl('listcate',array('op'=>'post'));}">添加/编辑分类</a></li>
+	</ul>
+
+
+<div class="panel panel-info">
+		<div class="panel-body">
+			<form action="" method="post" class="form-horizontal" role="form">
+			<input type="hidden" name="id" value="{$row[id]}">
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">名称</label>
+				<div class="col-sm-4">
+					<input class="form-control" required="required" name="name" type="text" value="{$row['name']}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">排序</label>
+				<div class="col-sm-4">
+					<input class="form-control" name="displayorder" type="number" min="0" value="{$row['displayorder']}">
+				</div>
+			</div>
+
+            <div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">首页显示</label>
+				<div class="col-sm-4">
+					<label><input type="radio" name="isindex" checked="checked" value="0"> 否</label>
+					<label style="margin-left: 10px;"><input type="radio" name="isindex" {if $row['isindex']}checked="checked"{/if} value="1"> 是</label>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">状态</label>
+				<div class="col-sm-4">
+					<label><input type="radio" name="status" checked="checked" value="0"> 禁用</label>
+					<label style="margin-left: 10px;"><input type="radio" name="status" {if $row['status']}checked="checked"{/if} value="1"> 启用</label>
+				</div>
+			</div>
+
+            <div class="form-group" >
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">图标</label>
+                    <div class="col-sm-6 col-xs-12">
+                        {php echo tpl_form_field_image('pic', $row['pic']);}
+                        <span class="help-block"></span> </div>
+            </div>
+
+			<button type="submit" class="btn btn-primary" name="submit" value="提交">保存</button>
+			<input type="hidden" name="token" value="{$_W['token']}" />
+			</form>
+	</div>
+</div>
+
+</div>
+{/if}
+{template 'footer'}

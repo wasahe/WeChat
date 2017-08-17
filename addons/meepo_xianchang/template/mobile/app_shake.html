@@ -1,0 +1,32 @@
+{template 'app_header'}
+    <link rel="stylesheet" type="text/css" href="{MODULE_URL}template/mobile/app/css/phone_shake.css">
+    <script src="{MODULE_URL}template/mobile/app/js/jquery.mobile.events.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        var PATH_ACTIVITY = '';
+		var rotate_id = '{$rotate_id}';
+        var SHAKE_INFO = {php echo json_encode($shake_info);};
+    </script>
+    <script src="{MODULE_URL}template/mobile/app/js/base.js" type="text/javascript" charset="utf-8"></script>
+    <script src="{MODULE_URL}template/mobile/app/js/phone_paoma.js?t={php echo time()}" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<style>
+.shake-icon {
+background-image:url({if empty($shake_info['app_bg'])}{MODULE_URL}template/mobile/app/images/shake/shake0.png{else}{php echo tomedia($shake_info['app_bg'])}{/if}) !important;
+background-repeat:no-repeat;
+background-size: cover;
+width:300px;
+height:300px;
+top:50%;
+left:50%;
+margin-top:-180px;
+margin-left:-150px;
+outline:none;
+}
+</style>
+<body class="shakeing1">
+<img src="" width="0" height="0"   >
+            <audio id="ShakeAudio" src="{if empty($shake_info['shake_music'])}{MODULE_URL}template/mobile/app/images/shake/v4.mp3{else}{php echo tomedia($shake_info['shake_music'])}{/if}" preload="preload"></audio>
+        <div class="memo">听从现场指挥摇动手机</div>
+    <div class="shake-icon"></div>
+{template 'app_footer'}

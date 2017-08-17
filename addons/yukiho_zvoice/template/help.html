@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+{if empty($_W['isajax'])}
+{template 'common/top'}
+{/if}
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">帮助说明列表</h3>
+				<div class="box-tools">
+					<a href="{php echo $this->createWebUrl('help',array('act'=>'edit'))}" class="btn btn-success">新增帮助</a>
+					<a data-href="{php echo $this->createWebUrl('help',array('act'=>'mutdelete'))}" href="javascript:;" class="btn btn-danger mutdelete">删除选中</a>
+				</div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example2" class="table table-hover">
+                <thead>
+                <tr>
+                    <th style="width:3em;">
+                        <input type="checkbox" id="checkall"/>
+                    </th>
+                    <th style="width:10%;">序号</th>
+                    <th style="width:30%;">标题</th>
+                    <th style="width:20%;">日期</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {loop $list['list'] $li}
+                <tr>
+                    <td><input type="checkbox" name="ids[]" value="{$li['id']}"/></td>
+                    <td>{$li['dsporder']}</td>
+                    <td>{$li['title']}</td>
+					<td>
+						<label class="label label-success">{php echo date('Y-m-d H:i',$li['create_time'])}</label>
+					</td>
+                    <td>
+                        <a href="{php echo $this->createWebUrl('help',array('act'=>'edit','id'=>$li['id']))}" class="btn btn-success btn-sm">编辑</a>
+                        <a href="{php echo $this->createWebUrl('help',array('act'=>'delete','id'=>$li['id']))}" class="btn btn-danger btn-sm">删除</a>
+                    </td>
+                </tr>
+                {/loop}
+                </tbody>
+              </table>
+            </div>
+			<div class="box-footer">
+				{php echo $list['pager']}
+			</div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+</div>
+<!-- ./wrapper -->
+{if empty($_W['isajax'])}
+{template 'common/foot'}
+<script type="text/javascript">
+	$('.mutdelete').click(function(){
+		var url = $(this).data('href');
+		var ids = [];
+		var idss = [];
+		$('input:checkbox[name="ids[]"]').each(function() {
+			var _that = $(this)[0];
+			if(_that.checked){
+				ids = ids.concat($(this).val());
+			}else{
+				idss = idss.concat($(this).val());
+			}
+		});
+		console.log(ids);
+		if(confirm("您确定要删除么？")){
+			$.post(url,{ids:ids},function(data){
+				util.message("删除成功","{php echo $_W['siteurl']}",'success');
+			},'json');
+		}
+	});
+	$('.unmutdelete').click(function(){
+		var ids = [];
+		var idss = [];
+		$('input:checkbox[name="ids[]"]').each(function() {
+			var _that = $(this)[0];
+			if(_that.checked){
+				ids = ids.concat($(this).val());
+			}else{
+				idss = idss.concat($(this).val());
+			}
+		});
+		console.log(idss);
+		if(confirm("您确定要删除么？")){
+			$.post(url,{ids:idss},function(data){
+				util.message("删除成功","{php echo $_W['siteurl']}",'success');
+			},'json');
+		}
+	})
+	$("#checkall").click(function(){
+		console.log('checkall');
+		$('input[name="ids[]"').each(function(){
+			var _that = $(this)[0];
+			if(_that.checked){
+				_that.checked = false;
+			}else{
+				_that.checked = true;
+			}
+		});
+	});
+</script>
+{/if}

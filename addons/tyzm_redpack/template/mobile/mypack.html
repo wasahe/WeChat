@@ -1,0 +1,147 @@
+{template 'header'}
+<style>
+.box{
+	position: relative;
+	width: 100%;
+	height: auto;
+	margin: 0px;
+	overflow: hidden;
+}	
+.redty{
+	position: absolute;
+	padding: 4px 6px;
+	font-size: 12px;
+	color: white;
+	top: 16px;
+	right: 16px;
+	border-radius: 2px;
+	background: rgba(0,0,0,.6);
+}
+.plus_box{
+	position: absolute;
+	height: 27px;
+	font-size: 12px;
+    LINE-HEIGHT: 27PX;
+	color: white;
+	top: 16px;
+	padding:0 5px;
+	left: 16px;
+	border-radius: 2px;
+	background: rgba(0,0,0,.6);
+}
+.div-img{
+	position: relative;
+	width: 72px;
+	height: 72px;
+	margin: 0 auto;
+	overflow: hidden;
+	border: 3px solid #FF5500;
+	border-radius: 50%;
+}
+
+.margin-center{
+	position: relative;
+	height: auto;
+	width: auto;
+	margin: 0 auto;
+}
+
+.list{
+	padding: 16px;
+	padding-right: 35px;
+	border-bottom: 1px solid #EEEEEE;
+}
+
+.list:hover{
+	background-color: #EEEEEE;
+}
+
+	</style>
+</head>
+<body style="background-color: #EBEBEB;">
+<!--[if lte IE 9]>
+<p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a
+  href="http://browsehappy.com/" target="_blank">升级浏览器</a>
+  以获得更好的体验！</p>
+<![endif]-->
+
+<header class="box am-padding-top">
+	<div class="div-img">
+					<img src="{$userinfo['avatar']}" width="100%" height="100%">
+	</div>
+	<div class="box am-text-center am-text-sm" style="margin-top: 16px;">{$userinfo['nickname']}共发出</div>
+	<div class="box am-text-center am-text-xxl" style="color: #FF5500;">￥{$amount}</div>
+	<div class="box" style="line-height: 40px; margin-top: 30px; padding: 0px 16px;">
+		<span class="am-fl am-text-xs">红包<span style="color: #FF5500;">{$redpacktotal}</span>个</span>
+	</div>
+	
+</header>
+
+<div id="list_content" class="am-g" style="position: relative; overflow: hidden; background-color: white; border-top: 1px solid #CCCCCC;">
+</div>
+
+<div id="list_more" class="box" style="margin: 16px 0px; text-align: center;"><span></span></div>
+
+<!--[if lt IE 9]>
+<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+<![endif]-->
+
+<script type="text/javascript">
+wx.ready(function () {
+		wx.hideOptionMenu();
+});
+/*获取我的红包方法*/
+var limit = 1;
+function get_list(){
+ 
+	$("#list_more").html('<div class="am-modal-bd am-text-secondary"><span class="am-icon-spinner am-icon-spin"></span> Loading...</div>');
+	$.ajax({
+	    type : "post",
+	    url : "{php echo $this->createMobileUrl('Mypack',array('ty'=>'myredpackajax'))}",
+	    data : {
+	    	limit:limit
+	    },
+		dataType : "json",		
+	    success : function(data) {
+	    	if(data.status==200){
+						var list = data.content;
+						var content = '';
+						for(var i=0; i<list.length; i++){
+							
+							content = '<div onclick="window.location.href=\''+list[i]['url']+'\'" class="am-u-sm-12 list">'
+							+'<img src="'+list[i]['addimg']+'" width="60" height="60" style="float: left;margin-left: -10px;margin-right: 5px;margin: 5px 5px 5px -10px;">'
+							+'<div><span>'+list[i]['ad_name']+'的红包</span>'
+							+'<span class="am-text-sm am-fr">'+list[i]['pack_money']+'元</span></div><div>'
+							+'<span class="am-text-xs" style="color: #CCCCCC;">'+list[i]['createtime']+'</span>'
+							+'<span class="am-text-xs am-fr" style="color: #CCCCCC;">已领取'+list[i]['get_num']+'/'+list[i]['pack_num']+'个</span></div>'
+							+'<div style="font-size: 12px; color: #AAAAAA;">'
+							+'<span>访问数：'+list[i]['pv_num']+'</span>&nbsp;&nbsp;&nbsp;'
+							+'<span>转发数：'+list[i]['forward_num']+'</span>&nbsp;&nbsp;&nbsp;'
+							+'<span>广告点击：'+list[i]['adclick_num']+'</span></div>'
+							+'<div style="position: absolute; top: 16px; right: 10px; color: #CCCCCC; line-height: 64px;"><i class="am-icon-chevron-right"></i></div></div>';
+							$("#list_content").append(content);
+						}
+						if(list.length==10){
+							$("#list_more").html('<span class="am-text-secondary" onclick="get_list();">查看更多</span>');
+						}else{
+							$("#list_more").html('<span></span>');
+						}
+						limit++;		
+		    }
+	    	else if(data.status==-103){
+	    		$("#list_more").html('<span>没有更多红包咯！</span>');
+	    	}	    	
+	    },
+	    error : function(xhr, type) {
+
+	    }
+	});
+}
+get_list();
+</script><ul class="am-nav am-nav-pills am-nav-justify am-text-xs" style="position: fixed;    left: 0;    bottom: 0;    border-top: 1px solid rgba(226, 225, 225, 0.65);    background: #fff;">  <li><a href="{php echo $this->createMobileUrl('index')}"><span class="am-icon-home am-icon-sm"></span><br/>首页</a></li> 
+{if $issend==1}
+ <li><a href="{php echo $this->createMobileUrl('plus')}"style="color:#f00"><i class="am-icon-send am-icon-sm"></i><br/>我也发</a></li>  <li class="am-active"><a href="{php echo $this->createMobileUrl('Mypack')}"><i class="am-icon-pie-chart am-icon-sm"></i><br/>已发红包</a></li> 
+{/if}
+ <li><a href="{php echo $this->createMobileUrl('Mypack',array('ty'=>'lucky'))}"><i class="am-icon-user am-icon-sm"></i><br/>我的红包</a></li></ul>
+{template 'footer'}

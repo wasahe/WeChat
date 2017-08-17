@@ -1,0 +1,110 @@
+{template 'header'}
+<style>
+.header{
+	position: relative;
+	width: 100%;
+	min-height: 56px;
+	height: auto;
+	padding: 0px 16px;
+}
+.but_box{width: 80%;
+margin: 50% 10% 0 10%;}
+.am-btn{padding: 0.8em 1em;}
+
+</style>
+</head>
+<body style="">
+
+<div id="list_content"></div>
+
+<div id="list_more" class="box" style="margin-top: 16px; text-align: center;margin-bottom: 40px;"><span class="am-text-secondary" onclick="get_list();">查看更多</span></div>
+
+<style>
+.redlist{position:relative;border-bottom: 1px solid #EFEFEF;padding: 10px;}
+.redlist:hover{background:#EFEFEF}
+.redadimg{max-height:200px;width:100%}
+.redpackkey{ color: #FD0000; margin:10px 0 5px 0}
+.redpaktip{color: #333;margin:5px 0;    font-size: 1rem;}
+.redpackwishing{color: #333;margin:5px 0;    font-size: 1rem;}
+.redpackuser{color: #333;margin:5px 0;}
+.redpackuser img{width:20px; height:20px; margin-right:5px;}
+</style>
+
+<ul class="am-nav am-nav-pills am-nav-justify am-text-xs" style="position: fixed;    left: 0;    bottom: 0;    border-top: 1px solid rgba(226, 225, 225, 0.65);    background: #fff;">
+  <li class="am-active"><a href="{php echo $this->createMobileUrl('index')}"><span class="am-icon-home am-icon-sm"></span><br/>首页</a></li>
+  {if $issend==1}
+  <li><a href="{php echo $this->createMobileUrl('plus')}" style="color:#f00"><i class="am-icon-send am-icon-sm"></i><br/>我也发</a></li>
+  <li><a href="{php echo $this->createMobileUrl('Mypack')}"><i class="am-icon-pie-chart am-icon-sm"></i><br/>已发红包</a></li>
+  {/if}
+  <li><a href="{php echo $this->createMobileUrl('Mypack',array('ty'=>'lucky'))}"><i class="am-icon-user am-icon-sm"></i><br/>我的红包</a></li>
+</ul>
+
+
+<script type="text/javascript">
+wx.ready(function () {
+	wx.showOptionMenu();
+});
+
+/*获取红包记录方法*/
+
+
+
+
+
+
+
+var limit = 1;
+function get_list(){	
+	$("#list_more").html('<div class="am-text-secondary"><span class="am-icon-spinner am-icon-spin"></span> 卖命加载红包中...</div>');
+	$.ajax({
+	    type : "post",
+	    url : "{php echo $this->createMobileUrl('Index',array('ty'=>'redpackajax'))}",
+	    data : {
+	    	limit:limit,
+	    },
+        dataType : "json",		
+	    success : function(data) {
+	    	if(data.status==200){
+						var list = data.content;
+						var content = '';
+						$("#list_content").append(list);
+						for(var i=0; i<list.length; i++){
+							content = '<a href="'+list[i]['url']+'"><div class="am-text-center redlist">'
+									+'<img src="'+list[i]['adbg']+'"  class="am-radius redadimg"/>'
+									+'<p class="am-text am-text-xl redpackkey">'+list[i]['key']+'</p>'
+									+'<div class="am-text am-text-sm redpaktip">'
+									+'<a class="am-badge am-badge-secondary am-radius"><i class="am-icon-filter"></i> '+list[i]['pack_type']+'</a> '
+									+'<span class="am-badge am-badge-success am-round"><i class="am-icon-money"></i>￥'+list[i]['pack_money']+'</span> '
+									+'<span class="am-badge am-badge-warning am-round"><i class="am-icon-fire"></i> '+list[i]['hot_num']+'</span> ';
+							if(list[i]['status']==2){
+							    content +='<span class="am-badge am-radius"><i class="am-icon-codiepie"></i>  已抢完</span></div>';
+							}else{
+								content +='<span class="am-badge am-badge-primary am-radius"><i class="am-icon-codiepie"></i>  热抢中</span></div>';
+							}		
+									
+							content +='<div class="am-text am-text-sm redpackwishing">'+list[i]['wishing']+'</div>'
+									+'<div class="am-text am-text-sm redpackuser">'
+									+'<img src="'+list[i]['addimg']+'" class="am-circle" >'+list[i]['ad_name']+'</div></a>';
+							
+							$("#list_content").append(content);
+						}
+						if(list.length==10){
+							$("#list_more").html('<span class="am-text-secondary" onclick="get_list();">查看更多</span>');
+						}else{
+							$("#list_more").html('<span></span>');
+						}
+						limit++;		
+		    }else if(data.status==-103){
+	    		$("#list_more").html('<span>没有更多记录！</span>');
+	    	}else{
+			    $("#list_more").html('<span>没有更多记录！</span>');
+			}    	
+	    },
+	    error : function(xhr, type) {
+
+	    }
+	});
+}
+get_list();
+</script>
+{template 'footer'}

@@ -1,0 +1,135 @@
+{template 'common/header'}
+<link rel="stylesheet" href="../addons/kuaiwei_xxcx/images/flow/css/ystep.css">
+
+<div class="panel panel-primary">
+<div class="panel-heading" style="text-align: center;font-size: 18px;">
+        【{$companyname}】进度示意图
+    </div>
+    <div class="panel-body">
+        <!--  <div style="text-align: center;font-size: 24px;color: #d9534f;margin-top: 15px;">进度示意图</div> -->
+        <div class="ystep1" style="text-align: center;margin-top: 30px;margin-bottom: 30px;"></div>
+    </div>
+</div>
+
+
+<div class="panel panel-primary">
+<div class="panel-heading" style="text-align: center;font-size: 18px;">
+        进度步骤操作>>>>>
+    </div>
+    <div class="panel-body">
+        <div class="form-group col-sm-12">
+        <!-- <div style="font-size: 16px;margin-top: 50px;">进度步骤操作：</div> -->
+        <form action="" method="post" class="form" enctype="multipart/form-data" style="margin-top: 15px;">
+                {loop $lc $index $row}
+                {if $row['state'] == '已完成'}
+                    <p style="float: left;margin-right: 15px;line-height: 24px;font-size: 14px;"><input type="checkbox" id="lc{$index}" data-sn="{php echo $index+1}" name="lc" value="{$row['id']}" checked="checked" disabled="disabled"  />{$row['lcname']}</p>
+                {else}
+                    <p style="float: left;margin-right: 15px;line-height: 24px;font-size: 14px;"><input type="checkbox" id="lc{$index}" data-sn="{php echo $index+1}" name="lc" value="{$row['id']}"   />{$row['lcname']}</p>
+                {/if}
+                {/loop}
+
+        </form>
+        </div>
+
+        <div class="form-group col-sm-12">
+            <input type="submit" id="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+        </div>
+
+    </div>
+</div>
+
+
+
+
+<!--<script>-->
+
+
+    <!-- 引入jquery -->
+    <script src="../addons/kuaiwei_xxcx/images/flow/js/jquery.min.js"></script>
+<!-- 引入ystep插件 -->
+<script src="../addons/kuaiwei_xxcx/images/flow/js/ystep.js"></script>
+<script>
+    //根据jQuery选择器找到需要加载ystep的容器
+    //loadStep 方法可以初始化ystep
+
+    $(".ystep1").loadStep({
+        //ystep的外观大小
+        //可选值：small,large
+        size: "small",
+        //ystep配色方案
+        //可选值：green,blue
+        color: "green",
+        //ystep中包含的步骤
+
+    steps:
+            [
+                        {loop $lc $row}
+                {
+            //步骤名称
+            title: "{$row['lcname']}",
+        },
+                        {/loop}
+    ]
+
+    });
+
+
+    $(".ystep1").setStep({$lct});
+
+//    $("#submit").bind("click", function() {
+//        $.post('{php echo $this->createWebUrl('update',array('state'=>1))}',function(data){
+//
+//        });
+//    });
+    $("#submit").bind("click",function(){
+        var check = $("input:checked");
+        if(check.length<1){
+            alert('请选择要完成的记录!');
+            return false;
+        }
+//        if( confirm("确认要完成选择的记录?")) {
+        var id = new Array();
+        var isok = 1;
+        var sn = new Array();
+        check.each(function(i){
+            id[i] = $(this).val();
+            sn[i] = $(this).data('sn');
+            console.log(sn);
+
+            if(sn[i]-1 != i){
+                alert("请勿跳过操作");
+                isok = 0;
+            }
+        });
+//        console.log(isok);
+
+        if (isok == 1)
+        {
+                $.post('{php echo $this->createWebUrl('update')}', {idArr:id},function(data){
+                if (data.errno ==0)
+                {
+                    location.reload();
+                } else {
+                    alert(data.error);
+                }
+
+            },'json');
+        }
+});
+
+
+
+
+//    var checkedObj = [];
+//        if($("input[name='lc']:checkbox:checked").each(function(){
+//                    var $this = $(this);
+//                    checkedObj.push($this.val());
+//                    $.post('{php echo $this->createWebUrl('update')}',{idArr:checkedObj});
+//                }));
+//        console.log(checkedObj)
+
+
+
+</script>
+
+{template 'common/footer'}

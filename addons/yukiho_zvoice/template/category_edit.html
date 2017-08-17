@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+{if empty($_W['isajax'])}
+{template 'common/top'}
+{/if}
+  <link rel="stylesheet" href="{MODULE_URL}assets/admin/css/select2.min.css">
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <!-- right column -->
+        <div class="col-md-12">
+          <!-- Horizontal Form -->
+          <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">分类信息</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+           <form action="" method="post"  class="form-horizontal" enctype="multipart/form-data">
+              <div class="box-body">
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">分类名</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="title" placeholder="" value="{$item['title']}" class="form-control"/>
+					<span class="help-block"></span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">分类图标</label>
+                  <div class="col-sm-10">
+                    {php echo tpl_form_field_image('image',$item['image'])}
+					<span class="help-block"></span>
+                  </div>
+                </div> 
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">顺序</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="displayorder" placeholder="" value="{$item['displayorder']}" class="form-control"/>
+                    <span class="help-block"></span>
+                  </div>
+                </div>
+                <div class="form-group">
+					<label class="col-sm-2 control-label">首页展示</label>
+					  <div class="col-sm-10">
+						<label class="radio-inline">
+							<input type="radio" name="ismain" value="1" {if $item['ismain']==1}checked="checked"{/if}> 是
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="ismain" value="0" {if $item['ismain']==0}checked="checked"{/if}> 否
+						</label>
+						<span class="help-block">用于首页展示分类，选是请设置图标</span>
+					</div>
+                </div>
+              </div>   
+			  <div class="box-footer">
+                <input type="hidden" name="token" value="{$_W['token']}" />
+                <button type="submit" class="btn btn-info center-block">写好了</button>
+              </div>
+            </form>
+          </div>
+          <!-- /.box -->
+        </div>
+        <!--/.col (right) -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+{if empty($_W['isajax'])}
+{template 'common/foot'}
+<script src="{MODULE_URL}assets/admin/js/select2.full.min.js"></script>
+<script type="text/javascript">	
+	require(['bootstrap']);
+	$(document).ready(function() {
+		var labels = ',';
+		$("#category_id").select2({
+			tags: true,
+			maximumSelectionLength:4
+		});
+		
+		$("#category_id").on('change keyup',function(){
+			labels = ',';
+			$("#category_id option:selected").each(function(){
+				labels += $(this).val()+',';
+			});
+			$("#labels").val(labels);
+		});
+	});
+	$('.js-clip').each(function(){
+		util.clip(this, $(this).attr('data-url'));
+	});
+</script>
+{/if}

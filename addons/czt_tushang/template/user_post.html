@@ -1,0 +1,83 @@
+{template 'common/header'}
+<div class="main">
+    <div class="alert alert-info">
+    <img width="50px" src="{$user['headimgurl']}" alt="">&nbsp;&nbsp;&nbsp; {$user['nickname']} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;余额：{$user['balance']}&nbsp;&nbsp;&nbsp;收入：{$user['income']} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{if ($user['status']==1)}<a class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" href="{php echo $this->createWebUrl('user', array( 'uid' => $user['uid'], 'op' => 'block'))}" onclick="return confirm('确认要屏蔽该用户吗？');return false;" title="屏蔽"><i class="fa fa-times"></i> 屏蔽</a>{else}<a class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" href="{php echo $this->createWebUrl('user', array( 'uid' => $user['uid'], 'op' => 'resume'))}" onclick="return confirm('确认要恢复该用户吗？');return false;" title="恢复"><i class="fa fa-undo"></i> 恢复</a>{/if}
+    </div>
+    <ul class="nav nav-tabs">
+        <li {if ($type=='image')}class="active"{/if}><a href="{php echo $this->createWebUrl('user_post', array( 'uid' => $uid,'type'=>1))}">Ta发布的图片</a></li>
+        <li {if ($type=='video')}class="active"{/if}><a href="{php echo $this->createWebUrl('user_post', array( 'uid' => $uid,'type'=>2))}">Ta发布的视频</a></li>
+    </ul>
+    <div class="panel panel-default">
+        <div class="panel-body table-responsive">
+        {if ($type=='video')}
+            <table class="table table-hover">
+                <thead class="navbar-inner">
+                    <tr>
+                        <th style="width:50px;">ID</th>
+                        <th>标题</th>
+                        <th style="width:120px;">缩略图</th>
+                        <th style="width:60px;">价格</th>
+                        <th style="width:72px;">打赏人数</th>
+                        <th style="width:130px;">创建时间</th>
+                        <th style="width:322px;">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {loop $list $row}
+                    <tr>
+                        <td>{$row['id']}</td>
+                        <td>{$row['title']}</td>
+                        <td><img src="{$settings['qiniu']['host']}/video/{$row['thumb']}" width="80px;" /></td>
+                        <td>{$row['price']}</td>
+                        <td>{$row['show_times']}</td>
+                        <td>{php echo date("Y-m-d H:i", $row['create_time'])}</td>
+                        <td>
+                            <a target="_blank" href="{php echo $this->createWebUrl('play_video', array('src' => $settings['qiniu']['host'].'/video/'.$row['url']))}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="查看原视频" ><i class="fa fa-search"></i> 原视频</a>
+                            <a class="btn btn-default btn-sm" href="{php echo $this->createWebUrl('edit', array('type' => 2, 'id' => $row['id']))}"><i class="fa fa-edit"></i> 修改数据</a>
+                            <a href="{php echo $this->createWebUrl('record', array('op' => 'record','type'=>2, 'id' => $row['id']))}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="打赏记录" ><i class="fa fa-thumbs-up"></i> 打赏记录</a>
+                            <a href="{php echo $this->createWebUrl('video', array('op' => 'delete', 'id' => $row['id']))}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="删除" onclick="return confirm('此操作不可恢复，确认删除吗？');"><i class="fa fa-times"></i> 删除</a>
+                        </td>
+                    </tr>
+                    {/loop}
+                </tbody>
+            </table>
+        {else}
+            <table class="table table-hover">
+                <thead class="navbar-inner">
+                    <tr>
+                        <th style="width:50px;">ID</th>
+                        <th>标题</th>
+                        <th style="width:120px;">缩略图</th>
+                        <th style="width:60px;">价格</th>
+                        <th style="width:72px;">打赏人数</th>
+                        <th style="width:130px;">创建时间</th>
+                        <th style="width:310px;">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {loop $list $row}
+                    <tr>
+                        <td>{$row['id']}</td>
+                        <td>{$row['title']}</td>
+                        <td><img src="{$settings['qiniu']['host']}{$row['url']}{if ($row['qiniu_stat']==1)}!icon{else}?imageMogr2/thumbnail/640x/blur/50x40/gravity/North/crop/120x120{/if}" width="80px;" /></td>
+                        <td>{$row['price']}</td>
+                        <td>{$row['show_times']}</td>
+                        <td>{php echo date("Y-m-d H:i", $row['create_time'])}</td>
+                        <td>
+                            <a target="_blank" href="{$settings['qiniu']['host']}{$row['url']}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="查看图片" ><i class="fa fa-search"></i> 看图</a>
+                            <a class="btn btn-default btn-sm" href="{php echo $this->createWebUrl('edit', array('type' => 1, 'id' => $row['id']))}"><i class="fa fa-edit"></i> 修改数据</a>
+                            <a href="{php echo $this->createWebUrl('record', array('op' => 'record', 'id' => $row['id']))}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="打赏记录" ><i class="fa fa-thumbs-up"></i> 打赏记录</a>
+                            <a href="{php echo $this->createWebUrl('image', array('op' => 'delete', 'id' => $row['id']))}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="删除" onclick="return confirm('此操作不可恢复，确认删除吗？');"><i class="fa fa-times"></i> 删除</a>
+                        </td>
+                    </tr>
+                    {/loop}
+                </tbody>
+            </table>
+        {/if}
+        </div>
+    </div>
+    {$pager}
+</div>
+</div>
+{template 'common/footer'}
+<!---bbs_heirui_cn-->

@@ -1,0 +1,263 @@
+<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta name="viewport" content="width=750, target-densitydpi=device-dpi, user-scalable=no">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>{$reply['title']}</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link href="" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../addons/haoman_scene/images/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="../addons/haoman_scene/images/index.css?v=234233">
+    <style type="text/css">
+        .start {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 100;
+            display: none;
+            -webkit-animation: slideInUp .6s linear 0s both;
+            background: url({if empty($reply['start_bg'])}../addons/haoman_scene/images/startbg.jpg{else}{php echo tomedia($reply['start_bg'])}{/if}) center center no-repeat;
+            background-color: rgba(0, 0, 0, 0.85);
+            background-size: 100% auto;
+        }
+
+        
+        
+    </style>
+</head>
+
+<body>
+
+
+
+    <div id="loading">
+        <p><img src="../addons/haoman_scene/images/preloader.gif" width="15%" alt="" /></p>
+    </div>
+    <div class="wrap" id="wrap">
+    {if $reply['scene'] == 0}
+        <div class="cover">
+            <div class="cover_p1">
+             <div class="cover_bg"><img src="{if empty($reply['p1_bg'])}../addons/haoman_scene/images/p1bg.jpg{else}{php echo tomedia($reply['p1_bg'])}{/if}"></div>
+                <div class="title">
+                    <img class="w1" src="{if empty($reply['p1_top'])}../addons/haoman_scene/images/w1.png{else}{php echo tomedia($reply['p1_top'])}{/if}">
+                </div>
+                <div class="word"><img src="{if empty($reply['p1_bottom'])}../addons/haoman_scene/images/w6.png{else}{php echo tomedia($reply['p1_bottom'])}{/if}" style="width: 45%;"></div>
+                <div class="tip"><img src="../addons/haoman_scene/images/tip.png"></div>
+            </div>
+            <div class="cover_p2">
+            <div class="cover_bg"><img src="{if empty($reply['p2_bg'])}../addons/haoman_scene/images/p2bg.jpg{else}{php echo tomedia($reply['p2_bg'])}{/if}"></div>
+                <div class="title">
+                    <img class="w1" src="{if empty($reply['p2_top'])}../addons/haoman_scene/images/p21.png{else}{php echo tomedia($reply['p2_top'])}{/if}">
+                    <img class="w2" src="{if empty($reply['p2_bottom'])}../addons/haoman_scene/images/p22.png{else}{php echo tomedia($reply['p2_bottom'])}{/if}">
+                </div>
+                <div class="tip"><img src="../addons/haoman_scene/images/tip.png"></div>
+            </div>
+
+
+            <div class="cover_p3">
+            <div class="cover_bg"><img src="{if empty($reply['p3_bg'])}../addons/haoman_scene/images/bookbg.jpg{else}{php echo tomedia($reply['p3_bg'])}{/if}"></div>
+                <div class="booking_title"><img src="{if empty($reply['p3_top'])}../addons/haoman_scene/images/title2.png{else}{php echo tomedia($reply['p3_top'])}{/if}"></div>
+                {if $reply['p3_isphone'] !=0}
+                <div class="booking_con">
+                    <div class="click">
+                        {if $reply['p3_isphone'] ==1 || $reply['p3_isphone'] ==3 || $reply['p3_isphone'] ==5}
+                        <div class="c1">
+                            <p>直接拨打预约热线<span><img src="../addons/haoman_scene/images/tel.png">一键拨号</span></p>
+                        </div>
+                        {/if}
+                        {if $reply['p3_isphone'] ==2 || $reply['p3_isphone'] ==3 || $reply['p3_isphone'] ==4 || $reply['p3_isphone'] ==5}
+                        <div class="c2">
+                            <p>在线提交报名信息<span><img src="../addons/haoman_scene/images/pen.png">立即填写</span></p>
+                        </div>
+                        {/if}
+                    </div>
+                </div>
+                {/if}
+
+                <div class="tip"><img src="../addons/haoman_scene/images/tip.png"></div>
+              
+            </div>
+        </div>
+
+        {/if}
+
+        <div class="start" {if $reply['scene'] != 0}style="display: block"{/if}>
+           <div class="title"><img src="{if empty($reply['start_top'])}../addons/haoman_scene/images/title1.png{else}{php echo tomedia($reply['start_top'])}{/if}"></div>
+            <div class="btn">
+                <div class="btn1"><span>&gt;</span>如何参与<span>&lt;</span></div>
+                {if !empty($reply['http_scene_url'])}<div class="btn2"><img src="{if empty($reply['start_dec'])}../addons/haoman_scene/images/btn.png{else}{php echo tomedia($reply['start_dec'])}{/if}"></div>{/if}
+            </div>
+        </div>
+    </div>
+    <div class="rule">
+        <div class="rule_title"><img src="../addons/haoman_scene/images/title3.png"></div>
+        <div style="font-size: 100%;width: 92%;text-align: left;color: #f7d979;margin-bottom: 30px;">
+        {$reply['rules']}
+        </div>
+        <div class="rule_btn"><img src="../addons/haoman_scene/images/btn3.png"></div>
+    </div>
+
+    {if $reply['scene'] == 0}
+    <div class="booking_put">
+        <div class="booking_put_off"><img src="../addons/haoman_scene/images/off.png"></div>
+        <div class="booking_put_title"><img src="../addons/haoman_scene/images/title5.png"></div>
+        <div class="booking_put_con">
+            <input class="name" type="text" placeholder="姓名">
+            <input class="tel" type="tel" placeholder="电话" maxlength="11">
+           {if $reply['p3_isphone'] == 4 || $reply['p3_isphone'] == 5} <input class="addr" type="text" placeholder="地址">{/if}
+        </div>
+        <div class="booking_put_btn"><img src="../addons/haoman_scene/images/btn4.png"></div>
+    </div>
+    {/if}
+
+    <div class="share">
+        <img src="../addons/haoman_scene/images/share.png">
+    </div>
+
+    <div class="gz" {if $nogz == 1}style="display: block"{/if}>
+        <img style="width: 70%;margin-top: 30%;" src="{php echo tomedia($addad_img)}">
+        <p style="color: #f56203;font-size: 125%;width: 70%;margin-top: 5%;">{$addad_addetails}</p>
+    </div>
+
+    <div class="nothingbg">等待中...</div>
+    <div class="pw">
+        <p id="pwtitle" style="font-size: 125%;">等待中...</p>
+        <p>
+            <div style="margin-top: 10px;margin-bottom: 20px;width: 80%;height:60px;line-height: 60px;;border-radius: 100px;background: #fff;margin-left: 10%">
+                <input id="title" type="text" style="margin-left: 10px;border-radius: 100px;margin-bottom: 4px;height: 54px;width: 65%;background: #fff;border: none;font-size: 125%" placeholder="请使用口令获取红包！">
+                <span id="btnx" style="display: inline-block;text-align: center;color:#fff;font-weight:bold;width:22%;height:56px;background: red;border-radius: 50px;line-height: 56px;float: right;margin-top: 2px;margin-right: 2px;">确定</span>
+            </div>
+        </p>
+    </div>
+
+    {if !empty($reply['start_music'])}
+    <div class="music_btn"><img src="../addons/haoman_scene/images/play.png" alt="" /></div>
+    <audio preload="auto" loop style="width:0;height:0" id="audio">
+        <source src="{php echo tomedia($reply['start_music'])}" type="audio/mpeg" />
+    </audio>
+    {/if}
+
+</body>
+<script type="text/javascript">
+    {if !empty($reply['start_music'])}
+    var ismusic = 1;
+    {else}
+    var ismusic = 0;
+    {/if}
+    var indexUrl ="{php echo $this->createMobileUrl('index', array('id' => $rid))}";
+    var httpsceneurl ="{$reply['http_scene_url']}";
+    var PostIsad = "{php echo $this->createMobileUrl('isScene', array('id' => $rid,'from_user'=>$page_from_user,'isonce'=>0))}";
+    var information = "{php echo $this->createMobileUrl('information', array('id' => $rid,'from_user'=>$page_from_user))}";
+    var ksmobile = "{$reply['p3_phone']}";
+    {if $reply['is_hbad']==1}var ishbad =1; {else} var ishbad = 0; {/if}
+</script>
+<script src="../addons/haoman_scene/images/jquery-2.1.3.min.js"></script>
+<script src="../addons/haoman_scene/images/jquery.imgpreload.min.js"></script>
+<script src="../addons/haoman_scene/images/touch.js"></script>
+<script src="../addons/haoman_scene/images/index.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    var hav = '1';
+    {if $reply['isonce'] == 0}
+        {if $fans['isad'] != 0}
+            var once = '0';
+        {else}
+            var once = '1';
+        {/if}
+    {else}
+        {if $reply['scene'] == 1}
+            var once = '0';
+        {else}
+            var once = '1';
+        {/if}
+    {/if}
+    if (once == 1) {
+        $('.start').hide();
+    } else {
+        if (hav == 2) {
+            $('.start').show();
+            $('.cover').hide();
+        } else if (hav == 1) {
+            $('.start').show();
+            $('.cover').hide();
+            //$(".booking").fadeIn();
+        }
+    }
+
+})
+</script>
+
+<!-- 微信分享设置 -->
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+
+    wx.config({
+       debug:false,
+       appId: '{$package["appId"]}',
+       timestamp: '{$package["timestamp"]}',
+       nonceStr: '{$package["nonceStr"]}',
+       signature: '{$package["signature"]}',
+       jsApiList: [
+        {if $reply['share_type'] != 2}'onMenuShareTimeline','onMenuShareAppMessage','onMenuShareWeibo'{/if}
+       ]
+    });
+    var sharedata = {
+        "imgUrl" : "{$shareimg}",
+        "link" : "{$sharelink}",
+        "desc" : "{$sharedesc}",
+        "title" : "{$sharetitle}"
+    };
+
+    wx.ready(function () {
+
+        {if $reply['share_type'] == 2}
+        wx.hideOptionMenu();
+        {else if $reply['share_type'] == 1}
+        wx.showOptionMenu();
+        wx.onMenuShareAppMessage(sharedata);
+        wx.onMenuShareTimeline({
+            title: '{$sharetitle}', // 分享标题
+            link: '{$sharelink}', // 分享链接
+            imgUrl: '{$shareimg}', // 分享图标
+            success: function () { 
+                var submitData = {
+                    isshare: 1,
+                };
+                $.post('{php echo $this->createMobileUrl('setshare', array('id' => $rid,'from_user'=>$page_from_user))}', submitData, function(data) {
+                   // alert(data.success+data.msg);
+                    if (data.success == 1) {
+                        alert("成功分享到朋友圈，您可以点击下方按钮参与活动了！");
+                    }else {
+                        alert(data.msg);
+                        return
+                    }
+                },"json")
+            },
+            cancel: function () { 
+                alert("您没有成功分享到朋友圈！");
+            }
+        });
+        wx.onMenuShareQQ(sharedata);
+        wx.onMenuShareWeibo(sharedata);
+        {else}
+        wx.showOptionMenu();
+        wx.onMenuShareAppMessage(sharedata);
+        wx.onMenuShareTimeline(sharedata);
+        wx.onMenuShareQQ(sharedata);
+        wx.onMenuShareWeibo(sharedata);
+        {/if}
+    });
+
+</script>
+
+
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+{if empty($_W['isajax'])} 
+{template 'common/top'} 
+{/if}
+  <style type="text/css">
+  .table-responsive { overflow: visible; } 
+  .table-responsive .dropdown-menu, .table-responsive .dropdown-toggle { position: static !important; }
+  </style>
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Main content -->
+    <section class="content">
+		<div class="row"> 
+        {php $total = M('follow')->totalid()}
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-aqua"><i class="fa fa-plus"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">关注总数</span>
+              <span class="info-box-number">{$total['all']['sum']}</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-red"><i class="fa fa-check-square-o"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">今日新增</span>
+              <span class="info-box-number">{$total['day']['sum']}</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+ 
+        <!-- fix for small devices only -->
+        <div class="clearfix visible-sm-block"></div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-green"><i class="fa fa-line-chart"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">本周新增</span>
+              <span class="info-box-number">{$total['week']['sum']}</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-yellow"><i class="fa fa-flag-checkered"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">本月新增</span>
+              <span class="info-box-number">{$total['month']['sum']}</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+				<h3 class="box-title">问题列表</h3>
+				<div class="box-tools">
+					<a href="{php echo $this->createWebUrl('follow',array('act'=>'edit','to_openid'=>$to_openid))}" class="btn btn-info">新增</a>
+				</div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive">
+              <table id="example2" class="table table-drop table-hover">
+                <thead>
+					<tr>
+						<th style="width:15em;">用户</th>
+						<th style="width:12em;">关注时间</th>
+						<th>操作</th>
+					</tr>
+                </thead>
+                <tbody>
+					{loop $list['list'] $li}
+					{php $member = M('member')->getInfo($li['openid'])}
+					<tr>
+						<td>
+							<img src="{php echo tomedia($member['avatar'])}" style="width:4em;height:4em;" class="img-rounded"/>
+							{$member['nickname']}
+						</td>
+						<td>
+							<label class="label label-success">{php echo date('Y-m-d H:i',$li['create_time'])}</label>
+						</td>
+						<td>
+							<a href="{php echo $this->createWebUrl('follow',array('act'=>'edit','to_openid'=>$to_openid,'id'=>$li['id']))}" class="btn btn-success">编辑</a>
+							<a href="{php echo $this->createWebUrl('follow',array('act'=>'delete','to_openid'=>$to_openid,'id'=>$li['id']))}" class="btn btn-danger">删除</a>
+						</td>
+					</tr>
+					{/loop}
+				  </tbody>
+              </table>
+            </div>
+            <div class="box-footer">{php echo $list['pager']}</div>
+            <!-- /.box-body --></div>
+		  </div>
+      </div>
+      <!-- /.row --></section>
+    <!-- /.content --></div>
+  </div>
+  <!-- ./wrapper -->{if empty($_W['isajax'])} {template 'common/foot'}
+  <script>
+  $('.table-responsive tbody tr').slice( - 2).find('.dropdown').addClass('dropup');
+    $('.mutdelete').click(function() {
+      var url = $(this).data('href');
+      var ids = [];
+      var idss = [];
+      $('input:checkbox[name="ids[]"]').each(function() {
+        var _that = $(this)[0];
+        if (_that.checked) {
+          ids = ids.concat($(this).val());
+        } else {
+          idss = idss.concat($(this).val());
+        }
+      });
+      console.log(ids);
+      if (confirm("您确定要删除么？")) {
+        $.post(url, {
+          ids: ids
+        },
+        function(data) {
+          util.message("删除成功", "{php echo $_W['siteurl']}", 'success');
+        },
+        'json');
+      }
+    });
+    $('.unmutdelete').click(function() {
+      var ids = [];
+      var idss = [];
+      $('input:checkbox[name="ids[]"]').each(function() {
+        var _that = $(this)[0];
+        if (_that.checked) {
+          ids = ids.concat($(this).val());
+        } else {
+          idss = idss.concat($(this).val());
+        }
+      });
+      console.log(idss);
+      if (confirm("您确定要删除么？")) {
+        $.post(url, {
+          ids: idss
+        },
+        function(data) {
+          util.message("删除成功", "{php echo $_W['siteurl']}", 'success');
+        },
+        'json');
+      }
+    })
+    $("#checkall").click(function() {
+      console.log('checkall');
+      $('input[name="ids[]"').each(function() {
+        var _that = $(this)[0];
+        if (_that.checked) {
+          _that.checked = false;
+        } else {
+          _that.checked = true;
+        }
+      });
+    });
+    $('body').on('click', '.open_modal',
+    function() {
+      var title = '';
+      var url = $(this).data('href');
+      var name = $(this).data('name');
+      console.log(url);
+      $.get(url,
+      function(data) {
+        var content = data;
+        var footer = '<button class="btn btn-danger close2">关闭</button>';
+        var options = {
+          containerName: '' + name
+        };
+        var model = name + '_modal';
+        eval(model + '=util.dialog(title, content, footer,options);');
+        eval(model + '.show();');
+        eval(model + '.removeClass("fade");');
+        eval(model + '.find(".close2").click(function(){' + model + '.hide();})');
+      },
+      'html');
+    });</script>{/if}

@@ -1,0 +1,132 @@
+{template 'common/header'}
+<style>	
+.label-important {
+	background-color: #747474;
+}
+</style>
+<ul class="nav nav-tabs">
+	<li  class="active"><a href="{php echo $this->createWebUrl('counselors')}">销售员管理</a></li>
+	<li><a href="{php echo $this->createWebUrl('counselor', array('op'=>'post'))}">添加邀请码</a></li>	
+	<li><a href="{php echo $this->createWebUrl('counselor', array('op'=>'list'))}">邀请码管理</a></li>
+</ul>
+    <div class="main">
+		<div class="stat">
+			<form action="" method="post">
+				<input type="hidden" name="c" value="site" />
+				<input type="hidden" name="a" value="entry" />
+				<input type="hidden" name="m" value="hc_deluxejjr" />
+				<input type="hidden" name="do" value="counselors" />
+				<input type="hidden" name="op" value="sort" />
+				<table class="table sub-search">
+				<table class="table sub-search">
+					<tbody>
+						<tr>
+							<th style="width:100px;">真实姓名</th>
+							<td>
+								<input name="realname" class="form-control" style="width:150px;" type="text" value="{$sort['realname']}" />
+							</td>
+						</tr>
+						<tr>
+							<th style="width:100px;">手机号码</th>
+							<td>
+								<input name="mobile" class="form-control" style="width:150px;" type="text" value="{$sort['mobile']}" />
+							</td>
+						</tr>
+						<tr>
+							<th></th>
+							<td>
+								<input type="submit" name="" value="搜索" class="btn btn-primary">
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
+			
+			<div class="stat-div">
+				<div class="sub-item" id="table-list">
+					<h4 class="sub-title" style="float:right;color:red;">总数：<?php echo $total;?>&nbsp;&nbsp;&nbsp;<a href="">刷新</a></h4>
+					<h4 class="sub-title">销售员名单</h4>
+
+					<form action="" method="post" onsubmit="">
+					<div class="sub-content">
+						<table class="table table-hover">
+							<thead class="navbar-inner">
+								<tr>
+									{if $op=="allot"}<th class="row-hover">选择</th>{/if}
+									<th class="row-hover">编号</th>
+									<th class="row-hover">真实姓名</th>
+									<th class="row-hover">手机号码</th>
+									<th class="row-hover">注册时间</th>
+								    <th class="row-hover">状态</th>
+									<th class="row-hover">操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								{loop $list $v}
+								<tr>
+									{if $op=="allot"}
+										<td>
+											<input type="radio" name="allot" value="{$v['id']}"/>
+										</td>
+									{/if}
+									<td>
+										{$v['id']}
+									</td>
+									<td>
+										{$v['realname']}
+									</td>
+									<td>
+										{$v['mobile']}
+									</td>
+									<td>
+										{php echo date('Y-m-d',$v['createtime'])}
+									</td>
+									<td>
+									{if $v['status']==0}
+										<span class="label label-important">禁用</span>
+									{else}
+										<span class="label label-success">可用</span>
+									{/if}
+									</td>
+									<td>
+										<a href="{php echo $this->createWebUrl('counselors',array('op'=>'del','id' => $v['id']));}" onclick="return confirm('确定要删除该销售员吗？');">删除</a>
+										<a href="{php echo $this->createWebUrl('counselors',array('op'=>'showdetail','id' => $v['id']));}">详情</a>		
+										<a href="{php echo $this->createWebUrl('customer',array('op'=>'mycustomer','opp'=>'his', 'cid' => $v['id']));}">客户</a>		
+									</td>
+								</tr>
+								{/loop}
+							</tbody>
+						</table>
+					</div>
+					</form>
+					{$pager}
+				</div>
+				{if $op=="allot"}
+					<input type="submit" onclick="allot();" value="分配" class="btn btn-primary" />
+				{/if}
+			</div>
+		</div>
+    </div>
+<script>
+	function allot(){
+		var id = document.getElementsByName('allot');
+		var flag = false;
+		for (var i=0; i<id.length; i++){
+			if(id[i].checked == true){
+				id = id[i].value;
+				flag = true;
+				break;
+			}
+		}
+		if(flag){
+			
+		}else{
+			alert('您还未选择分配给谁！');
+			return;
+		}
+		if(confirm('确定分配给TA？')){
+			window.location.href = "{php echo $this->createWebUrl('counselors',array('op'=>'allot', 'selected'=>$selected), true)}&id="+id+";";
+		}
+	}
+</script>
+{template 'common/footer'}

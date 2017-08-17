@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta charset="UTF-8">
+    <meta name="keywords" content="" />
+    <meta name="description" content="">
+    <title></title>
+    <link rel="stylesheet" href="../addons/dg_newzl/resource/css/style.css" />
+</head>
+<body>
+<!--排行榜 start-->
+<div class="RanLi">
+    <div class="RanLiTit">
+        <h2>排行榜</h2>
+    </div>
+    <div class="RanLiMin">
+        <form action="">
+            <table cellpadding="0" cellspacing="0"border="0">
+                <thead>
+                <tr>
+                    <th>排名</th>
+                    <th>姓名</th>
+                    <th>支持数</th>
+                </tr>
+                </thead>
+                <tbody>
+                {loop $userinfo2 $index $user}
+                <tr>
+                    <td><?php echo $index+1 ?></td>
+                    <td>
+                        <div class="renming clearfix">
+                            <div class="img"><img src="{$user['headimg']}"></div><i>{$user['username']}</i>
+                        </div>
+                    </td>
+                    <td>{$user['count']}</td>
+                </tr>
+                {/loop}
+            </table>
+        </form>
+    </div>
+</div>
+<!--排行榜 end-->
+</body>
+</html>

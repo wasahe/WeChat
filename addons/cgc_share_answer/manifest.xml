@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com" versionCode="0.6,0.7">
+	<application setting="true">
+		<name><![CDATA[分享看答案]]></name>
+		<identifie><![CDATA[cgc_share_answer]]></identifie>
+		<version><![CDATA[1.1.7]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[分享看答案]]></ability>
+		<description><![CDATA[分享看答案]]></description>
+		<author><![CDATA[不错吧]]></author>
+		<url><![CDATA[http://www.012wz.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+			<message type="text" />
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="false" />
+		<card embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="链接入口" do="enter" state="" direct="false" />
+			<entry title="关注入口" do="follow" state="" direct="false" />
+			<entry title="答案入口" do="answer" state="" direct="false" />
+		</cover>
+	</bindings>
+	<permissions>
+	</permissions>
+	<install><![CDATA[install.php]]></install>
+	<uninstall><![CDATA[DROP TABLE IF EXISTS `cgc_guess`;
+]]></uninstall>
+	<upgrade><![CDATA[upgrade.php]]></upgrade>
+</manifest>

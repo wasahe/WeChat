@@ -1,0 +1,219 @@
+{template 'common/header'}
+<link rel="stylesheet" type="text/css" href="../addons/qwx_shangmen/template/resource/css/animate.min.css">
+<link rel="stylesheet" type="text/css" href="../addons/qwx_shangmen/template/resource/css/style.css">
+<script src="../addons/qwx_shangmen/template/resource/js/jquery.esn.autobrowse.js"></script>
+<script src="../addons/qwx_shangmen/template/resource/js/TouchSlide.1.1.source.js"></script>
+
+<style>
+.slideBox{ position:relative;  margin:0 auto; margin-bottom:0px;}
+.slideBox .hd{ width:100%; height:11px;  position:absolute; z-index:1; bottom:5px; text-align:center;  }
+.slideBox .hd ul{ display:inline-block; height:5px; padding:3px 5px; 
+        -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px; font-size:0; vertical-align:top;
+    }
+.slideBox .hd ul li{ display:inline-block; width:6px; height:6px; -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px; background:#cdcdcd; margin:0 5px;  vertical-align:top; overflow:hidden;   }
+.slideBox .hd ul .on{ background:#999;  }
+
+.slideBox .bd{ position:relative; z-index:0;overflow:hidden; }
+.slideBox .bd li{ position:relative; text-align:center;  }
+.slideBox .bd li img{ background:url(../addons/qwx_shangmen/images/loading.gif) center center no-repeat;  vertical-align:top; width:100%;}
+.slideBox .bd li a{ -webkit-tap-highlight-color:rgba(0,0,0,0);  }
+</style>
+
+<body>
+	<!-- 头部导航栏 -->
+    {template 'header'}
+    <section class="homePage">
+
+        <div id="slideBox" class="slideBox swipe">
+            <div class="bd">
+              <ul>
+                {loop $banner $key=>$b}
+                <li> <a class="pic" href="{$b[url]}" title="{$b[photo]}"><img src="{$_W['attachurl']}{$b[photo]}" title="{$b[photo]}" /></a> </li>
+                {/loop}
+              </ul>
+            </div>
+            <div class="hd">
+              <ul>
+              </ul>
+            </div>
+          </div>
+          <script type="text/javascript">
+                TouchSlide({ 
+                    slideCell:"#slideBox",
+                    titCell:".hd ul", //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
+                    mainCell:".bd ul", 
+                    effect:"leftLoop", 
+                    autoPage:true,//自动分页
+                    autoPlay:true //自动播放
+                });
+            </script>
+
+		{if $this->getConfigArr('open_diaodianyoujiang') == 'Y'}
+        <!--活动排行-->
+        <ul class="middle" style="height:80px">
+            <li>
+                <a href="{php echo $this->getConfigArr('diaodianyoujiang_url');}">
+                <img src="../addons/qwx_shangmen/images/1yty.png">
+                <span>到店有奖</span></a>
+            </li>
+            <li>
+                <a href="{php echo $this->getConfigArr('xinshoutongdao_url');}">
+                <img src="../addons/qwx_shangmen/images/qmhl.png">
+                <span>新手通道</span></a>
+            </li>
+            <li>
+                <a href="{php echo $this->getConfigArr('qiyefuli_url');}">
+                <img src="../addons/qwx_shangmen/images/qyfl.png">
+                <span>企业福利</span></a>
+            </li>
+        </ul>
+        <!--活动排行结束-->
+        {/if}
+                        
+        <!--项目分类tab-->
+        <div class="tab_wrap swipe" id="top_cate">
+            <ul class="tabs j_scroll">
+                <li {if !$cate_id}class="cur"{/if}><a href="{php echo $this->createMobileUrl('index'); }"><i class="recom"></i>全部</a></li>
+                {if $cates}
+                {loop $cates $key $cate}
+                <li {if $cate_id == $cate['id']}class="cur"{/if}><a href="{php echo $this->createMobileUrl('index',array('cate_id'=>$cate[id])); }" >{$cate[title]}</a></li>
+                {/loop}
+                {/if}
+            </ul>
+        </div>
+
+        <script type="text/javascript">
+            TouchSlide({ 
+                slideCell:"#top_cate",
+                mainCell:"ul", 
+                textMove:true,//自定义，移动文字； 
+                autoPage:false,//自动分页
+                autoPlay:false //自动播放
+            });
+        </script>
+        
+        {if $sub_cates_html}
+        <div class="tab_wrap" style="padding-left: 1em;border-bottom: 0px;height: auto;" id="sub_cates">
+            <ul class="tabs j_scroll" style="height: auto;">
+                {$sub_cates_html}
+            </ul>
+        </div>
+        <script type="text/javascript">
+            TouchSlide({ 
+                slideCell:"#sub_cates",
+                mainCell:"ul", 
+                textMove:true,//自定义，移动文字； 
+                autoPage:false,//自动分页
+                autoPlay:false //自动播放
+            });
+        </script>
+        <style>
+            #sub_cates .tabs li::after {
+                content: "";
+                width: 1px;
+                height: 15px;
+                background: #ececec;
+                position: absolute;
+                right: 0;
+                top: 8px;
+            }
+            #sub_cates .tabs li{
+                height: auto;
+            }
+            #sub_cates .tabs {
+                height: auto;
+
+            }
+        </style>
+        {/if}
+        <!--项目分类tab结束-->
+        
+        <!--项目列表内容-->
+        <div class="items" id="container">
+                <?php /* 注释原来的列表，全部用ajax调用；?>
+                <div class="itemlist" >
+                {if $goods}
+                {loop $goods $key $good}
+                <div class="item ">
+                	<a rel="{php echo $this->createMobileUrl('goods',array('id'=>$good[id])); }" title="{$good[title]}">
+                		<dl>
+                			<dt>
+                				<img src="{$_W['attachurl']}{$good[photo]}" alt="{$good[title]}">
+            				</dt>
+                			<dd>
+                				<h3>{$good[title]}</h3>
+                				<p class="effects {php echo $good['titledesc'] ? $good['titledesc'] : 'hide';}">{$good['titledesc']}</p>
+                				<p class="duration">
+                					<i></i>{$good[shijian]}分钟
+                					<cite class="hide">到店</cite>
+                					<cite class="online hide" >上门</cite>
+                				</p>
+                				<p class="price">
+                					<i>￥</i>{$good[price]}<span>{$good[market_price]}</span>
+                				</p>
+                			</dd>
+                			<dd></dd>
+                		</dl>
+                	</a>
+                </div>
+                {/loop}
+                {/if}
+                </div>
+                <?php */?>
+           
+		    <script>  
+var to_top_sec = 0;
+$('#container').on('tap', '.item > a', function (e) {
+	var now_sec = parseInt(new Date().getSeconds() - to_top_sec);
+	//alert(to_top_sec);//$('#scrollTop').hasClass('hide') &&
+	if (now_sec > 2) {
+		location.href = this.rel;	
+	}
+});
+             $(function(){ 	
+                $("#container").autobrowse(
+                    {
+                        url: function (offset)
+                        {
+                            // return "{php echo $this->createMobileUrl('index',array('page'=>$next_page))}";
+                            return "{php echo $this->createMobileUrl('index',array('page'=>'OFFSET','is_ajax'=>1,'cate_id'=>$cate_id_cur))}".replace(/OFFSET/, offset+1);
+                        },
+                        template: function (response)
+                        {
+                            var markup=response.item;
+                            markup = '<div class="itemlist">'+response.item+'</div>';
+                            return markup;
+                        },
+                        itemsReturned: function (response) { 
+                            // alert(response.total);
+                            if (response.page == 0 && response.total == 0){
+                                $('#container').html('<div class="noitem ">没有找到相关的项目！</div>');
+
+                            }
+                            return response.page; 
+                        },
+                        offset: 0,
+                        max: 100,
+                        loader: '<div class="loading" style="display:block"> <i></i>努力加载中... </div>',
+                        useCache: false,
+                        expiration: 0
+                    }
+                );
+             });   
+            </script>
+            
+        </div>
+        <!--项目列表内容结束-->
+    </section>
+    <!-- 引入网页的底部模板文件 -->
+    <div id="loading" class="hide" style="display:none"></div>
+    {template 'footer'}
+    {php $_share = get_share_info($this->module['config']);}
+    {php //template 'common/footer'} 
+    {template 'citylist'}
+    <script src="../addons/qwx_shangmen/template/resource/js/getscript"></script>
+    <script src="../addons/qwx_shangmen/template/resource/js/index.home.min13.js"></script> 
+</body>
+</html>
+
+

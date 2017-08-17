@@ -1,0 +1,122 @@
+{template 'header'}
+<body ontouchstart="" class="platform_mobile">
+<div class="qsc-alert" style="display: none;">
+<i class="info-base64"></i><span></span>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-white icon-loading-base64"><i class="icon-white icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading-new">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-loading-base64"><i class="icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<header class="qsc-tab bar-fixed wallet-tab headroom headroom--top" id="headroom">
+<ul class="tab-item nav-tabs-green" role="tablist">
+<li role="presentation" {if $statetype =="tosv"} class="active"{/if}>
+<a href="{php echo $this->createMobileUrl('workorder',array('statetype'=>'tosv'))}" role="tab">待服务</a>
+</li>
+<li role="presentation" {if $statetype =="ing"} class="active"{/if}>
+<a href="{php echo $this->createMobileUrl('workorder',array('statetype'=>'ing'))}" role="tab">服务中</a>
+</li>
+<li role="presentation" {if $statetype=="end"} class="active"{/if}>
+<a href="{php echo $this->createMobileUrl('workorder',array('statetype'=>'end'))}" role="tab">已完成</a>
+</li>
+</ul>
+</header>
+<style>
+.mod-project-card_content__status button {
+    background: #fff;
+	position:inherit;
+    border: 1px solid #2eb676;
+    color: #2eb676;
+    font-size: 12px;
+    line-height: 20px;
+    border-radius: 4px;
+}
+.mod-project-card_content__status span {
+    display: inline-block;
+    width: 31%;
+    text-align: center;
+}
+</style>
+<div class="content-fixed content-main top bottom tab-content">
+		<div role="tabpanel">
+		{loop $list $item}
+			<div class="mod-project-card funding">
+				<div class="mod-project-card_header clearfix" style="padding: 10px 0;">
+					<div class="mod-project-card_header__user">
+						<span>{$item['ordertime']} 下单 {if $item['type'] == "0"}预约到店{else}预约上门{/if}</span>
+					</div>
+				</div>
+				<div class="mod-project-card_content">
+					<a href=""> <header class="mod-project-card_content__header">
+							<span class="ribbon labels">{if empty($item['paytime'])}未付款{else}已付款{/if}</span>
+							<h2>{$item['svname']}</h2>
+						</header>
+					</a>
+					<div class="mod-project-card_content__detail">
+					    <p class="description">服务项目：{$item['svname']}:{$item['orderfee']}元/{$item['sminute']}分钟</p>
+						<p class="description">服务技师：{if empty($item['wname'])}正在安排技师为您服务{else}{$item['wname']}{/if}</p>
+						<p class="description">服务时间：{$item['stime']}</p>
+						{if $item['type'] != "0"}
+						<p class="description">客户姓名：{$item['fname']}</p>
+						<p class="description">客户电话：{$item['fmobile']}</p>
+						<p class="description">服务地址：{$item['faddress']}</p>
+						{/if}
+						<p class="description">备注留言：{$item['smsg']}</p>
+						
+					</div>
+					{if $item['state'] != "3"}
+					
+					<div class="mod-project-card_content__status">
+						
+						{if $item['state'] == "1"}
+						<span><button onclick="window.location.href='{php echo $this->createMobileUrl('orderdeal',array('orderid'=>$item['id'],'orderstate'=>$item['state'],'statetype'=>$statetype))}'"> 接单 </button></span>
+						{elseif $item['state'] == "2"}
+						<span><button data-toggle="modal" data-target="#exit-confirm{$item['id']}"> 结束 </button></span>
+						{/if}
+
+						<span><button onclick="window.location.href=''"> 打印 </button></span>
+						<span><button onclick="window.location.href='tel:{$item['fmobile']}'"> 电话 </button></span>
+					</div>
+					
+					{/if}
+
+				</div>
+			</div>
+			{if $item['state'] == "2"}
+			
+			<div class="modal qsc-modal qsc-modal-dialog" id="exit-confirm{$item['id']}"
+					tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog middle">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title text-center">温馨提示</h4>
+							</div>
+							<div class="modal-body text-center">您确认要结束当前服务吗？</div>
+							<div class="modal-footer clearfix" role="group">
+								<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+								<a href="{php echo $this->createMobileUrl('orderdeal',array('orderid'=>$item['id'],'orderstate'=>$item['state'],'statetype'=>$statetype))}"
+									class="btn btn-default"><strong>确认</strong></a>
+							</div>
+						</div>
+					</div>
+			</div>
+			{/if}
+			
+			{/loop}
+		</div>
+	</div>
+<div class="project-manage-modal"></div>
+{template 'workfooter'}
+<script type="text/javascript" src="../addons/water_o2o/template/js/user.min.js"></script>
+
+</body></html>

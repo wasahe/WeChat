@@ -1,0 +1,437 @@
+
+<style type="text/css">
+	#tag{width:750px; height:auto; text-align:left; padding:10px; border:1px #E0E0E0 solid ; line-height:25px;    border-radius: 5px;}
+	/*input post tab*/
+	div.radius_shadow{border:1px solid #DBDBDB;-moz-border-radius:5px;-khtml-border-radius:5px;-webkit-border-radius:5px;border-radius: 5px;padding:5px;-webkit-box-shadow:0 0 10px #414141;-moz-box-shadow:0 0 10px #414141;box-shadow:0 0 10px #414141;font-size:12px;background:#fff;}
+	span#radius{display:inline-block;float:none;font-size:12px;padding:2px 5px;margin:-2px 5px 15px;border:1px solid #E0E0E0; background-color:#F0F0F0;-moz-border-radius:5px;-khtml-border-radius:5px;-webkit-border-radius:5px;border-radius: 5px;color:#000;}
+	.tabinput{margin-left:5px;border:0;}
+	a#deltab{cursor:pointer;display:inline-block;color:#808080;margin-left:5px;font-weight:bold;}
+	a#deltab:hover{color:#D2D2D2;text-decoration:none;}
+	#getTab{ margin-top:10px;border:1px solid #E0E0E0; background-color:#F0F0F0; padding:10px; cursor:pointer;}
+</style>
+<script type="text/javascript" src="./resource/js/lib/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="../addons/haoman_scene/images/tabControl.js"></script>
+
+<input type="hidden" name="reply_id" value="{$reply['rid']}" />
+<input type="hidden" name="id" value="{$reply['id']}" />
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        活动设置
+    </div>
+    <div class="panel-body">
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">直接调用链接</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" id="link" class="form-control" placeholder="" name="link" disabled="disabled" value="{$_W['siteroot']}app/index.php?i={$_W['uniacid']}&c=entry&m=haoman_scene&do=index&id={$rid}">
+				<div class="help-block"><b style="color: #FC110D">第一次建立规则，必须保存后再调用这个链接</b>，需要拥有高级接口权限的！</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">二维码图片调用</label>
+			<div class="col-sm-9 col-xs-12">
+				<img src="{$imgUrl}">
+				<div class="help-block"><b style="color: #FC110D">第一次建立规则，必须保存后再使用这个二维码图片</b>，需要拥有高级接口权限的！</div>
+			</div>
+		</div>
+		
+		<div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">活动名称</label>
+            <div class="col-sm-9 col-xs-12">
+               	<input type="text" name="title" class="form-control" value="{$reply['title']}">
+				<div class="help-block">显示在网页标题中</div>
+            </div>
+		</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">活动图片</label>
+				<div class="col-sm-9 col-xs-12">
+					{php echo tpl_form_field_image('picture', $reply['picture']);}
+					<div class="help-block">用于回复关键字后返回图片 700*300</div>
+				</div>
+			</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 活动说明</label>
+			<div class="col-sm-9 col-xs-12">
+				<textarea style="height:60px;" id='description' name="description" class="form-control" cols="60">{$reply['description']}</textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 活动时间</label>
+			<div class="col-sm-9 col-xs-12">
+				{php echo tpl_form_field_daterange('datelimit', array('start'=>date('Y-m-d H:i',$reply['starttime']),'end'=>date('Y-m-d H:i',$reply['endtime'])), true)}
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 活动规则</label>
+			<div class="col-sm-9 col-xs-12">
+				{php echo tpl_ueditor('rules', $reply['rules']);}
+			</div>
+		</div>
+
+    </div>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		开篇场景设置
+	</div>
+	<div class="panel-body">
+
+		
+
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">场景模式</label>
+			<div class="col-sm-9">
+				<label class="radio-inline">
+					<input onclick="$('#outlinkUrl').hide();$('#inlineUrl').show()" type="radio" name="scene" id="scene" value="0" {if $reply['scene']==0} checked="checked"{/if}/>自带场景
+				</label>
+				<label class="radio-inline">
+					<input onclick="$('#inlineUrl').hide();$('#outlinkUrl').show()" type="radio" name="scene" id="scene2" value="1" {if $reply['scene']==1} checked="checked"{/if}/>外部场景
+				</label>
+				<div class="help-block">
+					自带场景:为模块自带的场景设置，只能设置3页，动画效果固定的。<br>
+					外部场景:可以设置外部场景的链接，请一定要在外部场景的最后一页留一个链接或是二维码，指向该活动。<br>
+					外部场景的链接和二维码请直接先保存本规则后，在调用规则最上面的直接调用链接和二维码。
+				</div>
+			</div>
+
+		</div>
+
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label"> 跳转的模块链接:</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" class="form-control" placeholder="" name="http_scene_url" value="{$reply['http_scene_url']}">
+				<div class="help-block">
+					观看完场景后，点击开始按钮后跳转的模块链接，或是其他页面，http://开头,留空则不显示跳转按钮<br>
+					<span style="color: #F9050B">请先确定您的模块支持直接用链接调用的，不清楚请先咨询相关开发者</span><br>
+					<span style="color: #F9050B">如果模块确实不支持链接调用，可以在微信公众号后台发布一图文信息，内容为引导粉丝通过关注公众号，回复关键词参与活动</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group" id="outlinkUrl" {if $reply['scene'] !=1}style="display: none"{/if}>
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label"> 外部场景链接:</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" class="form-control" placeholder="" name="out_scene_url" value="{$reply['out_scene_url']}">
+				<div class="help-block">
+					请直接输入外部场景的URL,任何可以通过URL访问的外部场景都行，http://开头<br>
+					<span style="color: #F9050B">外部场景回调链接：{$_W['siteroot']}app/index.php?i={$_W['uniacid']}&c=entry&m=haoman_scene&do=index&id={$rid}&type=outscene</span><br>
+					<span style="color: #F9050B">外部场景必须要放一个按钮或是点击指向上面的链接，这样才能实现闭环操作，才能实现统计和强制关注和分享功能</span>
+				</div>
+			</div>
+		</div>
+		<div class="form-group" id="inlineUrl" {if $reply['scene'] !=0}style="display: none"{/if}>
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label"> 自带场景设置</label>
+			<div class="col-sm-9 col-xs-12">
+			<!-- Nav tabs -->
+				<ul class="nav nav-tabs" role="tablist">
+				  <li role="presentation" class="active"><a href="#home" role="tab" data-toggle="tab">第一页场景设置</a></li>
+				  <li role="presentation" ><a href="#profile" role="tab" data-toggle="tab">第二页场景设置</a></li>
+				  <li role="presentation" ><a href="#messages" role="tab" data-toggle="tab">第三页场景设置</a></li>
+				</ul>
+
+				<!-- Tab panes -->
+				<div class="tab-content">
+				  <div role="tabpanel" class="tab-pane active" id="home">
+						<div class="form-group">
+							<div class="col-sm-12 col-xs-12">
+								{php echo tpl_form_field_image('p1_bg', $reply['p1_bg']);}
+								<div class="help-block">场景一背景图,不上传用默认的 750*1206 </div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-12 col-xs-12">
+								{php echo tpl_form_field_image('p1_top', $reply['p1_top']);}
+								<div class="help-block">场景一头部图片 654*193</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-12 col-xs-12">
+								{php echo tpl_form_field_image('p1_bottom', $reply['p1_bottom']);}
+								<div class="help-block">场景一底部图片 654*193</div>
+							</div>
+						</div>
+				  </div>
+				  <div role="tabpanel" class="tab-pane" id="profile">
+						<div class="form-group">
+							<div class="col-sm-12 col-xs-12">
+								{php echo tpl_form_field_image('p2_bg', $reply['p2_bg']);}
+								<div class="help-block">场景二背景图,不上传用默认的 750*1206 </div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-12 col-xs-12">
+								{php echo tpl_form_field_image('p2_top', $reply['p2_top']);}
+								<div class="help-block">场景二头部图片 654*193</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-12 col-xs-12">
+								{php echo tpl_form_field_image('p2_bottom', $reply['p2_bottom']);}
+								<div class="help-block">场景二底部图片 654*193</div>
+							</div>
+						</div>
+				  </div>
+				  <div role="tabpanel" class="tab-pane" id="messages">
+						<div class="form-group">
+							<div class="col-sm-12 col-xs-12">
+								{php echo tpl_form_field_image('p3_bg', $reply['p3_bg']);}
+								<div class="help-block">场景三背景图,不上传用默认的 750*1206 </div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-12 col-xs-12">
+								{php echo tpl_form_field_image('p3_top', $reply['p3_top']);}
+								<div class="help-block">场景三头部图片 654*193</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-12 col-xs-12">
+								<label class="radio-inline">
+									<input onclick="$('#bohao').hide();" type="radio" name="p3_isphone" value="0" {if $reply['p3_isphone']==0} checked="checked"{/if}/>不开启
+								</label>
+								<label class="radio-inline">
+									<input onclick="$('#bohao').show();" type="radio" name="p3_isphone" value="1" {if $reply['p3_isphone']==1} checked="checked"{/if}/>只开启一键拨号
+								</label>
+								<label class="radio-inline">
+									<input onclick="$('#bohao').hide();" type="radio" name="p3_isphone" value="2" {if $reply['p3_isphone']==2} checked="checked"{/if}/>只开启在线报名(不含地址)
+								</label>
+								<label class="radio-inline">
+									<input onclick="$('#bohao').show();" type="radio" name="p3_isphone" value="3" {if $reply['p3_isphone']==3} checked="checked"{/if}/>同时开启一键拨号和在线报名(不含地址)
+								</label>
+								<label class="radio-inline">
+									<input onclick="$('#bohao').hide();" type="radio" name="p3_isphone" value="4" {if $reply['p3_isphone']==4} checked="checked"{/if}/>只开启在线报名(含地址)
+								</label>
+								<label class="radio-inline">
+									<input onclick="$('#bohao').show();" type="radio" name="p3_isphone" value="5" {if $reply['p3_isphone']==5} checked="checked"{/if}/>同时开启一键拨号和在线报名(含地址)
+								</label>
+								<div class="help-block">设置第一页面是否开启填写信息和拨号功能。默认不开启，如果开启一键拨号功能，请填写拨打的号码。</div>
+							</div>
+
+						</div>
+
+						<div class="form-group" id="bohao" {if $reply['p3_isphone']!=1 && $reply['p3_isphone']!=3 && $reply['p3_isphone']!=5}style="display: none"{/if}>
+							<div class="col-sm-12 col-xs-12">
+								<input type="text" name="p3_phone" class="form-control" placeholder="请输入一键拨号的号码" value="{$reply['p3_phone']}">
+							</div>
+						</div>
+						
+				  </div>
+				</div>
+			</div>
+		</div>
+
+			<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">是否重复观看</label>
+			<div class="col-sm-9">
+				<label class="radio-inline">
+					<input type="radio" name="isonce" value="0" {if $reply['isonce']==0} checked="checked"{/if}/>不开启
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="isonce" value="1" {if $reply['isonce']==1} checked="checked"{/if}/>开启
+				</label>
+				<div class="help-block">默认不开启，开启后，用户每次进入都将先看下场景广告。</div>
+			</div>
+
+		</div>
+
+
+		
+		
+	</div>
+
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		开始页面设置(场景结束后的第一个页面<span style="color: #F9050B">这里指的场景不管是自带还是外部的场景，最后都会回到这个页面来</span>)
+	</div>
+	<div class="panel-body">
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">背景图片</label>
+			<div class="col-sm-9 col-xs-12">
+				{php echo tpl_form_field_image('start_bg', $reply['start_bg']);}
+				<div class="help-block">开场背景图,不上传用默认的 750*1206 </div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">头部图片</label>
+			<div class="col-sm-9 col-xs-12">
+				{php echo tpl_form_field_image('start_top', $reply['start_top']);}
+				<div class="help-block">头部标题图片 654*193</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">底部按钮</label>
+			<div class="col-sm-9 col-xs-12">
+				{php echo tpl_form_field_image('start_dec', $reply['start_dec']);}
+				<div class="help-block">底部按钮，不上传使用默认的 437*103</div>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">背景音乐<br>mp3格式</label>
+			<div class="col-sm-9 col-xs-12">
+				{php echo tpl_form_field_audio('start_music',$reply['start_music']);}
+				<div class="help-block">背景音乐，不上传则不使用背景音乐。</div>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		分享设置
+	</div>
+	<div class="panel-body table-responsive">
+
+	<div class="form-group">
+		<label class="col-xs-12 col-sm-3 col-md-2 control-label">开启强制关注</label>
+		<div class="col-sm-9 col-xs-12">
+			<label class="radio-inline">
+				<input type="radio" name="share_url" value="0" {if $reply['share_url']==0} checked="checked"{/if}/>未开启
+			</label>
+			<label class="radio-inline">
+				<input type="radio" name="share_url" value="1" {if $reply['share_url']==1} checked="checked"{/if}/>开启
+			</label>
+			<div class="help-block" style="color: #F9050B">
+			开启是否强制关注功能，请确保左侧关注二维码管理必须要有一个关注二维码。<br>
+			<span style="color: #FF0B1B">特别说明：由于微信限制和微擎机制问题，非认证的服务号和订阅号会出现明明关注过又要关注的情况，这种情形必须通过进入公众号，回复关键词参与活动才能解决，请在下面的关注引导话术上，提示下粉丝。</span>
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-xs-12 col-sm-3 col-md-2 control-label">分享模式</label>
+		<div class="col-sm-9">
+			<label class="radio-inline">
+				<input type="radio" name="share_type" value="0" {if $reply['share_type']==0} checked="checked"{/if}/>默认模式
+			</label>
+			<label class="radio-inline">
+				<input {if $isnogz == 1}disabled="disabled" {/if} type="radio" name="share_type" value="1" {if $reply['share_type']==1} checked="checked"{/if}/>分享后才能看
+			</label>
+			<label class="radio-inline">
+				<input {if $isnogz == 1}disabled="disabled" {/if} type="radio" name="share_type" value="2" {if $reply['share_type']==2} checked="checked"{/if}/>禁止分享模式
+			</label>
+			<div class="help-block">
+				<span>默认模式：正常使用分享朋友圈的功能，分享后不增加红包。</span><br>
+				<span>分享后才能看：分享一次到朋友圈才可以跳转到后面那一步。</span><br>
+				<span>禁止分享模式：禁止分享到朋友和朋友圈等功能。</span><br>
+				<span style="color: #F9050B">非认证的服务号或是订阅号必须借用权限才能选择模式。</span>
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-xs-12 col-sm-3 col-md-2 control-label">分享标题</label>
+		<div class="col-sm-9 col-xs-12">
+			<input type="text" class="form-control" name="share_title" value="{$reply['share_title']}">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-12 col-sm-3 col-md-2 control-label">分享描述</label>
+		<div class="col-sm-9 col-xs-12">
+			<textarea style="height:60px;" name="share_desc" class="form-control" cols="60">{$reply['share_desc']}</textarea>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-xs-12 col-sm-3 col-md-2 control-label">转发图</label>
+		<div class="col-sm-9 col-xs-12">
+			{php echo tpl_form_field_image('share_imgurl',$reply['share_imgurl']);}
+		</div>
+	</div>
+
+</div>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		黑白名单设置
+	</div>
+	<div class="panel-body">
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">开关设置</label>
+			<div class="col-sm-9">
+				<label class="radio-inline">
+					<input type="radio" name="getip" value="0" {if $reply['getip']==0} checked="checked"{/if}"/>关闭限制
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="getip" value="1" {if $reply['getip']==1} checked="checked"{/if}"/>允许以下地区粉丝参与
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="getip" value="2" {if $reply['getip']==2} checked="checked"{/if}"/>禁止以下地区粉丝参与
+				</label>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">活动地区</label>
+			<div class="col-sm-9 col-xs-6">
+				<input type="hidden" name="getip_addr" id="getaddr" value="">
+				<div id="tag"></div>
+				<div class="help-block">仅支持市级城市，请直接填入市级名称(<span style="color: #ff3807">不需要后面的“市”和前面的省级名称</span>),每输入一个地区请按一次回车，不能有空格，最多输入40个城市！</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">禁止后跳转链接</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" name="noip_url" class="form-control" value="{$reply['noip_url']}">
+				<div class="help-block">限制后跳转IP，没填默认关闭效果，必要http://开头 (网址太长,可能导致转发无效,请先生成短网址,下同) <a href='http://www.waqiang.com/index.php/url/shorten'>短网址生成页</a></div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+
+
+<script>
+	require(['jquery','util'], function($, util){
+		$(function(){
+			$('#mapxz').click(function(){
+				util.map({lng: 116.34176,lat: 42.863358}, function(location){
+					$('#allowip').val(location.lat +"|"+location.lng+"|"+location.label);
+				});
+			});
+		});
+	});
+</script>
+
+<script type="text/javascript">
+	$(function(){
+		$("#tag").tabControl({maxTabCount:40,tabW:80},"{$reply['getip_addr']}");
+		$("input[name='submit']").click(function(){
+			var v = $("#tag").getTabVals();
+			$("#getaddr").val(v);
+		});
+	});
+
+</script>
+
+
+
+
+
+<style>
+.ruoling {
+	width: 35%;
+    margin-left: inherit;
+}
+
+</style>
+
+
+
+
+
+
+	
+	
+	
+	
+
+

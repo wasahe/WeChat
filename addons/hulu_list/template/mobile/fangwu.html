@@ -1,0 +1,46 @@
+{template 'top'}
+
+<div id="add_title">
+<div class="add_title_a"><a href="javascript:history.go(-1);"><div class="add_title_a_1"><img src="{MODULE_URL}template/mobile/images/a.png"/></div></a></div>
+
+<div class="add_title_b">发布房屋租售信息</div>
+
+<div class="add_title_c"><a href="{php echo $this->createMobileUrl('fengmian');}"><div class="add_title_c_1"><img src="{MODULE_URL}template/mobile/images/b.png"/></div></a></div>
+</div>
+
+
+<div id="zhaopin_one">
+<form action="" method="POST">
+
+<div class="zhaopin_one_a">房屋类型：</div>
+<div class="zhaopin_one_b">
+<select name="housetype">
+<option value="私房">私房</option>
+<option value="二居室/三居室">二居室/三居室</option>
+<option value="门面">门面</option>
+<option value="单间">单间</option>
+</select>
+</div>
+
+<div class="zhaopin_one_a">房屋地址：</div>
+<div class="zhaopin_one_b"><input type="text" name="houseaddress" placeholder="请输入招聘职位房屋地址" required="required"/></div>
+
+<div class="zhaopin_one_a">房屋价格：</div>
+<div class="zhaopin_one_b"><input type="text" name="houseprice" placeholder="请输入房屋价格" required="required"/></div>
+
+<div class="zhaopin_one_a">联系电话：</div>
+<div class="zhaopin_one_b"><input type="text" name="tel" placeholder="请输入联系电话" required="required"/></div>
+
+<div class="zhaopin_one_a">房主姓名：</div>
+<div class="zhaopin_one_b"><input type="text" name="housename" placeholder="请输入房主姓名" required="required"/></div>
+
+<div class="zhaopin_one_a">截止日期：</div>
+<div class="zhaopin_one_b"><input type="datetime-local" name="validity" required="required"/></div>
+
+</div>
+
+<div id="add_ok"><input type="submit" value="发 布"/></div>
+
+</form>
+
+{template 'foot'}

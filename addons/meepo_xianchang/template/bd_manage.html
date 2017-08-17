@@ -1,0 +1,142 @@
+{template 'common/header'}
+{template 'nav'}
+<form action="" method="post" class="form-horizontal" role="form">
+<input type="hidden" value="{$bd_manage['id']}"  name="bd_manage_id">
+<div class="panel panel-default">
+	<div class="panel-heading">表单设置<br><br>
+	由于手机号码为必须录入项、故其他表单项目、字段值一定不能是mobile
+	</div>	
+	<div class="panel-body">
+	<div class="tab-content">
+	<div class="tab-pane  active" id="tab_basic">
+		<div class="panel panel-default">
+			<div class="panel-heading"></div>					
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2  control-label">是否开启表单录入</label>
+					<div class="col-sm-9 ">
+						<label class="radio-inline">
+							<input type="radio" name="show" value="0" id="show" {if $bd_manage['show'] == '0'}checked="true"{/if}> 关闭
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="show" value="1" id="show"  {if $bd_manage['show'] == '1'}checked="true"{/if}>开启
+						</label>
+					</div>
+				</div>
+				<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">表单项</label>
+				 <div class="col-xs-12 col-sm-9">
+					<div class="panel panel-default live_advs">
+										  <div class="panel-body">
+										  <ul class="list-group" id="vote_lists">
+												{if empty($bd_manage['xm'])}
+														
+															  <li class="list-group-item ng-scope" id="bd_box_{$key}">
+																	<div class="form-group">
+																		
+																		<div class="col-sm-9 col-xs-12  col-md-2">
+																			<input type="text" id='tagname' name="bd_displayid[]" class="form-control" value="1" placeholder="排序"/>
+																			
+																		</div>
+																		<label class="col-xs-12 col-sm-3 col-md-1 control-label">名称</label>
+																		<div class="col-sm-9 col-xs-12  col-md-3 ">
+																			<input type="text" id='tagname' name="bd_name[]" class="form-control" value="手机号码" placeholder="名称"/ readonly>
+																		</div>
+																		<label class="col-xs-12 col-sm-3 col-md-2 control-label">字段值</label>
+																		<div class="col-sm-9 col-xs-12  col-md-3 ">
+																			<input type="text" id='tagname' name="zd_name[]" class="form-control" value="mobile" placeholder="名称"/ readonly>
+																		</div>
+																		
+																	</div>
+															</li>
+												 {/if}
+															  {loop $bd_manage['xm'] $key $row}
+																
+																	<li class="list-group-item ng-scope" id="bd_box_{$key}">
+																	<div class="form-group">
+																		
+																		<div class="col-sm-9 col-xs-12  col-md-2">
+																			<input type="text" id='tagname' name="bd_displayid[]" class="form-control" value="{$row['displayid']}" placeholder="排序"/>
+																			
+																		</div>
+																		<label class="col-xs-12 col-sm-3 col-md-1 control-label">名称</label>
+																		<div class="col-sm-9 col-xs-12  col-md-3 ">
+																			<input type="text" id='tagname' name="bd_name[]" class="form-control" value="{$row['bd_name']}" placeholder="名称"/ {if $row['zd_name']=='mobile'}readonly{/if}>
+																		</div>
+																		<label class="col-xs-12 col-sm-3 col-md-2 control-label">字段值</label>
+																		<div class="col-sm-9 col-xs-12  col-md-3 ">
+																			<input type="text" id='tagname' name="zd_name[]" class="form-control" value="{$row['zd_name']}" placeholder="名称"/ {if $row['zd_name']=='mobile'}readonly{/if}>
+																		</div>
+																		{if $row['zd_name']!='mobile'}
+																		<div class="col-sm-8  col-xs-12 col-md-1">
+																				<a href="javascript:;" class="btn btn-danger" onclick="bd_delete({$key})" >删除</a>
+																	    </div>
+																	   {/if}
+																	</div>
+																	</li>
+																
+															 {/loop}
+											    
+										  </ul>
+										  </div>
+										  <div class="panel-footer">
+												<a href="javascript:;" class="btn btn-success bd_add">添加表单项</a>
+											</div>
+									</div>
+					</div>
+				  </div>
+				<!----->
+			</div>
+		</div>
+		<div class="form-group col-sm-12">
+			<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+			<input type="hidden" name="token" value="{$_W['token']}" />
+		</div>
+
+	</div>
+	</div>
+	</div>
+	</div>
+	</form>
+<div id="bd_html" style="display: none">	
+		<div class="col-sm-9 col-xs-12 col-md-2">
+			<input type="text"  name="bd_displayid[]" class="form-control"/>
+		</div>
+		<label class="col-xs-12 col-sm-3 col-md-1 control-label">名称</label>
+		<div class="col-sm-9 col-xs-12 col-md-3">
+			<input type="text" name="bd_name[]" class="form-control"/>
+		</div>
+		<label class="col-xs-12 col-sm-3 col-md-2 control-label">字段值</label>
+		<div class="col-sm-9 col-xs-12 col-md-3">
+			<input type="text" name="zd_name[]" class="form-control"/>
+		</div>
+</div>
+
+<script type="text/javascript">
+$(function(){
+$('.bd_add').on('click', function(){
+		var bd_add = new Date().getTime();
+		var content = '<li class="list-group-item ng-scope" id="bd_box_'+bd_add+'"><div class="form-group">';
+		content += $("#bd_html").html();
+		content += '<div class="col-sm-8  col-xs-12 col-md-1">';
+				 content += '<a href="javascript:;" class="btn btn-danger" onclick="bd_delete('+bd_add+')" >删除</a>';
+					content += '</div>';
+				content += '</div>';
+		content += '</li>';
+
+		$('#vote_lists').append(content);
+		var list_length = $('#vote_lists li').length;
+		$('#vote_lists li:last-child input:first').val(list_length);
+		//$('#vote_lists li:last-child input:last').val(0);
+		
+});
+})
+function bd_delete(id){
+	if(id){
+		$("#bd_box_"+id).remove();
+	}else{
+		alert('id不存在');
+	}
+}
+</script>
+{template 'common/footer'}

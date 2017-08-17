@@ -1,0 +1,218 @@
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="format-detection" content="telephone=no">
+	<title>个人中心</title>
+	<link href="{MODULE_URL}assets/styles/font-awesome.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="{MODULE_URL}assets/scripts/jquery.js"></script>
+	<script type="text/javascript" src="{MODULE_URL}assets/scripts/elink-framework.js"></script>
+	<script type="text/javascript" src="{MODULE_URL}assets/scripts/noty/packaged/jquery.noty.packaged.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+	<style type="text/css">*{font-family:"Microsoft YaHei",Arial,Helvetica,sans-serif,"宋体";}</style>
+	<link href="{MODULE_URL}assets/styles/weui.css" rel="stylesheet" type="text/css">
+    <script>
+        var jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || {};
+        // 是否启用调试
+        jssdkconfig.debug = false;
+        jssdkconfig.jsApiList = [
+            'checkJsApi',
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage',
+            'onMenuShareQQ',
+            'onMenuShareWeibo',
+            'hideMenuItems',
+            'showMenuItems',
+            'hideAllNonBaseMenuItem',
+            'showAllNonBaseMenuItem',
+            'translateVoice',
+            'startRecord',
+            'stopRecord',
+            'onRecordEnd',
+            'playVoice',
+            'pauseVoice',
+            'stopVoice',
+            'uploadVoice',
+            'downloadVoice',
+            'chooseImage',
+            'previewImage',
+            'uploadImage',
+            'downloadImage',
+            'getNetworkType',
+            'openLocation',
+            'getLocation',
+            'hideOptionMenu',
+            'showOptionMenu',
+            'closeWindow',
+            'scanQRCode',
+            'chooseWXPay',
+            'openProductSpecificView',
+            'addCard',
+            'chooseCard',
+            'openCard',
+			'translateVoice',
+            'openAddress'
+        ];
+        wx.config(jssdkconfig);
+        var _TUTOR_URL = "{php echo $this->createMobileUrl('tutor')}";
+        var _follow = "{php echo intval($_W['fans']['follow'])}";
+        var _openid = "{php echo $_W['openid']}";
+        var _qrcode = "{php echo $_W['account']['qrcode']}";
+    </script>
+</head> 
+<body bgcolor="#efeff4">
+		<div style="height:88px;border:1px solid #E0E0E0;margin-top:15px;background-color:#FFF">
+            <div class="weui-cell">
+                <div class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+                    <img src="{php echo $member['avatar']}" style="border:1px solid #E0E0E0;border-radius:5px; height:65px;width: 65px;display: block"/>
+                </div>
+				
+                <div class="weui-cell__bd">
+				{if '1' == $this->system['memberVerify']}
+								{if '0' == $member['status']}
+                                <p><a href="{php echo $this->createMobileUrl('tutor_edit')}">申请认证<i class="fa fa-angle-right"></i></a></p>
+					            {/if}
+								{if '1' == $member['status']}
+								<p><a style="color:red;">认证审核中...</a></p>
+								{/if}
+								{if '2' == $member['status']}
+								<p><a href="{php echo $this->createMobileUrl('tutor_edit')}"><em style="color:red;">审核不通过，点击这里修改！</em><i class="fa fa-angle-right"></i></a></p>
+								{/if}
+							{/if}
+                    <p style="margin-top:5px;font-size: 13px;">微信名：{$member['nickname']}</p>
+                </div>
+				<div style="weui-cell__ft">
+					<a  style="font-size:14px;display:block ;text-decoration:none;color:#000" href="{php echo $this->createMobileUrl('tutor_edit')}">修改<img src="{MODULE_URL}assets/images/ico_erwei.png" style="margin:0 0 0 5px;height:16px;" align="absmiddle"></a>
+					
+				</div>
+				
+            </div>
+        </div>
+		
+		
+		<div class="weui-cells" style="margin-top:20px;background-color:#FFF">
+            <a class="weui-cell weui-cell_access" href="{php echo $this->createMobileUrl('income')}">
+                <div class="weui-cell__hd"><img src="{MODULE_URL}assets/images/ico_l1.png" alt="" style="width:20px;margin-right:16px;display:block"></div>
+                <div class="weui-cell__bd">
+                    <p>我的收入</p>
+                </div>
+                <div class="weui-cell__ft"></div>
+            </a>
+			
+			
+            <a class="weui-cell weui-cell_access" href="{php echo $this->createMobileUrl('ask')}">
+                <div class="weui-cell__hd"><img src="{MODULE_URL}assets/images/ico_l2.png" alt="" style="width:20px;margin-right:16px;display:block"></div>
+                <div class="weui-cell__bd">
+                    <p>我的提问</p>
+                </div>
+                <div class="weui-cell__ft"></div>
+            </a>
+			
+			
+			<a class="weui-cell weui-cell_access" href="{php echo $this->createMobileUrl('follow')}">
+                <div class="weui-cell__hd"><img src="{MODULE_URL}assets/images/ico_l3.png" alt="" style="width:20px;margin-right:16px;display:block"></div>
+                <div class="weui-cell__bd">
+                    <p>我的关注</p>
+                </div>
+                <div class="weui-cell__ft"></div>
+            </a>
+			
+			<a class="weui-cell weui-cell_access" href="{php echo $this->createMobileUrl('ask')}">
+                <div class="weui-cell__hd"><img src="{MODULE_URL}assets/images/ico_l4.png" alt="" style="width:20px;margin-right:16px;display:block"></div>
+                <div class="weui-cell__bd">
+                    <p>我的查看</p>
+                </div>
+                <div class="weui-cell__ft"></div>
+            </a>
+        </div>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<!--<div style="border:1px solid #E0E0E0;margin-top:20px;background-color:#FFF">
+		 <a style="display:block ;text-decoration:none;color:#000" href="{php echo $this->createMobileUrl('income')}">
+		 <div class="weui-cell weui-cell_access" style="height:24px">
+                
+				<div class="weui-cell__bd" style="border:1px sol #E0E0E0">
+					<span style="vertical-align: middle"><img src="{MODULE_URL}assets/images/ico_l1.png" style="color:#000;margin-right:10px;width:20px;" align="AbsBottom"/>我的收入</span>
+                </a>
+				</div>
+                <div class="weui-cell__ft"></div>
+				
+           </div>
+			
+			<a style="display:block ;text-decoration:none;color:#000" href="{php echo $this->createMobileUrl('answer')}">
+			 <div class="weui-cell weui-cell_access" style="height:24px">
+				<div class="weui-cell__bd" >
+                    <span style="vertical-align: middle"><img src="{MODULE_URL}assets/images/ico_l2.png" style="color:#000;vertical-align:top;margin-right:10px;width:20px;" align="AbsBottom"/>我的回答</span>
+                </a>
+				</div>
+                <div class="weui-cell__ft"></div>
+            </div>
+			
+			
+			<a style="display:block ;text-decoration:none;color:#000" href="{php echo $this->createMobileUrl('follow')}">
+			 <div class="weui-cell weui-cell_access" style="height:24px">
+				<div class="weui-cell__bd">
+					<span style="vertical-align: middle"><img src="{MODULE_URL}assets/images/ico_l3.png" style="color:#000;margin-right:10px;width:20px;" align="AbsBottom"/>我的关注</span>
+                   </a>
+                </div>
+                <div class="weui-cell__ft"></div>
+            </div>
+			
+			<a style="display:block ;text-decoration:none;color:#000" href="{php echo $this->createMobileUrl('ask')}">
+			<div class="weui-cell weui-cell_access" style="height:24px">
+				<div class="weui-cell__bd">
+					<span style="vertical-align: middle"><img src="{MODULE_URL}assets/images/ico_l4.png" style="color:#000;margin-right:10px;width:20px;" align="AbsBottom"/>我的查看</span>
+                </a>
+				</div>
+                <div class="weui-cell__ft"></div>
+            </div>
+		</div>
+    </div>
+			 -->
+	<!--<div style="border:1px solid #E0E0E0;margin-top:20px;background-color:#FFF">
+		 <div class="weui-cell weui-cell_access" style="height:24px">
+                <div class="weui-cell__bd">
+                    
+					<span style="vertical-align: middle"><img src="images/ico_l5.png" style="margin-right:10px;width:20px;"/>表情</span>
+                    
+                </div>
+                <div class="weui-cell__ft"></div>
+            </div>
+			
+	</div>-->
+	
+	
+	<div class="weui-cells" style="margin-top:20px;background-color:#FFF">
+            <a class="weui-cell weui-cell_access" href="{php echo $this->createMobileUrl('help')}">
+                <div class="weui-cell__hd"><img src="{MODULE_URL}assets/images/ico_l6.png" alt="" style="width:20px;margin-right:16px;display:block"></div>
+                <div class="weui-cell__bd">
+                    <p>帮助</p>
+                </div>
+                <div class="weui-cell__ft"></div>
+            </a>
+    </div>
+	<!--
+	<div style="margin-top:20px;background-color:#FFF">
+		  <a style="display:block ;text-decoration:none;color:#000" href="{php echo $this->createMobileUrl('help')}">
+		 <div class="weui-cell weui-cell_access" style="height:24px">
+                <div class="weui-cell__bd">
+					<span style="vertical-align: middle"><img src="{MODULE_URL}assets/images/ico_l6.png" style="color:#000;margin-right:10px;width:20px;" align="AbsBottom"/>帮助<i class="fa fa-home" style='color:#B70F0F;'></i></span>
+                </a></div>
+                <div class="weui-cell__ft"></div>
+         </div>
+	</div>-->
+<!--菜单栏-->
+   <!--菜单栏-->
+	{php $menu='info'}
+	{template '/wx/menu'}
+</body>
+</html>

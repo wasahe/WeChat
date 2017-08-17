@@ -1,0 +1,85 @@
+{template 'common/header'}
+{template 'goods_nav'}
+
+<div class="main">
+<div class="panel panel-default">
+	<div class="panel-body table-responsive">
+	
+		<form action="" method="post" class="form-horizontal form"  id="form1" >
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 control-label" style="width: 100px;">添加分类</label>
+				<div class="col-sm-4 col-xs-12">
+					<input type="text" name="title" id="title" class="form-control" value="">
+				</div>
+				<div class="col-sm-4 col-xs-12">
+					<input type="submit" name="submit" value="添加" class="btn btn-primary col-lg-2">
+				</div>
+				<input type="hidden" name="op" value="cate_post" />
+				<input type="hidden" name="parent_id" value="{$parent_id}" />
+				<input type="hidden" name="return" value="{php echo $_SERVER['REQUEST_URI']}" />
+			</div>
+		</form>
+	
+		<table class="table table-hover" width="100%">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:100px;">ID</th>
+					<th >名称</th>
+					<th style="width:100px;">排序</th>
+					<th style="text-align:right; min-width:120px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+			{loop $list $item}
+			<form action="" method="post" class="form-horizontal form"  id="form1" >
+				<tr>
+					<td>{php echo $item['id']}</td>
+					<td>
+					<input type="text" name="title" id="title" class="form-control" value="{php echo $item['title']}">
+					
+					</td>
+					<td>
+					<input type="text" name="orderby" id="orderby" class="form-control" value="{php echo $item['orderby']}">
+					
+					</td>
+					<td style="text-align:right;">
+						<input type="submit" name="submit" value="保存" class="btn btn-success">
+						{if $item['parent_id'] == 0}
+						<input type="button" name="button" value="下级分类" class="btn btn-primary" onclick="location.href='{php echo $this->createWebUrl('goods', array('op' => 'cate','parent_id'=>$item['id']));}';" >
+						{/if}
+						<input type="button" name="button" value="删除" class="btn btn-danger" onclick="delItem({php echo $item['id']},'{php echo $item['title']}')" >
+						
+						<input type="hidden" name="op" value="cate_post" />
+						<input type="hidden" name="id" value="{php echo $item['id']}" />
+						<input type="hidden" name="parent_id" value="{php echo $item['parent_id']}" />
+						<input type="hidden" name="return" value="{php echo $_SERVER['REQUEST_URI']}" />
+					</td>
+				</tr>
+			</form>
+			{/loop}
+			
+			</tbody>
+		</table>
+		
+	</div>
+	</div>
+</div>
+
+<script>
+	function delItem(objId,objName){
+		var msg = '';
+		{if $parent_id == 0}
+			msg ='删除该项目，将会删除该项目对应的下级分类！';
+		{/if}	
+		if (confirm(msg+"确定删除“"+objName+"”？")!= false){
+			// alert('del')
+			var url = "{php echo $this->createWebUrl('goods', array('op' => 'cate_delete','return'=>$_SERVER['REQUEST_URI'],'id'=>'id_var'));}";
+			url = url.replace('id_var',objId)
+			//alert(url);
+			location.href= url;
+		}
+		
+	}
+
+</script>
+{template 'common/footer'}

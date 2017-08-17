@@ -1,0 +1,135 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li><a href="{php echo $this->createWebUrl('rank')}">管理圈子</a></li>
+	<li><a href="{php echo $this->createWebUrl('merchant',array('rank_id'=>$_GPC['rank_id']))}">商户管理</a></li>
+	<li class="active"><a href="javascript:location.reload();">修改商户</a></li>
+	<li><a href="{php echo $this->createWebUrl('merchant',array('cmd'=>'import','rank_id'=>$_GPC['rank_id']))}">批量导入商户</a></li>
+</ul>
+
+<form id="the_form" class="form-horizontal form" action="" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="merchant[id]" value="{$merchant['id']}" />
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			商户信息
+		</div>
+		<div class="panel-body">
+
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">商户名称</label>
+				<div class="col-sm-9 col-xs-12">
+					<input type="text" name="merchant[name]" class="form-control" value="{$merchant['name']}" />
+					<div class="help-block">必填项，例：肯德基（中山路店）</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">商户电话</label>
+				<div class="col-sm-9 col-xs-12">
+					<input type="text" name="merchant[telephone]" class="form-control" value="{$merchant['telephone']}" />
+					<div class="help-block"></div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">商户地址</label>
+				<div class="col-sm-9 col-xs-12">
+					<input type="text" name="merchant[address]" class="form-control" value="{$merchant['address']}" />
+					<div class="help-block"></div>
+				</div>
+			</div>
+
+
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">坐标（经度lng）</label>
+				<div class="col-sm-9 col-xs-12">
+					<div class="input-group">
+						<input type="text" name="merchant[lng]" class="form-control" value="{$merchant['lng']}"/>
+
+						<div class="input-group-addon">坐标（纬度lat）</div>
+						<input type="text" name="merchant[lat]" class="form-control" value="{$merchant['lat']}" />
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">综合评分</label>
+				<div class="col-sm-9 col-xs-12">
+					<input type="text" name="merchant[score]" class="form-control" value="{$merchant['score']}" />
+					<div class="help-block">排行的主要依据，越大，好评榜排行越高。越小，差榜排行越高。可以为负</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">综合评分</label>
+				<div class="col-sm-9 col-xs-12">
+					<input type="text" name="merchant[goods]" class="form-control" value="{$merchant['goods']}" />
+					<div class="help-block"></div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">综合评分</label>
+				<div class="col-sm-9 col-xs-12">
+					<input type="text" name="merchant[bads]" class="form-control" value="{$merchant['bads']}" />
+					<div class="help-block"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			状态
+		</div>
+		<div class="panel-body">
+
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">审核</label>
+				<div class="col-sm-9 col-xs-12">
+					<div class="col-sm-9 col-xs-12">
+						<label class="radio-inline">
+							<input type="radio" value="0" name="merchant[status]" {if $merchant['status']!=1}checked{/if}/> 未审核
+						</label>
+						<label class="radio-inline">
+							<input type="radio" value="1" name="merchant[status]" {if $merchant['status']==1}checked{/if}/> 已审核
+						</label>
+					</div>
+					<div class="help-block">通过审核的商家可在前端被搜索到</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="col-sm-12">
+			<input type="hidden" name="submit" value="edit" />
+			<input id="btn-submit" type="submit" value="提交" class="btn btn-primary col-lg-1" data-loading-text="正在提交..."/>
+		</div>
+	</div>
+
+</form>
+
+<script type="text/javascript">
+	require(['jquery','util'], function($, util){
+		$('#the_form').submit(function() {
+			$('#btn-submit').button('loading');
+			//tinyMCE.triggerSave();
+			$.post($(this).attr('action'),$(this).serialize(),function(resp) {
+				//resp=eval('('+resp+')');
+				if(resp.status==0){
+					$('#btn-submit').button('reset');
+					util.message(resp.info);
+				}else{
+					util.message(resp.info,resp.data,'success');
+					//location.href=resp.data;
+				}
+			});
+			return false;
+        });
+	});
+</script>
+
+{template 'common/footer'}

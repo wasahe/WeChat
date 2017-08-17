@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com" versionCode="0.6">
+	<application setting="false">
+		<name><![CDATA[智慧语音问答]]></name>
+		<identifie><![CDATA[yukiho_zvoice]]></identifie>
+		<version><![CDATA[5.3.4]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[微信语音互动问答平台]]></ability>
+		<description><![CDATA[微信语音互动问答平台]]></description>
+		<author><![CDATA[微赞]]></author>
+		<url><![CDATA[http://www.012wz.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+		</handles>
+		<rule embed="false" />
+		<card embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="首页入口" do="main" state="" direct="false" />
+			<entry title="专家列表入口" do="find" state="" direct="false" />
+			<entry title="问题列表入口" do="index" state="" direct="false" />
+			<entry title="悬赏问答入口" do="task" state="" direct="false" />
+			<entry title="个人中心入口" do="home" state="" direct="false" />
+			<entry title="小讲列表入口" do="speeches" state="" direct="false" />
+		</cover>
+		<menu>
+			<entry title="财务管理" do="paylog" state="" direct="false" />
+			<entry title="回答管理" do="answer" state="" direct="false" />
+			<entry title="问题管理" do="question" state="" direct="false" />
+			<entry title="会员管理" do="member" state="" direct="false" />
+			<entry title="分类菜单" do="category" state="" direct="false" />
+			<entry title="核心设置" do="setting" state="" direct="false" />
+		</menu>
+	</bindings>
+	<install><![CDATA[CREATE TABLE IF NOT EXISTS `ims_yukiho_zvoice_answer` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT '0',
+  `weblink` varchar(255) DEFAULT '',
+  `contents` varchar(1000) DEFAULT '',
+  `mode` tinyint(2) DEFAULT '0',
+  `status` tinyint(2) DEFAULT '0',
+  `images` varchar(255) DEFAULT '',
+  `create_time` int(11) DEFAULT '0',
+  `openid` varchar(64) DEFAULT '',
+  `question_id` int(11) DEFAULT '0',
+  `voice_id` varchar(320) DEFAULT '',
+  `timelong` int(11) DEFAULT '0',
+  `src` varchar(320) DEFAULT '',
+  `persistentId` varchar(320) DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_yukiho_zvoice_category` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT '0',
+  `create_time` int(11) DEFAULT '0',
+  `title` varchar(32) DEFAULT '',
+  `icon` varchar(32) DEFAULT '',
+  `fid` int(1) DEFAULT '0',
+  `displayorder` int(11) DEFAULT '0',
+  `ismore` tinyint(2) DEFAULT '0',
+  `image` varchar(320) DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_yukiho_zvoice_help` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT '0',
+  `title` varchar(255) DEFAULT '',
+  `contents` varchar(2000) DEFAULT '',
+  `dsporder` int(11) DEFAULT '0',
+  `create_time` int(11) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_yukiho_zvoice_member` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT '0',
+  `openid` varchar(64) DEFAULT '',
+  `number` int(11) DEFAULT '0' COMMENT '回答个数',
+  `follow` int(11) DEFAULT '0' COMMENT '收听人数',
+  `tags` varchar(20) DEFAULT '' COMMENT '头衔',
+  `desc` varchar(320) DEFAULT '',
+  `credit` int(5) DEFAULT '0' COMMENT '提问费用',
+  `avatar` varchar(320) DEFAULT '',
+  `nickname` varchar(32) DEFAULT '',
+  `status` tinyint(2) DEFAULT '0',
+  `score` decimal(5,2) DEFAULT '0.00',
+  `subjects` varchar(100) DEFAULT '',
+  `realname` varchar(32) DEFAULT '',
+  `home_cover` varchar(255) DEFAULT '',
+  `verifyMsg` varchar(255) DEFAULT '',
+  `certify` varchar(255) DEFAULT '',
+  `create_time` int(11) DEFAULT '0',
+  `uid` int(11) DEFAULT '0',
+  `open_free` tinyint(2) DEFAULT '0',
+  `ishot` tinyint(2) DEFAULT '0',
+  `isrecommend` tinyint(2) DEFAULT '0',
+  `category_id` int(11) DEFAULT '0',
+  `admin` tinyint(2) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_yukiho_zvoice_paylog` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT '0',
+  `create_time` int(11) DEFAULT '0',
+  `type` tinyint(2) DEFAULT '0',
+  `credit` decimal(10,2) DEFAULT '0.00',
+  `sn` varchar(64) DEFAULT '',
+  `openid` varchar(64) DEFAULT '',
+  `to_openid` varchar(64) DEFAULT '',
+  `question_id` int(11) DEFAULT '0',
+  `status` tinyint(2) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_yukiho_zvoice_question` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT '0',
+  `create_time` int(11) DEFAULT '0',
+  `title` varchar(320) DEFAULT '',
+  `category_id` int(11) DEFAULT '0',
+  `openid` varchar(64) DEFAULT '',
+  `credit` decimal(10,2) DEFAULT '0.00',
+  `listen_num` int(11) DEFAULT '0',
+  `good_num` int(11) DEFAULT '0',
+  `open` tinyint(2) DEFAULT '0',
+  `voice_id` varchar(320) DEFAULT '',
+  `to_openid` varchar(64) DEFAULT '',
+  `status` tinyint(2) DEFAULT '0',
+  `score` tinyint(2) DEFAULT '0',
+  `feedback` varchar(320) DEFAULT '',
+  `isfree` tinyint(2) DEFAULT '0',
+  `timelong` int(11) DEFAULT '0',
+  `hash` varchar(320) DEFAULT '',
+  `key` varchar(320) DEFAULT '',
+  `isweixin` tinyint(2) DEFAULT '0',
+  `images` varchar(1000) DEFAULT '',
+  `sn` varchar(64) DEFAULT '',
+  `usePoint` tinyint(2) DEFAULT '0',
+  `pointNum` decimal(10,2) DEFAULT '0.00',
+  `isrecommend` tinyint(2) DEFAULT '0',
+  `src` varchar(320) DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_yukiho_zvoice_quickmenu` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT '0',
+  `create_time` int(11) DEFAULT '0',
+  `title` varchar(32) DEFAULT '',
+  `name` varchar(255) DEFAULT '',
+  `icon` varchar(320) DEFAULT '',
+  `link` varchar(320) DEFAULT '',
+  `displayorder` int(11) DEFAULT '0',
+  `ido` varchar(32) DEFAULT '',
+  `auth` tinyint(2) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_yukiho_zvoice_setting` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `codename` varchar(32) DEFAULT '',
+  `value` text,
+  `uniacid` int(11) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+]]></install>
+	<uninstall><![CDATA[DROP TABLE IF EXISTS `ims_yukiho_zvoice_answer`;
+DROP TABLE IF EXISTS `ims_yukiho_zvoice_category`;
+DROP TABLE IF EXISTS `ims_yukiho_zvoice_help`;
+DROP TABLE IF EXISTS `ims_yukiho_zvoice_member`;
+DROP TABLE IF EXISTS `ims_yukiho_zvoice_paylog`;
+DROP TABLE IF EXISTS `ims_yukiho_zvoice_question`;
+DROP TABLE IF EXISTS `ims_yukiho_zvoice_quickmenu`;
+DROP TABLE IF EXISTS `ims_yukiho_zvoice_setting`;
+]]></uninstall>
+	<upgrade><![CDATA[upgrade.php]]></upgrade>
+</manifest>

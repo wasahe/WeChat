@@ -1,0 +1,8 @@
+<a id="scrollTop" href="javascript:void(0);" class="scrollTop hide">返回顶部</a>
+<footer>
+    <a href="{php echo $this->createMobileUrl('index',array());}" {if ($_GPC['do']=='index')}class="cur"{/if} ><i></i><span>首页</span></a>
+	<a href="{php echo $this->createMobileUrl('myorder',array());}" {if ($_GPC['do']=='myorder')}class="cur"{else}class="remind"{/if}><i></i><span>我的订单</span></a>
+    <a href="{php echo $this->createMobileUrl('my',array());}" {if ($_GPC['do']=='my')}class="cur"{/if} ><i></i><span>个人中心</span></a>
+</footer>
+<script src="../addons/qwx_shangmen/template/resource/js/zepto.min.js"></script>
+<script src="../addons/qwx_shangmen/template/resource/js/swipe.home.min.js"></script>

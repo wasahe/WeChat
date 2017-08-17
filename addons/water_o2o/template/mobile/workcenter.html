@@ -1,0 +1,147 @@
+{template 'header'}
+<body ontouchstart="" class="platform_mobile">
+<div class="qsc-alert" style="display: none;">
+<i class="info-base64"></i><span></span>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-white icon-loading-base64"><i class="icon-white icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading-new">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-loading-base64"><i class="icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<div class="mod-user-my">
+<div class="qsc-list-group">
+<a href="javascript:void(0);" class="list-item list-thumb list-thumb-md list-user-avatar">
+<span>
+<i class="icon"><img class="lazy-load" src="../addons/water_o2o/template/img/grey.png" 
+	data-original="{$worker['headimg']}" width="48" height="48" style="display: block;"></i>
+{$worker['nickname']} </span>
+<p>手机号：{if empty($worker['mobile'])}暂无{else}{$worker['mobile']}{/if}</p>
+<label>
+<!-- <i class="icon icon-arrow-right"></i> -->
+</label>
+</a>
+</div>
+<div class="content bottom">
+<div class="qsc-list-group">
+<a href="{php echo $this->createMobileUrl('workitem')}" class="list-item list-thumb list-thumb-sm first">
+<span><i class="icon icon-project"></i>项目管理</span>
+<label>
+<label class="badge">{if $worker['sid'] == 0}{php echo  $this->getServicesSumByWid($worker['id']);}{else}{php echo  $this->getServicesSumBySid($worker['sid']);}{/if}</label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+{if $worker['sid'] == 0}
+<a href="{php echo $this->createMobileUrl('worktime')}" class="list-item list-thumb list-thumb-sm">
+<span><i class="icon icon-support"></i>时间管理</span>
+<label>
+<label class="badge">{php echo  $this->getTimesSumByWid($worker['id']);}</label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+{/if}
+<a href="{php echo $this->createMobileUrl('workorder')}" class="list-item list-thumb list-thumb-sm">
+<span><i class="icon icon-follow-o"></i>订单管理</span>
+<label>
+<label class="badge">{php echo  $this->getOrdersSumByWid($worker['id']);}</label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+</div>
+{if $worker['sid'] == 0}
+<div class="qsc-list-group">
+<a href="{php echo $this->createMobileUrl('workqb')}" class="list-item list-thumb list-thumb-sm first">
+<span><i class="icon icon-wallet"></i>我的钱包</span>
+<label>
+<em>{php echo  $this->getSumCanFlowfeeByWid($worker['id']);}元</em>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+</div>
+{/if}
+<div class="qsc-list-group">
+<a href="{php echo $this->createMobileUrl('workmanage')}" class="list-item list-thumb list-thumb-sm first">
+<span><i class="icon icon-user-reward"></i>管理中心</span>
+<label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+</div>
+</div>
+</div>
+{template 'workfooter'}
+
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+    <script>
+        var appid = '{$_W['account']['jssdkconfig']['appId']}';
+        var timestamp = '{$_W['account']['jssdkconfig']['timestamp']}';
+        var nonceStr = '{$_W['account']['jssdkconfig']['nonceStr']}';
+        var signature = '{$_W['account']['jssdkconfig']['signature']}';
+
+        wx.config({
+            debug: false,
+            appId: appid,
+            timestamp: timestamp,
+            nonceStr: nonceStr,
+            signature: signature,
+            jsApiList: [
+                'checkJsApi',
+                'getLocation',
+                'openLocation',
+            ]
+        });
+
+        wx.ready(function () {
+            wx.getLocation({
+				type: 'gcj02',
+			    success: function (res) {
+			        var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+			        var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+			        var speed = res.speed; // 速度，以米/每秒计
+			        var accuracy = res.accuracy; // 位置精度
+			        // 更新用户坐标为实时坐标
+					doSynclnglat(longitude,latitude);
+			    },
+			    fail:function() {
+			    	//alert('fail');
+			    }
+			});
+
+
+        });
+
+        wx.error(function (res) {
+        });
+        
+     // 获取当前用户的坐标直接更新到数据表
+    	function doSynclnglat(lng,lat) {
+    		$.ajax({
+    		 	async:true,
+    		 	type:'post',
+    		 	data:{'lat':lat,'lng':lng},
+    		 	url:"{php echo $this->createMobileUrl('setworkerlocation')}",
+    		 	success:function(data){
+    		 		var json = eval("("+data+")");
+		      	  	if(json.result == 1){
+		      	  	 	  //alert(json.msg);
+		       		  }else{
+		       			  alert(json.msg);
+		       			  
+		       		}
+    	        }
+    		})
+    	}
+
+    </script>
+
+<script type="text/javascript" src="../addons/water_o2o/template/js/user.min.js"></script>
+
+</body></html>

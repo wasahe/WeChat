@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com" versionCode="0.6">
+	<application setting="true">
+		<name><![CDATA[微商城]]></name>
+		<identifie><![CDATA[wdl_shopping]]></identifie>
+		<version><![CDATA[6.0.5]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[微商城]]></ability>
+		<description><![CDATA[微商城]]></description>
+		<author><![CDATA[悟空源码]]></author>
+		<url><![CDATA[http://www.012wz.com/]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="商城入口设置" do="list" />
+		</cover>
+		<menu>
+			<entry title="订单管理" do="order" />
+			<entry title="商品管理" do="goods" />
+			<entry title="商品分类" do="category" />
+			<entry title="物流管理" do="express" />
+			<entry title="配送方式" do="dispatch" />
+			<entry title="幻灯片管理" do="adv" />
+			<entry title="维权与告警" do="notice" />
+		</menu>
+		<home>
+			<entry title="商城" do="list" />
+		</home>
+		<profile>
+			<entry title="我的订单" do="myorder" />
+		</profile>
+	</bindings>
+	<install><![CDATA[]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[upgrade.php]]></upgrade>
+</manifest>

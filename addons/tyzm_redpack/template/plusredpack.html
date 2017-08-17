@@ -1,0 +1,74 @@
+﻿{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li{if $_GPC['do'] == 'manage' || $_GPC['do'] == '' } class="active"{/if}><a href="{php echo $this->createWebUrl('manage');}">红包管理</a></li>
+    <li{if $_GPC['do'] == 'plusredpack'} class="active"{/if}><a href="{php echo $this->createWebUrl('plusredpack');}">发送红包</a></li>
+</ul>
+<div class="panel panel-info">
+	<div class="panel-heading">单个红包发送</div>
+	<div class="panel-body">
+		<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" id="form1">
+
+
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class="text-danger">*</span>用户openid</label>
+					<div class="col-sm-8 col-xs-12">
+						<input type="text" class="form-control" name="openid" value="{$plus['openid']}"/>
+						<span class="help-block">至粉丝模块查找用户openid</span>
+					</div>
+				</div>
+	
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class="text-danger">*</span>红包金额</label>
+					<div class="col-sm-8 col-xs-12">
+						<input type="text" class="form-control" name="money" value="{$plus['money']}"/>
+						<span class="help-block">发送红包金额，最小1000分。单位：元</span>
+					</div>
+					
+				</div>
+				
+				
+				<div class="form-group">
+				    <label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+					<input name="submit" id="submit" type="submit" value="提交" class="btn btn-primary col-lg-1">
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</div>
+				
+
+				
+
+			</div>
+	
+
+	</form>
+
+	</div>
+ 
+    </div>
+
+
+<script>
+	$('#form1').submit(function() {
+		if(!$.trim($(':text[name="openid"]').val())) {
+			util.message('请填写用户openid');
+			return false;
+		}
+		
+		if(!$.trim($(':text[name="money"]').val())){
+			util.message('请填写用户红包金额');
+			return false;
+		}else if($(':text[name="money"]').val() < 1){
+			util.message('红包金额不能小于1元');
+			return false;		
+		}else if($(':text[name="money"]').val() > 600){
+			util.message('红包金额不能大于200元');
+			return false;		
+		}
+
+		
+	
+
+	});
+</script>
+{template 'common/footer'}

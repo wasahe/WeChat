@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com" versionCode="0.6">
+	<application setting="false">
+		<name><![CDATA[寻找单身狗]]></name>
+		<identifie><![CDATA[deam_searchsingle]]></identifie>
+		<version><![CDATA[1.61]]></version>
+		<type><![CDATA[biz]]></type>
+		<ability><![CDATA[寻找单身狗]]></ability>
+		<description><![CDATA[寻找单身狗]]></description>
+		<author><![CDATA[悟空源码论坛]]></author>
+		<url><![CDATA[http://www.012wz.com/]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+		<card embed="false" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="游戏管理" do="actset" state="" direct="false" />>
+		</menu>
+	</bindings>
+	<permissions>
+	</permissions>
+	<install><![CDATA[CREATE TABLE IF NOT EXISTS `ims_deam_searchsingle_actset` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) NOT NULL,
+  `act_name` varchar(200) DEFAULT NULL,
+  `is_info` tinyint(3) DEFAULT '0',
+  `need_info` varchar(200) DEFAULT NULL,
+  `is_subscribe` tinyint(3) DEFAULT '0',
+  `starttime` int(11) NOT NULL,
+  `endtime` int(11) NOT NULL,
+  `is_area` tinyint(3) DEFAULT '0',
+  `in_area` varchar(500) DEFAULT NULL,
+  `content` text NOT NULL,
+  `pagetitle` varchar(200) NOT NULL,
+  `gzimage` varchar(200) NOT NULL,
+  `qrcodeimage` varchar(200) NOT NULL,
+  `is_jssdk` tinyint(3) DEFAULT '0',
+  `share_img` varchar(200) DEFAULT NULL,
+  `share_title` varchar(200) DEFAULT NULL,
+  `share_desc` varchar(200) DEFAULT NULL,
+  `copyright` varchar(200) DEFAULT NULL,
+  `is_delete` tinyint(3) DEFAULT '0',
+  `rule_id` int(11) DEFAULT '0',
+  `reply_title` varchar(255) DEFAULT NULL,
+  `reply_img` varchar(255) DEFAULT NULL,
+  `reply_description` varchar(255) DEFAULT NULL,
+  `createtime` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+CREATE TABLE IF NOT EXISTS `ims_deam_searchsingle_guanzhu` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `aid` int(10) DEFAULT NULL,
+  `uniacid` int(10) NOT NULL,
+  `openid` varchar(50) NOT NULL,
+  `gztime` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `openid` (`openid`),
+  KEY `openid_2` (`openid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+CREATE TABLE IF NOT EXISTS `ims_deam_searchsingle_members` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) NOT NULL,
+  `act_id` int(11) DEFAULT NULL,
+  `openid` varchar(200) DEFAULT NULL,
+  `avatar` varchar(200) DEFAULT NULL,
+  `nickname` varchar(200) DEFAULT NULL,
+  `realname` varchar(200) DEFAULT NULL,
+  `telphone` varchar(20) DEFAULT NULL,
+  `maxscore` int(11) DEFAULT '0',
+  `alltime` int(11) DEFAULT '1000',
+  `createtime` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `maxscore` (`maxscore`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;]]></install>
+	<uninstall><![CDATA[DROP TABLE IF NOT EXISTS `ims_deam_searchsingle_actset`;
+	DROP TABLE IF NOT EXISTS `ims_deam_searchsingle_guanzhu`;
+	DROP TABLE IF NOT EXISTS `ims_deam_searchsingle_members`;]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

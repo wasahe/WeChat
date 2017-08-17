@@ -1,0 +1,321 @@
+﻿<!DOCTYPE html><html class="js cssanimations"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>大家手气</title>
+
+  <!-- Set render engine for 360 browser -->
+  <meta name="renderer" content="webkit">
+
+  <!-- No Baidu Siteapp-->
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+  <link rel="icon" type="image/png" href="http://hb.37yiyou.com/Public/amazeui/i/favicon.png">
+
+  <!-- Add to homescreen for Chrome on Android -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="icon" sizes="192x192" href="http://hb.37yiyou.com/Public/amazeui/i/app-icon72x72@2x.png">
+
+  <!-- Add to homescreen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Amaze UI">
+  <link rel="apple-touch-icon-precomposed" href="http://hb.37yiyou.com/Public/amazeui/i/app-icon72x72@2x.png">
+
+  <!-- Tile icon for Win8 (144x144 + tile color) -->
+  <meta name="msapplication-TileImage" content="http://hb.37yiyou.com/Public/amazeui/i/app-icon72x72@2x.png">
+  <meta name="msapplication-TileColor" content="#0e90d2">
+
+  <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
+  <!--
+  <link rel="canonical" href="http://www.example.com/">
+  -->
+
+  <link rel="stylesheet" href="http://cdn.amazeui.org/amazeui/2.5.0/css/amazeui.min.css">
+  <link rel="stylesheet" href="http://hb.37yiyou.com/Public/amazeui/css/app.css">
+	<style>
+.box{
+	position: relative;
+	width: 100%;
+	height: auto;
+	margin: 0px;
+	overflow: hidden;
+}
+	
+.div-img{
+	position: relative;
+	width: 80px;
+	height: 80px;
+	margin: 0 auto;
+	overflow: hidden;
+	border: 3px solid #FF5500;
+	border-radius: 50%;
+}
+.edit{
+	position: absolute;
+	padding: 4px 6px;
+	font-size: 12px;
+	color: white;
+	top: 16px;
+	right: 16px;
+	border-radius: 2px;
+	background: url(http://hb.37yiyou.com/Public/shakearound/images/tmbg.png);
+}
+
+.two-code{
+	position: absolute;
+	height: auto;
+	width: auto;
+	padding: 4px 6px;
+	font-size: 12px;
+	color: white;
+	top: 16px;
+	left: 16px;
+	border-radius: 2px;
+	background: url(http://hb.37yiyou.com/Public/shakearound/images/tmbg.png);
+}
+
+.close{
+	position: absolute;
+	top: -8px;
+	right: -8px;
+	width: 32px;
+	height: 32px;
+	background-color: #F59E00;
+	color: white;
+	font-weight: bolder;
+	
+	border-radius: 50%;
+	text-align: center; line-height: 32px;
+}
+	</style>
+</head>
+<body style="background: url(http://hb.37yiyou.com/Public/shakearound/images/packet_bg.jpg) no-repeat; background-color: #ededed; background-size: 100%;">
+<header class="am-g am-padding am-text-center" style="position: relative; padding-top: 48px;">
+	<div class="am-margin-top am-margin-bottom-xl" style="color: white;">王传棋 ‍波波椰創的红包</div>
+	<div class="div-img">
+					<img src="http://wx.qlogo.cn/mmopen/8Pa3iaaic2qicLO6jsKiaxDGDQYyGia9LCqXWibzomXSqowibM9xPiam5dnGC3J6ykib2abzftm9AicicicFVEicicyUmq6UaPgibeHJiaicFeSU6/0" width="100%" height="100%">	</div>
+	<div class="edit" onclick="window.location.href='/app.php/Index/sendpacket'">我要发红包</div>
+	
+</header>
+
+<div class="am-g am-text-center" style="position: relative;">
+	<div style="color: #FF2F2F;">王传棋 ‍波波椰創</div>
+	<div style="color: #66666;">恭喜发财，大吉大利！</div>
+</div>
+
+<div class="am-g am-padding am-text-center" style="position: relative;">
+	<div onclick="$('#two_code').modal('open')" style="margin-top: 16px; font-size: 12px; color: #888888;">关注 【省钱助手】，可查看我的红包</div>
+</div>
+
+<div class="am-g am-text-xs am-padding-xs" style="padding-left: 16px; background-color: white; color: #EE1E2D; border-top: 1px dashed #CCCCCC;">
+	已领100/100个，共200.00元
+</div>
+
+<div id="list_content" class="box" style="background-color: white; border-bottom: 1px solid #CCCCCC; border-top: 1px solid #CCCCCC;">
+		
+	<!--<div class="box" style="padding: 16px; padding-left:80px;;">
+		<img src="" width="48" height="48" style="position: absolute; top: 16px; left: 16px;" />
+		<div>
+			<span>xxx</span>
+			<span class="am-text-sm am-fr">xxx元</span>
+		</div>
+		<div>
+			<span class="am-text-xs" style="color: #CCCCCC;">2015-12-25 14:33</span>
+		</div>
+	</div>-->
+		
+<div class="box" style="padding: 16px; padding-left:80px; border-bottom: 1px solid #EEEEEE"><img src="http://wx.qlogo.cn/mmopen/Q3auHgzwzM6H5mgCDT9HFMOjYNia1r2XajeUzoREibB0wnfwmKO0DjB9fu8kqhjKIzPJM8dX9YZIXWU2piaAMMfGKTeIQYvRMeDx1jgDIiaWw8w/0" width="48" height="48" style="position: absolute; top: 16px; left: 16px;"><div><span>小钰</span><span class="am-text-sm am-fr">1.97元</span></div><div><span class="am-text-xs" style="color: #CCCCCC;">2015-12-31 09:12:59</span></div></div><div class="box" style="padding: 16px; padding-left:80px; border-bottom: 1px solid #EEEEEE"><img src="http://wx.qlogo.cn/mmopen/OttZmzibalKic5umI4FiaCicOQDYNNhj10Ff159MTx1jU3NW6Nw0Ur8JITEB1bHxsoiaqQQWUFrBLTO55ib3kRb5U54pHMluIOn5d1/0" width="48" height="48" style="position: absolute; top: 16px; left: 16px;"><div><span>车失王</span><span class="am-text-sm am-fr">2.74元</span></div><div><span class="am-text-xs" style="color: #CCCCCC;">2015-12-31 09:12:32</span></div></div><div class="box" style="padding: 16px; padding-left:80px; border-bottom: 1px solid #EEEEEE"><img src="http://wx.qlogo.cn/mmopen/WmwqjsSBsZKbgMVicmBewD2aR20pLzaIRniaMSW8MFxTcVj6ibFzBNmncjqPic9IztYIWfIvFBKfPOjqOfJzQ5l15jib5Xj4LjictJ/0" width="48" height="48" style="position: absolute; top: 16px; left: 16px;"><div><span>宇影儿</span><span class="am-text-sm am-fr">1.07元</span></div><div><span class="am-text-xs" style="color: #CCCCCC;">2015-12-31 09:12:01</span></div></div><div class="box" style="padding: 16px; padding-left:80px; border-bottom: 1px solid #EEEEEE"><img src="http://wx.qlogo.cn/mmopen/5IDBRyCYBBia5F7L5RD4vJLHdiaMKvTfY54eVzGXcwMB1icoqa7n6fOBiagjreCrgqnrKa3N9fQSjQHxqkp3cmthNDSKOqAqlYA6/0" width="48" height="48" style="position: absolute; top: 16px; left: 16px;"><div><span>A心♀呈</span><span class="am-text-sm am-fr">1.08元</span></div><div><span class="am-text-xs" style="color: #CCCCCC;">2015-12-31 09:11:55</span></div></div><div class="box" style="padding: 16px; padding-left:80px; border-bottom: 1px solid #EEEEEE"><img src="http://wx.qlogo.cn/mmopen/3V4qEuhEQ73xQ7Kl7XaLHHAicP2wyjATQGxJ3rZyQyoxpmfofz60t054Sqo0GN5SSccHN4iau7sibqONK7EyKVrYgIelYic5rSbic/0" width="48" height="48" style="position: absolute; top: 16px; left: 16px;"><div><span>miss闫uu</span><span class="am-text-sm am-fr">1.04元</span></div><div><span class="am-text-xs" style="color: #CCCCCC;">2015-12-31 09:11:13</span></div></div><div class="box" style="padding: 16px; padding-left:80px; border-bottom: 1px solid #EEEEEE"><img src="http://wx.qlogo.cn/mmopen/OttZmzibalKicGPUQkHk7vyTdZUjL6ibTszRGyWzhwebUErwMaf48CYBYClkembT0eaIYYXRlDfL30hNG9UnGNOzSbGTRGEeV1ia/0" width="48" height="48" style="position: absolute; top: 16px; left: 16px;"><div><span>2⃣4⃣♐</span><span class="am-text-sm am-fr">1.06元</span></div><div><span class="am-text-xs" style="color: #CCCCCC;">2015-12-31 09:10:56</span></div></div><div class="box" style="padding: 16px; padding-left:80px; border-bottom: 1px solid #EEEEEE"><img src="http://wx.qlogo.cn/mmopen/OttZmzibalK9ysE1A0JOicELIM99ibuKpjtWWEYFLsVIuRPnWzgpSTHqk0tuaRtNkOSNOGLHkN0iciat2lnmeibsKpq5o7h9LfV1A0/0" width="48" height="48" style="position: absolute; top: 16px; left: 16px;"><div><span>余猪公</span><span class="am-text-sm am-fr">1.01元</span></div><div><span class="am-text-xs" style="color: #CCCCCC;">2015-12-31 09:10:40</span></div></div><div class="box" style="padding: 16px; padding-left:80px; border-bottom: 1px solid #EEEEEE"><img src="http://wx.qlogo.cn/mmopen/Q3auHgzwzM6J4PWlOqyXcaG482v9wBozQEdMFichRwPIwjZvzrZjrCvVznD05EFYb2FMBcE2q6nKuPuvxLM3eDSIvP8ic3ib7ibP4e944QmWbnQ/0" width="48" height="48" style="position: absolute; top: 16px; left: 16px;"><div><span>Jade </span><span class="am-text-sm am-fr">1.93元</span></div><div><span class="am-text-xs" style="color: #CCCCCC;">2015-12-31 09:10:38</span></div></div><div class="box" style="padding: 16px; padding-left:80px; border-bottom: 1px solid #EEEEEE"><img src="http://wx.qlogo.cn/mmopen/3V4qEuhEQ73jRd9TpoE6ticztJhSgTNkJNSL1jx9AawsenBRWcpticJ1JsILMpldPYQB9SibFf4MtCGbfxfazIdR4Q59DXqTDDT/0" width="48" height="48" style="position: absolute; top: 16px; left: 16px;"><div><span>castle</span><span class="am-text-sm am-fr">1.05元</span></div><div><span class="am-text-xs" style="color: #CCCCCC;">2015-12-31 09:09:53</span></div></div><div class="box" style="padding: 16px; padding-left:80px; border-bottom: 1px solid #EEEEEE"><img src="http://wx.qlogo.cn/mmopen/OttZmzibalKic5umI4FiaCicOYibbuJCL5RtAAoVzE0ic03Xf83clUYqkTU68I9gYM5xPMLua0rsd5fkODeEX7IISFe6EgPYnzp7KN/0" width="48" height="48" style="position: absolute; top: 16px; left: 16px;"><div><span>大手牽小手</span><span class="am-text-sm am-fr">1.12元</span></div><div><span class="am-text-xs" style="color: #CCCCCC;">2015-12-31 09:09:45</span></div></div></div>
+<div id="list_more" class="box" style="margin-top: 16px; text-align: center;"><span class="am-text-secondary" onclick="get_list();">查看更多</span></div>
+
+
+<!--复制分享链接开始-->
+<div class="am-modal am-modal-alert" id="share_url">
+	<div class="am-g" style="position: relative; height: auto; background-color: brown; border-radius: 8px;">
+
+		<div class="box" style="width: 80%; padding: 16px 0px; margin: 0 auto;" id="gg_img">
+			<img src="" width="100%" style="border-radius: 8px;">
+		</div>
+
+		<div class="am-u-sm-12 am-text-center" style="padding: 8px;color: white;">
+			
+			<input type="text" value="http://hb.37yiyou.com/app.php/Packet/index?id=1891&amp;verify=0ad03ffe4d2dd9387b0ec1becb805888" class="box" style="margin-bottom: 8px; padding: 8px; outline: none; color: white; background-color: brown; font-size: 12px; border: 1px dashed #CCCCCC; text-align: center;">
+			<span class="am-text-xs" style="color: #888888;">长按复制分享链接</span>
+		</div>
+
+		<div onclick="$('#share_url').modal('close');" class="close"><i class="am-icon-close"></i></div>
+
+	</div>
+</div>
+<!--复制分享链接开始-->
+
+
+<!--隐藏的分享开始-->
+<div class="am-modal-actions" id="share" style="height: 100%;">
+		<img width="100%" height="100%" onclick="$('#share').modal('close')" src="http://hb.37yiyou.com/Public/shakearound/images/fxg.png">
+</div>
+<!--隐藏的分享结束-->
+
+<!--二维码关注开始-->
+<div class="am-modal am-modal-alert" tabindex="-1" id="two_code">
+  <div class="am-modal-dialog" style="border-radius: 2px;">
+    <div class="am-modal-bd" id="alert_content">
+    	<div class="am-g am-text-center">
+    		<div class="am-u-sm-12 am-padding-top am-text-center am-text-sm" style="text-align: justify;">
+    			<img src="http://hb.37yiyou.com/Public/app/images/2wm.jpg" width="80%">
+					<div class="am-margin-top am-text-xs">长按关注 【省钱助手】，可查看我的红包</div>
+    		</div>
+    	</div>
+    </div>
+  </div>
+</div>
+<!--二维码关注结束-->
+
+
+<script src="http://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+<script src="http://cdn.amazeui.org/amazeui/2.5.0/js/amazeui.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+<script type="text/javascript">
+wx.config({
+    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+    appId: 'wxc1f0bda723943c7e', // 必填，公众号的唯一标识
+    timestamp: '1451566746', // 必填，生成签名的时间戳
+    nonceStr: 'FT2Eyy8If2hCJLX3', // 必填，生成签名的随机串
+    signature: 'eb227ab55c18f66e2f7c80af38dcc8aca5b04f05',// 必填，签名，见附录1
+    jsApiList: [
+       'onMenuShareTimeline',
+       'onMenuShareAppMessage',
+       'showOptionMenu',
+    ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+});
+
+wx.ready(function(){
+	wx.showOptionMenu();
+    //分享到朋友群
+    wx.onMenuShareTimeline({
+        title: '红包新玩法，营销新模式', // 分享标题
+        link: 'http://hb.37yiyou.com/app.php/Index/sendpacket', // 分享链接
+        imgUrl: 'http://hb.37yiyou.com/logo.jpg', // 分享图标
+        success: function (res) {
+        	share_succes();
+          },
+          cancel: function (res) {
+        	 share_error();
+          }
+        });
+         
+       //分享给微信好友
+  	   wx.onMenuShareAppMessage({
+  		    title: '红包新玩法，营销新模式', // 分享标题
+  		    desc: '一种全新的红包模式，无使用门槛，任何公众号都可以一步集成摇红包功能，并且能转发到朋友圈，一步到位引爆朋友圈。', // 分享描述
+  		    link: 'http://hb.37yiyou.com/app.php/Index/sendpacket', // 分享链接
+  		    imgUrl: 'http://hb.37yiyou.com/logo.jpg', // 分享图标
+  		    type: '', // 分享类型,music、video或link，不填默认为link
+  		    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+  		    success: function () { 
+  		    	share_succes();
+  		    },
+  		    cancel: function () { 
+  		    	share_error();
+  		    }
+  		});
+});
+
+/*获取红包记录方法*/
+var limit = 0;
+function get_list(){	
+	$("#list_more").html('<div class="am-modal-bd am-text-secondary"><span class="am-icon-spinner am-icon-spin"></span> Loading...</div>');
+	$.ajax({
+	    type : "post",
+	    url : "/app.php/Index/get_loadrecord_ajax",
+	    data : {
+	    	limit:limit,
+	    	activity_id:'1891'
+	    },      
+	    success : function(data) {
+
+	    	if(data.status==200){
+						var list = data['content'];
+						var content = '';
+						for(var i=0; i<list.length; i++){
+							content = '<div class="box" style="padding: 16px; padding-left:80px; border-bottom: 1px solid #EEEEEE">'
+							+'<img src="'+list[i]['icon']+'" width="48" height="48" style="position: absolute; top: 16px; left: 16px;" />'
+							+'<div><span>'+list[i]['username']+'</span>'
+							+'<span class="am-text-sm am-fr">'+list[i]['get_money']+'元</span>'
+							+'</div><div>'
+							+'<span class="am-text-xs" style="color: #CCCCCC;">'+list[i]['createtime']+'</span></div></div>';
+							
+							$("#list_content").append(content);
+						}
+						if(list.length==10){
+							$("#list_more").html('<span class="am-text-secondary" onclick="get_list();">查看更多</span>');
+						}else{
+							$("#list_more").html('<span></span>');
+						}
+						limit++;		
+		    }
+	    	else if(data.status==-103){
+	    		$("#list_more").html('<span>没有更多记录！</span>');
+	    	}	    	
+	    },
+	    error : function(xhr, type) {
+
+	    }
+	});
+}
+get_list();
+
+
+wx.config({
+    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+    appId: 'wxc1f0bda723943c7e', // 必填，公众号的唯一标识
+    timestamp: '1451566746', // 必填，生成签名的时间戳
+    nonceStr: 'FT2Eyy8If2hCJLX3', // 必填，生成签名的随机串
+    signature: 'eb227ab55c18f66e2f7c80af38dcc8aca5b04f05',// 必填，签名，见附录1
+    jsApiList: [
+       'onMenuShareTimeline','onMenuShareAppMessage',
+    ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+});
+
+wx.ready(function(){
+    //分享到朋友群
+    wx.onMenuShareTimeline({
+        title: '#全民摇红包#恭喜发财，大吉大利！', // 分享标题
+        link: 'http://hb.37yiyou.com/app.php/Index/mypacket/'+'', // 分享链接
+        imgUrl: 'http://wx.qlogo.cn/mmopen/8Pa3iaaic2qicLO6jsKiaxDGDQYyGia9LCqXWibzomXSqowibM9xPiam5dnGC3J6ykib2abzftm9AicicicFVEicicyUmq6UaPgibeHJiaicFeSU6/0', // 分享图标
+        success: function (res) {
+        	share_succes();
+          },
+          cancel: function (res) {
+        	 share_error();
+          }
+        });
+         
+       //分享给微信好友
+  	   wx.onMenuShareAppMessage({
+  		    title: '王传棋 ‍波波椰創'+'的红包', // 分享标题
+  		    desc: '#全民摇红包#恭喜发财，大吉大利！', // 分享描述
+  		    link: 'http://hb.37yiyou.com/app.php/Index/mypacket/'+'', // 分享链接
+  		    imgUrl: 'http://wx.qlogo.cn/mmopen/8Pa3iaaic2qicLO6jsKiaxDGDQYyGia9LCqXWibzomXSqowibM9xPiam5dnGC3J6ykib2abzftm9AicicicFVEicicyUmq6UaPgibeHJiaicFeSU6/0', // 分享图标
+  		    type: '', // 分享类型,music、video或link，不填默认为link
+  		    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+  		    success: function () { 
+  		    	share_succes();
+  		    },
+  		    cancel: function () { 
+  		    	share_error();
+  		    }
+  		});
+         
+});
+
+/*预览红包*/
+function showBrows(){
+	window.location.href="http://hb.37yiyou.com/app.php/Packet/index?id=1891&verify=0ad03ffe4d2dd9387b0ec1becb805888";
+}
+
+</script>
+
+</body><iframe id="__WeixinJSBridgeIframe_SetResult" style="display: none;"></iframe><iframe id="__WeixinJSBridgeIframe" style="display: none;"></iframe></html>

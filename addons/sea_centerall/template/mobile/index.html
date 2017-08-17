@@ -1,0 +1,76 @@
+{template 'common/header'} 
+{template 'common/common'} 
+
+<title>会员中心</title>
+
+<style type="text/css">
+	body{background-color: #FFFFFF;}
+	.menus-box{display: block;width: 100%;height: 100px;}
+	.menus-box ul{list-style-type: none;margin: 0;padding: 0;}
+	.menus-box ul li{float: left;width: 25%;height: 100px;box-sizing: border-box;}
+	.menus-box ul li:nth-of-type(odd){border-bottom: 1px solid #E5E5E5;}
+	.menus-box ul li:nth-of-type(even){border-bottom: 1px solid #E5E5E5;border-right: 1px solid #E5E5E5;border-left: 1px solid #E5E5E5;}
+	.menus-box ul li:nth-child(4n+0){border-right:0px;}
+	
+	.menus-box ul li a{text-decoration: none;}
+	
+	.nav-top,.nav-bottom{display: block;text-align: center;}
+	
+	.nav-top{height: 70px;}
+	.nav-bottom{height: 30px;}
+	.nav-top img{margin-top: 17px;}
+	.nav-bottom span{font-size: 18px;color:#333333;}	
+</style>
+
+<div id="container">
+	<div class="addWrap">
+		<div class="swipe" id="mySwipe">
+	    	<div class="swipe-wrap">
+	    		{loop $advs $a}
+		      		<div><a {if $a['link']}href="{$a['link']}"{else}href="javascript:;"{/if}><img class="img-responsive" src="{$a['thumb']}" width="100%"/></a></div>
+	    		{/loop}
+	    	</div>
+	  	</div>
+	  	<ul id="position">
+	    	{php $slideNum = 1;}
+			{loop $advs $a}
+				<li{if $slideNum == 1} class="cur"{/if}></li>
+				{php $slideNum++;}
+			{/loop}
+	  	</ul>
+	</div>
+</div>
+<div class="menus-box">
+		<ul>
+			{loop $menus $m}
+			<li>
+				<a {if $m['link']}href="{$m['link']}"{else}href="javascript:;"{/if}>
+					<div class="nav-top">
+						<img src="{$m['thumb']}" {if $m['imgwidth']}width="{$m['imgwidth']}"{/if} {if $m['imgheight']}height="{$m['imgheight']}"{/if} />
+					</div>
+					<div class="nav-bottom">
+						<span class="title" style="color:{$m['color']};font-size:{$m['fontsize']}px;">{$m['title']}</span>
+					</div>
+				</a>					
+			</li>
+			{/loop}
+		</ul>
+	</div>
+
+<script type="text/javascript">
+	var bullets = document.getElementById('position').getElementsByTagName('li');
+	var banner = Swipe(document.getElementById('mySwipe'), {
+		auto: 2000,
+		continuous: true,
+		disableScroll:false,
+		callback: function(pos) {
+			var i = bullets.length;
+			while (i--) {
+			  bullets[i].className = ' ';
+			}
+			bullets[pos].className = 'cur';
+		}
+	});
+</script>
+
+{template 'common/footer'}

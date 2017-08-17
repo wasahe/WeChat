@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com" versionCode="0.6">
+	<application setting="false">
+		<name><![CDATA[模块辅助器]]></name>
+		<identifie><![CDATA[haoman_scene]]></identifie>
+		<version><![CDATA[1.6]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[模块辅助器]]></ability>
+		<description><![CDATA[模块辅助器]]></description>
+		<author><![CDATA[折翼天使资源社区]]></author>
+		<url><![CDATA[http://www.012wz.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="活动管理" do="manage" />
+			<entry title="关注二维码" do="admanage" />
+			<entry title="借用设置" do="jieyong" />
+		</menu>
+
+	</bindings>
+	<install><![CDATA[CREATE TABLE IF NOT EXISTS `ims_haoman_scene_addad` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) NOT NULL DEFAULT '0',
+  `uniacid` int(10) unsigned NOT NULL COMMENT '公众号ID',
+  `rulename` varchar(255) NOT NULL COMMENT '活动规则',
+  `adlogo` varchar(255) NOT NULL DEFAULT '0' COMMENT '广告图片',
+  `adtitle` varchar(255) NOT NULL DEFAULT '0' COMMENT '广告标题',
+  `addetails` varchar(255) NOT NULL DEFAULT '0' COMMENT '广告简介',
+  `adlink` varchar(255) NOT NULL DEFAULT '0' COMMENT '广告链接',
+  `createtime` int(11) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0表示未投放，1表示投放',
+  PRIMARY KEY (`id`),
+  KEY `idx_id_rulename` (`id`,`rulename`) USING BTREE
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_haoman_scene_baoming` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '规则id',
+  `uniacid` int(10) unsigned NOT NULL COMMENT '公众号ID',
+  `from_user` varchar(50) NOT NULL DEFAULT '' COMMENT '用户openid',
+  `realname` varchar(20) NOT NULL DEFAULT '' COMMENT '真实姓名',
+  `mobile` varchar(20) NOT NULL DEFAULT '' COMMENT '联系电话',
+  `address` varchar(255) NOT NULL DEFAULT '' COMMENT '联系地址',
+  `createtime` int(10) DEFAULT '0',
+  `status` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `indx_rid` (`rid`),
+  KEY `indx_uniacid` (`uniacid`),
+  KEY `indx_from_user` (`from_user`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_haoman_scene_fans` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rid` int(11) DEFAULT '0',
+  `uniacid` int(11) DEFAULT '0',
+  `fansID` int(11) DEFAULT '0',
+  `from_user` varchar(50) DEFAULT '' COMMENT '用户ID',
+  `avatar` varchar(255) NOT NULL DEFAULT '' COMMENT '微信头像',
+  `nickname` varchar(50) NOT NULL DEFAULT '' COMMENT '微信昵称',
+  `isad` tinyint(1) DEFAULT '0' COMMENT '是否看过场景',
+  `isshare` tinyint(1) DEFAULT '0' COMMENT '是否分享过',
+  `createtime` int(10) DEFAULT '0',
+  `status` tinyint(1) DEFAULT '0',
+  `sharenum` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '分享量',
+  `sharetime` int(10) DEFAULT '0' COMMENT '提现次数',
+  `awardingid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '兑奖地址ID',
+  `todaynum` int(11) DEFAULT '0',
+  `is_closebg` int(11) DEFAULT '0' COMMENT '是否关闭背景音乐',
+  `last_time` int(10) DEFAULT '0',
+  `zhongjiang` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `indx_rid` (`rid`),
+  KEY `indx_from_user` (`from_user`),
+  KEY `indx_uniacid` (`uniacid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+CREATE TABLE IF NOT EXISTS `ims_haoman_scene_jiequan` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT '0',
+  `appid` varchar(255) DEFAULT '',
+  `appsecret` varchar(255) DEFAULT '',
+  `appid_share` varchar(255) DEFAULT '',
+  `appsecret_share` varchar(255) DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `idx_uniacid` (`uniacid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_haoman_scene_reply` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned DEFAULT '0',
+  `uniacid` int(11) DEFAULT '0',
+  `title` varchar(50) DEFAULT '',
+  `picture` varchar(100) NOT NULL COMMENT '活动图片',
+  `description` varchar(255) DEFAULT '',
+  `starttime` int(10) DEFAULT '0',
+  `endtime` int(10) DEFAULT '0',
+  `rules` text NOT NULL COMMENT '规则',
+  `up_qrcode` varchar(255) DEFAULT '',
+  `share_url` varchar(300) DEFAULT '',
+  `share_gz` varchar(300) DEFAULT '',
+  `share_type` tinyint(1) DEFAULT '0',
+  `share_title` varchar(200) DEFAULT '',
+  `share_desc` varchar(300) DEFAULT '',
+  `share_imgurl` varchar(255) NOT NULL COMMENT '分享朋友或朋友圈图',
+  `getip` tinyint(1) DEFAULT '0',
+  `getip_addr` text NOT NULL COMMENT '限制地区ip',
+  `noip_url` varchar(300) DEFAULT '',
+  `allowip` text NOT NULL,
+  `isallowip` tinyint(2) DEFAULT '0',
+  `isshow` tinyint(1) DEFAULT '0',
+  `isonce` tinyint(1) DEFAULT '0',
+  `isonline` tinyint(1) DEFAULT '0',
+  `copyright` varchar(20) DEFAULT '',
+  `createtime` int(10) DEFAULT '0',
+  `viewnum` int(11) DEFAULT '0' COMMENT '浏览次数',
+  `fansnum` int(11) DEFAULT '0' COMMENT '参与人数',
+  `scene` tinyint(1) DEFAULT '0',
+  `out_scene_url` varchar(255) NOT NULL COMMENT '外链场景URL',
+  `http_scene_url` varchar(255) NOT NULL COMMENT '外链场景URL',
+  `p1_bg` varchar(255) NOT NULL COMMENT '自带场景背景图',
+  `p1_top` varchar(255) NOT NULL COMMENT '自带场景顶部图',
+  `p1_bottom` varchar(255) NOT NULL COMMENT '自带场景底部图',
+  `p2_bg` varchar(255) NOT NULL COMMENT '自带场景背景图',
+  `p2_top` varchar(255) NOT NULL COMMENT '自带场景顶部图',
+  `p2_bottom` varchar(255) NOT NULL COMMENT '自带场景底部图',
+  `p3_bg` varchar(255) NOT NULL COMMENT '自带场景背景图',
+  `p3_top` varchar(255) NOT NULL COMMENT '自带场景顶部图',
+  `p3_isphone` tinyint(1) DEFAULT '0',
+  `p3_phone` varchar(50) DEFAULT '0',
+  `start_bg` varchar(250) DEFAULT '',
+  `start_top` varchar(250) DEFAULT '',
+  `start_dec` varchar(250) DEFAULT '',
+  `start_music` varchar(250) DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

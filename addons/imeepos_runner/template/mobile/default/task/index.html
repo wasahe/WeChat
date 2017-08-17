@@ -1,0 +1,276 @@
+{template 'default/common/header1'}
+<!--听单-->
+<div class="container" id="pjax-container" style="margin-top:0px;">
+	<style type="text/css">
+	.active{color:#04BE02 !important;}
+	.tabs-striped .tab-item.tab-item-active, .tabs-striped .tab-item.active, .tabs-striped .tab-item.activated {margin-top: -2px;border-style: solid;border-width: 2px 0 0 0;border-color: #04BE02;  }
+	.swiper-slide img{width:100%;}
+	.listen{width:120px;height:120px;text-align:center;margin:0 auto;margin-top: 15px;}
+	.listen div{background-color: #fff;color: #f49e10 !important;width: 120px;height: 120px;line-height: 120px;border-radius: 60px;box-shadow: 1px 1px 1px;border-width: 1px;border-style: solid;display:block;  }
+	.calm{color:#04BE02;}
+	.user img{margin-top:10px;width: 100px;height: 100px;border-radius: 50px;-webkit-box-shadow: 3px 3px 3px;-moz-box-shadow: 3px 3px 3px;box-shadow: 3px 3px 3px;  }
+	.user .title{margin-top: 5px;color: #4AD049;}
+	.user span{width: 80px;height: 80px;display: block;margin: 0 auto;border-radius: 50px;line-height: 80px;border-width: 1px;border-style: solid;margin-top: 10px;margin-bottom: 10px;background-color: #1EC41C;color: #fff;-webkit-box-shadow: 1px 2px 1px;-moz-box-shadow: 1px 2px 1px;box-shadow: 1px 2px 1px;  }
+	.user p{padding: 1em;color: red;white-space: normal;}
+	.weui_extra_area a{background-color: #F49E10;color: #fff !important;padding: 5px 15px;border-radius: 10px;}
+	.no_order_title{margin: 0 auto;display: block;margin-top: 20px;font-weight: 200;font-size: 20px;}
+	</style>
+	<div class="page slideIn msg">
+		<div class="weui_msg">
+			<div class="weui_icon_area">
+				<div class="content">
+					<div class="large"></div>
+					<div class="middle"></div>
+					<div class="small">
+						<p>听单中
+						<br><span class="time j_timeClock">0:0:0</span></p>
+					</div>
+				</div>
+			</div>
+			<div class="weui_text_area" style="margin-top: 200px;">
+				<p class="weui_msg_desc">
+					<div class="left"></div>
+					<div class="card" style="height:100%;" id="desc">
+						<span class="no_order_title" style="padding: 0 20px;">暂无订单</span>
+						<button id="renzheng" class="button button-calm" style="display:none;margin:0 auto;margin-bottom:44px;margin-top:33px;">确定前往</button>
+						<img src="{MODULE_URL}/public/images/no_order_3f875a1.png" alt="" />
+					</div>
+					<div class="right"></div>
+				</p>
+			</div>
+			<input type="hidden" name="province"/>
+			<input type="hidden" name="city"/>
+			<div class="weui_extra_area">
+				<a href="{php echo $this->createMobileUrl('tasks')}">查看所有</a>
+			</div>
+		</div>
+	</div>
+	<script>
+	require(['jquery','core','weixin','map','js/convertor','swiper'],function($,core,wx,BMap){
+		$('#footer').show();
+		clearInterval(timer);
+		var wating_time = 0;
+		var hour = 0;
+		var min = 0;
+		var sec = 0;
+		var isnew = false;
+		function addTime(){
+			wating_time = 0;
+			timer = setInterval(function(){
+				wating_time = wating_time + 1;
+				hour = parseInt(wating_time / (60*60));
+				min = parseInt((wating_time-hour * 60*60) / (60));
+				console.log(wating_time);
+				if(wating_time>=60){
+					sec = wating_time % 60;
+				}else{
+					sec = wating_time;
+				}
+				$('.j_timeClock').html(hour+':'+min+':'+sec);
+			},1000);
+		}
+		addTime();
+
+		wx.config(jssdkconfig);
+		//微信相关功能
+		var weixin = {};
+
+		//微信分享相关功能
+		weixin.share = weixin.share || {};
+		weixin.share.timeline = function(title,link,image,success,cancel){
+			wx.ready(function(){
+				wx.onMenuShareTimeline({
+					title:title,
+					link:link,
+					imgUrl:image,
+					success:function(){
+						if(success){
+							success();
+						}
+					},
+					cancel:function(){
+						if(cancel){
+							cancel();
+						}
+					}
+				});
+			});
+		}
+		//微信图片借口
+		weixin.image = weixin.image || {};
+		weixin.image.preview = function(current,urls){
+			wx.ready(function(){
+				wx.previewImage({
+					current:current,
+					urls:urls
+				});
+			});
+		}
+
+		weixin.image.upload = function(localId,success){
+			wx.ready(function(){
+				wx.uploadImage({
+					localId:localId,
+					isShowProgressTips:1,
+					success:function(res){
+						if(success){
+							success(res);
+						}
+					}
+				});
+			});
+		}
+
+		weixin.image.download = function(serverId,success){
+			wx.ready(function(){
+				wx.downloadImage({
+					serverId:serverId,
+					isShowProgressTips:1,
+					success:function(res){
+						success(res);
+					}
+				});
+			});
+		}
+
+		weixin.image.choose = function(count,success){
+			wx.ready(function(){
+				wx.chooseImage({
+					count:count,
+					sizeType:['original','compressed'],
+					sourceType:['album','camera'],
+					success:function(res){
+						success(res.localIds);
+					}
+				});
+			});
+		}
+
+		weixin.voice = weixin.voice || {};
+		weixin.voice.localId = '';
+		var listening = false;
+
+		weixin.voice.downloadAndPlay = function(data){
+			var serverId = data.media_id;
+			wx.ready(function(){
+				//alert(listening);
+				if(listening){
+					return '';
+				}else{
+					wx.onVoicePlayEnd({
+						success:function(res){
+							weixin.voice.localId = res.localId;
+							eval("newtasks.imeepos_runner_" +data.taskid+".listen=true");
+							eval("newtasks.imeepos_runner_" +data.taskid+".localId=res.localId");
+							//alert('播放完毕');
+							listening = false;
+							$.post("{php echo $this->createMobileUrl('listen_log')}",{taskid:data.taskid},function(d){
+								//alert(d.taskid);
+							},'json');
+						}
+					});
+					wx.downloadVoice({
+						serverId: serverId,
+						isShowProgressTips: 1,
+						success: function (res) {
+							weixin.voice.localId = res.localId;
+							//播放
+							listening = true;
+							wx.playVoice({
+								localId: weixin.voice.localId
+							});
+
+						}
+					});
+				}
+			})
+		}
+
+		weixin.voice.start = function(){
+			wx.ready(function(){
+				wx.startRecord();
+			});
+		}
+
+		weixin.voice.stop = function(success){
+			wx.ready(function(){
+				wx.stopRecord({
+					success:function(){
+						success(res.localId);
+					}
+				});
+			});
+		}
+
+
+		//微信定位相关功能
+		weixin.location = weixin.location || {};
+		weixin.location.get = function(){
+			wx.ready(function() {
+				wx.getLocation({
+					success: function(res) {
+						weixin.location.lat = res.latitude;
+						weixin.location.lng = res.longitude;
+					}
+				});
+			});
+		}
+
+		var source = new EventSource("{php echo $this->createMobileUrl('audionew')}");
+
+		$(document.body).on('click','.reciveOrder',function(){
+			core.post('reciveorder',{id:$(this).data('id')},function(data){
+				if(data.success == 0){
+					core.ok(data.message,function(){
+						window.location.href = "{php echo $this->createMobileUrl('detail')}&id="+data.taskid;
+					},function(){});
+				}else{
+					core.cancel(data.message,function(){});
+				}
+			});
+		});
+		//检查快递合法性
+		//实现 队列先进先出后进后出 newtasks = []
+		var newtasks = {};
+		core.post('check',{act:'runner'},function(data){
+			if(data.status != 0){
+				$html = "<span style='font-size:16px;margin-top:20px;color:red;margin-bottom:44px;'>"+data.message+"</span>";
+				$('.no_order_title').html($html);
+				$('#desc img').hide();
+				$('#renzheng').show();
+				$('#renzheng').click(function(){
+					window.location.href = data.url;
+				});
+			}else{
+				source.onmessage = function(event){
+					var data = eval('(' + event.data + ')');
+					console.log(data.status);
+					if(data.status == 0){
+						if(!listening){
+							eval("newtasks.imeepos_runner_"+data.taskid + "=data");
+							var html ="";
+							html += '<div class="item user" style="display:block;">'+
+									'<img src="'+data.avatar+'" class="avatar" alt="'+data.nickname+'" />'+
+									'<h2 class="title">'+data.nickname+'</h2>'+
+									'<p>'+data.desc+'</p>'+
+									'<span data-id="'+data.data.id+'" class="reciveOrder">立即接单</span>'+
+									'</div>';
+							$('#desc').html(html);
+							console.log(html);
+							var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+							$('.user').addClass('animated bounceInRight');
+							eval("newtasks.imeepos_runner_"+data.taskid + ".listen=true");
+							weixin.voice.downloadAndPlay(data);
+						}
+
+					}
+				}
+			}
+		});
+
+	});
+	</script>
+</div>
+{template 'default/common/share'}
+{template 'default/common/footerbar2'}
+{template 'default/common/footer'}

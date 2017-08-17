@@ -1,0 +1,211 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+    <li {if $operation == 'display'}class="active"{/if}><a href="{php echo $this->createWebUrl('actset', array('op' => 'display'))}">游戏管理</a></li>
+    <li {if $operation == 'post'&& empty($id)}class="active"{/if}><a href="{php echo $this->createWebUrl('actset', array('op' => 'post'))}">新增游戏</a></li>
+    {if $operation == 'post'&& !empty($id)}<li class="active"><a href="{php echo $this->createWebUrl('actset', array('op' => 'post','id' => $id))}">编辑游戏</a></li>{/if}
+    
+</ul>
+{if $operation == 'display'}
+<div class="main">
+	<div class="panel panel-default" style="padding-top:15px">
+    	<table class="table table-hover">
+        	<thead class="navbar-inner">
+                <tr>
+                    <th style="width:50px;text-align:center;">ID</th>
+                    <th style="width:160px;text-align:center;">游戏名称</th>
+                    <th style="text-align:center;">游戏时间</th>
+                    <th>游戏链接</th>
+                    <th style="width:200px;">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+           		 	{loop $list $item}
+						<tr>
+							<td style="width:50px;text-align:center;">{$item['id']}</td>
+							<td style="width:160px;text-align:center;">{$item['act_name']}</td>
+                            <td style="text-align:center;"><p class="label label-warning">开始：{php echo date('Y-m-d H:i:s',$item['starttime'])}</p><br><p class="label label-warning">结束：{php echo date('Y-m-d H:i:s',$item['endtime'])}</p></td>
+                            <td><input class="form-control" type="text" value="{$_W['siteroot']}app/index.php?i={$_W['uniacid']}&c=entry&id={$item['id']}&do=index&m=deam_searchsingle"></td>
+							 <td style="width:200px;overflow:visible"><div class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    操作
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+    <li><a href="{php echo $this->createWebUrl('actset', array('id' => $item['id'],'op'=>'post'))}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编辑</a></li>
+    <li><a href="{php echo $this->createWebUrl('gamedata', array('id' => $item['id'],'op'=>'display'))}"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> 游戏数据</a></li>
+    <li><a href="{php echo $this->createWebUrl('actset', array('id' => $item['id'],'op'=>'delete'))}" onclick="return confirm('确定删除？');return false;"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 删除</a></li>
+  </ul>
+</div></td>
+						</tr>
+					{/loop}
+            
+            </tbody>
+        </table>
+        {$pager}
+    </div>
+</div>
+{elseif $operation == 'post'}
+<div class="main">
+<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" onsubmit="return formcheck();">
+<input type="hidden" name="id" value="{$item['id']}" />
+	<div class="panel panel-default">
+    	<div class="panel-body">
+            <ul class="nav nav-tabs" id="myTab">
+                <li class="active" ><a href="#tab_basic">活动基本设置</a></li>
+                <li><a href="#tab_yingxiao">营销设置</a></li>
+                <li><a href="#tab_page">页面设置</a></li>
+                <li><a href="#tab_chufa">活动回复设置</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane  active" id="tab_basic">
+                    <div class="form-group">
+                        <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class="white">*</span>游戏名称</label>
+                        <div class="col-sm-9 col-xs-12">
+                            <input class="form-control" type="text" name="act_name" value="{$item['act_name']}" required>
+                            <div class="help-block">游戏名称。<font color="#FF0000">作为后台分辨游戏用途</font></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-12 col-sm-3 col-md-2 control-label">游戏时间</label>
+                        <div class="col-sm-9 col-xs-12">
+                            {php echo tpl_form_field_daterange('datelimit', array('starttime'=>date('Y-m-d H:i:s',$item['starttime']),'endtime'=>date('Y-m-d H:i:s',$item['endtime'])),true)}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class="white">*</span>参与游戏填写项</label>
+                        <div class="col-sm-9 col-xs-12">
+                            <label class="checkbox-inline" for="need_info1"><input type="checkbox" id="need_info1" value="username" name="need_info[]" {if $need_username} checked{/if}> 姓名</label>
+                            <label class="checkbox-inline" for="need_info2"><input type="checkbox" id="need_info2" value="telphone" name="need_info[]" {if $need_telphone} checked{/if}> 手机号</label>
+                            <div class="help-block" style="color:#FF0000"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class="white">*</span>游戏规则</label>
+                        <div class="col-sm-9 col-xs-12">
+                            {php echo tpl_ueditor('content', $item['content']);}
+                            <div class="help-block" style="color:#FF0000">活动介绍里面涉及到“关注”、“分享”等字眼的时候，建议将介绍做成图片格式</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane " id="tab_yingxiao">
+                    <div class="form-group">
+                        <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class="white">*</span>是否强制关注</label>
+                        <div class="col-sm-9 col-xs-12">
+                            <label for="is_subscribe1" class="radio-inline"><input type="radio" name="is_subscribe" value="1" onClick="$('.is_subscribe').fadeIn(200)" id="is_subscribe1" {if $item['is_subscribe'] == 1} checked="checked" {/if}> 是</label>
+                            <label for="is_subscribe2" class="radio-inline"><input type="radio" name="is_subscribe" value="0" onClick="$('.is_subscribe').fadeOut(200)" id="is_subscribe2" {if empty($item['is_subscribe'])} checked="checked" {/if}> 否</label>
+                            <div class="help-block" style="color:#FF0000">设置强制关注后必须关注才能参加活动。认证的服务号效果最佳，其他公众号只能通过触发关键字使用该功能</div>
+                        </div>
+                    </div>
+                    <div class="form-group is_subscribe" {if empty($item['is_subscribe'])} style="display:none"{/if}>
+                        <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">关注二维码图片</label>
+                        <div class="col-sm-8 col-xs-12">
+                           {php echo tpl_form_field_image('qrcodeimage',$item['qrcodeimage']);}
+                        </div>
+                        
+                    </div>
+                    <div class="form-group is_subscribe" {if empty($item['is_subscribe'])} style="display:none"{/if}>
+                        <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">页面关注提示图片</label>
+                        <div class="col-sm-8 col-xs-12">
+                            {php $item['gzimage'] = !empty($item['gzimage']) ? $item['gzimage'] : '../addons/deam_searchsingle/style/images/ewmwz.png'}
+                           {php echo tpl_form_field_image('gzimage',$item['gzimage']);}
+                           <div class="help-block"><font color="#FF0000">留空则使用默认图片</font></div>
+                        </div>
+                    </div>
+                    <div class="alert alert-info" role="alert">分享设置（需要有JSSDK权限，可借权）</div>
+                    <div class="form-group">
+                        <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">页面分享图片</label>
+                        <div class="col-sm-8 col-xs-12">
+                           {php echo tpl_form_field_image('share_img',$item['share_img']);}
+                           <div class="help-block">分享到朋友圈的缩略图，大小400px*400px以上</div>
+                        </div>
+                        
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class="white">*</span>是否开启jssdk分享</label>
+                        <div class="col-sm-9 col-xs-12">
+                            <label for="is_jssdk1" class="radio-inline"><input type="radio" name="is_jssdk" value="0" id="is_jssdk1" onClick="$('#jssdkSetting').fadeOut(200)" {if $item['is_jssdk'] == 0} checked="true" {/if}> 否</label>
+                            <label for="is_jssdk2" class="radio-inline"><input type="radio" name="is_jssdk" value="1" id="is_jssdk2" onClick="$('#jssdkSetting').fadeIn(200)" {if $item['is_jssdk'] == 1} checked="true" {/if}> 是</label>
+                            <div class="help-block">开启后分享时的标题和描述可以自定义。</div>
+                        </div>
+                    </div>
+                    <div id="jssdkSetting" {if empty($item['is_jssdk'])} style="display:none"{/if}>
+                    <div class="form-group">
+                        <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">分享标题自定义</label>
+                        <div class="col-sm-8 col-xs-12">
+                           <input type="text" class="form-control" placeholder="" name="share_title" value="{$item['share_title']}">
+                           <div class="help-block"><font color="#FF0000">需要有jssdk权限。如不填则显示页面标题，{##SCORE##}表示用户的最高分数，{##USETIME##}表示用户最高分数耗时。</font></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">分享好友描述自定义</label>
+                        <div class="col-sm-8 col-xs-12">
+                           <input type="text" class="form-control" placeholder="" name="share_desc" value="{$item['share_desc']}">
+                           <div class="help-block"><font color="#FF0000">需要有jssdk权限。如不填则显示空白</font></div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="tab_page">
+                    <div class="form-group">
+                        <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">页面标题</label>
+                        <div class="col-sm-8 col-xs-12">
+                            <input type="text" class="form-control" placeholder="" name="pagetitle" value="{$item['pagetitle']}">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class="white">*</span>底部版权</label>
+                        <div class="col-sm-9 col-xs-12">
+                            <input class="form-control" type="text" name="copyright" value="{$item['copyright']}">
+                            <div class="help-block"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="tab_chufa">
+                    <div class="form-group">
+                        <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">活动回复图文标题</label>
+                        <div class="col-sm-8 col-xs-12">
+                            <input type="text" class="form-control" name="reply_title" value="{$item['reply_title']}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">活动回复图文图片</label>
+                        <div class="col-sm-8 col-xs-12">
+                           {php echo tpl_form_field_image('reply_img',$item['reply_img']);}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-12 col-sm-3 col-md-2 control-label">活动回复图文描述</label>
+                        <div class="col-sm-9 col-xs-12">
+                            <textarea class="form-control ng-pristine ng-valid ng-empty ng-touched" placeholder="添加图文消息的简短描述" name="reply_description">{$item['reply_description']}</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        	
+        </div>
+    </div>
+    
+    
+    <div class="form-group col-sm-12" style="margin-top:15px;">
+        <input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+        <input type="hidden" name="token" value="{$_W['token']}" />
+    </div>
+</form>
+</div>
+<script>
+require(['jquery', 'util'], function($, u){
+    $(function(){
+       
+    });
+});
+$(function () {
+    window.optionchanged = false;
+    $('#myTab a').click(function (e) {
+        e.preventDefault();//阻止a链接的跳转行为
+        $(this).tab('show');//显示当前选中的链接及关联的content
+    })
+});
+</script>
+{/if}
+{template 'common/footer'}

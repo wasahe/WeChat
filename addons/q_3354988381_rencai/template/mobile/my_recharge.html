@@ -1,0 +1,304 @@
+{template 'common_header'}
+<link rel="stylesheet" href="{CURR_UI_DIR}weui/style/weui.css"/>
+<style type="text/css">
+    body,html{height:100%;-webkit-tap-highlight-color:transparent}.page,body{background-color:#fbf9fe}.page{overflow-y:auto;-webkit-overflow-scrolling:touch}.hd{padding:2em 0}.page_title{text-align:center;font-size:34px;color:#3cc51f;font-weight:400;margin:0 15%}
+p, hr, ul, ol, dl, blockquote, pre, address, fieldset, figure {
+    margin: 0 0 0 0;
+}
+</style>
+<link rel="stylesheet" href="../app/resource/css/common.min.css?v=20160906">
+
+{if 0}
+{php define(MUI, true);}
+<div class="mui-content mc-recharge">
+	<form  method="post" role="form" id="form1">
+		<input type="hidden" name="c" value="entry" />
+		<input type="hidden" name="m" value="recharge" />
+		<input type="hidden" name="i" value="{$_W['uniacid']}" />
+		<input type="hidden" name="do" value="pay" />
+	<div class="mui-row mui-mr5 mui-ml5">
+		{if !empty($recharge_settings['params']['recharge_type']) && !empty($recharge_settings['params']['recharges'])}
+		{loop $recharge_settings['params']['recharges'] $key $row}
+		{if !empty($row['back']) && !empty($row['condition'])}
+		<div class="mui-col-xs-4 mui-pa5 mui-mt5">
+			<div class="mui-thumbnail mui-text-center mui-text-info" data-recharge="{$row['condition']}" data-backtype="{$row['backtype']}" data-back="{$row['back']}">
+				<div class="mui-big mui-rmb">{$row['condition']}</div>
+				<div class="mui-small">
+					{if $row['backtype'] == '0'}
+						送{$row['back']}元
+					{else}
+						送{$row['back']}积分
+					{/if}
+				</div>
+				<span class="selected-status"></span>
+			</div>
+		</div>
+		{/if}
+		{/loop}
+		{/if}
+		<div class="mui-col-xs-4 mui-pa5 mui-mt5 other-sum">
+			<div class="mui-thumbnail mui-text-center mui-text-info js-inputpay">
+				<input type="text" placeholder="输入金额" name="inputpay" style="display:none;text-align:center;">
+				<span class="paytext">其他金额</span>
+				<span class="selected-status"></span>
+			</div>
+		</div>
+	</div>
+	<div class="mui-section">
+		支付金额 <span class="mui-text-success mui-big mui-pull-right add-pay mui-rmb">0元</span>
+	</div>
+	<div class="mui-content-padded">
+		<input type="hidden" name="backtype">
+		<input type="hidden" name="back">
+		<input type="hidden" name="token" value="{$_W['token']}">
+		<input type="hidden" name="fee" />
+		<button type="submit" name="submit" class="mui-btn mui-btn-success mui-btn-block dopay" value="确认充值">确认充值</button>
+	</div>
+	</form>
+</div>
+<script>
+$(function(){
+	$('.mui-thumbnail').click(function(){
+		$('.add-pay').addClass('mui-rmb');
+		$('.mui-thumbnail').removeClass('selected');
+		$(this).addClass('selected');
+		$('.paytext').show();
+		$('input[name="inputpay"]').hide();
+		var backtype = $(this).data('backtype');
+		var back = $(this).data('back');
+		var recharge = $(this).data('recharge');
+		$('input[name="back"]').val(back);
+		$('input[name="backtype"]').val(backtype);
+		exists = $(this).hasClass('js-inputpay');
+		if (exists) {
+			$('.paytext').hide();
+			$('input[name="inputpay"]').show();
+			$('input[name="inputpay"]').focus();
+			$('input[name="backtype"]').val('2');
+			recharge = $('input[name="inputpay"]').val();
+			if(!recharge) {
+				recharge = 0;
+			}
+			if(isNaN(recharge)) {
+				util.toast('请输入正确的金额', '', 'error');
+				$('.dopay').attr('href', 'javascript:;');
+				$('input[name="fee"]').val('0');
+				$('.add-pay').text(0 + '元');
+				return;
+			}
+		}
+		$('input[name="fee"]').val(recharge);
+		$('.add-pay').text(recharge + '元');
+	})
+	$('input[name="inputpay"]').bind('input propertchange', function() {
+		$('.add-pay').addClass('mui-rmb');
+		$('.mui-thumbnail').removeClass('selected');
+		var recharge = $('input[name="inputpay"]').val();
+		if(isNaN(recharge)) {
+			util.toast('请输入正确的金额', '', 'error');
+			$('.dopay').attr('href', 'javascript:;');
+			return false;
+		}
+		$('input[name="fee"]').val(recharge);
+		$('.add-pay').text(recharge + '元');
+	})
+	$(document).on('click', '.dopay', function() {
+		var recharge = $('input[name="fee"]').val();
+		recharge = parseFloat(recharge);
+		if(isNaN(recharge)) {
+			util.toast('请输入正确的金额', '', 'error');
+			$('input[name="inputpay"]').val('');
+			return false;
+		}
+		if(!recharge || recharge == '0') {
+			$('input[name="inputpay"]').val('');
+			util.toast('请输入或选择充值金额', '', 'error');
+			return false;
+		}
+	})
+})
+</script>
+{/if}
+
+     
+
+{if 0}
+    <div class="hd">
+        <h1 class="page_title">{$curr_title}</h1>
+    </div>
+{/if}
+<div class="mui-content mc-recharge">
+{if $youhuiset_open == 'Y'}
+        <div class="mui-row mui-mr5 mui-ml5">
+        {loop $youhuiset_list $youhui_data}
+            <div class="mui-col-xs-4 mui-pa5 mui-mt5" onclick="reset_money('{$youhui_data['addmoney']}')">
+                <div class="mui-thumbnail mui-text-center mui-text-info" data-recharge="{$row['condition']}" data-backtype="{$row['backtype']}" data-back="{$row['back']}">
+                    <div class="mui-big mui-rmb">{$row['condition']}{php echo round($youhui_data['addmoney']);}</div>
+                    <div class="mui-small">
+                        {if 1 || $row['backtype'] == '0'}
+                            送{php echo round($youhui_data['givemoney']);}元
+                        {else}
+                            送{$row['back']}积分
+                        {/if}
+                    </div>
+                    <span class="selected-status"></span>
+                </div>
+            </div>        
+        {/loop}
+        
+            <div class="mui-col-xs-4 mui-pa5 mui-mt5 other-sum">
+                <div class="mui-thumbnail mui-text-center mui-text-info js-inputpay">
+                    <input type="text" placeholder="输入金额" name="inputpay" id="inputpay" style="display:none;text-align:center;">
+                    <span class="paytext">其他金额</span>
+                    <span class="selected-status"></span>
+                </div>
+            </div>
+        </div>       
+{/if}    
+
+	<div class="weui_cells">
+        <div class="weui_cell">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>当前余额</p>
+            </div>
+            <div class="weui_cell_ft">￥{$my_money}</div>
+        </div>
+        <div class="weui_cell">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>企业入驻年费</p>
+            </div>
+            <div class="weui_cell_ft">
+            ￥{php echo $this->getConfigArr('company_joinin_cost_per_year');}元/年
+            </div>
+        </div>        
+        <div class="weui_cell">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>查看简历费用</p>
+            </div>
+            <div class="weui_cell_ft">
+            ￥{php echo $this->getConfigArr('price_per_resume');}元/次（不重复收取）
+            </div>
+        </div> 
+        
+        <div class="weui_cell">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>支付金额</p>
+            </div>
+            <div class="weui_cell_ft"><input style="text-align:left" readonly="readonly" class="weui_input" type="number" placeholder="最低充值 {php echo $this->module['config']['miniaddmoney']?$this->module['config']['miniaddmoney']:1;} 元" name="addmoney" id="addmoney"></div>
+        </div>  
+        
+    
+        
+                                  
+    </div>    
+    <div class="weui_btn_area">
+        <button class="weui_btn weui_btn_primary weui_btn_disabled" id="btn_recharge">立即充值</button>
+    </div>
+</div> 
+<script>
+function reset_money(money) {
+	$('#addmoney').val(money);
+	if($('#addmoney').val().length > 0){
+		$("#btn_recharge").removeClass("weui_btn_disabled");
+		flag = 1;
+	}else{
+		$("#btn_recharge").addClass("weui_btn_disabled");
+		flag = 0;
+	}
+}
+$(function(){
+	$('.mui-thumbnail').click(function(){
+		$('.add-pay').addClass('mui-rmb');
+		$('.mui-thumbnail').removeClass('selected');
+		$(this).addClass('selected');
+		$('.paytext').show();
+		$('input[name="inputpay"]').hide();
+		var backtype = $(this).data('backtype');
+		var back = $(this).data('back');
+		var recharge = $(this).data('recharge');
+		$('input[name="back"]').val(back);
+		$('input[name="backtype"]').val(backtype);
+		exists = $(this).hasClass('js-inputpay');
+		if (exists) {
+			$('.paytext').hide();
+			$('input[name="inputpay"]').show();
+			$('input[name="inputpay"]').focus();
+			$('input[name="backtype"]').val('2');
+			recharge = $('input[name="inputpay"]').val();
+			if(!recharge) {
+				recharge = 0;
+			}
+			if(isNaN(recharge)) {
+				util.toast('请输入正确的金额', '', 'error');
+				$('.dopay').attr('href', 'javascript:;');
+				$('input[name="fee"]').val('0');
+				$('.add-pay').text(0 + '元');
+				return;
+			}
+		}
+		$('input[name="fee"]').val(recharge);
+		$('.add-pay').text(recharge + '元');
+	})
+	$('input[name="inputpay"]').bind('input propertchange', function() {
+		$('.add-pay').addClass('mui-rmb');
+		$('.mui-thumbnail').removeClass('selected');
+		var recharge = $('input[name="inputpay"]').val();
+		if(isNaN(recharge)) {
+			util.toast('请输入正确的金额', '', 'error');
+			$('.dopay').attr('href', 'javascript:;');
+			return false;
+		}
+		$('input[name="fee"]').val(recharge);
+		$('.add-pay').text(recharge + '元');
+		reset_money(recharge);
+	})
+	$(document).on('click', '.dopay', function() {
+		var recharge = $('input[name="fee"]').val();
+		recharge = parseFloat(recharge);
+		if(isNaN(recharge)) {
+			util.toast('请输入正确的金额', '', 'error');
+			$('input[name="inputpay"]').val('');
+			return false;
+		}
+		if(!recharge || recharge == '0') {
+			$('input[name="inputpay"]').val('');
+			util.toast('请输入或选择充值金额', '', 'error');
+			return false;
+		}
+	})
+})
+</script>
+<script src="{CURR_UI_DIR}weui/weui.js"></script>
+<script type="text/javascript">
+    var flag = 0;
+    $('#addmoney').bind('input propertychange', function() {
+        if($(this).val().length > 0){
+            $("#btn_recharge").removeClass("weui_btn_disabled");
+            flag = 1;
+        }else{
+            $("#btn_recharge").addClass("weui_btn_disabled");
+            flag = 0;
+        }
+    });
+    $('#btn_recharge').click(function() {
+        if (flag == 1) {
+            var money = $("#addmoney").val();
+            $("#btn_recharge").addClass("weui_btn_disabled");
+            flag = 0;
+            $.ajax({
+                url: '{php echo $this->createMobileUrl('my_recharge');}',
+                type: 'post',
+                dataType: 'json',
+                data: {addmoney: money},
+                success:function(data){
+                    if (data.status == 1) {
+                        window.location.href = '{php echo $this->createMobileUrl('pay');}';
+                    }else{
+                        Weui.alert({"title":"充值失败","content":data.msg});
+                    }
+                }
+            });            
+        }
+    });
+</script>
+{template 'common_footer'}

@@ -1,0 +1,133 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li class="active"><a href="{php echo  $this->createWebUrl('Message', array());}">短信设置</a></li>    
+</ul>
+
+<div class="clearfix">    
+    <form id="theform" class="form form-horizontal" action="{php echo $this->createWebUrl('messageok', array());}" method="post">
+    <input type="hidden" name="id" value="{$item['id']}">
+            <div class="panel-heading">
+            	短信设置
+            </div>
+            <div class="panel-body">
+            	<div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">短信平台</label>
+                    <div class="col-sm-9 col-xs-12">
+                    	<select name="platform" id="platform" class="form-control  input-s-lg">
+                            <option value="短信宝" selected>短信宝</option>
+                        </select>
+                        <span class="help_block">如果没有，<a href="http://www.smsbao.com/reg?r=10226" target="_blank">点此进行申请</a></span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">用户名</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="plat_name" id="plat_name" value="{$item['plat_name']}" placeholder="" class="form-control">
+                        <span class="help_block">在短信宝注册用户的用户名</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">密码</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="password" name="plat_pwd" id="plat_pwd" value="" placeholder="不修改不用填写" class="form-control">
+                        <span class="help_block">在短信宝注册用户时的密码</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">签名</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="qianming" id="qianming" value="{$item['qianming']}" placeholder="【欣媒互动】" class="form-control">
+                        <span class="help_block">（必填，格式必须是“【XXXX】”）</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">用户下单短信通知</label>
+                    <div class="col-sm-9 col-xs-12">
+                    	<div>
+                            <label class="radio-inline">
+                                <input type="radio" name="message1" value="1" {if $item[message1] == 1} checked {/if}>启用
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="message1" value="0" {if $item[message1] == 0} checked {/if}>不启用
+                            </label>
+                        </div>
+                        <span style="color:red;">（谨慎选择!启用后，用户下单会给所有范围内的服务人员发送短信，如果服务人员较多
+会产生较大短信量）</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">下单短信通知内容</label>
+                    <div class="col-sm-9 col-xs-12">
+                    	<textarea name="message1_content" id="message1_content" class="form-control" rows="6" placeholder="不启动不用填写">{$item[message1_content]}</textarea>
+                        <span class="help_block">注意：在给用户发送短息时：可用{name}替换服务人员姓名，{money}替换报价,{order}替换服务类别,{ftime}替换服务时间,{fadr}替换服务地点，{fmobile}替换订单人电话，{nickname}替换用户昵称</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">抢单短信提示</label>
+                    <div class="col-sm-9 col-xs-12">
+                    	<div>
+                            <label class="radio-inline">
+                                <input type="radio" name="message2" value="1" {if $item[message2] == 1} checked {/if}>启用
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="message2" value="0" {if $item[message2] == 0} checked {/if}>不启用
+                            </label>
+                        </div>
+                        <span style="color:red;">（启用后，有服务人员抢单后，会给用户发送一条短信）</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">抢单短信提示内容</label>
+                    <div class="col-sm-9 col-xs-12">
+                    	<textarea name="message2_content" id="message2_content" class="form-control" rows="6" placeholder="不启动不用填写">{$item[message2_content]}</textarea>
+                        <span class="help_block">注意：在给用户发送短息时：可用{name}替换服务人员姓名，{money}替换报价,{order}替换服务类别,{ftime}替换服务时间,{fadr}替换服务地点，{fmobile}替换订单人电话，{nickname}替换用户昵称</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">选定服务人员短信提醒</label>
+                    <div class="col-sm-9 col-xs-12">
+                    	<div>
+                            <label class="radio-inline">
+                                <input type="radio" name="message3" value="1" {if $item[message3] == 1} checked {/if}>启用
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="message3" value="0" {if $item[message3] == 0} checked {/if}>不启用
+                            </label>
+                        </div>
+                        <span style="color:red;">（启用后，用户选定服务人员后，会给服务人员发送一条短信）</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">选定服务人员提醒内容</label>
+                    <div class="col-sm-9 col-xs-12">
+                    	<textarea name="message3_content" id="message3_content" class="form-control" rows="6" placeholder="不启动不用填写">{$item[message3_content]}</textarea>
+                        <span class="help_block">注意：在给用户发送短息时：可用{name}替换服务人员姓名，{money}替换报价,{order}替换服务类别,{ftime}替换服务时间,{fadr}替换服务地点，{fmobile}替换订单人电话，{nickname}替换用户昵称</span>
+                    </div>
+                </div>
+                
+            </div>    
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+                    <div class="col-md-2 col-lg-1">
+                        <input name="submit" type="submit" value="保存" class="btn btn-primary btn-block" />
+                        <input type="hidden" name="token" value="{$_W['token']}" />
+                    </div>
+                </div>
+            
+            
+        </div>
+    </form>
+</div>
+
+
+{template 'common/footer'}

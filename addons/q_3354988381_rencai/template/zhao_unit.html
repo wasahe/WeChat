@@ -1,0 +1,144 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+    <li class="active"><a href="#">入驻企业管理</a></li>
+    <li class=""><a href="{php echo $this->createWebUrl("ZhaounitEdit", array("id" => 0));}">新增企业</a></li>
+</ul>
+<div class="panel panel-info">
+    <div class="panel-heading">筛选</div>
+    <div class="panel-body">
+        <form action="./index.php" method="get" class="form-horizontal" role="form">
+            <input type="hidden" name="c" value="site" />
+            <input type="hidden" name="a" value="entry" />
+            <input type="hidden" name="m" value="q_3354988381_rencai" />
+            <input type="hidden" name="do" value="zhaounit" />
+            {if $_GET['id'] != ''}
+            <input type="hidden" name="id" value="{$_GET['id']}" />
+            {else}
+            <input type="hidden" name="id" value="{$_GET['rid']}" />
+            {/if}
+              
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label" >企业名称</label>
+                <div class="col-sm-8 col-lg-9">
+                    <input class="form-control" name="name" id="" type="text" value="{$_GPC['name']}">
+                </div>
+                <div class=" col-xs-12 col-sm-2 col-lg-2">
+                    <button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+                    
+                    <button name="deleterec" value="1" onclick="if(!confirm('确定要删除所查询数据吗？')){return false;}" class="btn btn-default"><i class="fa fa-file"></i> 删除数据</button>
+                </div>
+            </div>
+            <div class="form-group">
+            </div>
+        </form>
+    </div>
+  </div>
+  
+    <div style="padding:15px;">
+        <table class="table table-hover">
+            <thead class="navbar-inner">
+                <tr>
+                    <th>ID/企业名称</th>
+                    <th>可用余额</th>
+                    <th>优惠总计</th>
+                    <th>申请时间</th>
+                    <th>审核</th>
+                    <th>认证</th>
+                    <th>{php echo $this->getFieldsArr('sys', 'sys_position');}</th>
+                    
+                    <th>可看简历数</th>
+                    <th>排序</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {loop $lists $row}
+                <tr>
+                    <td><small>{$row['id']} / {$row['name']}</small></small></td>
+                    <td><small>{$row['curr_money']}</small></td>
+                    <td><small>{$row['money_youhui_get']}</small></td>
+                    <td><small>{php echo date('Y-m-d',$row['dateline'])}</small></td>
+                    <td><small>
+                        {if $row['status'] == 0}
+                        <a class="btn btn-warning btn-sm" href="javascript:void(0);" onclick="audit_change_company_status({$row['id']}, 1)">通过</a>
+                        <a class="btn btn-warning btn-sm" href="javascript:void(0);" onclick="audit_change_company_status({$row['id']}, -1)">拒绝</a>
+                        {elseif $row['status'] == 1}
+                        <a class="btn btn-success btn-sm" href="javascript:void(0);" onclick="audit_change_company_status({$row['id']}, -1)">通过</a>
+                        {elseif $row['status'] == -1}
+                        <a class="btn btn-danger btn-sm" href="javascript:void(0);" onclick="audit_change_company_status({$row['id']}, 1)">失败</a>
+                        {/if}
+                    </small></td>
+                    
+                    <td><small>
+                        {if $row['isauth'] == 0}
+                        	<a class="btn btn-default btn-sm" href="javascript:void(0);" onclick="audit_change_company_auth({$row['id']}, 1)">电话</a>
+                        	<a class="btn btn-primary btn-sm" href="javascript:void(0);" onclick="audit_change_company_auth({$row['id']}, 2)">执照</a>
+                        	<a class="btn btn-danger btn-sm" href="javascript:void(0);" onclick="audit_change_company_auth({$row['id']}, -1)">拒绝</a>
+                        {elseif $row['isauth'] == 1}
+                        	<a class="btn btn-primary btn-sm" href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="点击后重新设置认证状态" onclick="audit_change_company_auth({$row['id']}, 0)">电话认证</a>
+                       	{elseif $row['isauth'] == 2}
+                        	<a class="btn btn-success btn-sm" href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="点击后重新设置认证状态" onclick="audit_change_company_auth({$row['id']}, 0)">执照认证</a>
+                        {elseif $row['isauth'] == -1}
+                        	<a class="btn btn-danger btn-sm" href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="点击后重新设置认证状态" onclick="audit_change_company_auth({$row['id']}, 0)">失败</a>
+                        {/if}
+                    </small></td>
+                    <!--<td><small>-->
+                    	<!--<span class="badge">{$row['view_resume_total']}</span>-->
+                    	<!--<a class="btn btn-default btn-sm" href='{php echo $this->createWebUrl("AuditViewResumeTotal", array("company_id" => $row[id]));}'>设置</a>-->
+                    <!--</small></td>-->
+                    <td>
+                        {if $row['position'] == 0}
+                            <a class="btn btn-default btn-sm" href="javascript:void(0);">否</a>
+                        {else}
+                            <a class="btn btn-success btn-sm" href="javascript:void(0);">是</a>
+                        {/if}
+                    </td>
+                    
+                    <td>{php echo $row['view_resume_total']-$row['view_resume_nums'];}</td>
+                    <td>{$row['sort']}</td>
+                    <td>
+                        <a href='{php echo $this->createWebUrl("ZhaounitEdit", array("id" => $row[id]));}' title="编辑" class="btn btn-primary btn-sm">查看</a>
+                        <a href="javascript:void(0);" onclick="delete_company({$row['id']})" title="删除" class="btn btn-danger btn-sm">删除</a>
+                    </td>
+                </tr>
+                {/loop}
+            </tbody>
+        </table>
+        {$pager}
+    </div>
+    
+	<script>
+		//审核
+	    function audit_change_company_status(company_id, change_to){
+	    	$.post(
+	    			'{php echo $this->createWebUrl("AuditCompanyStatusAjax")}',
+	    	        {"company_id":company_id, "change_to":change_to},
+	    	        function (data){
+	    	        	location.reload();
+	    	        }
+	    	);
+	    }
+	    //认证
+	    function audit_change_company_auth(company_id, change_to){
+	    	$.post(
+	    			'{php echo $this->createWebUrl("AuditCompanyAuthAjax")}',
+	    	        {"company_id":company_id, "change_to":change_to},
+	    	        function (data){
+	    	        	location.reload();
+	    	        }
+	    	);
+	    }
+	    //删除企业
+	    function delete_company(company_id){
+	    	if(confirm('确定删除')){
+		    	$.post(
+		    			'{php echo $this->createWebUrl("DeleteCompanyAjax")}',
+		    	        {"company_id":company_id},
+		    	        function (data){
+		    	        	location.reload();
+		    	        }
+		    	);
+	    	}	
+	    }
+	</script>
+{template 'common/footer'}

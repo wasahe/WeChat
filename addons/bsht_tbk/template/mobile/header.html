@@ -1,0 +1,220 @@
+{php $cateid=$setting['part1'];}
+{php $cate1info=$this->getcate($cateid);}
+{php $cate1id=$cate1info['id'];}
+{php $cate1name=$cate1info['name'];}
+{php $cateid=$setting['part2'];}
+{php $cate2info=$this->getcate($cateid);}
+{php $cate2id=$cate2info['id'];}
+{php $cate2name=$cate2info['name'];}
+{php $cateid=$setting['part3'];}
+{php $cate3info=$this->getcate($cateid);}
+{php $cate3id=$cate3info['id'];}
+{php $cate3name=$cate3info['name'];}
+{php $cateid=$setting['part4'];}
+{php $cate4info=$this->getcate($cateid);}
+{php $cate4id=$cate4info['id'];}
+{php $cate4name=$cate4info['name'];}
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+  <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no" />
+  <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1" media="(device-height: 568px)" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-touch-fullscreen" content="yes" />
+  <meta name="full-screen" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="format-detection" content="address=no" />
+  <link href="{$res}static/jwap/css/style_v3_{$setting['color']}.css" rel="stylesheet" type="text/css" />
+  <link href="{$res}static/jwap/css/jp.bag.css" rel="stylesheet" type="text/css" />
+  <link type="text/css" rel="stylesheet" href="{$res}static/jwap/css/alert.css" />
+  <link rel="stylesheet" type="text/css" href="{$res}static/jwap/css/amazeui.css">
+  
+  {if $_GPC['do']=='index'}
+  <link rel="stylesheet" type="text/css" href="{$res}js/swiper-3.3.1.min.css">
+  {/if}
+
+  <title>{if !empty($_W['page']['sitename'])}{$_W['page']['sitename']}{else}{$_W['account']['name']}{/if}{if !empty($title)}{$title} {/if}</title>
+
+  <meta name="keywords" content="牛贝折扣-微信淘宝客 @ 微赞012wz.com">
+
+  <meta name="description" content="牛贝折扣-微信淘宝客 @ 微赞012wz.com">
+
+  <script src="{$res}static/jwap/js/jquery-1.8.0.js"></script>
+
+  {if $_GPC['do']=='index'}
+  <script type="text/javascript" src="{$res}js/swiper-3.3.1.jquery.min.js"></script>
+  {/if}
+
+  {if $_GPC['do']!='uc'}
+  <script type="text/javascript" src="{$res}js/layer/layer.js"></script>
+  {else}
+    <script type="text/javascript" src="{$res}js/layer-m/layer.js"></script>
+  {/if}
+  <script type="text/javascript" src="{$res}js/fastclick.min.js"></script>
+  <script>$(function() {FastClick.attach(document.body);});</script>
+  
+<style type="text/css">*{margin:0; padding:0;}
+a{text-decoration: none;}
+img{max-width: 100%; height: auto;}
+#weixin-tip{display: none; position: fixed; left:0; top:0; bottom:0; background: rgba(0,0,0,0.8); filter:alpha(opacity=80);  height: 100%; width: 100%; z-index: 10000000;}
+#weixin-tip p{text-align: center; margin-top: 10%; padding:0 5%;}
+#weixin-tip .close{color:#fff;padding:5px;font:bold 20px/24px simsun;text-shadow:0 1px 0 #ddd;position:absolute;top:0;left:5%;}
+#weixin-tt.quanpost {position: fixed; left:0; top:0; bottom:0; background: rgba(0,0,0,0.8); filter:alpha(opacity=80);  height: 100%; width: 100%; z-index: 10000000;}
+#weixin-tt .close{color:#fff;padding:5px;font:bold 20px/24px simsun;text-shadow:0 1px 0 #ddd;position:absolute;top:0;right:5%;}
+</style>
+
+<script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+<script type="text/javascript">
+	if(navigator.appName == 'Microsoft Internet Explorer'){
+		if(navigator.userAgent.indexOf("MSIE 5.0")>0 || navigator.userAgent.indexOf("MSIE 6.0")>0 || navigator.userAgent.indexOf("MSIE 7.0")>0) {
+			alert('您使用的 IE 浏览器版本过低, 推荐使用 Chrome 浏览器或 IE8 及以上版本浏览器.');
+		}
+	}
+	window.sysinfo = {
+		{if !empty($_W['uniacid'])}'uniacid': '{$_W['uniacid']}',{/if}
+		{if !empty($_W['acid'])}'acid': '{$_W['acid']}',{/if}{if !empty($_W['openid'])}'openid': '{$_W['openid']}',{/if}
+		{if !empty($_W['uid'])}'uid': '{$_W['uid']}',{/if}
+		'siteroot': '{$_W['siteroot']}',
+		'siteurl': '{$_W['siteurl']}',
+		'attachurl': '{$_W['attachurl']}',
+		'attachurl_local': '{$_W['attachurl_local']}',
+		'attachurl_remote': '{$_W['attachurl_remote']}',
+		{if defined('MODULE_URL')}'MODULE_URL': '{MODULE_URL}',{/if}
+		'cookie' : {'pre': '{$_W['config']['cookie']['pre']}'}
+	};
+	// jssdk config 对象
+	jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || {};
+	// 是否启用调试
+	jssdkconfig.debug = false;
+	jssdkconfig.jsApiList = [
+		'checkJsApi',
+		'onMenuShareTimeline',
+		'onMenuShareAppMessage',
+		'onMenuShareQQ',
+		'onMenuShareWeibo',
+		'hideMenuItems',
+		'showMenuItems',
+		'hideAllNonBaseMenuItem',
+		'showAllNonBaseMenuItem',
+		'translateVoice',
+		'startRecord',
+		'stopRecord',
+		'onRecordEnd',
+		'playVoice',
+		'pauseVoice',
+		'stopVoice',
+		'uploadVoice',
+		'downloadVoice',
+		'chooseImage',
+		'previewImage',
+		'uploadImage',
+		'downloadImage',
+		'getNetworkType',
+		'openLocation',
+		'getLocation',
+		'hideOptionMenu',
+		'showOptionMenu',
+		'closeWindow',
+		'scanQRCode',
+		'chooseWXPay',
+		'openProductSpecificView',
+		'addCard',
+		'chooseCard',
+		'openCard',
+		'openAddress'
+	];
+	</script>
+ </head>
+ <body>
+  
+  <link type="text/css" rel="stylesheet" href="{$res}static/jwap/css/global.css" />
+  <div class="main" id="mainall">
+   
+ 
+   {template 'leftmenu'}
+   
+
+
+   <div class="app">
+    <!--div class="go-app">
+     <a href="" class="joa_load_app"><img src="data/upload/banner/1603/31/56fcb79593657.png" /><i class="closed"></i></a>
+    </div-->
+    <header id="head" class="head">
+     <div class="fixtop">
+	  {if $_GPC['do']=='index'}
+      <span id="classify" class="classify"><a href="javascript:;" class="btn btn-left btn-type"></a></span>
+	  {else}
+	  <span id="t-find"><a href="javascript:window.history.go(-1)" class="btn btn-left btn-back" title="返回上一页"></a></span>
+	  {/if}
+      <!--span id="index"><i class="logo"><img src="data/upload/site/577579304a41b.png" /></i></span-->
+	  <span id="t-index">{if $pagename}{$pagename}{else}{$_W['account']['name']}{/if}</span>
+      {if $_GPC['do']=='index'}
+	  {if $setting['qiandaourl']=='内置'}
+	  <span id="user"><a href="javascript:" onclick="gzcode()" class="sign_btn btn btn-right btn-sign2"></a></span>
+	  {else}
+	  <span id="user"><a href="{$setting['qiandaourl']}" class="sign_btn btn btn-right btn-sign"></a></span>
+	  {/if}
+	  {else}
+	  <span id="classify" class="classify"><a href="javascript:;" class="btn btn-right btn-type"></a></span>
+	  {/if}
+     </div>
+    </header>
+    
+	{if $_GPC['do']=='show' || $_GPC['do']=='show_dtk'  || $_GPC['do']=='show_all'}
+	{else}
+	<div id="search">
+     <div id="search-box" class="searchbox">
+      <span id="classify" class="classify ditops"><a href="javascript:;" class="btn bs btn-left btn-type"></a></span>
+      <form id="search-form" action="./index.php" method="get">
+	        <input type="hidden" name="c" value="entry" />
+			<input type="hidden" name="i" value="{$_W['uniacid']}" />
+        	<input type="hidden" name="m" value="bsht_tbk" />
+        	<input type="hidden" name="do" value="search" />
+            {if $_GPC['cate_id']}
+            <input type="hidden" name="cate_id" value="{$_GPC['cate_id']}" />
+			{/if}
+
+       <div class="box-search" id="box-search">
+        <input type="text" id="sokey" name="keywords" x-webkit-speech="" placeholder="搜索商品" autocomplete="off" value="{if $_GPC['keywords']}{$_GPC['keywords']}{/if}" />
+       </div>
+       <button class="buton"><img src="{$res}static/jwap/images/search.png" /></button>
+      </form>
+     </div>
+    </div>
+    <div class="nav_box" style="display:{if $setting['isnav']==1}block{else}none{/if}">
+     <nav class="nav" id="nav">
+      <ul class="">
+       <li><a {if $_GPC['do']=='index'}class="active"{/if} href="{php echo $this->createMobileUrl('index', array('op' => 'new'))}" target="_self"><em class="icon icon-jz"></em><span>{if $setting['isdtk']==2}折扣首页{/if}{if $setting['isdtk']==1}折扣首页{/if}{if $setting['isdtk']==0}新品上架{/if}</span><em class="line"></em></a></li>
+       
+
+{if $setting['isdtk']==2}
+
+      <li><a {if $_GPC['do']=='list_all'}class="active"{/if} href="{php echo $this->createMobileUrl('list_all')}" target="_self"><em class="icon icon-yg"></em><span>领券直播</span><em class="line"></em></a></li>
+
+{/if}
+{if $setting['isdtk']==1}
+
+      <li><a {if $_GPC['do']=='list_dtk'}class="active"{/if} href="{php echo $this->createMobileUrl('list_dtk')}" target="_self"><em class="icon icon-yg"></em><span>领券直播</span><em class="line"></em></a></li>
+
+{/if}
+{if $setting['isdtk']==0}
+	   <li><a {if $_GPC['cate_id']==$cate1id}class="active"{/if} href="{php echo $this->createMobileUrl('list', array('cate_id' => $cate1id))}" target="_self"><em class="icon icon-yg"></em><span>{$cate1name}</span><em class="line"></em></a></li>
+{/if}
+	   
+{if $setting['isshow']==1}
+	   <li><a {if $_GPC['do']=='show_dan'}class="active"{/if} href="{php echo $this->createMobileUrl('show_dan', array('op' => 'index'))}" target="_self"><em class="icon icon-bz"></em><span>有奖晒单</span><em class="line"></em></a></li>
+{else}	   
+	   <li><a {if $_GPC['cate_id']==$cate2id}class="active"{/if} href="{php echo $this->createMobileUrl('list', array('cate_id' => $cate2id))}" target="_self"><em class="icon icon-bz"></em><span>{$cate2name}</span><em class="line"></em></a></li>
+{/if}
+	   
+       
+	   
+	   
+	   <li class="_border"><a {if $_GPC['do']=='uc' || $_GPC['do']=='fav'}class="active"{/if} href="{php echo $this->createMobileUrl('uc', array('op' => 'new'))}" target="_self"><em class="icon icon-user"></em><span>用户中心</span><em class="line"></em></a></li>
+      </ul>
+     </nav>
+    </div>
+    {/if}

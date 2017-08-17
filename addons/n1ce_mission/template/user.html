@@ -1,0 +1,46 @@
+{template 'common/header'}
+<script type="text/javascript" src="./resource/js/lib/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="./resource/js/lib/jquery-ui-1.10.3.min.js"></script>
+<ul class="nav nav-tabs">
+	<li class=""><a href="{php echo $this->createWebUrl('userdetail',array('op'=>'finish','rid'=>$rid));}">任务已完成</a></li>
+	<li class=""><a href="{php echo $this->createWebUrl('userdetail',array('op'=>'havetrue','rid'=>$rid));}">红包领取成功</a></li>
+	<li class=""><a href="{php echo $this->createWebUrl('userdetail',array('op'=>'isfail','rid'=>$rid));}">红包领取失败</a></li>
+</ul>
+	<div class="panel panel-default">
+                <div class="panel-body table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th width="100">粉丝头像</th>
+							<th width="150">粉丝昵称</th>
+                            <th width="150">任务完成人数</th>
+                            <th width="150">完成时间</th>
+							
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {loop $list $row}
+                        <tr>
+						{if $row['from_user']}
+							<td style="white-space:normal;">
+                            <img src="{php echo tomedia($row['headimgurl']);}" width="50" onerror="this.src='resource/images/noavatar_middle.gif'" style="border-radius: 3px;"/>
+                            
+							</td>
+                            
+							<td>{$row['nickname']}</td>
+                            
+                            <td>{php echo $row['miss_num']}人</td>
+							
+                            <td>{php echo date('Y-m-d H:i:s',$row['createtime'])}</td>
+							{/if}
+                        </tr>
+                        {/loop}
+                        </tbody>
+                    </table>
+					{$pager}
+                </div>
+            </div>
+
+
+		
+{template 'common/footer'}

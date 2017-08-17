@@ -1,0 +1,71 @@
+﻿
+@charset "utf-8";
+/* 
+   copyright by wanglai QQ：35146983
+*/
+/*通用样式库*/
+html {overflow-x:hidden; overflow-y:auto;}
+body,input,textarea,select {font:14px/1.5 tahoma,arial,\5b8b\4f53;}
+body,h1,h2,h3,h4,h5,h6,p,ul,ol,dl,dd,li,form {margin:0; padding:0;}
+body {background: #eee; padding-bottom: 64px;}
+ul,ol,dl {list-style:none;}
+a {text-decoration:none; color:#383838;}
+a:hover {color:#ed155b; text-decoration:none;}
+img {border:0; vertical-align:middle;}
+em,i,b {font-style: normal;}
+a,button,input {-webkit-tap-highlight-color: rgba(0,0,0,0); -webkit-tap-highlight-color: transparent;}
+/*----------------------------------------------------------------------------*/
+.content:after {content:'\20'; display:block; height:0; clear:both;}
+.lazy {width: 100% \9; max-width: 100%; height: auto;}
+.mobile_color {color: #ed155b !important;}
+.text_center {text-align: center;}
+.mobile_border {border: 1px solid #e2e2e2;}
+.mobile_floatright {float: right !important;}
+.padding0 {padding: 0 !important; margin-bottom: 0 !important;}
+.paddingtb0 {padding-bottom: 0 !important; padding-top: 0 !important; background: none !important; margin-bottom: 0 !important;}
+.displayn {display:none;}
+.clearboth{clear:both;}
+.fl {float: left !important;}
+.fr {float: right !important;}
+/*--顶部--*/
+.top_banner {width: 100%; height: auto;}
+.top_head {width: 100%; height: 50px; line-height: 50px; z-index: 99; background: rgba(220,0,22,0.8);}
+.top_head > img {margin-left: 5px; margin-top: 5px; border-radius: 50%;}
+.top_head > a {margin-right: 5px;}
+.top_head > span {margin-left: 5px; font-size: 16px; color: #fff;}
+.top_nav {width: 100%; height: 40px; line-height: 40px; margin-top: -40px; text-align: center; position: relative; z-index: 1; border-bottom: 5px solid #dd0016;}
+.top_nav a {width: 33.33%; float: left; height: 45px; color: #fff; font-size: 18px; text-shadow: 1px 1px 1px #000; line-height: 50px;}
+.banner {width: 100%; height: auto; border-top: 5px solid #ad0101; overflow: hidden;}
+.top_nav a.hover_this {color: #ffe400; background: url(../img/mobile/bg10.png) no-repeat center 31px; background-size: 24px;}
+.main_tittle {width: 100%; height: 50px; padding-top: 8px; background: #ad0101; text-align: center; color: #fff; font-size: 16px;}
+.main_tittle p {line-height: 21px;}
+.main_tittle p span {color: #ff0; font-size: 14px;}
+.main_cover {width: 48%; margin: 10px 1% 0 1%; float: left;}
+.main_cover p {width: 100%; height: 32px; line-height: 32px; background: #ad0101; color: #fff; text-align: center; overflow: hidden;}
+.bottom {width: 100%; height: 50px; position: fixed; bottom: 0; left: 0; background: #dd0016; z-index: 99;}
+.p1 {float: left; width: 48.5%; height: 50px; line-height: 50px; text-align: center;}
+.p1 a {color: #fff;}
+.bottom img {width: 30px; height: 30px;}
+.p2 {width: 1%; height: 40px; margin-top: 5px; float: left; background: #ffd200;}
+.lianxi {padding-top: 5px;}
+.lianxi p {padding: 4px 5px; line-height: 23px; background: #ddd; margin-bottom: 5px;}
+.lianxi p  em {background: #ad0101; padding: 2px 5px; color: #fff; border-radius: 5px;}
+
+.main_video {width: 100%; height: 200px; overflow: hidden; position: relative;}
+.main_video #close_img {position: absolute; width: 100%; height: 200px; top: 0; left: 0; z-index: 10;}
+.main_video .bofang {width: 100px; height: 100px; position: absolute; left: 50%; top: 50%; margin-left: -50px; margin-top: -50px; opacity: 0.6; z-index: 11;}
+
+/*--样片客片栏目列表--*/
+.mobile_photo_list {width: 100%; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #ccc; }
+.mobile_photo_list li {width: 100%; float: left; height: auto; text-align: center;}
+.mobile_photo_list li span {height: 18px; display: inline-block; line-height: 18px; margin-top: 7px; font-size: 18px;}
+.mobile_photo_list li em {float: right; width: 20px; height: 20px; display: block; background: url(../img/mxitie_like.png); background-size: 20px; margin-top: 7px;}
+.mobile_photo_list li.heart_full em {background: url(../img/mxitie_like_full.png); background-size: 20px;}
+.kp_list {width: 100%; height: auto;}
+.kp_list li {width: 31.33%; float: left; padding: 0 1%; text-align: center;}
+.kp_list li a {background-color: #000; display: block; margin-bottom: 5px; border-radius: 22%;}
+.kp_list li img {border-radius: 20%; opacity: 0.8;}
+.kp_list li.my_hover img {opacity: 1;}
+
+input[type=number] {-moz-appearance:textfield; -webkit-appearance:textfield;}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button {-webkit-appearance: none; margin: 0;}

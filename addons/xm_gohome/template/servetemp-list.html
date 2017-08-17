@@ -1,0 +1,55 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+    <li class="active"><a href="{php echo $this->createWebUrl('Servetemp', array());}">服务模板管理</a></li>
+    <li><a href="{php echo  $this->createWebUrl('servetempadd', array());}">添加服务模板</a></li>
+</ul>
+
+<div class="clearfix">    
+    <div class="panel panel-default">
+    	<div class="panel-heading">
+            服务模板列表
+        </div>
+        <div class="table-responsive panel-body" style="overflow:visible;">
+            <table class="table table-hover">
+            	<thead>
+                	<tr class="active">
+                    	<td>序号</td>
+                        <td>类别名称</td>
+                        <td>标识</td>
+						<td>描述</td>
+                        <td>操作</td>
+                    </tr>
+                </thead>
+                <tbody>
+                	{php $n=0;}
+                	{loop $list $val}
+                    {php $n+=1;}
+                	<tr>
+                    	<td>{$n}</td>
+                        <td>{$val[temp_name]}</td>
+						<td>{$val[input_name]}</td>
+						<td>{$val[bewrite]}</td>
+                        <td style="overflow:visible;">
+                        	<div class="btn-group btn-group-sm">
+								<a class="btn btn-default" href="{php echo $this->createWebUrl('servetempdelete', array('id'=>$val['id']))}" onclick="return confirm('删除该服务模板后，选择该服务模板的服务类别也将失去该模板，确认删除该服务模板吗?');"><i class="fa fa-remove"></i> 删除</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {/loop}
+                    
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="panel-body text-center">
+            {$pager}
+        </div>
+        
+        <div class="panel-footer">
+        	<a class="btn btn-default" href="{php echo $this->createWebUrl('servetempadd', array())}">新增服务模板</a>
+        </div>
+    </div>
+</div>
+
+
+{template 'common/footer'}

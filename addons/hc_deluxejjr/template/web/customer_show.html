@@ -1,0 +1,287 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li class="active"><a>{if !empty($info['realname'])}{$info['realname']}的客户{else}客户管理{/if}</a></li>
+	<li ><a href="{php echo $this->createWebUrl('xlsupload');}">保护客户导入</a></li></a></li>
+	<li ><a href="{php echo $this->createWebUrl('output');}">客户导出</a></li>
+</ul>
+<style>	
+.label-important {
+	background-color: #747474;
+}
+</style>
+<div class="main">
+	<div class="stat">
+	{if $opp=='his'}
+		<form action="" method="post">
+			<input type="hidden" name="act" value="module" />
+			<input type="hidden" name="name" value="hc_deluxejjr" />
+			<input type="hidden" name="do" value="customer" />
+			<input type="hidden" name="op" value="mycustomer" />
+			<input type="hidden" name="opp" value="his" />
+			<input type="hidden" name="cid" value="{$cid}" />
+			
+			<table class="table sub-search">
+				<tbody>
+					<tr>
+						<th style="width:100px;">真实姓名</th>
+						<td>
+							<input name="realname" class="form-control" style="width:150px;" type="text" value="{$sort['realname']}" />
+						</td>
+					</tr>
+					<tr>
+						<th style="width:100px;">手机号码</th>
+						<td>
+							<input name="mobile" class="form-control" style="width:150px;" type="text" value="{$sort['mobile']}" />
+						</td>
+					</tr>
+					<tr>
+						<th></th>
+						<td>
+							<input type="submit" name="" value="搜索" class="btn btn-primary">
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
+	{else}
+	{if empty($id)}
+		<form action="" method="post">
+			<input type="hidden" name="c" value="site" />
+			<input type="hidden" name="a" value="entry" />
+			<input type="hidden" name="m" value="hc_deluxejjr" />
+			<input type="hidden" name="do" value="customer" />
+			<input type="hidden" name="op" value="sort" />
+			<table class="table sub-search">
+				<tbody>
+					<tr>
+						<th style="width:100px;">真实姓名</th>
+						<td>
+							<input name="realname" class="form-control" style="width:150px;" type="text" value="{$sort['realname']}" />
+						</td>
+					</tr>
+					<tr>
+						<th style="width:100px;">手机号码</th>
+						<td>
+							<input name="mobile" class="form-control" style="width:150px;" type="text" value="{$sort['mobile']}" />
+						</td>
+					</tr>
+					<tr>
+						<th style="width:100px;">名称</th>
+						<td>
+							{loop $loupan $key $l}
+								{php $key++}
+								<input type="submit" name="loupan" value="{$l['title']}">{if $key%7==0 }<br/>{/if}
+							{/loop}
+						</td>
+					
+					</tr>
+					<tr>
+						<th></th>
+						<td>
+							<input type="submit" name="" value="搜索" class="btn btn-primary">
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
+		{else}
+		<form action="" method="post">
+			<input type="hidden" name="c" value="site" />
+			<input type="hidden" name="a" value="entry" />
+			<input type="hidden" name="m" value="hc_deluxejjr" />
+			<input type="hidden" name="do" value="customer" />
+			<input type="hidden" name="op" value="mycustomer" />
+			<input type="hidden" name="id" value="{$id}" />
+			<table class="table sub-search">
+			<table class="table sub-search">
+				<tbody>
+					<tr>
+						<th style="width:100px;">真实姓名</th>
+						<td>
+							<input name="realname" type="text" class="form-control" value="{$sort['realname']}" />
+						</td>
+					</tr>
+					<tr>
+						<th style="width:100px;">手机号码</th>
+						<td>
+							<input name="mobile" type="text" class="form-control" value="{$sort['mobile']}" />
+						</td>
+					</tr>
+					<tr>
+						<th></th>
+						<td>
+							<input type="submit" name="" value="搜索" class="btn btn-primary">
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
+		{/if}
+		{/if}
+		<div class="stat-div">
+			<div class="sub-item" id="table-list">
+				<h4 class="sub-title" style="float:right;color:red;">总数：<?php echo $total;?>&nbsp;&nbsp;&nbsp;<a href="">刷新</a></h4>
+				<h4 class="sub-title">客户名单</h4>
+
+				<form action="" method="post" onsubmit="">
+				<div class="sub-content">
+					<table class="table table-hover">
+						<thead class="navbar-inner">
+							<tr>
+								{if $opp!='his'}<th class="row-hover" style="text-align:center"><input type="checkbox" name="selected" onclick="getTop()"/></th>{/if}
+								<th class="row-hover" width="5%">客户</th>
+								<th class="row-hover" width="9%">手机</th>
+								<th class="row-hover" width="5%">经纪人</th>
+								
+								<th class="row-hover" width="9%">电话</th>
+								
+								<th class="row-hover">推荐产品</th>
+								
+								<th class="row-hover">备注</th>
+								
+								<th class="row-hover" width="9%">推荐时间</th>
+								<th class="row-hover">经纪人身份</th>
+								<th class="row-hover">提交方式</th>
+								<th class="row-hover" width="6%">状态</th>
+								<th class="row-hover" width="5%">有效性</th>
+								<th class="row-hover" width="9%">操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							{loop $list $v}
+							<tr>
+								{if $opp!='his'}
+								<td style="text-align:center">
+									{if $v['cid']==0}
+										<input type="checkbox" name="select" value="{$v['id']}"/>
+									{else}
+										助理{$v['cid']}
+									{/if}
+								</td>
+								{/if}
+								<td>
+									{$v['realname']}
+								</td>
+								<td>
+									{$v['mobile']}
+								</td>
+								<td>
+									{$member['realname'][$v['openid']]}
+								</td>
+								
+								<td>
+									{$member['mobile'][$v['openid']]}
+								</td>
+								
+								<td>
+									{$loupans[$v['loupan']]}
+								</td>
+								
+								<td>
+									<div title="{$v['content']}">{$v['content']}</div>
+								</td>
+								<td>
+									{php echo date('Y-m-d',$v['createtime'])}
+								</td>
+								<td>
+									{if $member['identity'][$v['openid']]==64}
+										聚贤庄
+									{else}
+									{if $member['identity'][$v['openid']]==65}
+									二手房
+									{else}
+									{if $member['identity'][$v['openid']]==66}
+									一手房
+									{else}
+										大众
+									{/if}
+									{/if}
+									{/if}
+								</td>
+								<td>
+									{if $v['flag']==0}
+										<span class="label label-important">推荐提交</span>
+									{else}
+										<span class="label label-success">预约提交</span>
+									{/if}
+								</td>
+								<td>
+								{if $v['status']==0}
+									<span class="label label-important">{$status[$v['status']]}</span>
+								{else}
+									<span class="label label-success">{$status[$v['status']]}</span>
+								{/if}
+								</td>
+								<td>
+									{if $v['isvalid']==1}
+										<span class="label label-success">有效</span>
+									{else}
+										<span class="label label-important">无效</span>
+									{/if}
+								</td>
+								<td>
+
+									{if $opp=='his'}
+<!--客户删除屏蔽掉										<a href="{php echo $this->createWebUrl('customer',array('op'=>'del', 'opp'=>'delete', 'id' => $v['id']));}" onclick="return confirm('确定要删除该客户吗？');">删除</a>  -->
+										<a href="{php echo $this->createWebUrl('customer',array('op'=>'showdetail', 'opp'=>'showdetail', 'id' => $v['id'], 'cid'=>$info['id']));}">详情</a>	
+										<a href="{php echo $this->createWebUrl('customer',array('op'=>'cancel','id' => $v['id']));}" onclick="return confirm('确定从该置业中取消该客户吗？')">取消</a>		
+									{else}
+<!--客户删除屏蔽掉										<a href="{php echo $this->createWebUrl('customer',array('op'=>'del','id' => $v['id'], 'mid'=>!empty($info['id'])?$info['id']:$member['mid'][$v['openid']]));}" onclick="return confirm('确定要删除该客户吗？');">删除</a>  -->
+										<a href="{php echo $this->createWebUrl('customer',array('op'=>'showdetail','id' => $v['id'], 'mid'=>!empty($info['id'])?$info['id']:$member['mid'][$v['openid']]));}">详情</a>	
+									{/if}
+									<a href="{php echo $this->createWebUrl('customer',array('op'=>'cusmat','cid' => $v['id']));}">素材</a>
+								</td>
+							</tr>
+							{/loop}
+						</tbody>
+					</table>
+				</div>
+				</form>
+				{$pager}
+			</div>
+			{if $opp!='his'}
+				<input type="submit" onclick="allot();" value="分配" class="btn btn-primary"/>
+			{/if}
+		</div>
+	</div>
+</div>
+<script>
+	function getTop(){
+		var xed = document.getElementsByName("selected");
+		var x = document.getElementsByName("select");
+		
+		if(xed[0].checked == true){
+			for (var i=0; i<x.length; i++){
+				x[i].checked = true;
+			}
+		}else{
+			for (var i=0; i<x.length; i++){
+				x[i].checked = false;
+			}
+		}
+	}
+	
+	function allot(){
+		var x = document.getElementsByName("select");
+		var flag = false;
+		var j = 0;
+		
+		var selected = new Array();
+		for (var i=0; i<x.length; i++){
+			if(x[i].checked == true){
+				selected[j] = x[i].value;
+				flag = true;
+				j++;
+			}
+		}
+		if(flag){
+			
+		}else{
+			alert('您还未选择需要分配的人！');
+			return;
+		}
+		
+		window.location.href = "{php echo $this->createWebUrl('counselors', array('op'=>'allot'), true)}&selected="+selected;
+	}
+</script>
+{template 'common/footer'}

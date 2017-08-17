@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+{if empty($_W['isajax'])}
+{template 'common/top'}
+{/if}
+  <link rel="stylesheet" href="{MODULE_URL}assets/admin/css/select2.min.css">
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <!-- right column -->
+        <div class="col-md-12">
+          <!-- Horizontal Form -->
+          <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">编辑回答信息</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+           <form action="" method="post"  class="form-horizontal" enctype="multipart/form-data">
+              <div class="box-body">
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">问题选择</label>
+                  <div class="col-sm-10">
+                    <select name="question_id" id="" class="form-control">
+                        <option value="0">请选择</option>
+                        {php $options = M('question')->getall()}
+                        {loop $options $option}
+                        <option value="{$option['id']}" {if $item['question_id']==$option['id']}selected{/if}>{$option['title']}</option>
+                        {/loop}
+                    </select>
+					<span class="help-block"></span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">类型</label>
+                  <div class="col-sm-10">
+                    <select name="mode" id="" class="form-control">
+                        <option value="0" {if $item['mode']==0}selected{/if}>语音回答</option>
+						<option value="1" {if $item['mode']==1}selected{/if}>图文回答</option>
+                    </select>
+					<span class="help-block"></span>
+                  </div>
+                </div>
+				{if empty($item['id']) || $item['mode']==1}
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">内容</label>
+                  <div class="col-sm-10">
+                    <textarea name="contents"  class="form-control" id="" cols="30" rows="10">{$item['contents']}</textarea>
+					<span class="help-block"></span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">问题图片</label>
+                  <div class="col-sm-10">
+					{php $images = unserialize($item['images'])}
+					{php echo tpl_form_field_multi_image('images',$images)}
+                  </div>
+                </div>
+				{/if}
+				{if empty($item['id']) || $item['mode']==0}
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">回答</label>
+                  <div class="col-sm-10"> 
+					{php echo tpl_form_field_audio('src',$item['src'])}
+					<span class="help-block"></span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">语音时长</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name='timelong' value="{$item['timelong']}" placeholder="">
+					<span class="help-block"></span>
+                  </div>
+                </div>
+				{/if}
+				{if $this->pro['answerWithLink']=='1'}
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">相关链接</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name='weblink' value="{$item['weblink']}" placeholder="">
+					<span class="help-block"></span>
+                  </div>
+                </div>
+				{/if}
+                {php $members = M('member')->getall()}
+				{php $member = M('member')->getInfo($item['openid'])}
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">回答用户</label>
+                  <div class="col-sm-10">
+					<select id='openid' name='openid' class="form-control select2">
+                        {loop $members $m}
+                        <option value='{$m['openid']}' data-avatar="{$m['avatar']}" selected="selected">{$m['nickname']}</option>
+                        {/loop}
+					</select>
+					<span class="help-block"></span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">是否采纳</label>
+                  <div class="col-sm-10">
+                    <label class="radio-inline">
+                        <input type="radio" name="ispick" value="1" {if $item['ispick']==1}checked="checked"{/if}> 是
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="ispick" value="0" {if $item['ispick']==0}checked="checked"{/if}> 否
+                    </label>
+					<span class="help-block"></span>
+                  </div>
+                </div>
+              </div>
+			  <div class="box-footer">
+                <input type="hidden" name="token" value="{$_W['token']}" />
+                <button type="submit" class="btn btn-info center-block">写好了</button>
+              </div>
+            </form>
+          </div>
+          <!-- /.box -->
+        </div>
+        <!--/.col (right) -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+</div>
+<!-- ./wrapper -->
+{if empty($_W['isajax'])}
+{template 'common/foot'}
+<script src="{MODULE_URL}assets/admin/js/select2.full.min.js"></script>
+<script type="text/javascript">
+	require(['bootstrap']);
+	$(document).ready(function() {
+		$(".select2").select2({
+			templateResult: formatState
+		});
+		$("#openid").val("{$item['openid']}").trigger("change");
+	});
+	
+	function formatState (state) {
+	  if (!state.id) { return state.text; }
+	  var $state = $(
+		'<span><img style="width:2em;height:2em;" class="img-rounded" src="' + state.element.dataset.avatar + '" class="img-flag" /> ' + state.text + '</span>'
+	  );
+	  return $state;
+	}
+	$('.js-clip').each(function(){
+		util.clip(this, $(this).attr('data-url'));
+	});
+    require(['util'],function(util){
+        $('input[name="isfree"]').on('change keyup',function(){
+            var _val = $(this).val();
+            if(_val == 1){
+                $('#isfree').show();
+            }else{
+                $('#isfree').hide();
+            }
+        });
+        $('body').on('click','.open_modal',function(){
+            var _that = $(this);
+            var title = '';
+            var url = $(this).data('href');
+            var name = $(this).data('name');
+            $.get(url,function(data){
+                var content = data;
+                var footer = '<button class="btn btn-danger close2">关闭</button>';
+                var options = {containerName:''+name};
+                var model = name+'_modal';
+                eval(model+'=util.dialog(title, content, footer,options);');
+                eval(model+'.show();');
+                eval(model+'.removeClass("fade");');
+                eval(model+'.find(".close2").click(function(){'+model+'.hide();})');
+                eval(model+'.find(".select").click(function(){var openid = $(this).data("openid");select(openid)})');
+                eval(model+'.find("#search").on("keyup change",function(){var key = $(this).val();search(key)})');
+                function search(key){
+                    $.post("{php echo $this->createWebUrl('member_select')}",{key:key},function(html){
+                        eval(model+'.find("tbody").html(html)');
+                        eval(model+'.find(".select").click(function(){var openid = $(this).data("openid");select(openid)})');
+                    },'html');
+                }
+                function select(openid){
+                    _that.val(openid);
+                    eval(model+'.hide();');
+                }
+            },'html');
+        });
+    });
+</script>
+{/if}

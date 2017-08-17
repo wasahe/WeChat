@@ -1,0 +1,118 @@
+<html xmlns="http://www.w3.org/1999/xhtml" class="page-load">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="description">
+<meta name="keywords">
+<meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+<meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+<meta content="no-cache" http-equiv="pragma">
+<meta content="0" http-equiv="expires">
+<meta content="telephone=no, address=no" name="format-detection">
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>评价详情</title>
+<script type="text/javascript" src="../addons/water_o2o/template/js/jquery-1.7.2.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../addons/water_o2o/template/css/index.css">
+</head>
+<body >
+		<script type="text/javascript"> 
+		$(document).ready(function(){
+			$('.comment-navs li').click(function(){
+				var _this = $(this);
+				_this.attr("class", 'actived');
+				_this.siblings().attr('class', '');
+				
+				var _index = _this.index();
+				var _info = $('#s'+_index);
+				$("#s0").removeClass("actived");
+				$("#s1").removeClass("actived");
+				$("#s2").removeClass("actived");
+				$("#s3").removeClass("actived");
+				$("#s"+_index).addClass("actived");
+			});
+	});
+		</script>  
+    <div class="state-viewtherapist">
+	<div id="sections" class="sections">
+		<!-- 查看技师页面 -->
+		<section id="view_therapist" class="view-therapist">
+			<div class="iscroll" >
+				<div>
+					<div class="comments">
+						<h2>客户评价</h2>
+						<ul class="comment-navs">
+							<li class="actived" >全部(<i>{$all}</i>)</li>
+							<li class="" >好评(<i>{$hp}</i>)</li>
+							<li class="" >一般(<i>{$yb}</i>)</li>
+							<li class="" >不满意(<i>{$bh}</i>)
+							</li>
+						</ul>
+						<div class="comment-tabs">
+							<div class="comment-tab comment-all actived" id="s0">
+								<ul>
+									{loop $list $item}
+									<li class="c"><dl>
+											<dd>{$item['svname']} </dd>
+										</dl>
+										<p>{$item['content']}</p>
+										<dl>
+											<dt>{php echo substr_replace($item['fmobile'],'****',3,4);}</dt>
+											<dd>{$item['etime']}</dd>
+										</dl></li>
+									{/loop}
+								</ul>
+								
+							</div>
+							<div class="comment-tab comment-good" id="s1">
+								<ul>
+									{loop $list1 $item}
+									<li class="c"><dl>
+											<dd>{$item['svname']} </dd>
+										</dl>
+										<p>{$item['content']}</p>
+										<dl>
+											<dt>{php echo substr_replace($item['fmobile'],'****',3,4);}</dt>
+											<dd>{$item['etime']}</dd>
+										</dl></li>
+									{/loop}
+								</ul>
+								
+							</div>
+							<div class="comment-tab comment-normal nomore " id="s2">
+								<ul>
+										{loop $list2 $item}
+									<li class="c"><dl>
+											<dd>{$item['svname']} </dd>
+										</dl>
+										<p>{$item['content']}</p>
+										<dl>
+											<dt>{php echo substr_replace($item['fmobile'],'****',3,4);}</dt>
+											<dd>{$item['etime']}</dd>
+										</dl></li>
+									{/loop}
+								</ul>
+								
+							</div>
+							<div class="comment-tab comment-bad nomore" id="s3">
+								<ul>
+									{loop $list3 $item}
+									<li class="c"><dl>
+											<dd>{$item['svname']} </dd>
+										</dl>
+										<p>{$item['content']}</p>
+										<dl>
+											<dt>{php echo substr_replace($item['fmobile'],'****',3,4);}</dt>
+											<dd>{$item['etime']}</dd>
+										</dl></li>
+									{/loop}
+								</ul>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</div>
+</body>
+</html>

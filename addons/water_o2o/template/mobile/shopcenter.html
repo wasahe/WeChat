@@ -1,0 +1,79 @@
+{template 'header'}
+<body ontouchstart="" class="platform_mobile">
+<div class="qsc-alert" style="display: none;">
+<i class="info-base64"></i><span></span>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-white icon-loading-base64"><i class="icon-white icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading-new">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-loading-base64"><i class="icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<div class="mod-user-my">
+<div class="qsc-list-group">
+<a href="javascript:void(0);" class="list-item list-thumb list-thumb-md list-user-avatar">
+<span>
+<i class="icon"><img class="lazy-load" src="../addons/water_o2o/template/img/grey.png" 
+	data-original="{$_W['attachurl']}{$shop['slogo']}" width="48" height="48" style="display: block;"></i>
+{$shop['stitle']} </span>
+<p>客服电话：{$shop['smobile']}</p>
+<label>
+<!-- <i class="icon icon-arrow-right"></i> -->
+</label>
+</a>
+</div>
+<div class="content bottom">
+<div class="qsc-list-group">
+<a href="{php echo $this->createMobileUrl('shopitem')}" class="list-item list-thumb list-thumb-sm first">
+<span><i class="icon icon-project"></i>项目管理</span>
+<label>
+<label class="badge">{php echo $this->getServicesSumBySid($shop['id']);}</label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+<a href="{php echo $this->createMobileUrl('shoptime')}" class="list-item list-thumb list-thumb-sm">
+<span><i class="icon icon-support"></i>时间管理</span>
+<label>
+<label class="badge">{php echo  $this->getTimesSumBySid($shop['id']);}</label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+<a href="{php echo $this->createMobileUrl('shoporder')}" class="list-item list-thumb list-thumb-sm">
+<span><i class="icon icon-follow-o"></i>订单管理</span>
+<label>
+<label class="badge">{php echo  $this->getOrdersSumBySid($shop['id']);}</label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+</div>
+<div class="qsc-list-group">
+<a href="{php echo $this->createMobileUrl('shopqb')}" class="list-item list-thumb list-thumb-sm first">
+<span><i class="icon icon-wallet"></i>我的钱包</span>
+<label>
+<em>{php echo  $this->getSumCanFlowfeeBySid($shop['id']);}元</em>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+</div>
+<div class="qsc-list-group">
+<a href="{php echo $this->createMobileUrl('shopmanage')}" class="list-item list-thumb list-thumb-sm first">
+<span><i class="icon icon-user-reward"></i>管理中心</span>
+<label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+</div>
+</div>
+</div>
+{template 'shopfooter'}
+<script type="text/javascript" src="../addons/water_o2o/template/js/user.min.js"></script>
+
+</body></html>

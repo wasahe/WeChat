@@ -1,0 +1,38 @@
+{template 'header'}
+<body ontouchstart="" class="platform_mobile">
+<div class="qsc-alert" style="display: none;">
+<i class="info-base64"></i><span></span>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-white icon-loading-base64"><i class="icon-white icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading-new">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-loading-base64"><i class="icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+	<div class="top bottom">
+		<div class="view-body view-padding">
+			<h1 style="text-align: center;">{$system['zhucetitle']}</h1>
+			<p>
+				<img alt="Image title" class="fr-fin fr-dib"
+					src="{$_W['attachurl']}{$system['zhuceimg']}"
+					width="710">
+			</p>
+			<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$system['zhucecontent']}</p>
+
+			<p>
+				<br>
+			</p>
+		</div>
+	</div>
+	<style>body{background:#fff;}</style>
+<script type="text/javascript" src="../addons/water_o2o/template/js/main.min.js"></script>
+
+</body></html>

@@ -1,0 +1,99 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li {if $op == 'display'}class="active"{/if}><a href="{php echo $this->createWebUrl('store', array('op' => 'display'))}">门店管理</a></li>
+	<li {if $op == 'post'}class="active"{/if}><a href="{php echo $this->createWebUrl('store', array('op' => 'post'))}">创建门店</a></li>
+</ul>
+
+<!-- 列表 -->
+<div class="main">
+	<div class="panel panel-info">
+	<div class="panel-heading">筛选</div>
+	<div class="panel-body">
+		<form action="./index.php" method="get" class="form-horizontal" role="form">
+			<input type="hidden" name="c" value="site" />
+			<input type="hidden" name="a" value="entry" />
+			<input type="hidden" name="m" value="qwx_shangmen" />
+			<input type="hidden" name="do" value="store" />
+			<div class="form-group">
+				<label class="col-sm-2 control-label">门店名称</label>
+				<div class="col-sm-6">
+					<input class="form-control" name="keyword" id="" type="text" value="{$_GPC['keyword']}">
+				</div>
+				
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label">上架状态</label>
+				<div class="col-sm-4">
+					<select name="status" class='form-control'>
+							<option value="-1" {if $_GPC['status'] == -1} selected{/if}>全部</option>
+							<option value="1" {if $_GPC['status'] == 1} selected{/if}>上架</option>
+							<option value="0" {if $_GPC['status'] == 0} selected{/if}>下架</option>
+					</select>
+				</div>
+				<div class=" col-sm-2">
+					<button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<form action="?{$_SERVER['QUERY_STRING']}" method="post" id="form1">
+<div class="panel panel-default">
+	<div class="panel-body table-responsive">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:60px;">选择</th>
+					<th style="width:70px;">ID</th>
+					<th style="width:80px;" class="text-center">缩略图</th>
+					<th>门店名称</th>
+					<th style="width:220px;text-align:left;" class="text-center">区域</th>
+					<th style="width:140px;text-align:left;" class="text-center">联系方式</th>
+					<th style="width:100px;text-align:center;" class="text-center">当前状态</th>
+					<th style="width:150px;">更新时间</th>
+					<th style="text-align:right; width:120px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td><input type="checkbox" name="delete[]" value="{$item['id']}" /></td>
+					<td>{$item['id']}</td>
+					<td class="text-center"><img src="{$_W['attachurl']}{$item['photo']}" style="width:50px;height:50px;" /></td>
+					<td style="white-space: normal;">{$item['title']}</td>
+					<td style="white-space: normal;" class="text-left">{$item['province']},{$item['city']},{$item['district']}</td>
+					<td class="text-left">{$item['contact_name']}<br>{$item['tel']}</td>
+					<td class="text-center">
+						<label data='{$item['status']}' class='label  label-default {if $item['status']==1}label-info{/if}' >{if $item['status']==1}上架{else}下架{/if}</label>
+					</td>
+					<td>{$item['create_time']}</td>
+					<td style="text-align:right;">
+						<a href="{php echo $this->createWebUrl('store', array('op' => 'post','id'=>$item['id']))}"class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="编辑"><i class="fa fa-pencil"></i></a>
+
+						<a href="{php echo $this->createWebUrl('store', array('op' => 'delete','id'=>$item['id']))}" onclick="return confirm('此操作不可恢复，确认删除？');return false;" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="删除"><i class="fa fa-times"></i></a>
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+			
+		</table>
+		<table class="table table-hover">
+			<tr>
+				<td width="60">
+					<input type="checkbox" onclick="var ck = this.checked;$(':checkbox').each(function(){this.checked = ck});" />
+				</td>
+				<td class="text-left" width="100">
+					<input name="token" type="hidden" value="{$_W['token']}" />
+					<input name="op" type="hidden" value="delete" />
+					<input type="submit" class="btn btn-primary span2" name="submit" value="删除" />
+				</td>
+				<td class="text-right">
+					{$pager}
+				</td>
+			</tr>
+
+		</table>
+	</div>
+	</div>
+</form>	

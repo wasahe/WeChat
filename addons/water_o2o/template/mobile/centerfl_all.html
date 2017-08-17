@@ -1,0 +1,114 @@
+{template 'header'}
+<body ontouchstart="" class="platform_mobile">
+<div class="qsc-alert" style="display: none;">
+<i class="info-base64"></i><span></span>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-white icon-loading-base64"><i class="icon-white icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading-new">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-loading-base64"><i class="icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<header class="qsc-tab bar-fixed wallet-tab headroom headroom--top" id="headroom">
+<ul class="tab-item nav-tabs-green" role="tablist">
+<li role="presentation" class="active">
+<a href="{php echo $this->createMobileUrl('centerfl',array('type'=>'all'))}" role="tab">全部</a>
+</li>
+<li role="presentation">
+<a href="{php echo $this->createMobileUrl('centerfl',array('type'=>'funding'))}" role="tab">筹款中</a>
+</li>
+<li role="presentation">
+<a href="{php echo $this->createMobileUrl('centerfl',array('type'=>'success'))}" role="tab">已成功</a>
+</li>
+<li role="presentation">
+<a href="{php echo $this->createMobileUrl('centerfl',array('type'=>'fail'))}" role="tab">已失败</a>
+</li>
+</ul>
+</header>
+<div class="content-fixed content-main top bottom tab-content">
+<div role="tabpanel">
+<div class="mod-project-card funding">
+<div class="mod-project-card_header clearfix">
+<div class="mod-project-card_header__avatar">
+<a href="/user/index/5cb8c13b-ea08-45c3-b6fa-ab0e9c365e1b">
+<img class="lazy-load" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEK8v0GmpO1v5v2gOw1NghCwowBuMfMkEo7XTJiazyLbVKJWSELC8wjbQ3oXXxqyMY7kp3FdKFxp2NQ/96" data-original="http://wx.qlogo.cn/mmopen/PiajxSqBRaEK8v0GmpO1v5v2gOw1NghCwowBuMfMkEo7XTJiazyLbVKJWSELC8wjbQ3oXXxqyMY7kp3FdKFxp2NQ/96" width="40" height="40" alt="吃海鲜！享两年分红！让2000元变成8440元！泰州天水雅居，等你来赚！" style="display: inline;">
+</a>
+</div>
+<div class="mod-project-card_header__user">
+<a href="/user/index/5cb8c13b-ea08-45c3-b6fa-ab0e9c365e1b">
+<span>郑金伟泰州天水雅居</span>
+<p class="mod-project-card_header__time">6天前</p>
+</a>
+</div>
+</div>
+<div class="mod-project-card_content">
+<a href="/project/8209a711-066b-4fe9-99d3-8a9a28cda105">
+<header class="mod-project-card_content__header">
+<span class="ribbon labels">剩余 23天</span>
+<h2>吃海鲜！享两年分红！让2000元变成8440元！泰州天水雅居，等你来赚！</h2>
+</header>
+</a><div class="mod-project-card_content__detail"><a href="/project/8209a711-066b-4fe9-99d3-8a9a28cda105">
+<p class="description">
+事先声明：本次众筹的店铺位于江苏省泰州市天水雅居（泰州万达），望大家购买时妥善考虑自己所在 </p>
+</a><p><a href="/project/8209a711-066b-4fe9-99d3-8a9a28cda105">
+</a><a href="/project/8209a711-066b-4fe9-99d3-8a9a28cda105">
+<img class="lazy-load" data-original="http://images.qingsongchou.com/files/qschou.com/project/29/8209a711-066b-4fe9-99d3-8a9a28cda105/thumb_14450721526117d66a1c.jpg" src="http://images.qingsongchou.com/files/qschou.com/project/29/8209a711-066b-4fe9-99d3-8a9a28cda105/thumb_14450721526117d66a1c.jpg" width="23%" alt="吃海鲜！享两年分红！让2000元变成8440元！泰州天水雅居，等你来赚！" style="display: inline;">
+</a>
+</p>
+</div>
+<div class="mod-project-card_content__status">
+<span>目标<strong>¥2000000</strong></span>
+<span>已筹<strong>¥2000</strong></span>
+<span>支持<strong>1</strong>次</span>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+<div class="project-manage-modal"></div>
+<script type="text/template" id="J_project_admin_tpl">
+    <div class="modal qsc-modal qsc-modal-share project-${uuid}-modal">
+        <div class="modal-dialog bottom">
+            <div class="modal-content clearfix project-mg-edit">
+                <div class="modal-header">
+                    <h4 class="modal-title text-center">筹款管理</h4>
+                    <small>${name}</small>
+                </div>
+                <div class="modal-body">
+                    <a href="/project/timeline/${uuid}" class="icon-edit-update"><i class="icon icon-edit-round"></i>更新</a>
+                    <a href="/publish/edit/${uuid}" class="icon-edit-edit"><i class="icon icon-edit-round"></i>编辑</a>
+                    <a href="/project/stats/${uuid}" class="icon-edit-statistics"><i class="icon icon-edit-round"></i>统计</a>
+                    <a href="javascript:void(0);" class="icon-edit-delete project-delete"><i class="icon icon-edit-round"></i>删除</a>
+                </div>
+                <div class="modal-footer">
+                    <a href="javascript:void(0);" class="btn btn-default btn-block" data-dismiss="modal">取消</a>
+                </div>
+            </div>
+            <div class="modal-content clearfix project-mg-delete" style="display:none">
+                <form action="/project/delete/${uuid}" method="post">
+                    <div class="modal-header">
+                        <h4 class="modal-title text-center">确定删除${name}?</h4>
+                        <small>删除项目即永久无法查看，项目将会立即失败。</small>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-danger btn-block" value="确定删除" />
+                        <a href="javascript:void(0);" class="btn btn-default btn-block btn-cancel-delete">取消</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</script> 
+{template 'footer'}
+<script type="text/javascript" src="../addons/water_o2o/template/js/user.min.js"></script>
+
+</body></html>

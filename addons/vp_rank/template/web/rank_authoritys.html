@@ -1,0 +1,145 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li><a href="{php echo $this->createWebUrl('rank')}">圈子管理</a></li>
+	<li class="active"><a href="{php echo $this->createWebUrl('rank',array('cmd'=>'authoritys','id'=>$rank['id']))}">用户等级设置</a></li>
+</ul>
+
+	
+	{loop $levels $level $item}
+		<form class="form-horizontal form edit_form" action="" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="id" value="{$rank['id']}"/>
+			<input type="hidden" name="level[level]" class="form-control" value="{$level}" />
+
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					{$level}级
+				</div>
+				<div class="panel-body">
+					<div class="form-group">
+						<label class="col-xs-12 col-sm-3 col-md-2 control-label">称号</label>
+						<div class="col-sm-9 col-xs-12">
+							<input type="text" name="level[name]" class="form-control" value="{$item['name']}" />
+							<div class="help-block">请填写{$level}级用户的称号</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-12 col-sm-3 col-md-2 control-label">徽章</label>
+						<div class="col-sm-9 col-xs-12">
+							 {php echo tpl_form_field_image('level[flag]',$item['flag'])}
+							<div class="help-block">上传徽章图片（64x64像素）</div>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-xs-12 col-sm-3 col-md-2 control-label">等级说明</label>
+						<div class="col-sm-9 col-xs-12">
+							<input type="text" name="level[intro]" class="form-control" value="{$item['intro']}" />
+							<div class="help-block">请描述该等级</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-xs-12 col-sm-3 col-md-2 control-label">所需权威</label>
+						<div class="col-sm-9 col-xs-12">
+							<input type="text" name="level[credit]" class="form-control" value="{$item['credit']}" />
+							<div class="help-block">升级到该等级所需的权威值</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+						<div class="col-sm-9 col-xs-12">
+							<input type="hidden" name="submit" value="save" />
+							<input type="submit" value="确定保存" class="btn btn-primary btn-submit" data-loading-text="正在提交..."/>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</form>
+	{/loop}
+
+	{php $newlevel=$level+1;}
+	<form id="the_form" class="form-horizontal form" action="" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="id" value="{$rank['id']}"/>
+		<input type="hidden" name="level[level]" class="form-control" value="{$newlevel}" />
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				新增{$newlevel}级
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">称号</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="level[name]" class="form-control" value="" />
+						<div class="help-block">请填写{$level}级用户的称号</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">徽章</label>
+					<div class="col-sm-9 col-xs-12">
+						 {php echo tpl_form_field_image('level[flag]')}
+						<div class="help-block">上传徽章图片（64x64像素）</div>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">等级说明</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="level[intro]" class="form-control" value="" />
+						<div class="help-block">请描述该等级</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">所需权威</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="level[credit]" class="form-control" value="" />
+						<div class="help-block">升级到该等级所需的权威值</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="hidden" name="submit" value="add" />
+						<input id="btn-submit" type="submit" value="确定新增" class="btn btn-primary" data-loading-text="正在提交..."/>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</form>
+
+<script type="text/javascript">
+	require(['jquery','util'], function($, util){
+		$('#the_form').submit(function() {
+			$('#btn-submit').button('loading');
+			$.post($(this).attr('action'),$(this).serialize(),function(resp) {
+				if(resp.status==0){
+					$('#btn-submit').button('reset');
+					util.message(resp.info);
+				}else{
+					util.message(resp.info,resp.data);
+				}
+			});
+			return false;
+        });
+
+		$('.edit_form').submit(function() {
+			$(this).find('.btn-submit').button('loading');
+			$.post($(this).attr('action'),$(this).serialize(),function(resp) {
+				if(resp.status==0){
+					$(this).find('.btn-submit').button('reset');
+					util.message(resp.info);
+				}else{
+					util.message(resp.info,resp.data);
+				}
+			});
+			return false;
+        });
+	});
+</script>
+
+{template 'common/footer'}

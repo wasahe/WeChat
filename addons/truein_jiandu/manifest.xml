@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com" versionCode="0.6,0.7,0.8">	
+    <application setting="false">
+        <name><![CDATA[朋友圈荐读广告营销]]></name>
+        <identifie><![CDATA[truein_jiandu]]></identifie>
+        <version><![CDATA[1.4]]></version>
+        <type><![CDATA[activity]]></type>
+        <ability><![CDATA[员工任选分享自己喜欢的文章推荐到朋友圈都会携带企业预设的广告信息,本模块为初音科技企业社会化营销荐读模块]]></ability>
+        <description><![CDATA[企业可预设需要宣传的广告信息，员工发现好的文章可以复制文章url，先进入企业公众号预置广告，再分享到朋友圈； 分享后的界面以荐读为主旨，界面友好不引起读者反感，同时也会标注“XX好友荐读”，同时会统计本篇文章带来的广告曝光量、转化量、分享次数等数据，用来进行员工绩效考核依据和数据收集分析。 本模块为初音科技企业社会化营销功能之一]]></description>
+		<author><![CDATA[折翼天使资源社区)]]></author>
+		<url><![CDATA[http://www.012wz.com]]></url>
+    </application>
+    <platform>
+        <subscribes>
+        </subscribes>
+        <handles>
+            <message type="text" />
+        </handles>
+        <rule embed="true" />
+    </platform>
+    <bindings>
+	<cover>
+		</cover>
+		<menu>
+			<entry title="广告管理" do="advert" state="" direct="false" />
+			<entry title="文章管理" do="medias" state="" direct="false" />
+			<entry title="员工管理" do="staffs" state="" direct="false" />
+
+		</menu>
+		<home>
+		</home>
+    </bindings>
+    <install><![CDATA[install.php]]></install>
+    <uninstall><![CDATA[
+	DROP TABLE IF EXISTS `ims_truein_jiandu_ad`;
+	DROP TABLE IF EXISTS `ims_truein_jiandu_logs`;
+	DROP TABLE IF EXISTS `ims_truein_jiandu_medies`;
+	DROP TABLE IF EXISTS `ims_truein_jiandu_reply`;
+	DROP TABLE IF EXISTS `ims_truein_jiandu_share`;
+	DROP TABLE IF EXISTS `ims_truein_jiandu_staff`;
+	]]></uninstall>
+    <upgrade><![CDATA[upgrade.php]]></upgrade>
+</manifest>

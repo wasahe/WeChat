@@ -1,0 +1,104 @@
+							{loop $questions['list'] $li} 
+							<div class="weui-media-box weui-media-box_text" >
+								{php $to_member = M('member')->getInfo($li['to_openid'])}
+								{if $li['istask']=='1'}
+									<div  onclick="window.location.href='{php echo $this->createMobileUrl('task_answer',array('id'=>$li['id']))}'">
+										{php $quser = M('member')->getInfo($li['openid'])}
+											<span style="color:#A9A9A9;font-size:14px; margin:0 3px 0 0;border:1px solid  #A9A9A9;padding:2px 2px 2px 2px " >
+											{php $cate = M('category')->getInfo($li['category_id'])}{$cate['title']}
+											</span>
+											<span style="font-size:15px;">{$li['title']}</span>
+									</div>					
+									<div style="padding: 5px 5px;display: -webkit-box;display: -webkit-flex;display: flex;-webkit-box-align: center;-webkit-align-items: center;">
+										{php $ans = M('answer')->getone(array('question_id'=>$li['id']))}
+										{php $user = M('member')->getInfo($ans['openid'])}
+										{php $count = M('answer')->getTotal(array('question_id'=>$li['id']))}
+										<p class="user-list-follow">
+											{if $li['isanonymous']=='1'}
+												<div class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+												<img style="border-radius:2px; width:33px;height:33px;display: block" src="{MODULE_URL}assets/images/anonymous_avatar.jpg" alt="img">
+												</div>
+												<div class="weui-cell__bd">
+													<p style="font-size:13px;color:#8E8E8E">匿名用户提问</p>
+													<p style="margin-top:0px;font-size: 12px;color:#8E8E8E">{if $li['credit']>0}赏金{$li['credit']}元{/if}</p>
+												</div>
+											{else}
+												<div class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+												<img style="border-radius:2px; width:33px;height:33px;display: block" src="{php echo $quser['avatar']}" alt="img">
+												</div>
+												<div class="weui-cell__bd">
+													<p style="font-size:13px;color:#8E8E8E">{$quser['nickname']}提问</p>
+													<p style="margin-top:0px;font-size: 12px;color:#8E8E8E">{if $li['credit']>0}赏金{$li['credit']}元{/if}</p>
+												</div>
+												
+											{/if}
+											{php $time = $hour2-intval((time()-$li['create_time'])/3600)}
+											{php $mark = $li['status']=='2' || $time<=0}
+											
+											
+											<div  class="weui-cell__ft" style="font-size:13px;">
+											{if $count>0}{$count}人已抢答{/if}<br>
+											{if !$mark}
+											<a href="{php echo $this->createMobileUrl('task_answer',array('id'=>$li['id']))}" style='margin-bottom:10px;' class="follow2 button-green"><span class="tip">还剩{$time}小时</span></a>
+											{else}
+											<a href="{php echo $this->createMobileUrl('task_answer',array('id'=>$li['id']))}" style='margin-bottom:10px;' class="follow2 button-orange"><span class="tip">已结束</span></a>
+											{/if}
+											</div>
+											
+										</p>
+										<div class="decoration"></div>
+									</div>
+								{else}
+									<div  onclick="window.location.href='{php echo $this->createMobileUrl('question',array('id'=>$li['id']))}'">
+										{php $quser = M('member')->getInfo($li['openid'])}
+										<span style="color:#A9A9A9;font-size:14px; margin:0 3px 0 0;border:1px solid  #A9A9A9;padding:2px 2px 2px 2px " >
+										{php $cate = M('category')->getInfo($li['category_id'])}{$cate['title']}</span>
+										<span style="font-size:15px;">{$li['title']}</span>
+									</div>
+									<div style="padding: 5px 5px;display: -webkit-box;display: -webkit-flex;display: flex;-webkit-box-align: center;-webkit-align-items: center;">
+										{php $ans = M('answer')->getone(array('question_id'=>$li['id']))}
+										{php $user = M('member')->getInfo($ans['openid'])}
+										<p class="user-list-follow">
+											<a href="{php echo $this->createMobileUrl('tutor',array('openid'=>$to_member['openid']))}">
+												<div class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+													<img style="border-radius:2px; width:33px;height:33px;display: block" src="{php echo $to_member['avatar']}" alt="img">
+													{if $to_member['isrecommend']=='1'}<i class="icon icon_vip"></i>{/if}
+												</div>
+											</a> 
+											<a href="{php echo $this->createMobileUrl('tutor',array('openid'=>$to_member['openid']))}">
+												<div class="weui-cell__bd">
+													<p style="margin-top:0px;font-size: 13px;color:#8E8E8E">{$to_member['tags']}</p>
+													<p style="font-size:13px;color:#8E8E8E">{$to_member['realname']}</p>
+												</div>
+											</a> 
+											<div style="position: absolute;right:20px;">
+												{if $ans['mode']=='0'}
+															<a data-id="{$ans['id']}" data-mode="{$ans['mode']}" data-timelong="{$ans['timelong']}" data-question_id="{$li['id']}" class="listen weui-btn weui-btn_mini weui-btn_primary">
+															{php $listen_log = M('listen_log')->getOpenid($li['id'],$_W['openid'])}
+															{if empty($listen_log) || $listen_log['status'] == 0}
+																{if ($li['openid']==$_W['openid'] || $li['to_openid'] == $_W['openid'])}
+																<span class="tip">▶ 播放解答 {$ans['timelong']}''</span>
+																{else}
+																<span class="tip">▶ 播放解答 {$ans['timelong']}'' (¥{php echo $this->system['listen_price']})</span>
+																{/if}
+															{/if}
+															</a>											
+														{else}
+															<a data-id="{$ans['id']}" data-mode="{$ans['mode']}" data-question_id="{$li['id']}" class="lookup weui-btn weui-btn_mini weui-btn_primary">
+															{php $listen_log = M('listen_log')->getOpenid($li['id'],$_W['openid'])}
+															{if empty($listen_log) || $listen_log['status'] == 0}
+																{if ($li['openid']==$_W['openid'] || $li['to_openid'] == $_W['openid'])}
+																<span class="tip">查看图文解答 <i class="fa fa-angle-right"></i></span>
+																{else}
+																<span class="tip">查看图文解答 (¥{php echo $this->system['listen_price']})</span>
+																{/if}
+															{/if}</a>
+												{/if}
+											</div>
+											
+										</p>
+									<div class="decoration"></div>
+									</div>
+								{/if}
+								</div>
+							{/loop}

@@ -1,0 +1,152 @@
+{template 'header'}
+<body ontouchstart="" class="platform_mobile">
+	<div class="qsc-alert" style="display: none;">
+		<i class="info-base64"></i><span id="info">请完善信息</span>
+	</div>
+	<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading"
+		tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog middle">
+			<div class="modal-content">
+				<i class="icon-white icon-loading-base64"><i
+					class="icon-white icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+			</div>
+		</div>
+	</div>
+	<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading-new">
+		<div class="modal-dialog middle">
+			<div class="modal-content">
+				<i class="icon-loading-base64"><i
+					class="icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+			</div>
+		</div>
+	</div>
+	<header class="qsc-tab bar-fixed wallet-tab headroom headroom--top"
+		id="headroom">
+		<ul class="tab-item nav-tabs-green" role="tablist">
+			<li role="presentation" {if $type == "all"} class="active"{/if}>
+				<a
+				href="{php echo $this->createMobileUrl('worktime',array('type'=>'all'))}"
+				role="tab">最新时段</a>
+			</li>
+			<!-- <li role="presentation" {if $type== "free"} class="active"{/if}>
+				<a
+				href="{php echo $this->createMobileUrl('worktime',array('type'=>'free'))}"
+				role="tab">空闲</a>
+			</li> -->
+			<li role="presentation" {if $type== "busy"} class="active"{/if}>
+				<a
+				href="{php echo $this->createMobileUrl('worktime',array('type'=>'busy'))}"
+				role="tab">占用时段</a>
+			</li>
+		</ul>
+	</header>
+	<link rel="stylesheet" type="text/css" href="../addons/water_o2o/template/css/style.css" />
+<script src="../addons/water_o2o/template/js/modernizr.js"></script>
+<style>
+
+.fxk {font:14px/18px "Microsoft Yahei", Tahoma, Helvetica, Arial, Verdana, "\5b8b\4f53", sans-serif;padding-left: 10px;}
+.fxk span {display: inline-block;margin-top: -16px;vertical-align: middle;font-size: 16px;}
+</style>
+{if $type == "all"}
+
+<form action="{php echo $this->createMobileUrl('worktimemgr')}" method="post">
+<div class="content-fixed content-main top bottom tab-content" style="margin-bottom: 10px;">
+		<div role="tabpanel" class="tab-pane fade in active">
+		 
+		 <div class="mod-user-wallet_list">
+			{php $index = 0;}
+			{loop $tempinfos $item}
+				
+				{loop  $item['hs'] $hour}
+				
+			<div class="mod-user-wallet_list__item clearfix">
+			<header>
+			<div class="fxk">
+				<input type="checkbox" value ="{$month}月{$item['d']} {$hour['h']}" name="worktime[]" id="checkbox_a{$index}" class="chk_1"  /><label for="checkbox_a{$index}"></label><span>{$y}年{$month}月{$item['d']} {$hour['h']}:00</span>
+			</div>
+			<small>可预约</small>
+			</header>
+			</div>
+				{php $index++;}
+			    {/loop}
+				{php $index++;}
+			{/loop}
+			</div>
+		</div>
+	</div>
+<div class="content top bottom">
+<div class="content-main footer-btn">
+	<input type="hidden" name="workerid" value="{$worker['id']}">
+	<input type="submit" name="save-action" class="btn btn-success btn-lg btn-block" onclick="tj()" value="保存"> 
+</div>
+</div>
+</form>
+{elseif $type == "free"}
+
+<form action="{php echo $this->createMobileUrl('worktimemgr')}" method="post">
+<div class="content-fixed content-main top bottom tab-content" style="margin-bottom: 10px;">
+		<div role="tabpanel" class="tab-pane fade in active">
+		 
+		 <div class="mod-user-wallet_list">
+			{php $index = 0;}
+			{loop $list $item}
+			<div class="mod-user-wallet_list__item clearfix">
+			<header>
+			<div class="fxk">
+				<input type="checkbox" value ="{$item['stime']}" name="worktime[]" id="checkbox_a{$index}" class="chk_1"  /><label for="checkbox_a{$index}"></label><span><?php echo date("Y年m月d日 H:i:s",$item['strtotime']);?></span>
+			</div>
+			<small>空闲</small>
+			</header>
+			</div>
+				{php $index++;}
+			{/loop}
+			</div>
+		</div>
+	</div>
+<div class="content top bottom">
+<div class="content-main footer-btn">
+	<input type="hidden" name="workid" value="{$worker['id']}">
+	
+	<input type="submit" name="save-action" class="btn btn-success btn-lg btn-block" onclick="tj()" value="保存"> 
+</div>
+</div>
+</form>
+{else}
+
+<form action="{php echo $this->createMobileUrl('worktimemgrdelete')}" method="post">
+<div class="content-fixed content-main top bottom tab-content" style="margin-bottom: 10px;">
+		<div role="tabpanel" class="tab-pane fade in active">
+		 
+		 <div class="mod-user-wallet_list">
+			{php $index = 0;}
+			{loop $list $item}
+			<div class="mod-user-wallet_list__item clearfix">
+			<header>
+			<div class="fxk">
+				<input type="checkbox" value ="{$item['stime']}" name="worktime[]" id="checkbox_a{$index}" class="chk_1"  /><label for="checkbox_a{$index}"></label><span><?php echo date("Y年m月d日 H:i:s",$item['strtotime']);?></span>
+			</div>
+			<small>已占用</small>
+			</header>
+			</div>
+				{php $index++;}
+			{/loop}
+			</div>
+		</div>
+	</div>
+<div class="content top bottom">
+<div class="content-main footer-btn">
+    <input type="hidden" name="workerid" value="{$worker['id']}">
+    
+	<input type="submit" name="save-action" class="btn btn-success btn-lg btn-block"  value="删除"> 
+</div>
+</div>
+</form>
+
+{/if}
+
+
+{template 'workfooter'}
+<script type="text/javascript" src="../addons/water_o2o/template/js/user.min.js"></script>
+
+</body></html>

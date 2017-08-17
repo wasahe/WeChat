@@ -1,0 +1,86 @@
+{template 'common/header'}
+
+<div class="service">
+	<ul class="nav nav-tabs">
+		<li><a href="{php echo $this->createWebUrl('shop');}">商铺列表</a></li>
+        <li {if $op == "shop"} class="active" {/if}><a href="{php echo $this->createWebUrl('shopmanage',array('op'=>'shop','shopid'=>$shopid));}">商铺信息</a></li>
+        <li {if $op == "worker"} class="active"{/if}><a href="{php echo $this->createWebUrl('shopmanage',array('op'=>'worker','shopid'=>$shopid));}">员工信息</a></li>
+        <li {if $op == "service"}class="active" {/if}><a href="{php echo $this->createWebUrl('shopmanage',array('op'=>'service','shopid'=>$shopid));}">店铺服务</a></li>
+        <li {if $op == "servicehome"}class="active" {/if}><a href="{php echo $this->createWebUrl('shopmanage',array('op'=>'servicehome','shopid'=>$shopid));}">上门服务</a></li>
+        <li {if $op == "order"}class="active" {/if}><a href="{php echo $this->createWebUrl('shopmanage',array('op'=>'order','shopid'=>$shopid));}">订单列表</a></li>
+
+	</ul>
+	<div class="panel panel-info">
+		<div class="panel-heading">当前搜索条件下数量： {$total},时长或金额置为0则认为该商家不启用对应项目的上门服务</div>
+	</div>
+
+	<div class="panel panel-default">
+		<div class="panel-body table-responsive">
+			<table class="table table-hover">
+				<thead class="navbar-inner">
+					<tr>
+						<th style="width: 50px;">序号</th>
+						<th style="width: 120px;">服务名称</th>
+						<th style="width: 90px;">订单总数</th>
+						<th style="width: 130px;">时长(分钟)</th>
+						<th style="width: 130px;">价格(元)</th>
+						<th style="width: 120px;">信息确认</th>
+					</tr>
+				</thead>
+				<tbody>
+					{loop $list $item}
+					<tr>
+						<td>{$item['id']}</td>
+						<td>{$item['shname']}</td>
+						<td><button type="button" class="btn btn-info btn-sm" style="width: 60%;text-align: right;">{php echo  $this->getOrdersSumBySvid($item['id']);}</button></td>
+						{php $s =  $this->getServceHomeByShopidAndShid($shopid,$item['id']);}
+						<td><input type="text" id="sminute{$item['id']}" style="width: 80%;text-align: right;" class="form-control" placeholder="建议时长:{$item['sminute']}"  value="{$s['sminute']}"></td>
+						<td><input type="text" id="sprice{$item['id']}" style="width: 80%;text-align: right;" class="form-control"  placeholder="建议价格:{$item['sprice']}" value="{$s['sprice']}"></td>
+						<td><a class="btn btn-success btn-sm" href="javascript:void(0);" onclick="ti({$item['id']},{$shopid});"
+							title="编辑"><i class="icon-edit"></i>修改时长价格</a></td>
+					</tr>
+					{/loop}
+				</tbody>
+			</table>
+		</div>
+		{$pager}
+	</div>
+</div>
+
+<script type="text/javascript">
+
+function ti(id,shopid){
+	 var sminute = $("#sminute"+id).val();
+	 var sprice = $("#sprice"+id).val();
+	     $.ajax({
+	    	type:'POST',
+	    	url:'{php echo $this->createWebUrl('shopsvhmforprice')}',
+	    	data:{sminute:sminute,sprice:sprice,shid:id,shopid:shopid},
+	    	success:function(data){
+	    		data  = eval("(" + data +")");
+	            if(data.state == "0"){
+	            	alert(data.msg);
+	            }else{
+	            	alert(data.msg);
+	                 
+	            }
+	        }    
+	    });
+	
+}
+
+
+
+
+
+
+
+
+
+    function drop_confirm(msg, url){
+        if(confirm(msg)){
+            window.location = url;
+        }
+    }
+</script>
+{template 'common/footer'}

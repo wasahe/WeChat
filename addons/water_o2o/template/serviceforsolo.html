@@ -1,0 +1,52 @@
+{template 'common/header'}
+
+<div class="service">
+	<ul class="nav nav-tabs">
+	    <li><a href="{php echo $this->createWebUrl('worker');}">员工列表</a></li>
+		<li class="active"><a href="javascript:void(0);">服务列表</a></li>
+	</ul>
+	<div class="panel panel-default">
+		<div class="panel-body table-responsive">
+			<table class="table table-hover">
+				<thead class="navbar-inner">
+					<tr>
+						<th style="width: 50px;">序号</th>
+						<th style="width: 120px;">服务名称</th>
+						<th style="width: 80px;">时长(分钟)</th>
+						<th style="width: 80px;">价格(元)</th>
+						<th style="width: 90px;">订单总数</th>
+						<th style="width: 120px; text-align: right;">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					{loop $list $item}
+					<tr>
+						<td>{$item['id']}</td>
+						<td>{$item['sname']}</td>
+						<td>{$item['sminute']}</td>
+						<td>{$item['sprice']}</td>
+						<td><button type="button" class="btn btn-info btn-sm" style="width: 60%;text-align: right;">{php echo  $this->getOrdersSumBySvid($item['id']);}</button></td>
+						<td style="text-align: right;"><a
+							class="btn btn-success btn-sm"
+							href="{php echo $this->createWebUrl('addservice', array('serviceid'=>$item['id']))}"
+							title="编辑"><i class="icon-edit"></i>编辑</a> <a
+							class="btn btn-default btn-sm" href="#"
+							onclick="drop_confirm('确定要删除吗?','{php echo $this->createWebUrl('addservice',array('op'=>'delete','serviceid'=>$item['id']))}');"
+							title="删除"><i class="icon-remove"></i>删除</a></td>
+					</tr>
+					{/loop}
+				</tbody>
+			</table>
+		</div>
+		{$pager}
+	</div>
+</div>
+
+<script type="text/javascript">
+    function drop_confirm(msg, url){
+        if(confirm(msg)){
+            window.location = url;
+        }
+    }
+</script>
+{template 'common/footer'}

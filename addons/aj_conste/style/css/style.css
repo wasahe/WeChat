@@ -1,0 +1,46 @@
+*{margin:0; padding:0;}
+div,p{wrap-work: break-word; word-break: break-all; word-wrap:break-word; word-break:normal; -moz-box-sizing:border-box; -webkit-box-sizing:border-box; box-sizing:border-box; -ms-box-sizing:border-box;}
+li{list-style:none;}
+em{font-style:normal;}
+input,textarea,select{font:16px 'microsoft yahei: ;',Arial,Helvetica,sans-serif; -moz-box-sizing:border-box; -webkit-box-sizing:border-box; -box-sizing:border-box;}
+img{border:none; vertical-align:bottom;}
+a{color:#fff; text-decoration:none; border:none; cursor:pointer;}
+a:hover{text-decoration:none;}
+h1,h2,h3,h4,h5,h6{font-size:16px; font-weight:normal;}
+
+.title{text-align:center; overflow:hidden; margin:20px 0;}
+.title span{display:inline-block; bottom:30%; height:95px; width:180px; background:url("../images/title.png") no-repeat 50% 50%; background-size:100%; z-index:1;}
+.form{margin:0 auto; width:90%; text-align:center;}
+.pan{width:180px; margin:10px auto 15px auto;}
+.pan img{width:100%;}
+.form p{margin-bottom:5px;}
+.form label{position:relative; margin-right:8px;}
+.form label[for=day]{margin:0;}
+.form input{width:60px; color:#dbe5ff; line-height:30px; height:30px; font-size:14px; background:none; border:1px #dbe5ff solid; border-radius:8px; text-align:center;}
+.form select{display:inline-block; padding-left:5px; background:#dbe5ff; width:80px; line-height:35px; height:35px; font-size:16px; border:1px #dbe5ff solid; border-radius:8px;}
+.btn{clear:both; display:inline-block; margin:20px 0; width:100%; height:40px; line-height:40px; color:#091b4b; background:#fff048; text-align:center; border-radius:10px; font-size:18px;}
+.copyright{text-align:center; opacity:0.2;}
+
+.black{background:rgba(0,0,0,0.5); position:fixed; width:100%; height:100%; z-index:1; display:none;}
+.black span{position:absolute; right:10px; top:10px; width:40%; height:30%; background:url("../images/share.png") no-repeat; background-size:100%;}
+
+.result{font-size:16px; line-height:25px;}
+.result .rearea{padding:20px;}
+.result p span{display:inline-block; text-align:center; background:#fff048; height:23px; width:40px; color:#091b4b; margin-right:5px; font-size:12px;}
+.result p{margin-bottom:8px;}
+.result .c{text-align:center;}
+.result .px20{font-size:24px;}
+.result .yellow{color:#fff048;}
+.result .mb20{margin-bottom:15px;}
+.result .btngroup{margin:20px 0 0; text-align:center; font-size:14px;}
+.result .btngroup img{width:100%; display:block; margin:10px auto;}
+.result .btn{margin:5px 0;}
+.result .btn img{display:inline; margin:0; width:20px; margin-right:5px; margin-bottom:8px;}
+.result ul{text-align:left;}
+
+.menu{width:100%; font-size:14px; text-align:center; background:rgba(0,0,0,0.8); height:auto; overflow:hidden; position:fixed; bottom:-125px; transition:all 0.5s; -moz-transition:all 0.5s; -webkit-transition:all 0.5s; -o-transition:all 0.5s; min-height:165px;}
+.menu p{height:40px; line-height:40px; text-align:center; border-bottom:2px #fff048 solid; margin:0;}
+.menu p span{background:url("../images/more.gif"/*tpa=http://astrobook.kissfoods.net/xingzuoshu/images/more.gif*/) no-repeat 50% 50%; background-size:100%; display:inline-block; width:50px; height:45px; margin:0;}
+.menu div{padding:5px 10px;}
+.menu a{float:left; width:49%; margin:5px 5px 5px 0; background:#fff048; border-radius:5px; color:#091b4b; height:30px; line-height:30px;/* font-size:12px;*/}
+.menu a:nth-child(2n){margin-right:0;}

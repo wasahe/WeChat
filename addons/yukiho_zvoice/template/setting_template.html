@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+{if empty($_W['isajax'])}
+{template 'common/top'}
+{/if}
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <!-- right column -->
+        <div class="col-md-12">
+          <!-- Horizontal Form -->
+          <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">模板设置</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+			<form action="" method="post"  class="form-horizontal" enctype="multipart/form-data">
+              <div class="box-body">
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">普通用户称呼</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name='userName' value="{$item['userName']}" placeholder="比如：学生/患者/观众...">
+					<span class="help-block"></span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">认证用户称呼</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name='authname' value="{$item['authname']}" placeholder="比如：老师/医生/律师...">
+					<span class="help-block"></span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">偷听文字</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name='learnName' value="{$item['learnName']}" placeholder="比如：学习/偷听/旁听...">
+					<span class="help-block"></span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">限时免费文字</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name='limitFree' value="{$item['limitFree']}" placeholder="比如：限时免费/免费收听...">
+					<span class="help-block"></span>
+                  </div>
+                </div>
+              </div>
+			  <div class="box-footer">
+                <input type="hidden" name="token" value="{$_W['token']}" />
+                <button type="submit" class="btn btn-info center-block">写好了</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!--/.col (right) -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+{if empty($_W['isajax'])}
+{template 'common/foot'}
+{/if}

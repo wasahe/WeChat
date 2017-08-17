@@ -1,0 +1,166 @@
+{template 'common/header'} 
+<script language='javascript' src="{TOKER_DANMU_JS}jquery.min.js"></script>
+<form id="setform"  action="{php echo $this->createWebUrl('danmu_manage')}" method="post" class="form-horizontal form">
+    <div class='panel panel-default'>
+        <div class='panel-heading'>
+            弹幕设置
+        </div>
+        <div class='panel-body'>
+
+            
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 control-label">显示时段Ⅰ</label>
+                <div class="col-sm-2 col-xs-6">
+                    <select class="form-control" name="start_time1">
+                        <option value="-1">开始显示时间</option>
+                        <?php
+                        for($i = 0; $i < 24; $i ++) {
+                        echo '<option value="'. $i . '" ' . (($danmu['start_time1'] == $i) ? ' selected ' : '') . '>'. $i .'时</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+
+                <div class="col-sm-2 col-xs-6">
+                    <select class="form-control" name="end_time1">
+                        <option value="-1">结束显示时间</option>
+                        <?php
+                        for($i = 0; $i < 24; $i ++) {
+                        echo '<option value="'. $i . '" ' . (($danmu['end_time1'] == $i) ? ' selected ' : '') . '>'. $i .'时</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+                
+                <div class="input-group col-sm-2 col-xs-6">
+                    <input name="number_range1" type="text" class="form-control" aria-describedby="basic-addon2" placeholder="每次显示订单数" value="{if empty($danmu['number_range1'])}{else}{$danmu['number_range1']}{/if}"/>
+                    <span class="input-group-addon" id="Span2">条</span>
+                </div>
+                   
+             </div>
+            
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 control-label">显示时段Ⅱ</label>
+                <div class="col-sm-2 col-xs-6">
+                    <select class="form-control" name="start_time2">
+                        <option value="-1">开始显示时间</option>
+                        <?php
+                        for($i = 0; $i < 24; $i ++) {
+                        echo '<option value="'. $i . '" ' . (($danmu['start_time2'] == $i) ? ' selected ' : '') . '>'. $i .'时</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+
+                <div class="col-sm-2 col-xs-6">
+                    <select class="form-control" name="end_time2">
+                        <option value="-1">结束显示时间</option>
+                        <?php
+                        for($i = 0; $i < 24; $i ++) {
+                        echo '<option value="'. $i . '" ' . (($danmu['end_time2'] == $i) ? ' selected ' : '') . '>'. $i .'时</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+                 <div class="input-group col-sm-2 col-xs-6">
+                    <input name="number_range2" type="text" class="form-control" aria-describedby="basic-addon2" placeholder="每次显示订单数" value="{if empty($danmu['number_range2'])}{else}{$danmu['number_range2']}{/if}"/>
+                    <span class="input-group-addon" id="Span2">条</span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 control-label">显示时段Ⅲ</label>
+                <div class="col-sm-2 col-xs-6">
+                    <select class="form-control" name="start_time3">
+                        <option value="-1">开始显示时间</option>
+                        <?php
+                        for($i = 0; $i < 24; $i ++) {
+                        echo '<option value="'. $i . '" ' . (($danmu['start_time3'] == $i) ? ' selected ' : '') . '>'. $i .'时</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+
+                <div class="col-sm-2 col-xs-6">
+                    <select class="form-control" name="end_time3">
+                        <option value="-1">结束显示时间</option>
+                        <?php
+                        for($i = 0; $i < 24; $i ++) {
+                        echo '<option value="'. $i . '" ' . (($danmu['end_time3'] == $i) ? ' selected ' : '') . '>'. $i .'时</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+                 <div class="input-group col-sm-2 col-xs-6">
+                    <input name="number_range3" type="text" class="form-control" aria-describedby="basic-addon2" placeholder="每次显示订单数" value="{if empty($danmu['number_range3'])}{else}{$danmu['number_range3']}{/if}"/>
+                    <span class="input-group-addon" id="Span2">条</span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="time_range" class="col-xs-12 col-sm-3 col-md-2 control-label">XX秒前</label>
+                <div class="col-sm-7">
+                    <div class="input-group col-sm-3">
+                        <input name="time_range" type="text"  class="form-control" aria-describedby="basic-addon2" placeholder="XX秒前" value="{$danmu['time_range']}"/>
+                        <span class="input-group-addon" id="Span2">秒</span>
+                    </div>
+                    <span class="help-block">默认30秒，随机一个小于该数的时间</span>
+                </div>
+
+                <div class="col-sm-2" style="color:red;">
+                    *
+                </div>
+            </div>
+            
+            <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class="require"> </span>引入</label>
+                    <div class="col-sm-9 col-xs-12">
+                            <div class="input-group">
+                                    <input type="text" readonly name="" value='<script language="javascript" src="{php echo $_W["siteroot"]}addons/toker_danmu/data/danmu/danmu_{$_W["uniacid"]}.js"></script>' class="form-control">
+                                    <span class="input-group-addon js-clip" style="cursor:pointer">复制</span>
+                            </div>
+						<span class="help-block">复制上面的JS代码，添加到你想显示的页面即可！</span>
+                    </div>
+            </div>
+
+<!--             <div class="form-group">
+                <label for="number_range" class="col-sm-2 control-label">15s显示订单条数</label>
+                <div class="col-sm-7">
+                    <div class="input-group col-sm-3 col-xs-6">
+                        <input name="number_range" type="text" id="time_range" class="form-control" aria-describedby="basic-addon2" value="{$danmu['number_range']}"/>
+                        <span class="input-group-addon" id="Span2">条</span>
+                    </div>
+                    <span class="help-block">默认5条，不大于15</span>
+                </div>
+
+                <div class="col-sm-2" style="color:red;">
+                    *
+                </div>
+            </div>-->
+            
+         
+            <div class="col-sm-9 col-sm-offset-3">
+                <input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" onclick='return formcheck()' />
+                <input type="hidden" name="token" value="{$_W['token']}" />
+            </div>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+    require(['jquery.zclip'], function(){
+		$('.js-clip').each(function(){
+			var copy_button = this;
+			$(copy_button).zclip({
+				path: './resource/components/zclip/ZeroClipboard.swf',
+				copy: $(copy_button).prev().val(),
+				afterCopy: function(){
+					$(copy_button).text('复制成功');
+					setTimeout(function(){
+						$(copy_button).text('复制');
+					}, 2000);
+				}
+			});
+		});
+	});
+</script>        
+{template 'common/footer'}

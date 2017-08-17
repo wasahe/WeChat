@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,user-scalable=no,maximum-scale=1,initial-scale=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no">
+    <title>{$reply['title']}</title>
+    <link href="../addons/haoman_updatehb/images/base.css?v=2016071823541" type="text/css" rel="stylesheet">
+    <script type="text/javascript" src="../addons/haoman_updatehb/images/jquery-2.1.3.min.js?v=201607182351"></script>
+</head>
+
+<body>
+
+    <div style="width: 100%;height: 100%;position: fixed;top: 0px;left: 0px;right: 0px;bottom: 0px;background: rgba(0,0,0,0.8);z-index: 99999;" class="sharebg">
+        <div class="sharemoney">
+            <img class="share_gold" src="../addons/haoman_updatehb/images/gold-y.png" style="display: block;position: absolute;top:19%;left: 50%;;margin-left:-40px;width:80px;height:80px;border-radius: 50%;">
+            <img class="share_gold2" src="../addons/haoman_updatehb/images/gold-q2.gif" style="display: none;position: absolute;top:19%;left: 50%;;margin-left:-40px;width:80px;height:80px;border-radius: 50%;">
+            <span style="color: #fff;font-size: 1em;position: absolute;top:45%;left: 50%;margin-left:-45%;width:90%;display: block;text-align: center;" class="ck">点击拆开</span>
+            <span style="color: #fff;font-size: 1em;position: absolute;top: 50%;left: 50%;margin-left:-45%;width:90%;display: block;text-align: center;">恭喜获得红包一个，金额随机</span>
+            <span style="color: #fff;font-size: 1.4em;position: absolute;top: 55%;left: 0px;display:block;left: 50%;margin-left:-45%;width:90%;display: block;text-align: center;">红包将存入您的账户<br>到时一起提现</span>
+        </div>
+    </div>
+
+    <div class="act-rule-wraps" id="result" style="background: rgba(0,0,0,0.6);position: fixed;top: 0px;left: 0px;bottom: 0px;right: 0px;width: 100%;height: 100%;display: none;z-index: 999">
+        <div class="modal-backdrop">
+            <div class="wdeg" id="resbg" style="background: url('../addons/haoman_updatehb/images/win.png') no-repeat;background-size: 100% 100%;height: 70%;margin-top: 5%;text-align: center;"></div>
+            <img id="resimg" src="../addons/haoman_updatehb/images/noumi.png">
+            <div style="position: absolute;color: #fff;bottom: 30%;font-size: 18px;width: 100%;text-align: center;">
+                <span id="restitle" style="color: #fff">恭喜您中了现金红包6元</span>
+                <br />
+                <span id="nothing"></span>
+            </div>
+            <a class="close_b">关闭</a>
+        </div>
+    </div>
+
+</body>
+<script type="text/javascript">
+    $('.close_b').click(function() {
+        location.href="{php echo $this->createMobileUrl('index', array('id' => $rid))}";
+    });
+    $(".share_gold").click(function () {
+
+            $.ajax({
+                url: "{php echo $this->createMobileUrl('ScanCofirm', array('id' => $rid,'from_user'=>$page_from_user))}",
+                dataType: "json",
+                data: {
+                    t: Math.random()
+                },
+                beforeSend: function () {
+
+                },
+                success: function (data) {
+
+                    if(data.success == 2){
+                        $('.sharebg').hide();
+                        alert(data.msg);
+                        return false;
+                    }
+
+                    $('.share_gold,.ck').hide();
+                    $('.share_gold2').css('display', 'block');
+
+                    if (data.success == 1) {
+
+                        var credit = data.credit;
+
+                        name = '¥'+ credit/100;
+                        namer = '红包'+ credit/100 + '元';
+
+                        setTimeout(function() {
+                            $('.act-rule-wrap').hide();
+                            $('.share_gold2').hide();
+                            $('.sharebg').hide();
+                            $('#result').show();
+                            $('#resimg').attr('src','../addons/haoman_updatehb/images/noumi.png');
+                            $('#restitle').text('恭喜抽中'+namer);
+                        }, 1000);
+
+                    }
+
+                },
+                error: function () {
+
+                },
+                timeout: 15000
+            })
+        })
+</script>
+
+</html>

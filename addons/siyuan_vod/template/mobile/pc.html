@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<title>请在微信中访问</title>
+<style>
+body { margin:0px; padding:0px; font: 14px Verdana, Arial, Helvetica, sans-serif; color:#ccc }
+body{ background-image: url("data:image/jpg;base64,/9j/4AAQSkZJRgABAgAAZABkAAD/7AARRHVja3kAAQAEAAAARgAA/+4ADkFkb2JlAGTAAAAAAf/bAIQABAMDAwMDBAMDBAYEAwQGBwUEBAUHCAYGBwYGCAoICQkJCQgKCgwMDAwMCgwMDQ0MDBERERERFBQUFBQUFBQUFAEEBQUIBwgPCgoPFA4ODhQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQU/8AAEQgARQBuAwERAAIRAQMRAf/EAGcAAQEBAQAAAAAAAAAAAAAAAAEAAgcBAQEBAQAAAAAAAAAAAAAAAAABAwIQAQABAwQBBAEEAwEBAAAAAAERACECMUFREmFxgSIyQpGhscHR4fFiExEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8A4MRHgu+tbMy9uqYpOUe96BTXSZ21oM9shUWTQk9b/pQMhiipw5JegoizOnaqIGOxpET63qijT0kPS1cigHE07H6PNBrJ7TGOhDNr/wC6DLZLQR8ouUCGgsuTOMXtQS4yioTDBegGZIbtl8afxQakJYeuMF7yxQYiGZQbjNigrE5OkfZ59aBRxxPjdhSNk1oNShMwOkW/WdaDI2+x2XYg68XoK+8TszaKCynEnG6WZ4b0CJl1GQ2tegC044wuVzJYsc0DIXINrf5oM5Y2XJfdJ9igeoRj1Z8DFARpr5oNMEh9cbwbxQHU7GWn5MF44oLH4/JyyyhZyNQS0m9BoDqQDJFmgz26/FjqaUGvxs/XRF39KDN0TOXa7Jf96A+qLHXGyFBTiWi7dT7UDccWO28zNuLUDMfFx1vbQoBcPyZyNqBVRNnXmgmbH5aUBNtDifHNA/LRxONduaAyHG+mJrxQUiRiXd+KBZPiMNoJf6KAlcbXm5q0BlEy6kenvQMRlCMbzzQTuzcIigcsEBQbHNBY/UiMcn62Y96CcZYHXxvQCZcbhM+aCR7HJlLx9uaC3EiYSNoWb0DqkPhoCF+JpvxGn90GsstWwsTZ4oMZYmqj2OqloXT9IoNWyGMeqR1PG1AxGM3MtAi0F/5oMk5YuRlLr7t2gUetlnwlBl7Kiq7GtBq2ILPXQ9aDP5asF/egQfvOlg8u7QVpSLRLl5/7QA3RygSX0KDQwNpnR5KCyMYItlo+lAGVk9haB6zi4v2oBH080EPXIFJ35oFg0m4tAQiReQ/mgXIHLq2lWOfFAfG3ZFkdaCDu2tlPxNmKBIByi8MS2ZaDM4g5dbNut50/1QaDGOt05Cw+fFAQmcLY0n+qCvLr2bnAUAsXy8UGkl0l5oDIgVJ99KCG0NraJ/dBSAOYXEJHWaAQg5LEUGhcfs3SYKCuGi/+tqDL2+25c97UEnWMXTSdrUDOdjbe3H/aCep2uMs5MftQTeDY2iIKBxsXtF/bigcoTJmyBicMzQCGUn5Y780EYhkazj+P+aAgbDMMfregYyc4JhI+Nrm7NAGOJdCBxFhjVoIDDqZKbcfzQaHHRhHm7agJMocdHSKAcsEykmIm+lAyRNpdt6At8u0dIeyzE+9qBI6PWE63cYP4oA34gmfSgnQ5mgj6Za9ptQOXaPMX5igMoj46fvQGUba/vFA59dvpGMxpM0Du9tJY/WgrRjz2Z9IoM4x2+OkMcTFqBfoT9Yxjt9fOnmgXt/8AQufbi2tB/9k="); }
+.tips { width:100px; height:42px; line-height:42px; color:#fff; font-weight:bold; text-indent:1em }
+.row { width:100%; margin:30px 0px; padding:0px; }
+.text-center { text-align:center; }
+.bottom {z-index: 9999;position:absolute;bottom:5px;width:100%;text-align:center; }
+.bottom a{color:#ccc;}
+.main{margin-top:50px;}
+</style>
+</head>
+<body>
+<div class="main">
+<div class="row text-center"> <img src="{$_W['attachurl']}{$set['qr']}" width="180"/><br><font size="3">{$set['name']}<br>{$set['ad']}</font></div>
+<div class="row text-center" >
+<div style="font-size:18px;color:#fff;font-weight:bold;line-height:40px;color:#ffffff">长按上方二维码 保存到手机识别后关注</div>
+<div style="line-height:30px;"> 如长按图片无效，搜索以下微信公众号关注即可 </div>
+<div style="font-size:28px;font-weight:bold;line-height:60px;color:#ffffff"><span style="border:1px dashed #ffffff;padding:5px 10px">{$set['name']}</span></div>
+<div style="line-height:30px;">长按虚线框，拷贝公众号名称</div>
+</div>
+</div>
+</body>
+</html>

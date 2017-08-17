@@ -1,0 +1,654 @@
+{template 'header'}
+<style>
+.settings{
+	display: none;
+}
+</style>
+<ul class="nav nav-tabs" id="snav">
+	<li class="active"><a>站点信息</a></li>
+	<li><a>基础设置</a></li>
+	<li><a>互动奖励</a></li>
+	<li><a>风格颜色</a></li>
+	<li><a>API参数</a></li>
+	<li><a>模板消息参数</a></li>
+	<li><a>定向计划自动申请软件参数</a></li>
+</ul>
+<script>
+$('#snav li').click(function(){
+	$('#snav li').removeClass('active');
+	$(this).addClass('active');
+	$('.settings').hide();
+	$('.settings').eq($(this).index()).show();
+});
+</script>
+{php load()->func('tpl')}
+<form action="" method="post" class="form form-horizontal">
+<div class="panel panel-default settings" style="display: block;">
+	<div class="panel-heading">请认真填写站点信息</div>
+	<div class="panel-body">
+
+
+<div class="form-group" >
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">网站模式选择</label>
+                    <div class="col-sm-9 col-xs-12">
+					    <input type="radio" name="isdtk" value="2"  {if $set['isdtk']==2}checked="true"{/if} />全能模式
+                        <input type="radio" name="isdtk" value="1"  {if $set['isdtk']==1}checked="true"{/if} />大淘客模式
+                        <input type="radio" name="isdtk" value="0"  {if $set['isdtk']==0 || empty($set['isdtk'])}checked="true"{/if} />淘宝联盟模式
+                        <span class="help-block">默认淘宝联盟模式</span>
+                    </div>
+</div>
+
+
+
+
+<div class="form-group" >
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">站点标题</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="sitetitle" class="form-control" value="{$set['sitetitle']}" />
+                        <span class="help-block"></span>
+                    </div>
+</div>
+
+
+<div class="form-group" >
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">底部版权</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="sitecopy" class="form-control" value="{$set['sitecopy']}" />
+                        <span class="help-block"></span>
+                    </div>
+</div>
+
+<div class="form-group" >
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">分享标题</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="fxtit" class="form-control" value="{$set['fxtit']}" />
+                        <span class="help-block"></span>
+                    </div>
+</div>
+
+<div class="form-group" >
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">分享描述</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="fxdes" class="form-control" value="{$set['fxdes']}" />
+                        <span class="help-block"></span>
+                    </div>
+</div>
+
+
+<div class="form-group" >
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">分享图标</label>
+                    <div class="col-sm-9 col-xs-12">
+                        {php echo tpl_form_field_image('fxlogo', $set['fxlogo']);}
+                        <span class="help-block">建议尺寸：200x200px</span>
+                    </div>
+</div>
+     </div>
+     
+	
+</div>
+<div class="settings">
+	<div class="panel panel-default">
+		<div class="panel-heading">请认真填写基础设置</div>
+		<div class="panel-body">
+
+
+<div class="form-group" >
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">详情页引导方式</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="radio" name="isyindao" value="1"  {if $set['isyindao']==1}checked="true"{/if} />淘口令
+                        <input type="radio" name="isyindao" value="0"  {if $set['isyindao']==0}checked="true"{/if} />浏览器跳转
+                        <span class="help-block">默认引导复制淘口令</span>
+                    </div>
+</div>
+
+<div class="form-group" >
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">首页排序方式</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="radio" name="isindex" value="1"  {if $set['isindex']==1 || empty($set['isindex'])}checked="true"{/if} />顺序
+                        <input type="radio" name="isindex" value="2"  {if $set['isindex']==2}checked="true"{/if} />随机
+						<input type="radio" name="isindex" value="3"  {if $set['isindex']==3}checked="true"{/if} />销量
+						<input type="radio" name="isindex" value="4"  {if $set['isindex']==4}checked="true"{/if} />价格
+						<input type="radio" name="isindex" value="5"  {if $set['isindex']==5}checked="true"{/if} />点击
+						<input type="radio" name="isindex" value="6"  {if $set['isindex']==6}checked="true"{/if} />分享
+                        <span class="help-block">请选择您喜欢的方式（从大到小，但排序大的优先）</span>
+                    </div>
+</div>
+
+
+<div class="form-group" >
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">红包领取按钮</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="radio" name="ishb" value="1"  {if $set['ishb']==1}checked="true"{/if} />开启
+                        <input type="radio" name="ishb" value="0"  {if $set['ishb']==0}checked="true"{/if} />关闭
+                        <span class="help-block"></span>
+                    </div>
+</div>
+
+<div class="form-group" >
+                    <label class="col-xs-1 col-sm-3 col-md-2 control-label">红包淘口令</label>
+                    <div class="col-sm-2 col-xs-1">
+                        <input type="text" name="hbtkl" class="form-control" value="{$set['hbtkl']}" />
+                        <span class="help-block">请自行修改为自己的淘口令</span>
+                    </div>
+</div>
+
+
+
+
+<div class="form-group" >
+                    <label class="col-xs-1 col-sm-3 col-md-2 control-label">自定义分享标题</label>
+                    <div class="col-sm-7 col-xs-1">
+                        <input type="text" name="diytit" class="form-control" value="{$set['diytit']}" />
+                        <span class="help-block">留空为忽略设置，参数：#券后价#、#券价#、#售价#、#商品标题#（仅全能模式支持）</span>
+                    </div>
+</div>
+
+<div class="form-group" >
+                    <label class="col-xs-1 col-sm-3 col-md-2 control-label">自定义淘口令尾巴</label>
+                    <div class="col-sm-7 col-xs-1">
+                        <input type="text" name="diytkl" class="form-control" value="{$set['diytkl']}" />
+                        <span class="help-block">留空为关闭，仅在首次生成后打开淘宝激活时显示</span>
+                    </div>
+</div>
+
+
+	     </div>
+	</div>
+</div>
+<div class="panel panel-default settings">
+	<div class="panel-heading">请认真填写互动奖励相关设置</div>
+	<div class='panel-body'>
+	      <div class="form-group" style="display:none">
+                    <label class="col-xs-1 col-sm-3 col-md-2 control-label">邀请成功奖励积分</label>
+                    <div class="col-sm-2 col-xs-1">
+                        <input type="text" name="yaoqingjifen" class="form-control" value="{if $set['yaoqingjifen']}{$set['yaoqingjifen']}{else}10{/if}" />
+                        <span class="help-block">默认10积分</span>
+                    </div>
+</div>
+
+
+
+
+
+<div class="form-group" >
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">积分兑换方式</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="radio" name="duihuantype" value="1"  {if $set['duihuantype']==1}checked="true"{/if} />(方式1)系统内置兑换
+                        <input type="radio" name="duihuantype" value="2"  {if $set['duihuantype']==2}checked="true"{/if} />(方式2)模块内置兑吧兑换
+						<input type="radio" name="duihuantype" value="3"  {if $set['duihuantype']==3}checked="true"{/if} />(方式3)自定义积分兑换url
+                        <span class="help-block"></span>
+                    </div>
+</div>
+
+
+<div class="form-group" >
+                    <label class="col-xs-1 col-sm-3 col-md-2 control-label">自定义积分兑换url</label>
+                    <div class="col-sm-6 col-xs-6">
+                        <input type="text" name="duihuanurl" class="form-control" value="{if !empty($set['duihuanurl'])}{$set['duihuanurl']}{else}{$_W['siteroot']}app/index.php?i={$_W['uniacid']}&c=activity&a=coupon{/if}" />
+                        <span class="help-block">默认系统兑换链接（兑换方式3时生效）</span>
+                    </div>
+</div>
+
+
+
+<div class="form-group" >
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">是否开启晒单功能</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="radio" name="isshow" value="1"  {if $set['isshow']==1}checked="true"{/if} />开启
+                        <input type="radio" name="isshow" value="0"  {if $set['isshow']==0}checked="true"{/if} />关闭
+                        <span class="help-block"></span>
+                    </div>
+</div>
+
+<div class="form-group" >
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">开启晒单审核</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="radio" name="showisstatus" value="1"  {if $set['showisstatus']==1}checked="true"{/if} />开启
+                        <input type="radio" name="showisstatus" value="0"  {if $set['showisstatus']==0}checked="true"{/if} />关闭
+                        <span class="help-block"></span>
+                    </div>
+</div>
+
+
+<div class="form-group" >
+                    <label class="col-xs-1 col-sm-3 col-md-2 control-label">下级晒单上级奖励</label>
+					<div class="col-sm-2 col-xs-1">
+					   <div class="input-group">
+                        <input type="text" name="jiangli" class="form-control" value="{$set['jiangli']}" />
+						<span class="input-group-addon">%</span>
+						</div>
+						<span class="help-block">默认10%</span>
+                    </div>
+</div>
+
+<div class="form-group" >
+                    <label class="col-xs-1 col-sm-3 col-md-2 control-label">下级晒单上上级奖励</label>
+                    <div class="col-sm-2 col-xs-1">
+					   <div class="input-group">
+                        <input type="text" name="jiangli2" class="form-control" value="{$set['jiangli2']}" />
+						<span class="input-group-addon">%</span>
+						</div>
+						<span class="help-block">默认10%</span>
+                    </div>
+</div>
+
+<div class="form-group" >
+                    <label class="col-xs-1 col-sm-3 col-md-2 control-label">晒单积分基础奖励</label>
+                    <div class="col-sm-2 col-xs-1">
+                        <input type="text" name="showjifen" class="form-control" value="{if $set['showjifen']}{$set['showjifen']}{else}10{/if}" />
+                        <span class="help-block">默认10积分</span>
+                    </div>
+</div>
+
+<div class="form-group" >
+                    <label class="col-xs-1 col-sm-3 col-md-2 control-label">第2-5晒单图每图基础奖励</label>
+                    <div class="col-sm-2 col-xs-1">
+                        <input type="text" name="showpicjifen" class="form-control" value="{$set['showpicjifen']}" />
+                        <span class="help-block">默认10积分</span>
+                    </div>
+</div>
+
+<div class="form-group" >
+                    <label class="col-xs-1 col-sm-3 col-md-2 control-label">自定义签到url</label>
+                    <div class="col-sm-6 col-xs-6">
+                        <input type="text" name="qiandaourl" class="form-control" value="{if !empty($set['qiandaourl'])}{$set['qiandaourl']}{else}内置{/if}" />
+                        <span class="help-block">默认为模块内置签到（使用内置请填写：“内置”，激活关键字为：“牛贝签到”）<br>系统签到链接：{$_W['siteroot']}app/index.php?i={$_W['uniacid']}&c=mc&a=card&do=sign_display</span>
+                    </div>
+</div>
+
+
+
+	</div>
+</div>
+<div class="panel panel-default settings">
+		<div class="panel-heading">请认真设置站点风格</div>
+		<div class="panel-body">
+
+
+<div class="form-group" >
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">列表图片清晰度</label>
+                    <div class="col-sm-9 col-xs-12">
+<input type="radio" name="maxpic" value="_200x200"  {if $set['maxpic']=='_200x200'}checked="true"{/if} />极速
+<input type="radio" name="maxpic" value="_350x350"  {if $set['maxpic']=='_350x350'}checked="true"{/if} />均衡
+<input type="radio" name="maxpic" value="_600x600"  {if $set['maxpic']=='_600x600'}checked="true"{/if} />高清
+                        <span class="help-block">默认“极速”</span>
+                    </div>
+</div>
+
+
+<div class="form-group" >
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">开启仿真优惠券页面</label>
+                    <div class="col-sm-9 col-xs-12">
+<input type="radio" name="isnewshow" value="1"  {if $set['isnewshow']==1}checked="true"{/if} />开启
+<input type="radio" name="isnewshow" value="0"  {if $set['isnewshow']==0}checked="true"{/if} />关闭
+                        <span class="help-block">默认关闭，开启后详情页变为仿真优惠券样式</span>
+                    </div>
+</div>
+
+
+<div class="form-group" >
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">广告图位置设置</label>
+                    <div class="col-sm-9 col-xs-12">
+<input type="radio" name="istopads" value="1"  {if $set['istopads']==1}checked="true"{/if} />顶部
+<input type="radio" name="istopads" value="0"  {if $set['istopads']==0}checked="true"{/if} />中部
+                        <span class="help-block">默认开启</span>
+                    </div>
+</div>
+
+
+<div class="form-group" >
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">顶部4格导航导航</label>
+                    <div class="col-sm-9 col-xs-12">
+<input type="radio" name="isnav" value="1"  {if $set['isnav']==1}checked="true"{/if} />开启
+<input type="radio" name="isnav" value="0"  {if $set['isnav']==0}checked="true"{/if} />关闭
+                        <span class="help-block">默认开启</span>
+                    </div>
+</div>
+
+
+<div class="form-group" >
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">开启首页栏目展示</label>
+                    <div class="col-sm-9 col-xs-12">
+<input type="radio" name="iscate" value="1"  {if $set['iscate']==1}checked="true"{/if} />开启
+<input type="radio" name="iscate" value="0"  {if $set['iscate']==0}checked="true"{/if} />关闭
+                        <span class="help-block">默认开启</span>
+                    </div>
+</div>
+			
+
+<div class="form-group" >
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">开启首页4格按钮</label>
+                    <div class="col-sm-9 col-xs-12">
+<input type="radio" name="ismidbtn" value="1"  {if $set['ismidbtn']==1}checked="true"{/if} />开启
+<input type="radio" name="ismidbtn" value="0"  {if $set['ismidbtn']==0}checked="true"{/if} />关闭
+                        <span class="help-block">默认开启</span>
+                    </div>
+</div>
+
+
+<div class="form-group" >
+                    <label class="col-xs-1 col-sm-3 col-md-2 control-label">1-领券直播URL</label>
+                    <div class="col-sm-3 col-xs-1">
+                        <input type="text" name="part1url" class="form-control" value="{$set['part1url']}" />
+                        <span class="help-block"></span>
+                    </div>
+</div>
+
+<div class="form-group" >
+                    <label class="col-xs-1 col-sm-3 col-md-2 control-label">2-特惠精选URL</label>
+                    <div class="col-sm-3 col-xs-1">
+                        <input type="text" name="part2url" class="form-control" value="{$set['part2url']}" />
+                        <span class="help-block"></span>
+                    </div>
+</div>
+
+<div class="form-group" >
+                    <label class="col-xs-1 col-sm-3 col-md-2 control-label">3-9.9包邮URL</label>
+                    <div class="col-sm-3 col-xs-1">
+                        <input type="text" name="part3url" class="form-control" value="{$set['part3url']}" />
+                        <span class="help-block"></span>
+                    </div>
+</div>
+
+<div class="form-group" >
+                    <label class="col-xs-1 col-sm-3 col-md-2 control-label">4-20元封顶URL</label>
+                    <div class="col-sm-3 col-xs-1">
+                        <input type="text" name="part4url" class="form-control" value="{$set['part4url']}" />
+                        <span class="help-block">1-2为一组、3-4为一组，留空一组任意一个即为隐藏</span>
+                    </div>
+</div>
+
+
+
+<div class="form-group" >
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">分页加载方式</label>
+                    <div class="col-sm-9 col-xs-12">
+					    <input type="radio" name="autoclick" value="2"  {if $set['autoclick']==2}checked="true"{/if} />按钮分页
+                        <input type="radio" name="autoclick" value="1"  {if $set['autoclick']==1}checked="true"{/if} />自动加载
+                        <input type="radio" name="autoclick" value="0"  {if $set['autoclick']==0}checked="true"{/if} />点击加载
+                        <span class="help-block"></span>
+                    </div>
+</div>
+
+<div class="form-group" >
+                    <label class="col-xs-1 col-sm-3 col-md-2 control-label">分页显示商品数量</label>
+                    <div class="col-sm-2 col-xs-6">
+                        <input type="text" name="pageno" class="form-control" value="{if !empty($set['pageno'])}{$set['pageno']}{else}10{/if}" />
+                        <span class="help-block">默认10</span>
+                    </div>
+</div>
+
+
+
+
+
+<div class="form-group" >
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">风格样式</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="radio" name="skin" value="1"  {if $set['skin']==1}checked="true"{/if} />蜂客联盟
+                        <input type="radio" name="skin" value="2"  {if $set['skin']==2}checked="true"{/if} />卷皮网
+                        <span class="help-block"></span>
+                    </div>
+</div>
+
+<div class="form-group" >
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">网站主色调</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="radio" name="color" value="1"  {if $set['color']==1}checked="true"{/if} />橙色
+                        <input type="radio" name="color" value="2"  {if $set['color']==2}checked="true"{/if} />粉色
+                        <span class="help-block"></span>
+                    </div>
+</div>
+
+
+
+	     </div>
+	</div>
+
+<div class="panel panel-default settings">
+		<div class="panel-heading">API参数相关设置</div>
+		<div class="panel-body">
+			
+
+
+<div class="form-group" >
+                    <label class="col-xs-1 col-sm-3 col-md-2 control-label">淘宝客API - App Key</label>
+                    <div class="col-sm-5 col-xs-1">
+                        <input type="text" name="tb_key" class="form-control" value="{$set['tb_key']}" />
+                        <span class="help-block">查看地址：http://my.open.taobao.com/</span>
+                    </div>
+</div>
+
+<div class="form-group" >
+                    <label class="col-xs-1 col-sm-3 col-md-2 control-label">淘宝客API - App Secret</label>
+                    <div class="col-sm-5 col-xs-1">
+                        <input type="text" name="tb_secret" class="form-control" value="{$set['tb_secret']}" />
+                        <span class="help-block">查看地址：http://my.open.taobao.com/</span>
+                    </div>
+</div>
+
+
+<div class="form-group" >
+                    <label class="col-xs-1 col-sm-3 col-md-2 control-label">普通PID（类型：自助）</label>
+                    <div class="col-sm-5 col-xs-1">
+                        <input type="text" name="tb_pid" class="form-control" value="{$set['tb_pid']}" />
+                        <span class="help-block">查看地址：http://my.open.taobao.com/</span>
+                    </div>
+</div>
+
+<div class="form-group" >
+                    <label class="col-xs-1 col-sm-3 col-md-2 control-label">鹊桥PID（类型：主题活动）</label>
+                    <div class="col-sm-5 col-xs-1">
+                        <input type="text" name="tb_qpid" class="form-control" value="{$set['tb_qpid']}" />
+                        <span class="help-block">查看地址：http://my.open.taobao.com/</span>
+                    </div>
+</div>
+
+<div class="form-group" >
+                    <label class="col-xs-1 col-sm-3 col-md-2 control-label">大淘客Appkey</label>
+                    <div class="col-sm-5 col-xs-1">
+                        <input type="text" name="dtk_key" class="form-control" value="{$set['dtk_key']}" />
+                        <span class="help-block">查看地址：http://www.dataoke.com/ucenter/appkey_apply.asp</span>
+                    </div>
+</div>
+
+
+
+	     </div>
+	</div>
+
+
+
+<div class="panel panel-default settings">
+		<div class="panel-heading">模板消息设置</div>
+		<div class="panel-body">
+			
+<div class="form-group" >
+                    <label class="col-xs-1 col-sm-3 col-md-2 control-label">用户消息模板消息ID</label>
+                    <div class="col-sm-5 col-xs-1">
+                        <input type="text" name="yhtmpid" class="form-control" value="{$set['yhtmpid']}" />
+                        <span class="help-block">所在行业：IT科技，标题：任务处理通知，编号：OPENTM200605630</span>
+                    </div>
+</div>
+
+<div class="form-group" >
+                    <label class="col-xs-1 col-sm-3 col-md-2 control-label">管理员消息模板消息ID</label>
+                    <div class="col-sm-5 col-xs-1">
+                        <input type="text" name="gltmpid" class="form-control" value="{$set['gltmpid']}" />
+                        <span class="help-block">所在行业：IT科技，标题：任务处理通知，编号：OPENTM200605630</span>
+                    </div>
+</div>
+
+
+<div class="form-group" >
+                    <label class="col-xs-1 col-sm-3 col-md-2 control-label">管理员OPENID</label>
+                    <div class="col-sm-5 col-xs-1">
+                        <input type="text" name="glopenid" class="form-control" value="{$set['glopenid']}" />
+                        <span class="help-block">可以从会员管理中查询到</span>
+                    </div>
+</div>
+
+
+
+
+
+	     </div>
+	</div>
+
+
+
+<div class="panel panel-default settings">
+		<div class="panel-heading">配套定向计划申请软件参数</div>
+		<div class="panel-body">
+
+			
+<div class="form-group" >
+                    <label class="col-xs-1 col-sm-3 col-md-2 control-label">数据地址</label>
+                    <div class="col-sm-5 col-xs-1">
+                        <input type="text" name="" class="form-control" value="{$_W['siteroot']}app/index.php?i={$_W['uniacid']}" readonly/>
+                        <span class="help-block"></span>
+                    </div>
+</div>
+
+<div class="form-group" >
+                    <label class="col-xs-1 col-sm-3 col-md-2 control-label">软件申请高佣定向计划密钥</label>
+                    <div class="col-sm-5 col-xs-1">
+					   <div class="input-group">
+                        <input type="text" name="nbkey" class="form-control" value="{$set['nbkey']}" />
+						<span class="input-group-addon" style="cursor:pointer" onclick="EncodingAESKeyGen();">生成新的</span>
+						</div>
+						<span class="help-block">建议定期更换新密钥</span>
+                    </div>
+</div>
+
+
+<div class="form-group" >
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">只选天猫产品</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="radio" name="tm_min" value="0"  {if $set['tm_min']==0}checked="true"{/if} />关闭
+                        <input type="radio" name="tm_min" value="1"  {if $set['tm_min']==1}checked="true"{/if} />开启
+                        <span class="help-block"></span>
+                    </div>
+</div>
+
+
+<div class="form-group" >
+                    <label class="col-xs-1 col-sm-3 col-md-2 control-label">最小佣金</label>
+                    <div class="col-sm-3 col-xs-1">
+					   <div class="input-group">
+                        <input type="text" name="yj_min" class="form-control" value="{if $set['yj_min']}{$set['yj_min']}{else}30{/if}" />
+						<span class="input-group-addon">%</span>
+						</div>
+						<span class="help-block">自动过滤低于此数值的，填写0或空为忽略此条件，软件将不会申请定向计划，默认30%</span>
+                    </div>
+</div>
+
+
+<div class="form-group" >
+                    <label class="col-xs-1 col-sm-3 col-md-2 control-label">最低销量</label>
+                    <div class="col-sm-3 col-xs-1">
+					   <div class="input-group">
+                        <input type="text" name="xl_min" class="form-control" value="{$set['xl_min']}" />
+						<span class="input-group-addon">件</span>
+						</div>
+						<span class="help-block">自动过滤低于此数值的，填写0或空为忽略此条件，软件将不会申请定向计划</span>
+                    </div>
+</div>
+
+<div class="form-group" >
+                    <label class="col-xs-1 col-sm-3 col-md-2 control-label">最低优惠券剩余</label>
+                    <div class="col-sm-3 col-xs-1">
+					   <div class="input-group">
+                        <input type="text" name="yhj_min" class="form-control" value="{$set['yhj_min']}" />
+						<span class="input-group-addon">张</span>
+						</div>
+						<span class="help-block">自动过滤低于此数值的，填写0或空为忽略此条件，软件将不会申请定向计划</span>
+                    </div>
+</div>
+
+
+<div class="form-group" >
+                    <label class="col-xs-1 col-sm-3 col-md-2 control-label">最少收益</label>
+                    <div class="col-sm-3 col-xs-1">
+					   <div class="input-group">
+                        <input type="text" name="sy_min" class="form-control" value="{if $set['sy_min']}{$set['sy_min']}{else}10{/if}" />
+						<span class="input-group-addon">￥</span>
+						</div>
+						<span class="help-block">自动过滤低于此数值的，填写0或空为忽略此条件，软件将不会申请定向计划，默认10￥</span>
+                    </div>
+</div>
+
+<div class="form-group" >
+                    <label class="col-xs-1 col-sm-3 col-md-2 control-label">最小售价</label>
+                    <div class="col-sm-3 col-xs-1">
+					   <div class="input-group">
+                        <input type="text" name="jg_min" class="form-control" value="{$set['jg_min']}" />
+						<span class="input-group-addon">￥</span>
+						</div>
+						<span class="help-block">自动过滤低于此数值的，填写0或空为忽略此条件，软件将不会申请定向计划</span>
+                    </div>
+</div>
+
+<div class="form-group" >
+                    <label class="col-xs-1 col-sm-3 col-md-2 control-label">软件载入分页量</label>
+                    <div class="col-sm-3 col-xs-1">
+					   <div class="input-group">
+                        <input type="text" name="page_min" class="form-control" value="{if $set['page_min']}{$set['page_min']}{else}20{/if}" />
+						<span class="input-group-addon">条</span>
+						</div>
+						<span class="help-block">默认20条</span>
+                    </div>
+</div>
+
+
+
+
+
+	     </div>
+	</div>
+
+
+
+
+
+
+
+
+         <button class="btn btn-primary" name='submit' value="提交" type="submit">提交</button>
+         <input type="hidden" name="token" value="{$_W['token']}">
+</form>
+
+<script type="text/javascript">
+	require(['filestyle'], function(){
+		$(".form-group").find(':file').filestyle({buttonText: '上传图片'});
+	});
+	function tokenGen() {
+		var letters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+		var token = '';
+		for(var i = 0; i < 32; i++) {
+			var j = parseInt(Math.random() * (31 + 1));
+			token += letters[j];
+		}
+		$(':text[name="wetoken"]').val(token);
+	}
+	function EncodingAESKeyGen() {
+		var letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+		var token = '';
+		for(var i = 0; i < 43; i++) {
+			var j = parseInt(Math.random() * 61 + 1);
+			token += letters[j];
+		}
+		$(':text[name="nbkey"]').val(token);
+	}
+	{if $account['type'] != 3}
+		$(':radio[name="type"][value="3"]').click(function() {
+			$(':radio[value="1"]').prop('checked',true);
+			if (confirm('必须通过公众号授权登录页面进行授权接入，是否跳转至授权页面...')) {
+				location.href="{$authurl}";
+			} else {
+				return false;
+			}
+		});
+	{/if}
+</script>
+{template 'footer'}

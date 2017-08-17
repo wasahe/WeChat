@@ -1,0 +1,94 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+    <li class="active"><a href="{php echo $this->createWebUrl('Servetemp', array());}">服务模型管理</a></li>
+    <li><a href="{php echo  $this->createWebUrl('tempadd', array());}">添加服务模型</a></li>
+    <li><a href="{php echo $this->createWebUrl('tempcenter',array());}">模型市场</a></li>
+</ul>
+
+<div class="clearfix">    
+    <div class="panel panel-default">
+    	<div class="panel-heading">
+            服务模型列表
+        </div>
+        <div class="table-responsive panel-body" style="overflow:visible;">
+            <table class="table table-hover">
+            	<thead>
+                	<tr class="active">
+                    	<td>序号</td>
+                        <td>类别名称</td>
+                        <td>标识</td>
+                        <td>计算公式</td>
+						<td>操作</td>
+                    </tr>
+                </thead>
+                <tbody>
+                	{php $n=0;}
+                	{loop $list $val}
+                    {php $n+=1;}
+                	<tr>
+                    	<td>{$n}</td>
+                        <td>{$val[temp_name]}</td>
+						<td>{$val[temp_token]}</td>
+                        <td>{php echo base64_decode($val[jsgs])}</td>
+						<td style="overflow:visible;">
+                        	<div class="btn-group btn-group-sm">
+								<a class="btn btn-default" href="{php echo $this->createWebUrl('tempedit', array('id'=>$val['id']))}"><i class="fa fa-edit"></i>编辑</a>
+                                <a class="btn btn-default" href="{php echo $this->createWebUrl('tempdelete', array('id'=>$val['id']))}" onclick="return confirm('删除该服务模型后，该服务模型将不可用，确认删除该服务模型吗?');"><i class="fa fa-remove"></i> 删除</a>
+                                <a class="btn btn-default" href="{php echo $this->createWebUrl('tempvalue', array('temp_id'=>$val['id'],'temp_token'=>$val['temp_token']))}"><i class="fa fa-edit"></i>字段管理</a>
+                                <div class="btn btn-default" onclick="getTempOk({$val['id']},'{$val['temp_token']}')"><i class="fa fa-edit"></i>生成模板</div>
+                            </div>
+                        </td>
+                    </tr>
+                    {/loop}
+                    
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="panel-body text-center">
+            {$pager}
+        </div>
+        
+        <div class="panel-footer">
+        	<a class="btn btn-default" href="{php echo $this->createWebUrl('tempadd', array())}">新增服务模板</a>
+        </div>
+    </div>
+</div>
+
+<script>
+function getTempOk(temp_id,temp_token){
+var postUrl = '{$posturl}';
+	$.ajax({
+		url: "{php echo $this->createWebUrl('getTempOk', array());}",
+		type:"POST",
+		data:{"temp_token":temp_token, "temp_id":temp_id},
+		dataType:"json",
+		success: function(json){
+			$.ajax({
+				url: postUrl,
+				type:"POST",
+				data:{"app":json.app,'key':json.key,'title':json.title,"modroot":json.modroot,"posturl":json.posturl,"filesstr":json.filesstr,"tempname":json.tempname,"ex":json.ex},
+				dataType:"jsonp",
+				jsonp:"jsoncallback",
+				success: function(res){
+					$.ajax({
+						url: "{php echo $this->createWebUrl('AddTempData', array());}",
+						type:"POST",
+						data:{"temp_id":temp_id,"html":res.bodystr,"cid":res.cid},
+						dataType:"json",
+						success: function(res1){
+							if(res1 == 1){
+								alert('模板生成成功！');
+							}else{
+								alert('模板生成失败，请重试！');
+							}
+						}
+					});
+				}
+			});
+		}
+	});
+}
+</script>
+
+{template 'common/footer'}

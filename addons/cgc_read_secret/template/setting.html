@@ -1,0 +1,421 @@
+{template 'common/header'}
+
+<script>
+    require(['jquery', 'util'], function($, u) {
+        $(function(){
+            $('#setting-form').submit(function(){
+                var message = '';
+                if($.trim($(':text[name=appid]').val()) == '') {
+                    message += '必须输入AppID<br>';
+                }
+                if($.trim($(':text[name=secret]').val()) == '') {
+                    message += '必须输入AppSecret<br>';
+                }
+                if($.trim($(':text[name=mchid]').val()) == '') {
+                    message += '必须输入微信支付商户号<br>';
+                }
+                if($.trim($(':text[name=password]').val()) == '') {
+                    message += '必须输入微信支付商户密钥<br>';
+                }
+                
+                if($.trim($(':text[name=pay_desc]').val()) == '') {
+                    message += '必须输入企业付款描述<br>';
+                }
+                if(message) {
+                    u.message(message);
+                    return false;
+                }
+                return true;
+            });
+        });
+    });
+</script>
+
+
+<div class="main">
+	<form action="" method="post" class="form-horizontal form"  enctype="multipart/form-data"  id="setting-form">
+		<div class="panel panel-default">
+			<div class="panel-heading">参数设置</div>
+			<div class="panel-body">
+				<ul class="nav nav-tabs" id="myTab">
+					<li class="active" ><a href="#tab_basic">付款以及支付接口参数</a></li>				
+					<li><a href="#tab_share5">问题配置</a></li>
+					<li><a href="#tab_share2">分享设置</a></li>
+					
+					<li><a href="#tab_share3" style="display:">其他设置</a></li>					
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane  active" id="tab_basic">
+						<div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+                    <div class="col-sm-9 col-xs-12">
+                        <div class="alert alert-info">
+                            发放红包需要使用 <br>
+                            <span class="label label-info">认证服务号并开通微信支付</span> <br>
+                        </div>
+                    </div>
+                </div>
+                             
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">AppID</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="appid" value="{$settings['appid']}" class="form-control">
+                        <span class="help-block">就是本公众号的appid</span>                       
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">AppSecret</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="secret" value="{$settings['secret']}" class="form-control">
+                        <span class="help-block">就是本公众号的AppSecret</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">商户号</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="mchid" value="{$settings['mchid']}" class="form-control">
+                        <span class="help-block">微信支付商户号, 开通微信支付才能获得商户号</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">商户支付密钥</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="password" value="{$settings['password']}" class="form-control">
+                        <span class="help-block">微信支付商户所使用的支付密钥, 开通微信支付才能获得商户号</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">服务器IP</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="ip" value="{$settings['ip']}" class="form-control">
+                        <span class="help-block">发放红包接口需要服务器IP. 程序将自动获取你的服务器IP, 如果获取失败, 请手动指定</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">商户支付证书</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input name="apiclient_cert" type="hidden"  class="form-control" value="{$settings['apiclient_cert']}"/> 
+                        <input name="apiclient_cert_file" type="file"  class="form-control" value=""/> 
+                        <span class="help-block">
+            {if !empty($settings['apiclient_cert'])} <label style="color:red">已保存成功</label>{else}
+                        <label style="color:red">未上传</label>{/if}                       
+                        从商户平台上下载支付证书, 解压并取得其中的 <mark>apiclient_cert.pem</mark>上传此文件</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">支付证书私钥</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input name="apiclient_key" type="hidden"  class="form-control" value="{$settings['apiclient_key']}"/> 
+                        <input name="apiclient_key_file" type="file"  class="form-control" value=""/> 
+                        <span class="help-block">
+                        {if !empty($settings['apiclient_key'])} <label style="color:red">已保存成功</label>{else}
+                        <label style="color:red">未上传</label>{/if}
+                                                            从商户平台上下载支付证书, 解压并取得其中的 <mark>apiclient_key.pem</mark>上传此文件</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">支付根证书</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input name="rootca" type="hidden"  class="form-control" value="{$settings['rootca']}"/> 
+                        <input name="rootca_file" type="file"  class="form-control" value=""/> 
+                        <span class="help-block">
+             {if !empty($settings['rootca'])} <label style="color:red">已保存成功</label>{else}
+                        <label style="color:red">未上传</label>{/if}              
+                        从商户平台上下载支付证书, 解压并取得其中的 <mark>rootca.pem</mark>上传此文件</span>
+                    </div>
+                </div>
+                
+                 <div class="form-group sendtype" style="">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label"><font color='red'>*</font>企业付款描述</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="pay_desc" value="{$settings['pay_desc']}" class="form-control">
+                        <span class="help-block">企业零钱红包的描述(不要太长),#nickname#代表用户昵称。例如:#nickname#向你支付了一笔风流账。</span>
+                    </div>
+                </div> 
+                
+              
+               <div class="form-group" style="display:none">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">红包提现方式</label>
+                    <div class="col-xs-12 col-sm-9">
+                        <label class="radio-inline"><input type="radio" name="tx_type" value="0"
+                         {if empty($settings['tx_type'])} checked="checked" {/if}>系统自动提现</label>
+	         			<label class="radio-inline"><input type="radio" name="tx_type" value="1" 
+	         			 {if $settings['tx_type']==1} checked="checked" {/if}>后台提现</label>	         			 	         			 	         			 
+	         			  <span class="help-block">后台在参与用户资料有一个提现按钮</span>
+                    </div>
+              </div>
+              
+              <div class="form-group" style="display:none">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">最低提现金额(&yen)</label>
+                    <div class="col-xs-12 col-sm-9">
+                          <input type="text" name="tx_limit" value="{$settings['tx_limit']}" class="form-control">	 	         			 	         			 
+	         			  <span class="help-block">用户红包达到提现最低金额，才可以系统自动提现，默认为0</span>
+                    </div>
+              </div>
+              
+               <div class="form-group" style="display:none">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">支付类型</label>
+                    <div class="col-xs-12 col-sm-9">
+                        <label class="radio-inline"><input type="radio" name="ys_pay" value="0" onclick="$('#yun_pay_div').hide();"
+                         {if empty($settings['ys_pay'])} checked="checked" {/if}>微擎收银台支付</label>
+	         			<label class="radio-inline"><input type="radio" name="ys_pay" value="1" onclick="$('#yun_pay_div').hide();"
+	         			 {if $settings['ys_pay']==1} checked="checked" {/if}>原生支付</label>
+	         			
+	         			     			 	          			 	         			 	         			 
+	         			  <span class="help-block">
+	         			  </span>
+                    </div>
+              </div>
+              <div id="yun_pay_div" style="display:  {if $settings['ys_pay']==3} block;{else}none;{/if}">
+              <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">云支付账号</label>
+                    <div class="col-xs-12 col-sm-9">
+                          <input type="text" name="yunpay_no" value="{$settings['yunpay_no']}" class="form-control">	 	         			 	         			 
+	         			  <span class="help-block">使用云支付的支付类型时，申请的云支付账号，其余支付方式不填。</span>
+                    </div>
+              </div>
+              
+              <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">云支付PID</label>
+                    <div class="col-xs-12 col-sm-9">
+                          <input type="text" name="yunpay_pid" value="{$settings['yunpay_pid']}" class="form-control">	 	         			 	         			 
+	         			  <span class="help-block">使用云支付的支付类型时，申请的云支付PID，其余支付方式不填。</span>
+                    </div>
+              </div>
+              
+              <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">云支付KEY</label>
+                    <div class="col-xs-12 col-sm-9">
+                          <input type="text" name="yunpay_key" value="{$settings['yunpay_key']}" class="form-control">	 	         			 	         			 
+	         			  <span class="help-block">使用云支付的支付类型时，申请的云支付KEY，其余支付方式不填。</span>
+                    </div>
+              </div>
+              
+              </div>
+              
+           
+              
+                <div class="form-group sendtype" style="display:{if empty($settings['sendtype'])} none {/if}">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">红包活动名称</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="act_name" value="{$settings['act_name']}" class="form-control">
+                        <span class="help-block">现金红包的活动名称,不要超过8个字</span>
+                    </div>
+                </div>
+                
+                   <div class="form-group sendtype" style="display:{if empty($settings['sendtype'])} none {/if}">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">红包发起人</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="send_name" value="{$settings['send_name']}" class="form-control">
+                        <span class="help-block">发红包人的名称,不要超过8个字</span>
+                    </div>
+                  </div>
+                
+                  <div class="form-group sendtype" style="display:{if empty($settings['sendtype'])} none {/if}" >
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">红包备注</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="remark" value="{$settings['remark']}" class="form-control">
+                        <span class="help-block">备注,不要超过8个字</span>
+                    </div>
+                </div>
+                
+               <div class="form-group sendtype" style="">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">支付描述说明</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="pay_title" value="{$settings['pay_title']}" class="form-control">
+                        <span class="help-block">例如:支付秘密钱</span>
+                    </div>
+                </div> 
+              
+              
+                  <div class="form-group sendtype" style="">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">支付费率</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="sx_bl" value="{$settings['sx_bl']}" class="form-control">
+                        <span class="help-block">0-100之间，手续费</span>
+                    </div>
+                </div> 
+                
+        
+                													
+				</div>
+				
+
+					
+					
+	     <div class="tab-pane" id="tab_share2">
+			<div class="form-group" style="display:">
+                   <label class="col-xs-12 col-sm-3 col-md-2 control-label">分享标题</label>
+                    <div class="col-sm-9 col-xs-12">
+                     <input type="text" name="share_title" value="{$settings['share_title']}" class="form-control">
+                      <span class="help-block">#nickname#代表用户昵称。
+                      界面分享标题(微信后台设置好jssdk安全接口)</span>
+                    </div>
+                </div> 
+                
+                 <div class="form-group" style="display:">
+                   <label class="col-xs-12 col-sm-3 col-md-2 control-label">分享描述</label>
+                    <div class="col-sm-9 col-xs-12">
+                     <input type="text" name="share_desc" value="{$settings['share_desc']}" class="form-control">
+                      <span class="help-block">#nickname#代表用户昵称,界面的分享描述</span>
+                    </div>
+                </div> 
+                
+                 
+                 <div class="form-group" style="display:none">
+                   <label class="col-xs-12 col-sm-3 col-md-2 control-label">分享链接</label>
+                    <div class="col-sm-9 col-xs-12">
+                     <input type="text" name="share_url" value="{$settings['share_url']}" class="form-control">
+                      <span class="help-block">分享链接</span>
+                    </div>
+                </div> 
+                
+                 <div class="form-group" style="display:none">
+                   <label class="col-xs-12 col-sm-3 col-md-2 control-label">分享跳转链接</label>
+                    <div class="col-sm-9 col-xs-12">
+                     <input type="text" name="succ_url" value="{$settings['succ_url']}" class="form-control">
+                      <span class="help-block">分享跳转链接</span>
+                    </div>
+                </div> 
+                
+            <div class="form-group model0">
+                        <label class="col-xs-12 col-sm-3 col-md-2 control-label">分享的图片</label>
+                  <div class="col-sm-9 col-xs-12">            
+                    {php echo tpl_form_field_image('share_thumb',$settings['share_thumb']);}
+                     <div class="help-block">
+                                                                    如果不设置这个参数的话，那默认分享出去的是粉丝的头像。
+                     </div>  
+                </div>            
+          </div>
+          
+               <div class="form-group" style="display:">
+                   <label class="col-xs-12 col-sm-3 col-md-2 control-label">分享跳转的地址</label>
+                    <div class="col-sm-9 col-xs-12">
+                     <input type="text" name="succ_url" value="{$settings['succ_url']}" class="form-control">
+                      <span class="help-block">分享跳转的地址，比如诱导关注的链接</span>
+                    </div>
+                </div>   
+                
+                 <div class="form-group" style="display:">
+                  <label class="col-xs-12 col-sm-3 col-md-2 control-label">是否必须关注</label>
+	              <div class="col-xs-12 col-sm-9">
+                        <label class="radio-inline"><input type="radio" name="must_guanzhu" value="0"
+                         {if empty($settings['must_guanzhu'])} checked="checked" {/if}>否</label>
+	         			<label class="radio-inline"><input type="radio" name="must_guanzhu" value="1" 
+	         			 {if $settings['must_guanzhu']==1} checked="checked" {/if}>是</label>
+                      <span class="help-block">如果选择关注，则下面做个诱导关注链接,地址必须是http开头。</span>
+                   </div>
+                </div>  
+                
+                  <div class="form-group" style="display:">
+                   <label class="col-xs-12 col-sm-3 col-md-2 control-label">关注链接</label>
+                    <div class="col-sm-9 col-xs-12">
+                     <input type="text" name="guanzhu_url" value="{$settings['guanzhu_url']}" class="form-control">
+                      <span class="help-block">地址必须是http开头。</span>
+                    </div>
+                </div> 
+                
+            
+                        
+			</div>	
+			
+			
+		
+				
+			
+			<div class="tab-pane" id="tab_share5">
+              <!-- <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">秘密问题</label>
+                    <div class="col-xs-12 col-sm-9">
+                        <input type="text" name="questions" value="{$settings['questions']}" class="form-control">
+                        <span class="help-block">配置可以选择的秘密问题</span>
+                    </div>
+                </div> -->
+                
+                <div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">自定义问题</label>
+				<div class="col-xs-12 col-sm-8">
+					<table class='table'>
+						<thead>
+							<tr>
+								<th style="width:85%">问题内容</th>
+								<th style="width:15%">操作</th>
+							</tr>
+						</thead>
+						<tbody id="question_list_item">
+							{loop $settings['question_list'] $question_item}
+							<tr>
+								<td><input name="question[]" type="text" class="form-control span6" value="{$question_item['question']}" placeholder="请输入问题" /></td>
+								<td><a href='javascript:;' onclick='removeItem(this)'> &nbsp;<i class='glyphicon glyphicon-remove'></i>删除
+								</a></td>
+							</tr>
+							{/loop}
+						</tbody>
+					</table>
+					<a href="javascript:;" onclick="addItem();">
+					<i class="glyphicon glyphicon-plus" title="添加内容"></i>添加内容</a>
+				</div>
+			</div>
+         </div>
+      
+              <div class="tab-pane" id="tab_share3">
+        
+        
+        
+          <div class="form-group model">
+                        <label class="col-xs-12 col-sm-3 col-md-2 control-label">首页背景图片</label>
+                  <div class="col-sm-9 col-xs-12">            
+                    {php echo tpl_form_field_image('bg_thumb',$settings['bg_thumb']);}
+                     <div class="help-block">
+                                                                 
+                     </div>  
+                </div>            
+          </div>
+         
+        
+                
+                
+	  </div>	
+		</div>
+		</div>
+			</div>
+		</div>
+		<div class="form-group col-sm-12">
+			<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+			<input type="hidden" name="token" value="{$_W['token']}" />
+		</div>
+	</form>
+</div>
+
+
+<script>
+
+$(function () {
+		window.optionchanged = false;
+		$('#myTab a').click(function (e) {
+			e.preventDefault();//阻止a链接的跳转行为
+			$(this).tab('show');//显示当前选中的链接及关联的content
+		});
+		
+		$('.tpl-district').remove();
+
+	});
+
+function removeItem(obj) {
+    $(obj).parent().parent().remove();
+}
+
+function addItem(){
+    var html = "<tr>";
+    html += '<td><input name="question[]" type="text" class="form-control span6" value="" placeholder="请输入问题" /></td>';
+    html += '<td>&nbsp;<a href="javascript:;" onclick="removeItem(this)" ><i class="glyphicon glyphicon-remove"></i> 删除</a></td>';
+    html += "</tr>";
+    $("#question_list_item").append(html);
+}
+	
+</script>
+{template 'common/footer'}

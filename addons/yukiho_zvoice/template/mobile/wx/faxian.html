@@ -1,0 +1,171 @@
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="format-detection" content="telephone=no">
+	<title>发现</title>
+    <link href="{MODULE_URL}assets/styles/font-awesome.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="{MODULE_URL}assets/scripts/jquery.js"></script>
+	<script type="text/javascript" src="{MODULE_URL}assets/scripts/elink-framework.js"></script>
+	<script type="text/javascript" src="{MODULE_URL}assets/scripts/noty/packaged/jquery.noty.packaged.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+	<style type="text/css">*{font-family:"Microsoft YaHei",Arial,Helvetica,sans-serif,"宋体";}</style>
+	<link href="{MODULE_URL}assets/styles/weui.css" rel="stylesheet" type="text/css">
+
+    <script>
+        var jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || {};
+        // 是否启用调试
+        jssdkconfig.debug = false;
+
+        jssdkconfig.jsApiList = [
+            'checkJsApi',
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage',
+            'onMenuShareQQ',
+            'onMenuShareWeibo',
+            'hideMenuItems',
+            'showMenuItems',
+            'hideAllNonBaseMenuItem',
+            'showAllNonBaseMenuItem',
+            'translateVoice',
+            'startRecord',
+            'stopRecord',
+            'onRecordEnd',
+            'playVoice',
+            'pauseVoice',
+            'stopVoice',
+            'uploadVoice',
+            'downloadVoice',
+            'chooseImage',
+            'previewImage',
+            'uploadImage',
+            'downloadImage',
+            'getNetworkType',
+            'openLocation',
+            'getLocation',
+            'hideOptionMenu',
+            'showOptionMenu',
+            'closeWindow',
+            'scanQRCode',
+            'chooseWXPay',
+            'openProductSpecificView',
+            'addCard',
+            'chooseCard',
+            'openCard',
+			'translateVoice',
+            'openAddress'
+        ];
+        wx.config(jssdkconfig);
+        var _TUTOR_URL = "{php echo $this->createMobileUrl('tutor')}";
+        var _follow = "{php echo intval($_W['fans']['follow'])}";
+        var _openid = "{php echo $_W['openid']}";
+        var _qrcode = "{php echo $_W['account']['qrcode']}";
+    </script>
+	
+
+	
+</head> 
+<body bgcolor="#efeff4">
+
+
+
+	<div class="weui-cells" style="margin-top:20px;background-color:#FFF">
+
+            <a class="weui-cell weui-cell_access" href="{php echo $this->createMobileUrl('index')}">
+                <div class="weui-cell__hd"><img src="{MODULE_URL}assets/images/ico_l6.png" alt="" style="width:20px;margin-right:16px;display:block"></div>
+                <div class="weui-cell__bd">
+                    <p>问题大厅</p>
+                </div>
+                <div class="weui-cell__ft"></div>
+            </a>
+    </div>
+		
+		
+		<div class="weui-cells" style="margin-top:20px;background-color:#FFF">
+
+            <a class="weui-cell weui-cell_access" href="{php echo $this->createMobileUrl('find')}">
+                <div class="weui-cell__hd"><img src="{MODULE_URL}assets/images/ico_l1.png" alt="" style="width:20px;margin-right:16px;display:block"></div>
+                
+				<div class="weui-cell__hd">求助专家</div>
+                <div class="weui-cell__bd" align="right">
+                </div>
+				
+                <div class="weui-cell__ft"></div>
+            </a>
+			
+			</div>
+			
+			
+			
+	<div class="weui-cells" style="margin-top:20px;background-color:#FFF">
+
+            <a class="weui-cell weui-cell_access" href="{php echo $this->createMobileUrl('task')}">
+                <div class="weui-cell__hd"><img src="{MODULE_URL}assets/images/ico_l6.png" alt="" style="width:20px;margin-right:16px;display:block"></div>
+                <div class="weui-cell__bd">
+                    <p>悬赏大厅</p>
+                </div>
+                <div class="weui-cell__ft"></div>
+            </a>
+			
+			<a class="weui-cell weui-cell_access" href="{php echo $this->createMobileUrl('task_post')}">
+                <div class="weui-cell__hd"><img src="{MODULE_URL}assets/images/ico_l2.png" alt="" style="width:20px;margin-right:16px;display:block"></div>
+                <div class="weui-cell__bd">
+                    <p>发布悬赏</p>
+                </div>
+                <div class="weui-cell__ft"></div>
+            </a>
+			
+    </div>
+	
+	
+	
+			
+			<div class="weui-cells" style="margin-top:20px;background-color:#FFF">
+
+						<a class="weui-cell weui-cell_access" href="{php echo $this->createMobileUrl('speeches')}">
+                <div class="weui-cell__hd"><img src="{MODULE_URL}assets/images/ico_l3.png" alt="" style="width:20px;margin-right:16px;display:block"></div>
+                <div class="weui-cell__bd">
+                    <p>知识圈</p>
+                </div>
+                <div class="weui-cell__ft"></div>
+            </a>
+			
+			<a class="weui-cell weui-cell_access" href="{php echo $this->createMobileUrl('ask')}">
+                <div class="weui-cell__hd"><img src="{MODULE_URL}assets/images/ico_l4.png" alt="" style="width:20px;margin-right:16px;display:block"></div>
+                <div class="weui-cell__bd">
+                    <p>分享经验</p>
+                </div>
+                <div class="weui-cell__ft"></div>
+            </a>
+
+        </div>
+		
+		
+	
+	<div class="weui-cells" style="margin-top:20px;background-color:#FFF">
+
+            <a class="weui-cell weui-cell_access" href="{php echo $this->createMobileUrl('searchq')}">
+                <div class="weui-cell__hd"><img src="{MODULE_URL}assets/images/ico_l6.png" alt="" style="width:20px;margin-right:16px;display:block"></div>
+                <div class="weui-cell__bd">
+                    <p>搜索</p>
+                </div>
+                <div class="weui-cell__ft"></div>
+            </a>
+    </div>
+
+
+
+
+
+
+
+
+<!--菜单栏-->
+	{php $menu='find'}
+	{template '/wx/menu'}
+
+
+</body>
+</html>

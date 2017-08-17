@@ -1,0 +1,112 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+    <li class="active"><a href="{php echo  $this->createWebUrl('serveperson', array());}">服务人员管理</a></li>
+    <li><a href="{php echo  $this->createWebUrl('staffadd', array());}">添加服务人员</a></li>
+</ul>
+
+<div class="clearfix"> 
+    <div class="search">
+            <form action="index.php" method="get">
+            <input type="hidden" name="c" value="site" />
+            <input type="hidden" name="a" value="entry" />
+            <input type="hidden" name="do" value="Serveperson" />
+            <input type="hidden" name="m" value="xm_gohome" />
+            <table width="861" class="table table-bordered tb">
+                <tbody>
+                    <tr>
+                      <td>
+                      	姓名<input name="staff_name" id="staff_name" type="text" class="form-control" >
+                      </td>
+                      <td>
+                      	手机号码<input name="staff_mobile" id="staff_mobile" type="text" class="form-control" >
+                      </td>
+                      <td>
+                      	身份证号码<input name="card" id="card" type="text" class="form-control" >
+                      </td>
+                    </tr>
+                    
+                    <tr class="search-submit">
+                       <td colspan="3"><button class="btn pull-right span2"><i class="icon-search icon-large"></i> 搜索</button></td>
+                     </tr>
+                </tbody>
+            </table>
+            </form>
+        </div>   
+    <div class="panel panel-default">
+    	<div class="panel-heading">
+            服务人员列表
+        </div>
+        <div class="table-responsive panel-body" style="overflow:visible;">
+            <table class="table table-hover">
+            	<thead>
+                	<tr class="active">
+                    	<td>ID编号</td>
+                        <td>姓名</td>
+                        <td>性别</td>
+                        <td>手机号码</td>
+						<td>身份证</td>
+                        <td>余额</td>
+                        <td>个人审核</td>
+                        <td>已有证件</td>
+						<td width="400">操作</td>
+                    </tr>
+                </thead>
+                <tbody>
+                	{loop $list $val}
+                	<tr>
+                    	<td>{$val[id]}</td>
+                        <td>{$val[staff_name]}</td>
+                        <td>{php echo $this->getSex($val[sex])}</td>
+						<td>{$val[staff_mobile]}</td>
+                        <td>{php echo substr($val[card],0,12)}****{php echo substr($val[card],16,4)}</td>
+                        <td>￥{$val[money]}</td>
+						<td>
+						{if $val[flag] == 1}
+                        	已审核
+                        {else}
+                        	未审核
+                        {/if}
+						</td>
+                        <td>{$val[card_all]}</td>
+						<td style="overflow:visible;">
+                        	<div class="btn-group btn-group-sm">
+                            	{if $val[print_state] == 0}
+                                <a class="btn btn-default" href="{php echo $this->createWebUrl('printadd',array('id'=>$val['id']));}"><i class="fa fa-edit"></i>派发打印机</a>
+                                {/if}
+                                <a class="btn btn-default" href="{php echo $this->createWebUrl('staffsheng',array('id'=>$val['id'],'mge'=>$val['company_mge']));}"><i class="fa fa-edit"></i>个人审核编辑</a>
+                                
+                            	<a class="btn btn-default" href="{php echo $this->createWebUrl('staffchong',array('id'=>$val['id'],'flag'=>1));}"><i class="fa fa-edit"></i>充值</a>
+                                
+                                <a class="btn btn-default" href="{php echo $this->createWebUrl('staffedit',array('id'=>$val['id']));}"><i class="fa fa-edit"></i> 编辑</a>
+                                {if $val['staff_num'] == 0}
+                                	<a class="btn btn-default" href="{php echo $this->createWebUrl('staffdelete', array('id'=>$val['id']))}" onclick="return confirm('确认删除该服务人员?');"><i class="fa fa-remove"></i> 删除</a>
+                                {else}
+                                	<a class="btn btn-default" href="" onclick="delinfo()"><i class="fa fa-remove"></i> 删除</a>
+                                {/if}
+                            </div>
+                        </td>
+                    </tr>
+                    {/loop}
+                    
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="panel-body text-center">
+            {$pager}
+        </div>
+        
+        <div class="panel-footer">
+        	<a class="btn btn-default" href="{php echo $this->createWebUrl('staffadd', array('name'=>'xm_gohome'))}">新增服务人员</a>
+        </div>
+    </div>
+</div>
+
+{template 'common/footer'}
+
+<script>
+function delinfo(){
+	alert('该公司下还有服务人员，请删除服务人员后再来删除公司！');
+	return false;	
+}
+</script>

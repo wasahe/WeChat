@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com" versionCode="0.6,0.7,0.8">
+	<application setting="true">
+		<name><![CDATA[自主广告圈]]></name>
+		<identifie><![CDATA[cgc_ad]]></identifie>
+		<version><![CDATA[2.0.7.4]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[自主广告圈]]></ability>
+		<description><![CDATA[自主广告圈]]></description>
+		<author><![CDATA[微赞]]></author>
+		<url><![CDATA[http://www.012wz.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+		<card embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="地理位置测试" do="addtest" state="" direct="false" />
+		</cover>
+		<menu>
+			<entry title="提现申请" do="cgc_ad_tx" state="" direct="false" />
+			<entry title="海报推广" do="poster" state="" direct="false" />
+			<entry title="VIP会员规则" do="cgc_ad_vip_rule" state="" direct="false" />
+			<entry title="VIP交易记录" do="cgc_ad_vip_pay" state="" direct="false" />
+			<entry title="用户管理" do="member" state="" direct="false" />
+			<entry title="数据统计" do="stat" state="" direct="false" />
+			<entry title="广告管理" do="adv" state="" direct="false" />
+			<entry title="商家用户" do="sj" state="" direct="false" />
+			<entry title="机器人管理" do="xuni" state="" direct="false" />
+			<entry title="幻灯片设置" do="banner" state="" direct="false" />
+			<entry title="广告平台管理" do="quan" state="" direct="false" />
+			<entry title="通用设置" do="setting" state="" direct="false" />
+		</menu>
+	</bindings>
+	<permissions>
+	</permissions>
+	<install><![CDATA[install.php]]></install>
+	<uninstall><![CDATA[uninstall.php]]></uninstall>
+	<upgrade><![CDATA[update.php]]></upgrade>
+</manifest>

@@ -1,0 +1,724 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="format-detection" content="telephone=no">
+	<link href="{MODULE_URL}assets/styles/menus.css" rel="stylesheet" type="text/css">
+	<link href="{MODULE_URL}assets/styles/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
+	<link href="{MODULE_URL}assets/styles/font-awesome.css" rel="stylesheet" type="text/css">
+	<title>个人主页</title>
+    <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.js"></script>
+	<script type="text/javascript" src="{MODULE_URL}assets/scripts/elink-framework.js"></script>
+	<script type="text/javascript" src="{MODULE_URL}assets/scripts/noty/packaged/jquery.noty.packaged.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+	<style type="text/css">*{font-family:"Microsoft YaHei",Arial,Helvetica,sans-serif,"宋体";font-size:1em}</style>
+	<link href="{MODULE_URL}assets/styles/weui.css" rel="stylesheet" type="text/css">
+	<link href="css/weui.css" rel="stylesheet" type="text/css">
+   <script>
+        var jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || {};
+        // 是否启用调试
+        jssdkconfig.debug = false;
+        jssdkconfig.jsApiList = [
+            'checkJsApi',
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage',
+            'onMenuShareQQ',
+            'onMenuShareWeibo',
+            'hideMenuItems',
+            'showMenuItems',
+            'hideAllNonBaseMenuItem',
+            'showAllNonBaseMenuItem',
+            'translateVoice',
+            'startRecord',
+            'stopRecord',
+            'onRecordEnd',
+            'playVoice',
+            'pauseVoice',
+            'stopVoice',
+            'uploadVoice',
+            'downloadVoice',
+            'chooseImage',
+            'previewImage',
+            'uploadImage',
+            'downloadImage',
+            'getNetworkType',
+            'openLocation',
+            'getLocation',
+            'hideOptionMenu',
+            'showOptionMenu',
+            'closeWindow',
+            'scanQRCode',
+            'chooseWXPay',
+            'openProductSpecificView',
+            'addCard',
+            'chooseCard',
+            'openCard',
+			'translateVoice',
+            'openAddress'
+        ];
+        wx.config(jssdkconfig);
+        var _TUTOR_URL = "{php echo $this->createMobileUrl('tutor')}";
+        var _follow = "{php echo intval($_W['fans']['follow'])}";
+        var _openid = "{php echo $_W['openid']}";
+        var _qrcode = "{php echo $_W['account']['qrcode']}";
+	</script>
+	<style>
+	.split-title{ font-weight:400;font-size:14px;display:inline-block; width:88%; white-space:nowrap; word-break:keep-all; overflow:hidden; text-overflow:ellipsis;}
+	</style>
+	<style type="text/css">
+	.icon_vip{
+		position:absolute;
+		bottom:-8px;
+		left:56px;
+		background-size:88px 360px;
+		width:33px;
+		height:33px;
+		background-position:0px 0;
+		background-image:url({MODULE_URL}assets/images/icon.png?t=234143);
+		
+	}
+	
+		.images-content{ 
+			position: absolute; 
+			z-index: 1;
+			color: #fff; 
+			background: rgba(0,0,0,.7); 
+			overflow: hidden; 
+			margin-top:30px;
+			opacity:0.8;filter:alpha(opacity=80);
+			width:35px;
+			line-height:20px;
+			font-size:12px;
+			margin-left:-50px;
+			padding-left:15px;
+		} 
+		.imagesUploadArea{ 
+			float:left;
+			width:20%;
+			height:50px;
+		} 
+
+	</style> 
+</head> 
+<body bgcolor="#efeff4">
+	
+	<div style="border-top:1px solid #E0E0E0;margin-top:15px;background-color:#FFF">
+            <div class="weui-cell" style=" padding:15px 10px 10px 10px;height:55px">
+                <div class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+                    <img src="{php echo $member['avatar']}" style="border:1px solid #E0E0E0;border-radius:5px; width: 65px;display: block"/>
+                </div>
+                <div class="weui-cell__bd">
+                    <p>{$member['realname']}</p>
+					{if $member['isrecommend']=='1'}<i class="icon icon_vip"></i>{/if}
+
+					{if $this->pro['openFeedback']=='1'}
+					<div style="margin-top:5px;font-size:13px;display:inline;" id="star"></div>
+					<script type="text/javascript" src="{MODULE_URL}assets/scripts/raty/jquery.raty.js"></script>
+					<script>
+					$('#star').raty({ readOnly: true, score: "{$member['score']}" });
+					</script>
+					{/if}
+					
+					<ul class="weui-media-box__info" style="margin-top:1px">
+					{php $category = M('category')->getInfo($member['category_id'])}
+                    <p style="color:#808080; margin:0 10px 0 0;border:1px solid #808080;padding:3px 3px 3px 3px " class="weui-media-box__info__meta">{$category['title']}</p>
+					</ul>
+                </div>
+				
+				<div style="weui-cell__ft">
+					{php $check = M('follow')->check($member['openid'])}
+					{if !empty($check)}
+					<a act='unfollow' style="border-radius:5px;width:80px;font-size:16px; margin:0 3px 0 0;border:1px solid #808080;padding:3px 11px 3px 11px " data-openid="{$member['openid']}" class='focus' >已关注</a>
+					<!--<td style="width:60px;" rowspan="2"><img act='unfollow' data-openid="{$member['openid']}" class='focus' src="{MODULE_URL}assets/images/qxgz.png" style="width:65px;" ></td>-->
+					{else}
+					<a act='follow' style="border-radius:5px;width:80px;font-size:16px; margin:0 3px 0 0;border:1px solid #808080;padding:3px 11px 3px 11px " data-openid="{$member['openid']}" class='focus' >+ 关注</a>
+					<!--<td style="width:60px;" rowspan="2"><img act='follow' data-openid="{$member['openid']}" class='focus' src="{MODULE_URL}assets/images/gz.png" style="width:65px;" ></td>-->
+					{/if}
+					<!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default">+ 关注</a>-->
+					<p style="color:#808080;font-size:14px;margin-top:3px;" align="center">{php echo M('follow')->getTotal($member['openid'])}人关注</p>
+					<p style="color:#E0E0E0;font-size:13px;margin-top:1px;" align="center">举报</p>
+				</div>
+			</div>
+	
+			<div class="weui-panel">
+
+					<div class="weui-media-box weui-media-box_text">
+						<p style="color: #999999;font-size: 13px;line-height: 1.2;" >
+						<a style="font-size:16px">个人介绍：</a>{$member['desc']}</p>
+					</div>
+
+			</div>
+	</div>
+			
+			
+			
+			
+	
+	<div align=center style="margin-top:6px">
+		<label for="weuiAgree" class="weui-agree">
+			<input id="weuiAgree" type="checkbox" name="open" id="open" checked="checked" class="weui-agree__checkbox">
+			<span class="weui-agree__text">
+				公开提问，答案被查看的费用由提问者跟回答者平分！
+			</span>
+		</label>
+	</div>
+		
+			<div  style=" background-color: #FFFFFF;  position: relative; overflow: hidden;">
+				<div class="weui-media-box weui-media-box_text">
+					<div style="border:1px solid #E0E0E0" class="weui-cell">
+						<div class="weui-cell__bd">
+						
+							 <form name=myform action=""> 
+		
+								<!--<textarea  name="title" cols="28" onKeyDown="textCounter(title,remLen,66);" onKeyUp="textCounter(title,remLen,66);" placeholder="请输入述内，获得{php echo $this->template['authname']}的专业回答。" id="test" class="weui-textarea"  rows="3"></textarea>-->
+							<!--<textarea id="title"  class="weui-textarea"   name="title" cols="28" rows="3" onKeyDown="textCounter(title,remLen,86);" onKeyUp="textCounter(title,remLen,86);" placeholder="请输入述内，获得{php echo $this->template['authname']}的专业回答。"></textarea>--> 
+							<textarea maxlength="86" class="weui-textarea" name="title" id="title" cols="28" rows="3"  placeholder="请在此处详细描述您的问题内容。如果问题超过{php echo $this->pro['rebateHour1']}小时还未被回答您可以取消提问得到返款。">{$_SESSION['question_pro']}</textarea>
+							<!--<textarea id="title" class="weui-textarea"   name="title" cols="28" rows="3" onKeyDown="textCounter(title,remLen,86);" onKeyUp="textCounter(message,remLen,86);" placeholder="请输入述内，获得{php echo $this->template['authname']}的专业回答。"></textarea>-->
+							<!--<span class="weui-textarea-counter" style="float:right;font-size:13px;"><input class="weui-textarea-counter" style="border:0px;width:18px" name="remLen" type="text" value="0" size="2" readonly="readonly">/86</span>-->
+							<span class="weui-textarea-counter" style="float:right;font-size:13px;"><span id="saveStatus"></span><span class="weui-textarea-counter" id="count">0</span>/86</span>
+							
+							<br>
+								<hr style="height:1px;border:none;border-top:1px dashed #E0E0E0;" />
+							<div style="margin-top:10px;border-color: blue rgb(25%,35%,45%) #909090 red;border-width:1px;">
+								<div style="width:100%">
+								<div id='imagesTr'>
+									<div class="imagesUploadIcon" style="float:left;border:1px dashed #DCDCDC;width:28px; height:28px;">
+										<img src="{MODULE_URL}assets/images/pictures/tianjia.jpg" style="height:26px;">
+									</div>
+									<div align="left" class='imagesUploadDesc' style="padding-left:30px;font-size:16px;color:#DCDCDC;height:28px;">
+										<span style="margin:0 0 0 5px"> 点击这里上传图片，最多可上传5张。</span>
+									</div>
+								</div>
+						</div>
+					</div> 
+							</form>
+						</div>
+					</div>
+					<br>
+					
+					<div class="page__bd page__bd_spacing">
+						<button id="postQuestion" class="weui-btn weui-btn_primary" type=submit>向专家提问 (￥{$member['credit']})</button>
+					</div>
+
+				</div>
+			</div>
+		
+		
+
+	<div   style="margin:15px 0 0 0 ;padding:0 0 60px 0"class="weui-panel weui-panel_access">
+            <div class="weui-panel__hd">
+			<a>回答了{php echo M('answer')->getAnsTotal(array('openid'=>$openid))}个问题</a>
+			<div style="float:right;"><a style="color:#00BB00">最新 </a>|<a> 热门</a></div>
+			</div>
+			
+			
+	
+			
+			<div  id="questions"  style="padding:0 10px 0 10px">
+			{loop $questions $li}
+				{php $ans = M('answer')->getone(array('question_id'=>$li['id']))}
+				{php $user = M('member')->getInfo($ans['openid'])}
+				
+				<div class="weui-media-box weui-media-box_text" style="padding:5px 10px 5px 10px">
+					{if $li['istask']=='1'}
+					<a class="item" onclick="window.location.href='{php echo $this->createMobileUrl('task_answer',array('id'=>$li['id']))}'">
+					{else}
+					<a class="item" onclick="window.location.href='{php echo $this->createMobileUrl('question',array('id'=>$li['id']))}'">
+					{/if}
+						<div>
+							<span style="color:#808080;font-size:13px; margin:0 3px 0 0;border:1px solid #808080;padding:2px 2px 2px 2px " >
+								{if $li['istask']=='1'}悬赏{else}专家{/if}
+							</span>
+							<span style="color:#A9A9A9;font-size:13px; margin:0 3px 0 0;border:1px solid  #A9A9A9;padding:2px 2px 2px 2px " >
+								{php $category = M('category')->getInfo($li['category_id'])}{$category['title']}
+							</span>
+
+							<span>{$li['title']}</span>
+						</div>
+					</a>
+					
+					
+					<div style="padding: 5px 5px;display: -webkit-box;display: -webkit-flex;display: flex;-webkit-box-align: center;-webkit-align-items: center;align-items: center;">
+						<div class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+							<img src="{php echo $member['avatar']}" style="border-radius:2px; width: 33px;display: block"/>
+						</div>
+						<div class="weui-cell__bd">
+							<p style="font-size:13px;color:#8E8E8E">{$member['realname']}</p>
+							<p style="margin-top:0px;font-size: 12px;color:#8E8E8E">{php echo date('Y-m-d m:s',$li['create_time'])}</p>
+						</div>
+						<div id="content" class="weui-cell__ft">
+							<!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary">▶ 点击播放解答 58''</a>-->
+							
+										<a href="{php echo $this->createMobileUrl('tutor',array('openid'=>$to_member['openid']))}">
+										
+										<strong>{$to_member['realname']}
+											<em class="split-title">{$to_member['tags']}</em>
+										</strong></a>
+							
+										{if $ans['mode']=='0'}
+											<a data-id="{$ans['id']}" data-mode="{$ans['mode']}" data-timelong="{$ans['timelong']}" data-question_id="{$li['id']}" class="listen weui-btn weui-btn_mini weui-btn_primary">
+											{php $listen_log = M('listen_log')->getOpenid($li['id'],$_W['openid'])}
+											{if empty($listen_log) || $listen_log['status'] == 0}
+												{if ($li['openid']==$_W['openid'] || $li['to_openid'] == $_W['openid'])}
+												<span class="tip">▶ 播放解答 {$ans['timelong']}''</span>
+												{else}
+												<span class="tip">▶ 播放解答 {$ans['timelong']}'' (¥{php echo $this->system['listen_price']})</span>
+												{/if}
+											{/if}</a>
+											
+										{else}
+											<a data-id="{$ans['id']}" data-mode="{$ans['mode']}" data-question_id="{$li['id']}" class="listan weui-btn weui-btn_mini weui-btn_primary">
+											{php $listen_log = M('listen_log')->getOpenid($li['id'],$_W['openid'])}
+											{if empty($listen_log) || $listen_log['status'] == 0}
+												{if ($li['openid']==$_W['openid'] || $li['to_openid'] == $_W['openid'])}
+												<span class="tip">查看图文解答 <i class="fa fa-angle-right"></i></span>
+												{else}
+												<span class="tip">查看图文解答 (¥{php echo $this->system['listen_price']})</span>
+												{/if}
+											{/if}</a>
+										{/if}
+														
+						</div>
+					</div>
+				</div>
+				</a>
+			{/loop}
+			</div>
+	</div>
+	
+	<!--菜单栏-->	<!--菜单栏-->	{php $menu='ask'}	{template '/wx/menu'}
+	
+	<audio controls="controls" id="player" style="display:none;" autoplay preload="auto"></audio>
+    <script type="text/javascript" src="{MODULE_URL}public/libs/jquery_weui/jquery-weui.js"></script>
+	<script src="{MODULE_URL}public/js/loadmore.js"></script>		
+	<script src="{MODULE_URL}public/libs/fastclick.js"></script>
+	<input type="hidden" name="share_title" value="{$member['realname']}{php echo $this->template['authname']}的主页"/>
+	<input type="hidden" name="share_image" value="{php echo tomedia($member['avatar'])}"/>
+	<input type="hidden" name="share_desc" value="简介：{php echo $member['desc']}"/>
+	<input type="hidden" name="share_link" value=""/>
+	
+	
+	
+	<script>
+	var timerId;
+	var localIds;
+	var images = {
+		localId: [],
+		serverId: []
+	};
+	
+	$("#count").html($("#title").val().length);
+	window.setInterval(countChar, 1000); 
+	function countChar(){
+		$content = $("#title").val();
+		if($content.length>0 && $content.length<=86){
+			$("#count").html($("#title").val().length);
+			if($content.length>10){
+				$.post("{php echo $this->createMobileUrl('making')}&openid={$member['openid']}",{act:'saveQuestionContent',type:'pro',content:$("#title").val()},function(data){
+					if(data.status == 1){
+						$("#saveStatus").html("已保存 ");
+					}
+				},'json');
+			}
+		}else{
+			$("#title").val($("#title").val().substr(0,86));
+			$("#count").html($("#title").val().length);
+			return;
+		}
+    }
+	
+	$("#imagesTr").delegate(".imagesUploadIcon,.imagesUploadDesc,.imagesUploadArea","click",function(){
+		var that =$(this);
+		
+		// 删除已上传的图片
+		if(that.data('edit')=='1'){
+			that.remove();
+			$(".imagesUploadIcon").show();
+			return false;
+		}
+		
+		images.localId = [];
+		var canChooseCount = 5;
+		$('.imagesUploadArea').each(function(){
+			if($(this).data('edit')=='1') canChooseCount--;
+		});
+		wx.chooseImage({
+			count: canChooseCount,
+			sizeType: ['original', 'compressed'],
+			sourceType: ['album', 'camera'],
+			success: function (res) {
+			images.localId = res.localIds;
+			if (images.localId.length == 0) {
+				warn('请先使用 chooseImage 接口选择图片');
+				return;
+			}
+			if(images.localId.length > 5) {
+				warn('最多支持5张照片,请重新选择');
+				images.localId = [];
+				return;
+			}
+			var i = 0, length = images.localId.length;
+			images.serverId = [];
+			$('.imagesUploadDesc').hide();
+			//$('.imagesUploadArea').show();
+			function upload() {
+				wx.uploadImage({
+					localId: images.localId[i],
+					success: function (res) {		
+						$('.imagesUploadIcon').before('<div align="left" class="imagesUploadArea" data-sid="'+res.serverId+'" data-edit="1">'
+							+'<img id="imagePreview" src="'+images.localId[i]+'" style="width:50px;height:50px;"><span class="images-content">删除<span></div>');			
+						i++;
+						if (i < length) {
+							upload();
+						}
+						var count = 0;
+						$('.imagesUploadArea').each(function(){
+							if($(this).data('edit')=='1'){
+								count++;
+							}
+						});
+						if(count>=5){
+							$(".imagesUploadIcon").hide();
+						}
+					},
+					fail: function (res) {
+						warn(JSON.stringify(res));
+					}
+				});
+			}
+			upload();
+		  }
+		});
+	});
+	
+	
+	$('#postQuestion').click(function(){
+		_q = $(this);
+		var post = {};
+		post.title = $('textarea[name="title"]').val();
+		if($('input[name="open"]').is(':checked')){
+			post.open = '1';
+		}else{
+			post.open = '0';
+		}
+		if($('input[name="usePoint"]').is(':checked')){
+			post.usePoint = '1';
+		}else{
+			post.usePoint = '0';
+		}
+		post.act = 'post_question';
+		if(!post.title){
+			warn('您还没有填写内容哦');
+			return ;
+		}
+        post.images = [];
+		$('.imagesUploadArea').each(function(){
+			if($(this).data('edit')=='1'){
+				post.images = post.images.concat($(this).data('sid'));
+			}
+		});
+		 
+		 
+		$.post("{php echo $this->createMobileUrl('making')}&openid={$member['openid']}",post,function(data){
+			console.log(data);
+			if(data.status == 8){
+				warn(data.message,2000,function(){
+					_q.html("向专家提问 (￥{$member['credit']})");
+					_q.removeAttr("disabled","disabled");
+				});
+				return '';
+			}
+			if(data.status == 2){
+				$.post("{php echo $this->createMobileUrl('making')}&openid={$member['openid']}",{act:'post_question_success',question_id:data.question_id},function(d){
+					bingo('提交成功',function(){
+						window.location.href = "{php echo $this->createMobileUrl('ask')}";
+					});
+				},'json');
+			}else{
+				_q.html("正在开启支付传送门...");
+				wx.ready(function(){
+					wx.chooseWXPay({
+						timestamp: data.timeStamp,
+						nonceStr: data.nonceStr,
+						package: data.package,
+						signType: data.signType,
+						paySign: data.paySign,
+						success: function (res) {
+							if(res.errMsg == 'chooseWXPay:ok') {
+								$.post("{php echo $this->createMobileUrl('making')}&openid={$member['openid']}",{act:'post_question_success',question_id:data.question_id},function(d){},'json');                                    
+								bingo('提交成功',function(){
+									window.location.href = "{php echo $this->createMobileUrl('ask')}";
+								});
+							}else{
+								window.location.href = "{php echo $_W['siteurl']}";
+							}
+						},cancel:function(res){
+							_q.html("向专家提问 (￥{$member['credit']})");
+							_q.removeAttr("disabled");
+						}
+					});
+				});
+			}
+		},'json');
+    });
+	
+	
+	initload("{php echo $this->createMobileUrl('tutor')}&openid={php echo $openid}",callback);
+	loadmore("{php echo $this->createMobileUrl('tutor')}&openid={php echo $openid}",callback);
+	function callback(html){
+		$('#questions').append(html);
+	}
+	$('.focus').click(function(){
+		var _that = $(this);
+		var openid = _that.data('openid');
+		var act = _that.attr('act');
+		$.post("{php echo $this->createMobileUrl('members')}",{act:act,openid:openid},function(data){
+			if(data.status == 1){
+				bingo(data.message);
+				if('follow'==act){
+					_that.attr('act','unfollow');
+					_that.html('已关注');
+				}else if('unfollow'==act){
+					_that.attr('act','follow');
+					_that.html('加关注');
+				}
+			}else{
+				warn(data.message);
+			}
+		},'json');
+	});
+
+	wx.config(jssdkconfig);
+	initshare();
+
+	function initshare(){
+		var title = $('input[name="share_title"]').val();
+		var imgUrl = $('input[name="share_image"]').val();
+		var desc = $('input[name="share_desc"]').val();
+		var link = $('input[name="share_link"]').val();
+		wx.ready(function(cb1,cb2){
+			wx.onMenuShareTimeline({
+				title: title, // 分享标题
+				link: link, // 分享链接
+				imgUrl: imgUrl, // 分享图标
+				success: function () {
+					// 用户确认分享后执行的回调函数
+					cb1();
+				},
+				cancel: function () {
+					// 用户取消分享后执行的回调函数
+					cb2();
+				}
+			});
+			wx.onMenuShareAppMessage({
+				title: title, // 分享标题
+				desc: desc, // 分享描述
+				link: link, // 分享链接
+				imgUrl: imgUrl, // 分享图标
+				type: '', // 分享类型,music、video或link，不填默认为link
+				dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+				success: function () {
+					// 用户确认分享后执行的回调函数
+					cb1()
+				},
+				cancel: function () {
+					// 用户取消分享后执行的回调函数
+					cb2();
+				}
+			});
+			wx.onMenuShareQQ({
+				title: title, // 分享标题
+				desc: desc, // 分享描述
+				link: link, // 分享链接
+				imgUrl: imgUrl, // 分享图标
+				success: function () {
+					// 用户确认分享后执行的回调函数
+					cb1();
+				},
+				cancel: function () {
+					// 用户取消分享后执行的回调函数
+					cb2();
+				}
+			});
+			wx.onMenuShareWeibo({
+				title: title, // 分享标题
+				desc: desc, // 分享描述
+				link:link, // 分享链接
+				imgUrl: imgUrl, // 分享图标
+				success: function () {
+					// 用户确认分享后执行的回调函数
+					cb1();
+				},
+				cancel: function () {
+					// 用户取消分享后执行的回调函数
+					cb2();
+				}
+			});
+			wx.onMenuShareQZone({
+				title: title, // 分享标题
+				desc: desc, // 分享描述
+				link: link, // 分享链接
+				imgUrl: imgUrl, // 分享图标
+				success: function () {
+					// 用户确认分享后执行的回调函数
+					cb1();
+				},
+				cancel: function () {
+					// 用户取消分享后执行的回调函数
+					cb2()
+				}
+			});
+		});
+	}
+	
+
+ 
+   
+    function playData(data){
+		console.log(data);
+        player.src = data.src;
+        player.play();
+        var timelong = parseInt(data.timelong) * 1000;
+		var count = data.timelong;
+		var timer = window.setInterval(function(){
+			if((count--)>1){
+				$(data.target).find('span').html("播放中..."+count+"''");
+			}else{
+				clearInterval(timer);
+				$(data.target).find('span').html("再放一次 "+data.timelong+"''");
+			}
+		},1000);
+		/**
+        setTimeout(function(){
+			$(data.target).find('span').html("再放一次");
+        },timelong);*/
+    }
+	$("#questions").delegate(".lookup","click",function(){
+		var dd = {};
+        var question_id = $(this).data('question_id');
+        var target = $(this);
+        if(!question_id){
+            warn('question_id为空');
+            return '';
+        }
+        $.get("{php echo $this->createMobileUrl('question')}&id="+question_id,{answer_id:$(this).data('id'),act:'src'},function(data){
+            if(data.status == 8){
+				dd.status = 2;
+                warn(data.message,function(){});
+                return '';
+            }
+            if(data.status == 0){
+				target.parent().parent().prev().trigger('click');
+                return '';
+            }
+            wx.ready(function(){
+                wx.chooseWXPay({
+                    timestamp: data.timeStamp,
+                    nonceStr: data.nonceStr,
+                    package: data.package,
+                    signType: data.signType,
+                    paySign: data.paySign,
+                    success: function (res) {
+                        if(res.errMsg == 'chooseWXPay:ok') {
+                            data.act == 'paySuccess';
+                            $.post("{php echo $this->createMobileUrl('question')}&id="+question_id,{act:'paySuccess',listen_id:data.listen_id,answer_id:data.answer_id},function(d){
+                                if(d.status == 1){
+									target.parent().parent().prev().trigger('click');
+                                    return '';
+                                }else{
+									dd.status = 2;
+                                    warn('系统错误',2000,'cancel');
+                                }
+                            },'json');
+                        }else{
+							dd.status = 2;
+                            window.location.href = "{php echo $_W['siteurl']}";
+                        }
+                    }
+                });
+            });
+        },'json');
+    });
+	
+	$("#questions").delegate(".listen","click",function(){
+		var dd = {};
+        var question_id = $(this).data('question_id');
+        var target = $(this)[0];
+        var timelong = $(this).data('timelong');
+        if(!question_id){
+            warn('question_id为空');
+            return '';
+        }
+        $.get("{php echo $this->createMobileUrl('question')}&id="+question_id,{answer_id:$(this).data('id'),act:'src'},function(data){
+            if(data.status == 8){
+				dd.status = 2;
+                warn(data.message,function(){});
+                return '';
+            }
+            if(data.status == 0){
+				dd.status = 1;
+                dd.target = target;
+                dd.src = data.src;
+                dd.timelong = timelong;
+                return '';
+            }
+            if(!data.listen_id){
+				dd.status = 2;
+                warn('listen_id为空');
+                return '';
+            }
+            if(!data.answer_id){
+				dd.status = 2;
+                warn('answer_id为空');
+                return '';
+            }
+            wx.ready(function(){
+                wx.chooseWXPay({
+                    timestamp: data.timeStamp,
+                    nonceStr: data.nonceStr,
+                    package: data.package,
+                    signType: data.signType,
+                    paySign: data.paySign,
+                    success: function (res) {
+                        if(res.errMsg == 'chooseWXPay:ok') {
+                            data.act == 'paySuccess';
+                            $.post("{php echo $this->createMobileUrl('question')}&id="+question_id,{act:'paySuccess',listen_id:data.listen_id,answer_id:data.answer_id},function(d){
+                                if(d.status == 1){
+									dd.status = 1;
+                                    dd.target = target;
+                                    dd.src = d.src;
+                                    dd.timelong = timelong;
+                                    return '';
+                                }else{
+									dd.status = 2;
+                                    warn('系统错误',2000,'cancel');
+                                }
+                            },'json');
+                        }else{
+							dd.status = 2;
+                            window.location.href = "{php echo $_W['siteurl']}";
+                        }
+                    }
+                });
+            });
+        },'json');
+		$(target).find('span').html("数据搬运中...");
+		var timer1 = window.setInterval(function(){
+			if(dd.status>0){
+				clearInterval(timer1);
+				if(dd.status==1){
+					playData(dd);
+				}else{
+					$(target).find('span').html("重试一下");
+				}
+			}
+		},1000);
+    });
+	
+	</script>
+</body>
+</html>

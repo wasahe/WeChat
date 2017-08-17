@@ -1,0 +1,137 @@
+{template 'header'}
+<body ontouchstart="" class="platform_mobile">
+<div class="qsc-alert" style="display: none;">
+<i class="info-base64"></i><span></span>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-white icon-loading-base64"><i class="icon-white icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading-new">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-loading-base64"><i class="icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<div class="content top bottom">
+<div class="qsc-list-group">
+<a href="{php echo $this->createMobileUrl('publicdream')}" class="list-item list-thumb list-thumb-md first">
+<span>
+<i class="icon icon-template icon-dream"></i>
+梦想清单
+</span>
+<p>购物要列清单，实现梦想也要列出来的</p>
+<label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+<a href="{php echo $this->createMobileUrl('publicreward')}" class="list-item list-thumb list-thumb-md">
+<span>
+<i class="icon icon-template icon-reward"></i>
+尝鲜预售
+</span>
+<p>先收钱再出货，产品/服务作为回报</p>
+<label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+<a href="{php echo $this->createMobileUrl('publiclove')}" class="list-item list-thumb list-thumb-md">
+<span>
+<i class="icon icon-template icon-love"></i>
+微爱通道
+</span>
+<p>传递爱心正能量</p>
+<label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+</div>
+<div class="publish-money-guide" data-toggle="modal" data-target="#modal-money-guide">
+<i class="icon icon-help-sm"></i>
+<span class="text-success">筹款资金去向说明</span>
+</div>
+</div>
+<div class="modal qsc-modal" id="publish-agreement" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog middle-center">
+<div class="modal-content clearfix">
+<div class="modal-header">
+<h4 class="modal-title text-center">项目发起条款</h4>
+</div>
+<div class="modal-body">
+<h5>项目发布</h5>
+<p>根据相关法律法规，项目提交后，须经过网站工作人员审核后才能发布；</p>
+<p>根据项目的内容，工作人员会要求发起人提供相关材料，证明项目的可行性，以及发起人的执行能力；</p>
+<p>网站对提交筹资审核的项目是否拥有上线资格具有最终决定权（具备筹资上线资格的项目的上线时间由项目发起人自行决定）；</p>
+<p>网站大众评审对提交预热审核的项目具有决定权；</p>
+<p>项目在网站上线期间，不能在中国大陆其他类似的产品或项目孵化器平台同时发布。无论项目是否筹资成功，一经发现将立即下线处理，其项目上线期间所筹得的金额将被立即退回给支持者在网站上开立的账户中。</p>
+<h5>项目内容规范（不符合以下内容规范的项目将被退回）</h5>
+<ol>
+<li>项目内容必须完整、合理、具有可行性；有完整的计划和执行能力，且图片、视频不能借用或盗用非本人/公司拍摄的内容。</li>
+<li>项目应该有明确的目标，如制作一张专辑、出一本书或完成一件艺术品。可以完成的，有具体完成时间的才叫项目。创立一家公司就不是一种项目。</li>
+<li>项目不得为个人公益项目。个人不得为慈善或某项事业筹资。例如，禁止为红十字会募资，禁止把筹集到的资金或未来利润转用于慈善或某项事业。</li>
+<li>项目必须为有创意、有想法、有设计感的项目 。</li>
+<li>项目不得为网站类型的项目。由于网站需要长久经营，风险较大。无论是电子商务网站或社交网站的项目都将不被允许上线。</li>
+<li>对于开发新硬件或新产品的设计和科技项目，发起人必须在项目页面上展示实物手板或原型机的照片，并提供发起人或团队在产品开发方面的相关经验的信息。</li>
+<li>以下类别的项目和内容将不被允许在此发布：</li>
+</ol>
+<ul>
+<li>毒品、类似毒品的物质、吸毒用具、烟等相关</li>
+<li>枪支、武器和刀具相关</li>
+<li>多级直销和传销类相关</li>
+<li>令人反感的内容(仇恨言论、不适当内容等)</li>
+<li>色情内容相关</li>
+<li>支持或反对政治党派的项目</li>
+<li>推广或美化暴力行为的项目</li>
+<li>对奖、彩票和抽奖活动相关</li>
+</ul>
+<p>* 凡在轻松筹平台申请提现的用户，在提现时会减去提现金额的<strong class="text-danger">2%</strong>，该费用在用户使用微信支付时已被扣除。</p>
+<h5>项目回报规范（不符合以下回报规范的项目将被退回）</h5>
+<ol>
+<li>因平邮寄送会产生很多问题，故回报形式不得是平邮明信片(用快递寄送的套装明信片则不在此限)。</li>
+<li>项目不得以不可行、不合理的承诺作为回报。</li>
+<li>项目回报必须是项目的衍生品，不得是与项目无关的回报内容。</li>
+</ol>
+<h5>项目推荐标准：</h5>
+<p>举报：不符合《项目规范》</p>
+<p>合格：符合《项目规范》</p>
+<p>推荐：合格并且满足下列标准中的任意1-3项（含3项），视为推荐</p>
+<p>强烈推荐：合格并且满足下列标准中的任意3项以上，视为强烈推荐</p>
+<ol>
+<li>项目内容逻辑性强、完整且条理清晰、可执行，有完整的计划和能力，有相关的图片和视频（图片、视频不能借用或盗用非本人/公司拍摄的）</li>
+<li>项目内容有故事性、有热点，具备可传播性</li>
+<li>项目内容有创意、创新；非山寨、抄袭、跟风，产品在其他渠道买不到</li>
+<li>科技或设计类项目的产品设计感好，有品质，符合大众审美喜好的要求</li>
+<li>项目发起人有推广渠道、媒体资源、或在公众平台上有一定的影响力</li>
+<li>筹资总金额合理，达成率高，回报项及金额满足支持者多元化需求，回报内容性价比高，回报发送保证网站首发</li>
+<li>公益援助类项目，发起方为组织机构的，需要提交机构拍照，发起人为个人的需要提交身份信息；医疗援助项目，请务必上传相关图片，包括受助人身份信息，带有医院公章的医院诊断证明；项目结束后提现的账号，必须是受助人本人，或直系亲属。</li>
+</ol>
+</div>
+<div class="modal-footer">
+<a href="javascript:void(0);" class="btn btn-success btn-block" data-dismiss="modal">阅读并同意条款</a>
+</div>
+</div>
+</div>
+</div>
+<div class="modal qsc-modal" id="modal-money-guide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog bottom">
+<div class="modal-content clearfix">
+<div class="modal-header">
+<h4 class="modal-title text-center">筹款资金去向说明</h4>
+</div>
+<div class="modal-body">
+<div class="publish-guide_img"></div>
+</div>
+<div class="modal-footer">
+<a href="javascript:void(0);" class="btn btn-success btn-block" data-dismiss="modal">知道了</a>
+</div>
+</div>
+</div>
+</div>
+{template 'footer'}
+<script type="text/javascript" src="../addons/water_o2o/template/js/publish.min.js"></script>
+
+</body></html>

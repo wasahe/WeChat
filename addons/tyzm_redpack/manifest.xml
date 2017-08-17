@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com" versionCode="0.6">
+	<application setting="true">
+		<name><![CDATA[【掌泡】喊口令红包]]></name>
+		<identifie><![CDATA[tyzm_redpack]]></identifie>
+		<version><![CDATA[2.4]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[【掌泡】喊口令红包]]></ability>
+		<description><![CDATA[【掌泡】喊口令红包]]></description>
+		<author><![CDATA[悟空源码]]></author>
+		<url><![CDATA[http://www.021wz.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="封面" do="index" />
+		</cover>
+		<menu>
+			<entry title="数据管理" do="manage" />
+		</menu>
+	</bindings>
+	<install><![CDATA[CREATE TABLE IF NOT EXISTS `ims_tyzm_redpack_count` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT '0',
+  `aid` int(10) DEFAULT '0',
+  `tid` varchar(64) DEFAULT '0',
+  `openid` varchar(32) DEFAULT '0',
+  `pv_count` int(1) NOT NULL,
+  `forward_num` int(1) NOT NULL,
+  `adclick_num` int(1) NOT NULL,
+  `clientip` varchar(15) NOT NULL,
+  `starttime` int(10) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=78 ;
+
+CREATE TABLE IF NOT EXISTS `ims_tyzm_redpack_data` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `aid` int(10) DEFAULT '0',
+  `tid` varchar(64) NOT NULL,
+  `uniacid` int(11) DEFAULT '0',
+  `gettype` int(1) NOT NULL COMMENT '红包类型',
+  `order_num` int(10) NOT NULL,
+  `mch_billno` varchar(28) DEFAULT '',
+  `mch_id` varchar(32) DEFAULT '',
+  `wxappid` varchar(32) DEFAULT '',
+  `re_openid` varchar(32) DEFAULT '0',
+  `total_amount` int(10) DEFAULT '0',
+  `total_num` int(3) NOT NULL,
+  `client_ip` varchar(15) NOT NULL,
+  `user_ip` varchar(15) NOT NULL,
+  `send_time` varchar(14) DEFAULT '0',
+  `send_listid` varchar(32) DEFAULT '0',
+  `type` int(1) NOT NULL,
+  `sign` varchar(32) DEFAULT '0',
+  `return_data` text,
+  `createtime` int(10) DEFAULT '0',
+  `return_code` varchar(16) NOT NULL,
+  `return_msg` varchar(256) NOT NULL,
+  `result_code` varchar(16) NOT NULL,
+  `err_code` varchar(32) NOT NULL,
+  `err_code_des` varchar(128) NOT NULL,
+  `isdel` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `tid+order_num` (`tid`,`order_num`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+CREATE TABLE IF NOT EXISTS `ims_tyzm_redpack_lists` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `plid` bigint(11) NOT NULL,
+  `uniacid` int(11) DEFAULT '0',
+  `gettype` int(1) NOT NULL COMMENT '红包领取类型',
+  `redtype` int(1) NOT NULL,
+  `act_name` varchar(16) DEFAULT NULL,
+  `send_name` varchar(16) DEFAULT NULL,
+  `wishing` varchar(128) DEFAULT '',
+  `amount` varchar(10) DEFAULT '0',
+  `total` int(10) NOT NULL,
+  `total_num` int(10) NOT NULL,
+  `maximum` varchar(10) DEFAULT '0',
+  `starttime` int(10) DEFAULT '0',
+  `endtime` int(10) DEFAULT '0',
+  `remark` varchar(256) DEFAULT '',
+  `secret_key` varchar(256) DEFAULT '',
+  `description` text,
+  `status` int(1) DEFAULT '0',
+  `number` int(5) NOT NULL,
+  `addimg` varchar(255) DEFAULT '',
+  `adbg` varchar(255) NOT NULL,
+  `adurl` varchar(255) NOT NULL,
+  `openid` varchar(50) DEFAULT '',
+  `tid` varchar(64) DEFAULT '',
+  `ispay` int(1) NOT NULL,
+  `uuid` varchar(36) NOT NULL COMMENT '绑定周边设备UUID',
+  `reddata` mediumtext NOT NULL,
+  `short_url` varchar(50) NOT NULL,
+  `onlyshare` int(1) NOT NULL,
+  `area` varchar(255) NOT NULL,
+  `user_ip` varchar(15) NOT NULL,
+  `createtime` int(10) DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`),
+  KEY `tid` (`tid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

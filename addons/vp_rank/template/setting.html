@@ -1,0 +1,188 @@
+{template 'common/header'}
+
+
+
+<style type="text/css">
+
+</style>
+
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" id="form1">
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				商户设置
+			</div>
+			<div class="panel-body">
+				
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">微信支付商户号(MchId)</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="mchid" class="form-control" value="{$settings['mchid']}"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">应用标识(appId)</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="appid" class="form-control" value="{$settings['appid']}"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">商户支付密钥(API密钥)</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="key" class="form-control" value="{$settings['key']}"/>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				安全设置
+			</div>
+			<div class="panel-body">
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">服务器IP</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="ip" class="form-control" value="{$settings['ip']}"/>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">证书（rootca.pem）</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="file" name="cert_rootca" class="form-control" />
+						<p>{if !empty($settings['cert_rootca'])} {php echo ATTACHMENT_ROOT . '/' .$settings['cert_rootca']['path']} {/if} </p>
+					</div>
+					
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">证书（apiclient_cert.pem）</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="file" name="cert_cert" class="form-control" />
+						<p>{if !empty($settings['cert_cert'])} {php echo ATTACHMENT_ROOT . '/' .$settings['cert_cert']['path']} {/if} </p>
+					</div>
+					
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">证书（apiclient_key.pem）</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="file" name="cert_key" class="form-control" />
+						<p>{if !empty($settings['cert_key'])} {php echo ATTACHMENT_ROOT . '/' .$settings['cert_key']['path']} {/if} </p>
+					</div>
+					
+				</div>
+				
+			</div>
+		</div>
+		
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				接口设置
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">百度地图APP KEY</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="bd_ak" class="form-control" value="{$settings['bd_ak']}"/>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">七牛ACCESS KEY</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="qn_ak" class="form-control" value="{$settings['qn_ak']}"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">七牛SECRET KEY</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="qn_sk" class="form-control" value="{$settings['qn_sk']}"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">七牛空间名</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="qn_bucket" class="form-control" value="{$settings['qn_bucket']}"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">七牛空间域名</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="qn_api" class="form-control" value="{$settings['qn_api']}"/>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				公共配置
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">引导关注图片</label>
+					<div class="col-sm-9 col-xs-12">
+						 {php echo tpl_form_field_image('fo_img',$settings['fo_img'])}
+						 <div class="help-block">建议48x48</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">引导关注文字</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="fo_text" class="form-control" value="{$settings['fo_text']}"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">引导关注时间(毫秒)</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="fo_time" class="form-control" value="{$settings['fo_time']}"/>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">联系方式</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="contact" class="form-control" value="{$settings['contact']}"/>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				应用入口
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">入口地址</label>
+					<div class="col-sm-9 col-xs-12">
+						{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('index'), 2);}
+						 <div class="help-block">您可以创建关键字回复或菜单跳转到入口</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		-->
+
+		<div class="form-group col-sm-12">
+			<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+			<input type="hidden" name="token" value="{$_W['token']}" />
+		</div>
+	</form>
+</div>
+
+<script language='javascript'>
+
+</script>
+
+{template 'common/footer'}

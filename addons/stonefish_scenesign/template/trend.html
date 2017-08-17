@@ -1,0 +1,171 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+		<li{if $_GPC['do'] == 'manage'} class="active"{/if}><a href="{php echo $this->createWebUrl('manage');}">管理现场签到</a></li>
+		<li><a href="{php echo url('platform/reply/post',array('m'=>'stonefish_scenesign', 'rid' => $rid));}"><i class="fa fa-pencil"></i> 编辑活动</a></li>
+		<li{if $_GPC['do'] == 'prize'} class="active"{/if}><a href="{php echo $this->createWebUrl('prize',array('rid' => $rid));}">奖品</a></li>
+		<li{if $_GPC['do'] == 'fansdata'} class="active"{/if}><a href="{php echo $this->createWebUrl('fansdata',array('rid' => $rid));}">参与粉丝</a></li>
+		<li{if $_GPC['do'] == 'sharedata'} class="active"{/if}><a href="{php echo $this->createWebUrl('sharedata',array('rid' => $rid));}">分享记录</a></li>
+		<li{if $_GPC['do'] == 'prizedata'} class="active"{/if}><a href="{php echo $this->createWebUrl('prizedata',array('rid' => $rid));}">中奖名单</a></li>
+		{if $reply['mobileverify']}<li{if $_GPC['do'] == 'mobileverify'} class="active"{/if}><a href="{php echo $this->createWebUrl('mobileverify',array('rid' => $rid));}">手机验证</a></li>{/if}
+		<li{if $_GPC['do'] == 'posttmplmsg'} class="active"{/if}><a href="{php echo $this->createWebUrl('posttmplmsg',array('rid' => $rid));}">消息通知</a></li>
+		<li{if $_GPC['do'] == 'trend'} class="active"{/if}><a href="{php echo $this->createWebUrl('trend',array('rid' => $rid));}">活动分析</a></li>
+	</ul>
+<style>
+.account-basicinformation span{font-weight:700;}
+.account-stat-num > div{width:25%; float:left; font-size:16px; text-align:center;}
+.account-stat-num > div span{display:block; font-size:30px; font-weight:bold;}
+.panel-heading{font-weight:bold;}
+</style>
+<div class="panel panel-default">
+	<div class="panel-heading">
+		基本数据信息
+	</div>
+	<div class="panel-body">
+		<div class="account-stat-num row">
+			<div>参与人数<span>{$reply['fansnum']}</span></div>
+			<div>浏览人数<span>{$reply['viewnum']}</span></div>
+			<div>奖品数量<span>{$reply['prize_num']}</span></div>
+			<div>中奖数量<span>{$reply['zhongjiangnum']}</span></div>
+		</div>
+	</div>
+</div>
+<div class="panel panel-default">
+	<div class="panel-heading">
+		奖品发放情况
+	</div>
+	<div class="panel-body account-basicinformation">
+		<div class="row">
+			<div class="col-md-12" style="font-size:14px;">
+				{loop $award $awardt}
+		            {$awardt['prizerating']}:{$awardt['prizetotal']}/{$awardt['prizedraw']}　　
+		        {/loop}
+			</div>
+		</div>
+	</div>
+</div>
+<div class="panel panel-default">
+	<div class="panel-heading">
+		昨日关键指标/今日关键指标
+	</div>
+	<div class="panel-body">
+		<div class="account-stat-num row">
+			<div>昨日参与人数<span>{$fansnum}</span></div>
+			<div>昨日中奖数量<span>{$zhongjiangnum}</span></div>
+			<div>今日参与人数<span>{$today_fansnum}</span></div>
+			<div>今日中奖数量<span>{$today_zhongjiangnum}</span></div>
+		</div>
+	</div>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		关键指标详解
+	</div>
+	<div class="panel-body" id="scroll">
+		<div class="pull-left">
+			<form action="" id="form1">
+				<input name="c" value="site" type="hidden" />
+				<input name="a" value="entry" type="hidden" />
+				<input name="do" value="trend" type="hidden" />
+				<input type="hidden" name="m" value="stonefish_scenesign" />
+				<input name="rid" value="{$rid}" type="hidden" />
+				{php echo tpl_form_field_daterange('datelimit', array('start' => date('Y-m-d', $starttime),'end' => date('Y-m-d', $endtime)), '')}
+				<input type="hidden" value="" name="scroll">
+			</form>
+		</div>
+		<div class="pull-right">
+			<div class="checkbox">
+				<label style="color:#57B9E6;"><input checked type="checkbox"> 参与人数</label>&nbsp;
+				<label style="color:#e7a017;"><input checked type="checkbox"> 中奖数量</label>
+			</div>
+		</div>
+		<div style="margin-top:20px">
+			<canvas id="myChart" width="1200" height="300"></canvas>
+		</div>
+	</div>
+</div>
+	<script>
+		require(['chart', 'jquery', 'daterangepicker'], function(c, $) {
+			$('.daterange').on('apply.daterangepicker', function(ev, picker) {
+				$('input[name="scroll"]').val($(document).scrollTop());
+				$('#form1')[0].submit();
+			});
+			{if $scroll} 
+				var scroll = "{$scroll}";
+				$("html,body").animate({scrollTop: scroll}, 300);
+			{/if}
+			var chart = null;
+			var chartDatasets = null;
+			var templates = {
+				flow1: {
+					label: '参与人数',
+					fillColor : "rgba(36,165,222,0.1)",
+					strokeColor : "rgba(36,165,222,1)",
+					pointColor : "rgba(36,165,222,1)",
+					pointStrokeColor : "#fff",
+					pointHighlightFill : "#fff",
+					pointHighlightStroke : "rgba(36,165,222,1)",
+				},
+				flow2: {
+					label: '分享动作',
+					fillColor : "rgba(203,48,48,0.1)",
+					strokeColor : "rgba(203,48,48,1)",
+					pointColor : "rgba(203,48,48,1)",
+					pointStrokeColor : "#fff",
+					pointHighlightFill : "#fff",
+					pointHighlightStroke : "rgba(203,48,48,1)",
+				},					
+			};
+
+			function refreshData() {
+				if(!chart || !chartDatasets) {
+					return;
+				}
+				var visables = [];
+				var i = 0;
+				$('.checkbox input[type="checkbox"]').each(function(){
+					if($(this).attr('checked')) {
+						visables.push(i);
+					}
+					i++;
+				});
+				var ds = [];
+				$.each(visables, function(){
+					var o = chartDatasets[this];
+					ds.push(o);
+				});
+				chart.datasets = ds;
+				chart.update();
+			}
+
+			var url = location.href + '&#aaaa';
+			$.post(url, function(data){
+				var data = $.parseJSON(data)
+				var datasets = data.datasets;
+
+				if(!chart) {
+					var label = data.label;
+					var ds = $.extend(true, {}, templates);
+					ds.flow1.data = datasets.flow1;
+					ds.flow2.data = datasets.flow2;
+					var lineChartData = {
+						labels : label,
+						datasets : [ds.flow1, ds.flow2]
+					};
+
+					var ctx = document.getElementById("myChart").getContext("2d");
+					chart = new Chart(ctx).Line(lineChartData, {
+						responsive: true
+					});
+					chartDatasets = $.extend(true, {}, chart.datasets);
+				}
+				refreshData();
+			});
+
+			$('.checkbox input[type="checkbox"]').on('click', function(){
+				$(this).attr('checked', !$(this).attr('checked'))
+				refreshData();
+			});
+ 		});
+	</script>
+{template 'common/footer'}

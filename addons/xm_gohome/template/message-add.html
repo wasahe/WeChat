@@ -1,0 +1,86 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+    <li><a href="{php echo $this->createWebUrl('Tempmessage', array());}">模板消息列表</a></li>
+    <li  class="active"><a href="{php echo  $this->createWebUrl('Tempmessageadd', array());}">添加模板消息</a></li>
+    <li><a href="{php echo  $this->createWebUrl('Tempmessagedefault', array());}">默认模板消息</a></li>
+</ul>
+
+<div class="clearfix">    
+    <form id="theform" class="form form-horizontal" action="{php echo $this->createWebUrl('Tempmessageaddok', array());}" method="post">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                添加模板消息
+            </div>
+            <div class="panel-body">
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">模板消息名称</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="message_name" id="message_name" class="form-control">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">模板ID</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="msg_id" id="msg_id" value="{$item['msg_id']}" placeholder="" class="form-control">
+                        <span class="help_block"></span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">标题颜色</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="color_title" id="color_title" value="{$item['color_title']}" placeholder="" class="form-control">
+                        <span class="help_block">#FF0000</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">内容颜色</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="color_content" id="color_content" value="{$item['color_content']}" placeholder="" class="form-control">
+                        <span class="help_block">#173177</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">模板参数</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="dataname" id="dataname" value="{$item['dataname']}" placeholder="" class="form-control">
+                        <span class="help_block">以||分割</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">模板参数值</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <textarea name="datavalue" id="datavalue" class="form-control"></textarea>
+                        <span class="help_block">注意：1.以||分割，必须与上面所填参数一一对应；2.最后的remark后不能有任何符号；3.在给用户推送抢单信息时：可用{name}替换服务人员姓名，{money}替换预计价格，{offer}替换服务人员报价,{order}替换服务类别,{ftime}替换服务时间,{fadr}替换服务地点，{fmobile}替换订单人电话，{username}替换联系人，{nickname}替换用户昵称</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+                    <div class="col-md-2 col-lg-1">
+                        <input name="submit" type="submit" value="保存" class="btn btn-primary btn-block" />
+                        <input type="hidden" name="token" value="{$_W['token']}" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    
+    <div class="panel-footer">
+        	模板消息说明：<br />
+            1.登录微信公众号后台；<a href="https://mp.weixin.qq.com/" target="_blank">点击登录</a><br />
+            2.点击左边菜单栏里面的 模板消息<br />
+            3.从我的模板列表中，点击后面的详情。（如果我的模板中没恰当的模板，先从模板库选择适当的模板，并添加到我的模板中）<br/>         
+			4.从模板详情页中，取得模板参数，参照下图.<br />
+            <img src="{MODULE_URL}template/mobile/images/shuoming.png" />
+
+        </div>
+</div>
+
+
+{template 'common/footer'}

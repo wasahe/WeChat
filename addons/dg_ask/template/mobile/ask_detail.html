@@ -1,0 +1,334 @@
+<!doctype html>
+<html>
+	<head>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv="Cache-Control" content="no-siteapp">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="format-detection" content="email=no">
+		<meta name="format-detection" content="address=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<link rel="stylesheet" href="{TEMPLATE_PATH}/images/ux/iconfont.css?v={php echo time();}" />
+		<link rel="stylesheet" href="{TEMPLATE_PATH}/css/animate.css?v={php echo time();}" />
+		<link rel="stylesheet" href="{TEMPLATE_PATH}/css/style.css?v={php echo time();}" />
+		<script src="//cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+		<script src="http://cdn.bootcss.com/zepto/1.1.6/zepto.min.js"></script>
+		<script type="text/javascript" src="{TEMPLATE_PATH}/js/jquery.raty.js?v={php echo time();}" ></script><!--评分插件-->
+		<script type="text/javascript" src="{TEMPLATE_PATH}/js/script.js?v={php echo time();}" ></script>
+		<script src="{TEMPLATE_PATH}/js/ask_main.js?v=33"></script>
+		<title>问题详情</title>
+		{php echo register_jssdk();}
+		<script type="text/javascript">
+		var clock_index=0;
+		var clock_handler=null,current_voiclocalid=null;
+		var globalObj=new Object();
+		var ask_id={$ask_id};
+		var send_url="{php echo $this->createMobileUrl('my_ask_sendnotice')}";
+		var my_ask_index=location.href;
+		var ask_status={$ask_status};
+		
+		var is_myindex=false;
+		
+		//上传语音接口
+		function uploadVoic(localId){
+			wx.uploadVoice({
+			    localId: localId, // 需要上传的音频的本地ID，由stopRecord接口获得
+			    isShowProgressTips: 1, // 默认为1，显示进度提示
+			    success: function (res) {
+				    var serverId = res.serverId; // 返回音频的服务器端ID
+				    var posturl=location.href;
+					var json_data={voicesubmit:true,content:serverId,time_last:clock_index};
+					$.post(posturl,json_data,function(result){
+						 
+						 clock_index=0;
+						 voicePlay();
+						 $.post(send_url,{ask_id:ask_id,notice_type:'answer'},function(result){
+							  
+						 });
+						 location.href=location.href.replace("&type=expert","");
+					});
+			    }
+			});
+		}
+		//评分
+		$(function(){
+			 voicePlay();
+			 $(".qlbtna_add_answer ").click(function(){
+				 $(this).hide();
+				 $(".recording_tab_box").show();
+			 });
+		
+		 	$(".menu_expland").click(function(){
+				  $(".spreadBox").show();
+			  });
+			  $(".btn_cancel").click(function(){
+				  $(".spreadBox").hide();
+			  });
+			 $(".s_item").click(function(){
+				 $(".s_item.on").removeClass('on');
+				 $(this).addClass('on');
+				 var index = $(".feedback_box .s_item.on").index();
+				 $(this).parent().removeClass();
+				 $(this).parent().addClass('start_bar');
+				 $(this).parent().addClass('sc_'+index);
+				 var showtext="完全未解决";
+				 if(index==2) showtext="未解决";
+				 if(index==3) showtext="回答一般";
+				 if(index==4) showtext="满意";
+				 if(index==5) showtext="非常满意 ";
+				 $(".feeback_word").text(showtext);
+			 });
+			 //提交评分
+			 $(".btn_fb_submit").click(function(){
+				 var index = $(".star-on-png").length;
+				 if(index==0){
+					 alert('请选择您的评分!');
+					 return;
+				 }
+				 if(!confirm("确认提交您的评分吗？")){
+					 return;
+				 }
+				 //提交分数
+				 $.post(location.href,{score:index},function(result){
+					 alert(result.data);
+					 location.reload();
+				 });
+			 });
+		});
+		</script>
+		
+		<script type="text/javascript">
+		//录音回答
+		//当前正在播放语音信息
+		function startRec(){
+			$(".tc.time").eq(0).text(clock_index+"s / 60s");
+			clock_index++;
+			if(clock_index==60){
+				clock_index=60;
+				$(".recording.step2").click();
+			}
+		}
+		$(function(){
+			 voicePlay();
+			 var zxx = {
+			      obj: function(){
+			             return {
+			                 sec: $("#sec"),
+			                 mini: $("#mini"),
+			                 hour: $("#hour"),
+			                 day: $("#day")
+			             }
+			      }
+			 };
+		     fnTimeCountDown('{$paytime}000', zxx.obj());
+			 /*开始录音*/
+			 $(".recording.step1").click(function(){
+				 $(this).hide();
+				 $(".recording.step2").show();
+			 		wx.startRecord();
+			 		$(".answerBox .tips").hide();
+			 		$(".answerBox .time").show();
+			 	    startRec();
+			 	    clock_handler=setInterval(startRec,1000);
+			 });
+			 
+			 /*停止录音*/
+			 $(".recording.step2").click(function(){
+				 $(this).hide();
+				 $(".recording.step3").show();
+				 $(".shiBo").show();
+				 clearInterval(clock_handler);
+				 wx.stopRecord({
+			 		 success: function (res) {
+			 		    current_voiclocalid = res.localId;
+			 		 }
+			 	 });
+			 });
+			 
+			 /*点击发送*/
+			 $(".recording.step3").click(function(){
+				 if(current_voiclocalid!=null){
+			 			uploadVoic(current_voiclocalid);
+			 	 }
+			 });
+			 
+			 /*取消和重录*/
+			 $(".cancel,.again").click(function(){
+				 $(".recording.step1").show();
+				 $(".recording.step2").hide();
+				 $(".recording.step3").hide();
+				 $(".tc.time").eq(0).text("0s / 60s");
+				 $(".shiBo").hide();
+				 current_voiclocalid=null;
+				 clock_index=0;
+			 });
+			 
+			 /*试播*/
+			 $(".shiBo").click(function(){
+				 if(current_voiclocalid==null){
+					 alert("没有找到有效的录音！");
+					 return;
+				 }
+				 wx.playVoice({
+			    	    localId: current_voiclocalid
+			     });
+			 }); 
+		});
+		</script>
+	</head>
+	<body>
+	<div class="main">
+		<audio id="dgAudioPlayer" >Your browser does not support the audio element.您的浏览器不支持 audio 标签。</audio>
+		<div class="fd">
+			<div class="ask">
+				<span class="yel fr"><i class="iconfont"></i>{$ask_record['pay_money']}</span>				{if $ask_record['is_nm']}				<div class="avatar mr10 fl">					<img src="../web/resource/images/gw-wx.gif" width="30" height="30">				</div>				<div class="name f12 gray">匿名</div>				{else}				<div class="avatar mr10 fl">					<img src="{$ask_record['pay_avatar']}" width="30" height="30">				</div>				<div class="name f12 gray">{$ask_record['pay_nickname']}</div>				{/if}
+				<div class="clearfix mt15">
+					<p>{$ask_record['ask_content']}</p>
+				</div>
+			</div>
+			
+			<div class="replyBox">
+				
+				<div class="reply flex2">	
+					<div class="avatar mr10">
+						<img src="{$paytouser['avatar']}" width="40" height="40">
+					</div>
+					<div class="voice sub">
+						{if $is_answer==1}
+						{loop $answer_records $record}
+						<div class="box" attr-id="{$ask_record['id']}"  attr-aid="{$record['id']}">
+							<span class="visit gray fr">{$pay_count}人旁听</span>
+						    {if $ask_record['show']==true}
+							    <div class="chat" attr-src="{$record['answer_content']}">{if $record['pay_money']==0}免费播放{else}点击播放{/if}</div>
+							{else}
+							    <div class="chat" attr-src="pay" ask-type="listen">{$cfg['listen_money']}元旁听</div>
+							{/if}
+						</div>
+						{/loop}
+						{else}
+						<p>暂无回答</p>
+						{/if}
+					</div>
+				</div>
+				
+				<div class="replayInfo mt15 f12 gray">
+					<div class="raty f16 fr"></div>
+					<span>{$show_text}</span>
+				</div>
+			</div>
+			
+			<div class="info">
+				<a href="{php echo $this->createMobileUrl('my_ask_index',array('uid'=>$answer_records[0]['id']))}">
+				<h3 class="f16">{$paytouser["nickname"]}<span class="ml5 gray f12"><i class="iconfont"></i> {$paytouser["follow_num"]}人收听</span></h3>
+				<p class="mt5 gray f12">{$paytouser["user_title"]}</p>
+				</a>
+			</div>
+			
+			
+			{if $is_answer==1 && $is_show_score && !$is_had_score}
+			<!--评分区域 start-->
+			<div class="pingfen">
+				<h3 class="f16 mb10 gray"><i class="iconfont">&#xe623;</i> 给解答评个分吧</h3>
+				<div id="targetText-hint" class="fr"></div>
+				<div class="ratyIng f24"></div>
+				<div class="btn tc mt10 btn_fb_submit">
+					<button>提交</button>
+				</div>
+			</div>
+            <!--评分区域 end-->
+            {/if}
+			{if $is_show_answer}
+			<div class="tiemLeft">
+				<div class="timeAn"><i></i></div>
+				{if $timeout}
+				<div class="countdown">
+					<div class="con">剩余时间：<i>0</i>天<i>0</i>时<i>0</i>分<i>0</i>秒</div>
+				</div>
+				{else}
+				<div class="countdown">
+					<div class="con">剩余时间：<i id="day">0</i>天<i id="hour">0</i>时<i id="mini">0</i>分<i id="sec">0</i>秒</div>
+				</div>
+				<div class="btn tc">
+					<button class="f16 answer">{if $is_answer==1}补充一条{else}我要回答{/if}</button>
+				</div>
+				{/if}
+			</div>
+			<div class="mt15 tc f12 gray">48小时内未回答，提问金额将会返回提问者帐户！</div>
+			{/if}
+		</div>
+	</div>
+
+	<!--回答 start-->
+	<div class="answerBox animated slideInUp">
+		<div class="voice">
+			<p class="tc tips">点击开始语音回答，最长60s</p>
+			<p class="tc time" style="display: none;">0s / 60s</p>
+			<div class="con mt15">
+				<ul class="flex">
+					<li><div class="cancel btn gray">取消</div></li>
+					<li>
+						<div class="recording step1" style="display:"><i class="iconfont">&#xe61c;</i></div>
+						<div class="recording step2" style="display:none;"><i class="iconfont">&#xe606;</i></div>
+						<div class="recording step3" style="display:none;">点击发送</div>
+						
+					</li>
+					<li><div class="shiBo btn" style="display:none;">试播</div><div class="again btn">重录</div></li>
+				</ul>
+			</div>
+			<div class="voiceBg"></div>
+		</div>
+	</div>
+	<!--回答 end-->
+	
+	<!--底部菜单 start-->
+	{template footer}
+	<!--底部菜单 end-->
+	
+	<!--推广此页面-->
+	 <div class="floatBox popupTip spreadBox" style="display: none;">
+	 	<div class="mid box">
+	 		<div class="txt tl gray">
+	 			<p>1、点击页面右上角<i class="iconfont green f18">&#xe607;</i> ，选择<span class="green">「转发给好友」</span></p>
+	 			<p>2、用浏览器端打开 <span class="green">「复制链接」</span>发送给朋友</p>
+	 		</div>
+	 		<div class="btn btn_cancel">
+	 			<ul class="flex">
+	 				<li class="spread">关闭</li>
+	 			</ul>
+	 		</div>
+	 	</div>
+	 </div>
+    <!--评分js-->
+    <script>
+    var score="{$askscore}";
+    if(score==""){score=0;}
+        //评分数据展示
+    	$('.raty').raty({ 
+    		starType: 'i',
+    		score:score,
+    		readOnly : true   
+    	});
+    	//评分操作
+    	$('.ratyIng').raty({ 
+    		starType: 'i',
+    		score:0,
+    		target: '#targetText-hint',
+ 			targetText : '点击星星评分',
+ 			hints: ['非常不满意', '不满意', '一般', '满意', '非常满意']
+    	});
+    </script>
+    <script type="text/javascript">
+		wx.ready(function () {
+		    sharedata = {
+		        title: "{$sharedata['title']}",
+		        desc: "{$sharedata['desc']}",
+		        link: "{$sharedata['link']}",
+		        imgUrl: "{$sharedata['imgUrl']}",
+		        success:function(){}
+		    };
+		    wx.onMenuShareAppMessage(sharedata);
+		    wx.onMenuShareTimeline(sharedata);
+		});
+	</script>
+	</body>
+</html>

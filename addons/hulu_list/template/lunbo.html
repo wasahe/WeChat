@@ -1,0 +1,19 @@
+{template 'common/header'}
+<div>
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#one" aria-controls="one" role="tab" data-toggle="tab">轮播图片</a></li>
+    <li role="presentation"><a href="#two" aria-controls="two" role="tab" data-toggle="tab">添加轮播图片</a></li>
+   
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="one">{template 'lunbo1'}</div>
+    <div role="tabpanel" class="tab-pane" id="two">{template 'lunbo2'}</div>
+  
+  </div>
+
+</div>
+{template 'common/footer'}

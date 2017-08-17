@@ -1,0 +1,175 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<HTML xmlns="http://www.w3.org/1999/xhtml"><HEAD>
+<META http-equiv=Content-Type content="text/html; charset=utf-8">
+
+<TITLE><?php echo $param['title']?></TITLE>
+<META content="MSHTML 6.00.6000.17097" name=GENERATOR></HEAD>
+<body>
+<script type="text/javascript" src="{$staticurl}template/js/jquery.js"></script>
+<style>
+*{padding:0;margin:0;}
+body{font-size:12px;}
+IMG {
+	BORDER-TOP-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-RIGHT-WIDTH: 0px
+}
+
+.content{
+	width:1000px;
+	margin:0 auto;
+}
+.itemt{
+	width:120px;
+	height:180px;
+	float:left;
+	margin:0 40px 20px;
+}
+.twit_item {
+	OVERFLOW: hidden;
+	float:left;
+	_zoom: 1;
+}
+
+.twit_item_content {
+	text-align:center;
+	line-height:20px;
+}
+h1{
+text-align:center;
+}
+a,body,select,td,b{font-size:12px;text-decoration:none;}
+body{width:100%;height:1024px;background:#ffffff;background:url('<?php echo tomedia($param['imgsrc'])?>') no-repeat center 0;}
+a,pre{color:#808080;}
+a:link,a:visited {color:#555;}
+a:hover,a:active { color:#ff4e00;}
+.head{border-radius:50%;width:120px;height:120px;}
+.twit_item_content{padding-top:20px;color:#ffffff;font-weight:bold;font-size:16px;}
+.twit_item_pic{width:120px;height:120px;}
+.init{width:280px;margin:0 auto;}
+#initNum{border:1px solid #6aa8f1;border-radius:2px;height:26px;line-height:26px;margin-right:10px;text-align:center;width:100px;}
+#init{border:1px solid #6aa8f1;padding:0 20px;border-radius:2px;display:inline-block;height:28px;line-height:28px;background:#fff;}
+
+.clearfix{zoom:1;display:block}.clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
+</style>
+<div style="height:<?php echo $param['height'];?>;width:100%;"></div>
+<div class="content">
+<DIV class="twit_list" id="txtBox"></DIV>
+<div class="clearfix"></div>
+<div class="init clearfix"><input id="initNum" type="text" value="<?php echo ceil($param['nums']/2);?>"><span id="init">中奖人数</span></div>
+</div>
+<script>
+var data = <?php echo json_encode($users)?>;
+var initNum = 0;
+var nums = <?php echo $param['nums'];?>;
+$(document).ready(function(){
+	initNum = $('#initNum').val();
+	$('#txtBox').empty();
+	for(i=0;i<nums;i++){
+		$('#txtBox').append('<DIV data-id="" class=itemt id="'+i+'"><DIV class="twit_item MIB_linedot2"><DIV class="twit_item_pic"><IMG id="p'+i+'" class="head" src="'+data[i].img+'"></DIV><DIV class=twit_item_content>'+data[i].name+'</DIV></DIV></DIV>');
+	}
+});
+
+var timer;
+var start=0;
+var t=0;
+function cj(){
+	if(t >= nums) {
+		t = 0;
+	}
+	var ran = Math.round(Math.random()*(data.length-1));
+	$('#'+t).find('img').attr('src',data[ran].img);
+	$('#'+t).attr('data-id',data[ran].id);
+	$('#'+t).find('.twit_item_content').text(data[ran].name);
+	t++;
+}
+
+function checks() {
+	var ids = Array();
+	var len = $('#txtBox').find('.itemt').length;
+	var p = 0;
+	for(var s=0;s<len;s++) {
+		var _i = $('#txtBox').find('.itemt').eq(s).attr('data-id');
+		if(_i > 0 && typeof(ids[_i])=='undefined') {
+			ids[_i] = _i;
+			p++;
+		} else {
+			$('#txtBox').find('.itemt').eq(s).attr('data-id', '');
+			$('#txtBox').find('.itemt').eq(s).find('img').attr('src', '');
+			$('#txtBox').find('.itemt').eq(s).find('.twit_item_content').text('');
+		}
+	}
+
+	if(p != len && data.length > p) {
+		for(var t=0;t<len;t++) {
+			var _i = $('#txtBox').find('.itemt').eq(t).attr('data-id');
+			if(_i == '') {
+				var ran = Math.round(Math.random()*(data.length-1));
+				while(typeof(ids[ran]) != 'undefined') {
+					ran = Math.round(Math.random()*(data.length-1));
+				}
+				ids[ran] = ran;
+				$('#txtBox').find('.itemt').eq(t).attr('data-id', data[ran].id);
+				$('#txtBox').find('.itemt').eq(t).find('img').attr('src', data[ran].img);
+				$('#txtBox').find('.itemt').eq(t).find('.twit_item_content').text(data[ran].name);
+			}
+		}
+		checks();
+	}
+}
+
+document.onkeydown=function(event){
+	var e = event || window.event || arguments.callee.caller.arguments[0];  
+	if(e && e.keyCode==13){
+		if(start==0){
+			timer=setInterval("cj()",1);
+			start=1;
+		}else{
+			clearInterval(timer);
+			var initNum = $('#initNum').val();
+			var j=0;
+			$('#initNum').attr('disabled','disabled');
+			checks();
+			if(initNum < nums) {
+				var ran=getNumb(initNum);
+				$('.itemt').css('opacity',0);
+				for(var i=0;i<nums;i++){
+					for(var j in ran){
+						if(ran[j]==i){
+							$('#'+i).css('opacity',1);
+						}
+					}
+				}
+			}
+			
+			start=0;
+			var mm = $('.itemt');
+			var strp = '';
+			for(var s=0;s<mm.length;s++) {
+				if(mm.eq(s).css('opacity') == 1) {
+					strp += mm.eq(s).attr('data-id')+',';
+				}
+			}
+			$.post('', {strp:strp}, function(d){},'json');
+		}
+	}
+};
+
+function getNumb(initNum){
+		var num = new Array();
+		for(var i = 0; i < initNum; i++){
+				var val =  Math.ceil(Math.random() * (nums-1));
+				var isEqu = false;
+				for(var idx in num){
+						if(num[idx] == val){isEqu = true; break;}
+				}
+				if(isEqu)
+						i--;
+				else
+						num[num.length] = val;
+		}
+		return num;
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+{template 'common/header'}
+<style>
+.datetimepicker{width:30%;}
+</style>
+<ul class="nav nav-tabs">
+	<li class="active"><a href="javascript:;">{$module['title']}</a></li>
+</ul>
+
+	<div class="clearfix" style="margin-top:150px;">
+		<a href="<?php echo $this->createWebUrl('clear');?>"><div class="panel panel-info" style="padding:20px 10px;width:200px;float:left;margin-left:100px;text-align:center;cursor:pointer;">
+			重置中奖
+		</div></a>
+
+		<a href="<?php echo $this->createWebUrl('del');?>"><div class="panel panel-info" style="padding:20px 10px;width:200px;float:left;margin-left:100px;text-align:center;cursor:pointer;">
+			重置所有
+		</div></a>
+
+		<a href="<?php echo $this->createWebUrl('index');?>" target="_blank"><div class="panel panel-info" style="padding:20px 10px;width:200px;float:left;margin-left:100px;text-align:center;cursor:pointer;">
+			大屏幕
+		</div></a>
+
+	</div>
+<div style="margin-top:100px;color:#ff0000;">注：重置中奖(删中奖记录、删中奖用户过滤、保留参与人员)&nbsp;&nbsp;重置所有(删中奖记录、删所有参与人员) 折 翼 天 使 资 源 社 区 提 供</div>
+{template 'common/footer'}

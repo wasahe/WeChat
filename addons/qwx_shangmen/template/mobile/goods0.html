@@ -1,0 +1,174 @@
+{template 'common/header'}
+<link rel="stylesheet" type="text/css" href="../addons/qwx_shangmen/template/resource/css/animate.min.css">
+<link rel="stylesheet" type="text/css" href="../addons/qwx_shangmen/template/resource/css/style.css">
+<link rel="stylesheet" type="text/css" href="../addons/qwx_shangmen/template/resource/css/goods.css">
+
+<body>
+	<!-- 头部导航栏 -->
+    {template 'header'}
+<section>
+    <div class="project_top">
+        <div class="imgArea">
+                <img src="{$_W['attachurl']}{$goods[photo]}" alt="{$goods[title]}">
+                <span class="favor">999</span>
+                <div class="price">
+            {if 1 or ($is_vip && $goods['member_price']>0)}
+                <span>{$goods[member_price]}
+                <sup>￥</sup></span>
+                <span>市场价：<i>￥{$goods[market_price]}</i></span> 
+            {else}
+                <span>{$goods[price]}<sup>￥</sup></span>
+                <span>市场价：<i>￥{$goods[market_price]}</i></span>            
+            {/if}                
+                </div>
+        </div>
+              
+        <div class="item_b"><!-- item_title <span class='vip_span' style='text-decoration: none;display: inline-block'>/vip</span>-->
+            <span class="hide">{$goods[title]}</span>
+            <span>总销量：{$order_count}&nbsp;<i></i>{$goods[shijian]}分钟</span>
+            <!--<span><i></i>{$goods[shijian]}分钟 &nbsp; 销量：{$order_count}</span>-->
+            <input type="hidden" id="goods_id" value="{$goods[id]}" />
+        </div>
+        
+        <div class="item_desc">
+            <ul class="tags">
+                <li>{$goods['titledesc']}</li>            
+            </ul>
+            <p>
+                <!-- wap才显示此标签 -->
+                <i class="online">上门</i> 
+                <i class="store">到店</i> 
+                {php echo get_html($goods['gongxiao']); }                   
+            </p>
+        </div>        
+    </div>
+    <div class="project_btm">
+        <ul class="tabs">
+            <li class="cur">项目详情</li>
+            <li class=''>评价（227）</li>
+        </ul>
+
+        <div class="cnts">
+            <div class="detail j_imgLoad">
+				{php $show_item = $this->getFieldsSaveValArr('goods_', 1, 1);}
+                {loop $show_item $field $field_val}
+                    <?php if ($field=='title') continue;?>
+                    <div class="detail_item">
+                        <h3 class="detail_tit">{php echo $this->getFieldsLabel('goods_'.$field);}</h3>
+                        <p class="group_desc">{php echo get_html($goods[$field]); }</p>
+                    </div>
+				{/loop}            
+
+            </div>
+            <!-- 显示评论 -->
+            <div class="comments hide">
+                <div class="loading" style="display:none"><i></i>努力加载中...</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<aside>
+    <a id="bookBtn" href="javascript:void(0);">下单</a>
+    <div id="loading" class="hide" style="top: 407px;"></div>
+    <div id="modal1" class="hide"></div>
+    
+    <div class="modal1-wrap hide" id="modal1-wrap">
+        <div id="test_block" class="hide" style="width: 100%; height: 400px; display: none; background: #ccc; position: absolute; left: 0; bottom: 0px; z-index: 700;">
+        this is a test block.
+    	</div>
+        
+        <div class="modal1">          
+            <dl class="modal1-top">
+                <dt>
+                    <img src="{$_W['attachurl']}{$goods[photo]}" alt="{$goods[title]}">
+                </dt>
+                <dd>
+                    <h4>{$goods[title]}</h4>
+                    <p>
+                    {if ($is_vip && $goods['member_price']>0)}
+                        <code>￥</code>{$goods[member_price]}
+                        <span class='vip_span' style='text-decoration: none;display: inline-block'>/vip</span>
+                    {else}
+                        <code>￥</code>{$goods[price]}
+                    {/if}
+
+                        <i>{$goods[shijian]}分钟</i>
+                    </p>
+                    
+                    <p class="hide"><!--到店价格todo-->
+                    {if ($is_vip && $goods['member_price']>0)}
+                        <code>￥</code>{$goods[member_price]}
+                        <span class='vip_span' style='text-decoration: none;display: inline-block'>/vip</span>
+                    {else}
+                        <code>￥</code>{$goods[price]}
+                    {/if}
+
+                        <i>{$goods[shijian]}分钟</i>
+                    </p>                    
+                </dd>
+            </dl>
+            <div class="modal1-center" id="service_type">
+                <a href="javascript:void(0);" class="cur daojia" data-price="{if ($is_vip && $goods['member_price']>0)}{$goods['member_price']}{else}{$goods['price']}{/if}" title="上门服务">上门服务</a> 
+                <a href="javascript:void(0);" class=" daojia" data-price="{if ($is_vip && $goods['member_price']>0)}{$goods['member_price']}{else}{$goods['price']}{/if}" >到店服务</a>
+            </div>
+            
+			<div class="modal1-bottom">
+                <p class="hide">上门服务：美丽之道，一键到家，尊享方便省时的专业服务 注：如您需更改或取消订单，请提前致电客服{php echo $this->module['config']['service_phone']}</p>
+                <p class="">到店服务：奢华殿堂，尊贵享受，体验幽然私密的极致服务 注：如您需更改或取消订单，请提前致电客服{php echo $this->module['config']['service_phone']}</p>
+            </div>            
+
+
+            <a class="modal1-enter" href="javascript:void(0);" id="add_cart">确认</a>
+            <a class="close-modal1" id="close-modal1" href="javascript:void(0);">关闭</a>
+        </div>              
+    </div>
+</aside>
+
+<script>
+$(function(){
+    $('#add_cart').click(function(){
+        var goods_id = '{$goods[id]}';
+        var price = 0;
+        var daojia = 1;
+        // alert($('#service_type .cur').text());return false;
+        if ($('#service_type .cur').text()=='到店服务'){
+            daojia = 0;
+        }
+
+        price = $('#service_type .cur').attr('data-price');
+        // alert(price);return false;
+
+        $.ajax({
+            url:'{php echo $this->createMobileUrl('cart',array('is_ajax'=>1,'op'=>'add_cart'))}',
+            type:'post',
+            data:{'goods_id':goods_id,'price':price,'daojia':daojia,'is_vip':'{if ($is_vip && $goods['member_price']>0)}{$is_vip}{else}0{/if}'},
+            success:function(data){
+                if (data.code){
+                    //跳转到购物车页面：
+                    var url = '{php echo $this->createMobileUrl('cart')}';
+                    window.location.href=url;
+                    return ;
+
+                }else{
+                    alert(data.msg);
+                }
+            },
+            dataType:'json'
+        })
+
+    })
+
+})
+</script>
+
+<script src="../addons/qwx_shangmen/template/resource/js/zepto.min.js"></script>
+<script src="../addons/qwx_shangmen/template/resource/js/picShow.js"></script>
+<script src="../addons/qwx_shangmen/template/resource/js/index_project8.min.js"></script>
+{php $_share = get_share_info($this->module['config']);}
+{template 'common/footer'} 
+</body>
+</html>
+
+

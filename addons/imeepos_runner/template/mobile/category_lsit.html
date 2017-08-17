@@ -1,0 +1,23 @@
+{template 'common/header'}
+<link rel="stylesheet" href="{MODULE_URL}public/libs/ionic/css/ionic.css"/>
+<link rel="stylesheet" href="{MODULE_URL}public/libs/weui/weui.css"/>
+<div class="container" id="container">
+    {template 'default/common/footerbar'}
+    <div class="home">
+        <div class="bd">
+            <div class="weui_grids">
+                {loop $categorys['list'] $category}
+                <a href="{php echo $this->createMobileUrl('category_post',array('category_id'=>$category['id']))}" class="weui_grid">
+                    <div class="weui_grid_icon">
+                        <img src="{php echo tomedia($category['icon'])}" alt=""/>
+                    </div>
+                    <p class="weui_grid_label">
+                        {$category['title']}
+                    </p>
+                </a>
+                {/loop}
+            </div>
+        </div>
+    </div>
+</div>
+{template 'common/footer'}

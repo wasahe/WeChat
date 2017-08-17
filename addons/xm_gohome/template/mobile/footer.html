@@ -1,0 +1,55 @@
+	<div id="footer" class="fix0 c-foot" style="width:100%; bottom:0; z-index:999">
+        <div class="ub">
+            <a href ="{php echo $this->createMobileUrl('Order',array())}" class="ub ub-pc block" style="width:25%">
+                <div class="ub ub-ver ub-ac ub-pc">
+                    <i class="iconfont icon-dingdan ulev1 {if $page == 'order'} t-gre1 {/if}"></i> 
+                    <span class="block ulev-1 {if $page == 'order'} t-gre1 {/if}" style="">订单</span>
+                </div>
+            </a>
+            
+            <a href ="{php echo $this->createMobileUrl('Catch',array())}" class="ub ub-pc block" style="width:25%">
+                <div class="ub ub-ver ub-ac ub-pc">
+                    <i class="iconfont icon-sousuo15 ulev1 {if $page == 'catch'} t-gre1 {/if}"></i> 
+                    <span class="block ulev-1 {if $page == 'catch'} t-gre1 {/if}" style="">发现</span>
+                </div>
+            </a>
+            
+            <a href ="{php echo $this->createMobileUrl('Index',array())}" class="ub ub-pc block t-gre1 t-wh" style="width:25%">
+                <div class="ub ub-ver ub-ac ub-pc">
+                    <i class="iconfont icon-dingwei ulev1 {if $page == 'index'} t-gre1 {/if}"></i> 
+                    <span class="block ulev-1 {if $page == 'index'} t-gre1 {/if}" style="">预约</span>
+                </div>
+            </a>
+            <a href ="{php echo $this->createMobileUrl('Myinfo',array())}" class="ub ub-pc block" style="width:25%">
+                <div class="ub ub-ver ub-ac ub-pc">
+                    <i class="iconfont icon-nan ulev1 {if $page == 'my'} t-gre1 {/if}"></i> 
+                    <span class="block ulev-1 {if $page == 'my'} t-gre1 {/if}" style="">我的</span>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="top-head">
+        <div class="pc header">
+            <div class="logo">
+       	    	<img src="{$_W['attachurl']}{php echo $this->logo}" style="height:100%" alt="幸福家政" /> 
+            </div>
+            <div class="menu">
+            	<div class="xm">
+                    <a id="index" href="{php echo $this->createMobileUrl('Index',array())}" class="">首页</a>
+                    <a id="cjwt" href="{php echo $this->createMobileUrl('question',array())}">常见问题</a>
+                    <a id="fwsm" href="{php echo $this->createMobileUrl('shuoming',array())}">服务说明</a>
+                    <a id="orderl" href="{php echo $this->createMobileUrl('Order',array())}">我的订单</a>
+                    <a id="ucindex" href="{php echo $this->createMobileUrl('Myinfo',array())}">会员中心</a>
+                    <div class="clear"></div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="foot2">
+    	<div class="foot-con t-gra">
+        	{php echo $this->banquan}
+        </div>
+    </div>
+    

@@ -1,0 +1,92 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+    <li><a href="{php echo $this->createWebUrl('Tempmessage', array());}">模板消息列表</a></li>
+    <li><a href="{php echo  $this->createWebUrl('Tempmessageadd', array());}">添加模板消息</a></li>
+    <li  class="active"><a href="{php echo  $this->createWebUrl('Tempmessagedefault', array());}">默认模板消息</a></li>
+</ul>
+
+<div class="clearfix">    
+    <form id="theform" class="form form-horizontal" action="{php echo $this->createWebUrl('Tempmessagedefaultok', array());}" method="post">
+    <input type="hidden" name="id" value="{$item[id]}" >    
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                添加模板消息
+            </div>
+            <div class="panel-body">
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">审核默认模板消息</label>
+                    <div class="col-sm-9 col-xs-12">
+                    	<select name="stmpmsg_id" id="stmpmsg_id" class="form-control  input-s-lg">
+                            <option value="">---选择默认模板消息---</option>
+                            <option value="0" {if $item['stmpmsg_id'] == 0} selected {/if}>不发送模板消息</option>
+                            {loop $list $vo}
+                            <option value="{$vo[id]}" {if $item['stmpmsg_id'] == $vo[id]} selected {/if}>{$vo[message_name]}</option>
+                            {/loop}
+                        </select>
+                        
+                     <span class="help_block">当没有指定模板消息时使用指定的默认模板消息</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">订单推送默认模板消息</label>
+                    <div class="col-sm-9 col-xs-12">
+                    	<select name="otmpmsg_id" id="otmpmsg_id" class="form-control  input-s-lg">
+                            <option value="">---选择默认模板消息---</option>
+                            <option value="0" {if $item['otmpmsg_id'] == 0} selected {/if}>不发送模板消息</option>
+                            {loop $list $vo}
+                            <option value="{$vo[id]}" {if $item['otmpmsg_id'] == $vo[id]} selected {/if}>{$vo[message_name]}</option>
+                            {/loop}
+                        </select>
+                        
+                     <span class="help_block">当没有指定模板消息时使用指定的默认模板消息</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">抢单推送默认模板消息</label>
+                    <div class="col-sm-9 col-xs-12">
+                    	<select name="qtmpmsg_id" id="qtmpmsg_id" class="form-control  input-s-lg">
+                            <option value="">---选择默认模板消息---</option>
+                            <option value="0" {if $item['qtmpmsg_id'] == 0} selected {/if}>不发送模板消息</option>
+                            {loop $list $vo}
+                            <option value="{$vo[id]}" {if $item['qtmpmsg_id'] == $vo[id]} selected {/if}>{$vo[message_name]}</option>
+                            {/loop}
+                        </select>
+                        
+                     <span class="help_block">当没有指定模板消息时使用指定的默认模板消息</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">选定服务人员默认模板消息</label>
+                    <div class="col-sm-9 col-xs-12">
+                    	<select name="xtmpmsg_id" id="xtmpmsg_id" class="form-control  input-s-lg">
+                            <option value="">---选择默认模板消息---</option>
+                            <option value="0" {if $item['xtmpmsg_id'] == 0} selected {/if}>不发送模板消息</option>
+                            {loop $list $vo}
+                            <option value="{$vo[id]}" {if $item['xtmpmsg_id'] == $vo[id]} selected {/if}>{$vo[message_name]}</option>
+                            {/loop}
+                        </select>
+                        
+                     <span class="help_block">当没有指定模板消息时使用指定的默认模板消息</span>
+                    </div>
+                </div>
+
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+                    <div class="col-md-2 col-lg-1">
+                        <input name="submit" type="submit" value="保存" class="btn btn-primary btn-block" />
+                        <input type="hidden" name="token" value="{$_W['token']}" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+   
+</div>
+
+
+{template 'common/footer'}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+{if empty($_W['isajax'])}
+{template 'common/top'}
+{/if}
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">一键打款</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example2" class="table table-hover">
+				<thead>
+				<tr>
+					<th style="width:15%;">金额</th>
+					<th style="width:25;">用户</th>
+					<th>操作</th>
+				</tr>
+				</thead>
+				<tbody>
+				{loop $list $li}
+				{if $li['credit']>0}
+				<tr>
+					<td>{$li['credit']}元</td>
+					{php $member = M('member')->getInfo($li['to_openid'])}
+					<td>
+						<img src="{php echo tomedia($member['avatar'])}" style="width:2em;height:2em;" class="img-rounded"/>
+						{$member['nickname']}
+					</td>
+					<td>
+						<a href="{php echo $this->createWebUrl('finish_paylog',array('act'=>'finish','credit'=>$li['credit'],'type'=>'wechat','to_openid'=>$li['to_openid']))}" class="btn btn-success btn-sm">打款到微信钱包</a>
+						<!--<a href="{php echo $this->createWebUrl('finish_paylog',array('act'=>'finish','credit'=>$li['credit'],'type'=>'credit2','to_openid'=>$li['to_openid']))}" class="btn btn-success btn-sm">打款到会员余额</a>-->
+					</td>
+				</tr>
+				{/if}
+				{/loop}
+				</tbody>
+              </table>
+				{php echo $list['pager']}
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+{if empty($_W['isajax'])}
+{template 'common/foot'}
+{/if}

@@ -1,0 +1,434 @@
+{php $title=$rank['name']}
+{template 'inc/header'}
+
+<script type="text/javascript">
+	// 微信JSSDK相关
+	wx.ready(function () {
+		wx.onMenuShareAppMessage({
+			title:"{$rank['settings']['share_title']}",
+			desc:"{$rank['settings']['share_desc']}",
+			imgUrl:"{php echo tomedia($rank['settings']['share_img'])}"
+		});
+		wx.onMenuShareTimeline({
+			title:"{$rank['settings']['share_line']}",
+			imgUrl:"{php echo tomedia($rank['settings']['share_img'])}"
+		});
+	});
+</script>
+
+<style>
+	body{background:#f8f8f8;}
+	/**.weui-pull-to-refresh-layer{padding:5px 10px;}**/
+
+	#rank_header{position:relative;}
+	.rank_banner .swiper-wrapper{height:auto;}
+	.rank_banner .swiper-slide{height:auto;}
+	.rank_banner{width:100%;overflow:hidden;}
+	.rank_banner img{width:100%;}
+
+	.vp_actbar{display:inline-block;position:absolute;white-space:nowrap;z-index:1001;background:#4c5254;border-radius:3px;}
+	.vp_actbar a{color:#FFFFFF;display:inline-block;height:36px;line-height:36px;padding:0 18px;}
+	.vp_actbar a:active{background:#323637;color:#EEEEEE;}
+	.vp_actbar .ed{color:#AAAAAA;}
+	.vp_actbar .ed:active{background:#4c5254;color:#AAAAAA;}
+	.vp_actbar .hide{display:none;}
+
+		#feeds_list{padding:0px;margin:0px;background:#f8f8f8;}
+		.feed{}
+		.feed:active{background:#EEEEEE;}
+		.feed.weui_cell{
+			background:#FFFFFF;
+			padding-left:8px;
+			padding-right:8px;
+			margin-bottom:10px;
+			display:block !important;
+			height:auto;
+		}
+		.feed.weui_cell::before {
+			left: 0;
+			display:none !important;
+		}
+		
+
+		.sdtitle{position:relative;font-size:15px;}
+		.sdtitle i{display:inline-block;vertical-align:middle;width:16px;height:16px;line-height:16px;text-align:center;font-size:11px;color:#FFFFFF;background-size:16px 16px;}
+		.sdhead{position:relative;width:100%;}
+		.sdtou{position:absolute;top:0px;left:0px;width:45px;}
+		.sdavatar{display:block;width:42px;height:42px;overflow:hidden;border-radius:42px;}
+		.sdavatar img{width:42px;}
+		/**.sdtou i{position:absolute;display:inline-block;top:-8px;right:-2px;width:18px;height:18px;background:url("{MODULE_URL}/static/mobile/images/ico_top.png") no-repeat;background-size:18px 18px;}**/
+		.sdwhat{margin-left:52px;font-size:15px;}
+		.sdwhat dt{padding:0 0 2px 0;}
+
+		.sdnick{color:#576b95;}
+		.sdnick i{display:inline-block;height:20px;vertical-align:top;}
+		.sdnick i img{height:20px;}
+		.sdtimer{position:absolute;top:2px;right:0px;color:#999999;font-size:12px;}
+		.sdcont{color:#000000;text-indent:50px;display:-webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp:2;overflow: hidden;}/**padding-left:24px;background:url("{MODULE_URL}/static/mobile/images/m_add_ac.png") no-repeat left center;background-size:20px 20px;**/
+		.sdcont.type1{background:url("{MODULE_URL}/static/mobile/images/good_tag.png") no-repeat left 2px;background-size:45px 18px;}/*color:#22bc38;*/
+		.sdcont.type2{background:url("{MODULE_URL}/static/mobile/images/bad_tag.png") no-repeat left 2px;background-size:45px 18px;}/*color:#ff0042;*/
+		
+
+		.sdbody{padding-left:52px;}
+
+		.sdimgs{display:block;overflow:hidden;zoom:1;}
+		.sdimgs.cont{padding:10px 0 0 0;}
+		.sdimgs:after{content:"";display:block;height:0;line-height:0;clear:both;visibility:hidden;}
+		.sdimgs .sdimg{float:left;width:80px;height:80px;overflow:hidden;text-align:center;}
+		.sdimgs .sdimg img{width:80px;}
+		/**.sdimgs .sdimg img{min-height:70px;width:70px;overflow:hidden; }**/
+		.sdimgs .sdimg.c1{width:100%;height:auto;max-height:200px;}
+		.sdimgs .sdimg.c1 img{width:100%;}
+		.sdimgs .sdimg.c2{width:49%;height:auto;max-height:200px;}
+		.sdimgs .sdimg.c2.i0{margin-right:2%;}
+		.sdimgs .sdimg.c2 img{width:100%}
+		.sdimgs .sdimg.c3{width:32%;height:auto;max-height:200px;}
+		.sdimgs .sdimg.c3.i0{margin-right:2%;}
+		.sdimgs .sdimg.c3.i1{margin-right:2%;}
+		.sdimgs .sdimg.c3 img{width:100%}
+
+		.sdtail{position:relative;padding-left:52px;margin-top:10px;height:20px;line-height:20px;color:#999999;font-size:12px;}
+		.sdtail span{display:inline-block;width:50px;}
+		.sdtail .agrees.ed{color:#40d0ad;}
+		.sdtail .disagrees.ed{color:#f16270;}
+		.sdact{position:absolute;right:0px;top:2px;}
+		.btn_feed{display:inline-block;width:19px;height:14px;background:url("{MODULE_URL}/static/mobile/images/btn_feed.png") no-repeat;background-size:19px 14px;}
+
+
+
+		/***
+		.sdtail span.views{background:url("{MODULE_URL}/static/mobile/images/views.png") no-repeat left center;background-size:16px 16px;}
+		.sdtail span.replys{background:url("{MODULE_URL}/static/mobile/images/replys.png") no-repeat left center;background-size:16px 16px;}
+		.sdtail span.agrees{background:url("{MODULE_URL}/static/mobile/images/agree.png") no-repeat left center;background-size:16px 16px;}
+		.sdtail span.disagrees{background:url("{MODULE_URL}/static/mobile/images/disagree.png") no-repeat left center;background-size:16px 16px;}
+		***/
+
+
+</style> 
+
+
+<div class="weui_tab">
+	<div class="weui_tab_bd">
+		<div id="feeds_list_container" class="weui_tab_bd_item weui_tab_bd_item_active">
+
+				<div id="rank_header">
+					{if !empty($rank['settings']['slider'])}
+						<div class="rank_banner">
+							<div class="swiper-container">
+								<div class="swiper-wrapper">
+									{php $i=0;}
+									{loop $rank['settings']['slider'] $slider}
+									<div class="swiper-slide"><img data-url="{$rank['settings']['slider_link'][$i]}" src="{php echo tomedia($slider)}"/></div>
+									{php $i++;}
+									{/loop}
+								</div>
+								<div class="swiper-pagination"></div>
+							</div>
+						</div>
+					{/if}
+				</div>
+
+				<!-- 下拉刷新有BUG，暂时不启用
+				<div class="weui-pull-to-refresh-layer">
+					<div class="pull-to-refresh-arrow"></div> 
+					<div class="pull-to-refresh-preloader"></div>
+					<div class="down">下拉刷新</div>
+					<div class="up">释放刷新</div>
+					<div class="refresh">正在刷新...</div>
+				</div>
+				-->
+
+				<div id="feeds_list" class="weui_cells" data-url="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('index',array('cmd'=>'feeds','rid'=>pencode($rank['id']))), 2)}" data-loading=0 data-start=0 data-more=1 >
+				</div>
+				<script id="feeds_list_tpl" type="text/template" >
+					<%
+						if(!list){
+							return;
+						}
+						for(var i=0;i<list.length;i++){
+							var item = list[i];
+							var imgs = item['images'];
+					%>
+						<div class="feed weui_cell">
+							<div class="sdmain" data-url="<%=item._url%>">
+								<div class="sdhead">
+									<div class="sdtou">
+										<span class="sdavatar"><img src="<%=item._user.avatar%>" data-url="<%=item._user_url%>"/></span>
+									</div>
+									<dl class="sdwhat">
+										<dt class="sdtitle">
+											<span class="sdnick"  data-url="<%=item._user_url%>">
+												<%=item._user.nickname%><i><img src="<%=item._user._authority.flag%>"/></i>
+											<span class="sdtimer"><%=VP_FORMAT(item.create_time,'MM-dd h:m')%></span> 
+										</dt>
+										<dd class="sdcont type<%=item.type%>"><%=item.merchant_name%> &nbsp;<%=item.content%></dd>
+									</dl>
+								</div>
+								<div class="sdbody">
+									<% if(imgs){ %>
+										<div>
+											<ul class="sdimgs <%=(item.content?'cont':'') %>">
+												<% if(imgs.length==1){%>
+													<li class="sdimg c1" ><img src="<%=imgs[0]%>"/></li>
+												<% }%>
+
+												<% if(imgs.length==2){%>
+													<% for(var j=0;j<imgs.length;j++){ %>
+														<li class="sdimg c2 i<%=j%>" ><img src="<%=imgs[j]%>"/> </li>
+													<% }%>
+												<% }%>
+
+												<% if(imgs.length>2){%>
+													<% for(var j=0;j<3;j++){ %>
+														<li class="sdimg c3 i<%=j%>" ><img src="<%=imgs[j]%>"/> </li>
+													<% }%>
+												<% }%>
+											</ul>
+										</div>
+									<% } %>
+								</div>
+							</div>
+					
+							<div class="sdtail" data-fid="<%=item.id%>" >
+								<span class="agrees <%=item._agreed==1?'ed':'';%>">赞<em><%=item.agrees%></em></span>
+								<span class="disagrees <%=item._disagreed==1?'ed':'';%>">反<em><%=item.disagrees%></em></span>
+								<span class="replys">评<em><%=item.replys%></em></span>
+
+								<div class="sdact">
+									<a class="btn_feed"></a>
+								</div>
+							</div>
+						</div>
+					<%  } %>
+				</script>
+
+
+			<div id="feeds_list_loader" class="weui-infinite-scroll"><div class="infinite-preloader"></div>加载...</div>
+		</div>
+	</div>
+	<a id="btn_to_post" style="display:inline-block;position:fixed;bottom:65px;right:15px;"><img style="width:50px;" src="{MODULE_URL}/static/mobile/images/post.png"/></a>
+	{php $menu='index'}
+	{template 'inc/menu'}
+</div>
+
+
+
+{template 'inc/script'}
+
+<script type="text/javascript">
+
+	+function($) {
+	  "use strict";
+
+	  var defaults;
+	  var show = function(target,params) {
+
+		var mask = $("<div class='weui_mask_transparent vp_actbar_mask'></div>").appendTo(document.body);
+
+		var actions = params.actions || [];
+		var actionsHtml = actions.map(function(d, i) {
+		  return '<a class="vp_actbar_cell ' + (d.className || "") + '" href="javascript:;">' + (d.className=='ed'?'已':'') + d.text + '</a>';
+		}).join("");
+
+		var tpl = '<div class="vp_actbar">'+actionsHtml+'</div>';
+		var dialog = $(tpl).appendTo(document.body);
+		dialog.find(".vp_actbar_cell").each(function(i, e) {
+			$(e).click(function(ee) {
+				if($(ee.target).hasClass('ed')){
+					return false;
+				}
+				$.hideActbar();
+				if(actions[i] && actions[i].onClick) {
+				  actions[i].onClick();
+				}
+			})
+		});
+
+		dialog.css({'top':target.offset().top-(dialog.height()-target.height())/2,'left':target.offset().left-dialog.width()});
+		dialog.show();
+	  };
+
+	  var hide = function(callback) {
+		$(".vp_actbar_mask").remove();
+		$(".vp_actbar").remove();
+	  }
+
+	  $.actbar = function(target,params) {
+		show(target,params);
+	  }
+
+	  $(document).on("touchstart", ".vp_actbar_mask", function() {
+		$.hideActbar();
+	  });
+
+	  $.hideActbar = function() {
+		hide();
+	  }
+	}($);
+
+
+
+	$(function(){
+		
+		/** 下拉刷新有BUG,暂时不启用
+		$('#feeds_list_container').pullToRefresh();
+		$('#feeds_list_container').on("pull-to-refresh", function() {
+			loadList(true);
+		});
+		**/
+		var mySwiper = new Swiper ($('.swiper-container'), {
+			width:window.innerWidth,
+			watchSlidesProgress : true,
+			watchSlidesVisibility : true,
+			pagination: $('.swiper-pagination'),
+			paginationClickable: true,
+			autoplay: 2500,
+			autoplayDisableOnInteraction: false,
+			loop: true
+		});
+		$('.rank_banner img').on('click',function(){
+				location.href=$(this).data('url');
+		});
+
+		var list = $("#feeds_list");
+		var list_tpl=baidu.template($('#feeds_list_tpl').html());
+		var loadList=function(refresh){
+			if(list.attr('data-loading')==1 || list.attr('data-more')==0){
+				return;
+			}
+			list.attr('data-loading',1);
+
+			if(refresh){
+				list.attr('data-start',0);
+				list.attr('data-more',1);
+			}
+			$.post(list.attr('data-url'), {
+				start:list.attr('data-start')
+			},function(resp) {
+				list.attr('data-loading',0);
+				//$('#feeds_list_container').pullToRefreshDone();
+				if(resp.status==0){
+					alert(resp.info);
+				}else{
+					list.attr('data-start',resp.data.start);
+					list.attr('data-more',resp.data.more);
+					if(list.attr('data-more')==0){
+						$('#feeds_list_container').destroyInfinite();
+						$('#feeds_list_loader').hide();
+					}
+					if(refresh){
+						 list.html('');
+					}
+					var html=list_tpl(resp.data);
+					list.html(list.html()+html);
+				}
+			});	
+		}
+		
+		$('#feeds_list_container').infinite().on("infinite", function() {
+			loadList(false);
+		});
+
+		loadList(true);
+
+
+
+		list.on('click','.sdmain',function(e){
+			if($(e.target).data('url')){
+				location.href=$(e.target).data('url');
+			}else{
+				location.href=$(this).data('url');
+			}
+		});
+		
+		/**
+		$(document).bind('touchstart', function (event) {
+            $('.sdactbox').hide();  
+        });
+
+		  $(document).on("click", ".weui_actions_mask", function() {
+			$.closeActions();
+		  });
+		**/
+	
+//sd.find('disagrees').hasClass('ed')?'hide'
+
+
+		list.on('click','.sdtail',function(){
+			var sd=$(this);
+			var fid=$(this).data('fid');
+			
+			$.actbar($(this).find('.btn_feed'),{
+				actions:[{
+					text: "赞同",
+					className:sd.find('.ed').length==1?(sd.find('.ed').hasClass('agrees')?'ed':'hide'):'',
+					onClick: function() {
+						$.post("{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('feed',array('cmd'=>'agree','rid'=>pencode($rank['id']))), 2)}",{
+							fid:fid
+						},function(resp) {
+							if(resp.status==0){
+								$.alert(resp.info);
+							}else{
+								sd.find('.agrees em').text(parseInt(sd.find('.agrees em').text())+1);
+								sd.find('.agrees').addClass('ed');
+							}
+						});
+
+						$('<div class="sd_agree" style="position:absolute;left:52px;color:#40d0ad;">赞同+1</div>').appendTo(sd);
+						$('.sd_agree').animate({
+							top:'-=50px',
+							fontSize:'18px'
+						} ).fadeOut(1000);
+					}
+				  },{
+					text: "反对",
+					className:sd.find('.ed').length==1?(sd.find('.ed').hasClass('disagrees')?'ed':'hide'):'',
+					onClick: function() {
+
+						$.post("{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('feed',array('cmd'=>'disagree','rid'=>pencode($rank['id']))), 2)}",{
+							fid:fid
+						},function(resp) {
+							if(resp.status==0){
+								$.alert(resp.info);
+							}else{
+								sd.find('.disagrees em').text(parseInt(sd.find('.disagrees em').text())+1);
+								sd.find('.disagrees').addClass('ed');
+							}
+						});
+
+						 $('<div class="sd_agree" style="position:absolute;left:102px;color:#f16270;">反对+1</div>').appendTo(sd);
+						 $('.sd_agree').animate({
+							top:'-=50px',
+							fontSize:'18px'
+						 }).fadeOut(1000);
+					}
+				  },{
+					text: "评论",
+					onClick: function() {
+						//alert('评论'+id);
+						location.href="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('feed',array('act'=>'reply','rid'=>pencode($rank['id']))), 2)}&fid="+fid;
+					}
+				  }]
+				}
+			);
+
+
+			//$(this).find('.sdactbox').slideUp();  
+		});
+
+		$('#btn_to_post').on('click',function(){
+			$.actions({
+				actions: [{
+					text: "发好评",
+					onClick: function(){location.href="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('index',array('cmd'=>'post','rid'=>pencode($rank['id']),'type'=>1)), 2)}";}
+				},{
+					text: "发差评",
+					onClick: function(){location.href="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('index',array('cmd'=>'post','rid'=>pencode($rank['id']),'type'=>2)), 2)}";}
+				}]
+			});
+		});
+
+	});
+</script>
+{template 'inc/follow'}
+{template 'inc/footer'}

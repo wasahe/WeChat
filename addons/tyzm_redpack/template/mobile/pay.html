@@ -1,0 +1,71 @@
+{template 'common/header'}
+<style>
+	body{background:#EEE;}
+	.container-fill{padding:.5em;}
+	h4{margin:15px 0;}
+	h4:first-of-type{margin-top:10px;}
+	.panel{padding:.5em; margin-bottom:10px;}
+	.nav.nav-tabs{margin-bottom:.8em;}
+	.alert .form-group{margin-bottom:0;}
+	label.form-group{display:block;}
+	label.form-group{font-weight:normal; overflow:hidden; border-top:1px #DDD solid; padding-top:10px;padding-bottom:0;margin-bottom:0 }
+	label.form-group .col-xs-2{margin-top:0px;}
+	label.form-group input[name="type"]{opacity:0; width:0;}
+	#wq_card .form-group{border-top:none;border-bottom:1px solid #ccc;}
+	#wq_card .form-group .col-xs-2{margin-top:15px;}
+	#wq_card .form-group:last-child{border-bottom:none}
+	form .btn.btn-block{padding:10px 12px; margin-bottom:10px;}
+</style>
+<script>
+	require(['bootstrap'], function($){
+		$(function(){
+		});
+	});
+</script>
+<h4>订单信息</h4>
+<div class="panel">
+	<div class="clearfix" style="padding-top:10px;">
+		<p>商品名称 :<span class="pull-right">{$params['title']}</span></p>
+		<p>订单编号 :<span class="pull-right">{$params['ordersn']}</span></p>
+		<p>商家名称 :<span class="pull-right">{$_W['account']['name']}</span></p>
+		<p>支付金额 :<span class="pull-right">￥{php echo sprintf('%.2f', $params['fee']);} 元</span></p>
+		<p id="order_card" style="display: none">商品优惠 :<span class="pull-right text-danger"></span></p>
+		{if !empty($mine)}
+			{loop $mine $mi}
+			<p>{$mi['name']} :<span class="pull-right">{$mi['value']}</span></p>
+			{/loop}
+		{/if}
+	</div>
+</div>
+
+
+
+
+<div class="panel clearfix" style="border-top-left-radius:0; border-top-right-radius:0;">
+	<div class="tab-content">
+		<!-- 直接到账 -->
+		<div class="tab-pane animated active fadeInLeft" id="direct">
+			{if !empty($pay['wechat']['switch'])}
+			<div class="pay-btn" id="wechat-panel">
+				<form action="{php echo url('mc/cash/wechat');}" method="post">
+					<input type="hidden" name="params" value="{php echo base64_encode(json_encode($params));}" />
+					<input type="hidden" name="encrypt_code" value="" />
+
+					<button class="btn btn-success btn-block col-sm-12" disabled="disabled" type="submit" id="wBtn" value="wechat">微信支付(必须使用微信内置浏览器)</button>
+				</form>
+			</div>
+			<script type="text/javascript">
+				document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+					$('#wBtn').removeAttr('disabled');
+					$('#wBtn').html('微信支付');
+				});
+			</script>
+			{/if}
+
+	
+			
+	</div>
+</div>
+<input type="hidden" name="token" value="{$_W['token']}" />
+
+{template 'common/footer'}

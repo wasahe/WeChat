@@ -1,0 +1,23 @@
+{template 'common/header'}
+<div>
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#one" aria-controls="one" role="tab" data-toggle="tab">所有信息</a></li>
+    <li role="presentation"><a href="#two" aria-controls="two" role="tab" data-toggle="tab">未审核</a></li>
+    <li role="presentation"><a href="#three" aria-controls="three" role="tab" data-toggle="tab">真</a></li>
+    <li role="presentation"><a href="#four" aria-controls="four" role="tab" data-toggle="tab">假</a></li>
+	<li role="presentation"><a href="#five" aria-controls="five" role="tab" data-toggle="tab">回收站</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="one">{template 'hulu/job1'}</div>
+    <div role="tabpanel" class="tab-pane" id="two">{template 'hulu/job2'}</div>
+    <div role="tabpanel" class="tab-pane" id="three">{template 'hulu/job3'}</div>
+    <div role="tabpanel" class="tab-pane" id="four">{template 'hulu/job4'}</div>
+	<div role="tabpanel" class="tab-pane" id="five">{template 'hulu/job5'}</div>
+  </div>
+
+</div>
+{template 'common/footer'}

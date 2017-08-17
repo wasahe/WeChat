@@ -1,0 +1,40 @@
+<footer class="g-ft m-footer">
+<p>Copyright © 2016 本站一切片源来自互联网分享数据！</p>
+</footer>
+<script src="{$_W['siteroot']}addons/siyuan_vod/img/js/vod_1.js"></script>
+<script src="{$_W['siteroot']}addons/siyuan_vod/img/js/vod_2.js"></script>
+<script src="{$_W['siteroot']}addons/siyuan_vod/img/js/vod_3.js"></script>
+<div id="bannerClient" class="g-ban-client z-app-head hidden" block="appBanner" style="display: block;">
+<div class="m-ban-client f-cb">
+<div class="logo"><img src="{$_W['attachurl']}{$set['bottom_logo']}"></div>
+<div class="info">
+<p class="tip1">{$set['bottom_name']}</p>
+<p class="tip2">{$set['bottom_ad']}</p>
+</div>
+<a class="btn app-install-btn j-install-btn"  href="javascript:showBg();"></a>
+</div>
+</div>
+<div class="zx-dialog-wrap" id="fullbg">
+<div class="zxd-dialog" id="dialog">
+<p class="zxd-dialog-info"><img src="{$_W['attachurl']}{$set['bottom_qr']}">长按二维码识别后关注<br> <span style="font-size:24px;margin-top:5px;line-height:30px;color:{$set['color']};">{$set['bottom_name']}</span></p>
+<a href="#" onclick="closeBg();" class="zxd-dialog-btn">我知道了</a>
+</div>
+</div> 
+</div>
+<script>
+function showBg() { 
+var bh = $("body").height(); 
+var bw = $("body").width(); 
+$("#fullbg").css({ 
+height:bh, 
+width:bw, 
+display:"block" 
+}); 
+$("#dialog").show(); 
+} 
+//关闭灰色 jQuery 遮罩 
+function closeBg() { 
+$("#fullbg,#dialog").hide(); 
+}
+setTimeout(function(){document.getElementById("bannerClient").style.display="none";},5000);
+</script>

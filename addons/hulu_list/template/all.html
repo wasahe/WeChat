@@ -1,0 +1,25 @@
+{template 'common/header'}
+<div>
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">招聘求职</a></li>
+    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">房屋租售</a></li>
+    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">二手交易</a></li>
+    <li role="presentation"><a href="#che1" aria-controls="che1" role="tab" data-toggle="tab">车找人</a></li>
+	<li role="presentation"><a href="#che2" aria-controls="che2" role="tab" data-toggle="tab">人找车</a></li>
+	<li role="presentation"><a href="#linshi" aria-controls="linshi" role="tab" data-toggle="tab">临时工</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="home">{template 'zhaopin'}</div>
+    <div role="tabpanel" class="tab-pane" id="profile">{template 'fangwu'}</div>
+    <div role="tabpanel" class="tab-pane" id="messages">{template 'ershou'}</div>
+    <div role="tabpanel" class="tab-pane" id="che1">{template 'che1'}</div>
+	<div role="tabpanel" class="tab-pane" id="che2">{template 'che2'}</div>
+	<div role="tabpanel" class="tab-pane" id="linshi">{template 'linshi'}</div>
+  </div>
+
+</div>
+{template 'common/footer'}

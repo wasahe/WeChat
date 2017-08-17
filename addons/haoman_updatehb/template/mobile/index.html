@@ -1,0 +1,605 @@
+<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta name="viewport" content="width=750, target-densitydpi=device-dpi, user-scalable=no">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>{$reply['title']}</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link href="" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../addons/haoman_updatehb/images/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="../addons/haoman_updatehb/images/index.css?v=23424321233">
+    <style type="text/css">
+        .start {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 100;
+            display: none;
+            -webkit-animation: slideInUp .6s linear 0s both;
+            background: url({if empty($reply['start_bg'])}../addons/haoman_updatehb/images/startbg.png{else}{php echo tomedia($reply['start_bg'])}{/if}) center bottom no-repeat;
+            background-color: rgba(0, 0, 0, 0.85);
+            background-size: 100% 85%;
+        }
+    </style>
+    <style>
+        .tel_cover{
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,.8);
+            left: 0;
+            top: 0;
+            z-index: 9999;
+            display: block;
+        }
+        .tel_content{
+            width: 80%;
+             min-height: 400px;
+            background: white;
+            border-radius: 5px;
+            margin-left: 10%;
+            padding: 10px 0;
+            margin-top: 35%;
+            text-align: center;
+        }
+        .tel_content_title{
+            font-size: 2rem;
+            padding: 10px 0 30px 10px;
+        }
+        .tel_content_input{
+            margin-bottom: 25px;
+            width: 100%;
+        }
+        .tel_content_input span{
+            position: relative;
+            display: inline-block;
+            width: 60%;
+            height: 60px;
+        }
+        .tel_content_input label{
+            width: 30%;
+            display: inline-block;
+            text-align: left;
+            padding: 5px 0;
+            font-size: 1.6rem;
+        }
+
+        .tel_content_input #tel{
+            width: 60%;
+            border-radius: 5px;
+
+            border: 1px solid gainsboro;
+
+            padding: 5px 0px;
+
+            height: 60px;
+            font-size: 1.6rem;
+
+        }
+        .tel_content_input span input{
+            width: 100%;
+            border-radius: 5px;
+
+            border: 1px solid gainsboro;
+
+            padding: 5px 0px;
+
+            height: 60px;
+            font-size: 1.6rem;
+
+        }
+
+        .tel_content_input button{
+
+            position: absolute;
+
+            right: -2px;
+
+            height: 60px;
+
+            top: 0;
+
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+
+            border: 0;
+
+            background: orange;
+
+            color: white;
+
+            width: 180px;
+            font-size: 1.6rem;
+        }
+
+        .tel_content_btn{
+            border: 0;
+               width: 80%;
+            height: 80px;
+            line-height: 80px;
+            border-radius: 5px;
+            background: orange;
+
+            color: white;
+
+            font-size: 1.6rem;
+
+            margin-top: 15px;
+
+        }
+
+        .disabled{
+
+            background: gray !important;
+
+        }
+
+    </style>
+</head>
+
+<body>
+<div id="load" style="width: 100%;height: 100%;background: rgba(0,0,0,0.9);z-index: 99999;">
+    <div id="circle"></div><div id="circle1"></div>
+</div>
+
+{if $reply['isallowip']!=1}
+<script>
+
+    window.onload = function() {
+
+        $("#load").fadeOut(10);
+        $("#circle").fadeOut(10);
+        $("#circle1").fadeOut(10);
+    };
+</script>
+{/if}
+    <div id="loading">
+	<p><img src="../addons/haoman_updatehb/images/preloader.gif" width="15%" alt="" /></p>
+    </div>
+
+<div class="tel_cover" style="display: none">
+
+    <div class="tel_content">
+
+        <div class='tel_content_title'>请先验证手机号码</div>
+
+        <div class="tel_content_input">
+
+            <label>手机号码：</label><input type="tel" name="tel" id="tel">
+
+        </div>
+
+        <div class="tel_content_input">
+
+            <label>验证码：</label><span><input type="tel" name="code" id="code"><button onclick="onSMS(this)">获取验证码</button></span>
+
+        </div>
+
+        <div style="text-align: center;"><button class="tel_content_btn" onclick="onCheck()">提交</button></div>
+        <input type="hidden" value="" id="token">
+
+    </div>
+
+</div>
+
+    <div class="wrap" id="wrap">
+    {if $reply['scene'] == 0}
+        <div class="cover">
+            <div class="cover_p1">
+             <div class="cover_bg"><img src="{if empty($reply['p1_bg'])}../addons/haoman_updatehb/images/p1bg.jpg{else}{php echo tomedia($reply['p1_bg'])}{/if}"></div>
+                <div class="title">
+                    <img class="w1" src="{if empty($reply['p1_top'])}../addons/haoman_updatehb/images/w1.png{else}{php echo tomedia($reply['p1_top'])}{/if}">
+                </div>
+                <div class="word"><img src="{if empty($reply['p1_bottom'])}../addons/haoman_updatehb/images/w6.png{else}{php echo tomedia($reply['p1_bottom'])}{/if}" style="width: 45%;"></div>
+                <div class="tip"><img src="../addons/haoman_updatehb/images/tip.png"></div>
+            </div>
+            <div class="cover_p2">
+            <div class="cover_bg"><img src="{if empty($reply['p2_bg'])}../addons/haoman_updatehb/images/p2bg.jpg{else}{php echo tomedia($reply['p2_bg'])}{/if}"></div>
+                <div class="title">
+                    <img class="w1" src="{if empty($reply['p2_top'])}../addons/haoman_updatehb/images/p21.png{else}{php echo tomedia($reply['p2_top'])}{/if}">
+                    <img class="w2" src="{if empty($reply['p2_bottom'])}../addons/haoman_updatehb/images/p22.png{else}{php echo tomedia($reply['p2_bottom'])}{/if}">
+                </div>
+                <div class="tip"><img src="../addons/haoman_updatehb/images/tip.png"></div>
+            </div>
+
+
+            <div class="cover_p3">
+            <div class="cover_bg"><img src="{if empty($reply['p3_bg'])}../addons/haoman_updatehb/images/bookbg.jpg{else}{php echo tomedia($reply['p3_bg'])}{/if}"></div>
+                <div class="booking_title"><img src="{if empty($reply['p3_top'])}../addons/haoman_updatehb/images/title2.png{else}{php echo tomedia($reply['p3_top'])}{/if}"></div>
+                {if $reply['p3_isphone'] !=0}
+                <div class="booking_con">
+                    <div class="click">
+                        {if $reply['p3_isphone'] ==1 || $reply['p3_isphone'] ==3 || $reply['p3_isphone'] ==5}
+                        <div class="c1">
+                            <p>直接拨打预约热线<span><img src="../addons/haoman_updatehb/images/tel.png">一键拨号</span></p>
+                        </div>
+                        {/if}
+                        {if $reply['p3_isphone'] ==2 || $reply['p3_isphone'] ==3 || $reply['p3_isphone'] ==4 || $reply['p3_isphone'] ==5}
+                        <div class="c2">
+                            <p>在线提交报名信息<span><img src="../addons/haoman_updatehb/images/pen.png">立即填写</span></p>
+                        </div>
+                        {/if}
+                    </div>
+                </div>
+                {/if}
+
+                <div class="hand">
+                    <img class="hand_con" src="../addons/haoman_updatehb/images/hand.png">
+                    <img src="../addons/haoman_updatehb/images/hand_w.png">
+                </div>
+            </div>
+        </div>
+
+        {/if}
+
+        <div class="start" {if $reply['scene'] != 0}style="display: block"{/if}>
+            <div class="title"><img src="{if empty($reply['start_top'])}../addons/haoman_updatehb/images/title1.png{else}{php echo tomedia($reply['start_top'])}{/if}"></div>
+            <div class="info">
+                <p style="width: 50%;line-height: 50px;">
+                {if empty($reply['start_dec'])}免费领取后即可每日见长，养大红包即可提现！{else}{$reply['start_dec']}{/if}
+                </p>
+            </div>
+            <div class="btn">
+                <div class="btn1"><span>&gt;</span>如何参与<span>&lt;</span></div>
+                <div class="btn2"><img src="../addons/haoman_updatehb/images/btn.png"></div>
+            </div>
+        </div>
+        <div class="mine">
+            <div class="mine_top"><b>每隔{$reply['hb_time']}分钟点击刷新按钮可得红包</b></div>
+            <div class="mine_money">
+                红包金额
+                <br />
+                <p><b id="hbtotal">{$hbtotal}</b><i>元</i></p>
+                <span>刷新<img src="../addons/haoman_updatehb/images/hand2.png" alt="" /></span>
+            </div>
+            <div class="mine_info">
+                <div class="mine_info_con">
+                    <div class="now_pople_num">已有<b>{php echo $reply['fansnum']+$reply['timenum']}人</b>领取红包基金</div>
+                    <p class="p1">上一次获得红包收益<b id="recent">{php echo $recent['credit']/100}元</b> <span id="recenttime">{php echo date("Y-m-d H:i", $recent['createtime'])}</span></p>
+                    {if $reply['is_sharetype']==1}<p>分享至朋友圈即可<b>获得额外的收益哟</b></p>{/if}
+                    {if $reply['is_sharetype']==0}<p>保持固定时间刷新<b>获得高额的收益哟</b></p>{/if}
+                </div>
+                <div class="mine_info_ts"><b>{php echo date("m月d日 H:i", $reply['hbtx_time'])}</b>才可以提现红包金额哦! </div>
+            </div>
+            <div class="mine_btn">
+                <div class="btn1">
+                    {if $reply['is_sharetype']==1}<b class="share_1"><span>&gt;</span>分享至朋友圈<span>&lt;</span></b>{/if}
+                    <b class="once_1"><span>&gt;</span>再看一次<span>&lt;</span></b>
+                </div>
+                <div class="btn2">
+                    <img id="tixian" {if $reply['is_openbbm'] == 1}style="width: 40%;margin-right: 4%;"{/if} src="../addons/haoman_updatehb/images/btn2.png">
+                    {if $reply['is_openbbm'] == 1} <img id="password" style="width: 40%;" src="../addons/haoman_updatehb/images/btn22.png">{/if}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="rule">
+        <div class="rule_title"><img src="../addons/haoman_updatehb/images/title3.png"></div>
+        <div style="font-size: 100%;width: 92%;text-align: left;color: #f7d979;margin-bottom: 30px;">
+        {$reply['rules']}
+        </div>
+        <div class="rule_btn"><img src="../addons/haoman_updatehb/images/btn3.png"></div>
+    </div>
+
+    {if $reply['scene'] == 0}
+    <div class="booking_put">
+        <div class="booking_put_off"><img src="../addons/haoman_updatehb/images/off.png"></div>
+        <div class="booking_put_title"><img src="../addons/haoman_updatehb/images/title5.png"></div>
+        <div class="booking_put_con">
+            <input class="name" type="text" placeholder="姓名">
+            <input class="tel" type="tel" placeholder="电话" maxlength="11">
+           {if $reply['p3_isphone'] == 4 || $reply['p3_isphone'] == 5} <input class="addr" type="text" placeholder="地址">{/if}
+        </div>
+        <div class="booking_put_btn"><img src="../addons/haoman_updatehb/images/btn4.png"></div>
+    </div>
+    {/if}
+
+    {if $reply['is_sharetype']==1}
+    <div class="share">
+        <img src="../addons/haoman_updatehb/images/share.png">
+    </div>
+    {/if}
+
+    {if $reply['is_hbad']==1}
+    <div class="result">
+        <a href="{$addad_url}"><img style="width: 98%;margin-top: 1%;" src="{php echo tomedia($addad_img)}"></a>
+        <p style="color: #a9a7a7;font-size: 150%;width: 70%;margin-top: 5%;">{$addad_title}</p>
+        <p style="color: #a9a7a7;font-size: 125%;width: 70%;margin-top: 5%;">您刚刚获得<span id="hbnum" style="color: #FF0B1B">￥423423</span>红包</p>
+        <div class="result_btn"><img src="../addons/haoman_updatehb/images/btn3.png"></div>
+    </div>
+    {/if}
+
+    <div class="gz" {if $nogz == 1}style="display: block"{/if}>
+        <img style="width: 70%;margin-top: 30%;" src="{php echo tomedia($reply['up_qrcode'])}">
+        <p style="color: #f56203;font-size: 125%;width: 70%;margin-top: 5%;">{$reply['share_gz']}</p>
+    </div>
+
+    <div class="nothingbg">等待中...</div>
+    <div class="pw">
+        <p id="pwtitle" style="font-size: 125%;">等待中...</p>
+        <p>
+            <div style="margin-top: 10px;margin-bottom: 20px;width: 80%;height:60px;line-height: 60px;;border-radius: 100px;background: #fff;margin-left: 10%">
+                <input id="title" type="text" style="margin-left: 10px;border-radius: 100px;margin-bottom: 4px;height: 54px;width: 65%;background: #fff;border: none;font-size: 125%" placeholder="请使用口令获取红包！">
+                <span id="btnx" style="display: inline-block;text-align: center;color:#fff;font-weight:bold;width:22%;height:56px;background: red;border-radius: 50px;line-height: 56px;float: right;margin-top: 2px;margin-right: 2px;">确定</span>
+            </div>
+        </p>
+    </div>
+
+    {if !empty($reply['start_music'])}
+    <div class="music_btn"><img src="../addons/haoman_updatehb/images/play.png" alt="" /></div>
+    <audio preload="auto" loop style="width:0;height:0" id="audio">
+        <source src="{php echo tomedia($reply['start_music'])}" type="audio/mpeg" />
+    </audio>
+    {/if}
+
+</body>
+<script type="text/javascript">
+    {if !empty($reply['start_music'])}
+    var ismusic = 1;
+    {else}
+    var ismusic = 0;
+    {/if}
+    var indexUrl ="{php echo $this->createMobileUrl('index', array('id' => $rid))}";
+    var PostIsad = "{php echo $this->createMobileUrl('isScene', array('id' => $rid,'from_user'=>$page_from_user,'isonce'=>0))}";
+    var OnceIsad = "{php echo $this->createMobileUrl('isScene', array('id' => $rid,'from_user'=>$page_from_user,'isonce'=>1))}";
+    var getaward = "{php echo $this->createMobileUrl('get_award', array('id' => $rid,'from_user'=>$page_from_user))}";
+    var information = "{php echo $this->createMobileUrl('information', array('id' => $rid,'from_user'=>$page_from_user))}";
+    var application = "{php echo $this->createMobileUrl('application', array('id' => $rid,'from_user'=>$page_from_user))}";
+    var ksmobile = "{$reply['p3_phone']}";
+    {if $reply['is_hbad']==1}var ishbad =1; {else} var ishbad = 0; {/if}
+    {if $reply['is_openbbm'] == 1}var checkpwurl="{php echo $this->createMobileUrl('checkpw', array('id' => $rid,'from_user'=>$page_from_user))}";{/if}
+</script>
+<script src="../addons/haoman_updatehb/images/jquery-2.1.3.min.js"></script>
+<script src="../addons/haoman_updatehb/images/jquery.imgpreload.min.js"></script>
+<script src="../addons/haoman_updatehb/images/touch.js"></script>
+<script src="../addons/haoman_updatehb/images/index.js?v=2222"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    var hav = '1';
+    {if $fans['isad'] == 1 && $reply['isonce'] == 0}
+    var once = '0';
+    {else}
+    var once = '1';
+    {/if}
+    if (once == 1) {
+        $('.mine').hide();
+    } else {
+        if (hav == 2) {
+            $('.mine').show();
+            $('.cover').hide();
+        } else if (hav == 1) {
+            $('.mine').show();
+            $('.cover').hide();
+            //$(".booking").fadeIn();
+        }
+    }
+
+})
+</script>
+
+<script>
+
+    var disabled = false;
+
+    var count;
+
+    var obj;
+
+    function countDown(){
+
+        if(count <= 0){
+
+            codeReset();
+
+            return;
+
+        }
+
+        $(obj).text(--count);
+
+        window.setTimeout(countDown,1000);
+
+    }
+    function onCheck(){
+
+        $.ajax({
+
+            url:"{php echo $this->createMobileUrl('bindtel',array('rid'=>$rid,'from_user'=>$page_from_user))}",
+
+            data:{mobile:$('#tel').val(),code:$('#code').val(),token:$('#token').val()},
+
+            success:function(msg){
+
+                if(msg != '1'){
+
+                    alert(msg);
+
+                }else{
+
+                    alert('验证成功！');
+                    $(".tel_cover").hide();
+                    location.reload();
+
+                }
+
+            },
+
+        });
+
+    }
+
+    function onSMS(o){
+
+        obj = o;
+
+        if(disabled) return;
+
+        disabled = true;
+
+        count = 120;
+
+        var mobile = $.trim($('#tel').val());
+        var token = $("#token").val();
+
+        if(mobile == '' || mobile.length < 11){
+
+            alert('请输入正确的手机号码');
+            location.reload();
+            return;
+
+        }
+
+        $(obj).text(count).addClass('disabled');
+
+        $.ajax({
+
+            url:"{php echo $this->createMobileUrl('sms',array('rid'=>$rid,'from_user'=>$page_from_user))}",
+            data:{mobile:mobile,token:token},
+            success:function(msg){
+                if(msg != '1'){
+                    codeReset();
+                    alert(msg);
+                    count = 0;
+                }
+            },
+            error:function(){
+                codeReset();
+                count = 0;
+            }
+        });
+        window.setTimeout(countDown,1000);
+    }
+    function codeReset(){
+        disabled = false;
+        $(obj).text('获取验证码').removeClass('disabled');
+    }
+</script>
+
+<!-- 微信分享设置 -->
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+
+    wx.config({
+       debug:false,
+       appId: '{$package["appId"]}',
+       timestamp: '{$package["timestamp"]}',
+       nonceStr: '{$package["nonceStr"]}',
+       signature: '{$package["signature"]}',
+       jsApiList: [
+           'getLocation',
+        {if $reply['share_type'] != 3}'onMenuShareTimeline','onMenuShareAppMessage','onMenuShareWeibo'{/if}
+       ]
+    });
+    var sharedata = {
+        "imgUrl" : "{$shareimg}",
+        "link" : "{$sharelink}",
+        "desc" : "{$sharedesc}",
+        "title" : "{$sharetitle}"
+    };
+
+    wx.ready(function () {
+        {if $reply['isallowip']==1}
+
+        wx.getLocation({
+            type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+            success: function (res) {
+
+                var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                var speed = res.speed; // 速度，以米/每秒计
+                var accuracy = res.accuracy; // 位置精度
+                var submitData = {
+                    lat: latitude,
+                    lon: longitude,
+                    lbsip: "{$reply['allowip']}",
+                };
+
+                $.post('{php echo $this->createMobileUrl('getlbs',array('id' => $rid))}', submitData, function(idata) {
+
+                    if (idata.success == 1) {
+                        jQuery("#load").fadeOut(10);
+                        jQuery("#circle").fadeOut(10);
+                        jQuery("#circle1").fadeOut(10);
+                    } else {
+                        alert(idata.msg);
+                        location.href = "{php echo $this->createMobileUrl('other', array('id' => $rid,'type'=>2))}";
+
+                    }
+                },"json");
+
+            },
+            fail: function () {
+                alert("获取位置失败,请打开GPS功能！");
+                location.href = "{php echo $this->createMobileUrl('index', array('id' => $rid))}";
+
+            },
+            cancel:function(){
+                alert("获取位置失败,请打开GPS功能！");
+                location.href = "{php echo $this->createMobileUrl('index', array('id' => $rid))}";
+            }
+        });
+        {/if}
+        {if $reply['share_type'] == 3}
+        wx.hideOptionMenu();
+        {else if $reply['share_type'] == 1 || $reply['share_type'] == 2}
+        wx.showOptionMenu();
+        wx.onMenuShareAppMessage(sharedata);
+        wx.onMenuShareTimeline({
+            title: '{$sharetitle}', // 分享标题
+            link: '{$sharelink}', // 分享链接
+            imgUrl: '{$shareimg}', // 分享图标
+            success: function () { 
+                var submitData = {
+                    isshare: 1,
+                };
+                $.post('{php echo $this->createMobileUrl('setshare', array('id' => $rid,'from_user'=>$page_from_user))}', submitData, function(data) {
+                   // alert(data.success+data.msg);
+                    if (data.success == 1) {
+                        $(".nothingbg").html("恭喜您获得"+data.credit+"红包");
+                        $('.nothingbg').show(1000);
+                        $("#title").val('');
+                        $("#hbtotal").html(data.hbtotal);
+                        $("#recent").html(data.credit);
+                        $("#recenttime").html(data.recenttime);
+                        setTimeout(function(){
+                            $(".nothingbg").hide(1000);
+                        },3000)
+                    }
+                     else {
+                        $(".nothingbg").html(data.msg);
+                        $('.nothingbg').show(1000);
+                        setTimeout(function(){
+                            $(".nothingbg").hide(1000);
+                        },3000)
+                         return
+                     }
+                },"json")
+            },
+            cancel: function () { 
+                alert("您没有成功分享到朋友圈！");
+            }
+        });
+        wx.onMenuShareQQ(sharedata);
+        wx.onMenuShareWeibo(sharedata);
+        {else}
+        wx.showOptionMenu();
+        wx.onMenuShareAppMessage(sharedata);
+        wx.onMenuShareTimeline(sharedata);
+        wx.onMenuShareQQ(sharedata);
+        wx.onMenuShareWeibo(sharedata);
+        {/if}
+    });
+
+</script>
+
+
+</html>

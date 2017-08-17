@@ -1,0 +1,92 @@
+
+{template 'header'}
+<div class="container" id="container">
+<div class="hd">
+    <h1 class="page_title">余额提现</h1>
+</div>
+<div class="bd">
+  <form action="" method="post" style="margin-top:-20px;">
+    <div class="weui_cells_title">余额信息</div>
+    <div class="weui_cells">
+      <div class="weui_cell">
+        <div class="weui_cell_bd weui_cell_primary">
+          <p>当前余额</p>
+        </div>
+        <div class="weui_cell_ft">{$user['balance']}元</div>
+      </div>
+    </div>
+    <div class="weui_cells_title">提现规则</div>
+    <div class="weui_cells">
+      <div class="weui_cell">
+        <div class="weui_cell_bd weui_cell_primary">
+          <p>最低提现</p>
+        </div>
+        <div class="weui_cell_ft">{$settings['cash']['min']}元</div>
+      </div>
+      <div class="weui_cell">
+        <div class="weui_cell_bd weui_cell_primary">
+          <p>最高提现</p>
+        </div>
+        <div class="weui_cell_ft">{$settings['cash']['max']}元</div>
+      </div>
+      <div class="weui_cell">
+        <div class="weui_cell_bd weui_cell_primary">
+          <p>每日限提</p>
+        </div>
+        <div class="weui_cell_ft">{$settings['cash']['times']}次</div>
+      </div>
+    </div>
+    <div class="weui_cells_title">提现信息</div>
+    <div class="weui_cells">
+      <div class="weui_cell weui_cell_select weui_select_after">
+        <div class="weui_cell_hd">
+          <label for="" class="weui_label">提现金额</label>
+        </div>
+        <div class="weui_cell_bd weui_cell_primary">
+          <select class="weui_select" name="fee">
+            <!-- <option value="1">1元</option> -->
+            {if ($settings['cash']['max']>=2)}
+            <option value="2">2元</option>
+            {/if}
+            {if ($settings['cash']['max']>=5)}
+            <option value="5">5元</option>
+            {/if}
+            {if ($settings['cash']['max']>=10)}
+            <option value="10">10元</option>
+            {/if}
+            {if ($settings['cash']['max']>=20)}
+            <option value="20">20元</option>
+            {/if}
+            {if ($settings['cash']['max']>=50)}
+            <option value="50">50元</option>
+            {/if}
+            {if ($settings['cash']['max']>=100)}
+            <option value="100">100元</option>
+            {/if}
+            {if ($settings['cash']['max']>=200)}
+            <option value="200">200元</option>
+            {/if}
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="weui_cells_tips">系统扣除{php echo $settings['cash']['rate']*100}%手续费，请注意到账通知！</div>
+    <div class="weui_btn_area">
+      <input type="hidden" name="token" value="{$_W['token']}" />
+      <input class="weui_btn weui_btn_primary" name="submit" type="submit" value="确认" />
+      <!-- <a href="{php echo $this->createMobileUrl('user',array(),false);}" class="weui_btn weui_btn_default">返回</a> -->
+    </div>
+  </form>
+</div>
+</div>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?f9d8372d09746efa70528c980d91b569";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+{template 'footer'}
+<!---bbs_heirui_cn-->

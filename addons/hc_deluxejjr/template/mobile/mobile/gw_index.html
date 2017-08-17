@@ -1,0 +1,375 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<title>{if $opp=='his'}案场经理{else}置业顾问{/if}-个人中心</title>
+
+<meta charset="utf-8">
+
+<link rel="stylesheet" href="../addons/hc_deluxejjr/style/css/style.css"/>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" />
+
+<meta name="format-detection" content="telephone=no,address=no,email=no" />
+
+<meta name="mobileOptimized" content="width" />
+
+<meta name="handheldFriendly" content="true" />
+
+<meta http-equiv="Cache-Control" content="max-age=0" />
+
+<meta name="apple-touch-fullscreen" content="yes" />
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+
+
+</head>
+
+<body>
+
+<section class="main animated ">
+
+	<div class="main-box">
+
+		<div style="display:inline-block;height:30px;width:48%;">号码：{$profile['mobile']}</div>
+
+		<div style="display:inline-block;position:relative;right:-4px;height:30px;width:48%;">邀请码：{$profile['code']}</div>
+
+		<form action="{if $opp=='his'}{php echo $this->createMobileUrl('counselor',array('opp'=>'visit', 'op'=>'statussort', 'oppp'=>'sort'))}{else}{php echo $this->createMobileUrl('counselor',array('op'=>'statussort', 'oppp'=>'sort'))}{/if}" method="post">
+
+			{if $opp=='his'}
+
+			<select name="louid" style="position:relative;top:-5px;height:30px;width:99.9% ;border: 1px solid white;">
+
+				<option value="0">选择楼盘...</option>
+
+				{loop $loupan $l}
+
+					<option value="{$l['id']}" {if $louid==$l['id']}selected{/if}>{$l['title']}</option>
+
+				{/loop}
+
+			</select>
+
+			{/if}
+
+			<input type="text" name="realname" value="{$_GPC['realname']}" placeholder="姓名" style="height:30px;width:48%;border: 1px solid #fff;"/>
+
+			<input type="text" name="mobile" value="{$_GPC['mobile']}" placeholder="电话" style="position:relative;right:-4px;height:30px;width:48%;border: 1px solid #fff;"/>
+
+			<input type="submit" value="搜索" style="position:relative;top:7px;height:30px;width:99.9%;background-color: #fa614b;color:white;border: 1px solid #fff;"/>
+
+		</form>
+
+		<div class="topnav">
+
+			<ul class="rb-row fn-clear">
+
+				<a href="{if $opp=='his'}{php echo $this->createMobileUrl('counselor',array('opp'=>'visit', 'op'=>'statussort', 'oppp'=>'all'))}{else}{php echo $this->createMobileUrl('counselor',array('op'=>'statussort', 'oppp'=>'zyall'))}{/if}" ><li>全部</LI></a>
+
+				{php $i=0;}
+
+				{loop $status $item}
+
+				<a href="{if $opp=='his'}{php echo $this->createMobileUrl('counselor',array('opp'=>'visit', 'op'=>'statussort','status'=>$i))}{else}{php echo $this->createMobileUrl('counselor',array('op'=>'statussort','status'=>$i))}{/if}" ><li>{$item}</LI></a>
+
+				{php $i++;}
+
+				{/loop}
+
+				
+
+			</ul>
+
+		</div>
+
+		<div class="client my-client-title">
+
+			<ul class="rb-row fn-clear">
+
+				<li style="{if $opp=='his'}text-align:left;{/if} width:23%;">{if $opp=='his'}
+
+					<input type="checkbox" name="selected" onclick="getTop()" />
+
+					{/if}姓名
+
+				</li>
+
+				<li style="width:25%;">意向</li>
+
+				{if $opp=='his'}<li style="width:25%;">分配情况</li>{else}<li style="width:25%;">电话</li>{/if}
+
+				<li style="width:23%;">状态</li>
+
+			</ul>
+
+		</div>
+
+		<div class="client my-client-list">
+
+		{loop $customer $row}
+
+			<a href="{if $opp=='his'}{php echo $this->createMobileurl('counselor',array('opp'=>'visit', 'op'=>'detail', 'cid'=>$row['id']))}{else}{php echo $this->createMobileurl('counselor',array('op'=>'detail','cid'=>$row['id'], 'url'=>$url))}{/if}" class="rb-row my-client">
+
+				<ul class="fn-clear">
+
+					<li style="{if $opp=='his'}text-align:left;{/if} width:23%;">
+
+					{if $opp=='his'}
+
+						{if $row['cid']==0}
+
+						<input type="checkbox" name="select" value="{$row['id']}"/>
+
+						{/if}
+
+					{/if}
+
+					{php echo ($row['realname'])}
+
+					</li>
+
+					<li style="width:25%;">{php echo hehe($pan[$row['loupan']])}</li>
+
+					{if $opp=='his'}
+
+					<li style="width:25%;">
+
+						{if $row['cid']==0}
+
+							未分配
+
+						{else}
+
+							<font color="red">{$xs[$row['cid']]}</font>
+
+						{/if}
+
+					</li>
+
+					{else}
+
+						<li style="width:25%;">{$row['mobile']}</li>
+
+					{/if}
+
+					<li style="width:23%;">
+
+						<span class="    {if $row['status']==2}   invalid   {else if $row['status']==0}   new   {else}  visit    {/if}                            ">{$status[$row['status']]}</span>
+
+					</li>
+
+				</ul>
+
+			</a>	
+
+		{/loop}	
+
+		{if $opp=='his'}
+
+			<input type="submit" onclick="allot();" value="分配" class="btn btn-primary" style="width:49%;"/>
+
+			<input type="submit" onclick="visit();" value="查看销售员" class="btn btn-primary" style="width:49%;"/>
+
+		{/if}
+
+			<br/>
+
+			<br/>
+
+			<ul class="fn-clear">
+
+				{$pager}
+
+			</ul>
+
+		</div>
+
+	</div>
+
+</section>
+
+
+
+<footer class="foot"><a>&copy; {$_W['account']['name']}</a></footer>
+
+<!--
+
+<nav class="nav fn-clear">
+
+	<a {if $active==1}class="active"{/if} href="{php echo $this->createMobileUrl('counselor', array('op'=>'gwindex'));}"><i class="icon-spin4"></i>新客户</a>
+
+	<a {if $active==2}class="active"{/if} href="{php echo $this->createMobileUrl('counselor', array('op'=>'display'));}"><i class="icon-users"></i>所有客户</a>
+
+	<a href="{php echo $this->createMobileUrl('counselor', array('op'=>'gwstatus'));}"><i class="icon-eye-1"></i>总分类</a>
+
+	  gwstatus 如果不带参数status 则显示出所有的状态,如未联系 
+
+</nav>
+
+-->
+
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+
+<script src="../addons/hc_deluxejjr/style/js/com.js"></script>
+
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+{php $signPackage=$_W['account']['jssdkconfig'];}	
+
+<script>
+
+wx.config({
+
+	debug: false,   
+
+	appId: '<?php echo $signPackage["appId"];?>',
+
+	timestamp: '<?php echo $signPackage["timestamp"];?>',
+
+	nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+
+	signature: '<?php echo $signPackage["signature"];?>',
+
+	jsApiList: ['checkJsApi','onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo',]
+
+});
+
+
+
+wx.ready(function () {
+
+	var shareData = {
+
+		title: "经纪人中心",
+
+		desc: "调动你的社交关系，推荐客源，获丰厚佣金！",
+
+		link: "{php echo $_W['siteroot'].'app/'.$this->createMobileUrl('index',array('id'=>$id))}",
+
+		imgUrl: "{$_W['siteroot']}addons/hc_deluxejjr/icon.jpg",
+
+		trigger: function (res) {},
+
+		complete: function (res) {},
+
+		success: function (res) {
+
+             TopBox.alert("分享后成功,等着收佣金吧!");
+
+			},
+
+		cancel: function (res) {
+
+             
+
+		},
+
+		fail: function (res) {}
+
+	};
+
+	wx.onMenuShareAppMessage(shareData);
+
+	wx.onMenuShareQQ(shareData);
+
+	wx.onMenuShareWeibo(shareData);
+
+	wx.onMenuShareTimeline(shareData);
+
+});
+
+</script>
+
+<script type="text/javascript">
+
+
+
+	function getTop(){
+
+		var xed = document.getElementsByName("selected");
+
+		var x = document.getElementsByName("select");
+
+		
+
+		if(xed[0].checked == true){
+
+			for (var i=0; i<x.length; i++){
+
+				x[i].checked = true;
+
+			}
+
+		}else{
+
+			for (var i=0; i<x.length; i++){
+
+				x[i].checked = false;
+
+			}
+
+		}
+
+	}
+
+	
+
+	function allot(){
+
+		var x = document.getElementsByName("select");
+
+		var flag = false;
+
+		var j = 0;
+
+		var selected = new Array();
+
+		for (var i=0; i<x.length; i++){
+
+			if(x[i].checked == true){
+
+				selected[j] = x[i].value;
+
+				flag = true;
+
+				j++;
+
+			}
+
+		}
+
+		if(flag){
+
+			
+
+		}else{
+
+			alert('您还未选择需要分配的人！');
+
+			return;
+
+		}
+
+		window.location.href = "{php echo $this->createMobileUrl('acmanager', array('op'=>'allot'), true)}&selected="+selected;
+
+	}
+
+	
+
+	function visit(){
+
+		window.location.href = "{php echo $this->createMobileUrl('acmanager', array('op'=>'allot'))}";
+
+	}
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,263 @@
+{template 'header'}
+<ul class="nav nav-tabs">
+	<li {if $_GPC['op']==''}class="active"{/if}><a href="{php echo $this->createWebUrl('listitem');}">订单列表</a></li>
+</ul>
+<style>
+.table td span{display:inline-block;margin-top:4px;}
+.table td input{margin-bottom:0;}
+th{
+	text-align: center !important;
+}
+
+.red{color:red;font-weight:bold}
+</style>
+
+<div class="main">
+<div class="panel panel-info">
+<div class="panel-heading">筛选</div>
+	<div class="panel-body">
+		<form action="./index.php" method="get" class="form-horizontal" role="form">
+			<input type="hidden" name="c" value="site" />
+			<input type="hidden" name="a" value="entry" />
+        	<input type="hidden" name="m" value="bsht_tbk" />
+        	<input type="hidden" name="do" value="listorder" />
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">关键字</label>
+				<div class="col-sm-8 col-lg-2">
+					<input class="form-control" name="keyword" id="" placeholder="输入商品名称或商品代码或订单号" type="text" value="{$_GPC['keyword']}">
+				</div>
+
+				<!--label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">状态</label>
+					<div class="col-sm-8 col-lg-2">
+						<select name="zhuangtai" class="form-control">
+			  <option value="0" {if intval($_GPC['zhuangtai']) == 0}selected="selected"{/if}>全部商品</option>	
+			  <option value="1" {if intval($_GPC['zhuangtai']) == 1}selected="selected"{/if}>无优惠券</option>
+              <option value="2" {if intval($_GPC['zhuangtai']) == 2}selected="selected"{/if}>已下架产品</option>
+			  <option value="3" {if intval($_GPC['zhuangtai']) == 3}selected="selected"{/if}>点击从高到低</option>
+			  <option value="4" {if intval($_GPC['zhuangtai']) == 4}selected="selected"{/if}>分享从高到低</option>
+						</select>
+					</div-->
+                
+				
+			</div>
+			<div class="form-group">
+
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-1 control-label">分页显示量</label>
+				<div class="col-sm-2 col-lg-1">
+					<input class="form-control" name="psize" id="" placeholder="默认10个" type="text" value="{$_GPC['psize']}">
+				</div>
+
+				<div class=" col-xs-12 col-sm-2 col-lg-2">
+					<button class="btn btn-info"><i class="fa fa-search"></i> 搜 索</button>
+				</div>
+			</div>
+
+ 			<div class="form-group">
+			</div>
+		</form>
+		
+	</div>
+</div>
+
+
+<div class="panel panel-success">
+<div class="panel-heading">工具箱（当前栏目订单总数：{$total}）</div>
+	<div class="panel-body">
+		
+			<div class="form-group">
+
+<a class="btn btn-sm btn-info" href="javascript:importrow1({$row['id']})"><i class="fa fa-mail-forward"></i> 导入订单XLS</a>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a  onclick="return confirm('清空当前订单库，确认吗？'); return false;" href="{php echo $this->createWebUrl('orderall_op',array('op'=>'delall_order'))}" class="btn btn-sm btn-danger "><i class="fa fa-times"></i> 清空订单库</a>
+				
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a  onclick="return confirm('清除失效订单，确认吗？'); return false;" href="{php echo $this->createWebUrl('orderall_op',array('op'=>'delall_order2'))}" class="btn btn-sm btn-warning"><i class="fa fa-recycle"></i> 清除失效订单</a>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a  onclick="return confirm('立即同步订单信息，确认吗？'); return false;" href="javascript:alert('新版软件功能，暂未开放使用，请等待软件发布');" class="btn btn-sm btn-success"><i class="fa fa-refresh"></i> 软件同步阿里妈妈订单信息</a>
+			
+			</div>
+
+
+		
+	</div>
+</div>
+
+<form action="" method="post" class="form-horizontal" role="form">
+	<div style="padding:15px;background: white;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+				    <th style="width:3em;">
+                        <input type="checkbox" id="checkall"/>
+                    </th>
+					<th style="width:3em;">ID</th>
+					<th style="width:150px">订单编号</th>
+					<th style="width:90px">订单状态</th>
+					<th style="width:90px">付款金额</th>
+					<th style="width:90px">收入比例</th>
+					<th style="width:90px">效果预估</th>
+					<th style="width:auto;text-align:left">商品信息</th>
+					
+					<th style="width:auto">时间信息</th>
+
+					
+					
+					<th style="width:90px;text-align:center">信息状态</th>
+					<th style="width:100px">修改/删除</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+				    <td><input type="checkbox" name="ids[]" value="{$item['id']}" /></td>
+					<td>{$item['id']}</td>
+					<td><label class="label label-success">{$item['orderid']}</label></td>
+                    <td><label class="label label-{if $item['orderstatus']=='订单结算'}success{/if}{if $item['orderstatus']=='订单付款'}warning{/if}{if $item['orderstatus']=='订单失效'}danger{/if}">{$item['orderstatus']}</label></td>
+					<td><label class="label label-info">￥{$item['orderfee']}</label></td>
+					<td><label class="label label-warning">{$item['shouru_bili']}%</label></td>
+					<td><label class="label label-danger">￥{$item['shouru_yongjin']}</label></td>
+					<td style="text-align:left"><label class="label label-info">{$item['itemid']}</label>&nbsp;{$item['itemtitle']}</td>
+					<td style="text-align:center">
+					<label class="label label-sm label-warning"">创建：{$item['ctime']}</label>
+                    <div style="height:15px"></div>
+					<label class="label label-sm label-warning"">点击：{$item['etime']}</label>
+					</td>
+                    
+                    
+
+					<td style="text-align:center" data-id='{$item["id"]}'>{if $item['status']}<label class="label label-success status">有效</label>{else}<label class="label label-default status">失效</label>{/if}</td>
+					
+					<td>
+						<a onclick="return confirm('删除此商品，确认吗？'); return false;" href="{php echo $this->createWebUrl('listorder', array('op' => 'del','id' => $item['id']))}" title="删除" class="btn btn-sm btn-danger"><i class="fa fa-remove"></i></a>
+					</td>
+				</tr>
+				{/loop}
+
+                <tr>
+				    <th style="width:3em;">
+                        <input type="checkbox" id="checkallbottom"/>
+                    </th>
+					
+				</tr>
+
+				<tr>
+	                <td colspan="11" style="text-align: left !important;">
+	                	<input name="token" type="hidden" value="{$_W['token']}" />
+	                   
+						<a data-href="{php echo $this->createWebUrl('listorder',array('op'=>'delall'))}" href="javascript:;" class="btn btn-danger mutdelete">删除选中</a>
+	                </td>
+	            </tr>
+
+
+			</tbody>
+			
+		</table>
+		{$pager}
+	</div>
+</form>
+</div>
+<style>
+	.masklayer{ display: none; width: 100%; height: 100%; position: fixed; z-index: 1000; top: 0px; left: 0px; background: rgba(0,0,0,0.7);}
+	.mask{ display: none; width: 460px; height: auto; overflow: hidden; position: fixed; z-index: 2000; left: 50%; margin-left: -230px; background: #fff; top: 20%;}
+	.mask .title{ width: 100%; height: 40px; line-height: 40px; background:#467ab3; position: relative; z-index: 10;}
+	.mask .title span{ margin-left: 15px; color: #fff; font-size: 14px;}
+	.mask .title .close{ width: 40px; height: 40px; position: absolute; display: block; top: 7px; right: -15px;color:#fff; z-index: 20;}
+	.maskMain{  padding: 0px; height: auto; overflow: hidden; text-align: center; padding-bottom: 30px;}
+	.maskMain a{ width: 40%; height: 46px; line-height: 46px; text-align: center; display: inline-block; background: #467ab3; color: #fff; border: 1px solid #000; margin: 30px 15px 0px 15px;}
+</style>
+<div class="masklayer" onclick="javascript:close1();" style="display: none;" id="masklayer1"></div>
+<div class="mask maskOuter" style="display: none;" id="mask1">
+			<p class="title">
+				<span>导入阿里妈妈订单XLS</span>
+				<em class="close" onclick="javascript:close1();">X</em>
+			</p>
+			<div class="maskMain">
+				<form style="display: inline-block;width: 400px;" action="{php echo $this->createWebUrl('importaldd',array('op'=>('music')))}" method="post" enctype="multipart/form-data" class="form-inline">
+				<input type="hidden" id="rowid" name="rowid" value=""/>
+				<input type="file" name='txtfile1' class="form-control">
+				<button class="btn btn-info" style="margin-left:5%;" type="submit">导入</button>
+				</form>
+			</div>
+</div>
+
+
+<script>
+function importrow1(rowid){
+	$('#rowid').val(rowid);
+	$("#mask1").fadeIn(500);
+	$("#masklayer1").fadeIn(500);
+}
+
+function close1(){
+	$(".maskOuter").fadeOut(500);
+	$(".masklayer").fadeOut(500);
+}
+</script>
+
+<script>
+require(['util'],function(util){
+$('.mutdelete').click(function(){
+            var url = $(this).data('href');
+            var ids = [];
+            var idss = [];
+            $('input:checkbox[name="ids[]"]').each(function() {
+                var _that = $(this)[0];
+                if(_that.checked){
+                    ids = ids.concat($(this).val());
+                }else{
+                    idss = idss.concat($(this).val());
+                }
+            });
+            console.log(ids);
+            if(confirm("您确定要删除么？")){
+                $.post(url,{ids:ids},function(data){
+                    util.message("删除成功","{php echo $_W['siteurl']}",'success');
+                },'json');
+            }
+        });
+
+
+
+
+$("#checkall").click(function(){
+            console.log('checkall');
+            $('input[name="ids[]"').each(function(){
+                var _that = $(this)[0];
+                if(_that.checked){
+                    _that.checked = false;
+                }else{
+                    _that.checked = true;
+                }
+            });
+        });
+
+
+$("#checkallbottom").click(function(){
+            $("#checkall").click();
+        });
+
+
+$('table .status').click(function(){
+	var label = $(this);
+	$.ajax({
+		url:'{php echo $this->createWebUrl("listorder",array("op"=>"status"))}',
+		type:'post',
+		data:{id:label.parent().attr('data-id')},
+		success:function(status){
+			if(status == '1'){
+				if(label.hasClass('label-success')){
+					label.removeClass('label-success').addClass('label-default');
+					label.text('失效');
+				}else{
+					label.removeClass('label-default').addClass('label-success');
+					label.text('有效');
+				}
+			}
+		}
+	});
+  });
+});
+</script>
+
+{template 'footer'}

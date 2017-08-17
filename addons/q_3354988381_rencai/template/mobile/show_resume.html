@@ -1,0 +1,192 @@
+{template 'common_header'}
+    <style>
+        .amtxt {margin: 5px 0 0 0}
+    </style>
+    <div class="am-g" style="background-color:#FFF;margin-top:0;padding-top:0" onclick="location.href='{php echo $this->createMobileUrl('ShowResumeInfo', array('person_id' => $person['id']));}';">
+        <div class="am-u-sm-3">
+            <img class="am-img-thumbnail am-radius" style="width:80px;height:80px" src="{$person['headimgurl']}"/>
+        </div>
+         <div class="am-u-sm-8">
+              <strong>{$person['username']}</strong>
+              <font size="1.2rem">{if $person['sex'] == 1}先生{else}女士{/if}</font>
+              <p style="font-size:12px;margin:5px 0 5px 0;color:red">{$person['mobile']}</p>
+              <p style="font-size:12px;margin:5px 0 5px 0">
+              {$person['views']}人浏览&nbsp;&nbsp;
+              {$person['buy_total']}人购买
+              </p>
+         </div>         
+    </div>
+   
+   	<div class="am-g" style="margin-top:3px;padding-top:0">
+    	<div class="am-u-sm-12" style="background-color:#FFF">
+    		<div class="am-tabs" data-am-tabs="{noSwipe: 1}">
+			  <ul class="am-tabs-nav am-nav am-nav-tabs">
+			    <li class="am-active" style="width:49%"><a href="#tab1">基本信息</a></li>
+			    <li><a href="#tab2">工作经验</a></li>
+			  </ul>
+			  <div class="am-tabs-bd">
+                    <!-- 基本信息 -->   
+                    <div class="am-tab-panel am-fade am-in am-active" id="tab1">
+                    
+                    <p class="am-text-default amtxt">最后更新：&nbsp;&nbsp;{$person['updatetime']}</p>
+                    
+<?php if ($fields_list) { foreach($fields_list as $field => $field_item) { 
+	if (in_array($field, array('username', 'sex', 'mobile', 'headimgurl'))) {
+    	continue;
+    }    
+?>    
+	{if $field == 'educational'}
+                        <p class="am-text-default amtxt">{php echo $field_item['user_label'] ? $field_item['user_label'] : $field_item['label'];}：&nbsp;&nbsp;{$config['educational'][$person['educational']]}</p> 
+	{else if $field == 'cid'}
+                        <p class="am-text-default amtxt">{php echo $field_item['user_label'] ? $field_item['user_label'] : $field_item['label'];}：&nbsp;&nbsp;{$category['name']}</p> 
+	{else if $field == 'payroll'}
+                        <p class="am-text-default amtxt">{php echo $field_item['user_label'] ? $field_item['user_label'] : $field_item['label'];}：&nbsp;&nbsp;{$config['payroll'][$person['payroll']]}</p> 
+    {else if $field == 'assessment'} 
+                        <hr style="margin: 5px 0">
+                        <h4 style="margin: 5px 0"><strong>{php echo $field_item['user_label'] ? $field_item['user_label'] : $field_item['label'];}</strong></h4>
+                        <p>{$person['assessment']}</p>
+	{else if $field == 'payroll'}
+                        <p class="am-text-default amtxt">{php echo $field_item['user_label'] ? $field_item['user_label'] : $field_item['label'];}：&nbsp;&nbsp;{$config['payroll'][$person['payroll']]}</p> 
+    {else if $field == 'province'} 
+                        <p class="am-text-default amtxt">{php echo $field_item['user_label'] ? $field_item['user_label'] : $field_item['label'];}：&nbsp;&nbsp;{$person['province']}{$person['city']}{$person['district']}</p>        
+    {else}
+       					<p class="am-text-default amtxt">{php echo $field_item['user_label'] ? $field_item['user_label'] : $field_item['label'];}：&nbsp;&nbsp;{$person[$field]}</p>
+    {/if} 
+<?php }} else {?>                           
+                        <p class="am-text-default amtxt">年龄：&nbsp;&nbsp;{$person['age']}</p>    
+                        <p class="am-text-default amtxt">学历：&nbsp;&nbsp;{$config['educational'][$person['educational']]}</p>
+                        <p class="am-text-default amtxt">专业：&nbsp;&nbsp;{$person['professional']}</p>
+                        <p class="am-text-default amtxt">QQ：&nbsp;&nbsp;{$person['qq']}</p>
+                        <p class="am-text-default amtxt">工作经验：&nbsp;&nbsp;{$person['workexperience']}</p>
+                        
+                        <p class="am-text-default amtxt">期望工作地：&nbsp;&nbsp;{$person['workaddress']}</p>
+                        <hr style="margin: 5px 0">
+                        <h4 style="margin: 5px 0"><strong>自我评价</strong></h4>
+                        <p>{$person['assessment']}</p>    
+<?php }?>                    
+                    </div>
+                    <!-- 工作经验 -->
+                    <div class="am-tab-panel am-fade" id="tab2">    
+                            {loop $resumes $resume}
+                                <p class="am-text-default amtxt">公司：&nbsp;&nbsp;{$resume['company_name']}</p>
+                                <p class="am-text-default amtxt">时间：&nbsp;&nbsp;{$resume['dateline']}</p>
+                                <hr style="margin: 5px 0">
+                                <h4 style="margin: 5px 0"><strong>工作描述</strong></h4>
+                                <p>{$resume['work_description']}</p> 
+                                          
+                            {/loop}      
+                    </div>        
+			  </div>
+			</div>
+    	</div>
+                
+        <div class="am-u-sm-12" style="margin-top:5px;background-color:#FFF">
+            <div class="am-form-group">
+                {if $isinvite}
+                <input type="button" id="invite" value="{$isinvite_msg}" class="am-btn am-btn-block am-btn-default"/>
+                {else}
+                <input type="button" id="invite" value="发出面试邀请" class="am-btn am-btn-block am-btn-success"/>
+                {/if}            
+                
+            </div>
+        </div>        
+	</div>
+
+{if $js_ad_str} 
+<meta id="viewport" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,maximum-scale=1, user-scalable=no">
+<script type="text/javascript" src="{CURR_UI_DIR}layer/layer-pc.js"></script>
+<script type="text/javascript">
+var loading;
+jQuery(document).ready(function () {
+		var cHeight= document.documentElement.clientHeight || document.body.clientHeight;
+		var cWidth = document.documentElement.clientWidth || document.body.clientWidth;	
+		var my_pic_width = cWidth*0.85 + 'px';
+		var my_pic_height = my_pic_width;
+		//alert(cWidth + '--' + cHeight);
+		loading = layer.open({
+			type: 1,
+			closeBtn: 0,
+			//skin: 'layui-layer-lan',
+			title: false,
+			//fix: true,
+			shadeClose: false,
+			shade:0.2,
+			skin: 'layui-layer-nobg', 
+			//maxmin: true,
+			//area: ['400px', '175px'],
+			area: [my_pic_width, my_pic_height],
+			content: '<img width="'+my_pic_width+'" height="'+my_pic_height+'" id="img_ad" style="border-radius:5px;overflow:hidden" src="" />',
+	
+		});
+		//layer.msg('欢迎使用layer');
+		$("#img_ad").click(function(){
+			layer.close(loading);
+		});	
+		timedAdfun();
+});
+
+var ad_loop = 0;
+var ad_arr = [{$js_ad_str}];
+function timedAdfun()
+{			
+	var index = Math.floor((Math.random()*ad_arr.length)); 
+	document.getElementById('img_ad').src = ad_arr[index]; 
+	ad_loop++;
+	if (ad_loop <= {$loop_adpics}) {
+		setTimeout("timedAdfun()", 2000);
+	} else {
+		layer.close(loading);
+		alert('简历购买成功');
+	}
+}
+		
+</script>
+{/if}   
+<script>
+    wx.ready(function () {
+        sharedata = {
+            title: "简历-{$person['username']}",
+            desc: "{$person['assessment']}",
+            link: "{$_W['siteroot']}app/{php echo $this->createMobileUrl('ShowResumeInfo', array('person_id' => $person['id']))}",
+            imgUrl: "{$person['headimgurl']}",
+            success: function(){
+            },
+            cancel: function(){
+            }
+        };
+        wx.onMenuShareAppMessage(sharedata);
+        wx.onMenuShareTimeline(sharedata);
+    });
+	//职位邀请
+        $("#invite").click(function(data){
+            $.get(
+				'{php echo $this->createMobileUrl("InviteJobAjax", array('person_id' => $person['id']))}',
+				{},
+				function (data){
+					if(data == '-5'){
+						alert('可查看简历数已用完');
+					}					
+					if(data == '-4'){
+						alert('邀请次数已用完');
+					}
+					if(data == '-3'){
+						alert('您是求职用户，无法邀请');
+					}
+					if(data == '-2'){
+						alert('您还未成为认证企业');
+					}
+					if(data == '-1'){
+						alert('已经邀请');
+					}        			
+					if(data == 1){
+						alert('邀请成功');
+					}
+					if(data == 0){
+						alert('邀请失败');
+					} 
+					return false;   
+				}
+			);            
+        });	
+</script>
+{template 'common_footer'}

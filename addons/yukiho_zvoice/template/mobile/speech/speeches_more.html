@@ -1,0 +1,28 @@
+					{if !empty($speeches['list'])}
+					<div id="questions" class="portfolio-filter-wrapper" style="margin-left:5px;">
+						{loop $speeches['list'] $li} 
+						{php $member = M('member')->getInfo($li['openid'])}
+						<div class="blog-sidebar-text" onclick="window.location.href='{php echo $this->createMobileUrl('speech',array('id'=>$li['id']))}'">
+							{php $quser = M('member')->getInfo($li['openid'])}
+							<h5 style="font-size:15px;">
+								{$li['title']}
+							</h5>
+						</div>
+						<div class="container one-third-responsive">
+							{php $ans = M('answer')->getone(array('question_id'=>$li['id']))}
+							{php $user = M('member')->getInfo($ans['openid'])}
+							<p class="user-list-follow">
+								<a href="{php echo $this->createMobileUrl('tutor',array('openid'=>$member['openid']))}">
+									<img src="{php echo $member['avatar']}" alt="img">
+									{if $member['isrecommend']=='1'}<i class="icon icon_vip"></i>{/if}
+									<strong>{$member['realname']}
+										<em class="split-title">{$member['tags']}</em>
+									</strong>
+								</a> 
+								<a class="follow2 button-blue">
+									<span class="tip">{$li['join_num']}人参加</span>
+								</a>
+							</p>
+						<div class="decoration"></div>
+						</div>
+						{/loop}

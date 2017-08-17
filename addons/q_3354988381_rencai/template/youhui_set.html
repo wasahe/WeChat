@@ -1,0 +1,117 @@
+{template 'common/header'}
+    <ul class="nav nav-tabs">
+        <li class=""><a>充值优惠套餐管理</a></li>
+        
+    </ul>
+
+<form action="" id="theform" name="theform"  method="post" class="form-horizontal form ng-pristine ng-valid" accept-charset="utf-8">
+<input type="hidden" name="id" value="{$data['id']}" />
+<input type="hidden" name="token" value="{$_W['token']}" />
+<div class="panel panel-success">    
+	<div class="panel-body">      
+        <div class="form-group">
+            <label class="col-xs-12 col-md-3 col-lg-2 control-label">优惠设置</label>
+			<div class="col-sm-9 col-xs-12">
+            <label class="radio-inline">
+            <input value="Y" {if $youhuiset_open=='Y'}checked="checked"{/if} ng-model="activeItem.params.recharge_type" class="ng-pristine ng-untouched ng-valid ng-not-empty" name="youhuiset_open" type="radio"> 开启</label>
+            <label class="radio-inline">
+            <input value="N" {if $youhuiset_open=='N'}checked="checked"{/if} ng-model="activeItem.params.recharge_type" class="ng-pristine ng-untouched ng-valid ng-not-empty" name="youhuiset_open" type="radio"> 不开启</label>
+            </div>                                
+        </div>
+        
+    </div> 
+    {loop $list $data} 
+	<div class="panel-body">      
+        <div class="form-group">
+            <label class="col-xs-12 col-md-3 col-lg-2 control-label"></label>            
+            <div class="col-sm-9 col-xs-12">
+                <div class="input-group">
+                    <span class="input-group-addon">充</span> 
+                    <input name="{$data['id']}_addmoney" id="{$data['id']}_addmoney" value="{$data['addmoney']}" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" ng-model="recharge.condition" type="text"> 
+                    <span class="input-group-addon">元</span> <!-- ngIf: recharge.backtype == '0' -->
+                    <span class="input-group-addon ng-scope" ng-if="recharge.backtype == '0'">送</span>
+                    <!-- end ngIf: recharge.backtype == '0' --> <!-- ngIf: recharge.backtype == '1' --> 
+                    <input name="{$data['id']}_givemoney" id="{$data['id']}_givemoney" value="{$data['givemoney']}" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" ng-model="recharge.back" type="text">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width:88px">
+                        <span ng-switch="" on="recharge.backtype"><!-- ngSwitchWhen: 0 -->
+                        <span ng-switch-when="0" class="ng-scope">元</span><!-- end ngSwitchWhen: --> <!-- ngSwitchWhen: 1 --> 
+                        </span>
+                        <i class="fa fa-angle-down"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right select-back">
+                        <li><a href="#" ng-click="recharge.backtype='0';recharge.backunit='元'">元</a></li>
+                        <li><a href="#" ng-click="recharge.backtype='1';recharge.backunit='积分'" style="display:none">积分</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div> 
+                                 
+        </div>
+    </div>    
+    {/loop} 
+    <div class="panel-body">      
+        <div class="form-group">
+            <label class="col-xs-12 col-md-3 col-lg-2 control-label"></label>            
+            <div class="col-sm-9 col-xs-12">
+                <div class="input-group">
+                    <span class="input-group-addon">充</span> 
+                    <input name="new_addmoney" id="new_addmoney" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" ng-model="recharge.condition" type="text"> 
+                    <span class="input-group-addon">元</span> <!-- ngIf: recharge.backtype == '0' -->
+                    <span class="input-group-addon ng-scope" ng-if="recharge.backtype == '0'">送</span>
+                    <!-- end ngIf: recharge.backtype == '0' --> <!-- ngIf: recharge.backtype == '1' --> 
+                    <input name="new_givemoney" id="new_givemoney" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" ng-model="recharge.back" type="text">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width:88px">
+                        <span ng-switch="" on="recharge.backtype"><!-- ngSwitchWhen: 0 -->
+                        <span ng-switch-when="0" class="ng-scope">元</span><!-- end ngSwitchWhen: --> <!-- ngSwitchWhen: 1 --> 
+                        </span>
+                        <i class="fa fa-angle-down"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right select-back">
+                        <li><a href="#" ng-click="recharge.backtype='0';recharge.backunit='元'">元</a></li>
+                        <li><a href="#" ng-click="recharge.backtype='1';recharge.backunit='积分' style="display:none"">积分</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div> 
+                                 
+        </div>
+    </div>         
+            
+</div>
+
+
+   
+		<div class="form-group">
+			<div class="col-sm-12">
+			<input type="submit"  name="submit" value="提交" class="btn btn-primary col-lg-1"/>
+				
+			</div>
+		</div>
+
+</form>
+
+  
+<script type="text/javascript">
+require(['jquery', 'util'], function($, u){
+	$(function(){
+		//u.editor($('.richtext')[0]);	 
+		$('#theform2').submit(function(){
+				var message = '';
+				if($.trim($(':text[name=new_addmoney]').val()) == '') {
+					message += '必须输入充值金额<br>';
+				}
+				if($.trim($(':text[name=new_givemoney]').val()) == '') {
+					message += '必须输入赠送金额';
+				}//textarea
+				if(message) {
+					u.message(message);
+					return false;
+				}
+				return true;				
+		});
+	});	
+});
+</script>
+{template 'common/footer'}

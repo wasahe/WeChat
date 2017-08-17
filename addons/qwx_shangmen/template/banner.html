@@ -1,0 +1,66 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li {if $op == 'display'}class="active"{/if}><a href="{php echo $this->createWebUrl('banner', array('op' => 'display'))}">广告图管理</a></li>
+	<li {if $op == 'post'}class="active"{/if}><a href="{php echo $this->createWebUrl('banner', array('op' => 'post'))}">创建广告图</a></li>
+</ul>
+
+<!-- 列表 -->
+<form action="?{$_SERVER['QUERY_STRING']}" method="post" id="form1">
+<div class="panel panel-default">
+	<div class="panel-body table-responsive">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:60px;">选择</th>
+					<th style="width:70px;">ID</th>
+					<th style="width:250px;" class="text-center">缩略图</th>
+					<th >名称</th>
+					<th style="width:100px;text-align:center;" class="text-center">状态</th>
+					<th style="width:150px;">更新时间</th>
+					<th style="text-align:right; width:120px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td><input type="checkbox" name="delete[]" value="{$item['id']}" /></td>
+					<td>{$item['id']}</td>
+					<td class="text-center">
+						<a href="{$item['url']}" target="_blank">
+						<img src="{$_W['attachurl']}{$item['photo']}" style="width:200px;" />
+						</a>
+					</td>
+					<td style="white-space: normal;">{$item['title']}</td>
+					<td class="text-center">
+						<label data='{$item['status']}' class='label  label-default {if $item['status']==1}label-info{/if}' >{if $item['status']==1}已发布{else}已禁止{/if}</label>
+					</td>
+					<td>{$item['create_time']}</td>
+					<td style="text-align:right;">
+						<a href="{php echo $this->createWebUrl('banner', array('op' => 'post','id'=>$item['id']))}"class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="编辑"><i class="fa fa-pencil"></i></a>
+
+						<a href="{php echo $this->createWebUrl('banner', array('op' => 'delete','id'=>$item['id']))}" onclick="return confirm('此操作不可恢复，确认删除？');return false;" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="删除"><i class="fa fa-times"></i></a>
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+			
+		</table>
+		<table class="table table-hover">
+			<tr>
+				<td width="60">
+					<input type="checkbox" onclick="var ck = this.checked;$(':checkbox').each(function(){this.checked = ck});" />
+				</td>
+				<td class="text-left" width="100">
+					<input name="token" type="hidden" value="{$_W['token']}" />
+					<input name="op" type="hidden" value="delete" />
+					<input type="submit" class="btn btn-primary span2" name="submit" value="删除" />
+				</td>
+				<td class="text-right">
+					{$pager}
+				</td>
+			</tr>
+
+		</table>
+	</div>
+	</div>
+</form>	

@@ -1,0 +1,39 @@
+{template 'header'}
+<style>
+.header{
+	position: relative;
+	width: 100%;
+	min-height: 56px;
+	height: auto;
+	padding: 0px 16px;
+}
+.but_box{width: 80%;
+margin: 50% 10% 0 10%;}
+.am-btn{padding: 0.8em 1em;}
+</style>
+</head>
+<body style="background: url({php echo MODULE_URL;}/template/static/images/redpacktop.jpg) no-repeat; background-color: #A7473B; background-size: 100%;">
+	<!--拼手气红包开始-->
+	<div  class="but_box">
+		<div class="am-g am-padding">
+			
+			{if $issend==1}
+			<button class="am-btn am-btn-primary am-radius am-btn-block" style="margin-top:20px;" onclick="window.location.href='{php echo $this->createMobileUrl('Mypack')}'">我发的红包</button>
+			
+			<button class="am-btn am-btn-success am-radius am-btn-block" style="margin-top:20px;" onclick="window.location.href='{php echo $this->createMobileUrl('Mypack',array('ty'=>'lucky'))}'">我收的红包</button>
+			
+			<button class="am-btn am-btn-warning am-radius am-btn-block" style="margin-top:20px;" onclick="window.location.href='{php echo $this->createMobileUrl('Plus')}'">发红包</button>
+			{/if}
+			<button class="am-btn am-btn-success am-radius am-btn-block" style="margin-top:20px;" onclick="window.location.href='{php echo $this->createMobileUrl('Mypack',array('ty'=>'lucky'))}'">我收的红包</button>
+		</div>
+	</div>
+	<!--拼手气红包结束-->
+<div class="am-g am-padding"style="color: #F37B1D;    position: fixed;    bottom: 0;    text-align: center;    font-size: 1.5rem;">
+可发带广告朋友圈红包
+</div>
+<script type="text/javascript">
+wx.ready(function () {
+	wx.showOptionMenu();
+});
+</script>
+{template 'footer'}

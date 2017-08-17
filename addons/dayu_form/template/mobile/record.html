@@ -1,0 +1,81 @@
+{template 'weheader'}
+<style>
+body{background-color:#fff;font-weight:300;}
+.divider{font-size:12px;}
+.divider::after, .divider::before {text-align:left;color:#9500c0;}
+
+.p{background-color:#fff;padding:0px;}
+.discuss_list{padding:0px 5px;}
+.discuss_item{background-color:#fff;border-bottom:3px solid #dedede;margin-bottom:5px;}
+.discuss_message .discuss_message_content{font-size:12px;color:#333;;}
+.discuss_message .discuss_message_content:last-child{font-size:14px;color:#000;}
+
+.dayu{margin:8px 5px;border:1px solid #c8c8c8;border-top:8px solid {if $activity['bcolor']}{$activity['bcolor']}{else}#b585e9{/if};}
+.weui_media_title{border-bottom:1px dashed #999;font-size:14px;font-weight:300;color:#333;}
+.weui_media_title span{padding:3px 0;}
+.weui_media_box{padding: 15px 15px 0;}
+.weui_media_box:before {height: 0px;border-top: 0px solid #E5E5E5;}
+.weui_media_box .weui_media_desc, .weui_media_box .weui_desc{font-size:12px;color:#333;padding:2px 0;}
+.weui_media_box .weui_media_desc:last-child, .weui_media_box .weui_desc:last-child{font-size:14px;color:#000;}
+.weui_media_box small{color:#999;}
+
+.dayu .weui_media_box:last-child{padding:0 15px 15px;}
+</style>
+<div class="weui_tab_bd">
+	{if $activity['avatar']}
+<div class="p">
+	<ul class="discuss_list">
+	{loop $rows $item}
+		<li class="discuss_item">
+			<div class="user_info">
+			<strong class="nickname">{$item['member']}</strong>
+			<img src="{if !empty($item['user']['tag']['avatar'])}{$item['user']['tag']['avatar']}{else}{MODULE_URL}template/weui/images/noface.jpg{/if}" class="avatar">
+			</div>
+			<div class="discuss_message">
+				<span class="discuss_status"></span>
+				{loop $children[$item['rerid']] $d}
+				<?php $fi=$this->get_fields($d['refid'],$reid); ?>
+				<div class="discuss_message_content">{$fi['title']}: {$d['data']}</div>
+				{/loop}
+			</div>
+			<p class="discuss_extra_info">{php echo date('Y/m/d', $item['createtime'])}</p>
+ 
+			<div class="reply_result">
+			<div class="nickname f12">处理结果</div>
+			<div class="discuss_message">
+			<div class="discuss_message_content">{$item['kfinfo']}</div>
+			</div>
+			<p class="discuss_extra_info">回复时间：{php echo date('Y/m/d', $item['yuyuetime'])}</p>
+			</div>
+		</li>
+	{/loop}
+	</ul>
+</div>
+{else}
+         <div class="weui_panel weui_panel_access">
+            <div class="weui_panel_bd">
+	{loop $rows $item}
+		<div class="radius-md dayu">
+                <div class="weui_media_box weui_media_text">
+					<h4 class="weui_media_title f14">{php echo date('Y/m/d', $item['createtime'])} <span class="right f16">{$state}</span></h4>
+				{loop $children[$item['rerid']] $d}
+				<?php $fi=$this->get_fields($d['refid'],$reid); ?>
+				<div class="weui_desc">{$fi['title']}: {$d['data']}</div>
+				{/loop}
+                </div>
+				
+                <div class="weui_media_box weui_media_text">
+				<div class="divider">处理结果</div>
+				<div class="weui_desc f14">{$item['kfinfo']}</div>
+				<small class="f12">回复时间：{php echo date('Y/m/d', $item['yuyuetime'])}</small>
+                </div>
+
+		</div>
+	{/loop}
+            </div>
+        </div>
+{/if}
+	{if $pager}<div class="p bg-gray" style="height:32px;">{$pager}</div>{/if}
+</div>
+{php $footer_off=1}
+{template 'footers'}

@@ -1,0 +1,83 @@
+
+{template 'header'}
+<script type="text/javascript">
+var pagename="index";
+</script>
+<style>
+.hnav > div:nth-child(1n+1) .iconn{
+	background-color:#8e5cd4;
+}
+.hnav > div:nth-child(2n+1) .iconn{
+	background-color: #FF7C06;
+}
+.hnav > div:nth-child(3n+1) .iconn{
+	background-color: #CC99CC;
+}
+.hnav > div:nth-child(4n+1) .iconn{
+	background-color: #99CC33;
+}
+.hnav > div:nth-child(5n+1) .iconn{
+	background-color: #F8976D;
+}
+.hnav > div .iconn img{
+	opacity: .8;
+}
+.hnav > div{
+	width:25%;
+}
+
+
+</style>
+</head>
+<body>
+
+<div id="page0" class="ub ub-ver bga">
+    <ul class="ub-f1 uinn">
+    	{loop $list $vo}
+        <li class="ubb b-bla01" style="padding:0.75rem 0">
+        	<a href="{php echo $this->createMobileUrl('project',array('id'=>$vo['id']))}" class="ub ub-ac">
+            	<div class="ub-img1" style="height:4rem; width:5rem; background-image:url({$_W['attachurl']}{$vo['icon_pc']})"></div>
+                <!--以下注释为调用分类小图标-->
+                <!--<div class="ub-img1" style="height:4rem; width:5rem; background-image:url({$_W['attachurl']}{$vo['icon']})"></div>-->
+                <div class="ub-f1 uinn">
+                	<div class="t-bla">{$vo['type_name']}</div>
+                    <div class="ulev-4 t-gra">{$vo['remark']}</div>
+                </div>
+                <div class="tx-r">
+                	<div class="ulev2 t-gre1"><span class="ulev-4">￥</span>{$vo['price_unit']}</div>
+                    <div class="t-gra ulev-4">/ {$vo['unit']}</div>
+                </div>
+                <div style="padding-left:0.5rem"><i class="iconfont icon-xiangyou ulev1 t-gra"></i></div>
+            </a>
+        </li>
+        {/loop}
+    </ul>
+    <!--<div class="ub-f1 hnav" style="padding:0.5rem 0.75rem">
+        {loop $list $vo}
+            <div class="ufl">
+            	<a href="{php echo $this->createMobileUrl('project',array('id'=>$vo['id']))}" class="ub ub-ver ub-ac block"  style="padding:0.5rem 0.5rem 0.3rem 0.5rem">
+                    <div class="uc-a1 c-blu ub ub-ac ub-pc iconn">
+                        <img src="{$_W['attachurl']}{$vo['icon']}" style="width:2rem">
+                        <img src="{$_W['attachurl']}{$vo['icon_pc']}" style="width:2rem">
+                    </div>
+                    <div class="ulev-4 t-gra" style="padding-top:0.2rem">{$vo['type_name']}</div>
+                    <div class="ulev-4 t-gra" style="padding-top:0.2rem">{$vo['remark']}</div>
+                    <div class="ulev-4 t-gra" style="padding-top:0.2rem">{$vo['price_unit']}</div>
+                    <div class="ulev-4 t-gra" style="padding-top:0.2rem">{$vo['unit']}</div>
+                </a>
+            </div>
+        {/loop}
+        <div class="clear"></div>
+    </div>-->
+    
+    <div class="" style="height:3.125rem"></div>
+    
+    {template 'footer'}
+    
+</div>
+
+<script type="text/javascript" src="{MODULE_URL}/template/mobile/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="{MODULE_URL}/template/mobile/js/main.js"></script>
+
+</body>
+</html>

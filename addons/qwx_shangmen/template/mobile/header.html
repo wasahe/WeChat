@@ -1,0 +1,27 @@
+<?php 
+	if (!$page_title){
+		$page_title = $this->module['config']['site_name'];
+		if (!$page_title){
+			$page_title = $_W['account']['name'];
+		}
+	}
+	$service_phone = $this->module['config']['service_phone'];
+?>
+<header>
+<?php 
+if ($_GET['do'] == 'index' && $_SESSION['weixin_get_fans_location']) {
+	echo '<a class="entrance j_cityEntrance" id="currentCity" href="javascript:void(0);">'.$_SESSION['weixin_get_fans_location'].'</a>';
+} else {
+	echo '<a class="prev back_prev" href="javascript:void(0);"></a>';
+}
+?>
+    <h2>{$page_title}</h2>
+    <a class="tel" href="tel:{$service_phone}"></a>
+</header>
+<script>
+$(function(){
+	$('.back_prev').click(function(){
+		1 >= window.history.length ? window.location.href = "{php echo $this->createMobileUrl('index')}": window.history.go( - 1)
+	})
+})
+</script>

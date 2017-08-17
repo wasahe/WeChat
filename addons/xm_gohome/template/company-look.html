@@ -1,0 +1,62 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+    <li class="active"><a href="{php echo  $this->createWebUrl('companylook', array());}">公司员工</a></li>
+    <li><a href="{php echo  $this->createWebUrl('comadd_s', array('openid'=>$openid));}">添加员工</a></li>
+
+</ul>
+
+<div class="clearfix">    
+    <div class="panel panel-default">
+    	<div class="panel-heading">
+            公司人员列表
+        </div>
+        <div class="table-responsive panel-body" style="overflow:visible;">
+            <table class="table table-hover">
+            	<thead>
+                	<tr class="active">
+                    	<td>ID编号</td>
+                        <td>姓名</td>
+                        <td>性别</td>
+                        <td>手机号码</td>
+						<td>身份证</td>
+                        <td>已有证件</td>
+                        <td>公司名称</td>
+						<td width="400">操作</td>
+                    </tr>
+                </thead>
+                <tbody>
+                	{loop $list $val}
+                	<tr>
+                    	<td>{$val[id]}</td>
+                    	<td>{$val[staff_name]}</td>
+                        <td>{php echo $this->getSex($val[sex])}</td>
+						<td>{$val[staff_mobile]}</td>
+                        <td>{php echo substr($val[card],0,12)}****{php echo substr($val[card],16,4)}</td>
+                        <td>{$val[card_all]}</td>
+						<td>{$val[company_name]}</td>
+                        <td style="overflow:visible;">
+                        	<div class="btn-group btn-group-sm">
+                            	{if $val[print_state] == 0}
+                                <a class="btn btn-default" href="{php echo $this->createWebUrl('printadd',array('id'=>$val['id']));}"><i class="fa fa-edit"></i>派发打印机</a>
+                                {/if}
+                                <a class="btn btn-default" href="{php echo $this->createWebUrl('staffsheng',array('id'=>$val['id'],'mge'=>$val['company_flag']));}"><i class="fa fa-edit"></i>个人审核编辑</a>
+                            	<a class="btn btn-default" href="{php echo $this->createWebUrl('comstaffedit',array('id'=>$val['id'],'openid'=>$val['openid']));}"><i class="fa fa-edit"></i> 编辑</a>
+                                <a class="btn btn-default" href="{php echo $this->createWebUrl('Companysdelete', array('id'=>$val['id']))}" onclick="return confirm('确认删除该服务人员?');"><i class="fa fa-remove"></i> 删除</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {/loop}
+                    
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="panel-body text-center">
+            {$pager}
+        </div>
+        
+    </div>
+</div>
+
+
+{template 'common/footer'}

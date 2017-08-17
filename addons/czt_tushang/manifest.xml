@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com" versionCode="0.6">
+	<application setting="true">
+		<name><![CDATA[图片打赏]]></name>
+		<identifie><![CDATA[czt_tushang]]></identifie>
+		<version><![CDATA[2.3]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[图片打赏]]></ability>
+		<description><![CDATA[图片打赏]]></description>
+		<author><![CDATA[黑锐源码社区]]></author>
+		<url><![CDATA[http://www.012wz.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+			<message type="image" />
+			<message type="video" />
+			<message type="shortvideo" />
+			<message type="click" />
+		</handles>
+		<rule embed="true" />
+		<card embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="个人中心" do="user" state="" direct="false" />
+			<entry title="热门图片" do="list" state="1" direct="false" />
+			<entry title="热门视频" do="list" state="2" direct="false" />
+			<entry title="余额提现" do="cash" state="" direct="false" />
+			<entry title="最新图片" do="list2" state="1" direct="false" />
+			<entry title="最新视频" do="list2" state="2" direct="false" />
+			<entry title="排行榜" do="rank" state="" direct="false" />
+		</cover>
+		<menu>
+			<entry title="用户管理" do="user" state="" direct="false" />
+			<entry title="图片管理" do="image" state="" direct="false" />
+			<entry title="视频管理" do="video" state="" direct="false" />
+			<entry title="提现管理" do="cash" state="" direct="false" />
+			<entry title="相关说明" do="help" state="" direct="false" />
+		</menu>
+	</bindings>
+	<permissions>
+	</permissions>
+	<install><![CDATA[install.php]]></install>
+	<uninstall><![CDATA[DROP TABLE IF EXISTS `czt_tushang_cash`;
+DROP TABLE IF EXISTS `czt_tushang_image`;
+DROP TABLE IF EXISTS `czt_tushang_record`;
+DROP TABLE IF EXISTS `czt_tushang_user`;
+DROP TABLE IF EXISTS `czt_tushang_video`;
+]]></uninstall>
+	<upgrade><![CDATA[upgrade.php]]></upgrade>
+</manifest>

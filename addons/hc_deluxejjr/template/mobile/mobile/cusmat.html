@@ -1,0 +1,597 @@
+<html xmlns="http://www.w3.org/1999/xhtml" class="js">
+<head>
+	<title>客户画像</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta http-equiv="Cache-Control" content="no-cache">
+	<meta http-equiv="Cache-Control" content="no-store">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="Expires" content="0">
+	<link href="../addons/hc_deluxejjr/style/css/mobile.css" rel="stylesheet" type="text/css">
+	<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+	<style type="text/css">
+		.wjlogo{text-align: left;}
+		.TopBgLogo{background-color: #85c8ff;}
+		body{background-color: #efefef;}
+		#next_button, #confirm_verify_btn, .wjprogress_new .barbox{background-color: #85c8ff;}
+		#control_panel .button{border-width:1px;border-style:solid;color: #ffffff}
+		#control_panel .prev_button{border-width:1px;border-style:solid;border-color: #85c8ff;color: #85c8ff}
+		.login_input .button{background-color: #85c8ff;}
+		.login_input .button:hover{opacity: 0.8;}
+		.login_input .button{color: #ffffff}
+		.phone_end .button{background-color: #85c8ff;}
+		.phone_end .button{color: #ffffff}
+		.phone_end .button:hover{opacity: 0.8;}
+		.TopBgTitle{background-color: #e7462f;}
+		.wj_title{color: #ffffff;}
+	</style>
+</head>
+<body>
+<div class="TopBgTitle">
+	<div class="wj_title ">全民经纪人豪华版客户画像</div>
+</div>
+<div class="header clear project_title">
+	<div class="wjintro mtop desc_begin">
+		<p>请认真填写以下内容，谢谢。</p>
+	</div>
+</div>
+<form action="{php echo $this->createMobileUrl('cusmat', array('op'=>'post', 'cid'=>$cid))}" method="post" id="form">
+	<div class="Phone_con">
+	  <div class="M_topic maxtop question">
+		<div class="topic_title">
+		  <span>
+			<span style="color:#FF0000">
+			  <span style="font-size:16px">
+				<span style="font-family:microsoft yahei">
+				  年龄
+				</span>
+			  </span>
+			</span>
+		  </span>
+		</div>
+		<div class="topic_con">
+		  <div class="phone_select">
+			<select name="age">
+				<option value="0">
+					--请选择一个选项--
+				</option>
+				<option value="1" {if $cusmatlog['age']==1}selected{/if}>
+					20岁以下
+				</option>
+				<option value="2" {if $cusmatlog['age']==2}selected{/if}>
+					21-30岁
+				</option>
+				<option value="3" {if $cusmatlog['age']==3}selected{/if}>
+					31-40岁
+				</option>
+				<option value="4" {if $cusmatlog['age']==4}selected{/if}>
+					41-50岁
+				</option>
+				<option value="5" {if $cusmatlog['age']==5}selected{/if}>
+					51-60岁
+				</option>
+				<option value="6" {if $cusmatlog['age']==6}selected{/if}>
+					61岁以上
+				</option>
+			</select>
+			<!-- <p>点击选择一项</p> -->
+			<!-- <div class="DownArrow"></div> -->
+		  </div>
+		</div>
+	  </div>
+	  <div class="M_topic maxtop question">
+		<div class="topic_title">
+		  <span>
+			<span style="color:#FF0000">
+			  <span style="font-size:16px">
+				<span style="font-family:microsoft yahei">
+				  性别
+				</span>
+			  </span>
+			</span>
+		  </span>
+		</div>
+		<div class="topic_con">
+		  <div class="phone_select">
+			<select name="sex">
+				<option value="0">
+					--请选择一个选项--
+				</option>
+				<option value="1" {if $cusmatlog['sex']==1}selected{/if}>
+					男
+				</option>
+				<option value="2" {if $cusmatlog['sex']==2}selected{/if}>
+					女
+				</option>
+			</select>
+			<!-- <p>点击选择一项</p> -->
+			<!-- <div class="DownArrow"></div> -->
+		  </div>
+		</div>
+	  </div>
+	  <div class="wjques maxtop question M_sorting">
+		<div class="topic_title">
+		  <span>
+			<span style="color:#FF0000">
+			  <span style="font-size:16px">
+				<span style="font-family:microsoft yahei">
+				  意向区域
+				</span>
+			  </span>
+			</span>
+		  </span>
+		</div>
+		<div class="topic_con M_topic">
+		  <ul id="" class="unstyled M_sorting">
+			<li class="Ulist">
+			  <select name="area_location_p" class="U_select option"></select>
+			</li>
+			<li class="Ulist">
+			  <select name="area_location_c" class="U_select option"></select>
+			</li>
+			<li class="Ulist">
+			  <select name="area_location_a" class="U_select option"></select>
+			</li>
+			<script type="text/javascript" src="../addons/hc_deluxejjr/style/js/region_select.js"></script>
+			<script type="text/javascript">
+				var area_location_p = "{if !empty($cusmatlog['area_location_p'])}{$cusmatlog['area_location_p']}{else}福建省{/if}";
+				var area_location_c = "{if !empty($cusmatlog['area_location_c'])}{$cusmatlog['area_location_c']}{else}泉州市{/if}";
+				var area_location_a = "{if !empty($cusmatlog['area_location_a'])}{$cusmatlog['area_location_a']}{else}丰泽区{/if}";
+				new PCAS("area_location_p", "area_location_c", "area_location_a", area_location_p, area_location_c, area_location_a);
+			</script>
+		  </ul>
+		</div>
+	  </div>
+	  <div class="M_topic maxtop question">
+		<div class="topic_title">
+		  <span>
+			<span style="color:#FF0000">
+			  <span style="font-size:16px">
+				<span style="font-family:microsoft yahei">
+				  意向户型
+				</span>
+			  </span>
+			</span>
+		  </span>
+		</div>
+		<div class="topic_con checkbox_wrap">
+		  <ul class="unstyled">
+			<li id="litype1" onclick="select($('#litype1'), type1)">
+			  <div class="checked_wrap">
+				<i>
+				</i>
+				<input type="checkbox" name="type[]" id="type1" value="1" style="display:none;">
+				<span>
+				  一房
+				</span>
+			  </div>
+			</li>
+			<li id="litype2" onclick="select($('#litype2'), type2)">
+			  <div class="checked_wrap">
+				<i>
+				</i>
+				<input type="checkbox" name="type[]" id="type2" value="2" style="display:none;">
+				<span>
+				  两房
+				</span>
+			  </div>
+			</li>
+			<li id="litype3" onclick="select($('#litype3'), type3)">
+			  <div class="checked_wrap">
+				<i>
+				</i>
+				<input type="checkbox" name="type[]" id="type3" value="3" style="display:none;">
+				<span>
+				  三房
+				</span>
+			  </div>
+			</li>
+			<li id="litype4" onclick="select($('#litype4'), type4)">
+			  <div class="checked_wrap">
+				<i>
+				</i>
+				<input type="checkbox" name="type[]" id="type4" value="4" style="display:none;">
+				<span>
+				  复式
+				</span>
+			  </div>
+			</li>
+			<li id="litype5" onclick="select($('#litype5'), type5)">
+			  <div class="checked_wrap">
+				<i>
+				</i>
+				<input type="checkbox" name="type[]" id="type5" value="5" style="display:none;">
+				<span>
+				  公寓
+				</span>
+			  </div>
+			</li>
+			<li id="litype6" onclick="select($('#litype6'), type6)">
+			  <div class="checked_wrap">
+				<i>
+				</i>
+				<input type="checkbox" name="type[]" id="type6" value="6" style="display:none;">
+				<span>
+				  别墅
+				</span>
+			  </div>
+			</li>
+		  </ul>
+		</div>
+	  </div>
+	  <div class="M_topic maxtop question">
+		<div class="topic_title">
+		  <span>
+			<span style="color:#FF0000">
+			  <span style="font-size:16px">
+				<span style="font-family:microsoft yahei">
+				  心理单价（元/㎡）
+				</span>
+			  </span>
+			</span>
+		  </span>
+		</div>
+		<div class="topic_con">
+		  <div class="topic_input">
+			<input class="option" name="wantprice" value="{$cusmatlog['wantprice']}" type="text">
+		  </div>
+		</div>
+	  </div>
+	  <div class="M_topic maxtop question">
+		<div class="topic_title">
+		  <span>
+			<span style="color:#FF0000">
+			  <span style="font-size:16px">
+				<span style="font-family:microsoft yahei">
+				  总价预算（万元）
+				</span>
+			  </span>
+			</span>
+		  </span>
+		</div>
+		<div class="topic_con">
+		  <div class="topic_input">
+			<input class="option" name="allprice" value="{$cusmatlog['allprice']}" type="text">
+		  </div>
+		</div>
+	  </div>
+	  <div class="M_topic maxtop question">
+		<div class="topic_title">
+		  <span>
+			<span style="color:#FF0000">
+			  <span style="font-size:16px">
+				<span style="font-family:microsoft yahei">
+				  公积金情况
+				</span>
+			  </span>
+			</span>
+		  </span>
+		</div>
+		<div class="topic_con">
+		  <div class="phone_select">
+			<select name="cpf">
+				<option value="0">
+					--请选择一个选项--
+				</option>
+				<option value="1" {if $cusmatlog['cpf']==1}selected{/if}>
+					有
+				</option>
+				<option value="2" {if $cusmatlog['cpf']==2}selected{/if}>
+					无
+				</option>
+				<option value="3" {if $cusmatlog['cpf']==3}selected{/if}>
+					不详
+				</option>
+			</select>
+			<!-- <p>点击选择一项</p> -->
+			<!-- <div class="DownArrow"></div> -->
+		  </div>
+		</div>
+	  </div>
+	  <div class="maxtop question ">
+		<div class="DividingLine">
+		</div>
+	  </div>
+	  <div class="wjques maxtop question M_sorting">
+		<div class="topic_title">
+		  生活区域
+		</div>
+		<div class="topic_con M_topic">
+		  <div id="tip_56cbb5f3a320fc9e1983b508" class="error_bar" style="display: none;">
+		  </div>
+		  <ul id="" class="unstyled M_sorting">
+			<li class="Ulist">
+			  <select name="live_location_p" class="U_select option"></select>
+			</li>
+			<li class="Ulist">
+			  <select name="live_location_c" class="U_select option"></select>
+			</li>
+			<li class="Ulist">
+			  <select name="live_location_a" class="U_select option"></select>
+			</li>
+			<script type="text/javascript" src="../addons/hc_deluxejjr/style/js/region_select.js"></script>
+			<script type="text/javascript">
+				var live_location_p = "{if !empty($cusmatlog['live_location_p'])}{$cusmatlog['live_location_p']}{else}{/if}";
+				var live_location_c = "{if !empty($cusmatlog['live_location_c'])}{$cusmatlog['live_location_c']}{else}{/if}";
+				var live_location_a = "{if !empty($cusmatlog['live_location_a'])}{$cusmatlog['live_location_a']}{else}{/if}";
+				new PCAS("live_location_p", "live_location_c", "live_location_a", live_location_p, live_location_c, live_location_a);
+			</script>
+		  </ul>
+		</div>
+	  </div>
+	  <div class="wjques maxtop question M_sorting">
+		<div class="topic_title">
+		  工作区域
+		</div>
+		<div class="topic_con M_topic">
+		  <ul class="unstyled M_sorting">
+			<li class="Ulist">
+			  <select name="work_location_p" class="U_select option"></select>
+			</li>
+			<li class="Ulist">
+			  <select name="work_location_c" class="U_select option"></select>
+			</li>
+			<li class="Ulist">
+			  <select name="work_location_a" class="U_select option"></select>
+			</li>
+			<script type="text/javascript" src="../addons/hc_deluxejjr/style/js/region_select.js"></script>
+			<script type="text/javascript">
+				var work_location_p = "{if !empty($cusmatlog['work_location_p'])}{$cusmatlog['work_location_p']}{else}{/if}";
+				var work_location_c = "{if !empty($cusmatlog['work_location_c'])}{$cusmatlog['work_location_c']}{else}{/if}";
+				var work_location_a = "{if !empty($cusmatlog['work_location_a'])}{$cusmatlog['work_location_a']}{else}{/if}";
+				new PCAS("work_location_p", "work_location_c", "work_location_a", work_location_p, work_location_c, work_location_a);
+			</script>
+		  </ul>
+		</div>
+	  </div>
+	  <div class="M_topic maxtop question">
+		<div class="topic_title">
+		  购房原因
+		</div>
+		<div class="topic_con checkbox_wrap">
+		  <ul class="unstyled">
+			<li id="libuy1">
+			  <div class="checked_wrap" onclick="select($('#libuy1'), buy1)">
+				<i>
+				</i>
+				<input type="checkbox" name="buyreason[]" value="1" id="buy1" style="display:none;">
+				<span>
+				  自住，不想再租房了
+				</span>
+			  </div>
+			</li>
+			<li id="libuy2">
+			  <div class="checked_wrap" onclick="select($('#libuy2'), buy2)">
+				<i>
+				</i>
+				<input type="checkbox" name="buyreason[]" value="2" id="buy2" style="display:none;">
+				<span>
+				  改善，卖小买大，提高生活品质
+				</span>
+			  </div>
+			</li>
+			<li id="libuy3">
+			  <div class="checked_wrap" onclick="select($('#libuy3'), buy3)">
+				<i>
+				</i>
+				<input type="checkbox" name="buyreason[]" value="3" id="buy3" style="display:none;">
+				<span>
+				  投资，看准房价会涨，手里闲钱多
+				</span>
+			  </div>
+			</li>
+			<li id="libuy4">
+			  <div class="checked_wrap" onclick="select($('#libuy4'), buy4)">
+				<i>
+				</i>
+				<input type="checkbox" name="buyreason[]" value="4" id="buy4" style="display:none;">
+				<span>
+				  养老，响应政府提倡
+				</span>
+			  </div>
+			</li>
+			<li id="libuy5">
+			  <div class="checked_wrap" onclick="select($('#libuy5'), buy5)">
+				<i>
+				</i>
+				<input type="checkbox" name="buyreason[]" value="5" id="buy5" style="display:none;">
+				<span>
+				  结婚，需要房子
+				</span>
+			  </div>
+			</li>
+			<li id="libuy6">
+			  <div class="checked_wrap" onclick="select($('#libuy6'), buy6)">
+				<i>
+				</i>
+				<input type="checkbox" name="buyreason[]" value="6" id="buy6" style="display:none;">
+				<span>
+				  读书，为了小孩读书，落实学区
+				</span>
+			  </div>
+			</li>
+		  </ul>
+		</div>
+	  </div>
+	  <div class="M_topic maxtop question">
+		<div class="topic_title">
+		  现居住情况
+		</div>
+		<div class="topic_con">
+		  <div class="phone_select">
+			<select name="livecondition">
+				<option value="0">
+					--请选择一个选项--
+				</option>
+				<option value="1" {if $cusmatlog['livecondition']==1}selected{/if}>
+					商品房
+				</option>
+				<option value="2" {if $cusmatlog['livecondition']==2}selected{/if}>
+					经济适用房
+				</option>
+				<option value="3" {if $cusmatlog['livecondition']==3}selected{/if}>
+					二手房
+				</option>
+				<option value="4" {if $cusmatlog['livecondition']==4}selected{/if}>
+					自建私有房
+				</option>
+				<option value="5" {if $cusmatlog['livecondition']==5}selected{/if}>
+					租赁房
+				</option>
+				<option value="6" {if $cusmatlog['livecondition']==6}selected{/if}>
+					单位福利分房
+				</option>
+			</select>
+			<!-- <p>点击选择一项</p> -->
+			<!-- <div class="DownArrow"></div> -->
+		  </div>
+		</div>
+	  </div>
+	  <div class="M_topic maxtop question">
+		<div class="topic_title">
+		  家庭结构
+		</div>
+		<div class="topic_con">
+		  <div class="phone_select">
+			<select name="homeformation">
+				<option value="0">
+					--请选择一个选项--
+				</option>
+				<option value="1" {if $cusmatlog['homeformation']==1}selected{/if}>
+					单身贵族
+				</option>
+				<option value="2" {if $cusmatlog['homeformation']==2}selected{/if}>
+					三口之家
+				</option>
+				<option value="3" {if $cusmatlog['homeformation']==3}selected{/if}>
+					三世同堂
+				</option>
+				<option value="4" {if $cusmatlog['homeformation']==4}selected{/if}>
+					四世同堂
+				</option>
+				<option value="5" {if $cusmatlog['homeformation']==5}selected{/if}>
+					单亲家庭
+				</option>
+			</select>
+			<!-- <p>点击选择一项</p> -->
+			<!-- <div class="DownArrow"></div> -->
+		  </div>
+		</div>
+	  </div>
+	  <div class="M_topic maxtop question">
+		<div class="topic_title">
+		  工作单位性质
+		</div>
+		<div class="topic_con">
+		  <div class="phone_select">
+			<select name="worknature">
+				<option value="0">
+					--请选择一个选项--
+				</option>
+				<option value="1" {if $cusmatlog['worknature']==1}selected{/if}>
+					行政/事业单位
+				</option>
+				<option value="2" {if $cusmatlog['worknature']==2}selected{/if}>
+					合资（包括外商独资）
+				</option>
+				<option value="3" {if $cusmatlog['worknature']==3}selected{/if}>
+					国营（包括集体）
+				</option>
+				<option value="4" {if $cusmatlog['worknature']==4}selected{/if}>
+					私营
+				</option>
+				<option value="5" {if $cusmatlog['worknature']==5}selected{/if}>
+					境内上市股份公司
+				</option>
+				<option value="6" {if $cusmatlog['worknature']==6}selected{/if}>
+					其他
+				</option>
+			</select>
+			<!-- <p>点击选择一项</p> -->
+			<!-- <div class="DownArrow"></div> -->
+		  </div>
+		</div>
+	  </div>
+	  <div class="M_topic maxtop question">
+		<div class="topic_title">
+		  职务级别
+		</div>
+		<div class="topic_con">
+		  <div class="topic_input">
+			<input class="option" name="worklevel" value="{$cusmatlog['worklevel']}" type="text">
+		  </div>
+		</div>
+	  </div>
+	</div>
+	<style>
+	.btn {
+		background: -webkit-linear-gradient(left,#e21d00, #e31e00, #e51f00, #fc3200 0%,#e72100,#df1b00);
+		color: #fff;
+		text-align: center;
+		border-radius: 5px;
+	}
+	</style>
+	<div class="Phone_bon" id="control_panel">
+		{if $opp=='pro'}
+		<span onclick="history.go(-1);" style="height:47px;" class="btn button white WJ_an" style="background-color:#e7462f">返  回</span>
+		{else}
+		{if !empty($assistant)}
+		<span onclick="$('#form').submit();" style="height:47px;" class="btn button white WJ_an" style="background-color:#e7462f">提  交</span>
+		{else}
+		<span onclick="history.go(-1);" style="height:47px;" class="btn button white WJ_an" style="background-color:#e7462f">返  回</span>
+		{/if}
+		{/if}
+	</div>
+</form>
+<script>
+function select(liobj, checkobj){
+	if(liobj.attr('class')==undefined || liobj.attr('class')==''){
+		liobj.addClass("checked");
+		checkobj.checked = true;
+	} else {
+		liobj.removeClass("checked");
+		checkobj.checked = false;
+	}
+}
+
+window.onload = function(){
+	var inputs = document.getElementsByTagName("input");
+	var checkboxArray = [];
+	for(var i=0; i<inputs.length; i++){
+		var obj = inputs[i];
+		if(obj.type=='checkbox'){
+			checkboxArray.push(obj);
+		}
+	}
+	for(j=0; j<checkboxArray.length; j++){
+		if(checkboxArray[j].checked == true){
+			var lilabel = 'li' + checkboxArray[j].id;
+			$('#'+lilabel).addClass("checked");
+		} else {
+			var lilabel = 'li' + checkboxArray[j].id;
+			$('#'+lilabel).removeClass("checked");
+		}
+	}
+	var type = {php echo json_encode($type)};
+	var buyreason = {php echo json_encode($buyreason)};
+	if(buyreason!=''){
+		for(var k=0; k<buyreason.length; k++){
+			var buy = 'buy' + buyreason[k];
+			document.getElementById(buy).checked = true;
+			var libuy = 'libuy' + buyreason[k];
+			$('#'+libuy).addClass("checked");
+		}
+	}
+	if(type!=''){
+		for(var k=0; k<type.length; k++){
+			var ty = 'type' + type[k];
+			document.getElementById(ty).checked = true;
+			var litype = 'litype' + type[k];
+			$('#'+litype).addClass("checked");
+		}
+	}
+}
+</script>
+</body></html>

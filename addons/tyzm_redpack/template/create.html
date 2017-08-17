@@ -1,0 +1,188 @@
+﻿{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li{if $_GPC['do'] == 'manage' || $_GPC['do'] == '' } class="active"{/if}><a href="{php echo $this->createWebUrl('manage');}">红包管理</a></li>
+    <li{if $_GPC['do'] == 'create'} class="active"{/if}><a href="{php echo $this->createWebUrl('create');}">{if $id > 0}编辑红包活动{else}添加红包活动{/if}</a></li>
+</ul>
+<div class="clearfix">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" id="form1">
+		<div class="panel panel-default" id="step1">
+			<div class="panel-heading">
+				红包活动信息
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class="text-danger">*</span> 活动名称</label>
+					<div class="col-sm-8 col-xs-12">
+						<input type="text" class="form-control" name="act_name" value="{$redata['act_name']}"/>
+						<span class="help-block"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class="text-danger">*</span>商户名称</label>
+					<div class="col-sm-8 col-xs-12">
+						<input type="text" class="form-control" name="send_name" value="{$redata['send_name']}"/>
+						<span class="help-block">红包发送者名称</span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class="text-danger">*</span>红包祝福语</label>
+					<div class="col-sm-8 col-xs-12">
+						<input type="text" class="form-control" name="wishing" value="{$redata['wishing']}"/>
+						<span class="help-block">例如：感谢您参加猜灯谜活动，祝您元宵节快乐！</span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class="text-danger">*</span>活动时间</label>
+					<div class="col-sm-9 col-xs-4 col-md-3">
+						{php echo tpl_form_field_daterange('datelimit', array('starttime'=>date('Y-m-d h:i',$redata['starttime']),'endtime'=>date('Y-m-d h:i',$redata['endtime'])),true);}
+						<span class="help-block"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">绑定周边设备</label>
+					<div class="col-sm-8 col-xs-12">
+						<input type="text" class="form-control" name="uuid" value="{$redata['uuid']}"/>
+						<span class="help-block">绑定周边时，请填写对应的设备uuid，仅管理员操作。绑定周边时，仅通过周边摇一摇才能领红包！</span>
+					</div>
+				</div>
+				
+				<!--
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class="text-danger">*</span>红包类型</label>
+					<div class="col-sm-8 col-xs-12">
+						<label class="radio-inline">
+						<input type="radio" name="redtype" value="0" {if $redata['redtype']=='' or $redata['redtype']=='0'} checked {/if}/>现金红包
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="redtype" value="1" {if $redata['redtype']=='1'} checked {/if} />分裂红包
+					</label>
+
+						<span class="help-block">现金红包，固定发给一个人，分裂红包，发送给一位用户后，该用户可以分享给其他好友</span>
+					</div>
+				</div>
+				
+				<div class="form-group redtypenum" {if $redata['redtype']!='1'}style="display:none;{/if} ">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class="text-danger">*</span>分裂个数</label>
+					<div class="col-sm-8 col-xs-12">
+						<input type="number" class="form-control" name="total_num" id="total_num" value="{$redata['total_num']}"/>
+						<span class="help-block">红包发放总人数，即总共有多少人可以领到该组红包（包括分享者） </span>
+					</div>
+				</div>
+				-->
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class="text-danger"></span>红包口令</label>
+					<div class="col-sm-8 col-xs-12">
+					    <input type="text" class="form-control" name="secret_key" value="{$redata['secret_key']}"/>
+						<span class="help-block">口令红包时，填写口令，留空为摇一摇红包！</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class="text-danger"></span><span class="text-danger">*</span>备注</label>
+					<div class="col-sm-8 col-xs-12">
+						<textarea name="remark" class="form-control js-a" cols="30" rows="3">{$redata['remark']}</textarea>
+						<span class="help-block">备注信息：猜越多得越多，快来抢！</span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class="text-danger"></span><span class="text-danger">*</span>说明</label>
+					<div class="col-sm-8 col-xs-12">
+						<textarea name="description" class="form-control js-a" cols="30" rows="3">{$redata['description']}</textarea>
+						<span class="help-block">仅作为活动说明内部显示。</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class="text-danger">*</span>是否显示红包广场</label>
+					<div class="col-sm-8 col-xs-12">
+						<label class="radio-inline">
+						<input type="radio" name="onlyshare" value="0" {if $redata['onlyshare']=='0'} checked {/if} data-val="{$redata['onlyshare']}"/>显示
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="onlyshare" value="1" {if $redata['onlyshare']=='1'} checked {/if} data-val="{$redata['onlyshare']}" />不显示
+					</label>
+						<span class="help-block">是否在红包广场隐藏，默认显示。</span>
+					</div>
+				</div>
+						<div class="form-group">
+          <label class="col-xs-12 col-sm-3 col-md-2 control-label">地区限制</label>
+          <div class="col-sm-9">
+            <input class="form-control" type="text" value="{$redata['area']}" class="span2" name="area">
+            <div class="help-block">请填写开发活动地区城市，例如：北京,上海,广州,海口。为空则不限制地区。多个地区用“,”分割。
+			{if $baiduapikey==""}
+			<div class="alert alert-danger" role="alert">正确设置百度api市场apikey才能正常使用地区限制，<a href="{php echo url('profile/module/setting', array('m' => 'tyzm_redpack'));}#apikey" target="_blank" >点击设置</a>。</div>
+			{/if}
+			
+			</div>
+          </div>
+        </div>
+				<div class="alert alert-warning">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class="text-danger">*</span>支付情况</label>
+					<div class="col-sm-8 col-xs-12">
+						<label class="radio-inline">
+						<input type="radio" name="ispay" value="0" {if $redata['ispay']=='0'} checked {/if} data-val="{$redata['ispay']}"/>未支付
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="ispay" value="1" {if $redata['ispay']=='1'} checked {/if} data-val="{$redata['ispay']}" />已支付
+					</label>
+						<span class="help-block">修改支付状态，会照成资金流失或投诉，谨慎操作</span>
+					</div>
+				</div>
+				
+				<div class="form-group redtypenum" style="display:none;">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+					<div class="col-sm-8 col-xs-12">
+						<input type="password" class="form-control" name="password" id="password" placeholder="请输入管理员登录密码"/>
+						<span class="help-block">请输入管理员密码 </span>
+					</div>
+				</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-group col-sm-12">
+			<input name="submit" id="submit" type="submit" value="提交" class="btn btn-primary col-lg-1">
+			<input type="hidden" name="token" value="{$_W['token']}" />
+		</div>
+	</form>
+</div>
+
+<script>
+	$('#form1').submit(function() {
+		if(!$.trim($(':text[name="act_name"]').val())) {
+			util.message('请填写活动名称');
+			return false;
+		}
+		 var redtype=$(':radio[name="redtype"]:checked').val();
+		 if(redtype==1){
+			var total_num=$('#total_num').val();
+			if(total_num<3 || total_num>20){
+			    util.message('请填写分裂个数在3-20个内！');
+				return false;
+		    }
+		 }
+	});
+/*
+		$("input[type='radio']").change(function() { 
+		  var redtype=$(this).val();
+		  if(redtype==1){
+			$(".redtypenum").show();
+		  }else{
+		    $(".redtypenum").hide();
+		  }
+		}); 
+		*/
+        $(":radio[name='ispay']").change(function() { 
+		  var taval=$(this).val();
+		  var ispay=$(this).attr('data-val');
+		  if(taval!=ispay){
+			$(".redtypenum").show();
+		  }else{
+		    $(".redtypenum").hide();
+		  }
+		}); 
+	
+	
+</script>
+{template 'common/footer'}

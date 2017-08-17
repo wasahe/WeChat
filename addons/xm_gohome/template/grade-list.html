@@ -1,0 +1,61 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+    <li class="active"><a href="{php echo  $this->createWebUrl('grade', array());}">保证金级别管理</a></li>
+	<li><a href="{php echo  $this->createWebUrl('gradeadd', array());}">添加保证金级别</a></li>
+</ul>
+
+<div class="clearfix">    
+    <div class="panel panel-default">
+    	<div class="panel-heading">
+            保证金级别列表
+        </div>
+        <div class="table-responsive panel-body" style="overflow:visible;">
+            <table class="table table-hover">
+            	<thead>
+                	<tr class="active">
+                    	<td>级别名称</td>
+                        <td>保证金额</td>
+                        <td>级别描述</td>
+                        <td>操作</td>
+                    </tr>
+                </thead>
+                <tbody>
+                	{loop $list $val}
+                	<tr>
+                    	<td>
+                        	<p class="form-control-static">{$val[grade_name]}</p>
+                        </td>
+                        <td>
+							<p class="form-control-static">{$val[grade_money]}</p>
+                        </td>
+						<td>
+							<p class="form-control-static">{$val[remark]}</p>
+                        </td>
+                       
+                        
+					    <td style="overflow:visible;">
+                        	<div class="btn-group btn-group-sm">
+                                <a class="btn btn-default" href="{php echo $this->createWebUrl('gradeedit',array('id'=>$val['id']));}"><i class="fa fa-edit"></i> 编辑</a>
+                                <a class="btn btn-default" href="{php echo $this->createWebUrl('gradedelete', array('id'=>$val['id']))}" onClick="return confirm('确认删除?');"><i class="fa fa-remove"></i> 删除</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {/loop}
+                    
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="panel-body text-center">
+            {$pager}
+        </div>
+        
+        <div class="panel-footer">
+			<a class="btn btn-default" href="{php echo $this->createWebUrl('gradeadd',array());}">添加保证金级别</a>
+        </div>
+        
+    </div>
+</div>
+
+
+{template 'common/footer'}

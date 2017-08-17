@@ -1,0 +1,11 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+    <li><a href="{php echo  $this->createWebUrl('Version', array());}">系统更新</a></li>
+    <li><a href="{php echo  $this->createWebUrl('reset', array());}">重置系统</a></li>
+    <li><a href="{php echo  $this->createWebUrl('xiu', array());}">字段修复</a></li>
+</ul>
+
+<div class="clearfix">
+	<div class="tx-c" style="font-size:16px;">{$msg}</div>
+</div>
+{template 'common/footer'}

@@ -1,0 +1,621 @@
+{php $title=$rank['name']}
+{template 'inc/header'}
+
+<style>
+	body{background:#f8f8f8;}
+
+
+	.sdtitle{position:relative;font-size:15px;}
+	.sdtitle i{display:inline-block;vertical-align:middle;width:16px;height:16px;line-height:16px;text-align:center;font-size:11px;color:#FFFFFF;background-size:16px 16px;}
+	.sdhead{position:relative;width:100%;}
+	.sdtou{position:absolute;top:0px;left:0px;width:50px;}
+	.sdavatar{display:block;width:48px;height:48px;overflow:hidden;border-radius:48px;}
+	.sdavatar img{width:48px;}
+	/**.sdtou i{position:absolute;display:inline-block;top:-8px;right:-2px;width:18px;height:18px;background:url("{MODULE_URL}/static/mobile/images/ico_top.png") no-repeat;background-size:18px 18px;}**/
+	.sdwhat{margin-left:60px;font-size:15px;}
+	.sdwhat dt{padding:0 0 2px 0;}
+
+	.sdnick{color:#576b95;}
+	.sdnick i{display:inline-block;height:20px;vertical-align:top;}
+	.sdnick i img{height:20px;}
+	.sdtimer{position:absolute;top:2px;right:0px;color:#999999;font-size:12px;}
+
+	.sdtype{text-align:right}/**padding-left:24px;background:url("{MODULE_URL}/static/mobile/images/m_add_ac.png") no-repeat left center;background-size:20px 20px;**/
+	.sdtype.type1{background:url("{MODULE_URL}/static/mobile/images/good_tag.png") no-repeat left 2px;background-size:45px 18px;}/*color:#22bc38;*/
+	.sdtype.type2{background:url("{MODULE_URL}/static/mobile/images/bad_tag.png") no-repeat left 2px;background-size:45px 18px;}/*color:#ff0042;*/
+
+	.sdcont{padding:6px 15px;}
+	.sdcont p{padding-bottom:6px;}
+	
+	/**.btn_gree.ed{background:#576b95;color:#FFFFFF;border-color:#576b95;}**/
+	.label_gree{color:#666666;}
+	.label_agree.ed{color:#40d0ad;}
+	.label_disagree.ed{color:#f16270;}
+
+	.btn_gree.disabled{border-color:#c9c9c9;color:#999999;}
+	.btn_gree i{vertical-align:-4px;}
+	.btn_gree i img{height:20px;}
+	.btn_agree{border-color:#40d0ad;color:#40d0ad;}
+	.btn_agree.ed{background:#cffff3}
+	.btn_disagree{border-color:#f16270;color:#f16270;}
+	.btn_disagree.ed{background:#ffd5d9}
+	
+	
+	.greers{font-size:12px;padding:0 10px 0 10px;white-space:nowrap;overflow:hidden;}
+	.greers span{display:inline-block;vertical-align:middle;width:25px;height:25px;overflow:hidden;border-radius:28px;border:1px solid #dfe3ea;}
+	.greers span img{width:25px;}
+	.greersmore{font-size:12px;padding-left:5px;}
+
+	#replys_title{position:relative;color:#999999;padding:0 15px;margin-top:30px;}
+	#btn_to_reply{position:absolute;right:15px;}
+	#btn_to_reply i{vertical-align:-3px;}
+	#btn_to_reply i img{width:16px;}
+	#replys_list{margin-top:10px;}
+	.rp_title{}
+	.rp_title.on{color:#999999;}
+
+	.reply{padding-left:0px;padding-right:0px;}
+	.rpitem{position:relative;width:100%;}
+	.rpleft{position:absolute;width:50px;top:0px;left:10px;}
+	.rpavatar{display:inline-block;width:40px;height:40px;border-radius:40px;overflow:hidden;}
+	.rpavatar img{width:40px;}
+	.rptitle{position:relative;}
+	.rpnick{color:#999999;}
+	.rplike{position:absolute;right:0px;top:4px;font-size:12px;color:#999999;display:inline-block;padding:0 0 0 20px;background:url("{MODULE_URL}/static/mobile/images/like.png") no-repeat left center;background-size:16px 16px;}
+	.rplike.ed{background-image:url("{MODULE_URL}/static/mobile/images/liked.png")}
+	.rptimer{font-size:12px;color:#999999;}
+
+	.rpmain{padding:0 10px 0 60px;}
+
+	.rppbox{padding:10px 0 0 0;margin:6px 0 0 0;border-top:1px solid #EEEEEE;}
+	.rppbox .tt{height:14px;line-height:14px;padding:0 0 0 5px;color:#999999;}
+	.rppbox .tt.reward{border-left:3px solid #dc5d4a;}
+	.rppbox .bd{padding:8px 8px 6px 6px;}
+	.rppbox .bd.reward img{width:24px;margin:2px;}
+
+	#feed_foot{position:relative;padding:0 0 15px 0;}
+	#feed_foot a{color:#999999;}
+	#agree_sum{margin-right:5px;}
+	#agree_sum.ed{color:#40d0ad;}
+	#disagree_sum.ed{color:#f16270;}
+
+	#award_form{}
+	#award_form .btn_award{font-size:12px;color:#d75644;border-color:#d75644;}
+	#award_form .btn_award em{font-style:italic;font-size:24px;}
+	
+	#btn_to_award{display:inline-block;width:50px;height:50px;line-height:50px;text-align:center;color:#dc5d4a;border:2px solid #dc5d4a;border-radius:54px;font-size:24px}
+	#awards_block{padding:0px 40px}
+	#awards_block p{margin:15px 0 0 0;color:#999999;}
+	#awards_block p .avatar{display:inline-block;width:30px;height:30px;overflow:hidden;margin:1px}
+	#awards_block p .avatar img{width:30px;}
+	
+	.btn_to_reward{position:absolute;right:50px;top:2px;display:inline-block;color:#dc5d4a;border:1px solid #dc5d4a;height:18px;line-height:18px;width:18px;text-align:center;border-radius:40px;font-size:12px;}
+	#reward_form{}
+	#reward_form .btn_reward{font-size:12px;color:#d75644;border-color:#d75644;}
+	#reward_form .btn_reward em{font-style:italic;font-size:24px;}
+
+	#btn_admin{position:absolute;top:0px;right:15px;}
+	#btn_report{color:#999999;position:absolute;top:0px;right:15px;}
+</style> 
+
+<div id="award_post" class="weui-popup-container popup-bottom" style="z-index:11">
+	<div class="weui-popup-overlay"></div>
+	<div class="weui-popup-modal">
+
+		<div class="toolbar">
+		  <div class="toolbar-inner">
+			<a href="javascript:;" class="picker-button close-popup">关闭</a>
+			<h1 class="title" style="color:#d75644">打赏作者</h1>
+		  </div>
+		</div>
+
+		<div class="modal-content">
+			<form id="award_form" style="padding:15px;" action="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('feed',array('cmd'=>'award','rid'=>pencode($rank['id']),'fid'=>pencode($feed['id']))), 2)}" method="post">
+				<div class="weui-row">
+				  <div class="weui-col-33"><a href="javascript:;" class="btn_award weui_btn weui_btn_plain_primary" data-money="{$rank['settings']['award_values'][0]}"><em>{php echo $rank['settings']['award_values'][0]/100}</em>元</a></div>
+				  <div class="weui-col-33"><a href="javascript:;" class="btn_award weui_btn weui_btn_plain_primary" data-money="{$rank['settings']['award_values'][1]}"><em>{php echo $rank['settings']['award_values'][1]/100}</em>元</a></div>
+				  <div class="weui-col-33"><a href="javascript:;" class="btn_award weui_btn weui_btn_plain_primary" data-money="{$rank['settings']['award_values'][2]}"><em>{php echo $rank['settings']['award_values'][2]/100}</em>元</a></div>
+				</div>
+
+				<div class="weui-row" style="margin:15px 0;">
+				  <div class="weui-col-33"><a href="javascript:;" class="btn_award weui_btn weui_btn_plain_primary" data-money="{$rank['settings']['award_values'][3]}"><em>{php echo $rank['settings']['award_values'][3]/100}</em>元</a></div>
+				  <div class="weui-col-33"><a href="javascript:;" class="btn_award weui_btn weui_btn_plain_primary" data-money="{$rank['settings']['award_values'][4]}"><em>{php echo $rank['settings']['award_values'][4]/100}</em>元</a></div>
+				  <div class="weui-col-33"><a href="javascript:;" class="btn_award weui_btn weui_btn_plain_primary" data-money="{$rank['settings']['award_values'][5]}"><em>{php echo $rank['settings']['award_values'][5]/100}</em>元</a></div>
+				</div>
+			
+				<p style="text-align:center;font-size:12px;"><a id="btn_to_award_free">其它金额<a/></p>
+			</form>
+			
+		</div>
+	</div>
+</div>
+
+<div id="reward_post" class="weui-popup-container popup-bottom" style="z-index:11">
+	<div class="weui-popup-overlay"></div>
+	<div class="weui-popup-modal">
+
+		<div class="toolbar">
+		  <div class="toolbar-inner">
+			<a href="javascript:;" class="picker-button close-popup">关闭</a>
+			<h1 class="title" style="color:#d75644">打赏回复</h1>
+		  </div>
+		</div>
+
+		<div class="modal-content">
+			<form id="reward_form" style="padding:15px;" action="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('feed',array('cmd'=>'reward','rid'=>pencode($rank['id']),'fid'=>pencode($feed['id']))), 2)}" method="post">
+				<input id="reward_reply_id" type="hidden" name="reply_id"/>
+				<div class="weui-row">
+				  <div class="weui-col-33"><a href="javascript:;" class="btn_reward weui_btn weui_btn_plain_primary" data-money="{$rank['settings']['award_values'][0]}"><em>{php echo $rank['settings']['award_values'][0]/100}</em>元</a></div>
+				  <div class="weui-col-33"><a href="javascript:;" class="btn_reward weui_btn weui_btn_plain_primary" data-money="{$rank['settings']['award_values'][1]}"><em>{php echo $rank['settings']['award_values'][1]/100}</em>元</a></div>
+				  <div class="weui-col-33"><a href="javascript:;" class="btn_reward weui_btn weui_btn_plain_primary" data-money="{$rank['settings']['award_values'][2]}"><em>{php echo $rank['settings']['award_values'][2]/100}</em>元</a></div>
+				</div>
+
+				<div class="weui-row" style="margin:15px 0;">
+				  <div class="weui-col-33"><a href="javascript:;" class="btn_reward weui_btn weui_btn_plain_primary" data-money="{$rank['settings']['award_values'][3]}"><em>{php echo $rank['settings']['award_values'][3]/100}</em>元</a></div>
+				  <div class="weui-col-33"><a href="javascript:;" class="btn_reward weui_btn weui_btn_plain_primary" data-money="{$rank['settings']['award_values'][4]}"><em>{php echo $rank['settings']['award_values'][4]/100}</em>元</a></div>
+				  <div class="weui-col-33"><a href="javascript:;" class="btn_reward weui_btn weui_btn_plain_primary" data-money="{$rank['settings']['award_values'][5]}"><em>{php echo $rank['settings']['award_values'][5]/100}</em>元</a></div>
+				</div>
+			
+				<p style="text-align:center;font-size:12px;"><a id="btn_to_reward_free">其它金额<a/></p>
+			</form>
+			
+		</div>
+	</div>
+</div>
+
+<div id="reply_post" class="weui-popup-container fullscreen" style="z-index:11">
+  <div class="weui-popup-modal">
+	<a class='close-popup'></a>
+	<p class="popup-title">回复</p>
+	<div class='popup-main'>
+		<div>
+			<form id="reply_form" action="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('feed',array('cmd'=>'reply','rid'=>pencode($rank['id']),'fid'=>pencode($feed['id']))), 2)}" method="post">
+				<div class="weui_cells weui_cells_form">
+					<div class="weui_cell">
+						<div class="weui_cell_bd weui_cell_primary">
+							<textarea id="reply_content" name="content" class="weui_textarea" placeholder="说点儿什么吧..." style="height:120px;"></textarea>
+						</div>
+					</div>
+				</div>
+				<div style="padding:15px 15px 15px 15px;"><a id="btn_reply" class="weui_btn weui_btn_primary">确定</a></div>
+			</form>
+		</div>
+	</div>
+  </div>
+</div>
+
+<div class="weui_tab">
+	<div class="weui_tab_bd">
+		<div class="weui_panel" style="margin-top:0px;">
+			<div class="weui_panel_hd">
+				
+				<div class="sdhead">
+					<div class="sdtou">
+						<a class="sdavatar"  href="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('user',array('rid'=>pencode($rank['id']),'uid'=>pencode($feed['uid']))), 2)}"><img src="{php echo VP_AVATAR($feed['_user']['avatar'],'s');}"/></a>
+					</div>
+					<dl class="sdwhat">
+						<dt class="sdtitle">
+							<span class="sdnick">
+								<a href="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('user',array('rid'=>pencode($rank['id']),'uid'=>pencode($feed['uid']))), 2)}">{$feed['_user']['nickname']}<i><img src="{$feed['_user']['_authority']['flag']}"/></i></a>
+							</span>
+							<span class="sdtimer">{php echo date('m-d H:i',$feed['create_time'])}</span> 
+						</dt>
+						<dd class="sdtype type{$feed['type']}">来自<a href="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('index',array('rid'=>pencode($rank['id']))), 2)}">{$rank['name']}</a></dd>
+					</dl>
+				</div>
+			</div>
+			<div class="weui_panel_bd">
+				<div class="sdcont">
+					<p>{$feed['merchant_name']} &nbsp;{$feed['content']}</p>
+					<ul>
+					{loop $feed['images'] $feedimage}
+						{php $images = preg_replace('/http:\/\/http:\/\//','http:\/\/',VP_IMAGE_URL($feedimage,'m'));}
+						<li><img src="{php echo $images}" style="width:100%;"/></li>
+					{/loop}
+					</ul>
+				</div>
+
+				<div style="text-align:center;padding:40px 30px;">
+					<a class="open-popup"  id="btn_to_award"  href="javascript:;" data-target="#award_post">赏</a>
+					<div id="awards_block" data-url="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('feed',array('cmd'=>'awards','rid'=>pencode($rank['id']),'fid'=>pencode($feed['id']))), 2)}"></div>
+					<script id="awards_block_tpl" type="text/template" >
+						<%
+							if(total<=0){
+								return;
+							}
+						%>
+							<p><%=total%>次</p>
+							<p>
+						<%
+							for(var i=0;i<list.length;i++){
+								var item = list[i];
+						%>
+							<span class="avatar"><img src="<%=item.avatar%>"/></span>
+						<%  } %>
+							</p>
+					</script>
+				</div>
+
+				<div id="feed_foot">
+					<div style="padding-left:15px;">
+						<a id="agree_sum" class="{php echo in_array($user['uid'],$feed['agreers'])?'ed':''; }">赞同 <em>{$feed['agrees']}</em></a> <a id="disagree_sum" class="{php echo in_array($user['uid'],$feed['disagreers'])?'ed':''; }">反对 <em>{$feed['disagrees']}</em></a>
+					</div>
+
+					{if $mine['admin']>0}
+					<a id="btn_admin" data-delete="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('admin',array('cmd'=>'feed_delete','rid'=>pencode($rank['id']),'fid'=>pencode($feed['id']))), 2)}">管理</a>
+					{else}
+						<a id="btn_report" href="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('index',array('cmd'=>'report','rid'=>pencode($rank['id']),'feed_id'=>$feed['id'],'to_uid'=>$feed['uid'])), 2)}">举报</a>
+					{/if}
+				</div>
+			</div>
+		</div>
+		
+		<div id="replys_title">
+			<a class="rp_title on" data-sort="new">最新回复</a> | <a class="rp_title" data-sort="hot">最热回复</a>
+			<a id="btn_to_reply" class="open-popup"  href="javascript:;" data-target="#reply_post"><i><img src="{MODULE_URL}/static/mobile/images/reply.png"/></i>写回复</a>
+		</div>
+
+		<div id="replys_list" class="weui_cells" data-url="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('feed',array('cmd'=>'replys','rid'=>pencode($rank['id']),'fid'=>pencode($feed['id']))), 2)}" data-loading=false data-start=0 data-more=1 data-sort="new">
+		</div>
+		<div id="replys_list_loader" class="weui-infinite-scroll"><div class="infinite-preloader"></div>加载...</div>
+
+
+		<script id="replys_list_tpl" type="text/template" >
+			<%
+				if(!list){
+					return;
+				}
+				for(var i=0;i<list.length;i++){
+					var item = list[i];
+			%>
+				<div class="reply weui_cell" data-like="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('feed',array('cmd'=>'like','rid'=>pencode($rank['id']),'fid'=>pencode($feed['id']))), 2)}">
+					<div class="rpitem">
+						<div class="rpleft">
+							<span class="rpavatar"><img src="<%=item._user.avatar%>"/></span>
+						</div>
+						<dl class="rpmain">
+							<dt class="rptitle">
+								<span class="rpnick"><%=item._user.nickname%></span>
+								<a class="btn_to_reward" data-id="<%=item.id%>">赏</a>{if $mine['admin']>0 || $user['uid']==$feed['uid']}{/if}
+								<a class="rplike <%=item._liked==1?'ed':'';%>" data-id="<%=item.id%>"><%=item.likes%></a> 
+							</dt>
+							<dd class="rpcont"><%=item.content%> </dd>
+							<dd class="rptimer"><%=VP_FORMAT(item.create_time,'MM-dd h:m')%> </dd>
+
+							<%
+								var rewards=item._rewards;
+								if(rewards && rewards.length>0){
+							%>
+								<dd class="rppbox">
+									<p class="tt reward"><%=rewards.length%>次打赏</p>
+									<p class="bd reward">
+									<% for(var j=0;j<rewards.length;j++){ %>
+										<img src="<%=rewards[j]%>"/>
+									<%  } %>
+									</p>
+								</dd>
+							<%  } %>
+
+						</dl>
+					</div>
+				</div>
+			<%  } %>
+		</script>
+		<!--<%=item._rewards.uids%>-->
+
+	</div>
+
+	<div class="weui_tabbar">
+
+		{if !in_array($user['uid'],$feed['agreers']) && !in_array($user['uid'],$feed['disagreers'])}
+		<div id="gree_btns" style="width:100%;padding:5px 0;">
+			<div class="weui-row weui-no-gutter">
+				<div class="weui-col-50">
+					<a href="javascript:;" class="btn_agree btn_gree weui_btn  weui_btn_plain_default" style="margin:0 3px 0 6px;" data-url="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('feed',array('cmd'=>'agree','rid'=>pencode($rank['id']),'fid'=>pencode($feed['id']))), 2)}"><i><img src="{MODULE_URL}/static/mobile/images/agree.png"/></i> 赞同<span style="display:none;">+1</span></a>
+				</div>
+				<div class="weui-col-50">
+					<a href="javascript:;" class="btn_disagree btn_gree weui_btn  weui_btn_plain_default" style="margin:0 6px 0 3px;" data-url="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('feed',array('cmd'=>'disagree','rid'=>pencode($rank['id']),'fid'=>pencode($feed['id']))), 2)}"><i><img src="{MODULE_URL}/static/mobile/images/disagree.png"/></i> 反对<span style="display:none;">+1</span></a>
+				</div>
+			</div>
+		</div>
+		{/if}
+
+		<!--
+		<form id="reply_form" action="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('feed',array('cmd'=>'reply','rid'=>pencode($rank['id']),'fid'=>pencode($feed['id']))), 2)}" method="post">
+			<div style="width:100%;position:relative;">
+				<div style="padding:5px 70px 5px 50px;overflow:hidden;">
+					<div><input id="reply_content" name="content" style="width:100%;border:1px solid #CCCCCC;border-radius:2px;height:34px;line-height:34px;"/></div>
+				</div>
+				<div style="position:absolute;top:5px;right:5px;">
+					<a id="btn_reply"  href="javascript:;" class="weui_btn weui_btn_mini weui_btn_plain_default" style="height:34px;line-height:32px;padding:0 15px;">回复</a>
+				</div>
+			</div>
+		</form>
+		-->
+	</div>
+</div>
+
+<!-- 微信支付表单 -->
+<form id="pay_wechat" action="{php echo url('mc/cash/wechat');}" method="post">
+	<input id="pay_wechat_params" type="hidden" name="params" value="" />
+</form>
+
+
+{template 'inc/script'}
+<script type="text/javascript">
+
+	$(function(){
+
+		var list = $("#replys_list");
+		var list_tpl=baidu.template($('#replys_list_tpl').html());
+		var loadList=function(sort,refresh){
+			if(list.attr('data-loading')==true){
+				return;
+			}
+			$('.rp_title').each(function(){
+				if($(this).data('sort')==sort){
+					$(this).addClass('on');
+				}else{
+					$(this).removeClass('on');
+				}
+			});
+
+			if(refresh){
+				list.attr('data-start',0);
+				list.attr('data-more',1);
+				list.html('');
+				$('#replys_list_loader').show();
+			}
+			list.attr('data-loading',true);
+			$.post(list.attr('data-url'), {
+				start:list.attr('data-start'),
+				sort:sort
+			},function(resp) {
+				list.attr('data-loading',false);
+				//$('#replys_list_container').pullToRefreshDone();
+				if(resp.status==0){
+					alert(resp.info);
+				}else{
+					list.attr('data-sort',sort);
+					list.attr('data-start',resp.data.start);
+					list.attr('data-more',resp.data.more);
+					if(list.attr('data-more')==0){
+						//$('#replys_list_container').destroyInfinite();
+						$('#replys_list_loader').hide();
+					}
+					var html=list_tpl(resp.data);
+					list.html(list.html()+html);
+				}
+			});	
+		}
+		loadList('new',false);
+		
+		$('.rp_title').on('click',function(){
+			loadList($(this).data('sort'),true);
+		});
+
+		$('.btn_agree').on('click',function(){
+			if($(this).hasClass('ed')){
+				return $.toast("您已赞同过了","text");
+			}
+			var gree=$(this);
+			$.post(gree.data('url'),'',function(resp) {
+				if(resp.status==0){
+					$.alert(resp.info);
+				}else{
+					$('#agree_sum em').text(parseInt($('#agree_sum em').text())+1);
+					$('#agree_sum').addClass('ed');
+					$('#gree_btns').slideUp();
+				}
+			});
+			gree.find('span').show();
+			gree.addClass('ed');
+		});
+
+		$('.btn_disagree').on('click',function(){
+			if($(this).hasClass('disabled')){
+				return false;
+			}
+			if($(this).hasClass('ed')){
+				return $.toast("您已反对过了","text");
+			}
+			var gree=$(this);
+			$.post(gree.data('url'),'',function(resp) {
+				if(resp.status==0){
+					$.alert(resp.info);
+				}else{
+					$('#disagree_sum em').text(parseInt($('#disagree_sum em').text())+1);
+					$('#disagree_sum').addClass('ed');
+					$('#gree_btns').slideUp();
+				}
+			});
+			gree.find('span').show();
+			gree.addClass('ed');
+		});
+
+		$('#btn_reply').on('click',function(){
+			if($(this).hasClass('disabled')){
+				return false;
+			}
+			if($('#reply_content').val()==''){
+				return $.toast("说点什么吧","text");
+			}
+			$(this).hasClass('disabled');
+
+			var form=$('#reply_form');
+			$.showLoading("正在回复...");
+			$.post(form.attr('action'),form.serialize(),function(resp) {
+				$(this).removeClass('disabled');
+				$.hideLoading();
+				if(resp.status==0){
+					$.alert(resp.info);
+				}else{
+					$('#reply_content').val('')
+					$.toast("回复成功","text");
+					$.closePopup();
+					loadList('new',true);
+				}
+			});
+		});
+	
+		list.on('click','.reply',function(e){
+			if($(e.target).hasClass('rplike')){ // 赞操作
+				var type=1;
+				if($(e.target).hasClass('ed')){// 取消赞
+					type=2;
+					$(e.target).removeClass('ed');
+					$(e.target).text(parseInt($(e.target).text())-1);
+				}else{
+					$(e.target).addClass('ed');
+					$(e.target).text(parseInt($(e.target).text())+1);
+				}
+				$.post($(this).data('like'),{
+					rpid:$(e.target).data('id'),
+					type:type
+				},function(resp) {
+					if(resp.status==0){
+						$.alert(resp.info);
+					}else{
+					}
+				});
+			}else if($(e.target).hasClass('btn_to_reward')){
+				// 打赏回复
+				$('#reward_reply_id').val($(e.target).data('id'));
+				$('#reward_post').popup();
+			}
+		});
+
+		// 是否是直接回复
+		{if $_GPC['act']=='reply'}
+			$('#reply_post').popup();
+		{/if}
+		
+
+		// 获取打赏
+		var awards = $("#awards_block");
+		var awards_tpl=baidu.template($('#awards_block_tpl').html());
+		var loadAwards=function(){
+			$.post(awards.attr('data-url'), {
+			},function(resp) {
+				if(resp.status==0){
+					alert(resp.info);
+				}else{
+					var html=awards_tpl(resp.data);
+					awards.html(awards.html()+html);
+				}
+			});	
+		}
+		loadAwards();
+
+
+		/** 打赏楼主 **/
+		$('.btn_award').on('click',function(){
+			$.showLoading("正在打赏...");
+			var form=$('#award_form');
+			$.post(form.attr('action'),{
+				money:$(this).data('money')
+			},function(resp) {
+				$.hideLoading();
+				if(resp.status==0){
+					$.alert(resp.info);
+				}else{
+					$.showLoading("支付打赏...");
+					$('#pay_wechat_params').val(resp.data);
+					$('#pay_wechat').submit();
+				}
+			});
+		});
+
+		$('#btn_to_award_free').on('click',function(){
+			$.prompt({
+				title: '请输入打赏金额',
+				text: "{php echo $rank['settings']['award_min']/100}元 - {php echo $rank['settings']['award_max']/100}元",
+				empty: false,
+				onOK: function (val) {
+					if(isNaN(val)){
+					   return alert("请填写有效的金额");
+					}
+					$.showLoading("正在打赏...");
+					var form=$('#award_form');
+					$.post(form.attr('action'),{
+						money:val*100
+					},function(resp) {
+						$.hideLoading();
+						if(resp.status==0){
+							$.alert(resp.info);
+						}else{
+							$.showLoading("支付打赏...");
+							$('#pay_wechat_params').val(resp.data);
+							$('#pay_wechat').submit();
+						}
+					});
+				}
+			});
+		});
+
+		/** 打赏回复 **/
+		$('.btn_reward').on('click',function(){
+			$.showLoading("正在打赏...");
+			var form=$('#reward_form');
+			$.post(form.attr('action'),{
+				reply_id:$('#reward_reply_id').val(),
+				money:$(this).data('money')
+			},function(resp) {
+				$.hideLoading();
+				if(resp.status==0){
+					$.alert(resp.info);
+				}else{
+					$.showLoading("支付打赏...");
+					$('#pay_wechat_params').val(resp.data);
+					$('#pay_wechat').submit();
+				}
+			});
+		});
+
+		$('#btn_to_reward_free').on('click',function(){
+			$.prompt({
+				title: '请输入打赏金额',
+				text: "{php echo $rank['settings']['award_min']/100}元 - {php echo $rank['settings']['award_max']/100}元",
+				empty: false,
+				onOK: function (val) {
+					if(isNaN(val)){
+					   return alert("请填写有效的金额");
+					}
+					$.showLoading("正在打赏...");
+					var form=$('#reward_form');
+					$.post(form.attr('action'),{
+						reply_id:$('#reward_reply_id').val(),
+						money:val*100
+					},function(resp) {
+						$.hideLoading();
+						if(resp.status==0){
+							$.alert(resp.info);
+						}else{
+							$.showLoading("支付打赏...");
+							$('#pay_wechat_params').val(resp.data);
+							$('#pay_wechat').submit();
+						}
+					});
+				}
+			});
+		});
+
+		/** 管理相关 **/
+		
+		$('#btn_admin').on('click',function(){
+			var admin=$(this);
+			$.actions({
+				actions: [{
+					text: "删除",
+					onClick: function() {
+						$.confirm("确定删除该内容？", function() {
+							location.href=admin.data('delete');
+						});
+					}
+				}]
+			});
+		});
+	});
+</script>
+{template 'inc/follow'}
+{template 'inc/footer'}

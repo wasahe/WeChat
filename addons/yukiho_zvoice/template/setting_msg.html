@@ -1,0 +1,67 @@
+<!DOCTYPE html><html>{if empty($_W['isajax'])}{template 'common/top'}{/if}  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">    <!-- Main content -->
+    <section class="content">      <div class="row">
+        <!-- right column -->        <div class="col-md-12">          <!-- Horizontal Form -->
+          <div class="box box-info">            <div class="box-header with-border">              <h3 class="box-title">消息提醒内容设置</h3>            </div>            <!-- /.box-header -->            <!-- form start -->			<form action="" method="post"  class="form-horizontal" enctype="multipart/form-data">              <div class="box-body">                <div class="form-group">                  <label class="col-sm-2 control-label">最新提问通知</label>                  <div class="col-sm-10">						<div class="input-group">
+							<span class="input-group-addon">标题</span>							<input type="text" class="form-control" name="title1" value="{$item['title1']}" placeholder="">							<span class="input-group-addon">内容</span> 
+							<input type="text" class="form-control" name="content1" value="{$item['content1']}" placeholder="">
+						</div>						<span class="help-block">示例标题：最新提问通知&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;内容：{name}向您发起了提问，请尽快解答，点击查看详情</span>
+                  </div>                </div>
+                <div class="form-group">                  <label class="col-sm-2 control-label">最新悬赏通知</label>                  <div class="col-sm-10">						<div class="input-group">
+							<span class="input-group-addon">标题</span>							<input type="text" class="form-control" name="title2" value="{$item['title2']}" placeholder="">
+							<span class="input-group-addon">内容</span> 							<input type="text" class="form-control" name="content2" value="{$item['content2']}" placeholder="">
+						</div>						<span class="help-block">示例标题：最新悬赏通知&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;内容：有人在您的专业类目下发起了悬赏提问，请尽快解答，点击查看详情</span>
+                  </div>                </div> 
+                <div class="form-group">                  <label class="col-sm-2 control-label">回答被采纳通知</label>
+                  <div class="col-sm-10">
+						<div class="input-group">
+							<span class="input-group-addon">标题</span>
+							<input type="text" class="form-control" name="title3" value="{$item['title3']}" placeholder="">
+							<span class="input-group-addon">内容</span> 
+							<input type="text" class="form-control" name="content3" value="{$item['content3']}" placeholder="">
+						</div>						<span class="help-block">示例标题：回答被采纳通知&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;内容：恭喜，您的回答已被提问者采纳，获得{credit}元，点击查看详情</span>
+                  </div>                </div> 
+                <div class="form-group">                  <label class="col-sm-2 control-label">问题被回答提醒</label>
+                  <div class="col-sm-10">
+						<div class="input-group">							<span class="input-group-addon">标题</span>
+							<input type="text" class="form-control" name="title4" value="{$item['title4']}" placeholder="">
+							<span class="input-group-addon">内容</span> 
+							<input type="text" class="form-control" name="content4" value="{$item['content4']}" placeholder="">
+						</div>
+						<span class="help-block">示例标题：问题被回答提醒&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;内容：您的问题已经得到解答，点击查看详情</span>
+                  </div>
+                </div>                 <div class="form-group">
+                  <label class="col-sm-2 control-label">申请认证通知</label>
+                  <div class="col-sm-10">
+						<div class="input-group">
+							<span class="input-group-addon">标题</span>
+							<input type="text" class="form-control" name="title5" value="{$item['title5']}" placeholder="">							<span class="input-group-addon">内容</span> 
+							<input type="text" class="form-control" name="content5" value="{$item['content5']}" placeholder="">						</div>						<span class="help-block">示例标题：申请认证通知&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;内容：{name}用户已提交认证用户申请，请进入[会员管理]面板进行审核</span>
+                  </div>
+                </div>                  <div class="form-group">
+                  <label class="col-sm-2 control-label">回答被追问提醒</label>
+                  <div class="col-sm-10">
+						<div class="input-group">							<span class="input-group-addon">标题</span>
+							<input type="text" class="form-control" name="title7" value="{$item['title7']}" placeholder="">
+							<span class="input-group-addon">内容</span> 
+							<input type="text" class="form-control" name="content7" value="{$item['content7']}" placeholder="">
+						</div>						<span class="help-block">示例标题：回答被追问提醒&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;内容：您的回答被提问者追问，点击查看详情</span>
+                  </div>                </div>                 <div class="form-group">
+                  <label class="col-sm-2 control-label">回答被评价提醒</label>
+                  <div class="col-sm-10">
+						<div class="input-group">							<span class="input-group-addon">标题</span>
+							<input type="text" class="form-control" name="title6" value="{$item['title6']}" placeholder="">
+							<span class="input-group-addon">内容</span> 
+							<input type="text" class="form-control" name="content6" value="{$item['content6']}" placeholder="">
+						</div>
+						<span class="help-block">示例标题：回答被评价提醒&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;内容：您的回答被提问者评价，点击查看详情</span>
+                  </div>                </div>                 <div class="form-group">                  <label class="col-sm-2 control-label">最新{php echo $this->template['learnName']}通知</label>
+                  <div class="col-sm-10">						<div class="input-group">
+							<span class="input-group-addon">标题</span>							<input type="text" class="form-control" name="title8" value="{$item['title8']}" placeholder="">
+							<span class="input-group-addon">内容</span> 							<input type="text" class="form-control" name="content8" value="{$item['content8']}" placeholder="">						</div>
+						<span class="help-block">示例标题：最新{php echo $this->template['learnName']}通知&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;内容：有人{php echo $this->template['learnName']}了您的回答，您获得{credit}元，点击查看详情</span>                  </div>                </div> 
+              </div>			  <div class="box-footer">
+                    <input name="submit" type="submit" value="写好了" class="btn btn-info center-block" />                    <input type="hidden" name="token" value="{$_W['token']}" />              </div>            </form>          </div>
+          <!-- /.box -->        </div>        <!--/.col (right) -->
+      </div>      <!-- /.row -->
+    </section>    <!-- /.content -->  </div>{if empty($_W['isajax'])}{template 'common/foot'}{/if}

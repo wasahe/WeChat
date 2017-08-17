@@ -1,0 +1,58 @@
+{template 'head'}
+<a href="{$set['ad_url']}"><img class="ad_pic" src="{$_W['attachurl']}{$set['ad_pic']}"></a>
+<section class="g-con" style="margin-top:-4px;">
+<h2 class="m-h2-tit f-cb">
+<span class="tit">影片列表</span>
+</h2>
+<div class="f-mgt-10 m-cd-list">
+{loop $list $item}
+<div class="m-cd-i-wrap poster">
+<a class="m-cd-i" href="{php echo $this->createmobileUrl('news',array('id' => $item['id']))}">
+<div class="pic">
+<img src="{$_W['attachurl']}{$item['thumb']}">
+<span class="sd">{if $item['lianzai']}{$item['lianzai']}{/if}</span>
+<i class="ico-app">{$item['shuxing']}</i>
+</div>
+<div class="info">
+<h3 class="tit">{$item['title']}</h3>
+</div>
+</a>
+</div>
+{/loop}
+</div>
+</section>
+{if $pindex== '1'}
+{if $pindex+1<=$pageend}
+<a class="pages" href="{php echo $this->createmobileUrl('list',array('id' => $id,'page'=>$pindex+1),true)}">查看更多</a>
+{else}
+{/if}
+{else}
+{if $pindex+1>=$pageend}
+<a class="pages wdith50" href="{php echo $this->createmobileUrl('list',array('id' => $id,'page'=>$pindex-1),true)}">上一页</a>
+<a class="pages wdith50" href="{php echo $this->createMobileUrl('list',array('id' => $id),true)}">返回首页</a>
+{else}
+<a class="pages wdith50" href="{php echo $this->createmobileUrl('list',array('id' => $id,'page'=>$pindex-1),true)}">上一页</a>
+<a class="pages wdith50" href="{php echo $this->createmobileUrl('list',array('id' => $id,'page'=>$pindex+1),true)}">下一页</a>
+{/if}
+{/if}
+<div class="clear"></div>
+{php echo register_jssdk(false);}
+<script type="text/javascript">
+wx.ready(function () {
+sharedata = {
+title: "{$set['name']}-{$set['ad']}",
+desc: "{$set['ad']}",
+link: "{if $set['share_url']}{$set['share_url']}{else}{$_W['siteroot']}app{php echo str_replace('./','/',$this->createMobileUrl('index'))}{/if}",
+imgUrl: "{$_W['attachurl']}{$set['logo']}",
+success: function (res) {},
+cancel: function(){
+}
+};
+wx.onMenuShareAppMessage(sharedata);
+wx.onMenuShareTimeline(sharedata);
+wx.onMenuShareQQ(sharedata);
+wx.onMenuShareWeibo(sharedata);
+wx.onMenuShareQZone(sharedata);
+});
+</script>
+{template 'end'}

@@ -1,0 +1,90 @@
+{template 'common/header'}
+
+<div class="fans">
+	<ul class="nav nav-tabs">
+		<li {if $state==0 && $status!=2}class="active"{/if}><a href="{php echo $this->createWebUrl('fans',array('state'=>0));}">粉丝列表</a></li>
+		<li {if $state==1}class="active"{/if}><a href="{php echo $this->createWebUrl('fans',array('state'=>1));}">已提交信息</a></li>
+		<li {if $status==2}class="active"{/if}><a href="{php echo $this->createWebUrl('fans',array('status'=>2));}">员工列表</a></li>
+	</ul>
+		<div class="panel panel-info">
+		<div class="panel-heading">当前搜索条件下数量： {$total}</div>
+		    <div class="panel-body">
+        <form action="{php echo $this->createWebUrl('fans',array('state'=>$state))}" method="post" class="form-horizontal" role="form">
+            <div class="form-group">        
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-1 control-label">粉丝昵称</label>
+                <div class="col-sm-2 col-lg-2">
+                    <input class="form-control" name="nickname" id="" type="text" value="{$nickname}">
+            	</div>            
+				<div class=" col-xs-12 col-sm-2 col-lg-2">
+                    <button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+                </div>
+            </div>          
+        </form>
+    </div>
+		
+		
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-body table-responsive">
+			<table class="table table-hover">
+				<thead class="navbar-inner">
+					<tr>
+						<th style="width: 50px;">序号</th>
+						<th style="width: 60px;">头像</th>
+						<th style="width: 100px;">昵称|姓名</th>
+						<th style="width: 80px;">电话</th>
+						<th style="width: 60px;">有效分享</th>
+						<th style="width: 70px;">核销状态</th>
+						<th style="width: 70px;">设置</th>
+						<th style="width: 100px; text-align: right;">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					{loop $list $item}
+					<tr>
+						<td>{$item['id']}</td>
+						<td><img src="{$item['headimgurl']}" width="20%;"></td>
+						<td>{$item['nickname']}|{$item['fname']}</td>
+						<td>{if !empty($item['fmobile'])}<button type="button" class="btn btn-info btn-sm">{$item['fmobile']}</button>{/if}</td>
+						<td><button type="button" class="btn btn-info btn-sm">{if empty($item['sharecount'])}0{else}{$item['sharecount']}{/if}</button></td>
+						<td>
+						{if $item['verify']== 1}
+						<button type="button" class="btn btn-success btn-sm">已核销</button>
+						{else}
+						<button type="button" class="btn btn-info btn-sm">未核销</button>
+						{/if}
+						</td>
+						<td>
+						{if $item['status'] == 0}
+						<a class="btn btn-warning btn-sm"
+								href="#" onclick="drop_confirm('确定要设为管理员吗?','{php echo $this->createWebUrl('addfans',array('state'=>$state,'op'=>'admin','fansid'=>$item['id']))}');"
+								title="编辑"><i class="icon-edit"></i>设为员工</a>
+						{else}
+						<a class="btn btn-info btn-sm"
+								href="#" onclick="drop_confirm('确定要取消管理员吗?','{php echo $this->createWebUrl('addfans',array('state'=>$state,'op'=>'unadmin','fansid'=>$item['id']))}');"
+								title="编辑"><i class="icon-edit"></i>取消员工</a>
+						{/if}
+						
+						</td>
+						<td style="text-align: right;">
+							<a class="btn btn-default btn-sm" href="#"
+							onclick="drop_confirm('确定要删除吗?','{php echo $this->createWebUrl('addfans',array('state'=>$state,'op'=>'delete','fansid'=>$item['id']))}');"
+							title="删除"><i class="icon-remove"></i>删除</a>
+						</td>
+					</tr>
+					{/loop}
+				</tbody>
+			</table>
+		</div>
+		{$pager}
+	</div>
+</div>
+
+<script type="text/javascript">
+    function drop_confirm(msg, url){
+        if(confirm(msg)){
+            window.location = url;
+        }
+    }
+</script>
+{template 'common/footer'}

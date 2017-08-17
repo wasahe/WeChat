@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <title>经验记录</title>
+    <link rel="stylesheet" href="../addons/hc_deluxejjr/style/css/user.css?q=1"/>
+</head>
+<style>
+.pagination li{
+	margin-left:10px;
+	background-color: #fa614b;
+	display: inline-block;
+	padding: 0 4%;
+	border-radius: 5px;
+	
+}
+.pagination li .pager-nav{
+	color: #fff;
+}
+</style>
+<body style="background-color:#eaeaea">
+<div class="app-view">
+    <div class="app-page">
+        <section class="app-wrap">
+            <div class="inner">
+                <div class="m-integral">
+                    <div class="wrap">
+                        <div class="coupons">
+							<table  class="jifenjilu" > 
+								<tr class="jifentoubu"><td style="color:white;">经验详情：{$allexp}</td><td style="color:white;">经验</td><td style="color:white;">日期</td></tr>
+								{loop $explogs $e}
+									<tr class="jifenshenti">
+										<td>
+											{$e['expname']}
+										</td>
+										<td>+{$e['exp']}</td>
+										<td>{php echo date('Y-m-d', $e['createtime'])}</td>
+									</tr>
+								{/loop}								
+							</table><br/>
+							{$pager}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com" versionCode="0.6">
+	<application setting="true">
+		<name><![CDATA[微信接入验证txt文件上传器]]></name>
+		<identifie><![CDATA[xsy_wxfile]]></identifie>
+		<version><![CDATA[1.1]]></version>
+		<type><![CDATA[other]]></type>
+		<ability><![CDATA[微信接入验证文件上传器]]></ability>
+		<description><![CDATA[微信接入验证文件上传器]]></description>
+		<author><![CDATA[不错吧]]></author>
+		<url><![CDATA[http://www.012wz.com/]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		<message type="text" />
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="false" />
+		<card embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+		</cover>
+		<menu>
+			<entry title="微信接入验证文件管理" do="manager" state="" direct="false" />
+		</menu>
+		<home>
+		</home>
+	</bindings>
+	<permissions>
+	</permissions>
+	<install><![CDATA[
+	DROP TABLE IF EXISTS `ims_xsy_wxfile`;
+CREATE TABLE `ims_xsy_wxfile` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `name` varchar(255) DEFAULT '',
+  `createtime` int(11) DEFAULT NULL COMMENT '收入时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='文件';
+]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

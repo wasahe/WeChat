@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--<base href="http://moon.bjcyhh.cn">--><base href=".">
+    <meta charset="UTF-8">
+    <meta name="x5-orientation" content="portrait">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="{STYLE_PATH}/pay_files/reset.css">
+    <link rel="stylesheet" type="text/css" href="{STYLE_PATH}/pay_files/midAutumn.css">
+    <script src="{STYLE_PATH}/js/sweetalert.min.js"></script>
+   <link rel="stylesheet" type="text/css" href="{STYLE_PATH}/css/sweetalert.css">
+    <style>
+        li {
+            margin: 3px;
+            display: inline;
+        }
+    </style>
+
+    <script src="{STYLE_PATH}/pay_files/hm.js"></script>
+    
+    <title>{$secret['nickname']}在藏了一个秘密</title>
+    <script src="{STYLE_PATH}/pay_files/jquery.js"></script>
+
+	{template 'jssdk'}
+</head>
+<body style="background-color: #fdf2cf;position: relative">
+<!--广告-->
+<div class="advertisementBlock" style="bottom: 0px;display:none">
+    <div class="fl advertisementImg">
+        <img src="{STYLE_PATH}/pay_files/logo1.png" alt="">
+    </div>
+    <div class="fl advertisementText">
+        <p style="margin-top: 12px;">来租我吧</p>
+        <p>一个可以出租自己的单身社交平台</p>
+    </div>
+    <div class="fr advertisementClose">
+        <img src="{STYLE_PATH}/pay_files/closedad.png" alt="">
+    </div>
+    <div class="fr advertisementBtn">
+        <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.hiremeplz.hireme">
+            <img src="{STYLE_PATH}/pay_files/down.png" alt="">
+        </a>
+    </div>
+    <div class="clearBoth"></div>
+</div>
+<script>
+    $(".advertisementBlock").animate({"bottom":"0px"},2000);
+</script>
+<!--弹幕1-->
+<div style="position:absolute;z-index: 10;" class="test">
+
+    <marquee id="one" direction="left" scrollamount="2" scrolldelay="0" style="margin-top: 120px;">
+    
+    </marquee>
+    <marquee id="two" direction="left" scrollamount="2" scrolldelay="0" style="margin-top: 50px; opacity: 1;">
+            &nbsp;&nbsp;&nbsp; 
+    </marquee>
+    <marquee id="three" direction="left" scrollamount="2" scrolldelay="0" style="margin-top: 50px; opacity: 1;">
+                
+    </marquee>
+    <marquee id="four" direction="left" scrollamount="2" scrolldelay="0" style="margin-top: 50px; opacity: 1;">
+              
+    </marquee>
+</div>
+
+<div class="bgColor">
+    <div class="moonTitleBlock">
+        <div class="moonTitle">
+            <div style="width: 90%;margin: 0 auto">
+                <span class="wawaziti fl" style="color:#AF5822;">{$secret['nickname']}</span>
+                <span class="fl"  style="color:#AF5822;">{$secret['question']}</span>
+                <span class="clearBoth"></span>
+            </div>
+        </div>
+    </div>
+    <div class="moonCakeBlock" style="position: relative;">
+        <div class="mooncake">
+            <div>
+                <img src="{php echo tomedia($settings['bg_thumb'])}" alt="">
+            </div>
+        </div>
+
+    </div>
+    <script>
+     
+        var obj2 = document.getElementById('two');
+        obj2.stop();
+        setTimeout(function(){
+            $(obj2).css("opacity",1);
+            obj2.start();
+        },1000)
+        var obj3 = document.getElementById('three');
+        obj3.stop();
+        setTimeout(function(){
+            $(obj3).css("opacity",1);
+            obj3.start();
+        },500)
+        var obj4 = document.getElementById('four');
+        obj4.stop();
+        setTimeout(function(){
+            $(obj4).css("opacity",1);
+            obj4.start();
+        },1500)
+    </script>
+    <div class="moonBtnBlock moonBtnBlock_">
+                    <a href="javascript:void(0);" class="playMe">
+                <span class="fl">偷看</span>
+                <span class="fl moonName">{$secret['nickname']}</span>
+                <span class="fl">的秘密</span>
+                <span class="clearBoth"></span>
+            </a>
+            </div>
+    <div class="moonBtnBlock" style="margin-top: 10px;">
+                <a href="{php echo $this->createMobileUrl('secret')}" class="playMe">我也要玩</a>
+            </div>
+    <div class="explainBlock">
+        <!--<img src="/Public/img/moonShadow.png" alt="" class="explainImg">-->
+        <div class="explain">
+            <p class="explainText">规则说明:</p>
+            <p class="explainText1">售卖你的秘密，好友花钱查看，你可赚取相应的红包。</p>
+        </div>
+    </div>
+    <p class="activityExplain"></p>
+</div>
+<!--遮罩-->
+<div class="mask" style="display:none;">
+    <div class="pay">
+        <div class="closeBlock">
+            <img src="{STYLE_PATH}/pay_files/close.png" alt="" width="16">
+        </div>
+     
+        <div class="payBlock">
+            <a id="pay-btn" href="javasctipt:void(0);" class="payLook">支付{$secret['fee']}元偷看{$secret['nickname']}的秘密</a>
+            <div class="anonymousBlock">
+                <img id="anonymityImg" src="{STYLE_PATH}/pay_files/anonymous1.png" alt="" class="anonymous">
+                <span id="anonymity" class="anonymousText">匿名偷看</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!--二维码弹窗-->
+<div class="mask1">
+    <div class="playBlock">
+        <div class="playBlockClose">
+            <img src="{STYLE_PATH}/pay_files/closed.png" alt="" width="30">
+        </div>
+        <div class="playBlockImg">
+            <img src="{STYLE_PATH}/pay_files/erweima.jpg" alt="">
+            <p class="marginTop">关注公众号</p>
+            <p>生成你的秘密出售页面</p>
+        </div>
+    </div>
+</div>
+<!--提交问题之后弹窗-->
+<div class="mask2">
+    <div class="yindaoBlock">
+        <img src="{STYLE_PATH}/pay_files/yindao.png" alt="">
+    </div>
+    <div class="knowBlock">
+        <img src="{STYLE_PATH}/pay_files/know.png" alt="">
+    </div>
+</div>
+<script>
+    $(".knowBlock").click(function () {
+        $(".mask2").css({"display":"none"})
+    })
+    
+    {if $secret['openid']!=$userinfo['openid']}
+    $(".mask2").css({"display":"none"});
+    {/if}
+</script>
+
+<script>
+    $(".danmuBlock1").animate({"right":"200px"},20000,"linear",function(){
+        $(this).remove();
+    })
+    $(".danmuBlock2").animate({"right":"200px"},20000,"linear",function(){
+        $(this).remove();
+    })
+    $(".danmuBlock3").animate({"right":"200px"},20000,"linear",function(){
+        $(this).remove();
+    })
+    $(".danmuBlock4").animate({"right":"200px"},20000,"linear",function(){
+        $(this).remove();
+    })
+    function play() {
+        $(".mask1").css({"display":"block"})
+        $('.playBlockClose').click(function () {
+            $(".mask1").css({"display":"none"})
+        })
+    }
+
+    var anonymity = 0;
+    $('#anonymity').click(function(){
+        if(anonymity == 0){
+            anonymity = 1;
+            $('#anonymityImg').attr('src','/Public/img/anonymous2.png');
+        }else{
+            anonymity = 0;
+            $('#anonymityImg').attr('src','/Public/img/anonymous1.png');
+        }
+    })
+
+    /**
+     * 异步创建订单
+     * @return {[type]} [description]
+     */
+    function createOrder()
+    {
+        $.ajax({
+            type: "POST",
+            url: "/index.php/Home/Index/createOrderRecord.html",
+            data: "anonymity="+anonymity,
+            dataType:"JSON",
+            success: function(res){
+                // alert(res);
+            }
+        });
+    }
+
+    $('.moonBtnBlock_').click(function () {
+        $(".mask").css({"display":"block"})
+    })
+    $('.closeBlock').click(function () {
+        $(".mask").css({"display":"none"})
+    })
+    $('.advertisementClose').click(function () {
+        $(".advertisementBlock").animate({"bottom":"-50px"})
+    })
+    
+    $(function($) {
+      $('#pay-btn').click(function() {
+    		{if $settings['ys_pay']==3}
+    			var url = "{php echo $this->createMobileUrl('payment', array('op'=>'display','secretid'=>$secret['id'],'fee'=>$secret['fee']), true)}";
+    			window.location.href=url;
+    		{else}
+        $.ajax({
+          type: 'post',
+          url: "{php echo $this->createMobileUrl('payment', array('op'=>'display','secretid'=>$secret['id'],'fee'=>$secret['fee']), true)}",
+          data: {},
+          dataType: 'json',
+          timeout: 20000,
+          beforeSend: function(xhr, settings) {
+
+          }, 
+          success: function(data) {
+            if (data.code == 1) {
+            	{if empty($settings['ys_pay'])}
+            	  var charge_url ="{php echo $this->createMobileUrl('payment', array('op'=>'tj'), true)}"+"&orderid=" + data.orderid;
+                  window.location.href=charge_url;
+                {/if}
+                //虚拟支付
+               	{if $settings['ys_pay']==2}
+               	  swal({   
+               		//title: "恭喜你", 
+					type: "success",
+					title:"{if $settings['footer_btn1']}{$settings['footer_btn1']}{else}偷看{/if}成功",
+					confirmButtonText: "确定"
+				  },function(){
+					  window.location.href ="{php echo $this->createMobileUrl('payafter', array('secretid'=>$secretid), true)}";
+				  });
+         	    
+               	
+                {/if}
+               
+              wx.chooseWXPay({
+            	  debug:true,
+                  timestamp: data.wx.timestamp,
+                  nonceStr: data.wx.nonce,
+                  package:  data.wx.package,
+                  signType: 'MD5',
+                  paySign: data.wx.signature,
+                  success: function(res) {
+                      if(res.errMsg == 'chooseWXPay:ok') {
+                    	  window.location.href ="{php echo $this->createMobileUrl('payafter', array('secretid'=>$secretid), true)}";
+                      }
+                  },
+                  fail: function(res) {
+                	  alert(res.errMsg);
+                     alert("出错了");
+                  },
+                  cancel: function(res) {
+                	  alert("取消");
+                  }
+              });
+         
+            } else {
+              alert(data.msg);
+            }
+          },
+          error: function(xhr, type){
+            alert('网络异常,请您重新提交');
+          }
+        });
+        {/if}
+      });
+    });
+</script>
+
+
+
+
+<!-- <img src="http://wx.qlogo.cn/mmopen/TpyCgiaWfYBUgHoYoSKAmPRJeBabnia9dLCKzd34p31YJHn3ZPmhgueAP11gQPGdia5OPCWrypKDbyg7NraJj85ejKicZbW9V3Eo/0" width=200 alt="">
+<br/>
+
+<h4>昵称：川川</h4>
+<h3>问题：目前单身吗？</h3>
+<h5>订单号：cvg3e65hwk0000013704</h5>
+
+<input name="anonymity" id="anonymity" type="checkbox" value="1"> 匿名查看<br/>
+
+<p class="pay">支付1.50元</p> -->
+
+
+</body></html>

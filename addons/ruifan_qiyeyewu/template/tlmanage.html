@@ -1,0 +1,181 @@
+{template 'common/header'}
+<div class="main">
+	<ul class="nav nav-tabs">
+		<li{if $_GPC['do'] == 'manage'} class="active"{/if}><a href="{php echo $this->createWebUrl('manage');}">业务进度管理</a></li>
+        <li{if $_GPC['do'] == 'ywmanage'} class="active"{/if}><a href="{php echo $this->createWebUrl('ywmanage');}">业务类型管理</a></li>
+		<li{if $_GPC['do'] == 'tlmanage' || $_GPC['do'] == '' } class="active"{/if}><a href="{php echo $this->createWebUrl('tlmanage');}">模板管理</a></li>
+		<li{if $_GPC['do'] == 'formcs'} class="active"{/if}><a href="{php echo $this->createWebUrl('formcs');}">参数设置</a></li>
+		<li{if $_GPC['do'] == 'admanage'} class="active"{/if}><a href="{php echo $this->createWebUrl('admanage');}">广告管理</a></li>
+	</ul>
+    
+	<div class="panel panel-primary">
+		<div class="panel-heading" style="text-align: left;">
+			<button class="btn btn-success wzxx" type="button"><i class="fa fa-search"></i> 添加模板</button>
+		</div>
+		<div class="panel-body table-responsive">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:300px;">模板编号</th>
+					<th style="width:250px">模板名称</th>
+					<th style="width:250px">业务类型名称</th>
+					<th style="width:150px;">添加流程操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $row}
+				<tr>
+					<td>{$row['number']}</td>
+					<td>{$row['name']}</td>
+					<td>{$row['typename']}</td>
+					<td>
+						<a class="btn btn-default" data-toggle="tooltip" data-placement="top" href="{php echo $this->createWebUrl('lcmanage',array('id'=>$row['id'],'number'=>$row['number'],'name'=>$row['name']))}" title="添加流程"><i class="fa fa-edit"></i></a>
+                        <a class="btn btn-default" data-toggle="tooltip" data-placement="top" href="#" onclick="drop_confirm('您确定要删除吗?', '{php echo $this->createWebUrl('tldelete',array('id'=>$row['id'],'number'=>$row['number']))}');" title="删除"><i class="fa fa-times"></i></a>
+                  	</td>
+				</tr>
+				{/loop}
+
+			</tbody>
+		</table>
+	</div>
+	</div>
+	{$pager}
+</div>
+
+
+
+
+<div class="modal fade" id="wzmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="myModalLabel" style="text-align: center;">添加模板</h4>
+			</div>
+			<div class="modal-body" style="height: 550px;">
+
+
+				<!--<div class="col-xs-12 col-sm-12" style="margin-top: 30px;margin-bottom: 15px;">-->
+					<!--<span style='color:red'>*</span> 模板编号-->
+				<!--</div>-->
+				<!--<div class="col-sm-12 col-xs-12" style="margin-bottom: 15px;">-->
+					<!--<input type="text" id="number" class="form-control" placeholder="" name="number" value="">-->
+				<!--</div>-->
+
+
+				<div class="col-xs-12 col-sm-12" style="margin-top: 30px;margin-bottom: 15px;">
+					<span style='color:red'>*</span> 模板名称
+				</div>
+				<div class="col-sm-12 col-xs-12" style="margin-bottom: 15px;">
+					<input type="text" id="name" class="form-control" placeholder="" name="name" value="">
+				</div>
+
+
+				<div class="col-xs-12 col-sm-12" style="margin-top: 30px;margin-bottom: 15px;">
+					<span style='color:red'>*</span> 业务类型(如果下面选项为空,请先点击<a href="{php echo $this->createWebUrl('ywmanage')}">添加业务类型</a>)
+				</div>
+				<div class="col-sm-12 col-xs-12" style="margin-bottom: 15px;">
+					<select id="type" name="type" class="form-control">
+						{loop $ywlx $row}
+						<option class="form-control" value="{$row[id]}">{$row[lxname]}</option>
+						{/loop}
+					</select>
+				</div>
+
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" id="submit">确定</button>
+				<button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+
+
+
+<script>
+	require(['bootstrap'],function($){
+		$('.btn').tooltip();
+	});
+$(function(){
+   
+    $(".check_all").click(function(){
+       var checked = $(this).get(0).checked;
+		$(':checkbox').each(function(){this.checked = checked});
+    });
+	$("input[name=deleteall]").click(function(){
+ 
+		var check = $("input:checked");
+		if(check.length<1){
+			err('请选择要删除的记录!');
+			return false;
+		}
+        if( confirm("确认要删除选择的记录?")){
+		var id = new Array();
+		check.each(function(i){
+			id[i] = $(this).val();
+		});
+		$.post('{php echo $this->createWebUrl('deleteAll')}', {idArr:id},function(data){
+			if (data.errno ==0)
+			{
+				location.reload();
+			} else {
+				alert(data.error);
+			}
+
+
+		},'json');
+		}
+
+	});
+});
+</script>
+<script>
+
+	$(".wzxx").bind("click", function() {
+		$('#wzmodal').modal('show');
+	});
+
+
+	$("#submit").bind("click", function() {
+		var type = $('#type').val();
+		var name = $('#name').val();
+
+//		if (number == '' || number == undefined) {
+//			alert("模板编号不能为空");
+//			return
+//		}
+
+		if (name == '' || name == undefined) {
+			alert("模板名称不能为空");
+			return
+		}
+
+
+		var submitData = {
+//			number: number,
+			name: name,
+			type: type,
+		};
+
+		$.post('{php echo $this->createWebUrl('tlnew')}', submitData, function(data) {
+			if (data.success == 1) {
+				window.location = "{php echo $this->createWebUrl('tlmanage')}";
+			} else {
+				 alert(data.msg);
+			}
+		},"json")
+	});
+
+
+
+
+function drop_confirm(msg, url){
+    if(confirm(msg)){
+        window.location = url;
+    }
+}
+</script>
+{template 'common/footer'}

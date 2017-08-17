@@ -1,0 +1,291 @@
+﻿button.available {
+    -webkit-appearance: none;
+    padding: 0;
+    cursor: pointer;
+    background: 0 0;
+    border: 0;
+}
+.available {
+    float: right;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    filter: alpha(opacity=20);
+    opacity: .2;
+}
+.page {display: none;position:fixed;left: 0;bottom: 0;right: 0;width: 100%;height: 100%;overflow: hidden;}
+
+
+#datescroll div{}
+#datescroll_datetime div{float: left;margin: 0 auto;}
+
+#yearwrapper{position: absolute;left: 0;top:45px;bottom: 60px;width:80%;}
+#monthwrapper{position: absolute;left: 26%;top:45px;bottom: 60px;width:80%;}
+#daywrapper{overflow-x: auto!important;
+    overflow-y: visible!important;
+    flex: 1;
+    white-space: nowrap;}
+
+#Hourwrapper{position: absolute;left: 0;top:195px;bottom: 68px;width:95%;}
+#Minutewrapper{position: absolute;left: 26%;top:195px;bottom: 68px;width:80%;}
+#Secondwrapper{position: absolute;left: 50%;top:195px;bottom: 68px;width:80%;}
+
+/*增加手指滑动触摸面积*/
+#Hourwrapper ul li{color: #898989;font-size: 12px;}
+#Minutewrapper ul li{color: #898989;font-size: 12px;}
+#Secondwrapper ul li{color: #898989;font-size: 12px;}
+#yearwrapper ul li{color: #898989;font-size: 12px;}
+#monthwrapper ul li{color: #898989;font-size: 12px;}
+#daywrapper ul li{color: #898989;font-size: 12px;}
+
+#markyear{position:relative; margin-left: 76px;top:-2px;}
+#markmonth{position:relative; margin-left: 40px;top:-2px;}
+#markday{position:relative; margin-left: 42px;top:-2px;}
+#markhour{position:relative; margin-left: 62px;top:-2px;}
+#markminut{position:relative; margin-left: 58px;top:-2px;}
+#marksecond{position:relative; margin-left: 68px;top:-2px;}
+#dateheader{width: 100%;height: 50px;background: #fe6771;text-align: center;color: #fff;line-height: 50px;font-size: 20px;}
+
+#setcancle ul{
+    text-align: center;
+    line-height: 40px;
+    margin:1px auto;
+    font-size: 20px;
+}
+#setcancle ul li{
+    border-radius: 4px;
+    float: left;
+    width: 96%;
+
+    list-style-type: none;
+}
+#dateconfirm{
+    position: absolute;
+    background: #FD666F;
+    color:#fff;
+	    margin: .3rem 0;
+}
+#datecancle{
+       position: absolute;
+    background: none;
+    right: 20px;
+    /* width: 40%; */
+    border: none;
+}
+#dateshadow{display: none;position:fixed;width: 100%;height: 100%;top:0;left:0;background: #000; filter:alpha(Opacity=50);-moz-opacity:0.5;opacity: 0.5; z-index:10}
+#datePage{font-size: 22px; border-radius: 3px; position:fixed;bottom:0px;MARGIN-RIGHT: auto;vertical-align:middle;border-bottom:1px solid #666;
+MARGIN-LEFT: auto;width: 100%;;height: 240px;background: #FFFFFF;z-index:9999999; z-index:11}
+#datetitle{width: 100%;height: 50px;background: #fff;text-align: center;color: #999;line-height: 50px;font-size: 20px;padding-top: 0.7em;}
+#datetitle h1{font-family: PingHei,Helvetica Neue,Helvetica,Arial,Verdana,"sans-serif";    color: #1a1a1a;width: 95%; padding-left: 2rem;}
+#datemark{font-size: 18px;left:5%;width: 90%;height: 23px;position:absolute;top:108px;}
+#timemark{font-size: 18px;left:5%;width: 90%;height: 23px;position:absolute;top:242px;}
+#datescroll{text-align: center;line-height: 40px;}
+#datescroll_datetime{display: none;width:94%; margin:10px 3%;margin-top: 10px;border-radius: 4px;height: 245px;text-align: center;line-height: 40px;}
+#yearwrapper ul,#monthwrapper ul,#daywrapper ul{width:40%;}
+#Hourwrapper ul,#Minutewrapper ul,#Secondwrapper ul{width:40%;}
+#dateFooter{width:100%;background: #fff;height: 50px;bottom: 0px;position: absolute;border:0;       margin:0 .49rem;}
+
+
+#datePlugin section{
+    padding: 0px 0px;
+}
+
+
+#datescroll_datetime{
+	    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+	border-bottom:1px solid #e6e6e6
+
+}
+#Hourwrapper{
+	    position: absolute;
+
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: auto;
+}
+#Hourwrapper button{
+	opacity: 1;
+
+    float: left;
+    text-align: center;
+    border: 1px solid #979797;
+    background: #f7f7f7;
+    margin: .1375rem;
+    font-size: 60%;
+    pointer-events: none;
+    padding: 0;
+    display: inline-block;
+    color: #999;
+    position: relative;
+	pointer-events: auto;
+ 
+    background: #fff;
+	 font-weight: 400;
+	     width: 23%;
+    height: 1.9rem;
+}
+#Hourwrapper button.available{
+border-color: #FD666F;
+  color: #FD666F;
+}
+#Hourwrapper button.available .state{
+	
+    color: #FD666F;
+}
+
+#Hourwrapper button.close,#Hourwrapper button.available{
+	float:none;
+}
+
+
+#datescroll {
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 auto;
+    flex: 1 auto;
+    -moz-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+	    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    -moz-justify-content: space-between;
+    justify-content: space-between;
+    -webkit-box-align: stretch;
+    -ms-flex-align: stretch;
+    -moz-align-items: stretch;
+    -ms-grid-row-align: stretch;
+    align-items: stretch;
+    -webkit-box-direction: normal;
+    -webkit-box-orient: horizontal;
+    -moz-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-wrap: none;
+    flex-wrap: nowrap;
+    text-align: center;
+    background: #f7f7f7;
+    padding-left: .75rem;
+    font-size: 80%;
+}
+
+#datescroll button {
+    padding: .4rem 0 0;
+  
+    margin-right: 1rem;
+
+	background:none;
+	border:none;
+	  border-bottom: 2px solid #f7f7f7;
+}
+#daywrapper button .muted{
+   line-height: 2;
+    font-size: .5rem;
+	  display: block;
+    font-size: 70%;
+	    color: #999;
+		text-align:center;
+}
+
+#datescroll  button {
+       margin-right: 1rem;
+    font: normal normal normal normal 13.3333330154419px/normal Arial;
+    text-rendering: auto;
+    color: initial;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+}
+
+#daywrapper button.current {
+    border-bottom-color: #FD666F;
+    color: #FD666F;
+}
+#daywrapper button.current .muted{
+    color: #FD666F;
+}
+
+
+.SVGInline {
+    line-height: 1;
+    vertical-align: middle;
+    -ms-flex-item-align: center;
+    align-self: center;
+    display: inline-block!important;
+}
+
+.checked-in-corner .SVGInline {
+    position: absolute;
+    padding-left: .4rem;
+    padding-top: .4rem;
+    bottom: 0;
+    right: 0;
+    background-image: -webkit-linear-gradient(right bottom,#FD666F,#FD666F 50%,transparent 0);
+    background-image: linear-gradient(to left top,#FD666F,#FD666F 50%,transparent 0);
+}
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+::-webkit-scrollbar
+{
+    width: 0;
+    height: 0;
+    background-color: none;
+}
+ 
+/*定义滚动条轨道 内阴影+圆角*/
+::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 0;
+    background-color: none;;
+}
+ 
+/*定义滑块 内阴影+圆角*/
+::-webkit-scrollbar-thumb
+{
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
+}
+
+#Hourwrapper button .state {
+    display: block;
+    font-size: 80%;
+	padding-top: 1px;
+}
+
+@media only screen and (min-width: 414px){
+	html {
+		font-size: 22.08px;
+	}
+}
+
+@media only screen and (min-width: 375px){
+	html {
+		font-size: 20px;
+	}
+}
+@media only screen and (min-width: 360px) {
+	html {
+		font-size: 19.2px;
+	}
+}
+@media only screen and (min-width: 320px) {
+	html {
+		font-size: 17.067px;
+	}
+}
+
+

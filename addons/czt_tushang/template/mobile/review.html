@@ -1,0 +1,36 @@
+{template 'header'}
+<div class="container" id="container">
+<div class="bd">
+  <article class="weui_article">
+    {if ($type==2)}
+    <video autoplay="autoplay" controls="controls">
+      <source src="{$settings['qiniu']['host']}/video/{$rescource['url']}" type="video/mp4" />
+    Your browser does not support the video tag.
+    </video>
+    {else}
+    <img src="{$settings['qiniu']['host']}{$rescource['url']}" width="100%">
+    {/if}
+  </article>
+  <form action="" method="post" style="margin-top:-20px;">
+    <div class="weui_btn_area">
+    <input type="hidden" name="token" value="{$_W['token']}" />
+    <input type="hidden" name="review" value="0" />
+    <a href="javscript:;" data-val="1" class="weui_btn weui_btn_primary">通过</a>
+    <a href="javscript:;" data-val="0" class="weui_btn weui_btn_default">不通过</a>
+    </div>
+  </form>
+</div>
+</div>
+<script src="{JS_URL}zepto.min.js"></script>
+<script>
+$(function(){
+    $('a').on('click',function(event) {
+        event.preventDefault();
+        if ($(this).attr('data-val')==1) {
+            $('input[name=review]').val(1);
+        }
+        $('form').submit();
+    });
+});
+</script>
+{template 'footer'}<!---bbs_heirui_cn-->

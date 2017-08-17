@@ -1,0 +1,78 @@
+{template 'header'}
+<div class="container" id="container">
+{if $rescource['status']==0}
+<div class="bd">
+  <article class="weui_article">
+    <img src="{$thumb}" width="100%">
+  </article>
+  <form action="" method="post" style="margin-top:-20px;">
+    <div class="weui_cells_title">设置图片信息</div>
+    <div class="weui_cells weui_cells_form">
+        <div class="weui_cell">
+            <div class="weui_cell_hd">
+                <label class="weui_label">标题</label>
+            </div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <input maxlength="18" class="weui_input" type="text" name="title" placeholder="请准确描述图片内容"/>
+            </div>
+        </div>
+        <div class="weui_cell weui_cell_select weui_select_after">
+            <div class="weui_cell_hd">
+                <label for="" class="weui_label">价格</label>
+            </div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <select class="weui_select" name="price">
+                    <option value="1">1元</option>
+                    <option value="2">2元</option>
+                    <option value="3">3元</option>
+                    <option value="4">4元</option>
+                    <option value="5">5元</option>
+                    <option value="6">6元</option>
+                    <option value="7">7元</option>
+                    <option value="8">8元</option>
+                    <option value="9">9元</option>
+                    <option value="10">10元</option>
+                    <option value="0">自定义</option>
+                    {if $user['income']>=10}
+
+                    {/if}
+                    {if $user['income']>=100}
+
+                    {/if}
+                    {if $user['income']>=1000}
+
+                    {/if}
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="weui_cells_tips">1.请准确填写标题，与图片不符会被删除。</div>
+  <div class="weui_cells_tips">2.请认真填写信息，一经确认不允许修改。</div>
+    <div class="weui_btn_area">
+    <input type="hidden" name="token" value="{$_W['token']}" />
+        <input class="weui_btn weui_btn_primary" name="submit" type="submit" value="确认" />
+    </div>
+  </form>
+</div>
+<script src="{JS_URL}zepto.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('select').change(function(event) {
+            if($(this).val()==0){
+                $('select').after('<input class="weui_input" type="number" name="price" min="1" max="200" placeholder="1-200元"/>');
+                $('select').remove();
+                $('.weui_cell_select').removeClass('weui_cell_select').removeClass('weui_select_after');
+            }
+        });
+    });
+</script>
+{else}
+<div class="bd">
+  <article class="weui_article">
+    <a href="javascript:;" class="weui_btn weui_btn_plain_primary">打赏图已生成，长按图片保存</a>
+    <p><img src="{php echo $this->createMobileUrl('image', array('id' => $id))}" width="100%"></p>
+  </article>
+</div>
+{/if}
+</div>
+{template 'footer'}<!---bbs_heirui_cn-->

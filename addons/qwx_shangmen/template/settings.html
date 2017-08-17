@@ -1,0 +1,110 @@
+{template 'common/header'}
+<div class="main">
+    <form class="form-horizontal form" id="setting-form" action="" method="post" enctype="multipart/form-data">
+        <div class="panel panel-success">
+            <div class="panel-heading">基本参数配置</div>
+            <div class="panel-body">   
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">系统名称</label>
+                    <div class="col-sm-8">
+                        <input type="text" placeholder="上门服务" class="form-control" name="data[index_title]" value="{$settings['index_title']}" />
+                    	<span class="helper">手机主页标题</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">客服电话</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="data[index_tel]" value="{$settings['index_tel']}" />
+                        <span class="helper">手机主页右上角电话</span>
+                    </div>
+                </div>
+                             
+            </div>
+        </div>
+       
+		<div class="panel panel-success">
+            <div class="panel-heading">分享设置</div>
+            <div class="panel-body">                   
+                    <div class="form-group">
+                        <label class="col-xs-12 col-sm-3 col-md-2 control-label">分享标题</label>
+                        <div class="col-sm-8">
+                            <input name="data[share_title]" value="{$settings['share_title']}" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                       <label class="col-xs-12 col-sm-3 col-md-2 control-label">分享图片</label>
+                      <div class="col-sm-8 col-xs-12">
+                        {php echo tpl_form_field_image('data[share_pic]', $settings['share_pic'])}
+                      </div>
+                    </div>   
+                    <div class="form-group">
+                        <label class="col-xs-12 col-sm-3 col-md-2 control-label">分享内容</label>
+                        <div class="col-sm-8">
+                            <textarea name="data[share_content]" style="height:100px; " class="form-control" cols="70" rows="100">{$settings['share_content']}</textarea>
+                        </div>
+                    </div>             
+                    <div class="form-group" style="display:none">
+                        <label class="col-xs-12 col-sm-3 col-md-2 control-label">分享链接</label>
+                        <div class="col-sm-8">
+                            <input name="share_link" value="{$info['share_link']}" class="form-control"/>
+                            <br />如果为空则默认为当前文章地址
+                        </div>
+                    </div>        
+                    
+            
+             
+            </div>
+        </div>
+ 
+ 
+        <div class="panel panel-success">
+            <div class="panel-heading">其它设置及说明</div>
+            <div class="panel-body">  
+                    <div class="form-group">
+                       <label class="col-xs-12 col-sm-3 col-md-2 control-label">“VIP会员”所在组</label>
+                      <div class="col-sm-8 col-xs-12">
+						<select name="data[vip_group]" class="form-control">
+							<option>请选择会员组</option>
+							{loop $users_group $key $group}
+							<option value="{$group['groupid']}" {if ($group['groupid'] == $settings['vip_group'])}selected="selected"{/if}>{$group['title']}</option>
+							{/loop}
+						</select>
+                        <span class="help-block">在“粉丝营销-会员组“维护</span>
+                       </div>
+                    </div>  
+                    <div class="form-group">
+                       <label class="col-xs-12 col-sm-3 col-md-2 control-label">支付说明</label>
+                      <div class="col-sm-8 col-xs-12">
+                      	<span class="help-block">
+                        用户预约服务可设置为：<br />
+                        商城余额支付<br />
+                        支付宝支付<br />
+                        微信支付，请到“功能选项-支付参数”配置好微信支付信息（选择“JS API网页支付参数”方式，同时到公众号平台添加微信支付的授权目录）
+                      	</span>
+                      </div>
+                    </div> 
+                                                                                               
+                             
+            </div>
+        </div>
+                                                
+        <div class="form-group col-sm-12">
+            <input name="token" type="hidden" value="{$_W['token']}" /> <input
+                type="submit" class="btn btn-primary col-lg-1" name="submit"
+                value="提交" />
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    require([ 'jquery', 'util' ], function($, util) {
+        $(function() {
+            $("#setting-form").submit(function() {
+                if ($("input[name='data[title]']").val().trim() == "") {
+                    util.message("未填写标题！");
+                    return false;
+                }
+            });
+        });
+    });
+</script>
+{template 'common/footer'}

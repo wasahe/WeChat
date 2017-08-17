@@ -1,0 +1,25 @@
+{template 'top'}
+
+  <div data-am-widget="slider" class="am-slider am-slider-default" style="height:150px;" data-am-slider='{}' >
+  <ul class="am-slides">
+  {loop $lunbo $key $lunbo}
+      <li>
+        	<a href="{$lunbo['linkurl']}"><img style="height:150px;" src="{$_W['attachurl']}{$lunbo['linkimg']}" alt="{$lunbo['linkalt']}"></a>
+         
+      </li>
+	  {/loop}
+    </ul>
+</div>
+
+
+<div id="fengmian">
+
+{template 'list'}
+</div>
+
+
+{template 'bottom'}
+<style type="text/css">
+.am_tabs{width:100%;height:80px;margin:0px auto;}
+.am-tabs ul.am-tabs-nav li{float:left;width:25%;height:40px;text-align:center;line-height:40px;font-size:12px;color:#FF6633;}
+</style>

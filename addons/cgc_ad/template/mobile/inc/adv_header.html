@@ -1,0 +1,56 @@
+
+	
+	<script type="text/javascript">
+		wx.ready(function () {
+		
+			{if empty($adv['share_desc'])}
+			wx.onMenuShareAppMessage({
+				title:'{$title}',
+				desc:'{$adv['nickname']}给大家发了{$adv['total_amount']}{$config['unit_text']}',
+				imgUrl:'{php echo tomedia($adv['headimgurl'])}',
+				link:'{php echo !empty($share_url)?$share_url:$_W['siteroot'] . 'app/' . substr($this->createMobileUrl('foo',array('form'=>$_GPC['do'],'op'=>'help','quan_id'=>$quan_id,'pid'=>$mid,'id'=>$adv['id'])), 2)}',
+				success:function(){
+					var url="{php echo $this->createMobileUrl('share',array('quan_id'=>$_GPC['quan_id'],'id'=>$_GPC['id'],'type'=>'share_app_message'))}";
+					$.post(url);
+				}
+			});
+			
+			wx.onMenuShareTimeline({
+				title:'{$adv['nickname']}给大家发了{$adv['total_amount']}{$config['unit_text']}',
+				desc:'{$adv['nickname']}给大家发了{$adv['total_amount']}{$config['unit_text']}',
+				imgUrl:'{php echo tomedia($adv['headimgurl'])}',
+				link:'{php echo !empty($share_url)?$share_url:$_W['siteroot'] . 'app/' . substr($this->createMobileUrl('foo',array('form'=>$_GPC['do'],'op'=>'help','quan_id'=>$quan_id,'pid'=>$mid,'id'=>$adv['id'])), 2)}',
+				success:function(){
+					var url="{php echo $this->createMobileUrl('share',array('quan_id'=>$_GPC['quan_id'],'id'=>$_GPC['id'],'type'=>'share_time_line'))}";
+					$.post(url);
+				}
+			});
+			
+			{else}
+			wx.onMenuShareAppMessage({
+				title:"{$adv['title']}",
+				desc:"{$adv['share_desc']}",
+				imgUrl:'{php echo tomedia($adv['headimgurl'])}',
+				link:'{php echo !empty($share_url)?$share_url:$_W['siteroot'] . 'app/' . substr($this->createMobileUrl('foo',array('form'=>$_GPC['do'],'op'=>'help','quan_id'=>$quan_id,'pid'=>$mid,'id'=>$adv['id'])), 2)}',
+				success:function(){
+					var url="{php echo $this->createMobileUrl('share',array('quan_id'=>$_GPC['quan_id'],'form'=>$_GPC['do'],'id'=>$_GPC['id'],'type'=>'share_app_message'))}";
+					$.post(url);
+				}
+			});
+			
+			wx.onMenuShareTimeline({
+				title:"{$adv['share_desc']}",
+				desc:"{$adv['share_desc']}",
+				imgUrl:'{php echo tomedia($adv['headimgurl'])}',
+				link:'{php echo !empty($share_url)?$share_url:$_W['siteroot'] . 'app/' . substr($this->createMobileUrl('foo',array('form'=>$_GPC['do'],'op'=>'help','quan_id'=>$quan_id,'pid'=>$mid,'id'=>$adv['id'])), 2)}',
+				success:function(){
+					var url="{php echo $this->createMobileUrl('share',array('quan_id'=>$_GPC['quan_id'],'form'=>$_GPC['do'],'id'=>$_GPC['id'],'type'=>'share_time_line'))}";
+					$.post(url);
+				}
+			});
+		  {/if}
+			
+			
+		});
+		
+	</script>

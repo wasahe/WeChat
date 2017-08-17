@@ -1,0 +1,196 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li class="active"><a href="">用户详细信息</a></li>
+</ul>
+<style type="text/css">
+table li{padding:5px 0;}
+small a{color:#999;}
+</style>
+<div class="main">
+	<form action="" class="form-horizontal form" method="post">
+		<input type="hidden" name="id" value="{$user['id']}">
+		<input type="hidden" name="flag" value="{$user['flag']}">
+		<input type="hidden" name="mid" value="{$mid}">
+		<input type="hidden" name="cid" value="{$cid}">
+		<input type="hidden" name="op" value="status">
+		<input type="hidden" name="c" value="site" />
+		<input type="hidden" name="a" value="entry" />
+		<input type="hidden" name="m" value="hc_deluxejjr" />
+		<input type="hidden" name="do" value="customer" />
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				用户详细信息
+			</div>
+			<div class="form-group" style="padding-top:10px;">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label" style="text-align:left;padding-left:3%;">设置客户状态</label>
+				<div class="col-sm-7">
+					{php $num = sizeof($status)-1;}
+					{loop $status $key $s}
+					<label class="radio-inline">
+						<input type="radio" name="status" value="{$key}" {if $user['status']==$key}checked{/if}>{if $user['status']==$key}<font color="red">{$s}</font>{else}{$s}{/if}{if $num!=$key}&nbsp;—>{/if}
+					</label>
+					{/loop}
+				</div>
+			</div>
+		{if $user['flag']==1}
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label" style="text-align:left;padding-left:3%;">推荐人</label>
+				<div class="col-sm-7">
+					{if $realname!=""} {$realname}{else}未完善{/if}
+				</div>
+			</div>
+		{/if}
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label" style="text-align:left;padding-left:3%;">真实姓名</label>
+				<div class="col-sm-7">
+					{if $user['realname']!=""} {$user['realname']}{else}未完善{/if}
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label" style="text-align:left;padding-left:3%;">手机号码</label>
+				<div class="col-sm-7">
+					{if $user['mobile']!=""} {$user['mobile']}{else}未完善{/if}
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label" style="text-align:left;padding-left:3%;">{if $user['flag']==1}预约{else}推荐{/if}</label>
+				<div class="col-sm-3">
+					<select class="form-control" name="loupan">
+						{loop $loupans $l}
+							<option value="{$l['id']}" {if $l['id']==$user['loupan']}selected{/if}>{$l['title']}</option>
+						{/loop}
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label" style="text-align:left;padding-left:3%;">{if $user['flag']==1}预约时间{else}推荐时间{/if}</label>
+				<div class="col-sm-7">
+					{php echo date('Y-m-d H:i:s', $user['createtime']);}
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label" style="text-align:left;padding-left:3%;">已发放佣金</label>
+				<div class="col-sm-7">
+					{if $comm==0}0{else}{$comm}{/if}
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label" style="text-align:left;padding-left:3%;">成交金额</label>
+				<div class="col-sm-6">
+					<input type="text" class="form-control" placeholder="已成交:{$user['successmoney']}" name="successmoney" />
+				</div>
+			</div>
+			{if $mid != 0}
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label" style="text-align:left;padding-left:3%;">给{$realname}发放佣金</label>
+				<div class="col-sm-6">
+					<input type="text" placeholder="" class="form-control" name="commission" >
+				</div>
+			</div>
+			{/if}
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label" style="text-align:left;padding-left:3%;">佣金备注</label>
+				<div class="col-sm-6">
+					<textarea style="height:90px;" class="form-control" name="comcontent" ></textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label" style="text-align:left;padding-left:3%;">积分备注</label>
+				<div class="col-sm-6">
+					<textarea style="height:90px;" class="form-control" name="creditcontent" ></textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label" style="text-align:left;padding-left:3%;">推荐备注</label>
+				<div class="col-sm-6">
+					<textarea style="height:90px;" class="form-control" name="content">{$user['content']}</textarea>
+				</div>
+			</div>
+			<div class="form-group col-sm-12">
+				<input type="button" class="btn btn-primary span3" name="submit" onclick="history.go(-1)" value="返回" />
+				{if $user['status']==7}
+					<input type="submit" class="btn btn-primary span3" name="send"  value="发放" />
+				{else}
+					<input type="submit" class="btn btn-primary span3" name="submit"  value="提交" />
+				{/if}
+			</div>
+		</div>
+	</form>
+</div>
+
+<table class="table table-hover">
+	<thead class="navbar-inner">
+		<tr>
+			<th class="row-hover" style="text-align: center;">状态</th>
+			<th class="row-hover" style="text-align: center;">支付佣金</th>
+			<th class="row-hover" style="text-align: center;">支付时间</th>
+			<th class="row-hover" style="text-align: center;">状态</th>
+			<th class="row-hover" style="text-align: center;">备注</th>
+			
+		</tr>
+	</thead>
+	<tbody>
+		{loop $list $v}
+		<tr>
+			<td style="text-align: center;">
+				{$status[$v['status']]}
+			</td>
+			<td style="text-align: center;">
+				{$v['commission']}
+			</td>
+			<td style="text-align: center;">
+				{php echo date('Y-m-d H:i:s',$v['createtime'])}
+			</td>
+			<td style="text-align: center;" id="ischeck">
+				{if $v['ischeck']==0}<font color="red" onclick="check({$v['id']});" style="cursor:pointer;">未审核</font>{else}已审核{/if}
+			</td>
+			<td style="text-align: center;">
+				{if empty($v['content'])}无{else}{$v['content']}{/if}
+			</td>
+		</tr>
+		{/loop}
+	</tbody>
+</table>
+<table class="table table-hover">
+	<thead class="navbar-inner">
+		<tr>
+			<th class="row-hover" style="text-align: center;">状态</th>
+			<th class="row-hover" style="text-align: center;">支付积分</th>
+			<th class="row-hover" style="text-align: center;">支付时间</th>
+			<th class="row-hover" style="text-align: center;">备注</th>
+		</tr>
+	</thead>
+	<tbody>
+		{loop $credits $v}
+		<tr>
+			<td style="text-align: center;">
+				{$status[$v['status']]}
+			</td>
+			<td style="text-align: center;">
+				{$v['credit']}
+			</td>
+			<td style="text-align: center;">
+				{php echo date('Y-m-d H:i:s',$v['createtime'])}
+			</td>
+			<td style="text-align: center;">
+				{if empty($v['content'])}无{else}<a href="{php echo $this->createWebUrl('customer', array('op'=>'logdetail', 'id'=>$v['id']))}">{$v['content']}</a>{/if}
+			</td>
+		</tr>
+		{/loop}
+	</tbody>
+</table>
+<script>
+function check(id){
+	if(confirm('确认审核吗？')){
+		$.getJSON("{php echo $this->createWebUrl('customer', array('op'=>'check'), true)}&id="+id,function(res){
+			if(res==1){
+				document.getElementById('ischeck').innerHTML = '已审核';
+			}
+			if(res==0){
+				alert('审核失败！');
+			}
+		});
+	}
+}
+</script>
+{template 'common/footer'}

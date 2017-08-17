@@ -1,0 +1,121 @@
+<style>
+.jpanel .panel-heading {
+	position: relative;
+}
+.jpanel .panel-collapse {
+	width: 50px;
+	height: 38px;
+	line-height: 38px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	color: #CCC;
+	text-align: center;
+	background: #EEE;
+	border-left: 1px #DDD solid;
+}
+</style>
+<input type="hidden" name="reply_id" value="{$reply['id']}" />
+<div class="panel panel-default jpanel">
+  <div class="panel-heading">
+    <h4 class="panel-title">朋友圈广告设置</h4>
+    <a class="panel-collapse" data-toggle="collapse" href="#jframe-1"> <i class="fa fa-chevron-circle-down"></i> </a> </div>
+  <div class="panel-body collapse in" id="jframe-1"> {if $reply['id']}
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">&nbsp;</label>
+      <div class="col-sm-9"> {$_W['siteroot']}app/index.php?i={$_W['uniacid']}&c=entry&do=index&m=truein_jiandu&rid={php echo $rid}
+        <div class="help-block"></div>
+      </div>
+    </div>
+
+    {/if} 
+  </div>
+
+  <div class="panel-body collapse in" id="jframe-2">
+
+	<div class="form-group">
+	  <label class="col-xs-12 col-sm-3 col-md-2 control-label">活动时间</label>
+	  <div class="col-sm-9 form-inline">
+	  {php echo tpl_form_field_date('starttime', date('Y-m-d H:i:s',$reply['starttime']), true)} ~ 
+	  {php echo tpl_form_field_date('endtime', date('Y-m-d H:i:s',$reply['endtime']), true)} </div>
+	</div>
+	<div class="form-group">
+	  <label class="col-xs-12 col-sm-3 col-md-2 control-label">活动标题</label>
+	  <div class="col-sm-9">
+		<input type="text" value="{$reply['title']}" class="form-control"  name="title">
+		<div class="help-block">用户发送关键词返回的图文主题。</div>
+	  </div>
+	</div>
+	<div class="form-group">
+	  <label class="col-xs-12 col-sm-3 col-md-2 control-label">封面</label>
+	  <div class="col-sm-9"> {php echo tpl_form_field_image('cover', $reply['cover'])}
+		<div class="help-block">建议尺寸：450*250px，仅用于图文回复</div>
+	  </div>
+	</div>
+	<div class="form-group">
+	  <label class="col-xs-12 col-sm-3 col-md-2 control-label">描述</label>
+	  <div class="col-sm-9">
+		<textarea style="height:150px;" name="description" class="form-control" cols="60">{$reply['description']}</textarea>
+		<div class="help-block">用于图文显示的简介</div>
+	  </div>
+	</div>
+  </div> 
+	<div class="panel-heading">
+	<h4 class="panel-title">广告设置</h4>
+	<a class="panel-collapse" data-toggle="collapse" href="#jframe-6"> <i class="fa fa-chevron-circle-down"></i> </a> </div>
+	<div class="panel-body collapse in" id="jframe-6">
+		<div class="form-group">
+		  <label class="col-xs-12 col-sm-3 col-md-2 control-label">广告选择</label>
+		  <div class="col-sm-9">
+			<select name="aid" class="form-control">
+			{loop $list $row}
+				<option value="{$row['id']}" {if in_array($row['id'],$reply['aid'])}selected{/if}>{$row['title']}</option>		
+			{/loop}
+			</select>
+			<div class="help-block">请先在<b>广告管理</b>中添加广告后再选择</div>
+		  </div>
+		</div>
+	</div>
+	
+	<div class="panel-heading">
+	<h4 class="panel-title">奖励政策</h4>
+	<a class="panel-collapse" data-toggle="collapse" href="#jframe-6"> <i class="fa fa-chevron-circle-down"></i> </a> </div>
+	<div class="panel-body collapse in" id="jframe-6">
+		<div class="form-group">
+		  <label class="col-xs-12 col-sm-3 col-md-2 control-label">奖励政策</label>
+		  <div class="col-sm-9">
+			<textarea style="height:150px;" name="gift" class="form-control richtext" cols="60">{$reply['gift']}</textarea>
+			<div class="help-block">可以设置达到多少广告阅读量有什么样的奖励；带来多少广告点击量有什么样的奖励。</div>
+		  </div>
+		</div>
+	</div>
+
+	<div class="panel-heading">
+	<h4 class="panel-title">帮助文档</h4>
+	<a class="panel-collapse" data-toggle="collapse" href="#jframe-6"> <i class="fa fa-chevron-circle-down"></i> </a> </div>
+	<div class="panel-body collapse in" id="jframe-6">
+		<div class="form-group">
+		  <label class="col-xs-12 col-sm-3 col-md-2 control-label">帮助文档</label>
+		  <div class="col-sm-9">
+			<textarea style="height:150px;" name="help" class="form-control richtext" cols="60">{$reply['help']}</textarea>
+		  </div>
+		</div>
+	</div>
+	
+</div>
+<script>
+
+require(['jquery','util'], function($, util){
+	$('.tips').hover(function(){
+		$(this).tooltip('show');
+	},function(){
+		$(this).tooltip('hide');
+	});
+	$(function(){
+		util.editor($('.richtext')[0]);
+	});
+	$(function(){
+		util.editor($('.richtext')[1]);
+	});
+});
+</script>

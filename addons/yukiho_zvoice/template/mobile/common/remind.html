@@ -1,0 +1,21 @@
+<link href="{MODULE_URL}assets/styles/sweetalert.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="{MODULE_URL}assets/scripts/sweetalert.min.js"></script>
+{if !empty($this->pro['subscribe_title']) && $_W['fans']['follow']!='1' && $_SESSION['cancelSubscribeTip']!='1'}
+<script type="text/javascript">
+swal({
+  title: "您还未关注公众号！",
+  text: "{php echo $this->pro['subscribe_title']}<br><img width='200px' height='200px' src='{php echo tomedia($this->pro['subscribe_image'])}'/>",
+  html: true,
+  showCancelButton: true,
+  showConfirmButton: false,
+  confirmButtonColor: "#DD6B55",
+  confirmButtonText: "现在去关注",
+  cancelButtonText: "直接进入",
+  closeOnCancel: true
+},function(isConfirm){
+  if (!isConfirm) {
+	$.get("{php echo $this->createMobileUrl('main')}",{act:'cancelSubscribeTip'},function(data){});
+  }
+});
+</script>
+{/if}

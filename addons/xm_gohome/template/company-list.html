@@ -1,0 +1,125 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+    <li class="active"><a href="{php echo  $this->createWebUrl('company', array());}">公司管理</a></li>
+    <!--
+    <li><a href="{php echo  $this->createWebUrl('companyadd', array());}">添加公司</a></li>
+    -->
+</ul>
+
+<div class="clearfix"> 
+	<div class="search">
+            <form action="index.php" method="get">
+            <input type="hidden" name="c" value="site" />
+            <input type="hidden" name="a" value="entry" />
+            <input type="hidden" name="do" value="Company" />
+            <input type="hidden" name="m" value="xm_gohome" />
+            <table width="861" class="table table-bordered tb">
+                <tbody>
+                    <tr>
+                      <td>
+                      	公司名称<input name="company_name" id="company_name" type="text" class="form-control" >
+                      </td>
+                      <td>
+                      	联系电话<input name="mobile" id="mobile" type="text" class="form-control" >
+                      </td>
+                      <td>
+                      	身份证号码<input name="license" id="license" type="text" class="form-control" >
+                      </td>
+                    </tr>
+                    
+                    <tr class="search-submit">
+                       <td colspan="3"><button class="btn pull-right span2"><i class="icon-search icon-large"></i> 搜索</button></td>
+                     </tr>
+                </tbody>
+            </table>
+            </form>
+        </div> 
+           
+    <div class="panel panel-default">
+    	<div class="panel-heading">
+            公司列表
+        </div>
+        <div class="table-responsive panel-body" style="overflow:visible;">
+            <table class="table table-hover">
+            	<thead>
+                	<tr class="active">
+                    	<td>公司名称</td>
+                        <td>公司地址</td>
+                        <td>联系电话</td>
+						<td>营业执照注册码</td>
+                        <td>余额</td>
+                        <td>公司审核</td>
+                        <td>身份验证</td>
+                        <td width="380">操作</td>
+                    </tr>
+                </thead>
+                <tbody>
+                	{loop $list $val}
+                	<tr>
+                    	<td>{$val[company_name]}</td>
+                        <td>{$val[address]}</td>
+						<td>{$val[contact]}</td>
+                        <td>{$val[license]}</td>
+                        <td>￥{$val[money]}</td>
+						<td>
+						{if $val[flag] == 1}
+                        	已审核
+                        {else}
+                        	未审核
+                        {/if}
+						</td>
+                        <td>
+                        {if $val[openid] == ''}
+                        未验证
+                        {else}
+                        已验证
+                        {/if}
+                        </td>
+                       <td style="overflow:visible;">
+                        	<div class="btn-group btn-group-sm">
+                            	
+                                <a class="btn btn-default" href="{php echo $this->createWebUrl('companysheng',array('id'=>$val['id']));}"><i class="fa fa-edit"></i>公司审核编辑</a>
+                                
+                                <a class="btn btn-default" href="{php echo $this->createWebUrl('staffchong',array('id'=>$val['id'],'flag'=>2));}"><i class="fa fa-edit"></i>充值</a>
+                                    {if $val[openid] != ''}
+                                    <a class="btn btn-default" href="{php echo $this->createWebUrl('companylook',array('openid'=>$val['openid']));}"><i class="fa fa-edit"></i>查看员工</a>
+                                    {/if}
+                                
+								<a class="btn btn-default" href="{php echo $this->createWebUrl('companyedit',array('id'=>$val['id']));}"><i class="fa fa-edit"></i> 编辑</a>
+                                
+                                {if $val['staff_num'] == 0}
+                                <a class="btn btn-default" href="{php echo $this->createWebUrl('companydelete', array('id'=>$val['id']))}" onclick="return confirm('确认删除该公司?');"><i class="fa fa-remove"></i> 删除</a>
+                                {else}
+                                <a class="btn btn-default" onclick="delinfo()"><i class="fa fa-remove"></i> 删除</a>
+                                {/if}
+                            </div>
+                        </td>
+                    </tr>
+                    {/loop}
+                    
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="panel-body text-center">
+            {$pager}
+        </div>
+        
+        <!--
+        <div class="panel-footer">
+        	<a class="btn btn-default" href="{php echo $this->createWebUrl('companyad', array('name'=>'xm_gohome'))}">添加公司</a>
+        </div>
+        -->
+        
+    </div>
+</div>
+
+
+{template 'common/footer'}
+
+<script>
+function delinfo(){
+	alert('该公司下还有服务人员，请删除服务人员后再来删除公司！');
+	return false;	
+}
+</script>

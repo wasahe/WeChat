@@ -1,0 +1,132 @@
+{template 'common/header'}
+<link rel="stylesheet" type="text/css" href="../addons/qwx_shangmen/template/resource/css/animate.min.css">
+<link rel="stylesheet" type="text/css" href="../addons/qwx_shangmen/template/resource/css/style.css">
+<link rel="stylesheet" type="text/css" href="../addons/qwx_shangmen/template/resource/css/order.css">
+
+<body>
+	<!-- 头部导航栏 -->
+    {template 'header'}
+<section>
+    <form id="bookForm" method="POST" action="orderApi/add">
+
+        {if !$address}
+            <a href="{php echo $this->createMobileUrl('myaddresspost',array('source'=>'order')); }" class="addAdr"><span>+</span>添加新地址</a>
+        {else}
+            <div class="userinfo editAdr">
+                <a href="{php echo $this->createMobileUrl('myaddress',array('source'=>'order')); }">
+                <p>{$address[name]} {$address[phone]}</p>
+                <p>地址：{$address['province']},{$address['city']},{$address['district']} {$address['address']}</p>
+                </a>            
+            </div>
+        {/if}
+
+
+    <div class="timeinfo">
+        <!-- 显示给用户的服务时间 -->
+        <p>{php echo $this->getFieldsLabel('staff_name');}
+        <a href="{php echo $this->createMobileUrl('staff',array('source'=>'order'))}" id="j_setMrs">点击选择{php echo $this->getFieldsLabel('staff_name');}</a></p>
+    </div>
+    
+    <div class="iteminfo">
+        <div class="item_tit">预约项目
+            <span class="grey"></span>
+        </div>
+        {loop $cart_goods $key $cart}
+         <dl class="item" style="width:100%" >
+            <dt>
+                <a href="{php echo $this->createMobileUrl('goods',array('id'=>$cart[goods][id])); }">
+                    <img src="{$_W['attachurl']}{$cart[goods][photo]}" alt="{$cart[goods][title]}">
+                </a>
+            </dt>
+            <dd >
+                <h3>{$cart[goods][title]}</h3>
+                <p>
+                    数量：{$cart[buy_num]}&nbsp;
+                    <i></i>{$cart[goods][shijian]}分钟
+                    &nbsp;{if $cart[daojia] == 1}上门服务{else}到店服务{/if}
+                </p>
+                <p>
+                ￥{$cart[buy_price]}
+                {if ($cart[params]['is_vip'])}<span class='vip_span' style='text-decoration: none;display: inline-block'>/&nbsp;vip</span>{/if}
+                </p>
+                
+            </dd>
+            <dd></dd>
+        </dl> 
+        {/loop}    
+    </div>
+        
+        <div class="otherinfo">
+            <p>
+                合计：<i>￥{$sum_money}{$post_daojia_fee_msg}<code></code></i>
+                <span><b></b>{$sum_time}分钟</span>
+            </p>
+            <p>
+                实付金额：<i></i><span id="realPrice" style="font-size: 15px; color: #fe6771;">
+                ￥{$sum_money}</span>
+            </p>
+            <p>
+                预约{php echo $this->getFieldsLabel('staff_name');}：
+                {if $staff}
+                    {$staff['staff_name']}(工号:{$staff['staff_work_no']})
+                {/if}
+            </p>
+
+            <p>
+                预约时间：{$select_yuyue_time}
+            </p>
+            <p>
+                <input name="memo" id="memo" placeholder="备注：如对某产品过敏等" />
+            </p>
+        </div>
+                 
+        </form>
+            
+</section>
+
+<aside>
+    <input type="hidden" id="is_submit" value="0" />
+    <a class="book" id="bookBtn" href="javascript:void(0);">立即下单</a>
+</aside>
+
+<script>
+$('#bookBtn').click(function(){
+    if ($('#is_submit').val()==1){
+        return false;
+    }
+	{if date('Y-m-d H:i:s', strtotime($select_yuyue_time)) < date('Y-m-d H:i:s')}
+	alert('请选择正确的预约时间');return false;
+	{/if}
+    $('#is_submit').val(1);
+    $('#bookBtn').text('正在提交');
+    var memo = $('#memo').val();
+
+    $.ajax({
+        url:'{php $this->createMobileUrl('order')}',
+        type:'post',
+        data:{'address_id':'{$address[id]}','staff_id':'{$staff_id}','memo':memo},//todo-ipone
+        success:function(data){
+            if (data.code == 1){
+                //跳转到付款页：
+                var url = '{php echo $this->createMobileUrl('pay',array('order_sn'=>'order_sn_code'))}&order_sn='+data.order_sn;//@test;
+                window.location.href=url;
+            }else{
+                alert(data.msg);
+            }
+            $('#is_submit').val(0);
+            $('#bookBtn').text('立即下单');
+        },
+        dataType:'json'
+    });
+    
+})
+</script>
+
+
+
+<script src="../addons/qwx_shangmen/template/resource/js/zepto.min.js"></script>
+
+</body>
+</html>
+
+

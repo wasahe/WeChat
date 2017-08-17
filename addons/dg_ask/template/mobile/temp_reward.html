@@ -1,0 +1,71 @@
+<li class="shang {if $record['reward_overtime']>0}over{/if}">
+					<div class="questioner clearfix">
+						<span class="yel fr f16"><i class="iconfont">&#xe618;</i> {$record['pay_money']}</span>
+						{if $record['is_nm']}
+						<div class="avatar mr5 fl">
+							<img src="../web/resource/images/gw-wx.gif" width="30" height="30">
+						</div>
+						<div class="name fl gray">匿名</div>
+						{else}
+						<div class="avatar mr5 fl">
+							<img src="{$record['pay_avatar']}" width="30" height="30">
+						</div>
+						<div class="name fl gray">{$record['pay_nickname']}</div>
+						{/if}
+					</div>
+					<div class="ask whisper_question" attr-href="{php echo $this->createMobileUrl('reward_detail',array('ask_id'=>$record['id']))}">
+						<p>{$record['ask_content']}</p>
+					</div>
+					{if $record['answer']}
+					{loop $record['answer'] $index $answer}
+					<div class="reply">
+						<div class="info">
+						{if $answer[0]['is_nm']}
+							<h3 class="gray">
+							 匿名
+							</h3>
+						{else}
+							<h3 class="gray">
+							{if $answer[0]['real_name']}
+							{$answer[0]['real_name']}<span>{$answer[0]['user_title']}</span>
+							{else}
+							 {$answer[0]['nickname']}
+							{/if}
+							</h3>
+						{/if}
+						</div>
+						{if $answer['score']==5}
+						<span class="yel best"><i class="iconfont ">&#xe619;</i></span>
+						{/if}
+						<div class="avatar fl {if $answer[0]['vstatus']==1}renzheng{/if}">
+						<a href="{php echo $this->createMobileUrl('my_ask_index',array('uid'=>$answer[0]['answer_uid']))}">
+							<img src="{if $answer[0]['is_nm']}../web/resource/images/gw-wx.gif{else}{$answer[0]['payto_avatar']}{/if}" width="40" height="40">
+						</a>
+						</div>
+						
+						<div class="voice">
+						  {loop $answer $index2 $answer_detail}
+							<div class="box" attr-id="{$record['id']}" attr-aid="{$answer_detail['id']}">
+							<span class="visit gray fr">{$answer_detail['paycount']}人旁听</span>
+							{if $answer_detail['show']==true || $record['show']==true}
+							    <div class="chat" attr-src="{$answer_detail['answer_content']}">{if $record['pay_money']==0}免费播放{else}点击播放{/if}</div>
+							{else}
+							    <div class="chat" attr-src="pay" ask-type="reward_listen">{$cfg['listen_money']}元旁听</div>
+							{/if}
+							</div>
+					      {/loop}
+						</div>
+					</div>
+					{/loop}
+				  {else}
+				    <div class="wei tc">
+						 {if $is_myindex==false && !$record['is_timeout']}
+						 <a href="{php echo $this->createMobileUrl('reward_detail',array('ask_id'=>$record['id']))}">
+							 <button class="f16 sendBtn">我要回答</button>
+							</a>
+						 {/if}
+						 <i class="text-tips">暂无回答~</i>
+					</div>
+				  {/if}
+					
+</li>

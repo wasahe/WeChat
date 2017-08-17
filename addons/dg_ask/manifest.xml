@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com" versionCode="0.6">
+	<application setting="true">
+		<name><![CDATA[智慧纷答]]></name>
+		<identifie><![CDATA[dg_ask]]></identifie>
+		<version><![CDATA[2.3.1]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[纷答系统是一款知识分享平台]]></ability>
+		<description><![CDATA[智慧分答平台，给钱才回答,知乎Live、分答，专家语音解答问题]]></description>
+		<author><![CDATA[微赞]]></author>
+		<url><![CDATA[http://www.012wz.com/]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+		</handles>
+		<rule embed="false" />
+		<card embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="纷答入口" do="ask_index" state="" direct="false" />
+		</cover>
+		<menu>
+			<entry title="支付设置" do="pay_setting" state="" direct="false" />
+			<entry title="分享设置" do="ask_share" state="" direct="false" />
+			<entry title="数据统计" do="ask_summary" state="" direct="false" />
+			<entry title="财务结算" do="ask_payment" state="" direct="false" />
+			<entry title="问题管理" do="question_manage" state="" direct="false" />
+			<entry title="专家管理" do="ask_manage" state="" direct="false" />
+			<entry title="幻灯片设置" do="banner_manage" state="" direct="false" />
+			<entry title="分类标签" do="user_tags" state="" direct="false" />
+			<entry title="认证审核" do="chat_audit" state="" direct="false" />
+			<entry title="菜单设置" do="chat_menu" state="" direct="false" />
+		</menu>
+	</bindings>
+	<install><![CDATA[CREATE TABLE IF NOT EXISTS `ims_chat_ask` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) DEFAULT NULL,
+  `pay_money` decimal(10,2) DEFAULT '0.00',
+  `pay_uid` int(10) DEFAULT NULL,
+  `pay_openid` varchar(100) DEFAULT NULL,
+  `pay_nickname` varchar(100) DEFAULT NULL,
+  `pay_avatar` varchar(200) DEFAULT NULL,
+  `pay_time` int(11) DEFAULT '0',
+  `ask_type` varchar(10) DEFAULT NULL COMMENT '私密还是公开',
+  `ask_content` text,
+  `payto_uid` int(10) DEFAULT NULL,
+  `pay_type` varchar(10) DEFAULT NULL COMMENT '提问还是偷听',
+  `pay_status` tinyint(3) DEFAULT NULL,
+  `ask_id` int(10) DEFAULT NULL COMMENT '偷听时指向父id',
+  `is_answer` tinyint(3) DEFAULT '0',
+  `answer_time` int(11) DEFAULT NULL COMMENT '回答时间',
+  `transaction_id` varchar(100) DEFAULT NULL COMMENT '交易流水号',
+  `out_trade_no` varchar(100) DEFAULT NULL COMMENT '订单号',
+  `avg_score` decimal(10,2) DEFAULT '0.00',
+  `listen_num` int(10) DEFAULT '0',
+  `look_num` int(10) DEFAULT '0',
+  `create_time` int(11) DEFAULT NULL,
+  `refund_time` int(11) DEFAULT NULL COMMENT '退款时间-只有退款时才有用',
+  `reward_days` int(10) DEFAULT NULL,
+  `reward_expirytime` int(11) DEFAULT NULL,
+  `reward_tags` varchar(100) DEFAULT NULL,
+  `reward_overtime` int(11) DEFAULT NULL,
+  `is_nm` int(2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_chat_ask_answer` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) DEFAULT NULL,
+  `ask_id` int(10) DEFAULT NULL,
+  `answer_type` varchar(10) DEFAULT NULL COMMENT 'voice,image,text',
+  `answer_content` varchar(500) DEFAULT NULL,
+  `answer_content_down` varchar(1000) DEFAULT NULL,
+  `answer_uid` int(10) DEFAULT NULL,
+  `time_last` int(10) DEFAULT NULL,
+  `down_time` int(11) DEFAULT NULL COMMENT '文件上传七牛时间',
+  `create_time` int(11) DEFAULT NULL,
+  `up_count` int(11) DEFAULT NULL,
+  `down_count` int(11) DEFAULT NULL,
+  `score` int(10) DEFAULT NULL,
+  `listen_num` int(10) DEFAULT NULL,
+  `is_nm` int(2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_chat_ask_banner` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL,
+  `bannername` varchar(50) DEFAULT '',
+  `link` varchar(255) DEFAULT '',
+  `thumb` varchar(255) DEFAULT '',
+  `displayorder` int(11) DEFAULT '0',
+  `enabled` int(11) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+CREATE TABLE IF NOT EXISTS `ims_chat_ask_dig` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) DEFAULT NULL,
+  `answer_id` int(10) DEFAULT NULL,
+  `op_name` varchar(10) DEFAULT NULL,
+  `uid` int(10) DEFAULT NULL,
+  `create_time` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_chat_ask_follow` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `uid` int(10) DEFAULT NULL,
+  `follow_uid` int(10) DEFAULT NULL,
+  `create_time` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_chat_ask_listens` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) DEFAULT NULL,
+  `ask_type` varchar(10) DEFAULT NULL,
+  `ask_id` int(10) DEFAULT NULL,
+  `answer_id` int(10) DEFAULT NULL,
+  `pay_uid` int(10) DEFAULT NULL,
+  `pay_money` decimal(10,3) DEFAULT NULL,
+  `pay_status` tinyint(3) DEFAULT NULL,
+  `pay_time` int(11) DEFAULT NULL,
+  `transaction_id` varchar(200) DEFAULT NULL,
+  `out_trade_no` varchar(100) DEFAULT NULL,
+  `create_time` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_chat_ask_score` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) DEFAULT NULL,
+  `ask_id` int(10) DEFAULT NULL COMMENT '偷听时指向父id',
+  `uid` int(11) DEFAULT '0',
+  `score` int(10) DEFAULT NULL COMMENT '交易流水号',
+  `create_time` int(11) DEFAULT '0',
+  `answer_id` int(10) DEFAULT NULL,
+  `to_uid` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_chat_ask_share` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) DEFAULT NULL,
+  `share_title` varchar(500) DEFAULT NULL,
+  `share_desc` varchar(1000) DEFAULT NULL,
+  `share_img` varchar(200) DEFAULT NULL,
+  `create_time` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_chat_ask_summary` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) DEFAULT NULL,
+  `max_id` int(10) DEFAULT NULL COMMENT '上次汇总的最大id',
+  `pay_amount` decimal(10,2) DEFAULT '0.00' COMMENT '原始汇总金额',
+  `last_amount` decimal(10,2) DEFAULT '0.00' COMMENT '最终汇总金额(扣除点数)',
+  `pay_count` int(10) DEFAULT '0' COMMENT '数量',
+  `payto_uid` int(10) DEFAULT NULL COMMENT '数量',
+  `summary_type` tinyint(3) DEFAULT '0' COMMENT '1-付费回答,2-回答者旁听收入,3-提问者旁听收入',
+  `create_time` int(11) DEFAULT '0',
+  `batch_num` varchar(100) DEFAULT NULL COMMENT '结算批次号',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_chat_ask_summary_last` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) DEFAULT NULL,
+  `pay_amount` decimal(10,2) DEFAULT '0.00' COMMENT '原始汇总金额',
+  `last_amount` decimal(10,2) DEFAULT '0.00' COMMENT '最终汇总金额(扣除点数)',
+  `payto_uid` int(10) DEFAULT NULL COMMENT '数量',
+  `status` tinyint(3) DEFAULT '1' COMMENT '1-处理中,2-已打款',
+  `create_time` int(11) DEFAULT '0',
+  `pay_time` int(11) DEFAULT '0' COMMENT '结算时间',
+  `transaction_id` varchar(200) DEFAULT NULL COMMENT '结算号',
+  `batch_num` varchar(100) DEFAULT NULL COMMENT '批次号',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_chat_ask_tags` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL,
+  `tag_name` varchar(50) DEFAULT '',
+  `displayorder` int(11) DEFAULT '0',
+  `enabled` int(11) DEFAULT '0',
+  `create_time` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+]]></install>
+	<uninstall><![CDATA[DROP TABLE IF EXISTS `ims_chat_ask`;
+DROP TABLE IF EXISTS `ims_chat_ask_answer`;
+DROP TABLE IF EXISTS `ims_chat_ask_banner`;
+DROP TABLE IF EXISTS `ims_chat_ask_dig`;
+DROP TABLE IF EXISTS `ims_chat_ask_follow`;
+DROP TABLE IF EXISTS `ims_chat_ask_listens`;
+DROP TABLE IF EXISTS `ims_chat_ask_score`;
+DROP TABLE IF EXISTS `ims_chat_ask_share`;
+DROP TABLE IF EXISTS `ims_chat_ask_summary`;
+DROP TABLE IF EXISTS `ims_chat_ask_summary_last`;
+DROP TABLE IF EXISTS `ims_chat_ask_tags`;
+]]></uninstall>
+	<upgrade><![CDATA[upgrade.php]]></upgrade>
+</manifest>

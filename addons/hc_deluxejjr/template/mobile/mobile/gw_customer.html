@@ -1,0 +1,395 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+	<title>我的客户 - 销售员</title>
+
+	<meta charset="utf-8">
+
+	<link rel="stylesheet" href="../addons/hc_deluxejjr/style/css/style.css?r=2.24"/>
+
+	<link rel="apple-touch-icon-precomposed" href="/img/ico-startup-57x57.png" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" />
+
+	<meta name="format-detection" content="telephone=no,address=no,email=no" />
+
+	<meta name="mobileOptimized" content="width" />
+
+	<meta name="handheldFriendly" content="true" />
+
+	<meta http-equiv="Cache-Control" content="max-age=0" />
+
+	<meta name="apple-touch-fullscreen" content="yes" />
+
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+</head>
+
+<body>
+
+<section class="main animated fadeInDown">
+
+
+
+	<div class="main-box">
+
+		<div class="client-info fn-clear">
+
+			<h1>{$customer['realname']}</h1>
+
+			<div class="client-tel">
+
+				<p><i class="icon icon-phone"></i>电话号码<span>{$customer['mobile']}</span></p>
+
+				<p><i class="icon icon-location"></i>意向产品<span>{$pan[$customer['loupan']]}</span></p>
+
+				<p><i class="icon icon-adult"></i> 推 荐 人<span>{if !empty($member)}{$member['realname']}{else}已被删除{/if}</span></p>
+
+				{if !empty($xs)}<p><i class="icon icon-adult"></i> 销 售 员<span>{$xs['realname']}</span></p>{/if}
+
+			</div>
+
+		</div>
+
+		<div class="call-to"><a href="tel:{$customer['mobile']}">呼叫Ta</a><a href="tel:{$member['mobile']}">呼叫推荐人</a></div>
+
+		<div class="call-to"><a href="{if $opp=='pro'}{php echo $this->createMobileUrl('cusmat', array('cid'=>$customer['id'], 'opp'=>'pro'))}{else}{php echo $this->createMobileUrl('cusmat', array('cid'=>$customer['id']))}{/if}">客户素材</a><a onclick="location.href = '{php echo $this->createMobileUrl('customer', array('op'=>'remarkdetail', 'cid'=>$customer['id'], 'lid'=>$customer['loupan']))}'">查看日志</a></div>
+
+		
+
+		<div class="client-time border-box fn-clear" style="margin-bottom:10px;">
+
+                    <p>推荐时间：{php echo date('Y-m-d H:i:s', $customer['createtime'])}</p>  
+
+                    <p>客户备注：{$customer['content']}</p>
+
+                </div>	
+
+		
+
+		
+
+		<div class="client-time border-box fn-clear" style="margin-bottom:10px;">
+
+			<h1>跟进日志</h1>
+
+			<p><textarea id="content" style="width:100%;min-height:40px;" placeholder="增加日志"></textarea></p>
+
+		</div>		
+
+		<div class="client-time border-box fn-clear">
+
+			<div class="time-left">
+
+				{$time_node}
+
+			</div>
+
+			
+
+			<div class="time-right">
+
+				<ul>
+
+				{$time_detail}
+
+				</ul>
+
+			</div>
+
+		</div>
+
+		<input type="hidden" id="flag" value="{$customer['flag']}">
+
+		<p class="rb-submit">
+
+			{if $opp=='his'}
+
+			<input type="button" value="提交" class="btn" id="J_submitReg" style="width:49%;"/>
+
+			<input type="button" value="取消分配" class="btn" onclick="cancelfp({$customer['id']});" style="width:49%;"/>
+
+			{elseif $opp=='pro'}
+
+			<input type="button" value="返回" class="btn" onclick="history.go(-1)" />
+
+			<input type="button" value="取消分配" class="btn" onclick="cancelfp({$customer['id']});" style="width:49%;"/>
+
+			{else}
+
+			<input type="button" value="提交" class="btn" id="J_submitReg" />
+
+			
+
+			{/if}
+
+		</p>
+
+	</div>
+
+	</div>
+
+</section>
+
+
+
+<footer class="foot"><a>&copy; {$_W['account']['name']}</a></footer>
+
+
+
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+
+<script src="../addons/hc_deluxejjr/style/js/com.js"></script>
+
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+{php $signPackage=$_W['account']['jssdkconfig'];}	
+
+<script>
+
+wx.config({
+
+	debug: false,   
+
+	appId: '<?php echo $signPackage["appId"];?>',
+
+	timestamp: '<?php echo $signPackage["timestamp"];?>',
+
+	nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+
+	signature: '<?php echo $signPackage["signature"];?>',
+
+	jsApiList: ['checkJsApi','onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo',]
+
+});
+
+
+
+wx.ready(function () {
+
+	var shareData = {
+
+		title: "经纪人中心",
+
+		desc: "调动你的社交关系，推荐客源，获丰厚佣金！",
+
+		link: "{php echo $_W['siteroot'].'app/'.$this->createMobileUrl('index',array('id'=>$id))}",
+
+		imgUrl: "{$_W['siteroot']}addons/hc_deluxejjr/icon.jpg",
+
+		trigger: function (res) {},
+
+		complete: function (res) {},
+
+		success: function (res) {
+
+             TopBox.alert("分享后成功,等着收佣金吧!");
+
+			},
+
+		cancel: function (res) {
+
+		},
+
+		fail: function (res) {}
+
+	};
+
+	wx.onMenuShareAppMessage(shareData);
+
+	wx.onMenuShareQQ(shareData);
+
+	wx.onMenuShareWeibo(shareData);
+
+	wx.onMenuShareTimeline(shareData);
+
+});
+
+</script>
+
+<script type="text/javascript">
+
+function cancelfp(cid){
+
+	if(confirm('是否取消分配？')){
+
+		if(cid!=0){
+
+			opp = 'visit';
+
+			op = 'statussort';
+
+			oppp = 'all';
+
+			$.ajax({
+
+				type: "POST",
+
+				url: "{php echo $this->createMobileurl('counselor',array('op'=>'cancelfp'))}",
+
+				data: { cid:cid},
+
+				dataType: "text",
+
+				
+
+				success: function (d) {
+
+					if (d == "1") {
+
+						TopBox.alert("取消分配成功！", function () { window.location.href = '{php echo $this->createMobileurl('counselor', '', true)}&op='+op+'&opp='+opp+'&oppp='+oppp; });
+
+						//TopBox.alert("经纪人申请成功.");
+
+					} else if (d == "0") {
+
+						TopBox.alert("取消分配失败！");
+
+					}
+
+				},
+
+				
+
+				error: function (xml, text, thrown) {
+
+					TopBox.alert("出错啦!");
+
+				}
+
+			});
+
+		}
+
+	}
+
+}
+
+
+
+	var statuss = $('input[name="status"]');
+
+	if({$customer['status']}>2){
+
+		statuss[{$customer['status']}-1].checked = true;
+
+	}else{
+
+		statuss[{$customer['status']}].checked = true;
+
+	}
+
+	
+
+$("#J_submitReg").live("click", function () {
+
+
+
+	//var n = $("#content").val();
+
+	var cc = $("#content").val();
+
+	var f = $("#flag").val();
+
+	var opp = '';
+
+	var op = 'display';
+
+	var oppp = '';
+
+	if("{$opp}"=='his'){
+
+		opp = 'visit';
+
+		op = 'statussort';
+
+		oppp = 'all';
+
+	}
+
+	var status = '';
+
+	var cid = "{$cid}";
+
+	var statuss = $('input[name="status"]');
+
+	for (var i=0; i<statuss.length; i++){
+
+		if(statuss[i].checked == true){
+
+			var status = statuss[i].value;
+
+			break;
+
+		}
+
+	}
+
+
+
+	$.ajax({
+
+		type: "POST",
+
+		url: "{php echo $this->createMobileurl('counselor',array('op'=>'status'))}",
+
+		data: { content:cc, status:status, cid:cid, flag:f, opp:opp},
+
+		dataType: "text",
+
+		
+
+		success: function (d) {
+
+			if (d == "1") {
+
+				TopBox.alert("更新状态成功！", function () { window.location.href = '{$url}' });
+
+				//TopBox.alert("经纪人申请成功.");
+
+			} else if (d == "0") {
+
+				TopBox.alert("更新状态失败！");
+
+			}
+
+		},
+
+		
+
+		error: function (xml, text, thrown) {
+
+			TopBox.alert("出错啦!");
+
+		}
+
+	});
+
+
+
+});
+
+
+
+function remarkdetail(commid){
+
+	if(commid!=0){
+
+		location.href = "{php echo $this->createMobileUrl('counselor', array('op'=>'remarkdetail'), true)}&commid="+commid;
+
+	}
+
+}
+
+
+
+</script>
+
+</body>
+
+</html>

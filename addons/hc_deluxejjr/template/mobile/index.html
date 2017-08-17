@@ -1,0 +1,273 @@
+<!doctype html>
+<html>
+<head>
+	<title>经纪人首页</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="../addons/hc_deluxejjr/style/css/style.css?r=4.93"/>
+	<link rel="apple-touch-icon-precomposed" href="/img/ico-startup-57x57.png" />
+	<link href="../addons/hc_deluxejjr/style/jkt/css/Common21.css?rand=12" rel="stylesheet" type="text/css" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" />
+	<meta name="mobileOptimized" content="width" />
+	<meta name="handheldFriendly" content="true" />
+	<meta http-equiv="Cache-Control" content="max-age=0" />
+	<meta name="apple-touch-fullscreen" content="yes" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<script language="javascript" src="../addons/hc_deluxejjr/style/js/scroll.js" type="text/javascript"></script>
+	<link href="../addons/hc_deluxejjr/style/css/scroll.css" rel="stylesheet">
+	
+</head>
+<style>
+.rank-list, .my-team {
+	width: 49%;
+	height: 65px;
+	line-height: 65px;
+	border: #00b4bf solid 2px;
+	position: relative;
+}
+.my-model p {
+	text-align: right;
+	font-size: 14px;
+	font-style: italic;
+	font-weight: bold;
+	color: #00b4bf;
+	margin-right: 13px;
+}
+.app-dialog .select{
+	max-height:194px;
+	background-color: #fff;
+	overflow-x:hidden;
+	overflow-y: scroll;
+    box-shadow: 0 0 5px rgba(0,0,0,.2);
+    border-radius: 6px;
+	z-index:9999;
+	height:auto;
+	position:fixed;
+	top:33%;
+	width:50%;
+	left:25%;
+	display:none;
+}
+.app-dialog .select .inner{position: relative;width: 100%;overflow: hidden;}
+.app-dialog .select .option{display: block;max-width:300px;padding:0 45px;line-height: 38px;border-top: 1px solid #e1e1e1;outline: none;overflow:hidden;word-wrap:normal;white-space:nowrap;text-overflow:ellipsis;}
+.app-dialog .select .option:first-child{border-top: 0 none;}
+</style>
+<body>
+<!--loading start-->
+<style id="loading-style">html,body{width:100%;height:100%; overflow: hidden;}</style>
+<section class="user-loader" style="background:url(../addons/hc_deluxejjr/style/images/bg-loader.jpg);background-size: 100% 100%;">
+	<i class="icon-spin4 animate-spin"></i>
+</section>
+<!-- loading end-->
+<section class="main animated">
+	<div class="main-box">
+		{if empty($id)}
+			<div class="register-indexbox "><a href="{php echo $this->createMobileUrl('register')}"><img src="../addons/hc_deluxejjr/style/images/register-index.png" alt=""></a></div>
+		{else}
+		<div class="home-info border-box fn-clear">
+			<figure class="figure-box">
+				<img src="{$profile['headurl']}" alt="">
+			</figure>
+			<h5>{$profile['realname']}&nbsp;<img style="margin-top:-6px;" src="{if empty($explevel['levelicon'])}../addons/hc_deluxejjr/icon.jpg{else}{$_W['attachurl']}{$explevel['levelicon']}{/if}"></h5>
+			<div class="user-info">
+				<label>总佣金</label>
+				<p><i class="icon icon-money"></i><span>{$mycommission}</span></p>
+			</div>
+			<div class="info-border"></div>
+			<div class="user-info">
+				<label>推荐人数</label>
+				<p><i class="icon icon-users"></i><span>{$mycustomer}</span></p>
+			</div>
+		</div>
+		{/if}
+		<div class="shop_slider shop_slider_auto mod_pic_mt_1" data-tag="module-slider" data-height="320">
+			<div class="inner" data-tag="slider-warp" style="visibility: visible;">
+				<ul class="pic_list" data-tag="slider-list" style="width: 2560px;">
+					{loop $advs $adv}
+					<li data-index="0" style="width: 640px; left: 0px; transition: 0ms; -webkit-transition: 0ms; -webkit-transform: translate(640px, 0px) translateZ(0px);">
+						<a href="{if empty($adv['link'])}#{else}{$adv['link']}{/if}" target="_blank" title="图片">
+							<img alt="图片" class="pp_init_img" src="{$_W['attachurl']}{$adv['thumb']}">
+						</a>
+					</li>
+					{/loop}
+				</ul>
+			</div>
+			<div class="bar_wrap">
+				<ul class="bar" data-tag="slider-page">
+					<li class=""></li>
+					<li class="cur"></li>
+				</ul>
+			</div>
+		</div>
+		<div style="background-color:#fff;height:40px;">
+			<div style="display:inline-block;text-align:center;width:49%;padding-top:1px;color:rgb(208, 78, 78);border-right:1px rgb(208, 78, 78) solid;height:21px;margin-top:7px;"><font size="3px" style="font-weight:bold" {if $location_c == '全国'}{else}onclick="$('#isshow').css('display', 'block');$('#hide').css('display', 'block')"{/if}>{$location_c}</font></div>
+			<div style="display:inline-block;text-align:center;width:49%;color:rgb(208, 78, 78);" onclick="location.href = '{php echo $this->createMobileUrl('index', array('op'=>'area'))}'"><font size="3px" style="font-weight:bold">切换</font></div>
+		</div>
+		<!--
+		<ul class="home-nav fn-clear">
+			<li class="nav-recommend"><a href="{php echo $this->createMobileUrl('recommend')}">我要推荐<label>hot</label><br /><span>Recommend</span></a></li>
+			<li class="nav-rule"><a href="{php echo $this->createMobileUrl('index', array('op'=>'area'))}">区域选择<br /><span>Area</span></a></li>
+			<li class="nav-commission"><a href="{php echo $this->createMobileUrl('commission', array('id'=>$id))}"><p>我的佣金<br /><span>Commission</span></p></a></li>
+			<li class="nav-rule-detail"><a href="{php echo $this->createMobileUrl('rule')}">活动细则<br /><span>Rule</span></a></li>
+		</ul>
+		<a href="{php echo $this->createMobileUrl('team');}">
+			<div class="my-model my-model-alone fn-clear">
+				<div class="my-team border-box">
+					<i class="imgs icon-jjr"></i>
+					<p>我的团队</p>
+					<i class="icon-right-open-big"></i>
+				</div>
+			</div>
+		</a>
+		-->
+		{if $rule['isopen']==1}
+		{if !empty($areas)}
+		<div class="my-model my-model-alone fn-clear">
+			{loop $areas $key $a}
+			<div style="width:49%;float:{if $key%2==0}left{else}right{/if};height:32px;">
+				<a href="{php echo $this->createMobileUrl('index', array('location_c'=>$a['location_c']));}">
+					<ul style="">
+						<li style="background-color:rgb(208, 78, 78);text-align:center;color:white;height:24px;padding-top:3px;"><font style="font-weight:bold;">{$a['location_c']}</font></li>
+					</ul>
+				</a>
+			</div>
+			{/loop}
+			{if $key%2==0}
+				<div style="width:49%;float:right;height:30px;">
+				</div>
+			{/if}
+		</div>
+		{/if}
+		{/if}
+		<div class="sy_list" id="datalist" style="z-index: 999;">
+			{loop $loupans $l}
+				<ul name="click">
+					<li>
+						<div class="cot">
+							<a href="{php echo $this->createMobileurl('loupan',array('lid'=>$l['id']))}">
+								<img style="padding:3px;" src="{$_W['attachurl']}{$l['thumb']}" height="71" width="100%" />
+								<div class="potion" style="padding:3px;">
+									<img src="../addons/hc_deluxejjr/style/jkt/images/{if $l['typekind']==0}main1.png{elseif $l['typekind']==1}main2.png{elseif $l['typekind']==2}main3.png{elseif $l['typekind']==3}main4.png{/if}" width="40" height="34"  />
+								</div>
+							</a>
+						</div>
+						<div class="cot1" style="overflow:hidden; white-space:nowrap; text-overflow: ellipsis;">
+							<div style="height:28px;">
+								<div class="font_txt" style="font-size:1.4em;width:60%;" onclick="location.href = '{php echo $this->createMobileurl('loupan',array('lid'=>$l['id']))}'">{$l['title']}</div>
+								<div class="font_txt1" style=" width: 40%;">
+									<a href="{php echo $this->createMobileurl('loupan',array('lid'=>$l['id']))}">
+										<img style="vertical-align: middle; margin-top: 2px;" src="../addons/hc_deluxejjr/style/jkt/images/moneyimg01.png" width="12" height="12" />
+										<span>{if empty($idcommission[$l['id']])}待定{else}{$idcommission[$l['id']]}{/if}</span>
+									</a>
+								</div>
+								<div style="clear:both;"></div>
+							</div>
+							<div>
+								<span>{$l['location_a']}</span>&nbsp;&nbsp;
+								<span class="font_txt3"  style="padding-right:8px;">{$l['price']}元/m²</span>
+							</div>
+							<div style="margin-top: 0px; ">
+								<span class="font_txt3" style="font-size:10px;">推荐({php echo $l['recnum']+$loupan_cusnum[1][$l['id']]})</span>&nbsp;&nbsp;
+								<span class="font_txt3" style="font-size:10px;">
+									<span style="color:#db5353">成交({php echo $l['sucnum']+$loupan_cusnum[$success_key][$l['id']]})</span>
+								</span>
+								<div class="font_txt1" style="line-height: 31px;margin-top: -10px; width:25%;">
+									<div class="font_txt" style="width:auto;float:right;margin-right:25px;  overflow: inherit;">
+										<a style="color: #ffffff;padding: 0 10px;" href="{php echo $this->createMobileUrl('recommend', array('lid'=>$l['id']))}" >推荐</a>
+									</div>
+								</div>
+								<div style="clear: both; height: 0;">
+								</div>
+							</div>
+							<div style="clear: both; height: 0;">
+							</div>
+						</div>
+						<div style="clear: both;"></div>
+					</li>
+				</ul>
+			{/loop}
+		</div>
+	</div>
+</section>
+<div class="app-dialog">
+	<div class="select" id="isshow" >
+		<div class="inner">
+			<a class="option" onclick="$('#isshow').css('display', 'none');$('#hide').css('display', 'none')">关闭</a>
+			{loop $location_as $l}
+				<a class="option" href="{php echo $this->createMobileUrl('index', array('op'=>'location_a', 'location_a'=>$l['location_a']))}">{$l['location_a']}</a>
+			{/loop}
+		</div>
+	</div>
+</div>
+<div id="hide" style="display: none; top:0; width:100%; height:100%; background-color:black; filter:alpha(opacity=30); opacity: 0.3; position:fixed; z-index:9998"></div>
+<nav class="nav fn-clear">
+	<a href="{php echo $this->createMobileUrl('index')}" class="active"><i class="icon-angle-left"></i>首页</a>
+	<a href="{php echo $this->createMobileUrl('customer')}"><i class="icon-users"></i>我的客户</a>
+	<a href="{php echo $this->createMobileUrl('my')}" ><i class="icon-adult"></i>个人中心</a>
+</nav>
+<footer class="foot"><a>&copy; {$_W['account']['name']}</a> <a href="{php echo $this->createMobileUrl('counselor')}">销售入口</a> <a href="{php echo $this->createMobileUrl('acmanager')}">经理入口</a>   </footer>
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+<script src="../addons/hc_deluxejjr/style/js/com.js"></script>	
+<script>
+function loadImages(sources, callback) {
+	var count = 0,
+			images = {},
+			imgNum = 0;
+	for (src in sources) {
+		imgNum++;
+	}
+	for (src in sources) {
+		images[src] = new Image();
+		images[src].onload = function() {
+			if (++count >= imgNum) {
+				callback(images);
+			}
+		}
+		images[src].src = sources[src];
+	}
+}
+loadImages(['../addons/hc_deluxejjr/style/images/bg-loader.jpg'], function() {
+	setTimeout(function() {
+		$('.loader').addClass('fadeOut').hide();
+		$('.user-loader').addClass('fadeOut').hide();
+		$('.main-box').addClass('fadeIn');
+		$('#loading-style').remove();
+	}, 1000);
+});
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+{php $signPackage=$_W['account'][jssdkconfig];}	
+<script>
+wx.config({
+	debug: false,   
+	appId: '<?php echo $signPackage["appId"];?>',
+	timestamp: '<?php echo $signPackage["timestamp"];?>',
+	nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+	signature: '<?php echo $signPackage["signature"];?>',
+	jsApiList: ['checkJsApi','onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo',]
+});
+
+wx.ready(function () {
+	var shareData = {
+		title: "{$rule['share_title']}",
+		desc: "{$rule['share_content']}",
+		link: "{php echo $_W['siteroot'].'app/'.$this->createMobileUrl('index',array('id'=>$id))}",
+		imgUrl: "{$_W['attachurl']}{$rule['share_thumb']}",
+		trigger: function (res) {},
+		complete: function (res) {},
+		success: function (res) {
+             TopBox.alert("分享后成功,等着收佣金吧!");
+			},
+		cancel: function (res) {
+            
+		},
+		fail: function (res) {}
+	};
+	wx.onMenuShareAppMessage(shareData);
+	wx.onMenuShareQQ(shareData);
+	wx.onMenuShareWeibo(shareData);
+	wx.onMenuShareTimeline(shareData);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="description" content="">
+    <link rel="stylesheet" type="text/css" href="../addons/haoman_xxx/images/main.css?v=222">
+    <title>我的奖品</title>
+    <style type="text/css">
+    html,body{}
+    body {display: block;margin: 0;padding:0;background-size:100% auto;background-repeat:no-repeat;background-color:#cd334d;}
+    .pui_clear{border-radius: 50%;width: 80px;height: 80px;position: relative;left: 50%;margin-left: -40px;top: 5px;margin-bottom: 15px;}
+    .ranking_table {width: 100%;margin:10px 0 0 0;border: none;padding: 0;}
+    .ranking_table tbody tr {border-bottom: 1px dashed #2b9443;width: 100%;padding: 0;margin: 0;color: #fede2d;}
+    .ranking_table tr td {display: inline-block;text-align: center;width: 25%;font-size: 1.0em;padding: 0.6em 0;overflow: hidden;white-space: nowrap;margin: 0;text-overflow: ellipsis;}
+    </style>
+</head>
+
+<body>
+    <div class="page_lz">
+
+        <div class="pui_user userinfo" style="margin-top: 30px;">
+            <div class="pui_user_top">
+                <div class="pui_user_top_photo pui_clear">
+                    <img src="{if empty($fans['avatar'])}../addons/haoman_xxx/images/item8.jpg{else}{$fans['avatar']}{/if}" class="pui_circle" style="border-radius: 50%;width: 100%;"/>
+                </div>
+                <div class="name" style="width: 100%;text-align: center;margin-bottom: 10px;color: #fff">{$fans['nickname']}</div>
+            </div>
+            <div style="" id="mymoney">
+                <ul style="width: 100%;list-style: none;height: 35px;margin: 0px;padding: 0px;">
+                    <li style="float: left;width: 33.333%;height: 35px;line-height: 35px;text-align: center">账户余额：</li>
+                    <li style="float: left;width: 33.333%;height: 35px;line-height: 35px;color: #fff;text-align: center" ><span id="money">{php echo $fans['totalnum']/100}</span>元</li>
+                    <li style="float: left;width: 33.333%;height: 35px;line-height: 35px;text-align: center">{if $fans['totalnum']>$num}<button class="btn btn-success" id="butt" style="background: green;color: #fff;border: none;height:30px;width: 60px;border-radius: 3px;">提现</button>{/if}</li>
+                </ul>
+                {if $numx!=0}
+                <div style="width: 100%;"><label style="width: 33.33%;display: inline-block;text-align: center">提现中金额：</label><span style="color: #fff;">{php echo $numx/100}元</span></div>
+                {/if}
+            </div>
+        </div>
+
+        <div class="tabless">
+            <table class="ranking_table">
+                <thead></thead>
+                <tbody id="loading" >
+                    <tr style="background: rgba(0,0,0,0.2);color: #fff">
+                        <td style="width:40%;">奖品</td>
+                        <td style="width:35%;">时间</td>
+                        <td style="width:25%">状态</td>
+                    </tr>
+                    {loop $mybobing $row}
+                    <tr style="font-size: 12px;">
+                      <td style="width: 40%">{$row['awardname']}{if !empty($row['credit'])}(金额:{php echo $row['credit']/100}){/if}{if !empty($row['jifen'])}({php echo $row['jifen']}分){/if}</td>
+                      <td style="width:35%;">{php echo date('m/d H:i',$row['createtime'])}</td>
+                      <td style="width: 25%"><strong>{if $row['prizetype']==2&&$row['status']!=2}<button class="btn btn-success duijiang" data-id="{$row['id']}" data-djtitle="{$row['title']}" style="background: #d9534f;color: #fff;height: 20px;border: none">兑奖</button>{elseif $row['status']==1}未兑奖{else}已兑奖{/if}</strong></td>
+                    </tr>
+                   {/loop}
+                </tbody>
+            </table>
+        </div>
+        {if $mybb ==1}
+        <div class="help" style="width: 100%;text-align: center;margin-top: 10px;color: #999">暂无数据...</div>
+        {/if}
+   
+        <div style="text-align:center;margin:0.5em 0 0 0;color:#E9E900;"><a href="{php echo $this->createMobileUrl('index', array('id' => $rid))}">返回抽奖</a></div>
+        <div style="height:3.4em;"></div>
+    </div>
+
+    <!--兑奖密码-->
+
+    <div class="mask" style="z-index: 999998;position: fixed;top: 0px;left: 0px;right: 0px;bottom: 0px;background: rgba(0,0,0,0.95);display: none;width: 100%;height: 100%">
+    <div style="z-index: 999999;width:80% ;margin-left:10%;margin-top: 25%;text-align: center;background: rgba(255, 255, 255, 0.6);display: block;border-radius: 3px;"class="point">
+        {if $reply['is_error']!=1}
+        <img class="qrcode" src="../addons/haoman_xxx/images/qrcode_for_gh_cd501b79607f_258.jpg" style="width: 100%;display: block;margin-bottom: 5px;">
+        <span id="djtitle" style="line-height: 36px;font-size: 20px;color: #FFE504"></span>
+        <a class="cpgzclose close"></a>
+        {else}
+        <input type="number" placeholder="确定兑换奖品" style="background: #fff;height: 30px;border: none;width: 80%;border-radius: 2px;margin-top: 30px;" {if $reply['password']==0&&$reply['is_error']==1} disabled {/if} class="numx">
+        {/if}
+        <br>
+        {if $reply['is_error']==1}
+        <input type="button" id="btn0" value="确认兑奖" style="margin-top: 20px;height:30px;width: 80px;border: none;border-radius: 3px;margin-right: 10px;margin-bottom: 10px;">
+        <input type="button" id="btn1" value="取消兑奖" style="margin-top: 20px;height:30px;width: 80px;border: none;border-radius: 3px;margin-bottom: 10px;">
+        {else}
+        <input type="button" id="btn0" value="关闭" style="margin-top: 20px;height:30px;width: 80px;border: none;border-radius: 3px;margin-right: 10px;color: #333;margin-bottom: 10px;">
+        {/if}
+    </div>
+    </div>
+
+    <div class="defeat" style="width: 80%;height: 36px;background: rgba(0,0,0,0.6);border-radius: 18px;position: fixed;bottom: 20px;left:50%;margin-left:-40%;line-height:36px;z-index: 999999;text-align: center;display: none;color: #fff">兑奖码错误，请重新输入</div>
+    <div class="succeed" style="width: 80%;height: 36px;background:rgba(0,0,0,0.6);border-radius: 18px;position: fixed;bottom: 20px;left:50%;margin-left:-40%;line-height:36px;z-index: 999999;text-align: center;display: none;color: #fff;">兑奖成功，谢谢参与</div>
+
+    <script src="../addons/haoman_xxx/images/zepto.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+            //       提现申请
+            var click = false;
+
+
+                $("#butt").click(function () {
+                    if (click) {
+                        return false;
+                    } else {
+                        click = true;
+                    {if $numx == 1}
+                    alert('您提现次数大于每日提现次数，请明天在来提现！！')
+                    location.href = "{php echo $this->createMobileUrl('mybobing', array('rid' => $rid))}";
+                    {else}
+                        $("#butt").attr('disabled', true);
+                        $("#butt").hide();
+                    var content = $("#money").html()
+                    var submitData1 = {
+                        content: content,
+                    };
+
+                    $.post('{php echo $this->createMobileUrl('application', array('rid' => $rid))}', submitData1, function (data) {
+
+                        if (data.success == 1) {
+                            $(".succeed").show();
+                            $(".succeed").html(data.msg);
+                            setTimeout(function () {
+                                $(".succeed").toggle();
+                                location.href = "{php echo $this->createMobileUrl('mybobing', array('rid' => $rid))}";
+                            }, 2000)
+
+
+                        } else {
+                            $(".defeat").html(data.msg);
+                            $(".defeat").show();
+
+                            setTimeout(function () {
+                                $(".defeat").toggle();
+                                location.href = "{php echo $this->createMobileUrl('mybobing', array('rid' => $rid))}";
+                            }, 2000)
+                        }
+
+                    }, "json")
+                    {/if}
+
+                    }
+                })
+
+            {if $reply['is_error']==1}
+
+            $(".duijiang").bind("click", function () {
+                $(".mask").show();
+                $(".point").show();
+                 $num = $(this).data("id");
+               // $("#djtitle").html("您的兑奖码<br>"+num);
+
+                $("#btn0").on("click", function () {
+
+                    var submitData = {
+                        num:$num,
+                        inputval:$(".numx").val(),
+                    };
+
+                    $.post('{php echo $this->createMobileUrl('duijiang', array('rid' => $rid,'from_user'=>$from_user))}', submitData, function(data) {
+                        if (data.success == 1) {
+
+                            $(".mask").hide();
+                            $(".point").hide();
+                            $(".succeed").show();
+                            setTimeout(function(){
+                                $(".succeed").toggle();
+                                location.href="{php echo $this->createMobileUrl('mybobing', array('rid' => $rid))}";
+                            },1000)
+                        } else {
+
+                            $(".numx").val("").focus();
+                            $(".defeat").show();
+                            setTimeout(function(){
+                                $(".defeat").toggle();
+                            },1000)
+                        }
+                    },"json")
+
+                })
+            });
+            {else}
+            $(".duijiang").bind("click", function () {
+                $num = $(this).data("id");
+                var djtitle = $(this).data("djtitle");
+                var submitDatas = {
+                    id:$num,
+                    djtitle:djtitle
+                };
+
+                $.post('{php echo $this->createMobileUrl('getShareImgUrl', array('rid' => $rid,'from_user'=>$from_user))}',submitDatas, function(data) {
+
+                    if(data.success==1){
+
+                        var url = data.msg;
+
+                        $('.point .qrcode').attr('src', url);
+
+                        $(".mask").show();
+                        $(".point").show();
+
+                        $("#djtitle").html("您的兑奖码<br>"+data.djtitle);
+                    }
+                    else {
+                        alert(data.success);
+                    }
+
+                }, "json");
+            });
+            {/if}
+            $("#btn0").on("click", function () {
+                $(".mask").hide();
+                $(".point").hide();
+            })
+            $("#btn1").click(function(){
+                $(".mask").hide();
+                $(".point").hide();
+            })
+        })
+    </script>
+</body>
+
+<!-- 微信分享设置 -->
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+    // JS分享借用权限开始
+
+    // JS分享借用权限结束
+
+    wx.config({
+        debug:false,
+        appId: '{$package["appId"]}',
+        timestamp: '{$package["timestamp"]}',
+        nonceStr: '{$package["nonceStr"]}',
+        signature: '{$package["signature"]}',
+        jsApiList: [
+            'getLocation', {if $reply['share_type'] != 2}'onMenuShareTimeline','onMenuShareQQ','onMenuShareQZone','onMenuShareAppMessage','onMenuShareWeibo'{/if}
+    ]
+    });
+    var sharedata = {
+        "imgUrl" : "{$shareimg}",
+        "link" : "{$sharelink}",
+        "desc" : "{$sharedesc}",
+        "title" : "{$sharetitle}"
+    };
+
+    wx.ready(function () {
+        {if $reply['isallowip']==1}
+        wx.getLocation({
+            type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+            success: function (res) {
+
+                var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                var speed = res.speed; // 速度，以米/每秒计
+                var accuracy = res.accuracy; // 位置精度
+
+
+
+                var submitData = {
+                    lat: latitude,
+                    lon: longitude,
+                    lbsip: "{$reply['allowip']}"
+                };
+
+
+                $.post('{php echo $this->createMobileUrl('getlbs',array('id' => $rid))}', submitData, function(idata) {
+
+                    if (idata.success == 1) {
+
+                    } else {
+                        alert(idata.msg);
+                        location.href = "{php echo $this->createMobileUrl('other', array('id' => $rid,'type'=>2))}";
+
+                    }
+                },"json");
+
+            },
+            fail: function () {
+                alert("获取位置失败,请打开GPS功能！");
+                location.href = "{php echo $this->createMobileUrl('index', array('id' => $rid))}";
+
+            }
+        });
+        {/if}
+
+        {if $reply['share_type'] == 2}
+        wx.hideOptionMenu();
+        {else if $reply['share_type'] == 1}
+        wx.showOptionMenu();
+        wx.onMenuShareAppMessage(sharedata);
+        wx.onMenuShareTimeline(sharedata);
+        wx.onMenuShareQQ(sharedata);
+        wx.onMenuShareQZone(sharedata);
+        wx.onMenuShareWeibo(sharedata);
+        {else}
+        wx.showOptionMenu();
+        wx.onMenuShareAppMessage(sharedata);
+        wx.onMenuShareTimeline(sharedata);
+        wx.onMenuShareQQ(sharedata);
+        wx.onMenuShareQZone(sharedata);
+        wx.onMenuShareWeibo(sharedata);
+        {/if}
+    });
+
+</script>
+
+</html>

@@ -1,0 +1,49 @@
+{template 'common/header'}
+
+<div class="main">
+	<form action="" method="post" class="form-horizontal form">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				工作人员职称
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">前台显示的工作人员职称</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="zhicheng" class="form-control" value="{$settings['zhicheng']}" />
+					</div>
+				</div>
+			</div>
+		</div>
+    	<div class="panel panel-default">
+            <div class="panel-heading">
+                上门服务 <span class="text-muted">前台是否显示 上门服务选项</span>
+            </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">上门服务</label>
+                    <div class="col-xs-12 col-sm-9">
+		 				<label class="radio-inline"><input type="radio" name="shangmen" value="0" {if empty($settings) || $settings['shangmen'] == 0} checked="checked"{/if} /> 关闭</label>
+                		<label class="radio-inline"><input type="radio" name="shangmen" value="1" {if $settings['shangmen'] == 1} checked="checked"{/if} /> 开启</label>
+                    </div>
+                </div>
+        </div>
+    	<div class="panel panel-default">
+            <div class="panel-heading">
+                门店设置 <span class="text-muted">高级集成简单的门店，如需增强版请到商城搜索 “商户门店”</span>
+            </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">门店模块</label>
+                    <div class="col-xs-12 col-sm-9">
+		 				<label class="radio-inline"><input type="radio" name="instore" value="0" {if empty($settings) || $settings['instore'] == 0} checked="checked"{/if} /> 预约模块集成门店</label>
+                		<label class="radio-inline"><input type="radio" name="instore" value="1" {if $settings['instore'] == 1} checked="checked"{/if} /> 独立门店模块（需另购买）</label>
+						<br><h5 style="color:#ff0000">请确认使用其中一种门店，切换门店，技师的所属门店可能需要重新设置</h5>
+                    </div>
+                </div>
+        </div>
+<div class="form-group col-sm-12">
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span3" />
+					<input type="hidden" name="token" value="{$_W['token']}" />
+		</div>
+   </form>
+</div>
+{template 'common/footer'}

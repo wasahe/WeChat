@@ -1,0 +1,245 @@
+{template 'common/header'}
+{php load()->func('tpl')}
+<style type="text/css">
+.form .alert{width:700px;}
+.btn-group .active{background-color:#428bca;color:#fff;}
+</style>
+<ul class="breadcrumb">
+	<li><a href="{php echo $this->createWebUrl('display')}"><i class="fa fa-list-alt"></i> 表单列表</a></li>
+	{if !$reid}
+	<li class="active">新建表单</li>
+	{else}
+	<li class="active"><a href="{php echo $this->createWebUrl('post')}">新建表单</a></li>
+	{/if}
+	{if $reid}<li class="active">编辑表单</li>{/if}
+	<li><a href="{php echo $this->createWebUrl('recordset', array('reid' => $reid))}">记录显示设置</a></li>
+	<li><a href="{php echo $this->createWebUrl('staff', array('op' => 'list','reid' => $reid))}">客服管理</a></li>
+</ul>
+<div class="main">
+		<ul class="nav nav-tabs" id="myTab">
+			<li class="active"><a href="#tab_basic">基本设置</a></li>
+			<li><a href="#tab_skins">模板设置</a></li>
+			<li><a href="#tab_field">自定义字段</a></li>
+			<li><a href="#tab_setting">参数设置</a></li>
+			<li><a href="#tab_body">通知设置</a></li>
+			<li><a href="#tab_get">外部参数传递</a></li>
+		</ul>
+	<form class="form-horizontal form" action="" method="post" enctype="multipart/form-data" onsubmit="return validate(this);">
+    	<div class="panel panel-default">
+            <div class="panel-body table-responsive">
+		
+		<div class="tab-content">
+		<div class="tab-pane  active" id="tab_basic">{template 'post_basic'}</div>
+		<div class="tab-pane" id="tab_skins">{template 'post_skins'}</div>
+		<div class="tab-pane" id="tab_field">{template 'post_field'}</div>
+		<div class="tab-pane" id="tab_setting">{template 'post_setting'}</div>
+		<div class="tab-pane" id="tab_body">{template 'post_notice'}</div>
+		<div class="tab-pane" id="tab_get">{template 'post_get'}</div>
+		</div>
+				
+            </div>
+        </div>
+		
+<script type="text/javascript">
+<!--	
+	$(function () {
+		window.optionchanged = false;
+		$('#myTab a').click(function (e) {
+			e.preventDefault();//阻止a链接的跳转行为
+			$(this).tab('show');//显示当前选中的链接及关联的content
+		})
+	});
+//-->	
+</script>
+        <div class="form-group col-sm-12">
+			<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+			<input type="hidden" name="token" value="{$_W['token']}" />
+		</div>
+   </form>
+</div>
+<div id="dialog"  class="modal fade" tabindex="-1">
+    <div class="modal-dialog" style='width: 920px;'>
+        <div class="modal-content">
+            <div class="modal-header"><button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button><h3>设置选项</h3></div>
+            <div class="modal-body" >  
+               <div class="well">
+					<textarea id="re-desc" class="form-control" rows="3"></textarea>
+					<span class="help-block"><strong>设置此项目的说明信息</strong></span>
+				</div>
+				<div class="well re-value hide">
+					<textarea id="re-value" class="form-control" rows="6"></textarea>
+					<span class="help-block"><strong>设置表单项目的选项(如果有需要的话.) 每行一条记录, 例如: 性别 男, 女</strong></span>
+				</div>
+				<div class="well re-image hide">
+					{php echo tpl_form_field_images('image[]','');}
+					<span class="help-block"><strong>示例图：</strong></span>
+				</div>
+                <div id="module-menus" style="padding-top:5px;"></div>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-primary btn-ok" data-dismiss="modal" aria-hidden="true">确 定</a>
+                <a href="#" class="btn btn-default" data-dismiss="modal" aria-hidden="true">关 闭</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    require(['util'],function(util){
+         util.editor($('.richtext-clone')[0]);
+    })
+	var currentItem = null;
+	$(function(){
+		require(['jquery','jquery.ui'],function($,j){
+			$('#re-items').sortable({handle: '.fa-move'});
+		})
+		$('#dialog .btn-ok').on('click', function(){
+       
+			if(currentItem == null) return;
+			var v = $('#dialog #re-value').val();
+			$(currentItem).parent().prev().find(':hidden[name="value[]"]').val(encodeURIComponent(v.replace(/\n/g, ',')));
+			var v = $('#dialog #re-desc').val();
+			$(currentItem).parent().prev().find(':hidden[name="desc[]"]').val(encodeURIComponent(v));
+			
+			var v = $('#dialog #re-image').val();
+			$(currentItem).parent().prev().find(':hidden[name="image[]"]').val(v);
+			
+		});
+		{if $hasData}
+		$('#re-items').find(':text,:checkbox,select').attr('disabled', 'disabled');
+		{/if}
+	});
+	function setValues(o) {
+		var v = $(o).parent().prev().find(':hidden[name="value[]"]').val();
+		v = decodeURIComponent(v);
+		$('#dialog #re-value').val(v.replace(/,/g, '\n'));
+		
+		var v = $(o).parent().prev().find(':hidden[name="image[]"]').val();
+//		v = decodeURIComponent(v);
+		$('#dialog #re-image').val(v);
+		
+		var v = $(o).parent().prev().find(':hidden[name="desc[]"]').val();
+		v = decodeURIComponent(v);
+		$('#dialog #re-desc').val(v);
+		var v = $(o).parent().prev().prev().find('select[name="type[]"]').val();
+		
+             
+		if(v == 'radio' || v == 'checkbox' || v == 'select') {
+			$('.well.re-value').removeClass('hide');
+		} else {
+			$('.well.re-value').addClass('hide');
+		}
+		if(v == 'image') {
+			$('.well.re-image').removeClass('hide');
+		} else {
+			$('.well.re-image').addClass('hide');
+		}
+		$('#dialog').modal({keyboard: false});
+		currentItem = o;
+	}
+	function addItem() {
+		var html = '' + 
+				'<tr>' +
+					'<td><input name="title[]" type="text" class="form-control" /></td>' +
+					'<td><input type="text" name="displayorder[]" class="form-control" /></td>' + 
+					'<td style="text-align:center;"><input name="essential[]" type="checkbox" title="必填项" /></td>' +
+					'<td>' +
+						'<select name="type[]" class="form-control">' +
+						{loop $types $k $v}'<option value="{$k}">{$v}</option>' + {/loop}
+						'</select>' +
+					'</td>' +
+					'<td>' +
+						'<select name="bind[]" class="form-control">' +
+							'<option value="">不关联粉丝数据</option>' +
+						{loop $fields $k $v}{if !empty($v)}'<option value="{$k}">{$v}</option>' + {/if}{/loop}
+						'</select>' +
+						'<input type="hidden" name="value[]" />' +
+						'<input type="hidden" name="desc[]" />' +
+						'<input type="hidden" name="image[]" />' +
+						'<input type="hidden" name="essentialvalue[]" />' +
+					'</td>' +
+					'<td>' +
+						'<a href="javascript:;" data-toggle="tooltip" data-placement="bottom" class="btn btn-warning btn-sm" title="设置详细信息" onclick="setValues(this);"><i class="fa fa-edit"></i></a> &nbsp;' +
+						'<a href="javascript:;" data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm" onclick="deleteItem(this)"  title="删除此项目"><i class="fa fa-times"></i></a>' +
+					'</td>' + 
+				'</tr>';
+		$('#re-items').append(html);
+	}
+	function deleteItem(o) {
+		$(o).parent().parent().remove();
+	}
+    function message(msg){
+        require(['util'],function(util){
+            util.message(msg);
+        });
+    }
+	function validate() {
+		if($.trim($(':text[name="activity"]').val()) == '') {
+			message('必须填写表单标题.', '', 'error');
+			return false;
+		}
+		if($.trim($('textarea[name="information"]').val()) == '') {
+			message('必须填写表单成功提示信息.', '', 'error');
+			return false;
+		}
+		{if empty($reid)}
+		if($.trim($(':input[name="thumb"]').val()) == '') {
+			message('必须上传表单封面.', '', 'error');
+			return false;
+		}
+		{/if}
+		if($(':text[name="title[]"]').length == 0) {
+			message('必须设定表单的项目.', '', 'error');
+			return false;
+		}		
+		var var1 = /^[A-Za-z]+$/;
+		var var2 = /^[A-Za-z]+$/;
+		var var3 = /^[A-Za-z]+$/;
+		if($.trim($(':input[name="var1"]').val())!='' && !var2.test($.trim($('input[name="var1"]').val()))){
+			message('外部参数1 变量必须为纯字母.', '', 'error');
+			return false;
+		}
+		if($.trim($(':input[name="var2"]').val())!='' && !var2.test($.trim($('input[name="var2"]').val()))){
+			message('外部参数2 变量必须为纯字母.', '', 'error');
+			return false;
+		}
+		if($.trim($(':input[name="var3"]').val())!='' && !var2.test($.trim($('input[name="var3"]').val()))){
+			message('外部参数3 变量必须为纯字母.', '', 'error');
+			return false;
+		}
+		
+		var isError = false;
+		$(':text[name="title[]"]').each(function(){
+			if($.trim($(this).val()) == '') {
+				isError = true;
+			}
+		});
+		if(isError) {
+			message('必须要设定每个表单项目的标题.', '', 'error');
+			return false;
+		}
+		
+		var isError = false;
+		$('#re-items tr').each(function(){
+			var t = $(this).find('select[name="type[]"]').val();
+			if(t == 'radio' || t == 'checkbox' || t == 'select') {
+				if($.trim($(this).find(':hidden[name="value[]"]').val()) == '') {
+					isError = true;
+				}
+			}
+		});
+		if(isError) {
+			message('单选, 多选或下拉选择项目必须要设定备选项.', '', 'error');
+			return false;
+		}
+		$(':checkbox').each(function(){
+			if($(this).get(0).checked) {
+				$(this).parent().parent().find(':hidden[name="essentialvalue[]"]').val('true');
+			} else {
+				$(this).parent().parent().find(':hidden[name="essentialvalue[]"]').val('false');
+			}
+		});
+		return true;
+	}
+</script>
+{template 'common/footer'}

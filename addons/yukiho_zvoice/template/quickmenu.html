@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+{if empty($_W['isajax'])}
+{template 'common/top'}
+{/if}
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">底部菜单列表</h3>
+				<div class="box-tools">
+					<a href="{php echo $this->createWebUrl('quickmenu',array('act'=>'edit'))}" class="btn btn-info">新增</a>
+				</div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example2" class="table table-hover">
+				<thead>
+				<tr>
+					<th style="width:8%;">排序</th>
+					<th style="width:13%;">名称</th>
+					<th style="width:10%;">权限</th>
+					<th style="width:8%;">图标</th>
+					<th style="width:45%;">链接</th>
+					<th>操作</th>
+				</tr>
+				</thead>
+				<tbody>
+				{loop $list['list'] $li}
+				<tr>
+					<td>{$li['displayorder']}</td>
+					<td>{$li['title']}</td>
+					<td>
+						<label class="label label-{if $li['auth']=='9'}success{else}info{/if}">
+							{if $li['auth']==0}普通用户可见{else if $li['auth']==1}待审核用户可见{else if $li['auth']==2}审核未通过可见{else if $li['auth']==3}认证用户可见{else if $li['auth']==9}全部可见{/if}
+						</label>
+					</td>
+					<td><i class="{php echo $li['icon']}"></i></td>
+					<td>{$li['link']}</td>
+					<td>
+						<a href="{php echo $this->createWebUrl('quickmenu',array('act'=>'edit','id'=>$li['id']))}" class="btn btn-success">编辑</a>
+						<a href="{php echo $this->createWebUrl('quickmenu',array('act'=>'delete','id'=>$li['id']))}" class="btn btn-danger">删除</a>
+					</td>
+				</tr>
+				{/loop}
+				</tbody>
+              </table>
+            </div>
+			<div class="box-footer">
+				{php echo $list['pager']}
+			</div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+</div>
+<!-- ./wrapper -->
+{if empty($_W['isajax'])}
+{template 'common/foot'}
+<script type="text/javascript">
+	$('.mutdelete').click(function(){
+		var url = $(this).data('href');
+		var ids = [];
+		var idss = [];
+		$('input:checkbox[name="ids[]"]').each(function() {
+			var _that = $(this)[0];
+			if(_that.checked){
+				ids = ids.concat($(this).val());
+			}else{
+				idss = idss.concat($(this).val());
+			}
+		});
+		console.log(ids);
+		if(confirm("您确定要删除么？")){
+			$.post(url,{ids:ids},function(data){
+				util.message("删除成功","{php echo $_W['siteurl']}",'success');
+			},'json');
+		}
+	});
+	$('.unmutdelete').click(function(){
+		var ids = [];
+		var idss = [];
+		$('input:checkbox[name="ids[]"]').each(function() {
+			var _that = $(this)[0];
+			if(_that.checked){
+				ids = ids.concat($(this).val());
+			}else{
+				idss = idss.concat($(this).val());
+			}
+		});
+		console.log(idss);
+		if(confirm("您确定要删除么？")){
+			$.post(url,{ids:idss},function(data){
+				util.message("删除成功","{php echo $_W['siteurl']}",'success');
+			},'json');
+		}
+	})
+	$("#checkall").click(function(){
+		console.log('checkall');
+		$('input[name="ids[]"').each(function(){
+			var _that = $(this)[0];
+			if(_that.checked){
+				_that.checked = false;
+			}else{
+				_that.checked = true;
+			}
+		});
+	});
+</script>
+{/if}

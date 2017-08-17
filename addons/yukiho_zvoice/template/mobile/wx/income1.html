@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="format-detection" content="telephone=no">
+	<title>我的收入</title>
+	<link href="{MODULE_URL}assets/styles/font-awesome.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="{MODULE_URL}assets/scripts/jquery.js"></script>
+	<script type="text/javascript" src="{MODULE_URL}assets/scripts/elink-framework.js"></script>
+	<script type="text/javascript" src="{MODULE_URL}assets/scripts/noty/packaged/jquery.noty.packaged.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+	<style type="text/css">*{font-family:"Microsoft YaHei",Arial,Helvetica,sans-serif,"宋体";}</style>
+	<link href="{MODULE_URL}assets/styles/weui.css" rel="stylesheet" type="text/css">
+
+    <script>
+        var jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || {};
+        // 是否启用调试
+        jssdkconfig.debug = false;
+
+        jssdkconfig.jsApiList = [
+            'checkJsApi',
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage',
+            'onMenuShareQQ',
+            'onMenuShareWeibo',
+            'hideMenuItems',
+            'showMenuItems',
+            'hideAllNonBaseMenuItem',
+            'showAllNonBaseMenuItem',
+            'translateVoice',
+            'startRecord',
+            'stopRecord',
+            'onRecordEnd',
+            'playVoice',
+            'pauseVoice',
+            'stopVoice',
+            'uploadVoice',
+            'downloadVoice',
+            'chooseImage',
+            'previewImage',
+            'uploadImage',
+            'downloadImage',
+            'getNetworkType',
+            'openLocation',
+            'getLocation',
+            'hideOptionMenu',
+            'showOptionMenu',
+            'closeWindow',
+            'scanQRCode',
+            'chooseWXPay',
+            'openProductSpecificView',
+            'addCard',
+            'chooseCard',
+            'openCard',
+			'translateVoice',
+            'openAddress'
+        ];
+        wx.config(jssdkconfig);
+        var _TUTOR_URL = "{php echo $this->createMobileUrl('tutor')}";
+        var _follow = "{php echo intval($_W['fans']['follow'])}";
+        var _openid = "{php echo $_W['openid']}";
+        var _qrcode = "{php echo $_W['account']['qrcode']}";
+    </script>
+</head> 
+<body bgcolor="#efeff4">
+			
+		<div class="weui-cells" style="margin-top:20px;background-color:#FFF">
+
+
+			<a class="weui-cell weui-cell_access">
+                <div class="weui-cell__hd" style="width:50%;"><h4>收入：<z style='color:#27ae60'>{$credit[0]}元</z></h4></div>
+                <div class="weui-cell__bd" style="width:50%;">
+                    <p><h4>余额：
+					<z style='color:#27ae60'>{$credit['ktx']}元
+					<!--<a style="height:20px;padding-bottom:20px;line-height:20px;margin-left:10px;width:105px" href="#" class="button button-blue button-round">我要提现</a>--></z></h4></p>
+                </div>
+            </a>
+
+        </div>
+		
+		<div class="weui-cells" style="margin-top:20px;background-color:#FFF">
+            {php $menu='4'}
+
+			{if !empty($res['list'])}
+			<div class="container no-bottom">
+				<table cellspacing="0" class="table">
+					<tbody>
+					<tr>
+						<th>日期</th>
+						<th>金额</th>
+						<th>状态</th>
+						<th>来源</th>
+					</tr>
+					{loop $res['list'] $item}
+					<tr>
+						<td>{php echo date('Y-m-d',$item['create_time'])}</td>
+						<td>{php echo $item['credit']}</td>
+						<td>{if $item['status']==1}<a style='color:red'>未提现</a>
+						{else if $item['status']==2}<a style='color:green'>已提现</a>
+						{else}未知{/if}</td>
+						<td><a href="{php echo $this->createMobileUrl('question',array('id'=>$item['question_id']))}"><i class="fa fa-link" aria-hidden="true"></i> {if $item['type']==1}回答
+						{else if $item['type']==2}提问偷听
+						{else if $item['type']==3}回答偷听
+						{else if $item['type']==4}打赏
+						{else}未知{/if}</a></td>
+					</tr>
+					{/loop}
+					</tbody>
+				</table>
+			</div>
+			{/if}
+		</div>
+	</div>
+		
+		</div>
+		
+		
+
+
+<!--菜单栏-->
+ <!--菜单栏-->	{php $menu='info'}	{template '/wx/menu'}
+
+
+</body>
+</html>

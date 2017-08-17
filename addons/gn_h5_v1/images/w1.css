@@ -1,0 +1,317 @@
+@charset "utf-8";
+body {
+	background-color:#000;
+	background-image: url(https://img.alicdn.com/imgextra/i3/815440245/TB2ScM6gFXXXXbHXpXXXXXXXXXX_!!815440245.gif);
+	background-repeat: repeat;
+	background-position: -100px -100px;
+}
+
+.container{ width:98%; margin:0 auto; max-width:640px; overflow:hidden}
+
+.yy1{text-shadow: 0px 0px 2px #fff,0px 0px 2px #fff,0px 0px 2px #fff;}
+.yy11{
+	   text-shadow: 0px 0px 1px #fff,0px 0px 1px #fff,0px 0px 1px #fff;
+}
+.yy2{text-shadow: 1px 1px 4px #ff0000;}
+.yy3{text-shadow: 2px 3px 4px #ff0000;}
+.yy4 {text-shadow: 0px 0px 3px #FF0, 0px 0px 3px #fff;}
+/*黄色描边大*/
+.yy5 {text-shadow: 0px 0px 10px #FF0, 0px 0px 1px #fff;}
+/*红色投影*/
+.yy6{text-shadow: 1px 1px 4px #ff0000;}
+/*白色描边*/
+.yy7{text-shadow: 0px 0px 1px #fff,0px 0px 1px #fff,0px 0px 1px #fff;}
+.yy71{text-shadow:0px 0px 1px #922e09,-1px -1px #ffb69a,0px 0px #922e09;}
+
+.yy8{
+    text-shadow:
+    2px 0px 1px #5d0000,
+    2px 0px 1px #6d0000,
+    3px 0px 1px #700000;
+}
+
+.moveup{-webkit-animation: moveup 1s 1 ease-in-out;}
+.movedown{-webkit-animation: movedown 1s 1 linear;}
+.qiuqian{-webkit-animation: qiuqian 1s 10 linear;-webkit-transform-origin:50% 0;}
+
+#piaoluo{
+	z-index:121;
+	position:absolute;
+	top:0;
+}
+@-webkit-keyframes piaoluo{
+	from{-webkit-transform:translate(0px,0px) rotate(0deg);}
+	to{-webkit-transform:translate(-400px,1200px) rotate(360deg);}
+}
+
+*:focus {outline: none;}
+.round20 {-webkit-border-radius: 20px;}
+
+@-webkit-keyframes zhuan
+{
+	0%
+	{
+		-webkit-transform:rotate(0deg);
+	}
+
+	100%
+	{
+		-webkit-transform:rotate(360deg);
+	}
+}
+
+@-webkit-keyframes qiuqian
+{
+	0%
+	{
+		-webkit-transform:rotate(0);
+	}
+	25%
+	{
+		-webkit-transform:rotate(10deg) translate(10px,10px);
+	}
+	75%
+	{
+		-webkit-transform:rotate(-10deg) translate(-10px,-10px);
+	}
+	100%
+	{
+		-webkit-transform:rotate(0);
+	}
+}
+
+ /*定义左边进入动画动画moveleft*/
+@-webkit-keyframes 'moveleft' {
+  from{
+	   -webkit-transform: translate(-200px,0);
+     }
+  to {
+	 -webkit-transform: translate(0,0);
+  }
+}
+
+ /*定义左边进入旋转8度动画动画movelefr8t*/
+@-webkit-keyframes 'moveleftr8' {
+  from{
+	   -webkit-transform: translate(-200px,0);
+     }
+  75%{-webkit-transform: translate(0,0);}
+  to {
+	 -webkit-transform: rotate(-8deg);
+  }
+}
+
+ /*定义右边进入动画动画moveright*/
+@-webkit-keyframes 'moveright' {
+  from{
+	   -webkit-transform: translate(200px,0);
+     }
+  to {
+	 -webkit-transform: translate(0,0);
+  }
+}
+
+ /*定义右边进入动画动画'moverup*/
+@-webkit-keyframes 'moveup' {
+  from{
+	   -webkit-transform: translate(0,600px);
+	   opacity: 0;
+     }
+  to {
+	 -webkit-transform: translate(0px,0);
+	 opacity: 1;
+  }
+}
+
+ /*定义右边进入动画动画'moverdown*/
+@-webkit-keyframes 'movedown' {
+  from{
+	   -webkit-transform: translate(0,-50px);
+     }
+  to {
+	 -webkit-transform: translate(0px,0);
+  }
+}
+
+
+/* font */
+@font-face{
+font-family: myFirstFont;
+src: url('./font/ARRIVAL.ttf');
+	}
+
+@font-face{
+font-family: myFirstFont2;
+src: url('./font/BUSINKO.TTF');
+}
+
+@font-face{
+font-family: myFirstFont3;
+src: url('./font/Didot.ttf');
+	}
+
+@font-face{
+font-family: myFirstFont4;
+src: url('./font/sylfaen.ttf'); 
+	}
+
+.f_arr{font-family:myFirstFont;}
+.f_bus{font-family:myFirstFont2;}
+.f_did{font-family:myFirstFont3;}
+.f_syl{font-family:myFirstFont4;}
+
+/*input*/
+.contact_form input {
+	height:35px;
+	/*width:188px;*/
+	width:99%;
+	padding:0px 0px 0px 5px;
+	font-size: 22px;
+	line-height: 1.8em;
+	display:inline;
+}
+
+.contact_form input, .contact_form textarea {
+    border:1px solid #aaa;
+    box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset;
+    border-radius:2px;
+}
+.contact_form input:focus, .contact_form textarea:focus {
+    background: #fff;
+    border:1px solid #555;
+    box-shadow: 0 0 3px #aaa;
+}
+
+.reward_area {
+	padding:38px 5% 20px;
+	-webkit-box-sizing:border-box;
+	box-sizing:border-box;
+	margin:0 auto
+}
+.reward_area_inner {
+	margin:0 auto;
+	position:relative;
+	left:3px
+}
+.tc {
+	text-align:center
+}
+
+.mycolor1{
+    color: green;
+    animation:mycolor1 1s;
+    -moz-animation:mycolor1 1s; /* Firefox */
+    -webkit-animation:mycolor1 1s; /* Safari and Chrome */
+    -o-animation:mycolor1 1s; /* Opera */
+    animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
+}
+@-webkit-keyframes mycolor1 /* Safari and Chrome */
+{
+    0%   { color: #0F0;}
+    50%  { color: green;}
+    100% {color: #0F0;}
+}
+.mycolor2{
+    -webkit-animation: neon1 0.5s ease-in-out infinite alternate;
+    -moz-animation: neon1 0.5s ease-in-out infinite alternate;
+    animation: neon1 0.5s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes neon1 {
+    from {
+        text-shadow: 0 0 3px #fff,
+        0 0 5px  #fff,
+        0 0 7px  #fff,
+        0 0 12px  #FF1177,
+        0 0 16px  #FF1177,
+        0 0 20px  #FF1177,
+        0 0 24px #FF1177,
+        0 0 28px #FF1177;
+    }
+    to {
+        text-shadow: 0 0 2px #fff,
+        0 0 3px #fff,
+        0 0 4px #fff,
+        0 0 8px #FF0000,
+        0 0 10px #FF0000,
+        0 0 12px #FF0000,
+        0 0 14px #FF0000,
+        0 0 16px #FF0000;
+    }
+}
+
+.sdred{
+    text-shadow:
+    0 0 5px #A90000,
+    0 0 10px #FF0000;
+}
+
+.reward_access {
+	display:inline-block;
+	padding:0 1.6em;
+	line-height:2;
+	border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	background-color:#FA0909;
+	color:#fff;
+	font-size:16px;
+	-webkit-tap-highlight-color:rgba(0,0,0,0)
+}
+.reward_access:active {
+	background-color:#be5041;
+	color:#e69990
+}
+
+.tips_global {
+	color:#8c8c8c
+}
+
+.reward_user_tips {
+	margin-top:1.4em
+}
+
+.reward_user_list {
+	padding-top:.5em;
+	overflow:hidden
+}
+
+
+.moveleft{
+		-webkit-animation-name: 'moveleft'; /*动画名称*/
+      -webkit-animation-duration: 3s;/*播放一次所持续时间*/
+      -webkit-animation-timing-function: ease-in-out;/*动画播放频率*/
+      -webkit-animation-iteration-count: 1;/*动画播放次涒为无限次*/
+}
+.moveright{
+	-webkit-animation-name: 'moveright'; /*动画名称*/
+      -webkit-animation-duration: 4s;/*播放一次所持续时间*/
+      -webkit-animation-timing-function: ease-in-out;/*动画播放频率*/
+	  /*-webkit-animation-delay:1s;*/
+      -webkit-animation-iteration-count: 8;/*动画播放次涒为无限次*/
+}
+.moveright1{-webkit-animation:moveright 6s ease-in-out 0s 1}
+@-webkit-keyframes 'moveleft' {
+  from{
+	   -webkit-transform: translate(-350px,0);
+     }
+  50%{
+	 -webkit-transform: translate(0,0);
+  }
+  to {
+	 -webkit-transform: translate(0px,0);
+  }
+}
+
+@-webkit-keyframes 'moveright' {
+  from{
+	   -webkit-transform: translate(350px,0);
+     }
+  50%{
+	 -webkit-transform: translate(0,0);
+  }
+  to {
+	 -webkit-transform: translate(-380px,0);
+  }
+}

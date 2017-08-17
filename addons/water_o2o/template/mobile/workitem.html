@@ -1,0 +1,117 @@
+{template 'header'}
+<body ontouchstart="" class="platform_mobile">
+<div class="qsc-alert" style="display: none;">
+<i class="info-base64"></i><span></span>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-white icon-loading-base64"><i class="icon-white icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading-new">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-loading-base64"><i class="icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<header class="qsc-tab bar-fixed wallet-tab headroom headroom--top" id="headroom">
+<ul class="tab-item nav-tabs-green" role="tablist">
+<li role="presentation" {if $statetype =="all"} class="active"{/if}>
+<a href="{php echo $this->createMobileUrl('workitem',array('statetype'=>'all'))}" role="tab">全部</a>
+</li>
+<li role="presentation" {if $statetype =="ing"} class="active"{/if}>
+<a href="{php echo $this->createMobileUrl('workitem',array('statetype'=>'ing'))}" role="tab">服务中</a>
+</li>
+<li role="presentation" {if $statetype=="end"} class="active"{/if}>
+<a href="{php echo $this->createMobileUrl('workitem',array('statetype'=>'end'))}" role="tab">已暂停</a>
+</li>
+<li role="presentation" >
+<a href="{php echo $this->createMobileUrl('workadditem',array('statetype'=>'end'))}" role="tab">新增</a>
+</li>
+</ul>
+</header>
+<style>
+.mod-project-card_content__status button {
+    background: #fff;
+	position:inherit;
+    border: 1px solid #2eb676;
+    color: #2eb676;
+    font-size: 12px;
+    line-height: 20px;
+    border-radius: 4px;
+}
+.mod-project-card_content__status span {
+    display: inline-block;
+    width: 23%;
+    text-align: center;
+}
+</style>
+<div class="content-fixed content-main top bottom tab-content">
+		<div role="tabpanel">
+		{loop $list $item}
+			<div class="mod-project-card funding">
+				<div class="mod-project-card_header clearfix" style="padding: 10px 0;">
+					<div class="mod-project-card_header__user">
+						<span>服务类型: {if $item['sid'] == "0"}仅支持预约上门{else}{if $item['dohome'== 0]}仅支持预约到店{else}支持预约到店和预约上门{/if}{/if}</span>
+					</div>
+				</div>
+				<div class="mod-project-card_content">
+					<a href=""> <header class="mod-project-card_content__header">
+							<span class="ribbon labels">{if $item['state'] == 1}服务中{else}已暂停{/if}</span>
+							<h2>{$item['svname']}</h2>
+						</header>
+					</a>
+					<div class="mod-project-card_content__detail">
+						<p class="description">服务名称：{$item['sname']}</p>
+						<p class="description">服务简介：{$item['sdesc']}</p>
+						<p class="description">服务时间：{$item['sminute']}分钟</p>
+						<p class="description">服务金额：{$item['sprice']}元</p>
+						<?php $simgs = unserialize($item['simgs']);?>
+						<p>
+						{loop $simgs $img}
+						<img class="lazy-load" data-original="{$_W['attachurl']}{$img}" 
+							src="../addons/water_o2o/template/img/grey.png"
+							width="23%" style="display: inline;">
+						{/loop}	
+						</p>
+					</div>
+					<div class="mod-project-card_content__status">
+						<span><button onclick="window.location.href='{php echo $this->createMobileUrl('setitemstate',array('serviceid'=>$item['id'],status=>'work'))}'"> {if $item['state'] == "1"}暂停服务{else}上线服务{/if} </button></span>
+
+						<span ><button onclick="window.location.href='{php echo $this->createMobileUrl('iteminfo',array('serviceid'=>$item['id'],status=>'work'))}'"> 信息修改 </button></span>
+						<span><button > 更新缓存 </button></span>
+						<span><button data-toggle="modal" data-target="#exit-confirm{$item['id']}"> 删除服务 </button></span>
+						
+					</div>
+
+				</div>
+			</div>
+				<div class="modal qsc-modal qsc-modal-dialog" id="exit-confirm{$item['id']}"
+					tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog middle">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title text-center">温馨提示</h4>
+							</div>
+							<div class="modal-body text-center">你确认要删除当前服务吗？</div>
+							<div class="modal-footer clearfix" role="group">
+								<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+								<a href="{php echo $this->createMobileUrl('workdeleteitem',array('serviceid'=>$item['id'],'statetype'=>$statetype))}"
+									class="btn btn-default"><strong>确认</strong></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			{/loop}
+		</div>
+	</div>
+	<div class="project-manage-modal"></div>
+
+{template 'workfooter'}
+<script type="text/javascript" src="../addons/water_o2o/template/js/user.min.js"></script>
+
+</body></html>

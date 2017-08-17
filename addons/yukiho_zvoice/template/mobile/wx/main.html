@@ -1,0 +1,511 @@
+{php $g_title=''}
+{php $menu='2'}
+{template 'common/header1'}
+<!--菜单栏-->
+	{php $menu='home'}
+	{template '/wx/menu'}
+		<link href="{MODULE_URL}assets/styles/weui.css" rel="stylesheet" type="text/css">
+		<style type="text/css">
+		textarea,select,input{-webkit-appearance: none; -moz-appearance: none; -o-appearance: none; appearance: none;}
+		li{list-style:none}
+		.child{
+			float: left;
+			height: 40px;
+			width: 25%;
+			margin-top: 8px;
+			box-sizing: border-box;
+			background-clip: content-box;
+		}
+		.child img{
+			height:45px;
+			width:45px;
+		}
+		.cname{
+			position: absolute; 
+			z-index: 1;
+			color: #000; 
+			overflow: hidden; 
+			margin-top:50px;
+			width:80px;
+			line-height:20px;
+			font-size:13px;
+			text-align:center;
+			margin-left:-62px;
+		}
+		.split-line{
+			background-color:#efeef3;
+			height:10px;
+			margin-left:-10px;
+			margin-right:-10px;
+		}
+		input::-webkit-input-placeholder,
+		textarea::-webkit-input-placeholder {
+			color: #B3B1B1;
+		}
+		input {
+			background:url('{MODULE_URL}assets/images/search.png') no-repeat 15px 8px;
+			padding-left:10%;
+			padding-right:10%;
+			border:1px solid #ECECEC;
+			float:left;
+			border-radius:80px;
+			background-color:#FDFDFD;
+			width:83%;
+			height:30px;
+			margin:10px 20px 10px 32px;
+		}
+		.search {
+			font-size:20px;
+			color:#B3B1B1;
+			padding-top:10px;
+		}
+		.answer-tag {
+		  float: left;
+		  font-size: 14px;
+		  color: #999999;
+		  line-height: 14px;
+		  background: #F0F0F0;
+		  padding: 6px 6px;
+		  border-radius: 4px;
+		  margin-right: 4px;
+		  padding-top:6px;
+		}
+		</style>
+		<div style='padding-bottom:7px;' id="content" class="snap-content">
+		
+			<div style="background-color:#fff;height:50px;margin-left:-10px;margin-right:-10px;">
+				<form id="sform" action="{php echo $this->createMobileUrl('searchq')}" method="post">
+					<input placeholder="搜索你想知道的问题..." name="key" id="search" type="search" />
+					<div style="display:none;" class="search"><i class="ion-search"></i></div>
+				</form>
+			</div>
+			<div class="split-line"></div>
+			{php $category = M('category')->getall(array('ismain'=>'1'))}
+			{php $count = 0}
+			{loop $category $c}
+			{if $count==0 || $count==4 || $count==8 || $count==12}
+			<div align="center" style="background:#FFF;margin-top:0px;height:90px;">
+			{/if}
+				<a href="{php echo $this->createMobileUrl('index',array('act'=>'spec','cid'=>$c['id']))}" >
+					<div class="child">
+						<img src="{php echo $c['image']}"></img>
+						<span class='cname'>{$c['title']}</span>
+					</div>
+				</a>
+			{if $count==3 || $count==7 || $count==11 || $count==15 || $count==count($category)-1}
+			</div>
+			{/if}
+			{php $count=$count+1}
+			{/loop}
+			<div class="split-line"></div>
+			<div  style="background:#FFF;margin-top:10px;border-bottom:1px solid #DCDCDC">
+				<div style="width:100%;height:37px">
+					<div style="line-height:35px;padding-top:0px;border-top:0px;border-bottom:0px;" class="portfolio-filter-categories">
+						<a style="font-size:16px;color:#000;display:inline;margin:100px 0 0 10px">
+							<strong>来问{php echo $this->template['authname']}</strong>
+						</a>
+						<div style='padding-top:5px;width:60%;display: initial;float: right;' class="home-tabs">
+							<a data-name='rec' style='line-height:30px;float:right;width:30%' class="catemode activate-tab-2">推荐</a>
+							<a data-name='new' style='line-height:30px;float:right;width:30%' class="catemode activate-tab-1 active-home-tab">新加入</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id='new' class="mdiv content">
+				<div class="portfolio-filter">
+					<div id="members" class="portfolio-filter-wrapper" style="background-color:#fff;margin-left:5px;">
+						{loop $members['list'] $member}
+						<div class="cat{$member['category_id']} all-cat gallery-filter-item" style="display: block;width:100%;">
+								<p class="user-list-follow">
+									<t onclick="window.location.href='{php echo $this->createMobileUrl('tutor',array('openid'=>$member['openid']))}'"  >
+										<img style='margin-top:3px;border-radius:42px;width:42px;height:42px;' src="{php echo $member['avatar']}" alt="img">
+										<strong style='font-size:14px;font-weight:700;color:#333;'>{$member['realname']}
+											<em style='font-size:12px;' class="split-title">{$member['tags']}</em>
+										</strong>
+									</t> 
+									{php $credit = intval($member['credit'])}
+									<a onclick="window.location.href = '{php echo $this->createMobileUrl('making',array('openid'=>$member['openid']))}'" class="follow button-green">{if $credit>0}{$credit}元{/if}提问</a>
+								</p>
+						</div>
+						<div style="margin-bottom:5px;margin-top:10px;" class="decoration"></div>	
+						{/loop}
+					</div>
+				</div>
+				<div class="one-third-responsive">
+					<a href="{php echo $this->createMobileUrl('find',array('act'=>'new','orderby'=>'create_time'))}" style="margin-top:-3px;margin-bottom:7px;" class="user-list-item">
+						<em style="padding-left:10px;display:initial;">查看更多新加入{php echo $this->template['authname']}</em>
+						<i style="color:#666666;position:initial;float: right;padding-right: 20px;padding-top: 10px;" class="fa fa-chevron-right"></i>
+					</a>
+				</div>
+			</div>
+			<div id='rec' style='display:none;' class="mdiv content">
+				<div class="portfolio-filter">
+					<div id="members" class="portfolio-filter-wrapper" style="background-color:#fff;margin-left:5px;">
+						{loop $recommends['list'] $member}
+						<div class="cat{$member['category_id']} all-cat gallery-filter-item" style="display: block;width:100%;">
+								<p class="user-list-follow">
+									<t onclick="window.location.href='{php echo $this->createMobileUrl('tutor',array('openid'=>$member['openid']))}'">
+										<img style='margin-top:3px;border-radius:42px;width:42px;height:42px;' src="{php echo $member['avatar']}" alt="img">
+										<strong style='font-size:14px;font-weight:700;color:#333;'>{$member['realname']}
+											<em style='font-size:12px;' class="split-title">{$member['tags']}</em>
+										</strong>
+									</t> 
+									{php $credit = intval($member['credit'])}
+									<a onclick="window.location.href = '{php echo $this->createMobileUrl('making',array('openid'=>$member['openid']))}'" class="follow button-green">{if $credit>0}{$credit}元{/if}提问</a>
+								</p>
+						</div>
+						<div style="margin-bottom:5px;margin-top:10px;" class="decoration"></div>	
+						{/loop}
+					</div>
+				</div>
+				<div class="one-third-responsive">
+					<a href="{php echo $this->createMobileUrl('find',array('act'=>'recommend'))}" style="margin-top:-3px;margin-bottom:7px;" class="user-list-item">
+						<em style="padding-left:10px;display:initial;">查看更多推荐{php echo $this->template['authname']}</em>
+						<i style="color:#666666;position:initial;float: right;padding-right: 20px;padding-top: 10px;" class="fa fa-chevron-right"></i>
+					</a>
+				</div>
+			</div>
+			<div class="split-line"></div>
+			<div  style="background:#FFF;margin-top:10px;border-bottom:1px solid #DCDCDC">
+				<div style="width:100%;height:37px">
+					<div style="line-height:35px;padding-top:0px;border-top:0px;border-bottom:0px;" class="portfolio-filter-categories">
+						<a style="font-size:16px;color:#000;display:inline;margin:100px 0 0 10px">
+							<strong>推荐解答</strong>
+						</a>
+						<div style='padding-top:5px;width:60%;display: initial;float: right;' class="home-tabs">
+							<a data-name='free' style='line-height:30px;float:right;width:30%' class="qmode activate-tab-1 ">限免</a>
+							<a data-name='collect' style='line-height:30px;float:right;width:30%' class="qmode activate-tab-2 active-home-tab">精选</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id='collect' class="qdiv content">
+				<div class="portfolio-filter">
+					{if !empty($question_collect['list'])}
+					<div id="questions_collect" class="portfolio-filter-wrapper" style="margin-left:5px;">
+						{loop $question_collect['list'] $li}
+						{php $to_member = M('member')->getInfo($li['to_openid'])}
+						{if $li['istask']=='1'}
+						<div class="blog-sidebar-text" onclick="window.location.href='{php echo $this->createMobileUrl('task_answer',array('id'=>$li['id']))}'">
+							{php $quser = M('member')->getInfo($li['openid'])}
+							<h5 style="font-size:15px;">{$li['title']}</h5>
+						</div>
+						<div class="container one-third-responsive">
+							{php $ans = M('answer')->getone(array('question_id'=>$li['id']))}
+							{php $user = M('member')->getInfo($ans['openid'])}
+							<p class="user-list-follow">
+								{if $li['isanonymous']=='1'}
+								<img class='avatar' src="{MODULE_URL}assets/images/anonymous_avatar.jpg" alt="img">
+								<strong {if $li['credit']<=0 && $count<=0}style='padding-top:8px;'{/if}>匿名用户提问
+								{else}
+								<img class='avatar' src="{php echo $quser['avatar']}" alt="img">
+								<strong {if $li['credit']<=0 && $count<=0}style='padding-top:8px;'{/if}>{$quser['nickname']}提问
+								{/if}
+									{php $time = $hour2-intval((time()-$li['create_time'])/3600)}
+									{php $mark = $li['status']=='2' || $time<0}
+									{php $count = M('answer')->getTotal(array('question_id'=>$li['id']))}
+									<em>
+										{if $li['credit']>0}赏金{$li['credit']}元&nbsp;&nbsp;&nbsp;{/if}{if $count>0}{$count}人已抢答{/if}
+									</em>
+								</strong>
+								{if !$mark}
+								<a href="{php echo $this->createMobileUrl('task_answer',array('id'=>$li['id']))}" style='margin-bottom:10px;' class="follow2 button-green"><span class="tip">还剩{$time}小时</span></a>
+								{else}
+								<a href="{php echo $this->createMobileUrl('task_answer',array('id'=>$li['id']))}" style='margin-bottom:10px;' class="follow2 button-orange"><span class="tip">已结束</span></a>
+								{/if}
+							</p>
+							<div class="decoration"></div>
+						</div>
+						{else}
+						<div class="blog-sidebar-text" onclick="window.location.href='{php echo $this->createMobileUrl('question',array('id'=>$li['id']))}'">
+							{php $quser = M('member')->getInfo($li['openid'])}
+							<h5 style="font-size:15px;">{$li['title']}</h5>
+						</div>
+						<div class="container one-third-responsive">
+							{php $ans = M('answer')->getone(array('question_id'=>$li['id']))}
+							{php $user = M('member')->getInfo($ans['openid'])}
+							<p class="user-list-follow">
+								<a href="{php echo $this->createMobileUrl('tutor',array('openid'=>$to_member['openid']))}">
+									<img src="{php echo $to_member['avatar']}" alt="img">
+									<strong>{$to_member['realname']}
+										<em class="split-title">{$to_member['tags']}</em>
+									</strong></a> 
+
+									{if $ans['mode']=='0'}
+										<a data-id="{$ans['id']}" data-mode="{$ans['mode']}" data-timelong="{$ans['timelong']}" data-question_id="{$li['id']}" class="listen follow2 button-green">
+											<span class="tip">播放解答 {$ans['timelong']}''</span>
+										</a>
+									{else}
+										<a data-id="{$ans['id']}" data-mode="{$ans['mode']}" data-question_id="{$li['id']}" class="lookup follow2 button-blue">
+											<span class="tip">图文解答</span>
+										</a>
+									{/if}
+								</p>
+							<div class="decoration"></div>
+						</div>
+						{/if}
+						{/loop}
+					</div>
+					{else}
+					<div class="content" style="margin-top:150px;">
+						<div class="show-no-detection device-detected">
+							<h5>暂时还没有解答哦</h5>
+							<a href="{php echo $this->createMobileUrl('find')}" class="button-small button-orange button-center" style="margin-top:20px;">寻找{php echo $this->template['authname']}</a>
+						</div>
+					</div>
+					{/if}
+				</div>
+				<div class="one-third-responsive">
+					<a href="{php echo $this->createMobileUrl('index')}" style="margin-top:-10px;" class="user-list-item">
+						<em style="padding-left:10px;display:initial;">查看更多解答</em>
+						<i style="color:#666666;position:initial;float: right;padding-right: 20px;padding-top: 10px;" class="fa fa-chevron-right"></i>
+					</a>
+				</div>
+			</div>
+			<div id='free' style='display:none;' class="qdiv content">
+				<div class="portfolio-filter">
+					{if !empty($question_free['list'])}
+					<div id="questions_free" class="portfolio-filter-wrapper" style="margin-left:5px;">
+						{loop $question_free['list'] $li}
+						{php $to_member = M('member')->getInfo($li['to_openid'])}
+						<div class="blog-sidebar-text" onclick="window.location.href='{php echo $this->createMobileUrl('question',array('id'=>$li['id']))}'">
+							{php $quser = M('member')->getInfo($li['openid'])}
+							<h5 style="font-size:15px;">{$li['title']}</h5>
+						</div>
+						<div class="container one-third-responsive">
+							{php $ans = M('answer')->getone(array('question_id'=>$li['id']))}
+							{php $user = M('member')->getInfo($ans['openid'])}
+							<p class="user-list-follow">
+								<a href="{php echo $this->createMobileUrl('tutor',array('openid'=>$to_member['openid']))}">
+									<img src="{php echo $to_member['avatar']}" alt="img">
+									<strong>{$to_member['realname']}
+										<em class="split-title">{$to_member['tags']}</em>
+									</strong></a> 
+
+									{if $ans['mode']=='0'}
+										<a data-id="{$ans['id']}" data-mode="{$ans['mode']}" data-timelong="{$ans['timelong']}" data-question_id="{$li['id']}" class="listen follow2 button-green">
+											<span class="tip">播放解答 {$ans['timelong']}''</span>
+										</a>
+									{else}
+										<a data-id="{$ans['id']}" data-mode="{$ans['mode']}" data-question_id="{$li['id']}" class="lookup follow2 button-blue">
+											<span class="tip">图文解答</span>
+										</a>
+									{/if}
+								</p>
+							<div class="decoration"></div>
+						</div>
+						{/loop}
+					</div>
+					{else}
+					<div class="content" style="margin-top:150px;">
+						<div class="show-no-detection device-detected">
+							<h5>暂时还没有解答哦</h5>
+							<a href="{php echo $this->createMobileUrl('find')}" class="button-small button-orange button-center" style="margin-top:20px;">寻找{php echo $this->template['authname']}</a>
+						</div>
+					</div>
+					{/if}
+				</div>
+				<div class="one-third-responsive">
+					<a href="{php echo $this->createMobileUrl('index')}" style="margin-top:-10px;" class="user-list-item">
+						<em style="padding-left:10px;display:initial;">查看更多解答</em>
+						<i style="color:#666666;position:initial;float: right;padding-right: 20px;padding-top: 10px;" class="fa fa-chevron-right"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<audio controls="controls" id="player" style="display:none;" autoplay preload="auto"></audio>
+	<script src="{MODULE_URL}public/js/loadmore.js"></script>	
+	<script>
+    function playData(data){
+		console.log(data);
+        player.src = data.src;
+        player.play();
+        var timelong = parseInt(data.timelong) * 1000;
+		var count = data.timelong;
+		var timer = window.setInterval(function(){
+			if((count--)>1){
+				$(data.target).find('span').html("播放中..."+count+"''");
+			}else{
+				clearInterval(timer);
+				$(data.target).find('span').html("再放一次 "+data.timelong+"''");
+			}
+		},1000);
+		/**
+        setTimeout(function(){
+			$(data.target).find('span').html("再放一次");
+        },timelong);*/
+    }
+	{if !empty($this->pro['subscribe_title']) && $subscribe!='1' && $_SESSION['cancelSubscribeTip']!='1'}
+	swal({
+	  title: "您还未关注公众号！",
+	  text: "{php echo $this->pro['subscribe_title']}<b><img width='200px' height='200px' src='{php echo tomedia($this->pro['subscribe_image'])}'/>",
+	  html: true,
+	  showCancelButton: true,
+	  showConfirmButton: false,
+	  confirmButtonColor: "#DD6B55",
+	  confirmButtonText: "现在去关注",
+	  cancelButtonText: "直接进入",
+	  closeOnCancel: true
+	},function(isConfirm){
+	  if (!isConfirm) {
+		$.get("{php echo $this->createMobileUrl('main')}",{act:'cancelSubscribeTip'},function(data){});
+	  }
+	});
+	{/if}
+	$('.catemode').bind("click", function () {
+		$('.catemode').removeClass('active-home-tab');
+		$(this).addClass('active-home-tab');
+		if($('#'+$(this).data('name')).is(":hidden")){
+			$('.mdiv').slideToggle("show");
+		}
+	});
+	$('.qmode').bind("click", function () {
+		$('.qmode').removeClass('active-home-tab');
+		$(this).addClass('active-home-tab');
+		if($('#'+$(this).data('name')).is(":hidden")){
+			$('.qdiv').slideToggle("show");
+		}
+	});
+	$('#openPointPayBox').bind("click", function () {
+		if ($(this).is(":checked")) {
+			$('#openPointPay').val('1');
+		}else{
+			$('#openPointPay').val('0');
+		}
+	});
+	$(".search").click(function(){
+		$('#sform').submit();
+	});
+	/**
+	$("input").focus(function(){
+		$(this).animate({width:'67%'});
+		$('.search').show();
+	});
+	$("input").blur(function(){
+		$(this).animate({width:'75%'});
+		$('.search').hide();
+	});*/
+	$("#content").delegate(".lookup","click",function(){
+		var dd = {};
+        var question_id = $(this).data('question_id');
+        var target = $(this);
+        if(!question_id){
+            warn('question_id为空');
+            return '';
+        }
+        $.get("{php echo $this->createMobileUrl('question')}&id="+question_id,{answer_id:$(this).data('id'),act:'src'},function(data){
+            if(data.status == 8){
+				dd.status = 2;
+                warn(data.message,function(){});
+                return '';
+            }
+            if(data.status == 0){
+				target.parent().parent().prev().trigger('click');
+                return '';
+            }
+            wx.ready(function(){
+                wx.chooseWXPay({
+                    timestamp: data.timeStamp,
+                    nonceStr: data.nonceStr,
+                    package: data.package,
+                    signType: data.signType,
+                    paySign: data.paySign,
+                    success: function (res) {
+                        if(res.errMsg == 'chooseWXPay:ok') {
+                            data.act == 'paySuccess';
+                            $.post("{php echo $this->createMobileUrl('question')}&id="+question_id,{act:'paySuccess',listen_id:data.listen_id,answer_id:data.answer_id},function(d){
+                                if(d.status == 1){
+									target.parent().parent().prev().trigger('click');
+                                    return '';
+                                }else{
+									dd.status = 2;
+                                    warn('系统错误',2000,'cancel');
+                                }
+                            },'json');
+                        }else{
+							dd.status = 2;
+                            window.location.href = "{php echo $_W['siteurl']}";
+                        }
+                    }
+                });
+            });
+        },'json');
+    });
+	
+	$("#content").delegate(".listen","click",function(){
+		var dd = {};
+        var question_id = $(this).data('question_id');
+        var target = $(this)[0];
+        var timelong = $(this).data('timelong');
+        if(!question_id){
+            warn('question_id为空');
+            return '';
+        }
+        $.get("{php echo $this->createMobileUrl('question')}&id="+question_id,{answer_id:$(this).data('id'),act:'src'},function(data){
+            if(data.status == 8){
+				dd.status = 2;
+                warn(data.message,function(){});
+                return '';
+            }
+            if(data.status == 0){
+				dd.status = 1;
+                dd.target = target;
+                dd.src = data.src;
+                dd.timelong = timelong;
+                return '';
+            }
+            if(!data.listen_id){
+				dd.status = 2;
+                warn('listen_id为空');
+                return '';
+            }
+            if(!data.answer_id){
+				dd.status = 2;
+                warn('answer_id为空');
+                return '';
+            }
+            wx.ready(function(){
+                wx.chooseWXPay({
+                    timestamp: data.timeStamp,
+                    nonceStr: data.nonceStr,
+                    package: data.package,
+                    signType: data.signType,
+                    paySign: data.paySign,
+                    success: function (res) {
+                        if(res.errMsg == 'chooseWXPay:ok') {
+                            data.act == 'paySuccess';
+                            $.post("{php echo $this->createMobileUrl('question')}&id="+question_id,{act:'paySuccess',listen_id:data.listen_id,answer_id:data.answer_id},function(d){
+                                if(d.status == 1){
+									dd.status = 1;
+                                    dd.target = target;
+                                    dd.src = d.src;
+                                    dd.timelong = timelong;
+                                    return '';
+                                }else{
+									dd.status = 2;
+                                    warn('系统错误',2000,'cancel');
+                                }
+                            },'json');
+                        }else{
+							dd.status = 2;
+                            window.location.href = "{php echo $_W['siteurl']}";
+                        }
+                    }
+                });
+            });
+        },'json');
+		$(target).find('span').html("数据搬运中...");
+		var timer1 = window.setInterval(function(){
+			if(dd.status>0){
+				clearInterval(timer1);
+				if(dd.status==1){
+					playData(dd);
+				}else{
+					$(target).find('span').html("重试一下");
+				}
+			}
+		},1000);
+    });
+</script>
+</body>

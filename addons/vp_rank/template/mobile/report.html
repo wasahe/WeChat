@@ -1,0 +1,74 @@
+{php $title='举报'}
+{template 'inc/header'}
+
+<style>
+	body{background:#f8f8f8;}
+
+
+</style> 
+
+<script type="text/javascript">
+
+</script>
+
+
+<form id="report_form" action="" method="post">
+	<input type="hidden" name="submit" value="report"/>
+	
+	<input type="hidden" name="report[feed_id]" value="{$_GPC['feed_id']}"/>
+	<input type="hidden" name="report[reply_id]" value="{$_GPC['reply_id']}"/>
+	<input type="hidden" name="report[to_uid]" value="{$_GPC['to_uid']}"/>
+	
+	<div class="weui_cells weui_cells_form" style="margin-top:0px;">
+
+		<div class="weui_cell">
+			<div class="weui_cell_hd"><label for="name" class="weui_label">举报原因</label></div>
+			<div class="weui_cell_bd weui_cell_primary">
+				<input class="weui_input" id="report_type" type="text" name="report[type]" placeholder="请选择...">
+			</div>
+		</div>
+
+		<div class="weui_cell">
+			<div class="weui_cell_bd weui_cell_primary">
+				<textarea id="report_content" name="report[content]" class="weui_textarea" placeholder="请简单描述举报内容..." style="height:80px;"></textarea>
+			</div>
+		</div>
+	</div>
+
+
+	<div style="padding:15px 15px 15px 15px;"><a id="btn_report" class="weui_btn weui_btn_warn">确定举报</a></div>
+	
+</form>
+
+{template 'inc/script'}
+
+<script type="text/javascript">
+
+
+
+	$(function(){
+	
+		$("#report_type").select({
+			title: "选择举报原因",
+			items: ["欺诈", "色情", "政治谣言", "常识性谣言", "恶意营销", "虚假内容", "恶意诽谤", "其他"]
+		});
+
+		// 发布
+		var form = $('#report_form');
+		$('#btn_report').on('click',function(){
+			$.showLoading("正在提交...");
+			$.post(form.attr('action'), form.serialize(),function(resp) {
+				$.hideLoading();
+				if(resp.status==0){
+					$.alert(resp.info);
+				}else{
+					$.alert(resp.info,'举报成功',function() {
+						history.go(-1);
+					});
+				}
+			});
+		});
+
+	});
+</script>
+{template 'inc/footer'}

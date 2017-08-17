@@ -1,0 +1,135 @@
+{template 'common/header'}
+<div class="worker">
+    <ul class="nav nav-tabs">
+        {if $op == "add"}
+        <li><a href="{php echo $this->createWebUrl('shop');}">商铺列表</a></li>
+        {else}
+        <li><a href="{php echo $this->createWebUrl('worker');}">员工列表</a></li>
+        {/if}
+        <li class="active"><a href="javascript:void(0);">员工信息</a></li>
+    </ul>
+</div>       
+<style>
+.table td span{display:inline-block;margin-top:4px;}
+.table td input{margin-bottom:0;}
+</style>
+<div class="clearfix">
+<form class="form-horizontal form" action="" method="post" enctype="multipart/form-data">
+    <div class="panel panel-default">
+        <div class="panel-heading">员工信息编辑</div>
+        <div class="panel-body">
+                <input type="hidden" name="workerid" value="{$worker['id']}">
+                <input type="hidden" name="sid" value="{$shop['id']}">
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">店铺名称</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control"  placeholder="" readonly="readonly"  value="{if empty($shop['stitle'])}独立员工{else}{$shop['stitle']}{/if}">
+                    	<span class="help-block">员工所属店铺或者为独立员工</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">员工姓名</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control"  placeholder="" name="wname"  value="{$worker['wname']}">
+                    	<span class="help-block">员工姓名</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">关联员工</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <img style="width: 150px;height: 150px;" src="{$wewm}">
+                    	<span class="help-block">微信扫一扫，绑定员工信息后刷新本页面</span>
+                    </div>
+                </div>  
+                {if !empty($worker['nickname'])}
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">微信昵称</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control"  placeholder="" readonly="readonly"  value="{$worker['nickname']}">
+                    	<span class="help-block">微信昵称</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">微信头像</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <img style="width: 150px;height: 150px;" src="{$worker['headimg']}">
+                    	<span class="help-block">微信头像</span>
+                    </div>
+                </div>                                
+                {/if}
+              
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">员工电话</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control" placeholder="" name="mobile" value="{$worker['mobile']}">
+                    	<span class="help-block">员工电话</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">员工年龄</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control" placeholder="" name="wage" value="{$worker['wage']}">
+                    	<span class="help-block">员工年龄</span>
+                    </div>
+                </div> 
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">员工工龄</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control" placeholder="" name="wyears" value="{$worker['wyears']}">
+                    	<span class="help-block">员工工龄</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">所在省市</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control" placeholder="" name="wcity" value="{$worker['wcity']}">
+                    	<span class="help-block">所在省市</span>
+                    </div>
+                </div>                                                                                              
+               <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">员工照片</label>
+                    <div class="col-sm-8 col-xs-12">
+                       {php echo tpl_form_field_image('wimg',$worker['wimg']);}
+                    </div>
+               </div>
+               <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+                    <div class="col-sm-9 col-xs-12">
+                        <div class="help-block">建议100*100</div>
+                    </div>
+               </div>
+			   <div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">员工简介</label>
+					<div class="col-sm-9 col-xs-12">
+						<textarea style="height:100px; width:90%;" id='rule' class="form-control span7 richtext" name="wdesc" cols="70">{$worker['wdesc']}</textarea>
+						<span class="help-block">员工简介</span>
+					</div>
+				</div>                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">账户余额</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control"  placeholder="" name="balance"  value="{$worker['balance']}">
+                    	<span class="help-block">账户余额</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                	<label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">正式员工</label>
+                	<div class="col-sm-8 col-xs-12">
+                    <label class="checkbox">
+					  <input type="checkbox" name="state" value="2" {if $worker['state'] == 2}checked="checked"{/if}>勾选则为正式服务员工
+					</label>
+					 </div>
+                </div>           
+
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-12">
+            <input name="submit" type="submit" value="提交" class="btn btn-primary col-lg-1">
+            <input type="hidden" name="token" value="{$_W['token']}" />
+        </div>
+    </div>
+</form>
+</div>
+{template 'common/footer'}

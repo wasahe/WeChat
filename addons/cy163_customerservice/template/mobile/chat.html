@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,minimum-scale=1,user-scalable=no">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="email=no" name="format-detection">
+    <title>和{$touser['name']}的对话</title>
+    <link rel="stylesheet" href="{MD_ROOT}static/css/reset.css"/>
+    <link rel="stylesheet" href="{MD_ROOT}static/iconfont/iconfont.css"/>
+	{php echo register_jssdk(false);}
+    <script>
+        var deviceWidth = document.documentElement.clientWidth;
+        document.documentElement.style.fontSize = deviceWidth / 7.5 + 'px';
+    </script>
+	<style>
+	.main{padding:0.2rem 0.2rem 0 0.2rem;margin-bottom:0.9rem;display:inline-block;width:7.1rem;}
+	.main .weclome{width:5.5rem;margin:0 auto 0.3rem auto;height:0.6rem;line-height:0.6rem;border-radius:0.2rem;font-size:0.28rem;text-align:center;background:#D4D4D4;color:#fff;overflow:hidden;}
+	.message {
+		margin-bottom:0.3rem;
+		float: left;
+		width: 100%;
+	}
+    .message.me {
+        float: right;
+        text-align: right;
+        clear: right;
+    }
+
+    .message .avatar {
+        width: 0.7rem;
+        height: 0.7rem;
+        border-radius: 0.1rem;
+        -moz-border-radius: 0.1rem;
+        -webkit-border-radius: 0.1rem;
+        float: left;
+        cursor: pointer;
+    }
+
+    .message.me .avatar {
+        float: right;
+    }
+
+    .message .nickname {
+        padding-left:0.2rem;
+        font-size:0.25rem;
+        height:0.5rem;
+        line-height:0.5rem;
+        color: #4f4f4f;
+        overflow: hidden;
+    }
+
+	.message .nickname .time {
+		margin-left:0.1rem;
+		font-size:0.25rem;
+	}
+
+    .message.me .nickname {
+        padding-right:0.25rem;
+    }
+
+	.message.me .nickname .time {
+		margin-right:0.1rem;
+		font-size:0.25rem;
+	}
+
+    .message .content {
+        overflow: hidden;
+    }
+
+	.bubble {
+		max-width: 70%;
+		min-height: 1em;
+		display: inline-block;
+		vertical-align: top;
+		position: relative;
+		text-align: left;
+		font-size: 0.3rem;
+		border-radius::0.2rem;
+		-moz-border-radius:0.2rem;
+		-webkit-border-radius::0.2rem;
+		margin:0 0.25rem;
+	}
+
+    .bubble.bubble_default {
+        background-color: #fff;
+    }
+
+    .bubble:before, .bubble:after {
+        position: absolute;
+        top:0.15rem;
+        border:0.1rem solid transparent;
+        content: " ";
+    }
+    .bubble.left:before, .bubble.left:after {
+        right: 100%;
+    }
+    .bubble.left:after {
+        border-right-color: #FFF;
+        border-right-width: 4px;
+    }
+    .bubble.right:before, .bubble.right:after {
+        left: 100%;
+    }
+    .bubble.right:after {
+        border-left-color: #FFF;
+    }
+    .bubble.bubble_primary {
+        background-color: #b2e281;
+    }
+	.bubble.bubble_primary.left:after {
+		border-right-color: #b2e281;
+		border-right-width: 4px;
+	}
+	.bubble.bubble_primary.right:after {
+		border-left-color: #b2e281;
+		border-left-width: 4px;
+	}
+	.bubble.bubble_primary.right.arrow_primary:before {
+		border-left-color: #b2e281;
+		border-left-width: 4px;
+	}
+	.bubble.bubble_primary.right.arrow_primary:after {
+		border-left-color: #fff;
+		border-left-width: 4px;
+		margin-left: -2px;
+	}
+	.bubble_cont {
+		word-wrap: break-word;
+		word-break: break-all;
+		min-height: 0.5rem;
+	}
+
+    .bubble_cont .plain {
+        padding:0.1rem 0.2rem;
+		letter-spacing:1px;
+    }
+	.footer{position:fixed;bottom:0px;width:7rem;padding:0 0.25rem;height:0.9rem;background:#FFFFFF;border-top:#f1f1f1 1px solid;clear:both;z-index:9999;left:0;}
+	.footer input{display:inline-block;float:left;width:5.2rem;height:0.6rem;line-height:0.6rem;font-size:0.28rem;margin-top:0.15rem;padding:0;border:none;background:#efefef;border-radius:0.1rem;text-indent:5px;}
+	.footer button{display:inline-block;float:right;width:1.5rem;height:0.6rem;line-height:0.6rem;font-size:0.25rem;border-radius:0.1rem;border:none;margin-top:0.15rem;padding:0;background:#51C332;color:#fff;}
+	</style>
+</head>
+<body style="background-color:{$setting['bgcolor']};margin:0;">
+<div class="main" style="-webkit-overflow-scrolling:touch;">
+	<div class="weclome">和{$touser['name']}的对话</div>
+	<div class="message-box" id="messagelist">
+		{if $chatcon}
+		{loop $chatcon $row}
+			{if $row['openid'] != $openid}<div class="message">{else}<div class="message me">{/if}
+				<img class="avatar" src="{$row['avatar']}" />
+				<div class="content">
+					<div class="nickname">
+						{if $row['openid'] != $openid}{$row['nickname']}{/if}<span class="time">{php echo date('Y-m-d H:i:s',$row['time'])}</time>{if $row['openid'] == $openid}{$row['nickname']}{/if}
+					</div>
+					{if $row['openid'] != $openid}<div class="bubble bubble_default left">{else}<div class="bubble bubble_primary right">{/if}
+						<div class="bubble_cont">
+							<div class="plain">{$row['content']}</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		{/loop}
+		{/if}
+	</div>
+</div>
+
+<div class="footer">
+	<input type="text" name="messagecon" id="chatcontent" />
+	<button type="button" id="btnSend">发送</button>
+</div>
+<input type="hidden" id="toopenid" value="{$toopenid}" />
+<input type="hidden" id="timestamp" value="{$timestamp}" />
+<script type="text/javascript" src="{MD_ROOT}static/mui/js/jquery.min.js"></script>
+<script type="text/javascript">
+var datamsg = '';
+$(function(){
+	shuaxin();
+	$('html, body, .main').animate({scrollTop: $(document).height()}, 300); 
+	$("#btnSend").click(function(){
+		$.ajax({   
+			 url:"{php echo $this->createMobileUrl('addchat')}",   
+			 type:'post', 
+			 data:{
+				toopenid:$('#toopenid').val(),
+				content:$('#chatcontent').val(),
+			 },
+			 dataType:'json',
+			 success:function(data){   
+				if(data.error == 0){
+					shuaxin();
+					$('#chatcontent').val("");
+				}else{
+					alert(data.msg);
+				}
+			 }
+		});
+	})
+})
+function shuaxin(){
+	$.ajax({   
+		 url:"{php echo $this->createMobileUrl('shuaxinchat')}",   
+		 type:'post', 
+		 data:{
+			toopenid:$('#toopenid').val(),
+			timestamp:$('#timestamp').val(),
+		 },
+		 dataType:'json',
+		 success:function(data){  
+			if(data.msg != ''){
+				if(datamsg != data.msg || datamsg == ''){
+					$('#messagelist').append(data.msg);
+					datamsg = data.msg;
+				}
+				$('html, body, .main').animate({scrollTop: $(document).height()}, 300); 
+			}
+			$('#timestamp').val(data.timestamp);
+			setTimeout("shuaxin()",3000);
+		 }
+	});
+}
+</script>
+<script type="text/javascript">
+wx.ready(function () {
+	sharedata = {
+		title: '{$setting["sharetitle"]}',
+		desc: '{$setting["sharedes"]}',
+		link: '{$setting["shareurl"]}',
+		imgUrl: '{php echo tomedia($setting["sharethumb"]);}',
+		trigger: function (res) {
+			//alert('用户点击发送给朋友');
+		},
+		success: function (res) {
+			//alert('已分享');
+		},
+		cancel: function (res) {
+			//alert('已取消');
+		},
+		fail: function (res) {
+			alert("分享失败");
+		}
+	};
+	wx.onMenuShareAppMessage(sharedata);
+	wx.onMenuShareTimeline(sharedata);
+	wx.onMenuShareQQ(sharedata);
+	wx.onMenuShareWeibo(sharedata);
+});
+</script>
+</body>
+</html>

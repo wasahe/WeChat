@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+{if empty($_W['isajax'])}
+{template 'common/top'}
+{/if}
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+		<div class="col-md-12">
+			<div class="alert alert-{$type} alert-dismissible">
+				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+				<h4>{$msg}</h4>
+				<a href="{$redirect}">如果你的浏览器没有自动跳转，请点击此链接</a>
+			</div>
+        </div>
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+</div>
+<!-- ./wrapper -->
+{if empty($_W['isajax'])}
+{template 'common/foot'}
+<script>
+	setTimeout(function () {
+		location.href = "{$redirect}";
+	}, 3000);
+</script>
+{/if}

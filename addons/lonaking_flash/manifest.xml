@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com" versionCode="0.6,0.7,0.8">
+	<application setting="true">
+		<name><![CDATA[Flash]]></name>
+		<identifie><![CDATA[lonaking_flash]]></identifie>
+		<version><![CDATA[8.0]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[此模块为八戒所有模块的基础模块！]]></ability>
+		<description><![CDATA[此模块为八戒所有模块的基础模块，请注意更新哦]]></description>
+		<author><![CDATA[微赞]]></author>
+		<url><![CDATA[http://www.012wz.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+		</handles>
+		<rule embed="false" />
+		<card embed="false" />
+	</platform>
+	<bindings>
+	</bindings>
+	<permissions>
+	</permissions>
+	<install><![CDATA[install.php]]></install>
+	<uninstall><![CDATA[uninstall.php]]></uninstall>
+	<upgrade><![CDATA[update.php]]></upgrade>
+</manifest>

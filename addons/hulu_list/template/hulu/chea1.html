@@ -1,0 +1,52 @@
+<div class="panel panel-default">
+<div class="panel-heading">
+<div class="panel-title">
+<h3>车找人</h3>
+</div>
+</div>
+<div class="panel-body table-responsive">
+<table class="table">
+<thead>
+<tr>
+<th>信息编号</th>
+<th>出发地</th>
+<th>目的地</th>
+<th>可带几人</th>
+<th>车牌</th>
+<th>电话</th>
+<th>出发时间</th>
+<th>发布时间</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+{loop $cheaa $key $cheaa}
+<tr>
+<td>
+<a href="{php echo $this->createMobileUrl('job',array('vid'=>$cheaa['id']));}" target="_blank">{$cheaa['id']}</a> | 
+{if $cheaa['pid'] == 1}未审核
+{elseif $cheaa['pid'] == 2}真
+{elseif $cheaa['pid'] == 3}假
+{elseif $cheaa['pid'] == 4}已删除
+{else}未审核
+{/if}
+</td>
+<td>{$cheaa['chestart']}</td>
+<td>{$cheaa['cheend']}</td>
+<td>{$cheaa['cheperson']}</td>
+<td>{$cheaa['chechepai']}</td>
+<td>{$cheaa['tel']}</td>
+<td>{php echo date("Y-m-d H:i:s",strtotime($cheaa['validity']));}</td>
+<td>{php echo date('Y-m-d H:i:s',$cheaa['time'])}</td>
+<td>
+<a href="{php echo $this->createWebUrl('infoedit',array('vid'=>$cheaa['id'],'pid'=>'2'));}">真</a> | 
+<a href="{php echo $this->createWebUrl('infoedit',array('vid'=>$cheaa['id'],'pid'=>'3'));}">假</a> | 
+<a href="{php echo $this->createWebUrl('infoedit',array('vid'=>$cheaa['id'],'pid'=>'4'));}">删除</a> | 
+<a href="{php echo $this->createWebUrl('update',array('vid'=>$cheaa['id']));}">编辑</a></td>
+</tr>
+{/loop}
+</tbody>
+</table>
+</div>
+</div>
+

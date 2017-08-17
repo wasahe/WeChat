@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <title>大厅首页</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" name="viewport" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+
+    <script src="../addons/kuaiwei_xxcx/images/jquery-1.11.3.min.js"></script>
+    <link rel="stylesheet" href="../addons/kuaiwei_xxcx/images/css.css?v=543345454">
+    <link rel="stylesheet" href="../addons/kuaiwei_xxcx/images/bootstrap.min.css">
+    <link rel="stylesheet" href="../addons/kuaiwei_xxcx/images/layout.css">
+    <style type="text/css">
+    body {
+        background:#58c1f0;
+    }
+        div.check_code_div{width:100%; height:125px;}
+    </style>
+
+    <style type="text/css" media="screen">
+
+    .prize_btn1 {
+        width: 44%;
+        margin: 0;
+        position: absolute;
+        left: 50%;
+        margin-left: -22%;
+        top: 55%;
+    }
+    </style>
+</head>
+
+<body>
+<div style="margin-bottom: 15px;">
+    <img src="../addons/kuaiwei_xxcx/images/supertop.jpg" style="width:100%;height:auto;">
+</div>
+
+<div class="col-sm-12 col-xs-12" style="margin-bottom: 15px;text-align: center;margin-top: 15px;">
+    <p style="text-align: center;margin-bottom: 15px;">
+        <a href="{php echo $this->createMobileUrl('index2')}" style="width: 60%;background-color: #d16228;border-color: #f5ac67;" class="btn btn-primary" type="button" />信息数据查询</a>
+    </p>
+
+    <p style="text-align: center">
+        <a href="{php echo $this->createMobileUrl('index')}" style="width: 60%;background-color: #9bc94f;border-color: #b8e266;" class="btn btn-primary" type="button" />业务进度查询</a>
+    </p>
+</div>
+<div style="text-align:center;">
+    {if empty($reply['copyright'])} &copy;{$_W['account']['name']}{else}&copy;{$reply['copyright']}{/if}
+</div>
+    
+
+</body>
+
+
+<script>
+
+
+</script>
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+<script type="text/javascript">
+    wx.config({
+        debug:false,
+        appId: '{$package["appId"]}',
+        timestamp: '{$package["timestamp"]}',
+        nonceStr: '{$package["nonceStr"]}',
+        signature: '{$package["signature"]}',
+        jsApiList: [
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage',
+            'onMenuShareWeibo',
+            {if $base['isallowip'] == 3}
+            'getLocation'
+            {/if}
+    ]
+    });
+
+    var shareMeta  = {
+        title: '{$sharetitle}',
+        desc: '{$sharedesc}',
+        link: "{$sharelink}",
+        imgUrl: "{$shareimg}"
+    };
+
+    wx.ready(function(){
+        {if $base['isallowip'] == 3}
+        wx.getLocation({
+            type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+            success: function (res) {
+                var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                var speed = res.speed; // 速度，以米/每秒计
+                var accuracy = res.accuracy; // 位置精度
+
+
+                var submitData = {
+                    lat: latitude,
+                    lon: longitude,
+                    lbsip:"{$base['allowip']}"
+                };
+                $.post('{php echo $this->createMobileUrl('getlbs', array('id' => $id))}', submitData, function(idata) {
+                    if (idata.success == 1) {
+                        $("#loading").fadeOut(10);
+                    } else {
+                        alert(idata.msg);
+
+                    }
+                },"json");
+
+            },
+            fail:function(){
+                alert("获取位置失败,请打开GPS功能！");
+            }
+        });
+        {/if}
+        wx.onMenuShareTimeline(shareMeta);
+        wx.onMenuShareAppMessage(shareMeta);
+        wx.onMenuShareWeibo(shareMeta);
+    });
+    </script>
+
+</html>

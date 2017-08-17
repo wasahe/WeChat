@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="{TEMPLATE_PATH}/images/ux/iconfont.css" />
+		<link rel="stylesheet" href="{TEMPLATE_PATH}/css/animate.css" />
+		<link rel="stylesheet" href="{TEMPLATE_PATH}/css/style.css" />
+		<script src="//cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+		<script type="text/javascript" src="{TEMPLATE_PATH}/js/script.js" ></script>
+		<title>我的收益</title>
+		<script type="text/javascript">
+		$(function(){
+			$(".btn_cash").click(function(){
+				var conf=confirm("确认提现吗?");
+				if(!conf){return;}
+				$.post(location.href,{submit:true},function(result){
+					if(result.success==-1){
+						alert(result.data);
+					}else{
+						location.href=location.href;
+					}
+				});
+			});
+		});
+		</script>
+	</head>
+
+	<body>
+	<div class="main">
+		
+		<div class="shouyi">
+			<div class="syList">
+				<ul>
+					<li>
+						<h3 class="f16"><span class="fr f12"><font class="f24 yel">{$all_money}</font>元</span>累计总收益</h3>
+						<div class="box">
+							<ul class="flex tc">
+								<li>
+									<span><font class="f18 yel">{$all_amount[0]}</font>元</span>
+									<p>回答收益</p>
+								</li>
+								<li>
+									<span><font class="f18 yel">{$all_amount[1]}</font>元</span>
+									<p>旁听分成收益</p>
+								</li>
+								<li>
+									<span><font class="f18 yel">{$all_amount[2]}</font>元</span>
+									<p>提问分成收益</p>
+								</li>
+							</ul>
+						</div>
+					</li>	
+					
+					{if  $cfg['is_cash']==1 }	
+					<li>
+						<h3 class="f16"><span class="fr f12"><font class="f24 yel">{$current_money}</font>元</span>可提现金额</h3>
+						<div class="box">
+							<p class="gray">满{$cfg['cash_money']}元方可提现,微信官方会扣除2%手续费,
+			      {if $pl_ask_percent>0}平台方分成{$cfg['pl_ask_percent']}%,{/if}
+			               旁听收益回答者和提问者分成比例为50%,{if $pl_lis_percent>0}平台方分旁听金额的{$cfg['pl_lis_percent']}%{/if}</p>
+						</div>
+					</li>
+						{if  $cfg['is_cash']==1 }	
+			 {if $current_money>=$cfg['cash_money']}
+				<li><div class="btn" style="margin: 15px;">
+					<button class="btn_cash">申请提现</button>
+				</div></li>
+			{/if}
+			
+		 {/if}
+					<li>
+						<h3 class="f16"><span class="fr f12"><font class="f24 yel">{$all_summery}</font>元</span>已提现金额</h3>
+						<div class="box">
+							<p class="gray">请到微信钱包查看具体收益</p>
+						</div>
+					</li>
+					{/if}
+				 {loop $all_records $temp_record}             
+            <li style="margin-bottom:2px;padding:6px;">
+                <div style="display:inline-block;width:20%;">
+                        <span>{php echo date('Y/m/d', $temp_record['create_time']);}</span>
+                </div>
+                
+                <div  style="display:inline-block;width:60%;margin-left:15px;">
+                 <span class="p_color2 p_span_padding">{$temp_record['last_amount']}</span>
+                    <span style="float:right;color:{if $temp_record['status']=='处理中'}red{else}green{/if};margin-right:8px;">{$temp_record['status']}</span>
+                </div>
+            </li>
+            {/loop}
+				</ul>
+			</div>
+		
+		</div>
+
+	</div>
+	
+
+   {template footer}
+	</body>
+
+</html>

@@ -1,0 +1,49 @@
+ {template 'pc_header'}
+<link rel="stylesheet" type="text/css" href="{MODULE_URL}template/mobile/app/css/screen_zjd.css">
+<script src="{MODULE_URL}template/mobile/app/js/lotter_free_base.js" type="text/javascript" charset="utf-8"></script>
+<script src="{MODULE_URL}template/mobile/app/js/screen_zjd.js?t=10" type="text/javascript" charset="utf-8"></script>
+</head>
+<body class="FUN LOTTERY_FREE" {if !empty($basic_config['bg_vedio'])}data-vide-bg="{php echo tomedia($basic_config['bg_vedio'])}"{/if}>
+<audio id="Audio_Running" src="{MODULE_URL}template/mobile/app/images/zjd/lottery_running.mp3" loop preload="preload"></audio>
+<audio id="Audio_Result" src="{MODULE_URL}template/mobile/app/images/zjd/smashegg.mp3" preload="preload"></audio>
+ {template 'top_panel'}
+<div class="Panel Lottery"  ><img class="boxFront" src="{MODULE_URL}template/mobile/app/images/zjd/box2.png" >
+    <div class="lottery-left">
+        <div class="lottery-run">      
+			<div class="outBox">
+				<div class="box">
+					<img class="boxImg" src="{MODULE_URL}template/mobile/app/images/zjd/box.png">
+					<img class="boxLeft" src="{MODULE_URL}template/mobile/app/images/zjd/boxLeft.png">
+					<img class="boxRight" src="{MODULE_URL}template/mobile/app/images/zjd/boxRight.png">
+				</div>
+				<div class="hand">
+					<div class="hand1"></div>
+					<div class="hand2"></div>
+					<div class="user toux3"><p class="nick-name"></p><p class="mobile"></p></div>
+				</div>
+			</div>  
+        </div>
+        <div class="lottery-bottom">
+            <div class="round-num">
+                <div class="select-panel">单次中奖人数：
+                    <div class="select-button minus">-</div>
+                    <div class="select-value">1</div>
+                    <div class="select-button plus">+</div>
+                    　总共<span class="usercount-label">2人</span>
+                </div>
+            </div>
+            <div class="control button-run" style="display: none;">开始抽奖</div>
+            <div class="control button-stop" style="display: block;">开始砸蛋</div>
+            <div class="control button-nextround" style="display: none;">下一轮</div>
+            <!--<div class="button-showresult">全部结果</div>-->
+            <div class="button-reload">重新加载</div>
+        </div>
+
+    </div>
+    <div class="lottery-right">
+        <div class="result-line">
+            <div class="result-num">1</div>
+        </div>
+    </div>
+</div>
+{template 'pc_footer'}

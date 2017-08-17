@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com" versionCode="0.6,0.7">
+	<application setting="true">
+		<name><![CDATA[上门服务美到家]]></name>
+		<identifie><![CDATA[qwx_shangmen]]></identifie>
+		<version><![CDATA[1.34]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[预约美容师到家服务。]]></ability>
+		<description><![CDATA[预约美容师到家服务。]]></description>
+		<author><![CDATA[折翼天使资源社区]]></author>
+		<url><![CDATA[http://www.012wz.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="false" />
+		<card embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="入口设置" do="index" state="" direct="false" />
+		</cover>
+		<rule>
+			<entry title="首页入口" do="index" state="" direct="false" />
+			<entry title="订单中心" do="myorder" state="" direct="false" />
+			<entry title="个人中心" do="member" state="" direct="false" />
+		</rule>
+		<menu>
+			<entry title="项目管理" do="goods" state="" direct="false" />
+			<entry title="门店管理" do="store" state="" direct="false" />
+			<entry title="美容师管理" do="staff" state="" direct="false" />
+			<entry title="用户管理" do="user" state="" direct="false" />
+			<entry title="订单管理" do="order" state="" direct="false" />
+			<entry title="广告图管理" do="banner" state="" direct="false" />
+			<entry title="表单管理" do="form" state="" direct="false" />
+		</menu>
+	</bindings>
+	<permissions>
+	</permissions>
+	<install><![CDATA[
+	
+CREATE TABLE IF NOT EXISTS `ims_daojia_address` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `uniacid` int(11) NOT NULL DEFAULT '0' COMMENT '公众号ID',
+  `uid` int(11) NOT NULL DEFAULT '0' COMMENT '会员ID',
+  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '姓名',
+  `phone` varchar(50) DEFAULT NULL COMMENT '电话',
+  `province` varchar(50) DEFAULT NULL COMMENT '省份',
+  `city` varchar(50) DEFAULT NULL COMMENT '城市',
+  `district` varchar(50) DEFAULT NULL COMMENT '地区',
+  `address` varchar(600) DEFAULT NULL COMMENT '地址',
+  `is_default` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否为默认地址',
+  `orderby` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+  `create_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  `update_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_daojia_banner` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `uniacid` int(11) NOT NULL DEFAULT '0' COMMENT '公众号ID',
+  `uid` int(11) NOT NULL DEFAULT '0' COMMENT '会员ID',
+  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '缩略图标题',
+  `photo` varchar(255) NOT NULL DEFAULT '' COMMENT '图片',
+  `url` varchar(255) NOT NULL DEFAULT '' COMMENT '网址',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '发布状态1/0',
+  `orderby` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+  `create_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  `update_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_daojia_cart` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `uniacid` int(11) NOT NULL DEFAULT '0' COMMENT '公众号ID',
+  `uid` int(11) NOT NULL DEFAULT '0' COMMENT '会员ID',
+  `session_id` varchar(255) NOT NULL DEFAULT '' COMMENT 'session_id',
+  `goods_id` int(11) NOT NULL DEFAULT '0' COMMENT '商品ID',
+  `goods_name` varchar(255) NOT NULL DEFAULT '' COMMENT '商品名称',
+  `price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '商品价格',
+  `buy_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '实际价格',
+  `buy_num` int(11) NOT NULL DEFAULT '0' COMMENT '购买数量',
+  `discount` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '折扣价格',
+  `daojia` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否到家服务',
+  `params` text COMMENT '其他参数',
+  `create_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '加入时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_daojia_form` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) NOT NULL,
+  `field` varchar(32) NOT NULL,
+  `label` varchar(64) NOT NULL,
+  `user_label` varchar(64) NOT NULL,
+  `show` int(1) NOT NULL,
+  `sort` int(4) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `uniacid` (`uniacid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='表单管理' AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_daojia_goods` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `uniacid` varchar(255) NOT NULL DEFAULT '0' COMMENT '公众号ID',
+  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '项目名称',
+  `titledesc` varchar(120) NOT NULL,
+  `photo` varchar(255) DEFAULT NULL COMMENT '缩略图',
+  `cate_id` int(11) NOT NULL DEFAULT '0' COMMENT '分类ID',
+  `member_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '会员价',
+  `price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '价格',
+  `market_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '市场价',
+  `default_sale` int(11) NOT NULL DEFAULT '0' COMMENT '最低销量',
+  `shijian` varchar(255) DEFAULT NULL COMMENT '项目服务时长分',
+  `renqun` text COMMENT '试用人群',
+  `gongxiao` text COMMENT '疗程功效',
+  `liucheng` text COMMENT '服务流程',
+  `jifa` text COMMENT '技法详情',
+  `other` text COMMENT '其他内容',
+  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否上架1/0',
+  `create_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  `update_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:01' COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_daojia_goods_cate` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `uniacid` int(11) NOT NULL DEFAULT '0' COMMENT '公众号ID',
+  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '分类名称',
+  `parent_id` int(11) NOT NULL DEFAULT '0' COMMENT '父级ID',
+  `orderby` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+CREATE TABLE IF NOT EXISTS `ims_daojia_order` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `uniacid` int(11) NOT NULL DEFAULT '0' COMMENT '公众号ID',
+  `uid` int(11) NOT NULL DEFAULT '0' COMMENT '会员ID',
+  `order_sn` varchar(255) NOT NULL DEFAULT '' COMMENT '订单编号',
+  `daojia` tinyint(1) DEFAULT NULL COMMENT '是否到家',
+  `contact_name` varchar(50) DEFAULT NULL COMMENT '联系人',
+  `phone` varchar(100) DEFAULT NULL COMMENT '联系电话',
+  `price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '价格',
+  `discount` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '折扣价格',
+  `buy_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '实际价格',
+  `daojia_fee` decimal(8,2) NOT NULL,
+  `service_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '服务状态',
+  `payment_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '付款状态',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '订单状态',
+  `params` text COMMENT '参数',
+  `address_id` int(11) NOT NULL DEFAULT '0' COMMENT '地址ID',
+  `staff_id` int(11) NOT NULL DEFAULT '0' COMMENT '美容师的ID',
+  `yuyue_time` varchar(255) DEFAULT NULL COMMENT '预约的时间',
+  `memo` varchar(600) DEFAULT NULL COMMENT '订单备注',
+  `create_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  `update_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_daojia_order_item` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `uniacid` int(11) NOT NULL DEFAULT '0' COMMENT '公众号ID',
+  `uid` int(11) NOT NULL DEFAULT '0' COMMENT '会员ID',
+  `order_id` int(11) NOT NULL DEFAULT '0' COMMENT '订单ID',
+  `goods_id` int(11) NOT NULL DEFAULT '0' COMMENT '商品ID',
+  `goods_name` varchar(255) NOT NULL DEFAULT '' COMMENT '商品名称',
+  `daojia` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否上门1/0',
+  `buy_num` int(11) NOT NULL DEFAULT '0' COMMENT '购买数量',
+  `price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '单价',
+  `discount` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '折扣价格',
+  `price_total` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '总价',
+  `price_total_real` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '实际总价（减去折扣之后）',
+  `params` text,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_daojia_store` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `uniacid` int(11) NOT NULL DEFAULT '0' COMMENT '公众号ID',
+  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
+  `photo` varchar(255) DEFAULT NULL COMMENT '缩略图',
+  `province` varchar(255) DEFAULT NULL COMMENT '省',
+  `city` varchar(255) DEFAULT NULL COMMENT '市',
+  `district` varchar(255) DEFAULT NULL COMMENT '县区',
+  `address` varchar(600) DEFAULT NULL COMMENT '地址',
+  `lng` varchar(100) DEFAULT NULL COMMENT '经度',
+  `lat` varchar(100) DEFAULT NULL COMMENT '纬度',
+  `tel` varchar(100) DEFAULT NULL COMMENT '电话',
+  `contact_name` varchar(100) DEFAULT NULL COMMENT '联系人',
+  `post_daojia_fee` decimal(8,2) NOT NULL,
+  `free_daojia_fee_reach` decimal(8,2) NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否启用',
+  `yuyue_after_minutes` int(8) NOT NULL COMMENT '可预约起始时间',
+  `begin_hour` int(2) NOT NULL,
+  `end_hour` int(2) NOT NULL,
+  `create_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  `update_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:01' COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_daojia_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `uniacid` int(11) NOT NULL DEFAULT '0' COMMENT '公众号ID',
+  `member_id` int(11) NOT NULL DEFAULT '0' COMMENT '系统会员表ID',
+  `user_type` varchar(255) NOT NULL DEFAULT '0' COMMENT '会员类型',
+  `online` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否在线1/0',
+  `staff` text COMMENT '美容师的资料encode',
+  `staff_name` varchar(255) DEFAULT NULL COMMENT '美容师的姓名',
+  `staff_store_id` int(11) NOT NULL DEFAULT '0' COMMENT '门店',
+  `staff_work_no` varchar(255) DEFAULT NULL COMMENT '工号',
+  `staff_photo` varchar(255) DEFAULT NULL COMMENT '照片',
+  `staff_phone` varchar(255) DEFAULT NULL COMMENT '电话',
+  `staff_desc` text COMMENT '自我介绍',
+  PRIMARY KEY (`id`),
+  KEY `uniacid` (`uniacid`),
+  KEY `member_id` (`member_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+]]></install>
+	<uninstall><![CDATA[uninstall.php]]></uninstall>
+	<upgrade><![CDATA[upgrade.php]]></upgrade>
+</manifest>

@@ -1,0 +1,69 @@
+{template 'header'}
+<body ontouchstart="" class="platform_mobile">
+	<div class="qsc-alert" style="display: none;">
+		<i class="info-base64"></i><span></span>
+	</div>
+	<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading"
+		tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog middle">
+			<div class="modal-content">
+				<i class="icon-white icon-loading-base64"><i
+					class="icon-white icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+			</div>
+		</div>
+	</div>
+	<div class="modal qsc-modal qsc-modal-loading"
+		id="qsc-modal-loading-new">
+		<div class="modal-dialog middle">
+			<div class="modal-content">
+				<i class="icon-loading-base64"><i
+					class="icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+			</div>
+		</div>
+	</div>
+	<div class="content top bottom">
+		<form class="qsc-form" method="post" action="{php echo $this->createMobileUrl('doshopinfo')}" name="itemForm" id="itemForm">
+			<div class="input-row first">
+				<label for="stitle" class="control-label">商铺名称</label> <input
+					type="text" id="stitle" name="stitle" {if !empty($shop['stitle'])}readonly="readonly"{/if}  class="control-input"
+					placeholder="输入商铺名称" value="{$shop['stitle']}">
+			</div>
+			<div class="input-row">
+				<label for="sdesc" class="control-label">商铺描述</label>
+				<textarea rows="3" id="sdesc" name="sdesc" class="control-input"
+					placeholder="输入商铺描述">{$shop['sdesc']}</textarea>
+			</div>
+			<div class="input-row">
+				<label for="saddress" class="control-label">商铺地址</label>
+				<textarea rows="2" id="saddress" name="saddress" class="control-input"
+					placeholder="输入商铺地址">{$shop['saddress']}</textarea>
+			</div>			
+			<div class="input-row">
+				<label for="smobile" class="control-label">商铺电话</label> <input
+					type="tel" id="smobile" name="smobile" class="control-input"
+					placeholder="输入商铺电话" value="{$shop['smobile']}">
+			</div>
+			<div class="input-row">
+				<label for="suname" class="control-label">店长姓名</label> <input
+					type="text" id="suname" name="suname" class="control-input"
+					placeholder="输入店主姓名" value="{$shop['suname']}">
+			</div>												
+<!-- 			<div class="input-row lib-options">
+				<input type="hidden" name="defaultstate" value="0"> 
+				<input type="checkbox" name="defaultstate" id="defaultstate" value="1"> 
+				<label for="defaultstate" class="radius pull-right"></label>
+				<p class="form-control-static">服务上架</p>
+			</div> -->
+			<input type="hidden" name="shopid" value="{$shop['id']}">
+			<div class="content-main footer-btn">
+				<input type="submit" name="save-action"
+					class="btn btn-success btn-lg btn-block" value="保存">
+			</div>
+		</form>
+	</div>
+	<script type="text/javascript"
+		src="../addons/water_o2o/template/js/user.min.js"></script>
+
+</body>
+</html>

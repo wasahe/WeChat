@@ -1,0 +1,9 @@
+				{loop $questions $li}
+					{$li['istask']=='1'}
+					<a class="item" onclick="window.location.href='{php echo $this->createMobileUrl('task_answer',array('id'=>$li['id']))}'">
+					{else}
+					<a class="item" onclick="window.location.href='{php echo $this->createMobileUrl('question',array('id'=>$li['id']))}'">
+					{/if}
+						<p>{$li['title']}</p>
+					</a>
+				{/loop}

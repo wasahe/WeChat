@@ -1,0 +1,208 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com" versionCode="0.6">
+	<application setting="false">
+		<name><![CDATA[智慧上门服务]]></name>
+		<identifie><![CDATA[dayu_yuyue]]></identifie>
+		<version><![CDATA[2.9.4]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[智慧上门服务]]></ability>
+		<description><![CDATA[智慧上门服务]]></description>
+		<author><![CDATA[微赞]]></author>
+		<url><![CDATA[www.012wz.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+		<card embed="false" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="新建预约活动" do="post" state="" direct="false" />
+			<entry title="预约活动列表" do="display" state="" direct="false" />
+			<entry title="预约项目列表" do="yyxmdisplay" state="" direct="false" />
+			<entry title="新增预约项目" do="yyxmpost" state="" direct="false" />
+			<entry title="幻灯片管理" do="adv" state="" direct="false" />
+			<entry title="门店列表" do="storedisplay" state="" direct="false" />
+			<entry title="添加门店" do="storepost" state="" direct="false" />
+			<entry title="工作人员列表" do="jishidisplay" state="" direct="false" />
+			<entry title="新增工作人员" do="jishipost" state="" direct="false" />
+			<entry title="参数设置" do="setting" state="" direct="false" />
+		</menu>
+		<home>
+			<entry title="高级预约" do="gethometitles" state="" direct="false" />
+		</home>
+		<profile>
+			<entry title="我的预约" do="dayuyyresearch" state="" direct="false" />
+		</profile>
+	</bindings>
+	<install><![CDATA[CREATE TABLE IF NOT EXISTS `ims_dayu_yuyue` (
+  `reid` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `title` varchar(100) NOT NULL DEFAULT '',
+  `description` varchar(1000) NOT NULL,
+  `content` text NOT NULL,
+  `information` varchar(500) NOT NULL DEFAULT '',
+  `thumb` varchar(200) NOT NULL DEFAULT '',
+  `inhome` tinyint(4) NOT NULL DEFAULT '0',
+  `createtime` int(10) NOT NULL DEFAULT '0',
+  `starttime` int(10) NOT NULL DEFAULT '0',
+  `endtime` int(10) unsigned NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '0',
+  `pretotal` int(10) unsigned NOT NULL DEFAULT '1',
+  `accountsid` varchar(50) NOT NULL DEFAULT '',
+  `tokenid` varchar(50) NOT NULL DEFAULT '',
+  `appId` varchar(50) NOT NULL DEFAULT '',
+  `templateId` varchar(50) NOT NULL DEFAULT '',
+  `m_templateid` varchar(50) NOT NULL,
+  `pay` int(11) NOT NULL DEFAULT '1' COMMENT '支付开关',
+  `kaishi` int(11) NOT NULL DEFAULT '1',
+  `jieshu` int(11) NOT NULL DEFAULT '22',
+  `tianshu` int(11) NOT NULL DEFAULT '15',
+  `xmshow` int(11) NOT NULL DEFAULT '0' COMMENT '项目显示方式',
+  `xmname` varchar(50) NOT NULL DEFAULT '',
+  `yuyuename` varchar(50) NOT NULL DEFAULT '',
+  `kfirst` varchar(100) NOT NULL DEFAULT '',
+  `kfoot` varchar(100) NOT NULL DEFAULT '',
+  `mfirst` varchar(100) NOT NULL DEFAULT '',
+  `mfoot` varchar(100) NOT NULL DEFAULT '',
+  `share_url` varchar(100) NOT NULL DEFAULT '',
+  `follow` tinyint(1) DEFAULT '0',
+  `shangmen` tinyint(1) DEFAULT '0',
+  `stime` int(2) NOT NULL,
+  `etime` int(2) NOT NULL,
+  `eday` int(2) NOT NULL,
+  `card` tinyint(1) DEFAULT '0',
+  `instore` tinyint(1) DEFAULT '0',
+  `zhicheng` varchar(50) NOT NULL DEFAULT '',
+  `mname` varchar(50) NOT NULL DEFAULT '',
+  `skins` varchar(20) NOT NULL DEFAULT 'submit',
+  PRIMARY KEY (`reid`),
+  KEY `weid` (`weid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_dayu_yuyue_adv` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT '0',
+  `advname` varchar(50) DEFAULT '',
+  `link` varchar(255) DEFAULT '',
+  `thumb` varchar(255) DEFAULT '',
+  `displayorder` int(11) DEFAULT '0',
+  `enabled` int(11) DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `indx_weid` (`weid`),
+  KEY `indx_enabled` (`enabled`),
+  KEY `indx_displayorder` (`displayorder`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_dayu_yuyue_jishi` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `oid` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL DEFAULT '',
+  `telephone` varchar(20) NOT NULL DEFAULT '',
+  `noticeemail` varchar(50) NOT NULL DEFAULT '',
+  `content` varchar(1000) NOT NULL DEFAULT '',
+  `displayorder` tinyint(3) NOT NULL DEFAULT '0',
+  `isshow` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `weid` (`weid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_dayu_yuyue_record` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `member` varchar(50) NOT NULL DEFAULT '',
+  `mobile` varchar(50) NOT NULL DEFAULT '',
+  `add` varchar(250) NOT NULL DEFAULT '',
+  `weid` int(11) unsigned NOT NULL,
+  `yid` int(11) NOT NULL,
+  `xmid` int(11) NOT NULL,
+  `oid` int(11) NOT NULL,
+  `jsid` int(11) NOT NULL,
+  `yystarttime` int(10) NOT NULL DEFAULT '0',
+  `yyendtime` int(10) unsigned NOT NULL,
+  `yyfs` tinyint(1) NOT NULL DEFAULT '0',
+  `openid` varchar(50) NOT NULL DEFAULT '',
+  `beizhu` text NOT NULL,
+  `createtime` int(10) NOT NULL DEFAULT '0',
+  `status` tinyint(1) NOT NULL COMMENT '预约状态',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_dayu_yuyue_reply` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rid` int(11) NOT NULL,
+  `reid` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_dayu_yuyue_setting` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `reid` int(11) NOT NULL,
+  `accountsid` varchar(50) NOT NULL DEFAULT '',
+  `tokenid` varchar(50) NOT NULL DEFAULT '',
+  `appId` varchar(50) NOT NULL DEFAULT '',
+  `templateId` varchar(50) NOT NULL DEFAULT '',
+  `k_templateid` varchar(50) NOT NULL DEFAULT '',
+  `m_templateId` varchar(50) NOT NULL DEFAULT '',
+  `kfid` varchar(50) NOT NULL DEFAULT '',
+  `kfirst` varchar(100) NOT NULL COMMENT '客服模板页头',
+  `kfoot` varchar(100) NOT NULL COMMENT '客服模板页尾',
+  `mfirst` varchar(100) NOT NULL COMMENT '客户模板页头',
+  `mfoot` varchar(100) NOT NULL COMMENT '客户模板页尾',
+  `follow` tinyint(1) DEFAULT '0',
+  `instore` tinyint(1) DEFAULT '0',
+  `share_url` varchar(100) NOT NULL DEFAULT '',
+  `card` tinyint(1) DEFAULT '0',
+  `shangmen` tinyint(1) DEFAULT '0',
+  `zhicheng` varchar(50) NOT NULL DEFAULT '',
+  `xmname` varchar(50) NOT NULL DEFAULT '',
+  `yuyuename` varchar(50) NOT NULL DEFAULT '',
+  `mname` varchar(50) NOT NULL DEFAULT '',
+  `skins` varchar(20) NOT NULL DEFAULT 'submit',
+  `stime` int(2) NOT NULL,
+  `etime` int(2) NOT NULL,
+  `eday` int(2) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `weid` (`weid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_dayu_yuyue_store` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `thumb` varchar(255) NOT NULL,
+  `content` varchar(1000) NOT NULL,
+  `phone` varchar(15) NOT NULL,
+  `qq` varchar(15) NOT NULL,
+  `province` varchar(50) NOT NULL,
+  `city` varchar(50) NOT NULL,
+  `dist` varchar(50) NOT NULL,
+  `address` varchar(500) NOT NULL,
+  `lng` varchar(10) NOT NULL,
+  `lat` varchar(10) NOT NULL,
+  `industry1` varchar(10) NOT NULL,
+  `industry2` varchar(10) NOT NULL,
+  `createtime` int(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_lat_lng` (`lng`,`lat`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_dayu_yuyue_xiangmu` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `title` varchar(50) NOT NULL DEFAULT '',
+  `displayorder` tinyint(3) NOT NULL DEFAULT '0',
+  `isshow` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `weid` (`weid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+]]></install>
+	<uninstall><![CDATA[DROP TABLE IF EXISTS `ims_dayu_yuyue`;
+DROP TABLE IF EXISTS `ims_dayu_yuyue_adv`;
+DROP TABLE IF EXISTS `ims_dayu_yuyue_jishi`;
+DROP TABLE IF EXISTS `ims_dayu_yuyue_record`;
+DROP TABLE IF EXISTS `ims_dayu_yuyue_reply`;
+DROP TABLE IF EXISTS `ims_dayu_yuyue_setting`;
+DROP TABLE IF EXISTS `ims_dayu_yuyue_store`;
+DROP TABLE IF EXISTS `ims_dayu_yuyue_xiangmu`;
+]]></uninstall>
+	<upgrade><![CDATA[upgrade.php]]></upgrade>
+</manifest>

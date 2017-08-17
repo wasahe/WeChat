@@ -1,0 +1,46 @@
+{template 'header'}
+<body ontouchstart="" class="platform_mobile">
+<div class="qsc-alert" style="display: none;">
+<i class="info-base64"></i><span id="info"></span>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-white icon-loading-base64"><i class="icon-white icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading-new">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-loading-base64"><i class="icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>{php $info = $this->getAccountInfo($openid);}
+	<div class="content top bottom">
+		<div class="qsc-list-group">
+			<div class="list-item">
+				<span> 余额 </span> <label> <em id="showyue1">{php echo $info['yue'];}元</em>
+				</label>
+			</div>
+			<div class="list-item">
+				<span> 积分 </span> <label> <em id="showyue2">{php echo $info['jifen'];}分</em>
+				</label>
+			</div>
+		</div>
+		
+		<!-- <div class="qsc-list-group">
+<a href="/user/bank" class="list-item">
+<span>
+我的银行卡
+</span>
+<label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+</div> -->
+	</div>
+	{template 'footer'}
+<script type="text/javascript" src="../addons/water_o2o/template/js/user.min.js"></script>
+
+</body></html>

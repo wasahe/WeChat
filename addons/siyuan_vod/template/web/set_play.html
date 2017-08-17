@@ -1,0 +1,73 @@
+{template 'common/header'}
+<div class="main"> 
+<form action="" method="post" class="form-horizontal form"> 
+<div class="panel panel-default"> 
+<div class="panel-heading">视频解析设置</div>
+<div class="panel-body">
+<div class="panel-heading" style="border-bottom:1px dashed #cccccc;margin-bottom:20px;">Video++智能互动视频播放器技术平台</div>
+<div class="form-group"> 
+<label class="col-xs-12 col-sm-2 col-md-2 control-label">Video++ APPKey:</label> 
+<div class="col-sm-6 col-md-5 col-xs-12"> 
+<input type="text" class="form-control" name="videojj_key" value="{$set['videojj_key']}" />
+<span class="help-block"><a style="color:red;" href="http://videojj.com" target="_blank">点击注册Video++</a>登录Video++后台，应用管理——添加应用——复制APPKey，最后有一个中划线“-”一起复制。</span>
+</div> 
+</div>
+<div class="panel-heading" style="border-bottom:1px dashed #cccccc;margin-bottom:20px;">PlayM3u8 云平台</div>
+<div class="form-group"> 
+<label class="col-xs-12 col-sm-2 col-md-2 control-label">PlayM3u8 APPKey:</label> 
+<div class="col-sm-6 col-md-5 col-xs-12"> 
+<input type="text" class="form-control" name="playm3u8_key" value="{$set['playm3u8_key']}" />
+<span class="help-block"><a style="color:red;" href="http://www.playm3u8.com" target="_blank">点击访问PlayM3u8</a> 联系管理员充值申请开通解析，普通解析100元，累计充值500元才能解析各大视频站VIP影片。</span>
+</div> 
+</div>
+<div class="form-group"> 
+<label class="col-xs-12 col-sm-2 col-md-2 control-label">PlayM3u8 解析域名:</label> 
+<div class="col-sm-6 col-md-5 col-xs-12"> 
+<input type="text" class="form-control" name="playm3u8_host" value="{$set['playm3u8_host']}" />
+<span class="help-block">例：http://dns1.m3u8.cc  <a style="color:red;" href="http://jq.qq.com/?_wv=1027&k=2ByT462" target="_blank">点击加入PlayM3u8售后群</a> 如发现视频无法解析，请进群查看群维护公告，更换解析域名。</span>
+</div> 
+</div>
+<div class="form-group"> 
+<label class="col-xs-12 col-sm-2 col-md-2 control-label">PlayM3u8播放器显示站点名称:</label> 
+<div class="col-sm-6 col-md-5 col-xs-12"> 
+<input type="text" class="form-control" name="playm3u8_title" value="{$set['playm3u8_title']}" />
+<span class="help-block">微信浏览器不显示，手机浏览器或电脑浏览器才显示！</span>
+</div> 
+</div>
+<div class="form-group"> 
+<label class="col-xs-12 col-sm-2 col-md-2 control-label">PlayM3u8官方域名:</label> 
+<div class="col-sm-6 col-md-5 col-xs-12"> 
+<input type="text" class="form-control" name="playm3u8_url" value="{$set['playm3u8_url']}" />
+<span class="help-block">默认为http://www.playm3u8.com，请不要修改！</span>
+</div> 
+</div>
+<div class="form-group"> 
+<label class="col-xs-12 col-sm-2 col-md-2 control-label">PlayM3u8授权域名1:</label> 
+<div class="col-sm-6 col-md-5 col-xs-12"> 
+<input type="text" class="form-control" name="playm3u8_site1" value="{$set['playm3u8_site1']}" />
+<span class="help-block">绑定播放域名，防盗链，建议填写当前站点域名(不绑定就没法播放的哦，播放器所在域名无需绑定)</span>
+</div> 
+</div>
+<div class="form-group"> 
+<label class="col-xs-12 col-sm-2 col-md-2 control-label">PlayM3u8授权域名2:</label> 
+<div class="col-sm-6 col-md-5 col-xs-12"> 
+<input type="text" class="form-control" name="playm3u8_site2" value="{$set['playm3u8_site2']}" />
+</div> 
+</div>
+<div class="form-group"> 
+<label class="col-xs-12 col-sm-2 col-md-2 control-label">PlayM3u8当前配置</label> 
+ <div class="col-sm-6 col-md-8 col-xs-12"> 
+<textarea style="height:150px; width:100%" class="richtext" rows="20" id="reply-add-text" readonly="readonly">{$config}</textarea>
+<span class="help-block" style="color:red">此区域仅显示PlayM3u8当前配置文件内容方便查看配置是否正确，无法修改，修改请通过上面的内容输入框！</span>
+ </div> 
+</div>
+<div class="form-group"> 
+<label class="col-xs-12 col-sm-3 col-md-2 control-label"></label> 
+<div class="col-sm-9 col-xs-12"> 
+<p><input name="submit" type="submit" value="提交" class="btn btn-primary span3" /> <input type="hidden" name="token" value="{$_W['token']}" /> </p>
+</div> 
+</div> 
+</div> 
+</form>
+</div>
+{template 'common/footer'}

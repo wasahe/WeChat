@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{$reply['title']}</title>
+    <meta name="viewport" content="width=device-width,target-densitydpi=high-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    {php echo register_jssdk(false);}
+    <style>
+        *{
+            padding:0px;
+            margin:0px;
+        }
+        html,body{
+            width:100%;
+            height:100%;
+
+        }
+        div{
+            margin:auto;
+            width:95%;
+            height:90%;
+            background-size:contain;
+            background-repeat:no-repeat;
+            background-position-y:10%;
+            background-image:url("{php echo tomedia($reply['bgurl'])}");
+        }
+        img{
+            width:82%;
+            float:right;
+            margin-top:41%;
+        }
+
+    </style>
+</head>
+<body>
+<div id="wrap">
+    <img id="img" src="{php echo $imageUrl;}" />
+</div>
+
+</body>
+<script>
+
+    var img = document.getElementById('img');
+
+    img.onclick=function(){
+        wx.previewImage({
+            'current': '{php echo $imageUrl;}',
+            'urls':JSON.parse('["{php echo $imageUrl;}"]')
+        });
+
+    }
+
+</script>
+</html>

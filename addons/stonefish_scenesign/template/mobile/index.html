@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>{$reply['title']}--{$_W['account']['name']}</title>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<meta name="Description" content="{$reply['description']}" />
+<!-- Mobile Devices Support @begin -->
+<meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+<meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+<meta content="no-cache" http-equiv="pragma">
+<meta content="0" http-equiv="expires">
+<meta content="telephone=no, address=no" name="format-detection">
+<meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<!-- Mobile Devices Support @end -->
+<link href="{MODULE_URL}template/css/style.css?{php echo time()}" rel="stylesheet" type="text/css" />
+<link href="{MODULE_URL}template/css/scenesign.css?{php echo time()}" rel="stylesheet" type="text/css" />
+<script src="{$_W['siteroot']}app/resource/js/lib/jquery-1.11.1.min.js?{php echo time()}"></script>
+<style>
+html{color:{$template['textcolor']};}
+html{background-image: url({php echo toimage($template['bgimg'])});background-size: 100% auto;}
+html{background-color: {$template['bgcolor']};}
+body{font-size:{$template['fontsize']}px;color:{$template['textcolor']};}
+a:link, a:visited, a:hover, a:active { color:{$template['textcolorlink']}; text-decoration:none; } 
+.mingdan{background-color:{$template['buttoncolor']};}
+.biaoti{color:{$template['buttontextcolor']};}
+.biaoti a{ color:{$template['buttontextcolor']};}
+.mingdaninfo{background-color:{$template['rulecolor']};	border:1px {$template['rulecolor']} solid ;color:{$template['ruletextcolor']};}
+/* 弹出层CSS */
+.panel-box .panel-content{color: {$template['watchtextcolor']};	background-color: {$template['watchcolor']};}
+.panel-box .btn-confirm,.panel-box .btn-confirm2{background: {$template['buttoncolor']};color: {$template['buttontextcolor']};}
+/* 弹出层CSS */
+.share_div{background-image: url({php echo toimage($reply['businessbgpic'])});}
+.share_div img{margin:0;padding:0;}
+#right{alpha(opacity=80); opacity: 0.8;position:fixed;_position:absolute;right:5px;_right:5px;top:210px;_top:210px;}
+
+.cd-timeline-img.cd-picture { background: {$template['navactioncolor']};}
+.cd-timeline-img {box-shadow: 0 0 0 3px {$template['navcolor']};}
+.cd-timeline-content {background: {$template['navcolor']};box-shadow: 0 3px 0 {$template['navtextcolor']};}
+#cd-timeline::before {background: {$template['navtextcolor']};}
+.cd-timeline-content .zhongjiang{color:red;margin-top:-20px;margin-left:-10px;}
+</style>
+</head>
+<body>
+{template 'banner'}
+<h2 class="top_title">{$reply['title']}<br/><span>{$reply['description']}</span></h2>
+<section id="cd-timeline" class="cd-container">
+	{loop $fansdata $row}
+	<div class="cd-timeline-block">
+		<div class="cd-timeline-img cd-picture"></div>
+		<div class="cd-timeline-content">
+			{if $row['zhongjiang']}<div class="zhongjiang"><img src="{MODULE_URL}template/images/gift.png" width="20"></div>{/if}
+			<h2><img src="{php echo toimage($row['avatar'])}"></h2>
+			{if $exchange['isrealname']}
+			<p>{$row['realname']}{if $exchange['group']}<br>({$row['bumen']}){/if}</p>
+			{else}
+			<p>{$row['nickname']}</p>
+			{/if}
+			<span class="cd-date">{php echo date('Y/m/d H:i:s',$row['createtime']);}</span>
+		</div>
+	</div>
+	{/loop}	
+</section>
+{if $share['share_open_close']}
+<!--分享按钮-->
+	<div class="mingdan" style="margin-top:10px;">
+        <div id="shareimg" class="biaoti">{if strstr($share['share_anniu'], '/')}<img style="height: 35px;width: auto;" src="{php echo toimage($share['share_anniu'])}">{else}{$share['share_anniu']}{/if}</div>
+		<div id="pop_share"><img src="{php echo toimage($share['share_pic'])}" width="100%" alt="分享到朋友圈"/></div>
+    </div>
+<!--分享按钮-->			
+{/if}
+{if $reply['music']==1}
+<!--音乐控制-->
+<div class="audio-controls on"></div>
+<!-- 背景音乐 -->
+<audio id="audio" {if $reply['mauto']}autoplay="autoplay"{/if} {if $reply['mloop']}loop="loop"{/if}>
+	<source src="{php echo toimage($reply['musicurl'])}" type="audio/mpeg" />
+</audio>
+<!-- 背景音乐 -->
+<!--音乐控制-->
+{/if}
+{template 'footer'}
+{if $share['share_open_close']}
+{template 'jssdk'}
+<script>
+$("#shareimg").click(function(){
+	$("#pop_share").show();
+});
+
+$("#pop_share").click(function(){
+	$("#pop_share").hide();
+});
+</script>
+{else}
+{template 'jssdkhide'}
+{/if}
+<script type="text/javascript">
+{if $reply['music']==1}
+<!-- 音频暂停播放 -->
+var audioAuto = document.getElementById('audio');
+{if $reply['mauto']}
+	audioAuto.play();
+{else}
+	$(".audio-controls").removeClass("on");
+{/if}
+$(".audio-controls").click(function (){ 
+	if (audioAuto.paused) {
+		audioAuto.play();
+		$(".audio-controls").addClass("on");
+    }else{
+		audioAuto.pause();
+		$(".audio-controls").removeClass("on");
+    }
+});
+<!-- 音频暂停播放 -->
+{/if}
+</script>
+</body>		
+</html>

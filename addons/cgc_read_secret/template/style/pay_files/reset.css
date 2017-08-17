@@ -1,0 +1,71 @@
+﻿/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License���ʹ�÷�Χ��Ȩ: none (public domain)
+*/
+html, body, div, span, iframe,
+h1, h2, h3, h4, h5, h6,
+ p,a,img,q, s, samp,small,strong,
+ var,b, u, i,
+dl, dt, dd, ol, ul, li,
+form, label,table,tr, th, td,
+article, aside, canvas,details, figcaption,
+figure,footer, header, hgroup, 
+menu, nav,section,
+time, mark, audio, video,input{
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+} 
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+strong,i,em{font-style: normal;}
+/* add */
+
+body {font-size:12px;}
+body,html{height:100%;}
+img{border:0;}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}
+select,input{vertical-align:middle}
+.clear { display:block !important; clear:both !important; float:none !important; margin:0 !important; padding:0 !important; height:0; line-height:0; font-size:0; overflow:hidden;}
+.clearfix {*zoom:1; }
+.clearfix:after { content:""; display:block; clear:both; height:0; visibility:hidden;}
+.spacer{clear:both; font-size:0; height:0; line-height:0;}
+a{color:#333;text-decoration:none}
+a:hover{outline:none;}
+.fl{float: left;}
+.fr{float: right;}
+.clearBoth{clear:both;}
+
+body{
+	font-size: 12px;
+	font-family:"兰亭黑-简";
+	color: #000;
+}
+
+
+
+
+
+
+

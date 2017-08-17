@@ -1,0 +1,451 @@
+<html>
+<head>
+<title>{$err_title}</title>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,width=device-width">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" href="{STYLE_PATH}/weui/weui.css" />
+<script src="{MODULE_URL}template/style/js/jquery-2.1.3.min.js"></script>
+<script src="{MODULE_URL}template/style/js/fastclick.js"></script>
+<script src="{MODULE_URL}template/style/js/touch/toe.min.js"></script>
+<script src="{MODULE_URL}template/style/js/appjs/app.min.js?v=1"></script>
+<script src="{MODULE_URL}template/style/js/common.js"></script>
+<script src="{MODULE_URL}template/style/js/sweetalert/sweetalert.min.js"></script>
+<script src="{MODULE_URL}template/style/js/swiper.jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="{MODULE_URL}template/style/js/jquery-weui.js"></script>
+{php echo register_jssdk(false);}
+<!-- 注册调用微信js_api 放到其他引入的 js 之前 -->
+<link rel="stylesheet" href="{MODULE_URL}template/style/css/jquery-weui.css">
+<link rel="stylesheet" href="{MODULE_URL}template/style/css/jquery.modalbox.css">
+<style>
+.piece {
+	background: #FFFFFF;
+}
+
+.piece_head {
+	position: relative;
+}
+
+.piece_head .bg {
+	width: 100%;
+}
+
+.piece_head .user {
+	position: absolute;
+	bottom: -30px;
+	width: 100%;
+	text-align: center;
+}
+
+.piece_head .user .avatar {
+	width: 60px;
+	height: 60px;
+	border: 2px solid #FFFFFF;
+	background: #FFFFFF;
+	border-radius: 54px;
+}
+
+.piece_head .user .nickname {
+	color: #666666;
+}
+
+.piece_head .user .nickname em {
+	color: #ff5454;
+}
+
+.piece_head .from {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	color: #FFFFFF;
+	padding-left: 15px;
+	background: url("../addons/cgc_ad/images/piece_back.png") no-repeat left
+		center;
+	background-size: 11px 18px;
+}
+
+.piece_body {
+	margin: 40px 15px 0 15px;
+	padding: 10px 0 10px 0;
+	color: #000000;
+} /**border-top:1px solid #EEEEEE;**/
+.piece_body .title {
+	
+}
+
+.piece_body .content {
+	
+}
+
+.piece_body .images {
+	
+}
+
+.piece_body .images p {
+	margin-top: 10px;
+}
+
+.piece_body .images img {
+	width: 100%;
+}
+
+.piece_foot {
+	padding: 10px 15px 10px 15px;
+	color: #999999;
+	font-size: 15px;
+}
+
+.piece_foot .link {
+	color: #576b95;
+	margin-right: 10px;
+}
+
+.piece_foot1 {
+	padding: 10px 15px 10px 15px;
+	color: #999999;
+	font-size: 15px;
+	text-align: center;
+}
+
+.piece_foot1 .link {
+	color: #E40066;
+	margin: 10px;
+	text-align: center;
+	border: 1px solid #E40066;
+	padding: 8px;
+	font-weight: lighter;
+	border-radius: 7px;
+	letter-spacing: 1px;
+}
+
+.piece_info {
+	text-align: center;
+	margin-top: 20px;
+	color: #999999;
+}
+
+.piece_info em {
+	color: #ff5454;
+}
+
+.weui_cells_title {
+	font-size: 12px;
+}
+
+#robs_list .weui_cell p {
+	color: #666666;
+}
+
+.botbar {
+	background: #FFFFFF;
+	overflow: hidden;
+}
+
+.botbar .weui_cells {
+	margin: 0px;
+}
+
+.botbar .weui_btn {
+	margin: 10px;
+}
+
+.plist {
+	
+}
+
+.plist li {
+	display: block;
+	overflow: hidden;
+	border-bottom: dashed 1px #eee;
+	padding: 5px 0;
+}
+
+.plist li:last-child {
+	border: none;
+}
+
+.plist li img {
+	width: 25px;
+	vertical-align: middle;
+	margin-left: 5px;
+}
+
+.plist li span {
+	width: 100%;
+	display: block;
+	overflow: hidden;
+	vertical-align: middle;
+}
+/*.plist li span:first-child{margin-bottom: 3px;}*/
+.plist li span.sp2 {
+	text-indent: 8px;
+	margin-top: 5px;
+}
+
+.hheader {
+	margin: 8px 0;
+	border-bottom: 1px solid #eee;
+	padding: 0 15px;
+}
+
+.kf_box {
+	position: fixed;
+	right: -5px;
+	width: 60px;
+	z-index: 99999;
+	top: 45%;
+	padding: 5px;
+}
+
+.kf_box ul {
+	display: block;
+	overflow: hidden;
+}
+
+.kf_box ul li {
+	width: 100%;
+	display: block;
+	overflow: hidden;
+	text-align: center;
+	padding: 15px 0;
+}
+
+.kf_box ul li.one, .kf_boox ul li.one a {
+	background: #337ab7;
+	color: #fff;
+}
+
+.kf_box ul li.two {
+	background: #f2dede;
+}
+
+.kf_box ul li.three {
+	background: #449d44;
+	color: #fff;
+	font-size: 12px
+}
+
+.kf_box ul li.three2 {
+	background: #04be02;
+	color: #fff;
+	font-size: 12px
+}
+
+input[placeholder], [placeholder], *[placeholder] {
+	color: black !important;
+	font-weight: bolder;
+	font-family: 黑体;
+}
+
+.weui_cell_sd {
+	float: left;
+	margin-top: 6px
+}
+
+.weui_cell_cd {
+	background-color: #FFFFFF;
+	height: 44px;
+}
+
+#sub {
+	margin-top: 7px;
+	margin-right: 15px;
+	background-color: #ff7800;
+	color: #fff;
+	padding: 5px;
+	border-radius: 5px;
+	float: right;
+	font-size: 12px;
+	-webkit-appearance: none;
+}
+
+#selectall {
+	margin-top: 7px;
+	background-color: #ff7800;
+	color: #fff;
+	padding: 5px;
+	border-radius: 5px;
+	float: left;
+	font-size: 12px;
+	-webkit-appearance: none;
+}
+
+#all {
+	float: left;
+	margin-top: 14px;
+	margin-left: 15px
+}
+
+.weixindiag {
+	position: absolute;
+	height: auto;
+	z-index: 99999;
+	padding: 1px;
+	display: none;
+	width: 235px;
+	background-color: none;
+}
+
+.weixindiag img {
+	border-radius: 5px;
+}
+
+.weixinclose {
+	background: url({MODULE_URL}/images/weixinclose.png) no-repeat;
+	width: 38px;
+	height: 38px;
+	display: inline-block;
+	margin-bottom: -50px;
+	cursor: pointer;
+	margin-bottom: -38px;
+	z-index: 999;
+	position: absolute;
+	right: -18px;
+	top: -18px;
+}
+
+.overlay {
+	background-color: #252525;
+	position: absolute;
+	z-index: 99990;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0.7;
+	filter: alpha(opacity = 70);
+	-moz-opacity: 0.5;
+	display: none;
+}
+
+.weui_cell_cd {
+	background-color: #FFFFFF;
+	height: 44px;
+}
+
+#btn_ok {
+	float: left;
+	width: 27%
+}
+
+#btn_msg {
+	float: left;
+	width: 27%
+}
+
+#btn_cancel {
+	float: left;
+	width: 27%
+}
+</style>
+</head>
+
+<body ontouchstart="">
+	<form action="" method="post" class="form-horizontal" role="form" id="form1">
+		<input type="hidden" name="id" value="{$item['id']}">
+		<div id="zzc" style='background: #000; opacity: 0.5; display: none; position: fixed; width: 100%; height: 100%;'></div>
+		<div class="app-page" data-page="index_page">
+			<div class="app-topbar" style="display: none; height: 0px;"></div>
+			<div class="app-content" style="background: #F8F8F8; z-index: 0;">
+				<div class="app-body">
+					<div class="piece">
+						<div class="piece_head">
+							<img class="bg" src="{MODULE_URL}template/style/css/redpack_head.jpg" />
+							<div class="user">
+								<img class="avatar" src="{php echo tomedia($item['headimgurl'])}"/>
+								<h2 class="nickname">
+								{if empty($item['hb_status'])}<span style="color: red;">未发</span>{else} <span style="color: blue;">已发</span>{/if}&nbsp;&nbsp;
+								{if empty($item['sh_status'])}<span style="color: red;">未审核</span>{else} <span style="color: blue;">已审</span>{/if}</h2>
+							</div>
+						</div>
+						<div class="piece_body">
+							<div class="title">{$item['realname']}</div>
+							<div class="content">{$item['nickname']}</div>
+							{if !empty($item['pic'])}
+							<div class="images">
+								<img src="{php echo tomedia($item['pic']);}" />
+							</div>
+							{/if}
+						</div>
+
+					</div>
+
+					<div class="weui_cells weui_cells_form" style="margin-top: 0px;">
+						
+						<div class="weui_cells_title">消息内容</div>
+						<div class="weui_cells">
+						    <div class="weui_cell">
+						        <div class="weui_cell_bd weui_cell_primary">
+						            <input class="weui_input" type="text" name="myModal_message" placeholder="消息内容" />
+						        </div>
+						        <div class="weui_cell_ft">
+						          	<a href="javascript:sendMessage();" class="weui_btn weui_btn_mini weui_btn_primary">发送消息</a>
+						        </div>
+						    </div>
+						</div>
+						
+						<div class="weui_cells_title">红包金额</div>
+						<div class="weui_cells">
+						    <div class="weui_cell">
+						        <div class="weui_cell_bd weui_cell_primary">
+						            <input class="weui_input" type="text" name="hb_money" placeholder="红包金额" />
+						        </div>
+						        <div class="weui_cell_ft">
+						          	<a href="javascript:send_hb();" class="weui_btn weui_btn_mini weui_btn_warn">{$issue}</a>
+						        </div>
+						    </div>
+						</div>
+					</div>
+
+					<div class="app-botblank">
+						<div class="botbar">
+							<p class="weui_btn_area">
+								<a id="btn_ok" href="javascript:sh();" class="weui_btn weui_btn_primary">通过</a>
+								<a id="btn_cancel" href="javascript:send_hb();" class="weui_btn weui_btn_primary" style="width:100px;">{$issue}</a>
+								<a id="btn_msg" href="javascript:del();" class="weui_btn weui_btn_warn">删除</a>
+								<a id="btn_msg" href="{php echo $this->createMobileUrl('index', array ('op' => 'display'))}" class="weui_btn weui_btn_default">返回</a>
+							</p>
+						</div>
+					</div>
+					<br>
+				</div>
+
+			</div>
+
+			<div class="app-botbar">
+				<div class="botbar"></div>
+			</div>
+
+		</div>
+
+		<script type="text/javascript">
+		function sendMessage(){
+			if($("input[name='myModal_message']").val()==''){
+				alert('请输入消息内容！');
+				return ;
+			}
+			window.location.href="{php echo $this->createMobileUrl('check', array('op' => 'send_message_Bat','ids'=>$item['id']))}&message="+$("input[name='myModal_message']").val();
+		}
+
+		function sh(){
+			window.location.href="{php echo $this->createMobileUrl('check', array('op' => 'sh','id'=>$item['id']))}";
+		}
+		
+		function del(){
+		  if (confirm('确认删除信息吗,删除完不可恢复?')){
+			  location.href ="{php echo $this->createMobileUrl('check', array('op' => 'del','id'=>$item['id']))}";	
+		  }
+		}
+		
+		function send_hb(){
+		  var hb_money=$("input[name='hb_money']").val();
+		  window.location.href="{php echo $this->createMobileUrl('check', array('op' => 'send_hb','id'=>$item['id']))}&hb_money="+hb_money;
+		}
+		</script>
+	</form>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!doctype html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="{TEMPLATE_PATH}/images/ux/iconfont.css" />
+		<link rel="stylesheet" href="{TEMPLATE_PATH}/css/animate.css" />
+		<link rel="stylesheet" href="{TEMPLATE_PATH}/css/style.css" />
+		<script src="//cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+		<script type="text/javascript" src="{TEMPLATE_PATH}/js/script.js" ></script>
+		<script src="{TEMPLATE_PATH}/js/ask_main.js?v=1"></script>
+		<title>{if $is_myindex==true}我的主页{else}向{$db_user['nickname']}提问{/if}</title>
+	{php echo register_jssdk();}
+	<script type="text/javascript">
+	var globalObj=new Object();
+	var pindex=1;
+	var hasQuestion={$total};
+	var is_myindex={$is_myindex};
+	var answer_url="{php echo $this->createMobileUrl('ask_answer')}";
+	var ask_detailurl="{php echo $this->createMobileUrl('ask_detail')}";
+	var head_imgurl='{$head_imgurl}';
+	var send_url="{php echo $this->createMobileUrl('my_ask_sendnotice')}";
+	var follow_url="{php echo $this->createMobileUrl('ask_follow_ajax')}";
+	var listen_money={$cfg['listen_money']};
+	var is_openask={$db_user['is_openask']};
+	var my_ask_index=location.href;
+	var reward_detailurl="{php echo $this->createMobileUrl('reward_detail')}";
+	var get_user_url="{php echo $this->createMobileUrl('ask_index_ajax')}";
+	var ask_pay_url="{php echo $this->createMobileUrl('ask_pay_ajax')}";
+	$(function(){
+		Follow();
+		voicePlay();
+		QuestionBind();
+		/*付费页面*/
+		  $(".qlbtnb_submit_ask").unbind();
+		  $(".qlbtnb_submit_ask").click(function(){
+	         var ask_type=$(".btn_qlcheckbox").is(':checked')?"public":"private";			 var is_nm=$("#is_nm").val();
+	         var ask_content=$('.qlws_as_text').val();
+	         if(ask_content==''){
+	       	   alert('请输入需要提问 的问题!');
+	       	   return false;
+	         }
+	         
+			 $.getJSON(location.href, { submit: true,ask_type:ask_type,is_nm:is_nm,ask_content:ask_content,pay_type:'ask'}, function(json){
+				 if(json.money==0){
+					 $.post(send_url,{ask_id:json.ask_id,notice_type:'ask'},function(result){
+						  location.href=location.href+"&a=1";//刷新页面
+					 });
+				 }else{
+				    callpay(json,'ask');
+				 }
+			 });	  
+		  });
+		    
+		  pageLoadCommon($(document), function() {
+			    $(".loading").show();
+				$(".noMore").hide();
+				pindex++;
+				$.post(location.href, {pindex: pindex}, function(result){
+					$(".loading").hide();
+					if(result.pages<pindex){
+						$(".noMore").show();
+						return false;
+					}
+					pindex=result.pindex;
+					
+					var html=getAskHtml(result);
+					$(".itemList ul").append(html);
+
+					voicePlay();
+					QuestionBind();
+				});		
+		    });
+	});
+	</script>	
+	</head>
+
+	<body>
+	<div class="main">
+ <audio id="dgAudioPlayer" >Your browser does not support the audio element.您的浏览器不支持 audio 标签。</audio>      
+       <!--TA的主页 start-->
+       <div class="tiwen tc">
+       	  <div class="avatar {if $db_user['vstatus']==1}renzheng{/if}"><img src="{$head_imgurl}" width="50" height="50"></div>
+       	  <h3 class="mt15 f16">{$db_user['real_name']}</h3>
+       	  <p class="gray mt5">{$db_user['user_title']}</p>
+       	  <p class="tl mt10">{$db_user['user_desc']}</p>
+       	  <div class="clearfix mt10">
+       	  	<div class="fr gray">
+       	  		<span>{$db_user['follow_num']}人收听</span>
+       	  		<a href="javaScript:;"  data="{$db_user['id']}" class="listen ml10 {if $is_follow==1}active{/if}"><i class="iconfont">&#xe617;</i> 收听</a>
+       	  	</div>
+			<div class="tags clearfix">
+			 {loop $db_user['tags'] $tag}
+			   <span>{$tag}</span>
+			 {/loop}
+			</div>
+       	  </div>
+       	  
+       	  {if $is_myindex==false && $db_user['is_openask']==1}
+	       	  <div class="questionBox mt15">
+	       	  	<textarea maxlength="60"  class="qlws_as_text" placeholder="向{$db_user['real_name']}提问,等待语音解答；如48小时内未解答，将按支付方式全额退款！"></textarea>
+	       	  	<div class="fontCount gray f12" style="display:none;">12/60</div>
+	       	  </div>
+	       	  
+	       	  <div class="orPublic tl mt10 gray">
+	       	  	<label class="f12"><input checked="checked"  class="mr5 btn_qlcheckbox" type="checkbox">公开提问，答案被其他人旁听后，你从中分成50%</label>			  </div>			  <div class="orPublic tl mt10 gray">				<label class="f12"><input id="is_nm" type="checkbox" class="mr5"  value="1"/>匿名？</label>
+	       	  </div>
+	       	  
+	       	  <div class="sumbitQ mt15">
+	       	  	<p class="yel mb10 f18"><i class="iconfont"></i> {$db_user['pay_money']}</p>
+	       	  	<p><button class="qlbtnb_submit_ask">写好了</button></p>
+	       	  </div>
+       	  {/if}
+       </div>
+       <!--TA的主页 end-->
+       
+       <!--TA的回答 start-->
+       <div class="itemList mt20">
+	   <ul>	
+		   {loop $records $record}
+				{if $record['ask_type']=='reward'}
+						{template temp_reward}
+				{else}
+					    {template temp_public}
+				{/if}
+		  {/loop} 
+	   </ul>
+		</div>
+       <!--TA的回答 end-->
+
+<div class="loading gray" style="display:none;">
+			<span class="f18"><i class="iconfont">&#xe61a;</i></span>正在加载中…
+		</div>
+		
+		<div class="noMore gray" style="display:none;">
+			没有更多内容了！
+		</div>
+
+	</div>
+	
+   {template footer}
+<script type="text/javascript">
+wx.ready(function () {
+    sharedata = {
+        title: "{$sharedata['title']}",
+        desc: "{$sharedata['desc']}",
+        link: "{$sharedata['link']}",
+        imgUrl: "{$sharedata['imgUrl']}",
+        success:function(){}
+    };
+    wx.onMenuShareAppMessage(sharedata);
+    wx.onMenuShareTimeline(sharedata);
+});
+</script>
+	</body>
+
+</html>

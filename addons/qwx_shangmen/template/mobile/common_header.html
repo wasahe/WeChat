@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,minimal-ui">
+    <meta name="format-detection" content="telephone=no" searchtype="map">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    
+    <link rel="apple-touch-icon" sizes="114x114" href="{CURR_JS_CSS_IMAGES}images/196.png">
+    <link rel="apple-touch-icon-precomposed" href="{CURR_JS_CSS_IMAGES}images/196.png">
+    <link rel="stylesheet" type="text/css" href="{CURR_JS_CSS_IMAGES}css/animate.min.css">  
+	
+        
+    {if $_GET['do'] == 'index'}         
+        <link rel="stylesheet" type="text/css" href="{CURR_JS_CSS_IMAGES}css/style.home.min8.css"> 
+    {/if}
+    
+    
+<?php 
+$config_arr = $this->get_config();
+$_share['title'] = $config_arr['share_title'];
+$_share['content'] = $config_arr['share_content'];
+$_share['imgUrl'] = $_W['attachurl'] . $config_arr['share_pic'];    
+$_share['link'] = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];   
+
+if (!$page_title) {
+    $page_title = $config_arr['index_title'];
+    if (!$page_title) {
+        $page_title = $_W['account']['name'];
+    }
+}
+?>
+    <title>{$_share['title']}</title>
+</head>
+<body>
+    
+    
+{if $_GET['do'] == 'index'}
+    <style>
+        .hIphone footer, .hAndroid footer{ bottom: 45px;}
+    </style>
+    <div class="hide">
+        <img src="{CURR_JS_CSS_IMAGES}images/wx_share.jpg">
+    </div>
+    <header>    
+        <?php    
+        if ($_GET['do'] == 'index' && $_SESSION['weixin_get_fans_location']) {
+            echo '<a class="entrance j_cityEntrance" href="javascript:void(0);">'.$_SESSION['weixin_get_fans_location'].'</a>';
+        } else {
+            echo '<a class="prev back_prev" href="javascript:void(0);"></a>';
+        }
+        ?>
+        <h2>{$page_title}</h2>
+        <a class="tel" href="tel:{php echo $this->module['config']['index_tel'];}"></a>
+    </header>    
+{/if}

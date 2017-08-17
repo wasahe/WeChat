@@ -1,0 +1,855 @@
+﻿<?xml version="1.0" encoding="ISO-8859-1"?>
+<root>
+	<item id="Title"><![CDATA[Discuz! Plugin]]></item>
+	<item id="version"><![CDATA[X2,X2.5,X3,X3.1,X3.2,F1.0]]></item>
+	<item id="Time"><![CDATA[2016-12-24 16:01]]></item>
+	<item id="From"><![CDATA[折翼天使资源社区（www.zheyitianshi.com）]]></item>
+	<item id="Data">
+		<item id="plugin">
+			<item id="available"><![CDATA[1]]></item>
+			<item id="adminid"><![CDATA[1]]></item>
+			<item id="name"><![CDATA[折翼天使资源社区_【西瓜】微社区114]]></item>
+			<item id="identifier"><![CDATA[xigua_114]]></item>
+			<item id="description"><![CDATA[]]></item>
+			<item id="datatables"><![CDATA[]]></item>
+			<item id="directory"><![CDATA[xigua_114/]]></item>
+			<item id="copyright"><![CDATA[折翼天使资源社区（www.zheyitianshi.com）]]></item>
+			<item id="version"><![CDATA[36.20161007]]></item>
+			<item id="__modules">
+				<item id="35">
+					<item id="name"><![CDATA[myyapmagoo]]></item>
+					<item id="menu"><![CDATA[<span style="color:#E53333;"><b>折翼天使资源社区</b></span>]]></item>
+					<item id="url"><![CDATA[]]></item>
+					<item id="type"><![CDATA[3]]></item>
+					<item id="adminid"><![CDATA[0]]></item>
+					<item id="displayorder"><![CDATA[0]]></item>
+					<item id="navtitle"><![CDATA[]]></item>
+					<item id="navicon"><![CDATA[]]></item>
+					<item id="navsubname"><![CDATA[]]></item>
+					<item id="navsuburl"><![CDATA[]]></item>
+				</item>
+				<item id="0">
+					<item id="name"><![CDATA[cat]]></item>
+					<item id="param"><![CDATA[]]></item>
+					<item id="menu"><![CDATA[分类管理]]></item>
+					<item id="url"><![CDATA[]]></item>
+					<item id="type"><![CDATA[3]]></item>
+					<item id="adminid"><![CDATA[0]]></item>
+					<item id="displayorder"><![CDATA[0]]></item>
+					<item id="navtitle"><![CDATA[]]></item>
+					<item id="navicon"><![CDATA[]]></item>
+					<item id="navsubname"><![CDATA[]]></item>
+					<item id="navsuburl"><![CDATA[]]></item>
+				</item>
+				<item id="1">
+					<item id="name"><![CDATA[xigua_114]]></item>
+					<item id="param"><![CDATA[]]></item>
+					<item id="menu"><![CDATA[商户114]]></item>
+					<item id="url"><![CDATA[]]></item>
+					<item id="type"><![CDATA[1]]></item>
+					<item id="adminid"><![CDATA[0]]></item>
+					<item id="displayorder"><![CDATA[0]]></item>
+					<item id="navtitle"><![CDATA[]]></item>
+					<item id="navicon"><![CDATA[]]></item>
+					<item id="navsubname"><![CDATA[]]></item>
+					<item id="navsuburl"><![CDATA[]]></item>
+				</item>
+				<item id="2">
+					<item id="name"><![CDATA[manage]]></item>
+					<item id="param"><![CDATA[]]></item>
+					<item id="menu"><![CDATA[商户管理]]></item>
+					<item id="url"><![CDATA[]]></item>
+					<item id="type"><![CDATA[3]]></item>
+					<item id="adminid"><![CDATA[0]]></item>
+					<item id="displayorder"><![CDATA[1]]></item>
+					<item id="navtitle"><![CDATA[]]></item>
+					<item id="navicon"><![CDATA[]]></item>
+					<item id="navsubname"><![CDATA[]]></item>
+					<item id="navsuburl"><![CDATA[]]></item>
+				</item>
+				<item id="3">
+					<item id="name"><![CDATA[lang]]></item>
+					<item id="param"><![CDATA[]]></item>
+					<item id="menu"><![CDATA[语言包]]></item>
+					<item id="url"><![CDATA[]]></item>
+					<item id="type"><![CDATA[3]]></item>
+					<item id="adminid"><![CDATA[0]]></item>
+					<item id="displayorder"><![CDATA[5]]></item>
+					<item id="navtitle"><![CDATA[]]></item>
+					<item id="navicon"><![CDATA[]]></item>
+					<item id="navsubname"><![CDATA[]]></item>
+					<item id="navsuburl"><![CDATA[]]></item>
+				</item>
+				<item id="4">
+					<item id="name"><![CDATA[app]]></item>
+					<item id="param"><![CDATA[]]></item>
+					<item id="menu"><![CDATA[更多西瓜应用]]></item>
+					<item id="url"><![CDATA[]]></item>
+					<item id="type"><![CDATA[3]]></item>
+					<item id="adminid"><![CDATA[0]]></item>
+					<item id="displayorder"><![CDATA[99]]></item>
+					<item id="navtitle"><![CDATA[]]></item>
+					<item id="navicon"><![CDATA[]]></item>
+					<item id="navsubname"><![CDATA[]]></item>
+					<item id="navsuburl"><![CDATA[]]></item>
+				</item>
+			</item>
+		</item>
+		<item id="version"><![CDATA[X2,X2.5,X3,X3.1,X3.2,F1.0]]></item>
+		<item id="var">
+			<item id="0">
+				<item id="displayorder"><![CDATA[0]]></item>
+				<item id="title"><![CDATA[首页标题]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[title]]></item>
+				<item id="type"><![CDATA[text]]></item>
+				<item id="value"><![CDATA[商户中心]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="1">
+				<item id="displayorder"><![CDATA[1]]></item>
+				<item id="title"><![CDATA[咨询热线]]></item>
+				<item id="description"><![CDATA[商家入驻页面底部显示，点击拨打电话。
+留空则不显示]]></item>
+				<item id="variable"><![CDATA[hotline]]></item>
+				<item id="type"><![CDATA[text]]></item>
+				<item id="value"><![CDATA[]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="2">
+				<item id="displayorder"><![CDATA[2]]></item>
+				<item id="title"><![CDATA[列表页显示拨号按钮]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[callinlist]]></item>
+				<item id="type"><![CDATA[radio]]></item>
+				<item id="value"><![CDATA[1]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="3">
+				<item id="displayorder"><![CDATA[3]]></item>
+				<item id="title"><![CDATA[搜索预置语]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[searchlabel]]></item>
+				<item id="type"><![CDATA[text]]></item>
+				<item id="value"><![CDATA[找商户、搜号码]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="4">
+				<item id="displayorder"><![CDATA[4]]></item>
+				<item id="title"><![CDATA[列表每页条数]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[lpp]]></item>
+				<item id="type"><![CDATA[number]]></item>
+				<item id="value"><![CDATA[24]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="6">
+				<item id="displayorder"><![CDATA[6]]></item>
+				<item id="title"><![CDATA[微社区显示商户]]></item>
+				<item id="description"><![CDATA[选中类型的商户会出现在顶部可切换区域。
+更改此项后等过了“微社区显示缓存时间”才会生效。]]></item>
+				<item id="variable"><![CDATA[company]]></item>
+				<item id="type"><![CDATA[selects]]></item>
+				<item id="extra"><![CDATA[1=无
+new=最新商户
+hot=热门商户
+hui=优惠商户]]></item>
+				<item id="__value">
+					<item id="0"><![CDATA[1]]></item>
+				</item>
+			</item>
+			<item id="7">
+				<item id="displayorder"><![CDATA[7]]></item>
+				<item id="title"><![CDATA[微社区显示分类]]></item>
+				<item id="description"><![CDATA[选中类型的商户分类会出现在微社区顶部可恰换区域。
+更改此项后等过了“微社区显示缓存时间”才会生效。]]></item>
+				<item id="variable"><![CDATA[cat]]></item>
+				<item id="type"><![CDATA[selects]]></item>
+				<item id="extra"><![CDATA[1=无
+hot=热门分类
+new=最新分类]]></item>
+				<item id="__value">
+					<item id="0"><![CDATA[1]]></item>
+				</item>
+			</item>
+			<item id="8">
+				<item id="displayorder"><![CDATA[8]]></item>
+				<item id="title"><![CDATA[微社区显示缓存时间]]></item>
+				<item id="description"><![CDATA[单位秒。1小时=3600秒。]]></item>
+				<item id="variable"><![CDATA[cache_ttl]]></item>
+				<item id="type"><![CDATA[number]]></item>
+				<item id="value"><![CDATA[86400]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="9">
+				<item id="displayorder"><![CDATA[99]]></item>
+				<item id="title"><![CDATA[商户中心协议]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[agreement]]></item>
+				<item id="type"><![CDATA[textarea]]></item>
+				<item id="value"><![CDATA[<h4>（以下简称“本协议”）适用于所有在商户中心上发布信息的商户。</h4>
+    <p>本协议适用于所有在商户中心上认领、入驻和发布企业信息的商户。一经商户同意接受后即形成商户与本网站间有法律约束力之文件，此后，商户不得以未阅读本协议内容作任何形式的抗辩。商户在商户中心注册或提供、上传、下载、转载商户的作品将受本条款之规范。</p>
+    <p>如商户不同意本协议任意内容的，商户将无法在商户中心发布和传播任何作品一旦商户接受本条款，商户保证商户已达法定年龄且具有完全之行为能力，如果商户代表一个公司，组织或其他法律实体，商户保证商户的公司或组织是根据商户居住地之法律所成立且持续有效的法律实体，商户声明并保证商户的公司或组织已合法授权商户代表商户的公司或组织加入商户中心。</p>
+    <p>本网站审核商户及其作品的行为并不意味着本网站对其审核结果承担任何法律责任，包括对商户的资质、其作品承担任何保证或法律责任。对于因使用或无法使用商户中心服务而衍生任何直接、间接、意外、特别或重大损坏、利益丧失或业务中断，本网站概不负责。</p>]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="10">
+				<item id="displayorder"><![CDATA[100]]></item>
+				<item id="title"><![CDATA[加入提示]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[jointip]]></item>
+				<item id="type"><![CDATA[text]]></item>
+				<item id="value"><![CDATA[电话号码没有收录？马上加入&#187;]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="11">
+				<item id="displayorder"><![CDATA[101]]></item>
+				<item id="title"><![CDATA[AppId]]></item>
+				<item id="description"><![CDATA[先登录微信公众平台进入“公众号设置”的“功能设置”里填写论坛地址到“JS接口安全域名”。
+填写正确即可完整使用分享功能。]]></item>
+				<item id="variable"><![CDATA[appid]]></item>
+				<item id="type"><![CDATA[text]]></item>
+				<item id="value"><![CDATA[]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="12">
+				<item id="displayorder"><![CDATA[102]]></item>
+				<item id="title"><![CDATA[AppSecret]]></item>
+				<item id="description"><![CDATA[填写正确即可完整使用分享功能]]></item>
+				<item id="variable"><![CDATA[appsecret]]></item>
+				<item id="type"><![CDATA[text]]></item>
+				<item id="value"><![CDATA[]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="13">
+				<item id="displayorder"><![CDATA[103]]></item>
+				<item id="title"><![CDATA[允许电脑访问]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[allowpc]]></item>
+				<item id="type"><![CDATA[radio]]></item>
+				<item id="value"><![CDATA[1]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="14">
+				<item id="displayorder"><![CDATA[105]]></item>
+				<item id="title"><![CDATA[电脑版-地区筛选]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[filter1]]></item>
+				<item id="type"><![CDATA[select]]></item>
+				<item id="value"><![CDATA[city]]></item>
+				<item id="extra"><![CDATA[city=按城市
+dist=按区]]></item>
+			</item>
+			<item id="15">
+				<item id="displayorder"><![CDATA[106]]></item>
+				<item id="title"><![CDATA[电脑版-二维码底部文字]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[subfont]]></item>
+				<item id="type"><![CDATA[textarea]]></item>
+				<item id="value"><![CDATA[用微信扫二维码
+把114放进口袋]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="16">
+				<item id="displayorder"><![CDATA[107]]></item>
+				<item id="title"><![CDATA[电脑版-二维码关闭有效期]]></item>
+				<item id="description"><![CDATA[单位秒。]]></item>
+				<item id="variable"><![CDATA[qrclose]]></item>
+				<item id="type"><![CDATA[number]]></item>
+				<item id="value"><![CDATA[86400]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="17">
+				<item id="displayorder"><![CDATA[108]]></item>
+				<item id="title"><![CDATA[电脑版-顶部轮播广告]]></item>
+				<item id="description"><![CDATA[图片地址,链接地址
+http://...a.jpg,http://a.cn
+http://...b.jpg,http://b.cn
+图片,链接 用英文“空格”或“逗号”隔开,每行一个。]]></item>
+				<item id="variable"><![CDATA[topnavslider]]></item>
+				<item id="type"><![CDATA[textarea]]></item>
+				<item id="value"><![CDATA[source/plugin/xigua_114/upload/1.jpg,#
+source/plugin/xigua_114/upload/2.jpg,#
+source/plugin/xigua_114/upload/3.jpg,#]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="18">
+				<item id="displayorder"><![CDATA[109]]></item>
+				<item id="title"><![CDATA[电脑版-主题色]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[customcolor]]></item>
+				<item id="type"><![CDATA[color]]></item>
+				<item id="value"><![CDATA[#0089e0]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="19">
+				<item id="displayorder"><![CDATA[110]]></item>
+				<item id="title"><![CDATA[电脑版-窄屏轮播广告宽度]]></item>
+				<item id="description"><![CDATA[窄屏风格时候的广告宽度，根据自己的模板宽度定。
+单位：像素。]]></item>
+				<item id="variable"><![CDATA[topnavsliderwidth1]]></item>
+				<item id="type"><![CDATA[number]]></item>
+				<item id="value"><![CDATA[960]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="20">
+				<item id="displayorder"><![CDATA[112]]></item>
+				<item id="title"><![CDATA[电脑版-宽屏轮播广告宽度]]></item>
+				<item id="description"><![CDATA[宽屏风格时候的广告宽度，根据自己的模板宽度定。
+单位：像素。]]></item>
+				<item id="variable"><![CDATA[topnavsliderwidth2]]></item>
+				<item id="type"><![CDATA[number]]></item>
+				<item id="value"><![CDATA[1200]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="21">
+				<item id="displayorder"><![CDATA[113]]></item>
+				<item id="title"><![CDATA[移动版首页不要顶部]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[nohead]]></item>
+				<item id="type"><![CDATA[radio]]></item>
+				<item id="value"><![CDATA[1]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="22">
+				<item id="displayorder"><![CDATA[114]]></item>
+				<item id="title"><![CDATA[移动版显示分类]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[tt]]></item>
+				<item id="type"><![CDATA[radio]]></item>
+				<item id="value"><![CDATA[1]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="23">
+				<item id="displayorder"><![CDATA[115]]></item>
+				<item id="title"><![CDATA[移动版顶部入驻按钮]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[topjoin]]></item>
+				<item id="type"><![CDATA[text]]></item>
+				<item id="value"><![CDATA[马上加入&#187;]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="24">
+				<item id="displayorder"><![CDATA[116]]></item>
+				<item id="title"><![CDATA[移动版详情页浏览量]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[viewsword]]></item>
+				<item id="type"><![CDATA[text]]></item>
+				<item id="value"><![CDATA[浏览量]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="25">
+				<item id="displayorder"><![CDATA[118]]></item>
+				<item id="title"><![CDATA[移动版详情页轮播高度]]></item>
+				<item id="description"><![CDATA[单位像素]]></item>
+				<item id="variable"><![CDATA[lunheight]]></item>
+				<item id="type"><![CDATA[number]]></item>
+				<item id="value"><![CDATA[200]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="26">
+				<item id="displayorder"><![CDATA[119]]></item>
+				<item id="title"><![CDATA[前台入驻字段选择]]></item>
+				<item id="description"><![CDATA[选中的字段会显示，未选中的不会显示]]></item>
+				<item id="variable"><![CDATA[field]]></item>
+				<item id="type"><![CDATA[selects]]></item>
+				<item id="extra"><![CDATA[phone=电话
+qq=QQ号码
+wechat=微信号
+qr=微信二维码
+weibo=微博地址
+site=网站地址
+catid=商户分类
+company_name=商户名称
+company_desc=商户简介
+logo=商户图标
+cover=展示图片
+address=地址
+realname=申请人姓名
+idcard=申请人身份证
+mobile=申请人联系电话]]></item>
+				<item id="__value">
+					<item id="0"><![CDATA[phone]]></item>
+					<item id="1"><![CDATA[qq]]></item>
+					<item id="2"><![CDATA[wechat]]></item>
+					<item id="3"><![CDATA[qr]]></item>
+					<item id="4"><![CDATA[catid]]></item>
+					<item id="5"><![CDATA[company_name]]></item>
+					<item id="6"><![CDATA[company_desc]]></item>
+					<item id="7"><![CDATA[logo]]></item>
+					<item id="8"><![CDATA[cover]]></item>
+					<item id="9"><![CDATA[address]]></item>
+				</item>
+			</item>
+			<item id="27">
+				<item id="displayorder"><![CDATA[120]]></item>
+				<item id="title"><![CDATA[入驻引导页面描述]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[joindesc]]></item>
+				<item id="type"><![CDATA[textarea]]></item>
+				<item id="value"><![CDATA[<h2>欢迎！</h2>
+<p>请点击“立即入驻”，来创建您的企业。</p>
+<p>需要您提供企业名称、电话号码、地址、营业执照等基本信息。</p>
+<p>提供的信息务必真实、有效。</p>
+<p>这只是一句引导，你可以自行修改！</p>]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="28">
+				<item id="displayorder"><![CDATA[121]]></item>
+				<item id="title"><![CDATA[显示分享量]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[showsh]]></item>
+				<item id="type"><![CDATA[radio]]></item>
+				<item id="value"><![CDATA[1]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="29">
+				<item id="displayorder"><![CDATA[122]]></item>
+				<item id="title"><![CDATA[显示浏览量]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[showvi]]></item>
+				<item id="type"><![CDATA[radio]]></item>
+				<item id="value"><![CDATA[1]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="30">
+				<item id="displayorder"><![CDATA[123]]></item>
+				<item id="title"><![CDATA[显示相关商户]]></item>
+				<item id="description"><![CDATA[留空则不显示相关商户模块！]]></item>
+				<item id="variable"><![CDATA[aboutsh]]></item>
+				<item id="type"><![CDATA[text]]></item>
+				<item id="value"><![CDATA[您可能在找]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="31">
+				<item id="displayorder"><![CDATA[124]]></item>
+				<item id="title"><![CDATA[商户评论]]></item>
+				<item id="description"><![CDATA[留空则不会开启评论，这里填写社会化评论工具安装代码
+支持：畅言、多说、友言
+申请地址:
+http://changyan.kuaizhan.com
+http://duoshuo.com
+http://www.uyan.cc]]></item>
+				<item id="variable"><![CDATA[pinglun]]></item>
+				<item id="type"><![CDATA[textarea]]></item>
+				<item id="value"><![CDATA[]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="32">
+				<item id="displayorder"><![CDATA[125]]></item>
+				<item id="title"><![CDATA[相关商户条目数]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[aboutshnum]]></item>
+				<item id="type"><![CDATA[number]]></item>
+				<item id="value"><![CDATA[10]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="33">
+				<item id="displayorder"><![CDATA[126]]></item>
+				<item id="title"><![CDATA[离我最近]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[nearby]]></item>
+				<item id="type"><![CDATA[text]]></item>
+				<item id="value"><![CDATA[离我最近]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="34">
+				<item id="displayorder"><![CDATA[127]]></item>
+				<item id="title"><![CDATA[内容页导航引导]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[mapguide]]></item>
+				<item id="type"><![CDATA[text]]></item>
+				<item id="value"><![CDATA[距离该商家约 %s ，点击一键导航]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+		</item>
+		<item id="language">
+			<item id="scriptlang">
+				<item id="logy_m_g"><![CDATA[<h2 style="text-align:-webkit-center;">
+	<span style="color:#4C33E5;">推荐一个dz商</span><span style="color:#4C33E5;">业插件模版下载的</span><span style="color:#4C33E5;"></span><span style="color:#4C33E5;">网站给大家</span><a href="http://www.012wz.com" target="_blank"><span style="color:#4C33E5;">折翼天使资源社区折翼天使资源社区</span></a><span style="color:#4C33E5;">（www.zheyitianshi.com）</span> 
+</h2>
+<h3 style="text-align:-webkit-center;">
+	<span style="color:#E53333;">这</span><span style="color:#E53333;">是一个</span><span style="color:#E53333;">dz商业</span><a href="http://www.012wz.com/forum.php?mod=forumdisplay&fid=2" target="_blank"><span style="color:#337FE5;">插</span><u><span style="color:#337FE5;"></span></u><span style="color:#337FE5;">件</span></a><a href="http://www.012wz.com/forum.php?mod=forumdisplay&fid=36" target="_blank"><u><span style="color:#337FE5;">模</span></u><u><span style="color:#337FE5;"></span></u><u><span style="color:#337FE5;">版</span></u></a><span style="color:#E53333;">资源破解分享的网站，而且还有很多精品的网站源码下载</span> 
+</h3>
+<h3 style="text-align:-webkit-center;">
+	<span style="color:#E53333;">他们资源每天更新，并且很多都是他们自己出钱在应用中心购买后破解分享出来的</span><br />
+</h3>
+<h3>
+	<div style="text-align:center;">
+		<span style="color:#E53333;">不过还是替他们说一下</span> 
+	</div>
+	<div style="text-align:center;">
+		<span style="color:#E53333;">&nbsp;他们站下载的资源只限于自己学习研究内含的设计思想和原理 请勿有任何商业盈利行为</span> 
+	</div>
+</h3>
+<h3 style="text-align:center;">
+	<span style="color:#999999;">介绍也介绍完了，给大家做个小导航吧</span> 
+</h3>
+<h3 style="text-align:center;">
+	<span style="color:#337FE5;"><a href="http://www.012wz.com/forum.php?mod=forumdisplay&fid=2" target="_blank">dz商业破解插件下载</a> &nbsp; <a href="http://www.012wz.com/forum.php?mod=forumdisplay&fid=36" target="_blank">dz商业风格模版下载</a> &nbsp; &nbsp;<a href="http://www.012wz.com/forum.php?mod=forumdisplay&fid=50" target="_blank">精品网站源码下载</a> &nbsp; &nbsp;<a href="http://www.012wz.com/forum.php?mod=forumdisplay&fid=51" target="_blank">工具素材下载</a></span><span style="color:#337FE5;">&nbsp; &nbsp; <a href="http://www.012wz.com/forum.php?mod=forumdisplay&fid=41" target="_blank">精选教程区</a></span> 
+</h3> ]]></item>
+				<item id="category_tip"><![CDATA[<li>页面地址（手机访问）：%s，将该地址加入到“<a target="_blank" href="http://www.012wz.com/gg/addon.php?/?@xigua_navigation_wsq.plugin"><b>【西瓜】微社区导航</b></a>”中，或点击微社区列表页<b>顶部可切换区域</b>&gt;<b>商户相关栏目</b>&gt;“<b>更多&gt;&gt;</b>”即可进入。</li><li>分类名称必填；分类图标选填，规格推荐<b>100*100</b>；分类广告图片选填，规格推荐<b>320*90或640*180</b>，链接选填，如不填则进入该分类。填了直接进入外链。</li><li>分类不宜太多，合理分类会让商户中心更好用</li><li>通栏仅显示1个，显示在导航和附近之间，如位置为“轮播区”和“通栏”，则必须上传广告图片才会显示出来</li>]]></item>
+				<item id="order"><![CDATA[显示顺序]]></item>
+				<item id="UPLOAD_ERR_OK"><![CDATA[上传成功]]></item>
+				<item id="UPLOAD_ERR_INI_SIZE"><![CDATA[上传的文件大小超过服务器限制。]]></item>
+				<item id="UPLOAD_ERR_FORM_SIZE"><![CDATA[上传文件的大小超过客户端限制]]></item>
+				<item id="UPLOAD_ERR_PARTIAL"><![CDATA[文件只有部分上传]]></item>
+				<item id="UPLOAD_ERR_NO_FILE"><![CDATA[没有文件上传]]></item>
+				<item id="UPLOAD_ERR_NO_TMP_DIR"><![CDATA[找不到临时文件夹]]></item>
+				<item id="UPLOAD_ERR_CANT_WRITE"><![CDATA[文件写入服务器失败]]></item>
+				<item id="ONLY_IMAGE_ALLOW"><![CDATA[只能上传png,jpg,jpeg类型的文件]]></item>
+				<item id="exit"><![CDATA[操作]]></item>
+				<item id="del"><![CDATA[删？]]></item>
+				<item id="hot"><![CDATA[热]]></item>
+				<item id="new"><![CDATA[新]]></item>
+				<item id="del_confirm"><![CDATA[确定删除分类 ]]></item>
+				<item id="del_confirm_company"><![CDATA[确定删除商户 ]]></item>
+				<item id="audit_confirm_company"><![CDATA[确定通过审核商户 ]]></item>
+				<item id="delcat_error"><![CDATA[无法删除有子分类的分类！]]></item>
+				<item id="delcat_succeed"><![CDATA[分类删除成功！]]></item>
+				<item id="succeed"><![CDATA[操作成功！]]></item>
+				<item id="error"><![CDATA[操作失败！]]></item>
+				<item id="error_"><![CDATA[数据异常，请刷新页面再试。]]></item>
+				<item id="del_succeed"><![CDATA[删除成功！]]></item>
+				<item id="del_error"><![CDATA[删除失败！]]></item>
+				<item id="crts"><![CDATA[添加时间]]></item>
+				<item id="cat"><![CDATA[分类]]></item>
+				<item id="cat_name"><![CDATA[分类名称]]></item>
+				<item id="cat_icon"><![CDATA[分类图标]]></item>
+				<item id="cat_ad"><![CDATA[分类广告图片/链接]]></item>
+				<item id="ad_child_cat"><![CDATA[添加子分类]]></item>
+				<item id="ad_new_cat"><![CDATA[添加新分类]]></item>
+				<item id="new_cat_name"><![CDATA[新分类名称]]></item>
+				<item id="child_cat_name"><![CDATA[子分类名称]]></item>
+				<item id="company_manage"><![CDATA[<li>添加电话不能重复，后台添加的商户自动审核通过</li><li>审核商户时，请先点“审核”查看，选择分类后点“通过”</li>]]></item>
+				<item id="phone_union"><![CDATA[（电话不能重复）]]></item>
+				<item id="none"><![CDATA[无]]></item>
+				<item id="xigua_114"><![CDATA[【西瓜】微社区114]]></item>
+				<item id="online"><![CDATA[<span class="green">已上线</span>]]></item>
+				<item id="offline"><![CDATA[<span class="red">已下线</span>]]></item>
+				<item id="waiter"><![CDATA[<span class="orange">待审核</span>]]></item>
+				<item id="nav_waiter"><![CDATA[商户审核]]></item>
+				<item id="nav_report"><![CDATA[纠错与举报]]></item>
+				<item id="nav_manage"><![CDATA[商户管理]]></item>
+				<item id="audit"><![CDATA[审核]]></item>
+				<item id="audit__"><![CDATA[通过审核]]></item>
+				<item id="profile"><![CDATA[详情]]></item>
+				<item id="company_profile"><![CDATA[商户详情]]></item>
+				<item id="edit"><![CDATA[修改]]></item>
+				<item id="cat_error"><![CDATA[请选择商户分类]]></item>
+				<item id="company_audit"><![CDATA[商户审核]]></item>
+				<item id="company_name"><![CDATA[商户名称]]></item>
+				<item id="company_phone"><![CDATA[电话]]></item>
+				<item id="phone"><![CDATA[电话]]></item>
+				<item id="address"><![CDATA[地址]]></item>
+				<item id="wechat"><![CDATA[微信号]]></item>
+				<item id="applyandtime"><![CDATA[申请人/申请时间]]></item>
+				<item id="status"><![CDATA[状态]]></item>
+				<item id="opartion"><![CDATA[操作]]></item>
+				<item id="qq"><![CDATA[联系QQ]]></item>
+				<item id="qr"><![CDATA[微信二维码]]></item>
+				<item id="qr_"><![CDATA[微信二维码（尺寸不限，选填）]]></item>
+				<item id="weibo"><![CDATA[微博地址]]></item>
+				<item id="weibo_"><![CDATA[微博]]></item>
+				<item id="site"><![CDATA[网站地址]]></item>
+				<item id="site_"><![CDATA[网站]]></item>
+				<item id="company_name_"><![CDATA[名称（必填、显示用）]]></item>
+				<item id="company_desc"><![CDATA[简介]]></item>
+				<item id="company_logo"><![CDATA[图标（尺寸100*100，选填）]]></item>
+				<item id="company_cover"><![CDATA[展示图片（尺寸600*300，选填）]]></item>
+				<item id="company_cover_"><![CDATA[展示图片]]></item>
+				<item id="logo"><![CDATA[图标]]></item>
+				<item id="address_"><![CDATA[地址信息]]></item>
+				<item id="address_profile"><![CDATA[详细地址]]></item>
+				<item id="applyer"><![CDATA[申请人]]></item>
+				<item id="applyer_"><![CDATA[申请人姓名（必填）]]></item>
+				<item id="applyer_idcard"><![CDATA[申请人身份证号]]></item>
+				<item id="applyer_mobile"><![CDATA[申请人联系方式]]></item>
+				<item id="del_confirm_report"><![CDATA[确定要删除这条举报/纠错信息吗？]]></item>
+				<item id="ignore"><![CDATA[忽略]]></item>
+				<item id="hasignore"><![CDATA[已忽略]]></item>
+				<item id="ignore_confirm_report"><![CDATA[确定要忽略这条举报/纠错信息吗？]]></item>
+				<item id="hasdo"><![CDATA[已解决]]></item>
+				<item id="needdo"><![CDATA[待解决]]></item>
+				<item id="do_confirm_report"><![CDATA[确定已经解决这条举报/纠错信息吗？]]></item>
+				<item id="searchlabel"><![CDATA[商户名称/电话]]></item>
+				<item id="search"><![CDATA[搜索]]></item>
+				<item id="searchresult"><![CDATA[以下是“<b class="green">%s</b>”搜索的结果（<b class="orange">%d</b>个）:]]></item>
+				<item id="type1"><![CDATA[这是私人号码]]></item>
+				<item id="type1_"><![CDATA[这个是我的私人号码]]></item>
+				<item id="type1__"><![CDATA[请填写您所了解的信息，例如这个是我的私人号码等]]></item>
+				<item id="type2"><![CDATA[电话号码等信息错误]]></item>
+				<item id="type2_"><![CDATA[请填写您所了解的信息，例如正确的电话号码、地址、是否停止营业等]]></item>
+				<item id="type3"><![CDATA[举报该商户]]></item>
+				<item id="type3_"><![CDATA[请填写您所了解的信息，例如色情内容、恶意营销、涉嫌政治、虚假（仿冒）信息等]]></item>
+				<item id="report_type"><![CDATA[举报类型]]></item>
+				<item id="extra"><![CDATA[补充内容]]></item>
+				<item id="extra_"><![CDATA[补充内容（必填）]]></item>
+				<item id="extra__"><![CDATA[请填写您所了解的信息，例如正确的电话号码、地址、是否停止营业等]]></item>
+				<item id="connect"><![CDATA[联系方式]]></item>
+				<item id="connect__"><![CDATA[请填写您的联系方式，便于沟通确认]]></item>
+				<item id="report_ts"><![CDATA[举报时间]]></item>
+				<item id="phone_vaild"><![CDATA[请填写要举报的电话号码]]></item>
+				<item id="phone__vaild"><![CDATA[请填写电话号码，固话请加区号]]></item>
+				<item id="mobile_qq_vaild"><![CDATA[请填写您的联系方式]]></item>
+				<item id="extra_vaild"><![CDATA[请填写补充内容]]></item>
+				<item id="back"><![CDATA[返回]]></item>
+				<item id="report_title"><![CDATA[纠错与举报]]></item>
+				<item id="i_report"><![CDATA[我要举报]]></item>
+				<item id="report_phone"><![CDATA[请填写要举报的电话号码]]></item>
+				<item id="report_submit"><![CDATA[提交申请]]></item>
+				<item id="bottom_list1"><![CDATA[色情内容]]></item>
+				<item id="bottom_list2"><![CDATA[恶意营销]]></item>
+				<item id="bottom_list3"><![CDATA[涉嫌政治]]></item>
+				<item id="bottom_list4"><![CDATA[虚假（仿冒）信息]]></item>
+				<item id="report_succeed"><![CDATA[纠错/举报成功！]]></item>
+				<item id="company_name_exists"><![CDATA[该电话号码已经存在！]]></item>
+				<item id="company_name_vaild"><![CDATA[请填写商户名称]]></item>
+				<item id="realname_vaild"><![CDATA[请填写申请人姓名]]></item>
+				<item id="join_succeed"><![CDATA[恭喜！入驻成功！审核通过后即展示！]]></item>
+				<item id="in"><![CDATA[商户入驻]]></item>
+				<item id="welcome"><![CDATA[欢迎！]]></item>
+				<item id="welcome_desc"><![CDATA[<p>请点击“创建新的商户”，来创建您的企业。</p> <p>需要您提供企业名称、电话号码、地址、营业执照等基本信息。</p> <p>提供的信息务必真实、有效。</p>]]></item>
+				<item id="new_"><![CDATA[点击立即入驻]]></item>
+				<item id="hotline"><![CDATA[入驻咨询热线]]></item>
+				<item id="hotline_"><![CDATA[点击右侧一键拨号]]></item>
+				<item id="company_title"><![CDATA[商户资料]]></item>
+				<item id="phone_tip"><![CDATA[电话（必填、固话请加区号）]]></item>
+				<item id="qq1"><![CDATA[QQ号码]]></item>
+				<item id="nameanddesc"><![CDATA[商户名称和简介]]></item>
+				<item id="apply_name"><![CDATA[申请人信息]]></item>
+				<item id="idcard"><![CDATA[身份证号码]]></item>
+				<item id="phoneqq"><![CDATA[联系电话或QQ号（必填）]]></item>
+				<item id="iagree"><![CDATA[我已阅读并同意]]></item>
+				<item id="agreement"><![CDATA[《商户中心协议》]]></item>
+				<item id="submit_apply"><![CDATA[提交申请]]></item>
+				<item id="agreement_doc"><![CDATA[商户中心协议]]></item>
+				<item id="close"><![CDATA[关闭]]></item>
+				<item id="must"><![CDATA[（必选）]]></item>
+				<item id="position"><![CDATA[显示位置]]></item>
+				<item id="slider"><![CDATA[轮播区]]></item>
+				<item id="nav"><![CDATA[导航区]]></item>
+				<item id="list"><![CDATA[列表区]]></item>
+				<item id="nil"><![CDATA[隐藏]]></item>
+				<item id="near"><![CDATA[附近]]></item>
+				<item id="near_s"><![CDATA[附近]]></item>
+				<item id="bar"><![CDATA[通栏]]></item>
+				<item id="share"><![CDATA[分享]]></item>
+				<item id="home"><![CDATA[商户中心]]></item>
+				<item id="joinnow"><![CDATA[电话号码没有收录？马上加入&raquo;]]></item>
+				<item id="delshort"><![CDATA[删]]></item>
+				<item id="mainnew"><![CDATA[新]]></item>
+				<item id="mainhot"><![CDATA[热]]></item>
+				<item id="mainhui"><![CDATA[惠]]></item>
+				<item id="hotlist"><![CDATA[热门分类]]></item>
+				<item id="digest"><![CDATA[顶]]></item>
+				<item id="more"><![CDATA[更多信息]]></item>
+				<item id="search_guide"><![CDATA[<p>请在微信客户端中搜索并添加微信号</p><p>微信号：<span class="c3">%s</span></p>]]></item>
+				<item id="guide"><![CDATA[<p>点击微信首页右上角加号“+”</p><p>选择“添加朋友”，长按并粘贴 %s，</p><p>搜索进入公众号介绍页，点击底部“关注”。</p>]]></item>
+				<item id="know"><![CDATA[关闭]]></item>
+				<item id="hold_guide"><![CDATA[请在微信中长按二维码，识别图中二维码]]></item>
+				<item id="near_by"><![CDATA[附近]]></item>
+				<item id="search_result"><![CDATA[搜索结果]]></item>
+				<item id="nothing"><![CDATA[很抱歉，没有找到“%s”相关商户]]></item>
+				<item id="item"><![CDATA[条]]></item>
+				<item id="add"><![CDATA[添加]]></item>
+				<item id="addnew"><![CDATA[添加新商户]]></item>
+				<item id="wsqcat_hot"><![CDATA[热门分类]]></item>
+				<item id="wsqcat_new"><![CDATA[最新分类]]></item>
+				<item id="wsqcompany_new"><![CDATA[最新商户]]></item>
+				<item id="wsqcompany_hui"><![CDATA[热门商户]]></item>
+				<item id="wsqcompany_hot"><![CDATA[优惠商户]]></item>
+				<item id="link"><![CDATA[链接地址]]></item>
+				<item id="or"><![CDATA[或]]></item>
+				<item id="dot"><![CDATA[，]]></item>
+				<item id="allcat"><![CDATA[全部分类]]></item>
+				<item id="joinnow1"><![CDATA[立即入驻]]></item>
+				<item id="catmain"><![CDATA[商户分类：]]></item>
+				<item id="all"><![CDATA[全部]]></item>
+				<item id="dist"><![CDATA[地区：]]></item>
+				<item id="defaultsort"><![CDATA[默认排序]]></item>
+				<item id="newest"><![CDATA[最新]]></item>
+				<item id="pt1"><![CDATA[认证商户]]></item>
+				<item id="pt2"><![CDATA[特惠商户]]></item>
+				<item id="pt3"><![CDATA[热门商户]]></item>
+				<item id="pt4"><![CDATA[最新商户]]></item>
+				<item id="nodata"><![CDATA[没有找到符合条件的商户，换个筛选条件试试吧]]></item>
+				<item id="loadingmore"><![CDATA[正在载入更多商户...]]></item>
+				<item id="nomore"><![CDATA[没有更多商户了]]></item>
+				<item id="address_dot"><![CDATA[地址：]]></item>
+				<item id="wechat_dot"><![CDATA[微信号：]]></item>
+				<item id="site_dot"><![CDATA[商户网址：]]></item>
+				<item id="weibo_dot"><![CDATA[微博地址：]]></item>
+				<item id="qq_dot"><![CDATA[联系QQ：]]></item>
+				<item id="report"><![CDATA[纠错举报]]></item>
+				<item id="d1"><![CDATA[地区]]></item>
+				<item id="d2"><![CDATA[分类]]></item>
+				<item id="d3"><![CDATA[类型]]></item>
+				<item id="fx"><![CDATA[发现]]></item>
+				<item id="guidenav"><![CDATA[打开一键导航]]></item>
+				<item id="ranktitle"><![CDATA[排行榜]]></item>
+				<item id="index"><![CDATA[首页]]></item>
+				<item id="rankrt"><![CDATA[排行]]></item>
+				<item id="joind"><![CDATA[入驻]]></item>
+				<item id="bo1"><![CDATA[拨打电话]]></item>
+				<item id="viewsshares"><![CDATA[浏览量/分享数]]></item>
+				<item id="hottab"><![CDATA[热门]]></item>
+				<item id="newtab"><![CDATA[新入]]></item>
+				<item id="youtab"><![CDATA[优惠]]></item>
+				<item id="rentab"><![CDATA[认证]]></item>
+				<item id="tuitab"><![CDATA[推荐]]></item>
+				<item id="shanger"><![CDATA[出错了，地址不正确！]]></item>
+				<item id="please_input_address"><![CDATA[请点击选择地址]]></item>
+				<item id="loadmore"><![CDATA[点击加载更多]]></item>
+			</item>
+			<item id="templatelang">
+				<item id="or"><![CDATA[或]]></item>
+				<item id="dot"><![CDATA[，]]></item>
+				<item id="allcat"><![CDATA[全部分类]]></item>
+				<item id="joinnow1"><![CDATA[立即入驻]]></item>
+				<item id="catmain"><![CDATA[商户分类：]]></item>
+				<item id="all"><![CDATA[全部]]></item>
+				<item id="dist"><![CDATA[地区：]]></item>
+				<item id="defaultsort"><![CDATA[默认排序]]></item>
+				<item id="newest"><![CDATA[最新]]></item>
+				<item id="pt1"><![CDATA[认证商户]]></item>
+				<item id="pt2"><![CDATA[特惠商户]]></item>
+				<item id="pt3"><![CDATA[热门商户]]></item>
+				<item id="pt4"><![CDATA[最新商户]]></item>
+				<item id="nodata"><![CDATA[没有找到符合条件的商户，换个筛选条件试试吧]]></item>
+				<item id="loadingmore"><![CDATA[正在载入更多商户...]]></item>
+				<item id="nomore"><![CDATA[没有更多商户了]]></item>
+				<item id="address_dot"><![CDATA[地址：]]></item>
+				<item id="wechat_dot"><![CDATA[微信号：]]></item>
+				<item id="site_dot"><![CDATA[商户网址：]]></item>
+				<item id="weibo_dot"><![CDATA[微博地址：]]></item>
+				<item id="qq_dot"><![CDATA[联系QQ：]]></item>
+				<item id="report"><![CDATA[纠错举报]]></item>
+				<item id="d1"><![CDATA[地区]]></item>
+				<item id="d2"><![CDATA[分类]]></item>
+				<item id="d3"><![CDATA[类型]]></item>
+			</item>
+			<item id="installlang">
+				<item id="l1"><![CDATA[(14, 126, '工商银行', '', 'source/plugin/xigua_114/upload/gg553bb92897f9f1728.png', '', '95588', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 2, 1429247785, 0, 1, '0', 1),
+(17, 126, '中信银行', '', 'source/plugin/xigua_114/upload/gg553bbaf471fb58030.jpeg', '', '95558', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 8, 1429322581, 0, 1, '0', 1),
+(19, 126, '中国银行', '', 'source/plugin/xigua_114/upload/gg553bb907c5f622307.png', '', '95566', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 1, 1429323471, 0, 1, '0', 1),
+(20, 126, '广发银行', '', 'source/plugin/xigua_114/upload/gg553bbadb457c04985.jpeg', '', '4008308003', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 8, 1429498161, 0, 1, '', 1),
+(22, 126, '兴业银行', '', 'source/plugin/xigua_114/upload/gg553bb9e7b3c4b6159.jpeg', '', '95561', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 8, 1429516668, 0, 1, '0', 1),
+(23, 126, '华夏银行', '', 'source/plugin/xigua_114/upload/gg553bba1621bc1649.jpeg', '', '95577', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 8, 1429523725, 0, 1, '', 1),
+(26, 126, '邮政储蓄银行', '', 'source/plugin/xigua_114/upload/gg553bb8e2075e86890.png', '', '94480', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 2, 1429790766, 0, 1, '', 1),
+(38, 126, '招商银行', '', 'source/plugin/xigua_114/upload/gg553bb026155121450.png', '', '95555', '', '', '招商银行', 'http://www.cmbchina.com/', 'http://weibo.com/p/1006061653150224', '', '', '', '', '', '', '', '', '', 1, 6, 1429608179, 0, 1, '', 1),
+(40, 126, '交通银行', '', 'source/plugin/xigua_114/upload/gg553bb67a07f2e2965.png', '', '95559', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 5, 1429894855, 0, 1, '', 1),
+(41, 126, '建设银行', '股份制商业银行， 是国有五大商业银行之一。', 'source/plugin/xigua_114/upload/gg553bb65261f988062.png', '', '95533', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 4, 1429930915, 0, 1, '', 1),
+(42, 126, '民生银行', '', 'source/plugin/xigua_114/upload/gg553bb63c3e0c78431.png', '', '95568', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 8, 1429931062, 0, 1, '', 1),
+(43, 126, '农业银行', '', 'source/plugin/xigua_114/upload/gg553bb4e6951416399.png', '', '95599', '', '', '中国农业银行', 'http://www.abchina.com/cn/', 'http://weibo.com/abchina', '', '', '', '', '', '', '', '', '', 1, 3, 1429931110, 0, 1, '', 1),
+(45, 126, '南京银行', '', 'source/plugin/xigua_114/upload/gg553bb423456984245.jpg', '', '4008896400', '', '', '南京银行', 'http://www.njcb.com.cn/', 'http://weibo.com/njcb', '', '', '', '', '', '', '', '', '', 1, 9, 1429975269, 0, 1, '', 1),
+(46, 126, '光大银行', '', 'source/plugin/xigua_114/upload/gg553bbb59b7b058291.jpeg', '', '95595', '', '', '', '', '', '', '', '', '', '', '', 'admin', '', '', 1, 8, 1429977916, 0, 1, '', 1),
+(47, 123, '中国人寿保险', '', 'source/plugin/xigua_114/upload/gg553bbd6ddfd113488.png', '', '95519', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 0, 1429978477, 0, 1, '', 1),
+(48, 123, '太平洋保险', '', 'source/plugin/xigua_114/upload/gg553bbdeac090e772.png', '', '95500', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 0, 1429978602, 0, 1, '', 1),
+(49, 125, '建设银行信用卡', '', 'source/plugin/xigua_114/upload/gg553bbe4110e2b4067.png', '', '4008200588', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 0, 1429978689, 0, 1, '', 0),
+(50, 125, '交通银行信用卡', '', 'source/plugin/xigua_114/upload/gg553bbe747fd824259.png', '', '4008009888', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 0, 1429978740, 0, 1, '', 0),
+(51, 125, '招商银行信用卡', '', 'source/plugin/xigua_114/upload/gg553bbeb14d4727538.jpeg', 'source/plugin/xigua_114/upload/gg553bca182dc127381.jpg', '4008205555', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 0, 1429978801, 0, 1, '', 0),
+(52, 157, '麦当劳', '', 'source/plugin/xigua_114/upload/gg553bd7504a6e62533.jpg', '', '4008517517', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 0, 1429985104, 0, 1, '', 1),
+(53, 157, '肯德基', '', 'source/plugin/xigua_114/upload/gg553bd8a515e413345.jpeg', '', '4008823823', '', 'source/plugin/xigua_114/upload/gg553bddb5c7e107986.jpg', '肯德基', 'http://www.kfc.com.cn/kfccda/index.aspx', 'http://weibo.com/kfcchina', '', '', '', '', '', '', '', '', '', 1, 0, 1429985445, 0, 1, '', 1),
+(54, 157, '必胜客', '', 'source/plugin/xigua_114/upload/gg553bd9abee498623.jpg', '', '4008123123', '', '', '', 'http://www.pizzahut.com.cn/', '', '', '', '', '', '', '', '', '', '', 1, 0, 1429985707, 0, 0, '', 1),
+(55, 167, '真功夫', '', 'source/plugin/xigua_114/upload/gg553bdb06efd736457.jpg', '', '4006927927', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 0, 1429986054, 0, 0, '', 1),
+(56, 157, '德克士', '', 'source/plugin/xigua_114/upload/gg553bdc00d634a2715.jpg', '', '4006309907', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 0, 1429986176, 0, 1, '', 1),
+(57, 167, '蒸易烩', '下午营业时间接受晚餐预订，饭点送达！可以电话咨询！不方便送上楼哦！', 'source/plugin/xigua_114/upload/gg553be659e95252132.jpeg', '', '13952031440', '', '', '', '', '', '', '', '江苏省', '南京市', '建邺区', '恒山路179-5号', '', '', '', 1, 0, 1429988953, 0, 0, '', 0),
+(58, 167, '哈尔滨水饺', '', 'source/plugin/xigua_114/upload/gg553be728230fc4114.jpeg', '', '02587759669', '', '', '', '', '', '', '', '江苏省', '南京市', '玄武区', 'xx路', '', '', '', 1, 0, 1429989160, 0, 0, '', 1),
+(59, 168, '85度C', '', 'source/plugin/xigua_114/upload/gg553be8e4bab4f6155.jpeg', '', '025-86557885', '', '', '', '', '', '', '', '江苏省', '南京市', '建邺区', '水西门大街99号1楼A座', '', '', '', 1, 0, 1429989604, 0, 0, '', 1),
+(60, 161, '圆通速递', '', 'source/plugin/xigua_114/upload/gg553c50a63928c7920.jpeg', '', '95554', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 0, 1430016166, 0, 0, '', 1),
+(61, 187, '匪警', '', 'source/plugin/xigua_114/upload/gg553c51b94f1eb6562.jpg', '', '110', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 0, 1430016441, 0, 0, '', 0),
+(62, 186, '114电话导航', '', 'source/plugin/xigua_114/upload/gg553c525a4c313827.jpg', '', '114', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 0, 1430016602, 0, 0, '', 0),
+(63, 187, '火警', '', 'source/plugin/xigua_114/upload/gg553c52b35cd91561.jpg', '', '119', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 0, 1430016691, 0, 0, '', 0),
+(64, 225, '中国移动', '', 'source/plugin/xigua_114/upload/gg553d90a13a9f16903.png', '', '10086', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 0, 1430098081, 0, 1, '', 0),
+(65, 226, '中国联通', '', 'source/plugin/xigua_114/upload/gg553d90c53dc066159.png', '', '10010', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 0, 1430098117, 0, 0, '', 0);]]></item>
+				<item id="l2"><![CDATA[(1, 0, '银行', 'source/plugin/xigua_114/static/cat/gg553d941d15a3a7305.png', 'source/plugin/xigua_114/static/cat/gg553d927f8180e6673.jpg', '', 0, 2, '', 'nav', 1),
+(123, 1, '金融保险', '', '', '', 0, 3, '', '', 0),
+(125, 1, '信用卡', '', '', '', 0, 2, '', '', 0),
+(126, 1, '银行', '', '', '', 1429089942, 1, '', '', 0),
+(130, 0, '休闲娱乐', 'source/plugin/xigua_114/static/cat/gg553c5715cb8c1406.png', '', '', 1429090222, 1, 'new', 'nav', 0),
+(131, 0, '购物', 'source/plugin/xigua_114/static/cat/gg553cddd07afda465.png', '', '', 1429090222, 2, 'hot', 'nav', 1),
+(134, 0, '汽车交通', 'source/plugin/xigua_114/static/cat/gg553ce5df00204247.png', '', '', 1429090459, 5, '', 'nav', 0),
+(135, 0, '医疗健康', 'source/plugin/xigua_114/static/cat/gg553ce1a3f200e1339.png', '', '', 1429092032, 6, '', 'near', 0),
+(136, 0, '公共热线', 'source/plugin/xigua_114/static/cat/gg553c56a4bddda3751.png', '', '', 1429092032, 7, 'hot', 'nav', 0),
+(140, 0, '美食', 'source/plugin/xigua_114/static/cat/gg553cda7343b37636.png', '', '', 1429606098, 0, 'hot', 'nav', 1),
+(141, 0, '酒店', 'source/plugin/xigua_114/static/cat/gg553cdc7aed3923191.png', '', '', 1429628290, 0, '', 'near', 1),
+(142, 0, '火车机票', 'source/plugin/xigua_114/static/cat/gg553cdbbe2b01a3187.png', 'source/plugin/xigua_114/static/cat/gg553ce844259187039.jpg', '', 1429628290, 0, '', 'slider', 0),
+(143, 0, '快递', 'source/plugin/xigua_114/static/cat/gg553ce09d243862921.png', '', '', 1429628368, 0, 'hot', 'nav', 1),
+(151, 0, '运动健身', 'source/plugin/xigua_114/static/cat/gg553c5798b2e185273.png', '', '', 1429969656, 0, '', 'nav', 0),
+(152, 0, '教育培训', 'source/plugin/xigua_114/static/cat/gg553ce0f0383436524.png', '', '', 1429969656, 0, '', 'list', 1),
+(153, 0, '本地生活', 'source/plugin/xigua_114/static/cat/gg553cdd2f2f7bb9667.png', '', '', 1429969656, 0, '', 'list', 0),
+(157, 140, '美食外卖', '', '', '', 1429981852, 2, '', '', 0),
+(158, 130, '咖啡厅', '', '', '', 1429987708, 0, '', '', 1),
+(159, 130, 'KTV', '', '', '', 1429987708, 0, '', '', 1),
+(160, 130, '影院', '', '', '', 1429987708, 0, '', '', 1),
+(161, 143, '常用快递', '', '', '', 1429987776, 0, '', '', 1),
+(162, 141, '酒店预订', '', '', '', 1429987847, 0, '', '', 0),
+(163, 141, '快捷酒店', '', '', '', 1429987847, 0, '', '', 0),
+(164, 141, '高级连锁', '', '', '', 1429987847, 0, '', '', 0),
+(165, 142, '火车票预订', '', '', '', 1429987907, 0, '', '', 1),
+(166, 142, '机票预订', '', '', '', 1429987907, 0, '', '', 1),
+(167, 140, '中式美食', '', '', '', 1429989278, 1, '', '', 0),
+(168, 140, '甜点', '', '', '', 1429989422, 3, '', '', 1),
+(169, 151, '健身房', '', '', '', 1430014851, 0, '', '', 1),
+(170, 151, '瑜伽', '', '', '', 1430014851, 0, '', '', 1),
+(171, 151, '体育场馆', '', '', '', 1430014851, 0, '', '', 1),
+(172, 152, '职业培训', '', '', '', 1430014897, 3, '', '', 1),
+(173, 152, '艺术培训', '', '', '', 1430014897, 2, '', '', 1),
+(174, 152, '大学', '', '', '', 1430014897, 1, '', '', 1),
+(175, 153, '便民服务', '', '', '', 1430014970, 1, '', '', 0),
+(176, 153, '家电维修', '', '', '', 1430014970, 2, '', '', 1),
+(177, 153, '保洁', '', '', '', 1430014970, 3, '', '', 1),
+(178, 153, '搬家', '', '', '', 1430014970, 4, '', '', 1),
+(182, 131, '综合电商', '', '', '', 1430015080, 0, '', '', 0),
+(183, 131, '生活服务', '', '', '', 1430015080, 0, '', '', 0),
+(184, 131, '服饰', '', '', '', 1430015080, 0, '', '', 0),
+(185, 131, '便捷支付', '', '', '', 1430015080, 0, '', '', 0),
+(186, 136, '便民服务', '', '', '', 1430015182, 0, '', '', 0),
+(187, 136, '报警求助', '', '', '', 1430015182, 0, '', '', 0),
+(188, 136, '咨询投诉', '', '', '', 1430015182, 0, '', '', 0),
+(189, 134, '代驾', '', '', '', 1430015348, 0, '', '', 1),
+(190, 134, '打车/拼车', '', '', '', 1430015348, 0, '', '', 1),
+(191, 134, '租车', '', '', '', 1430015348, 0, '', '', 1),
+(192, 134, '车辆保险', '', '', '', 1430015348, 0, '', '', 1),
+(193, 134, '4S店', '', '', '', 1430015348, 0, '', '', 1),
+(194, 135, '求助热线', '', '', '', 1430015383, 0, '', '', 0),
+(195, 135, '医院', '', '', '', 1430015383, 0, '', '', 1),
+(196, 0, '结婚丽人', 'source/plugin/xigua_114/static/cat/gg553cdcc0ed3791252.png', '', '', 1430015647, 0, '', 'list', 0),
+(197, 0, '旅游出行', 'source/plugin/xigua_114/static/cat/gg553c5662dae207726.png', '', '', 1430015647, 0, '', 'list', 0),
+(198, 0, '小吃外卖', 'source/plugin/xigua_114/static/cat/gg553cdac9d275d4709.png', '', '', 1430015647, 0, 'new', 'nav', 1),
+(199, 196, '美容美发', '', '', '', 1430015816, 0, '', '', 1),
+(200, 196, '美甲', '', '', '', 1430015816, 0, '', '', 1),
+(201, 196, '婚纱摄影', '', '', '', 1430015816, 0, '', '', 1),
+(202, 196, '婚庆公司', '', '', '', 1430015816, 0, '', '', 1),
+(203, 197, '旅行社', '', '', '', 1430015816, 0, '', '', 1),
+(204, 197, '招待所', '', '', '', 1430015816, 0, '', '', 1),
+(205, 197, '景点', '', '', '', 1430015816, 0, '', '', 1),
+(206, 197, '车站', '', '', '', 1430015816, 0, '', '', 1),
+(207, 198, '中餐', '', '', '', 1430015816, 0, '', '', 0),
+(208, 198, '台式', '', '', '', 1430015816, 0, '', '', 0),
+(209, 198, '水果', '', '', '', 1430015816, 0, '', '', 1),
+(210, 198, '汉堡', '', '', '', 1430015816, 0, '', '', 1),
+(211, 198, '西式', '', '', '', 1430015816, 0, '', '', 0),
+(212, 198, '日式', '', '', '', 1430015816, 0, '', '', 0),
+(213, 0, '游戏', 'source/plugin/xigua_114/static/cat/gg553ce72cb6cf86146.png', '', '', 1430015876, 0, '', 'list', 0),
+(214, 213, '电玩城', '', '', '', 1430015932, 5, '', '', 1),
+(215, 213, '棋牌桌游', '', '', '', 1430015932, 4, '', '', 1),
+(216, 213, '手游', '', '', '', 1430015932, 3, '', '', 0),
+(217, 213, '网络游戏', '', '', '', 1430015932, 2, '', '', 0),
+(219, 0, '日常生活', 'source/plugin/xigua_114/static/cat/gg553cdf64327e6184.png', '', '', 1430016000, 0, '', 'list', 0),
+(220, 135, '药店', '', '', '', 1430016021, 0, '', '', 1),
+(221, 219, '超市', '', '', '', 1430016070, 0, '', '', 1),
+(222, 219, 'ATM', '', '', '', 1430016070, 0, '', '', 1),
+(223, 219, '商场', '', '', '', 1430016070, 0, '', '', 1),
+(224, 0, '话费充值', 'source/plugin/xigua_114/static/cat/gg553cf07b57d188780.png', 'source/plugin/xigua_114/static/cat/gg553d9296db0da7589.png', '', 1430055001, 0, '', 'slider', 0),
+(225, 224, '移动', '', '', '', 1430057083, 0, '', '', 1),
+(226, 224, '联通', '', '', '', 1430057083, 0, '', '', 1),
+(227, 224, '电信', '', '', '', 1430057083, 0, '', '', 1);]]></item>
+			</item>
+		</item>
+		<item id="installfile"><![CDATA[install.php]]></item>
+		<item id="upgradefile"><![CDATA[upgrade.php]]></item>
+		<item id="uninstallfile"><![CDATA[uninstall.php]]></item>
+	</item>
+</root>

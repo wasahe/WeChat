@@ -1,0 +1,537 @@
+<!doctype html>
+<html class="no-js">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
+<title>{if !empty($_W['page']['sitename'])}{$_W['page']['sitename']}{else}{$_W['account']['name']}{/if}{if !empty($title)}{$title} {/if}</title>
+
+<link rel="stylesheet" type="text/css" href="{$plus}dan/amazeui/css/amazeui.css"/>
+<link rel="stylesheet" type="text/css" href="{$plus}dan/mobile/css/style.css?t=4" />
+
+<script type="text/javascript" src="{$plus}dan/amazeui/js/jquery.min.js"></script>
+<script src="../addons/bsht_tbk/res/js/main.js"></script>
+<script type="text/javascript" src="{$plus}dan/amazeui/js/amazeui.min.js"></script>
+<script type="text/javascript" src="{$plus}dan/amazeui/js/fastclick.min.js"></script>
+<script>$(function() {FastClick.attach(document.body);});</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+<script type="text/javascript">
+	if(navigator.appName == 'Microsoft Internet Explorer'){
+		if(navigator.userAgent.indexOf("MSIE 5.0")>0 || navigator.userAgent.indexOf("MSIE 6.0")>0 || navigator.userAgent.indexOf("MSIE 7.0")>0) {
+			alert('您使用的 IE 浏览器版本过低, 推荐使用 Chrome 浏览器或 IE8 及以上版本浏览器.');
+		}
+	}
+	window.sysinfo = {
+		{if !empty($_W['uniacid'])}'uniacid': '{$_W['uniacid']}',{/if}
+		{if !empty($_W['acid'])}'acid': '{$_W['acid']}',{/if}{if !empty($_W['openid'])}'openid': '{$_W['openid']}',{/if}
+		{if !empty($_W['uid'])}'uid': '{$_W['uid']}',{/if}
+		'siteroot': '{$_W['siteroot']}',
+		'siteurl': '{$_W['siteurl']}',
+		'attachurl': '{$_W['attachurl']}',
+		'attachurl_local': '{$_W['attachurl_local']}',
+		'attachurl_remote': '{$_W['attachurl_remote']}',
+		{if defined('MODULE_URL')}'MODULE_URL': '{MODULE_URL}',{/if}
+		'cookie' : {'pre': '{$_W['config']['cookie']['pre']}'}
+	};
+	// jssdk config 对象
+	jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || {};
+	// 是否启用调试
+	jssdkconfig.debug = false;
+	jssdkconfig.jsApiList = [
+		'checkJsApi',
+		'onMenuShareTimeline',
+		'onMenuShareAppMessage',
+		'onMenuShareQQ',
+		'onMenuShareWeibo',
+		'hideMenuItems',
+		'showMenuItems',
+		'hideAllNonBaseMenuItem',
+		'showAllNonBaseMenuItem',
+		'translateVoice',
+		'startRecord',
+		'stopRecord',
+		'onRecordEnd',
+		'playVoice',
+		'pauseVoice',
+		'stopVoice',
+		'uploadVoice',
+		'downloadVoice',
+		'chooseImage',
+		'previewImage',
+		'uploadImage',
+		'downloadImage',
+		'getNetworkType',
+		'openLocation',
+		'getLocation',
+		'hideOptionMenu',
+		'showOptionMenu',
+		'closeWindow',
+		'scanQRCode',
+		'chooseWXPay',
+		'openProductSpecificView',
+		'addCard',
+		'chooseCard',
+		'openCard',
+		'openAddress'
+	];
+	</script>
+
+<body>
+
+<div class="am-modal am-modal-alert" tabindex="-1" id="fq_alert">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd" id="fq_alert_title"></div>
+    <div class="am-modal-bd" id="fq_alert_info">
+    </div>
+    <div class="am-modal-footer">
+      <span class="am-modal-btn">确定</span>
+    </div>
+  </div>
+</div>
+
+<div class="am-modal am-modal-confirm" tabindex="-1" id="fq_confirm">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd" id="fq_confirm_title"></div>
+    <div class="am-modal-bd" id="fq_confirm_info"></div>
+    <div class="am-modal-footer">
+      <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+    </div>
+  </div>
+</div>
+
+<div class="move">
+    <header style="position:relative;z-index:999;background:#F54D23;">
+
+    <a href="javascript:void(0);"  onclick="back();" style="position:absolute;top:2px;color:#fff;width:45px;height:100%;padding-left:10px;font-size:25px;" class="am-inline-block am-text-middle am-icon-angle-left"><!-- <img src="{$plus}dan/mobile/images/left.png" />--></a><div class="am-per-center am-text-center am-padding-vertical-sm" style="color:#fff;font-size:16px;">晒单广场</div>
+
+</header>
+
+<script>
+
+    function back(){
+       var last_page_url = (document.referrer);
+       if(last_page_url){
+          	window.history.back();
+		}else{
+			window.location.href ='{php echo $this->createMobileUrl('index', array('op' => 'new'))}';
+		}
+    }
+
+</script>
+    <ul class="am-tabs-nav am-nav am-nav-tabs" id="nav2">
+<li class="am-active" style="padding-right:0;padding-left:0;"><a href="{php echo $this->createMobileUrl('show_dan', array('op' => 'index'))}">晒单广场</a></li> 
+
+
+<li style="padding-right:0;padding-left:0;">
+{if $setting['duihuantype']==1 || empty($setting['duihuantype'])}
+              <a href="{$_W['siteroot']}app/index.php?i={$_W['uniacid']}&c=activity&a=coupon">积分兑换</a>
+			 {/if}
+
+			 {if $setting['duihuantype']==2}
+              <a href="{php echo $this->createMobileUrl('duiba')}">积分兑换</a>
+			 {/if}
+
+			 {if $setting['duihuantype']==3}
+              <a href="{$setting['duihuanurl']}">积分兑换</a>
+			 {/if}
+</li>
+
+
+
+<!--li style="padding-right:0;padding-left:0;"><a href="{php echo $this->createMobileUrl('show_dan', array('op' => 'my'))}">我的晒单</a></li>
+<li style="padding-right:0;padding-left:0;"><a href="{php echo $this->createMobileUrl('show_dan', array('op' => 'rank'))}">晒单排行</a></li-->
+<li style="float:right;"><a class="am-fr am-text-sm am-padding-horizontal-xs top_refer" style="background-color:#FFF;border:.1rem solid #F3E7E3;padding-top:3px;padding-bottom:3px;margin-top:6px;margin-bottom:3px;" href="{php echo $this->createMobileUrl('show_dan', array('op' => 'add'))}">我要晒单</a>
+        </li>
+    </ul>
+    <style>
+        #nav2{
+            margin:0;
+        }
+        #nav2 li{
+            height:100%;
+            padding:0 5px;
+        }
+        #nav2 li.am-active{
+            border-bottom:.3rem solid #F54D23;
+        }
+        #nav2 li.am-active a{
+            color:#F54D23;
+        }
+       #nav2 li a{
+            border:0;
+            padding:10px 7px 7px 7px;
+            font-size:1.4rem;
+            color:#3d0505;
+        }
+    </style>
+    <div class="am-cf"></div>
+    <div class="am-margin-horizontal-sm am-margin-top-sm am-text-center am-text-sm am-hide">暂无晒单信息</div>
+    <div class="am-text-sm am-padding-top-sm box" style="position:relative;z-index:1;"  id="pageCon">
+        
+		
+		
+		<ul class="goods-list list_box clear" id="list_box">
+
+
+{loop $list $i}
+<li class="picCon">
+<div class="am-padding-horizontal-sm">
+<img src="{php echo tomedia($i['avatar'])}" alt="" class="am-circle am-margin-right-xs am-fl" style="width:40px;height:40px;margin-top:2px;">
+
+<div class="info_box" style="position:relative;top:2px;">
+<span>{$i['nickname']}</span>
+<div class="praise_click am-fr" data-id="{$i['id']}">
+<!--i class="am-icon-thumbs-o-up"></i> <span class="praise_click_num">'+list[i]['zan']+'</span-->
+</div>
+</div>
+<div class="" style="color:#8f8f8f;">
+<span class="am-text-xs">
+</div>
+</div>
+<div class="am-cf"></div>
+<div class="am-margin-horizontal-sm">
+<div class="am-margin-vertical-xs">{$i['dec']}</div>
+<div class="image_show am-margin-top-xs am-gallery am-gallery-default am-no-layout" data-am-widget="gallery" data-am-gallery="{pureview: true}" style="padding-left:0;margin-left:0;">
+
+{if $i['img1']}
+<img class="loazd lazy-bk" src="{php echo tomedia($i['img1']);}" style="width:90px;height:90px;" />
+{/if}
+
+{if $i['img2']}
+<img class="loazd lazy-bk" src="{php echo tomedia($i['img2']);}" style="width:90px;height:90px;" />
+{/if}
+
+{if $i['img3']}
+<img class="loazd lazy-bk" src="{php echo tomedia($i['img3']);}" style="width:90px;height:90px;" />
+{/if}
+
+{if $i['img4']}
+<img class="loazd lazy-bk" src="{php echo tomedia($i['img4']);}" style="width:90px;height:90px;" />
+{/if}
+
+{if $i['img5']}
+<img class="loazd lazy-bk" src="{php echo tomedia($i['img5']);}" style="width:90px;height:90px;" />
+{/if}
+
+
+</div>
+<div class="am-margin-top-xs star"><div>
+<span>到手价：<span class="am-text-sm" style="font-weight:400;color:#f54d23">{$i['orderfee']}</span>元</span>
+<span class="am-fr">奖励积分：<span class="am-text-sm">{$i['jifen']}</span></span></div><div style="margin-right:2px;">
+<span>评分：</span>
+{php $snum='<i class="am-icon-star"></i>';}
+{if $i['star']==1}{php echo $snum;}{/if}
+{if $i['star']==2}{php echo $snum.$snum;}{/if}
+{if $i['star']==3}{php echo $snum.$snum.$snum;}{/if}
+{if $i['star']==4}{php echo $snum.$snum.$snum.$snum;}{/if}
+{if $i['star']==5}{php echo $snum.$snum.$snum.$snum.$snum;}{/if}
+<!--a href="#" class="am-fr"><span class="am-icon-hand-pointer-o"></span> 我也要买</a-->
+</div>
+</div>
+</div>
+<div class="am-cf"></div>
+</li>
+<hr data-am-widget="divider" style="margin:10px;color:#f3e7e3;" class="am-divider am-divider-solid" />
+{/loop}
+
+
+        </ul>
+
+
+        <div class="am-pagination am-pagination-centered am-text-xs" id="list_more" onclick="get_list(0);">
+
+
+      {php $tpage=$_GPC['page'];}
+     {if empty($_GPC['page'])}{php $tpage=1;$npage=$tpage-1;$npage2=$tpage+1;}{else}{php $npage=$tpage-1;$npage2=$tpage+1;}{/if}
+
+
+     {if $tpage!=1}
+	 <span class="am-text-secondary" style="float:left;width:50%">
+	 <a href="{php echo $this->createMobileUrl('show_dan', array('op' => 'index','page' => $npage));}">< 上一页</a>
+	 </span>
+	 {/if}
+
+	 <span class="am-text-secondary" style="float:right;{if $tpage!=1}width:50%{else}width:100%{/if}">
+	 <a href="{php echo $this->createMobileUrl('show_dan', array('op' => 'index','page' => $npage2));}">下一页 ></a>
+	 </span>
+
+<div style="height:50px"></div>  
+		</div>
+    </div>
+</div>
+<div class="menu">
+        <ul class="am-avg-sm-3 am-text-center am-padding-top-xs">
+            <li class="am-vertical-align">
+                <a href="{php echo $this->createMobileUrl('index', array('op' => 'new'))}">
+                    <img src="{$plus}dan/mobile/images/personal/home-page-unact.png" class="am-text-center am-vertical-align-middle"/>
+                    <br />               
+                    <span class=" am-text-center am-vertical-align-middle">首页</span>
+                </a>
+            </li>
+            <li  class="am-vertical-align">
+                <a href="{php echo $this->createMobileUrl('show_dan', array('op' => 'index'))}">
+                    <img src="{$plus}dan/mobile/images/personal/Inordertoshare-act.png" class="am-text-center am-vertical-align-middle" />
+                    <br />
+                    <span class=" am-text-center am-vertical-align-middle">晒单广场</span>
+                </a>
+            </li>
+            <li  class="am-vertical-align">
+                <a href="{php echo $this->createMobileUrl('uc')}">
+                    <img src="{$plus}dan/mobile/images/personal/per-center-unact.png" class="am-text-center am-vertical-align-middle" />
+                    <br />
+                    <span class=" am-text-center am-vertical-align-middle">个人中心</span>
+                </a>
+            </li>
+        </ul>
+    </div><style>
+.menu{
+        width:100%;
+        position:absolute;
+        position:fixed;
+
+        bottom:0;
+        background:#fff;
+        border-top:.1rem solid #F3E7E3;
+        z-index:999;
+    }
+    .menu img {
+        width:1.5rem;
+        height:1.5rem;
+        margin-bottom:.2rem;
+    }
+
+    .menu a {
+        display:inline-block;
+        color:#3d0505;
+
+    }
+
+    .menu a span {
+        font-size:1.2rem;
+    }
+</style>
+<div class="am-hide"></div>		
+</body>
+</html>
+<style>
+    .move{
+        margin-bottom:49px;
+        font-family:'Microsoft YaHei';
+    }
+    .nav.am-active{
+        color:#F54D23;
+    }
+    .nav{
+        color:#3d0505;
+        display:inline-block;
+    }
+    .top_hr{
+        margin:5px 0 10px;
+        background-color:#f8f8f8;
+        border:0;
+        height:.5rem
+    }
+    .box ul{
+        margin:0;
+        padding:0;
+        list-style:none;
+    }
+    .move .box ul li{
+        padding:0;
+        color:#3d0505;
+    }
+    .image_show img{
+        margin-bottom:5px;
+    }
+    .star i{
+        color:rgb(255,215,000);
+    }
+
+	.am-nav-tabs{
+	border-bottom:0.1rem solid #f3e7e3;
+}	
+
+</style>
+
+<!-- modal start -->
+
+
+
+<div class="am-modal am-modal-alert" tabindex="-1" id="fq_tips_alert">
+
+
+
+    <div class="am-modal-dialog" style="border-radius:6px;max-width:392px;">
+
+
+
+        <div class="am-modal-hd modal-hd-top" style="padding:.6rem 4rem;font-size:1.4rem;color:#c98080">
+
+
+
+            订单编号在你手机淘宝的订单详情里哟~
+
+
+
+        </div>
+
+
+
+        <div class="am-modal-hd" style="padding-top:0;padding-bottom:.6rem;font-size:1.4rem;color:#c98080">
+
+
+
+            ——— 示例 ———
+
+
+
+        </div>
+
+
+
+        <div class="am-modal-hd" style="padding-top:0;padding-bottom:.6rem;font-size:1.4rem;">
+
+
+
+            <img src="{$plus}dan/mobile/images/order_tips.png" style="max-width:100%;display:block;" />
+
+
+
+        </div>
+
+
+
+        <div class="am-modal-bd" id="fq_tips_alert_info" style="border-bottom:0;padding:0;padding-bottom:.6rem;">
+
+
+
+            <button type="button" style="border:0.1rem solid #F54D23;background:#F54D23;padding:2px 40px;color:#F54D23;border-radius:4px; color:white" data-am-modal-close>确定</button>
+
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+</div>
+
+<script>
+    function share_refer(){
+        window.location.href = '{php echo $this->createMobileUrl('show_dan', array('op' => 'index','page' => $npage))}';
+    }
+	function reindex()
+　　{
+　　setTimeout("share_refer()",2000)
+　　}
+</script>
+
+<!-- modal end -->
+
+{if empty($list)}
+<script type="text/javascript">
+
+$('#fq_alert_info').html('暂无更多晒单信息！');
+
+$('#fq_alert').modal();
+
+$('#submit').text('发布').attr('disabled',false);
+                         
+reindex();
+</script>
+{/if}
+
+<script type="text/javascript">
+	$(function(){
+
+      $('.praise_click').one('click',function(){
+	//$('.praise_click').click(function(){ 
+        //晒单id
+        var me = $(this);
+        var id = me.data('id');
+        var praise_click_num = me.children('.praise_click_num');
+        var num = parseInt(praise_click_num.text())+1;
+        praise_click_num.text(num);
+        me.children('i').attr('class','am-text-danger am-icon-thumbs-up');
+        $.ajax({
+            type:'post',
+            dataType:'json',
+            data:{"id":id},
+            url:'/share/praiseclick.html',
+            success:function(res){
+            
+            }
+        });   
+    });
+
+
+
+{if $_GPC['do']=='uc'}
+{if empty($user)}
+layer.msg('对不起，您无权访问', {
+  shade: [0.8, '#393D49'],
+  closeBtn: 0
+}, function(){window.location.href="{php echo $this->createMobileUrl('index')}";});
+{/if}
+{/if}
+
+
+{if $_GPC['do']=='show'}
+var url = "{php echo $this->createMobileUrl('hit_ajax',array('id'=>$_GPC['id'],'act'=>'item'));}";		
+$.post(url, function(dat){
+dat = eval('('+dat+')');
+});
+{/if}
+
+
+	wx.config(jssdkconfig);
+	var $_share = {php echo json_encode($_share);};
+	if(typeof sharedata == 'undefined'){
+		sharedata = $_share;
+	} else {
+		sharedata['title'] = sharedata['title'] || $_share['title'];
+		sharedata['desc'] = sharedata['desc'] || $_share['desc'];
+		sharedata['link'] = sharedata['link'] || $_share['link'];
+		sharedata['imgUrl'] = sharedata['imgUrl'] || $_share['imgUrl'];
+	}
+	if(sharedata.imgUrl == ''){
+		var _share_img = $('body img:eq(0)').attr("src");
+		if(_share_img == ""){
+			sharedata['imgUrl'] = window.sysinfo.attachurl + 'images/global/wechat_share.png';
+		} else {
+			sharedata['imgUrl'] = util.tomedia(_share_img);
+		}
+	}
+	if(sharedata.desc == ''){
+		var _share_content = util.removeHTMLTag($('body').html());
+		if(typeof _share_content == 'string'){
+			sharedata.desc = _share_content.replace($_share['title'], '')
+		}
+	}
+	wx.ready(function () {
+
+		wx.onMenuShareAppMessage(sharedata);
+		wx.onMenuShareTimeline(sharedata);
+		wx.onMenuShareQQ(sharedata);
+		wx.onMenuShareWeibo(sharedata);
+
+        sharedata.success = function(){
+
+{if $_GPC['do']=='show'}
+var url = "{php echo $this->createMobileUrl('share_ajax',array('id'=>$_GPC['id'],'act'=>'item'));}";		
+$.post(url, function(dat){
+dat = eval('('+dat+')');
+});
+{/if}   
+	    }
+
+
+	});
+
+	});
+</script>

@@ -1,0 +1,52 @@
+<div class="panel panel-default">
+<div class="panel-heading">
+<div class="panel-title">
+<h3>二手交易</h3>
+</div>
+</div>
+<div class="panel-body table-responsive">
+<table class="table">
+<thead>
+<tr>
+<th>信息编号</th>
+<th>物品名称</th>
+<th>品牌</th>
+<th>价格</th>
+<th>新旧程度</th>
+<th>电话</th>
+<th>有效期</th>
+<th>发布时间</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+{loop $ershoub $key $ershoub}
+<tr>
+<td>
+<a href="{php echo $this->createMobileUrl('job',array('vid'=>$ershoub['id']));}" target="_blank">{$ershoub['id']}</a> | 
+{if $ershoub['pid'] == 1}未审核
+{elseif $ershoub['pid'] == 2}真实
+{elseif $ershoub['pid'] == 3}假
+{elseif $ershoub['pid'] == 4}已删除
+{else}
+{/if}
+</td>
+<td>{$ershoub['ershouname']}</td>
+<td>{$ershoub['ershoupinpai']}</td>
+<td>{$ershoub['ershouprice']}</td>
+<td>{$ershoub['ershounewor']}</td>
+<td>{$ershoub['tel']}</td>
+<td>{php echo date("Y-m-d H:i:s",strtotime($ershoub['validity']));}</td>
+<td>{php echo date('Y-m-d H:i:s',$ershoub['time'])}</td>
+<td>
+<a href="{php echo $this->createWebUrl('infoedit',array('vid'=>$ershoub['id'],'pid'=>'2'));}">真</a> | 
+<a href="{php echo $this->createWebUrl('infoedit',array('vid'=>$ershoub['id'],'pid'=>'3'));}">假</a> | 
+<a href="{php echo $this->createWebUrl('infoedit',array('vid'=>$ershoub['id'],'pid'=>'4'));}">删除</a> | 
+<a href="{php echo $this->createWebUrl('update',array('vid'=>$ershoub['id']));}">编辑</a></td>
+</tr>
+{/loop}
+</tbody>
+</table>
+</div>
+</div>
+

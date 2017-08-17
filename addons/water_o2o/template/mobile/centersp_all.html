@@ -1,0 +1,78 @@
+{template 'header'}
+<body ontouchstart="" class="platform_mobile">
+<div class="qsc-alert" style="display: none;">
+<i class="info-base64"></i><span></span>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-white icon-loading-base64"><i class="icon-white icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading-new">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-loading-base64"><i class="icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<header class="qsc-tab bar-fixed wallet-tab headroom headroom--top" id="headroom">
+<ul class="tab-item nav-tabs-green" role="tablist">
+<li role="presentation" class="active">
+<a href="{php echo $this->createMobileUrl('centersp',array('type'=>'all'))}" role="tab">全部</a>
+</li>
+<li role="presentation">
+<a href="{php echo $this->createMobileUrl('centersp',array('type'=>'funding'))}" role="tab">筹款中</a>
+</li>
+<li role="presentation">
+<a href="{php echo $this->createMobileUrl('centersp',array('type'=>'success'))}" role="tab">已成功</a>
+</li>
+<li role="presentation">
+<a href="{php echo $this->createMobileUrl('centersp',array('type'=>'fail'))}" role="tab">已失败</a>
+</li>
+</ul>
+</header>
+<div class="content-fixed content-main top bottom tab-content">
+<div role="tabpanel">
+</div>
+</div>
+<div class="project-manage-modal"></div>
+<script type="text/template" id="J_project_admin_tpl">
+    <div class="modal qsc-modal qsc-modal-share project-${uuid}-modal">
+        <div class="modal-dialog bottom">
+            <div class="modal-content clearfix project-mg-edit">
+                <div class="modal-header">
+                    <h4 class="modal-title text-center">筹款管理</h4>
+                    <small>${name}</small>
+                </div>
+                <div class="modal-body">
+                    <a href="/project/timeline/${uuid}" class="icon-edit-update"><i class="icon icon-edit-round"></i>更新</a>
+                    <a href="/publish/edit/${uuid}" class="icon-edit-edit"><i class="icon icon-edit-round"></i>编辑</a>
+                    <a href="/project/stats/${uuid}" class="icon-edit-statistics"><i class="icon icon-edit-round"></i>统计</a>
+                    <a href="javascript:void(0);" class="icon-edit-delete project-delete"><i class="icon icon-edit-round"></i>删除</a>
+                </div>
+                <div class="modal-footer">
+                    <a href="javascript:void(0);" class="btn btn-default btn-block" data-dismiss="modal">取消</a>
+                </div>
+            </div>
+            <div class="modal-content clearfix project-mg-delete" style="display:none">
+                <form action="/project/delete/${uuid}" method="post">
+                    <div class="modal-header">
+                        <h4 class="modal-title text-center">确定删除${name}?</h4>
+                        <small>删除项目即永久无法查看，项目将会立即失败。</small>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-danger btn-block" value="确定删除" />
+                        <a href="javascript:void(0);" class="btn btn-default btn-block btn-cancel-delete">取消</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</script> 
+<footer class="qsc-bar bar-fixed bar-tab global-bar">
+{template 'footer'}
+<script type="text/javascript" src="../addons/water_o2o/template/js/user.min.js"></script>
+
+</body></html>

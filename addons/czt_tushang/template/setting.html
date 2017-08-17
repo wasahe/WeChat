@@ -1,0 +1,290 @@
+{template 'common/header'}
+<div class="main">
+    <form class="form-horizontal form" method="post">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                微信支付配置
+            </div>
+            <div class="panel-body">
+                {if (!file_exists(MODULE_ROOT . '/SimHei.ttf'))}
+                <div class="alert alert-info text-center">
+                    模块需要一个字体文件，请<a target="_blank" href="http://pan.baidu.com/s/1bz01tW">点击下载这个文件</a>，然后上传到服务器这个目录下{MODULE_ROOT}
+                </div>
+                {/if}
+                {if (@file_get_contents($_W['siteroot'].'addons/'.MODULE_NAME.'/qiniu_callback.php?check=1')!='ok')}
+                <div class="alert alert-danger text-center">警告：微信支付异步通知回调地址无法访问！</div>
+                {/if}
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">支付授权目录</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <span class="help-block" style="color:red">{php echo $_W['siteroot'].'app/';}</span>
+                        <span class="help-block">请在微信公众号后台配置支付授权目录</span>
+                    </div>
+                </div>
+                <div class="form-group" id="account">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">借用公众号</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <select name="acid" class="form-control">
+                            <option value="0">不借用任何权限</option>
+                            {loop $accounts $acid $name}
+                            <option value="{$acid}" {if $settings['oauth']['acid'] == $acid}selected{/if}>{$name}</option>
+                            {/loop}
+                        </select>
+                        <span class="help-block"><font color="red">如需借用，请选择有微信支付的认证服务号进行借用，并在下面填写该借用号的微信支付资料</font></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">微信支付商户号</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" name="wechat[mchid]" class="form-control" value="{$settings['wechat']['mchid']}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">商户支付密钥</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" name="wechat[signkey]" class="form-control" value="{$settings['wechat']['signkey']}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">商户支付证书<br>（{if (file_exists($path . '/apiclient_cert.pem.' . $_W['uniacid']))}已上传{else}未上传{/if}）</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <textarea class="form-control" name="apiclient_cert" rows="5" placeholder="为保证安全性，不显示证书内容。若要修改，请直接填写"></textarea>
+                        <span class="help-block">从商户平台下载支付证书，解压并获得其中的<font color="red">apiclient_cert.pem</font>，用记事本打开并复制文件内容，粘贴至此处</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">支付证书秘钥<br>（{if (file_exists($path . '/apiclient_key.pem.' . $_W['uniacid']))}已上传{else}未上传{/if}）</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <textarea class="form-control" name="apiclient_key" rows="5" placeholder="为保证安全性，不显示证书内容。若要修改，请直接填写"></textarea>
+                        <span class="help-block">从商户平台下载支付证书，解压并获得其中的<font color="red">apiclient_key.pem</font>，用记事本打开并复制文件内容，粘贴至此处</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">支付根证书<br>（{if (file_exists($path . '/rootca.pem.' . $_W['uniacid']))}已上传{else}未上传{/if}）</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <textarea class="form-control" name="rootca" rows="5" placeholder="为保证安全性，不显示证书内容。若要修改，请直接填写"></textarea>
+                        <span class="help-block">从商户平台上下载支付证书, 解压并取得其中的 <font color="red">rootca.pem</font> ，用记事本打开并复制文件内容，粘贴至此处</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">提现错误日志</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <a id="btn-paylog" class="btn btn-sm btn-primary">查看</a>
+                        <textarea id="paylog-content" style="display:none" class="form-control" rows="8" placeholder=""></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {if ($_W['account']['level']==4)}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                消息模板设置
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">收入提醒模板</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input name="notify_tpl[income]" class="form-control" placeholder="请输入收入提醒模板ID" value="{$settings['notify_tpl']['income']}" />
+                        <span class="help-block">IT科技-互联网|电子商务-OPENTM207112032</span>
+                    </div>
+                    <div class="col-sm-2"><a data-tpl="OPENTM207112032" class="btn-add-template btn btn-sm btn-primary">自动获取</a></div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">提现提醒模板</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input name="notify_tpl[cash]" class="form-control" placeholder="请输入提现提醒模板ID" value="{$settings['notify_tpl']['cash']}" />
+                        <span class="help-block">IT科技-互联网|电子商务-OPENTM405841337</span>
+                    </div>
+                    <div class="col-sm-2"><a data-tpl="OPENTM405841337" class="btn-add-template btn btn-sm btn-primary">自动获取</a></div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">待处理通知模板</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input name="notify_tpl[notice]" class="form-control" placeholder="请输入待处理通知模板ID" value="{$settings['notify_tpl']['notice']}" />
+                        <span class="help-block"> IT科技 - 互联网|电子商务-OPENTM207145917</span>
+                    </div>
+                    <div class="col-sm-2"><a data-tpl="OPENTM207145917" class="btn-add-template btn btn-sm btn-primary">自动获取</a></div>
+                </div>
+            </div>
+        </div>
+        {/if}
+        <div class="panel panel-default">
+            <div class="panel-heading">七牛设置(<a target="_blank" href="https://portal.qiniu.com/signup?code=3lel8qftiqo2a">没有七牛账号，点击去注册</a>)</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">账号公钥</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" name="qiniu[ak]" class="form-control" value="{$settings['qiniu']['ak']}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">账号密钥</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" name="qiniu[sk]" class="form-control" value="{$settings['qiniu']['sk']}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">存储空间</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" name="qiniu[bucket]" class="form-control" value="{$settings['qiniu']['bucket']}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">访问域名</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" name="qiniu[host]" class="form-control" value="{$settings['qiniu']['host']}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">转码队列名</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" name="qiniu[pipeline]" class="form-control" value="{$settings['qiniu']['pipeline']}">
+                        <span class="help-block">如果不设置这里，转码速度将会非常之慢，请务必设置这里。<a target="_blank" href="https://portal.qiniu.com/create/mps">去创建多媒体处理队列</a></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">图片鉴黄</label>
+                    <div class="col-sm-8 col-xs-6">
+                        <div class="input-group">
+                            <label class="radio-inline">
+                                <input type="radio" name="qiniu[nrop]" value="0" {if $settings['qiniu'][ 'nrop']!=1}checked="true" {/if}> 关闭
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" {if $settings['qiniu'][ 'nrop']==1}checked="true" {/if} name="qiniu[nrop]" value="1"> 开启
+                            </label>
+                        </div>
+                        <span class="help-block">图片鉴黄接口要先去七牛后台启用才行 <a href="https://portal.qiniu.com/create/third_party_ufop/nrop/quickstart" target="_blank">点击去启用</a></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">视频鉴黄</label>
+                    <div class="col-sm-8 col-xs-6">
+                        <div class="input-group">
+                            <label class="radio-inline">
+                                <input type="radio" name="qiniu[video_nrop]" value="0" {if $settings['qiniu'][ 'video_nrop']!=1}checked="true" {/if}> 关闭
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" {if $settings['qiniu'][ 'video_nrop']==1}checked="true" {/if} name="qiniu[video_nrop]" value="1"> 开启
+                            </label>
+                        </div>
+                        <span class="help-block">视频鉴黄接口要先去七牛后台启用才行 <a href="https://portal.qiniu.com/create/third_party_ufop/tupu-video/quickstart" target="_blank">点击去启用</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                设置
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">管理员openid</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input name="admin_openid" class="form-control" placeholder="" value="{$settings['admin_openid']}" />
+                        <span class="help-block">鉴黄接口无法100%准确判断，有些可能需要人工审核，此处填写管理员openid，将会发送消息给管理员进行人工审核，不填则不进行人工审核，仅当上面开启了鉴黄功能此选项才会有效</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">引导关注图文链接</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input name="subscribe_url" class="form-control" placeholder="选填" value="{$settings['subscribe_url']}" />
+                        <span class="help-block">可填写引导关注图文链接，引导用户公众号并进行相关操作说明，不填则弹出公众号二维码</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">打赏图底部文字</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input name="foot_text" class="form-control" placeholder="选填" value="{$settings['foot_text']}" />
+                        <span class="help-block">可填写版权信息或是广告语之类的</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                提现设置（注意：要到微信支付商户后台-产品中心-产品大全-企业付款到用户-申请开通）
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">单次提现最小额</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input name="cash[min]" min="2" max="200" type="number" class="form-control" placeholder="" value="{$settings[cash]['min']}" />
+                        <span class="help-block">用户单次提现的最小金额</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">单次提现最大额</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input name="cash[max]" type="number" class="form-control" placeholder="" min="2" max="200" value="{$settings['cash']['max']}" />
+                        <span class="help-block">用户单次提现的最大金额</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">一天内最多提现次数</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input name="cash[times]" type="number" class="form-control" placeholder="" min="1" max="10" value="{$settings['cash']['times']}" />
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">提现超过多少元需要后台审核</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input name="cash[limit]" type="number" class="form-control" placeholder="" min="0" max="200" value="{$settings['cash']['limit']}" />
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">提现手续费</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input name="cash[rate]" type="text" class="form-control" placeholder="" value="{$settings['cash']['rate']}" />
+                        <span class="help-block">用户提现需要扣除的手续费， 用小数表示</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-sm-12">
+            <input name="token" type="hidden" value="{$_W['token']}" />
+            <input type="submit" class="btn btn-primary col-lg-1" name="submit" value="提交" />
+        </div>
+    </form>
+</div>
+<script language='javascript'>
+require(['jquery', 'util'], function($, u) {
+    $(function() {
+        $('#btn-paylog').click(function(event) {
+            event.preventDefault();
+            $.get('{php echo $_W['siteroot'].'addons/'.MODULE_NAME.'/wx_pay.log'}?t='+new Date().getTime(), function(data) {
+                if (data) {
+                    $('#paylog-content').val(data);
+                    $('#btn-paylog').hide();
+                    $('#paylog-content').show();
+                }
+            });
+        });
+        $('.btn-add-template').click(function(event) {
+            event.preventDefault();
+            var that=$(this);
+            $.post('{php echo $this->createWebUrl('wx_tpl')}', {template_id_short: $(this).attr('data-tpl')}, function(data) {
+                if(data){
+                    if (data.search('error')<0) {
+                        that.parent('div').prev().find('input').val(data);
+                      }else{
+                        alert(data);
+                      }
+                }
+            });
+        });
+    });
+});
+</script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?c697336244df5580a6b1ae3cb3cf27bc";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+{template 'common/footer'}
+<!---bbs_heirui_cn-->

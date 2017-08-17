@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+{if empty($_W['isajax'])}
+{template 'common/top'}
+{/if}
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <!-- right column -->
+        <div class="col-md-12">
+          <!-- Horizontal Form -->
+          <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">编辑底部菜单</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+           <form action="" method="post"  class="form-horizontal" enctype="multipart/form-data">
+              <div class="box-body">
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">名称</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="title" placeholder="四个字以内" value="{$item['title']}" class="form-control"/>
+					<span class="help-block"></span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">排序</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="displayorder" placeholder="越大越靠前" value="{$item['displayorder']}" class="form-control"/>
+					<span class="help-block"></span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">标题</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="name" placeholder="页面顶部标题" value="{$item['name']}" class="form-control"/>
+					<span class="help-block"></span>
+                  </div>
+                </div>
+                <div class="form-group">
+					<label class="col-sm-2 control-label">链接</label>
+					<div class="col-sm-10">
+						<div class="input-group">
+							<input type="text" value="{php echo $item['link']}" id="link" name="link" class="form-control" autocomplete="off">
+							<span class="input-group-btn">
+								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">选择链接 <span class="caret"></span></button>
+								<ul class="dropdown-menu">
+									{if $this->auth['yukiho_speech']=='1'}
+									<li>
+										<a data-ido="speeches" data-url="{php echo $this->createMobileUrl('speeches')}" class="urlitem">小讲列表（荐）</a>
+									</li>
+									{/if}
+									{if $this->auth['yukiho_zvoice']=='1'}
+									<li>
+										<a data-ido="main" data-url="{php echo $this->createMobileUrl('main')}" class="urlitem">站点主页（荐）</a>
+									</li>
+									<li>
+										<a data-ido="index" data-url="{php echo $this->createMobileUrl('index')}" class="urlitem">问题列表（荐）</a>
+									</li>
+									<li>
+										<a data-ido="find" data-url="{php echo $this->createMobileUrl('find')}" class="urlitem">找专家（荐）</a>
+									</li>
+									<li>
+										<a data-ido="home" data-url="{php echo $this->createMobileUrl('home')}" class="urlitem">个人中心（荐）</a>
+									</li>
+									<li>
+										<a data-ido="task" data-url="{php echo $this->createMobileUrl('task')}" class="urlitem">悬赏问题列表</a>
+									</li>
+									<li>
+										<a data-ido="task_post" data-url="{php echo $this->createMobileUrl('task_post')}" class="urlitem">发布悬赏提问</a>
+									</li>
+									<li>
+										<a data-ido="income" data-url="{php echo $this->createMobileUrl('income')}" class="urlitem">我的收入</a>
+									</li>
+									<li>
+										<a data-ido="ask" data-url="{php echo $this->createMobileUrl('ask')}" class="urlitem">我提问的</a>
+									</li>
+									<li>
+										<a data-ido="tutor_edit" data-url="{php echo $this->createMobileUrl('tutor_edit')}" class="urlitem">专家认证</a>
+									</li>
+									<li>
+										<a data-ido="help" data-url="{php echo $this->createMobileUrl('tutor_edit')}" class="urlitem">帮助说明</a>
+									</li>
+									{/if}
+								</ul>
+							</span>
+						</div>
+					</div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">图标</label>
+                  <div class="col-sm-10">
+                    {php echo tpl_form_field_icon('icon',$item['icon'])}
+                    <span class="help-block">同时支持fontawesome/ionicons/iconfont三套图标，输入图标编号即可使用。</br> 
+					<label class="label label-success">fontawesome</label>&nbsp;&nbsp;地址：<a href="http://fontawesome.io/icons">http://fontawesome.io/icons</a>&nbsp;&nbsp;示例：fa fa-user</br>
+					<label class="label label-info">ionicons</label>&nbsp;&nbsp;地址：<a href="http://ionicons.com">http://ionicons.com</a>&nbsp;&nbsp;示例：ion-ionic</br>
+					<label class="label label-warning">iconfont</label>&nbsp;&nbsp;地址：<a href="http://www.iconfont.cn/plus/collections/detail?cid=33">http://www.iconfont.cn/plus/collections/detail?cid=33</a>&nbsp;&nbsp;示例：icon iconfont icon-discover</br>
+					</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">权限</label>
+                  <div class="col-sm-10">
+                    <select name="auth" id="" class="form-control">
+                        <option value="9" {if $item['auth']=='9'}selected{/if}>全部可见</option>
+                        <option value="0" {if $item['auth']=='0'}selected{/if}>普通用户可见</option>
+						<option value="1" {if $item['auth']=='1'}selected{/if}>待审核用户可见</option>
+						<option value="2" {if $item['auth']=='2'}selected{/if}>审核未通过可见</option>
+                        <option value="3" {if $item['auth']=='3'}selected{/if}>认证用户可见</option>
+					</select>
+					<span class="help-block"></span>
+                  </div>
+                </div>
+              </div>
+			  <div class="box-footer">
+				<input type="hidden" id='ido' name="ido" value="{$item['ido']}"/>
+                <input type="hidden" name="token" value="{$_W['token']}" />
+                <button type="submit" class="btn btn-info center-block">写好了</button>
+              </div>
+            </form>
+          </div>
+          <!-- /.box -->
+        </div>
+        <!--/.col (right) -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+{if empty($_W['isajax'])}
+{template 'common/foot'}
+<script type="text/javascript">
+	$(".urlitem").click(function(){
+        $("#link").val($(this).data('url'));
+        $("#ido").val($(this).data('ido'));
+	});
+</script>
+{/if}

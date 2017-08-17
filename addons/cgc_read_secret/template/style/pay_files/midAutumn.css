@@ -1,0 +1,114 @@
+/*首页样式*/
+input[type="button"], input[type="submit"], input[type="reset"] {
+    -webkit-appearance: none;
+}
+
+textarea {  -webkit-appearance: none;}
+/*.bgColor{width:100%;background-color: #fdf2cf;}*/
+.moonTitleBlock{width: 80%;height:48px;margin:0 auto;padding: 7% 0 0 0;}
+.moonTitle{background: url(../img/moonTitle.png)no-repeat;background-size: 100%}
+.moonTitle span{display: block;line-height: 48px;text-align: center;font-size: 17px;color: #ffffff}
+.mooncake{width: 75%;margin: 0 auto;position: relative;}
+.mooncake img{width: 90%;margin-left: 5%;}
+.moonCut{position: absolute;top:3px;right:-16px;width: 55px;}
+.moonCut img{width:100%;}
+.moonBtnBlock{width: 54%;height:40px;margin: 0 auto;border-radius: 5px;background-color: #af5822;}
+.moonBtnBlock span{display: block;font-size: 16px;}
+.moonName{width: 64px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+.playMe{color: #ffffff;font-size: 16px;line-height: 40px;display: block;text-align: center;border-radius: 10px;width: 75%;margin: 0 auto;}
+.explainBlock{width:86%;height:100px;margin: 20px auto 10px;background: url(../img/moonShadow.png) no-repeat;background-size: 100%;}
+.explainImg{width: 100%}
+.explain{padding: 12px 20px;}
+.explainText{font-size: 16px;color:#af5822;padding-top: 3px;}
+.explainText1{font-size: 14px;color:#af5822;padding-top: 8px;line-height: 20px;}
+.activityExplain{text-align: center;color:#af5822;margin:10px 0;}
+.wawaziti{width: 80px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+.overflowpOint{width: 42px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+/*支付弹窗样式*/
+.mask{width:100%;height: 100%;background: rgba(0,0,0,0.4);position: absolute;top: 0;left: 0;z-index: 10;display: none;}
+.pay{position: absolute;width: 80%;height: 92px;top: 45%;left: 10%;margin-top: -65px;background-color: #fff;padding: 18px 0 15px;overflow: hidden;border-radius: 10px;}
+.closeBlock{position: absolute;top:12px;right: 14px;}
+.loveWho{font-size: 17px;line-height: 32px;display: block;float: left;}
+.payBlock{width: 80%;margin: 20px auto;}
+.payLook{height:35px;border-radius: 5px;background-color: #c15a44;line-height: 35px;color: #fff;font-size: 14px;display: block;text-align: center;margin-bottom: 4px}
+.anonymous{width: 18px;vertical-align: sub;margin-top: 10px;}
+.anonymousText{font-size: 14px;color:#686868}
+/*关注公众号弹窗样式*/
+.mask1{width:100%;height: 100%;background: rgba(0,0,0,0.4);position: absolute;top: 0;left: 0;z-index: 10;display: none;}
+.playBlockClose{position: absolute;top:-30px;right: -30px;}
+.playBlock{position: absolute;width: 50%;top: 30%;left: 25%;background-color: #fff;padding: 10px 0 13px 0;border-radius: 10px;}
+.playBlockImg{width: 90%;margin: 0 auto;}
+.marginTop{margin-top: -8px;}
+.playBlockImg img{width: 100%;}
+.playBlock p{text-align: center;color:#af5822;line-height: 20px;}
+/*我也要玩页面样式*/
+.paddingTopBottom{padding: 40px 0 10px 0}
+.headPortraitBlock{width: 110px;height:110px;margin: 0 auto;border: 6px solid #f2ca54;border-radius: 25px;overflow: hidden;}
+.problemBlock{width: 90%;height: 100px;margin: 10px auto;position: relative;}
+.problem{width: 100%;position: absolute;top:0;line-height: 90px;text-align: center;font-size: 25px}
+.answerBlock{width: 90%;height: 150px;margin: 15px auto 30px;background: url(../img/answer.png) no-repeat;background-size: 100%;}
+.answerText1{text-align: center;font-size: 16px;width: 50%;margin: 0 auto;padding: 64px 0;line-height: 20px;}
+.answerText2{text-align: center;font-size: 16px;width: 50%;margin: 0 auto;padding: 54px 0;line-height: 20px;}
+/*收入页面*/
+.bg{background-color: #fdf2cf;}
+.bgColor1{width:100%;background-color: #faebbb;padding-bottom: 20px;}
+.income{text-align: center;font-size: 12px;margin:15px 0 8px 0;}
+.incomeMoneyBlock{width: 34%;margin: 0 auto 10px;text-align: center;font-size: 30px;}
+.incomeMoney{display: block;}
+.yuan{display: block;font-size: 14px;}
+.incomeMe{height: 27px;border-bottom: 1px solid #fbe396;line-height: 27px;padding-left: 13px;color: #686868;}
+.incomeMeList{height: 50px;border-bottom: 1px solid #fbe396;margin-left: 13px;}
+.headPortraitList{height: 36px;width: 36px;margin: 7px 10px 7px 0;}
+.headPortraitList img{width: 100%;border-radius: 50%;overflow: hidden}
+.incomeMeListDetail{height: 30px;margin: 10px 0}
+.incomeMeListName{font-size: 14px;color: #272727;}
+.incomeMeLisTime{font-size: 12px;color: #686868;margin-top: 4px}
+.incomeMeListMoney{padding: 13px;}
+.incomeExplain{height: 27px;line-height: 27px;padding-left: 13px;color: #af5921;font-size: 12px;font-family: "黑体-简"}
+.marginTop20{margin-top: 20px}
+.marginTop10{margin-top: 10px;}
+/*设置我的问题页面*/
+.setProblemBlock{background-color: #ffffff;}
+.setProblemBlockList{padding-left: 4%;line-height: 40px;}
+.arrowBottom{height:10px;margin-top: 16px;margin-right: 13px;}
+.paddingTopBottom40{padding: 40px 0 40px 0}
+.chooseProblem,.chooseProblem2{color:#686868;font-size: 14px;}
+.ps{padding-left: 13px;margin: 10px 0;color: #686868;}
+.problemList{text-align: left}
+.problemMoney{text-align: right;padding-right: 13px}
+.borderBottom{border-bottom: 1px solid #fdf2cf;}
+.borderBottom span{color:#272727}
+.editProblem{width: 91%;height: 80px;margin: 13px auto 4px;border:1px solid #fbe396;border-radius: 5px;resize:none;font-size: 14px;line-height: 30px;padding-left: 3%}
+.clearBothBlock{clear: both;display: block}
+.submit{width: 100%;height: 40px;background-color: #af5822;border-radius: 5px;font-size: 18px;color: #fff;}
+
+#chooseProblem2{border-bottom: 1px solid #eeeeee;}
+.problemList1{text-align: center;font-size: 13px}
+#choose_price{font-size: 14px;color:#686868;}
+#choose_problem{font-size: 14px;color:#686868;}
+
+/*弹幕*/
+.danmuBlock1{position: absolute;top:65px;right:-200px;}
+.danmuBlock2{position: absolute;top:115px;right:0px;}
+.danmuBlock3{position: absolute;top:165px;right:-200px;}
+.danmuBlock4{position: absolute;top:215px;right:0px;}
+.danmuText{background: rgba(0,0,0,0.4);color: #ffffff;font-size: 12px;border-radius: 3px;padding: 4px 5px;margin-left: 5px;}
+
+.headImgdanmu{width:20px;height:20px;border-radius:50%;vertical-align: text-bottom;margin-bottom: -3px;}
+.bgColortanmu{display: inline-block;background: rgba(0,0,0,0.4);color: #ffffff;font-size: 12px;border-radius: 3px;padding: 4px 5px;margin-left: 5px;}
+
+/*广告*/
+.advertisementBlock{width:100%;height: 50px;background: rgba(0,0,0,0.4);position: fixed;bottom:-50px;z-index: 1000
+}
+.advertisementImg img{height: 36px;margin-top: 7px;margin-left: 10px}
+.advertisementText p{font-size: 12px;color: #ffffff;line-height: 16px;margin-left: 10px}
+.advertisementBtn a{display: block;width: 100%;height: 100%;}
+.advertisementBtn img{height: 24px;margin-top: 13px;margin-right: 10px}
+.advertisementClose img{height: 20px;margin-top: 15px;margin-right: 10px;}
+/*提交问题后弹窗*/
+.mask2{width:100%;height: 100%;background: rgba(0,0,0,0.3);position: absolute;top: 0;left: 0;z-index: 10;}
+.yindaoBlock img{width: 290px;position: absolute;top:7px;right:30px;}
+.knowBlock img{width: 150px;position: absolute;bottom:38%;left:30%;}
+
+.custom{width: 91%;margin:20px auto 7px;border: 1px solid #fbe396;border-radius: 5px;font-size: 14px;
+    padding:10px 0 10px 3%;color: #686868;}

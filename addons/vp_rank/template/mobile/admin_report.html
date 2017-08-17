@@ -1,0 +1,88 @@
+{php $title='举报管理'}
+{template 'inc/header'}
+
+<style>
+	body{}
+	.weui_cell_ft{}
+	.weui_cell_ft em{color:#15b82c;}
+</style> 
+
+<div id="reports_list" class="weui_cells" style="margin-top:0px;" data-url="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('admin',array('cmd'=>'report','submit'=>'list','rid'=>pencode($rank['id']))), 2)}" data-loading=false data-start=0 data-more=1 >
+</div>
+<div id="reports_list_loader" class="weui-infinite-scroll"><div class="infinite-preloader"></div>加载...</div>
+
+<script id="reports_list_tpl" type="text/template" >
+	<%
+		if(!list){
+			return;
+		}
+		for(var i=0;i<list.length;i++){
+			var item = list[i];
+	%>
+		<div class="weui_cell">
+			<div class="weui_cell_bd weui_cell_primary">
+				<p><a href="<%=item.url%>">[<%=item.type%>] <%=item.content%></a></p>
+				<p style="padding:5px 0 0 0;"><% if(item.status==1){ %><a class="btn_op weui_btn weui_btn_mini weui_btn_default" data-id="<%=item.id%>">设为已处理</a> <% }else{ %> <span style="color:#999999;">已处理</span> <% } %></p>
+			</div>
+		</div>
+	<%  } %>
+</script>
+
+
+
+{template 'inc/script'}
+<script type="text/javascript">
+$(function(){
+	
+	var list = $("#reports_list");
+	var list_tpl=baidu.template($('#reports_list_tpl').html());
+	var loadList=function(refresh){
+		if(refresh){
+			list.attr('data-start',0);
+			list.attr('data-more',1);
+		}
+		list.attr('data-loading',true);
+		$.post(list.attr('data-url'), {
+		},function(resp) {
+			list.attr('data-loading',false);
+			if(resp.status==0){
+				alert(resp.info);
+			}else{
+
+				if(resp.data.more==0){
+					$('#reports_list_loader').hide();
+				}
+				if(refresh){
+					 list.html('');
+				}
+
+				var html=list_tpl(resp.data);
+
+				list.html(list.html()+html);
+			}
+		});	
+	}
+	loadList(true);
+	
+	// 改状态
+	$('#reports_list').on('click','.btn_op',function(){
+		var id=$(this).data('id');
+
+		$.confirm("确定处理？", function() {
+			$.showLoading("正在提交...");
+			$.post("{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('admin',array('cmd'=>'report','submit'=>'op','rid'=>pencode($rank['id']))), 2)}", {
+				id:id
+			},function(resp) {
+				$.hideLoading();
+				if(resp.status==0){
+					$.alert(resp.info);
+				}else{
+					$.toast(resp.info);
+					loadList(true);
+				}
+			});
+		});
+	});
+});
+</script>
+{template 'inc/footer'}

@@ -1,0 +1,103 @@
+{template 'common/header'}
+{if $operation == 'display'}
+<div class="main">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            筛选
+        </div>
+        <div class="panel-body">
+            <form action="./index.php" method="get" class="form-horizontal" role="form">
+            <input type="hidden" name="c" value="site">
+            <input type="hidden" name="a" value="entry">
+            <input type="hidden" name="op" value="display">
+            <input type="hidden" name="do" value="gamedata">
+            <input type="hidden" name="m" value="deam_searchsingle">
+            <input type="hidden" name="id" value="{$act_id}">
+            
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">昵称/姓名/手机号码/openid</label>
+                    <div class="col-sm-6 col-md-8 col-lg-8 col-xs-12">
+                        <input type="text" class="form-control" name="username" value="">
+                    </div>
+                    <div class="pull-right col-xs-12 col-sm-3 col-md-2 col-lg-2">
+                        <button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+                        <a href="{php echo $this->createWebUrl('gamedata', array('op' => 'export','id'=>$act_id))}" class="btn btn-default"><i class="fa fa-download"></i> 导出全部数据</a>
+                        <input type="hidden" name="token" value="{$_W['token']}">
+                    </div>
+                </div>
+                
+            </form>
+
+        </div>
+    </div>
+	<div class="panel panel-default" style="padding-top:15px">
+    	<table class="table table-hover">
+        	<thead class="navbar-inner">
+                <tr>
+                    <th style="width:50px;text-align:center;">ID</th>
+                    <th style="width:120px;">会员</th>
+                    <th style="">预留资料</th>
+                    <th style="width:180px; text-align:center">分数</th>
+                    <th>使用时间（秒）</th>
+                    <th style="width:180px;">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+           		 	{loop $list $item}
+						<tr>
+							<td style="width:50px;text-align:center;">{$item['id']}</td>
+							<td><img src="{$item['avatar']}" style="width:30px;height:30px;padding:1px;border:1px solid #ccc">{$item['nickname']}</td>
+                            <td>{php echo empty($item['realname']) ? '---' : $item['realname']}|{php echo empty($item['telphone']) ? '---' : $item['telphone']}</td>
+                            <td style="width:180px; text-align:center">{$item['maxscore']}
+                                <a href="javascript:;" style="font-size:18px;" data-toggle="modal" data-target="#myModal{$item['id']}"><span class="fa fa-edit"></span></a>
+                                <div class="modal fade" id="myModal{$item['id']}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="text-align:left">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">修改分数--{$item['nickname']}</h4>
+                                            </div>
+                                            <div class="modal-body" style="overflow:hidden;">
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label" style="margin:7px 0px;">修改得分为：</label>
+                                                    <div class="col-sm-10">
+                                                        <div class="input-group">
+                                                            <input class="form-control" type="text" id="highscore{$item['id']}" name="highscore" value="{$item['maxscore']}">
+                                                            <div class="input-group-addon">分</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label" style="margin:7px 0px;">修改时间为：</label>
+                                                    <div class="col-sm-10">
+                                                        <div class="input-group">
+                                                            <input class="form-control" type="text" id="alltime{$item['id']}" name="alltime" value="{$item['alltime']}">
+                                                            <div class="input-group-addon">秒</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-success" onclick="window.location.href='{php echo $this->createWebUrl('gamedata',array('id'=>$act_id,'op'=>'update','memberid'=>$item['id']))}&highscore='+$('#highscore{$item['id']}').val()+'&alltime='+$('#alltime{$item['id']}').val()">确定</button>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+							 <td>{$item['alltime']}</td>
+                            <td>
+                                <a href="{php echo $this->createWebUrl('gamedata', array('id'=>$act_id,'memberid' => $item['id'],'op'=>'delete'))}" class="btn btn-default btn-sm" onclick="return confirm('确定删除？该操作不可逆')" title="删除"><i class="fa fa-times"></i></a>
+                            </td>
+						</tr>
+					{/loop}
+            
+            </tbody>
+        </table>
+        {$pager}
+    </div>
+</div>
+{/if}
+
+{template 'common/footer'}

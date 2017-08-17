@@ -1,0 +1,19 @@
+{php $g_title='帮助手册'}
+{php $menu='4'}
+{template 'common/header1'}
+{template 'common/menu'}
+		<div id="content" class="snap-content">
+			<div class="container" style="margin-right:15px;margin-left:15px;">
+				{php $helps = M('help')->getall()}
+				{loop $helps $h}
+				<div class="toggle active-toggle">
+					<a href="#" class="toggle-title">{$h['title']}<i class="fa fa-plus"></i></a>
+					<div class="toggle-content" style="display: none;">
+						<p>{php echo html_entity_decode($h['contents'])}</p>
+					</div>
+				</div>
+				{/loop}
+			</div>
+		</div>
+	</div>
+</body>

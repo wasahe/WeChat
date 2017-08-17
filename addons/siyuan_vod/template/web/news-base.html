@@ -1,0 +1,96 @@
+	<div class="form-group">
+<label class="col-xs-12 col-sm-3 col-md-2 control-label">视频解析接口</label>
+<div class="col-sm-9">
+<label class="radio-inline">
+<input type="radio" name="play" value="0" {if $item['play']== 0} checked="checked"{/if}/>PlayM3u8</label>
+<label class="radio-inline">
+<input type="radio" name="play" value="1" {if $item['play'] == 1} checked="checked"{/if}/>Video++</label>
+</div>
+</div>
+	<div class="form-group">
+          <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label"><a target="_blank" href="{$item['gx']}">更新网址</a></label>
+          <div class="col-sm-8 col-xs-12">
+            <input type="text" class="form-control" placeholder="" name="gx" value="{$item['gx']}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">视频标题</label>
+          <div class="col-sm-8 col-xs-12">
+            <input type="text" class="form-control" placeholder="" name="title" value="{$item['title']}">
+          </div>
+        </div>
+		  <div class="form-group">
+          <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">视频类别</label>
+          <div class="col-sm-8 col-xs-12">
+            {php echo tpl_form_field_category_2level('fenlei', $parent, $children, $blei, $slei)}    
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">封面图</label>
+          <div class="col-sm-8 col-xs-12">
+            {php echo tpl_form_field_image('thumb', $item['thumb']);}
+			<div class="help-block">建议大小：高420*宽300 140:100</div>
+          </div>
+        </div>
+		<div class="form-group">
+          <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">影片类型</label>
+          <div class="col-sm-2 col-xs-12">
+            <input type="text" class="form-control" placeholder="" name="shuxing" value="{$item['shuxing']}">
+			<div class="help-block">类型：BD高清 TS抢先版 HD高清 预告片</div>
+          </div>
+        </div>
+		<div class="form-group">
+          <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">更新集数</label>
+          <div class="col-sm-2 col-xs-12">
+            <input type="text" class="form-control" placeholder="" name="lianzai" value="{$item['lianzai']}">
+			<div class="help-block">例：更新至 3 集   全 16 集</div>
+          </div>
+        </div>
+<div class="form-group">
+          <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">内容</label>
+          <div class="col-xs-12 col-sm-8">
+            <textarea style="height:300px; width:100%" class="richtext" name="body" rows="6" id="reply-add-text" placeholder="点这里输入内容" >
+              {$item['body']}</textarea>
+          </div>
+        </div>
+    <div class="panel panel-primary">
+      <a data-toggle="collapse" data-parent="#accordion" href="#collapse" aria-expanded="flase" aria-controls="collapse">
+        <div class="panel-heading">
+          <h3 class="panel-title">文章属性设置&nbsp;<span class="caret"></span></h3>
+        </div>
+      </a>
+      <div id="collapse" class="panel-collapse collapse" role="tabpane">
+        <div class="panel-body">
+          <div class="form-group">
+            <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">排序</label>
+            <div class="col-sm-8 col-xs-12">
+              <input type="text" class="form-control" placeholder="" name="displayorder" value="{$item['displayorder']}">
+              <span class="help-block">文章的显示顺序，越大则越靠前</span>
+            </div>
+          </div>
+		  <div class="form-group">
+	<label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">发布时间</label>
+	<div class="col-sm-8 col-xs-12">
+		{php echo tpl_form_field_date('time', $item['time'], true);}
+	</div>
+</div>
+
+<div class="form-group">
+            <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">阅读次数</label>
+            <div class="col-sm-8 col-xs-12">
+              <input type="text" class="form-control" placeholder="文章已被阅读次数" name="yuedu" value="{$item['yuedu']}">
+              <span class="help-block">本数值会随着阅读数增加自动变化。为营造火热气氛，可以人工调大本值。</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+	<script type="text/javascript">
+  require(['jquery', 'util'], function($, u){
+    $(function(){
+      $('.richtext').each(function() {
+        u.editor(this);
+      });
+    });
+  });
+</script>

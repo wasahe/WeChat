@@ -1,0 +1,137 @@
+
+<?php
+$start_time=$reply['starttime'];
+$end_time=$reply['endtime'];
+?>
+<style>
+    .red {
+        color: red;
+    }
+</style>
+<input type="hidden" name="id" value="{$reply['id']}" />
+<div class="panel panel-default">
+    <div class="panel-heading">
+        基本设置
+    </div>
+    <div class="panel-body">
+		<!--<div class="form-group">-->
+			<!--<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span>关注参与活动</label>-->
+			    <!--<div class="col-sm-9 col-xs-12">-->
+				<!--<label class="radio-inline">-->
+					<!--<input type="radio" name="subscribes" value="1" {if $reply['subscribes'] == 1} checked="checked"{/if} />开启-->
+				<!--</label>-->
+				<!--<label class="radio-inline">-->
+					<!--<input type="radio" name="subscribes" value="0" {if $reply['subscribes'] == 0} checked="checked"{/if}  />不开启-->
+				<!--</label>-->
+				<!--<div class="help-block">是否开启关注才能参与活动,开启后会弹出二维码引导关注</div>-->
+			<!--</div>-->
+		<!--</div>-->
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 活动名称</label>
+            <div class="col-sm-9 col-xs-12">
+                <input type="text" id="title" class="form-control span7" placeholder="" name="title" value="{$reply['titile']}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">活动限制区域</label>
+            <div class="col-sm-9 col-xs-12">
+                <div class="row row-fix">
+                    <div class="col-sm-4 col-xs-2">
+                        <div class="input-group">
+                            <input type="text" name="province" class="form-control" value="{$reply['province']}">
+                            <span class="input-group-addon" style="border-left:none;border-right:none;">省</span>
+                            <input type="text" name="city" class="form-control" value="{$reply['city']}">
+                            <span class="input-group-addon">城市</span>
+                        </div>
+                    </div>
+                </div>
+                <span class="help-block">如果要限制粉丝在特定区域才能参与活动,请设置省和市,系统会根据IP反查地区做判断</span>
+                <span class="help-block">系统调用的是新浪的IP地址查询,会有很小的误差</span>
+            </div>
+        </div>
+      	 <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 活动时间</label>
+            <div class="col-sm-9 col-xs-12">
+               	{php echo tpl_form_field_daterange('datelimit', array('start'=>date('Y-m-d H:i',$start_time),'end'=>date('Y-m-d H:i',$end_time)), true)}
+            </div>
+       	</div>
+     	<div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">图集</label>
+            <div class="col-sm-9">
+               {php echo tpl_form_field_multi_image('img',$piclist);}
+               <span class="help-block">商品详情幻灯片，建议640*400</span>
+            </div>
+        </div>
+        <div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">商品简介</label>
+			<div class="col-sm-9 col-xs-12">
+				<textarea name="desc" class="form-control richtext" cols="70" style="height:300px;">{$reply['desc']}</textarea>
+			</div>
+		</div>
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">同IP支持数</label>
+            <div class="col-sm-9 col-xs-12">
+                <div class="input-group input-medium">
+                    <input type="text" name="ipcount" id='ipcount' class="form-control input-medium" value="{$reply['ipcount']}" />
+                    <span class="input-group-addon">次</span>
+                </div>
+                <span class="help-block"><strong>同IP可帮助的支持数</strong></span>
+            </div>
+        </div>
+	</div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+       	 图文设置
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class='red'>*</span>图文标题</label>
+            <div class="col-sm-9 col-xs-12">
+                <input type="text" id="tw_title" class="form-control span7" placeholder="" name="tw_title" value="{$reply['tw_title']}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class='red'>*</span>图文 图标</label>
+            <div class="col-sm-9 col-xs-12">
+                {php echo tpl_form_field_image('tw_img',$reply['tw_img']);}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class='red'>*</span>图文描述</label>
+            <div class="col-sm-9 col-xs-12">
+			<textarea style="height: 60px;" name="tw_desc" class="form-control span7" cols="60">{$reply['tw_desc']}</textarea>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        	分享设置
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class='red'>*</span>分享标题</label>
+            <div class="col-sm-9 col-xs-12">
+                <input type="text" id="share_title" class="form-control span7" placeholder="" name="share_title" value="{$reply['share_title']}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class='red'>*</span>分享图标</label>
+            <div class="col-sm-9 col-xs-12">
+                {php echo tpl_form_field_image('share_img',$reply['share_img']);}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class='red'>*</span>分享描述</label>
+            <div class="col-sm-9 col-xs-12">
+			<textarea style="height: 60px;" name="share_desc" class="form-control span7" cols="60">{$reply['share_desc']}</textarea>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    util.editor($('.richtext')[0]);
+</script>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{$title}</title>
+    <style>
+        .button{
+            display: inline-block;
+            width: 30%;
+            border: 2px solid white;
+            text-align: center;
+            font-size: 3rem;
+            font-family: "Microsoft YaHei UI";
+            color: #fff;
+            margin:1rem;
+            height:6rem;
+            line-height: 6rem;
+            border-radius: 3rem;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body style="background: {php echo $this->module['config']['footer_nav_bgcolors'] ? $this->module['config']['footer_nav_bgcolors'] : '#d54d41'}">
+{php $public_index_arr = $this->getPublicIndexProfile();}
+<div style="text-align: center;margin-top:25%;"><img src="{$public_index_arr['company_logo']}" style="width: 60%;"/></div>
+<div style="color:#fff;font-size: 5rem;padding-left:15%;padding-right: 15%;margin-top:10%;font-family: Microsoft YaHei UI">{$public_index_arr['remark']}</div>
+<div style="margin-top:10%;text-align: center;">
+    
+    <a href="{php echo $this->createMobileUrl('PublicJob');}" class="button">企业用户</a>
+    <a href="{php echo $type != 1 ? $this->createMobileUrl('PublicResumeBasic') : '#';}" class="button">求职用户</a>
+</div>
+</body>
+</html>

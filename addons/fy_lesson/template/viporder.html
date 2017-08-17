@@ -1,0 +1,335 @@
+<!-- 
+ * 会员VIP服务订单管理
+ * ============================================================================
+ * ============================================================================
+-->
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li {if $op=='display'}class="active"{/if}><a href="{php echo $this->createWebUrl('viporder');}">VIP订单管理</a></li>
+	<li {if $op=='vipcard'}class="active"{/if}><a href="{php echo $this->createWebUrl('viporder',array('op'=>'vipcard'));}">VIP服务卡</a></li>
+</ul>
+{if $operation == 'display'}
+<style>
+.col-lg-3{width:22%;}
+</style>
+<div class="main">
+    <div class="panel panel-info">
+        <div class="panel-heading">筛选</div>
+        <div class="panel-body">
+            <form action="./index.php" method="get" class="form-horizontal" role="form">
+                <input type="hidden" name="c" value="site" />
+                <input type="hidden" name="a" value="entry" />
+                <input type="hidden" name="m" value="fy_lesson" />
+                <input type="hidden" name="do" value="viporder" />
+                <input type="hidden" name="op" value="display" />
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label" style="width:100px;">订单遍号</label>
+                    <div class="col-sm-2 col-lg-3">
+                        <input class="form-control" name="ordersn" type="text" value="{$_GPC['ordersn']}">
+                    </div>
+					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label" style="width: 100px;">用户昵称</label>
+                    <div class="col-sm-2 col-lg-3">
+                        <input class="form-control" name="nickname" id="" type="text" value="{$_GPC['nickname']}">
+                    </div>
+                </div>
+                <div class="form-group">
+					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label" style="width:100px;">订单状态</label>
+                    <div class="col-sm-8 col-lg-3 col-xs-12">
+                        <select name="status" class="form-control">
+                            <option value="">不限</option>
+							<option value="0" {if in_array($_GPC['status'],array('0'))} selected="selected" {/if}>待付款</option>
+							<option value="1" {if $_GPC['status'] == 1} selected="selected" {/if}>已付款</option>
+                        </select>
+                    </div>
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label" style="width: 100px;">下单时间</label>
+                    <div class="col-sm-8 col-lg-3 col-xs-12">
+                        {php echo tpl_form_field_daterange('time', array('starttime'=>date('Y-m-d', $starttime),'endtime'=>date('Y-m-d', $endtime)));}
+                    </div>
+                    <div class="col-sm-3 col-lg-3" style="width: 18%;">
+                        <button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div class="panel panel-default">
+        <form action="" method="post" class="form-horizontal form" >
+        <div class="table-responsive panel-body">
+            <table class="table table-hover">
+                <thead class="navbar-inner">
+                <tr>
+                    <th style="width:15%;">订单遍号</th>
+                    <th style="width:10%;">用户昵称</th>
+                    <th style="width:10%;">服务时长</th>
+                    <th style="width:10%;">服务价格</th>
+					<th style="width:14%;">一级/二级/三级佣金</th>
+                    <th style="width:10%;">支付方式</th>
+                    <th style="width:10%;">订单状态</th>
+                    <th style="width:15%;">下单时间</th>
+                    <th style="text-align:right;">删除</th>
+                </tr>
+                </thead>
+                <tbody>
+                {loop $list $item}
+                <tr>
+                    <td>{if $item['paytype']=='vipcard'}<a href="{php echo $this->createWebUrl('viporder', array('op'=>'vipcard','ordersn'=>$item['ordersn']));}">{$item['ordersn']}</a>{else}{$item['ordersn']}{/if}</td>
+                    <td>{$item['nickname']}</td>
+                    <td>{$item['viptime']} 天</td>
+                    <td>{$item['vipmoney']} 元</td>
+					<td>{$item['commission1']} / {$item['commission2']} / {$item['commission3']}</td>
+                    <td>
+						<span class="label label-info">
+						{if $item['paytype'] == 'credit'}余额支付
+						{elseif $item['paytype'] == 'wechat'}微信支付
+						{elseif $item['paytype'] == 'alipay'}支付宝支付
+						{elseif $item['paytype'] == 'vipcard'}服务卡支付
+						{else}无{/if}
+						</span>
+                    </td>
+                    <td>
+                        {if $item['status'] == 0}<span class="label label-danger">未付款</span>{/if}
+						{if $item['status'] == 1}<span class="label label-success">已付款</span>{/if}
+                    </td>
+                    <td>{php echo date('Y-m-d H:i:s', $item['addtime'])}</td>
+                    <td style="text-align:right;">
+                        <a class="btn btn-default btn-sm" href="{php echo $this->createWebUrl('viporder', array('op' => 'delete', 'id' => $item['id'], 'page'=>$_GPC['page']))}" title="删除订单" onclick="return confirm('此操作不可恢复，确认删除？');return false;"><i class="fa fa-times"></i></a>
+                    </td>
+                </tr>
+                {/loop}
+                </tbody>
+            </table>
+            {$pager}
+        </div>
+    </div>
+    </form>
+</div>
+
+{elseif $op=='vipcard'}
+<style type="text/css">
+.mloading-bar {
+    width: 250px;
+    min-height: 22px;
+    text-align: center;
+    background: #fff;
+    box-shadow: 0px 1px 1px 2px rgba(0, 0, 0, 0.3);
+    border-radius: 7px;
+    padding: 20px 15px;
+    font-size: 14px;
+    color: #000;
+    position: absolute;
+    top: 48%;
+    left: 50%;
+    margin-left: -140px;
+    margin-top: -30px;
+    word-break: break-all;
+	z-index:999;
+	display:none;
+}
+#overlay{
+	background:#000;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 100;
+	display:none;
+}
+</style>
+<div class="mloading-bar" style="margin-top: -31px; margin-left: -140px;"><img src="{MODULE_URL}template/mobile/images/download.gif"><span class="mloading-text">上传处理中，请稍候...</span></div>
+<div id="overlay"></div>
+<script type="text/javascript">
+/* 显示遮罩层 */
+function showOverlay() {
+    $("#overlay").height("100%");
+    $("#overlay").width("100%");
+    $("#overlay").fadeTo(200, 0);
+	$(".mloading-bar").show();
+}
+</script>
+<div class="main">
+    <div class="panel panel-info">
+        <div class="panel-heading">上传VIP服务卡</div>
+        <div class="panel-body">
+            <form action="{php echo $this->createWebUrl('viporder', array('op'=>'uploadcard'));}" method="post" class="form-horizontal"  enctype="multipart/form-data">
+                <div class="form-group">
+					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label" style="width:100px;">上传文件</label>
+                    <div class="col-sm-8 col-lg-3 col-xs-12">
+                        <input type="file" name="vipcard" class="form-control">
+                    </div>
+					<div class="col-sm-3 col-lg-3" style="width: 18%;">
+                        <button class="btn btn-default" onclick="showOverlay()"><i class="fa fa-upload"></i> 上传</button>&nbsp;&nbsp;
+						<a href="{MODULE_URL}template/sample/vipCard.xls">下载模版示例</a>
+						<input type="hidden" name="token" value="{$token}">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+	<div class="panel panel-info">
+        <div class="panel-heading">筛选</div>
+        <div class="panel-body">
+            <form action="./index.php" method="get" class="form-horizontal" role="form">
+                <input type="hidden" name="c" value="site" />
+                <input type="hidden" name="a" value="entry" />
+                <input type="hidden" name="m" value="fy_lesson" />
+                <input type="hidden" name="do" value="viporder" />
+                <input type="hidden" name="op" value="vipcard" />
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label" style="width:100px;">订单遍号</label>
+                    <div class="col-sm-2 col-lg-3">
+                        <input class="form-control" name="ordersn" type="text" value="{$_GPC['ordersn']}">
+                    </div>
+					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label" style="width: 100px;">用户昵称</label>
+                    <div class="col-sm-2 col-lg-3">
+                        <input class="form-control" name="nickname" id="" type="text" value="{$_GPC['nickname']}">
+                    </div>
+                </div>
+                <div class="form-group">
+					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label" style="width:100px;">服务卡状态</label>
+                    <div class="col-sm-8 col-lg-3 col-xs-12">
+                        <select name="is_use" class="form-control">
+                            <option value="">全部状态</option>
+							<option value="0" {if in_array($_GPC['is_use'],array('0'))} selected="selected" {/if}>未使用</option>
+							<option value="1" {if $_GPC['is_use'] == 1} selected="selected" {/if}>已使用</option>
+							<option value="-1" {if $_GPC['is_use'] == -1} selected="selected" {/if}>已过期</option>
+                        </select>
+                    </div>
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label" style="width: 100px;">使用时间</label>
+                    <div class="col-sm-8 col-lg-3 col-xs-12">
+					{php echo tpl_form_field_daterange('time', array('starttime'=>($starttime ? date('Y-m-d', $starttime) : false),'endtime'=> ($endtime ? date('Y-m-d', $endtime) : false)));}
+                    </div>
+                    <div class="col-sm-3 col-lg-3" style="width: 18%;">
+                        <button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+						<button type="submit" name="export" value="1" class="btn btn-success">导出 Excel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div class="panel panel-default">
+        <form action="{php echo $this->createWebUrl('viporder', array('op'=>'delAllCard'));}" method="post" class="form-horizontal form">
+        <div class="table-responsive panel-body">
+            <table class="table table-hover">
+                <thead class="navbar-inner">
+                <tr>
+					<th style="width:6%;"><input type="checkbox" id="checkItems"> 全选</th>
+                    <th style="width:10%;">服务卡号</th>
+                    <th style="width:15%;">卡密</th>
+                    <th style="width:6%;">卡时长</th>
+					<th style="width:13%;">有效期</th>
+                    <th style="width:8%;">卡状态</th>
+					<th style="width:10%;">使用者</th>
+					<th style="width:15%;">订单号</th>
+                    <th style="width:12%;">使用时间</th>
+                    <th style="text-align:right;">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {loop $list $item}
+                <tr>
+                    <td><input type="checkbox" name="ids[]" value="{$item['id']}"></td>
+					<td>{$item['card_id']}</td>
+                    <td>{$item['password']}</td>
+                    <td>{$item['viptime']} 天</td>
+                    <td>{php echo date('Y-m-d H:i',$item['validity'])}</td>
+					<td>
+						{if $item['is_use'] == 0 && time() > $item['validity']}<span class="label label-default">已过期</span>{/if}
+						{if $item['is_use'] == 0 && time() <= $item['validity']}<span class="label label-success">未使用</span>{/if}
+						{if $item['is_use'] == 1}<span class="label label-warning">已使用</span>{/if}
+					</td>
+                    <td>{$item['nickname']}</td>
+                    <td><a href="{php echo $this->createWebUrl('viporder', array('ordersn'=>$item['ordersn']));}">{$item['ordersn']}</a></td>
+                    <td>{if !empty($item['use_time'])}{php echo date('Y-m-d H:i', $item['use_time']);}{/if}</td>
+                    <td style="text-align:right;">
+                        <a class="btn btn-default btn-sm" href="{php echo $this->createWebUrl('viporder', array('op' => 'delCard', 'id' => $item['id']))}" title="删除服务卡" onclick="return confirm('此操作不可恢复，确认删除？');return false;"><i class="fa fa-times"></i></a>
+                    </td>
+                </tr>
+                {/loop}
+                </tbody>
+				<tfoot>
+					<tr>
+						<td colspan="9">
+							<input name="submit" type="submit" class="btn btn-primary" value="批量删除" onclick="return delAll()">
+						</td>
+					</tr>
+				</tfoot>
+            </table>
+            {$pager}
+        </div>
+    </div>
+    </form>
+</div>
+<script type="text/javascript">
+var ids = document.getElementsByName('ids[]');
+$("#checkItems").click(function(){  
+	if (this.checked) {
+		for(var i=0;i<ids.length;i++){
+			var checkElement=ids[i];
+			checkElement.checked="checked";
+		}
+	}else{  
+		for(var i=0;i<ids.length;i++){
+			var checkElement=ids[i];  
+			checkElement.checked=null;  
+		}
+	}
+});
+function delAll(){
+	var flag = false;
+	for(var i=0;i<ids.length;i++){  
+		if(ids[i].checked){
+			flag = true;
+			break;
+		}
+	}
+	if(!flag){  
+		alert("未选中任何选项");
+		return false ;
+	}
+	if(!confirm('该操作无法恢复，确定删除?')){
+		return false;
+	}
+
+	return true;
+}
+</script>
+{elseif $op=='updateorder'}
+<div class="main">
+    <div class="panel panel-info">
+        <div class="panel-heading">选择处理日期</div>
+        <div class="panel-body">
+			<div class="panel-body">
+				自v1.4.2版本升级后把VIP会员购买时长的单位从“月”改为“天”后，之前的订单时长和价格明显不符合。
+				<br/>例如，之前订单是1个月30元，升级后却显示1天30元，请大家自行使用该工具矫正。
+				<br/><b style="color:red;">数据无价，执行该工具前请自行备份数据表"ims_fy_lesson_member_order"
+				<br/>该功能仅能执行一次，否则会导致VIP订单表购买时长出错</b>
+				<br/><b style="color:green;">使用说明：例如，通过查看VIP订单的购买市场和价格发现，之前我设置1个月30元，现在变成了“1天30元”，最后一条订单显示出错的下单时间是2017-02-16 18:25:49，则我在下面选择2017-02-16 18:26，因此在这个时间之前的订单都会自动转换为天显示</b>
+			</div>
+            <form  method="post" class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label" style="width:100px;">执行该日期前的订单</label>
+                    <div class="col-sm-2 col-lg-3">
+                        {php echo tpl_form_field_daterange('time', $times, true);}
+                    </div>
+					<div class="col-sm-3 col-lg-3" style="width: 18%;">
+                        <input type="submit" name="submit" value="提交" class="btn btn-default">
+						<input type="hidden" name="token" value="{$_W['token']}">
+                    </div>
+                </div>
+            </form>
+			<br/>
+			<br/>
+			<b>执行前：</b>
+			<img src="{MODULE_URL}template/mobile/images/order1.jpg">
+			<br/>
+			<b>执行后：</b>
+			<img src="{MODULE_URL}template/mobile/images/order2.jpg">
+        </div>
+    </div>        
+</div>
+{/if}
+{template 'common/footer'}

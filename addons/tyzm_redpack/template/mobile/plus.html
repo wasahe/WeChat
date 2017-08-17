@@ -1,0 +1,387 @@
+{template 'header'}
+<style>
+.header{
+	position: relative;
+	width: 100%;
+	min-height: 56px;
+	height: auto;
+	padding: 0px 16px;
+}
+.header>div{
+	position: relative;
+	width: 100%;
+	height: auto;
+	margin-top: 8px;
+	padding-bottom: 8px;
+	border-bottom: 1px dashed #CCCCCC;
+	text-align: center;
+}
+
+.div-input {
+	position: relative;
+	width: 100%;
+	height: 48px;
+	padding-left: 80px;
+	background-color: white;
+	border-radius: 2px;
+	line-height: 48px;
+}
+
+.input {
+	display: block;
+	position: relative;
+	width: 100%;
+	height: 48px;
+	border: 0px;
+	outline: none;
+	text-align: right;
+	padding-right: 32px;
+}
+
+.box{
+	position: relative;
+	width: 100%;
+	height: auto;
+	margin: 0px;
+	padding: 0px 16px;
+}
+
+.color-ccc{
+	color: #CCCCCC;
+}
+.btn-buttom{
+	position: fixed;
+	bottom: 0px;
+	z-index: 4;
+	background: #FFF;
+	padding: 1rem;border: 1px solid #E5E5E5;
+}
+.help_box{font-size: 0.8em;padding-top: 5px; float:left;}
+.help_box i{ margin-right:5px;}
+.redpack_type{padding:0;
+    font-size: 0.8em;padding-top: 5px;
+}
+.redpack_type span{ color: #009EF2;}
+
+</style>
+</head><body style="background-color: #EBEBEB;padding-top: 10px;">
+
+
+	
+
+	
+
+	<div class="box" style="margin-top: 16px;">
+		<div class="div-input">
+			<div style="position: absolute; top: 0px; left: 8px;">红包个数</div>
+			<input id="packet_numbers" class="input" type="number" min="1" placeholder="填写个数">
+			<div style="position: absolute; width: 16px; text-align: center; background-color: white; top: 0px; right: 16px;">个</div>
+		</div>
+		
+		<div class="redpack_type">
+		     <div onclick="packet_type(1,1)" class="redpack_1">当前为拼手气红包，<span>改为普通红包</span></div>
+			 <div onclick="packet_type(0,0)" class="redpack_0" style="display:none">当前为普通红包，<span>改为拼手气红包</span></div>
+		</div>
+	</div>
+
+
+	<!--拼手气红包开始-->
+	<div id="packet_0" class="">
+		<div class="box">
+			<div class="div-input" style="margin-top: 16px;">
+				<div style="position: absolute; top: 0px; left: 8px;">总金额</div>
+				<input id="packet_price" name="packet_price" class="input" type="number" placeholder="{if $gettype==1}大于0.01元，小于200元{else}大于1元，小于200元{/if}">
+				<div style="position: absolute; width: 16px; text-align: center; background-color: white; top: 0px; right: 16px;">元</div>
+			</div>
+			<div class="help_box">
+		         <a href="{$pluspelp}"><div><i class="am-icon-info-circle"></i><span>发红包帮助</span></div></a>
+		     </div>
+			<div class="am-text-right am-text-xs am-padding-xs color-ccc">每人抽到的金额随机</div>
+		</div>
+
+		<div class="am-g am-padding" style="padding-top: 0px;">
+			<div class="am-text-center">￥<span id="all_price" class="am-text-xxl">0.00</span></div>
+			<div class="am-text-center am-text-xs am-padding-xs color-ccc">{if $FEE!=0}每次加收{$FEE}%的服务费{/if}</div> 
+			<button class="am-btn am-radius am-btn-block am-btn-danger" style="color: white; padding: .7em 1em;" onclick="pay_ajax(0)">塞钱进红包</button>
+			<span class="am-text-xs">使用微信支付把钱塞进红包</span>
+
+		</div>
+	</div>
+	<!--拼手气红包结束-->
+
+	<!--普通红包开始-->
+	<div id="packet_1" class="am-hide">
+		<div class="am-g am-padding-horizontal">
+			<div class="div-input" style="margin-top: 16px;">
+				<div style="position: absolute; top: 0px; left: 8px;">单个金额</div>
+				<input id="general_packet_price" name="general_packet_price" class="input" type="number" placeholder="{if $gettype==1}大于0.01元，小于200元{else}大于一元，小于200元{/if}">
+				<div style="position: absolute; width: 16px; text-align: center; background-color: white; top: 0px; right: 16px;">元</div>
+			</div>
+			<div class="help_box">
+		         <a href="http://mp.weixin.qq.com/s?__biz=MzI1MDAwNTUxMA==&mid=401067409&idx=1&sn=69132ed84a676b1d6178538e738159c6#rd"><div><i class="am-icon-info-circle"></i><span>发红包帮助</span></div></a>
+		     </div>
+			<div class="am-text-right am-text-xs am-padding-xs color-ccc">每人收到固定金额</div>
+		</div>
+
+		<div class="am-g am-padding"  style="padding-top: 0px;">
+			<div class="am-text-center">￥<span id="general_all_price" class="am-text-xxl">0.00</span></div>
+			<div class="am-text-center am-text-xs am-padding-xs color-ccc">
+			{if $FEE!=0}每次加收{$FEE}%的服务费{/if}
+			</div>
+			<button class="am-btn am-radius am-btn-block am-btn-danger" style="color: white; padding: .7em 1em;" onclick="pay_ajax(1)">塞钱进红包</button>
+			<span class="am-text-xs">使用微信支付把钱塞进红包</span>
+		</div>
+	</div>
+	<!--普通红包结束-->
+        <div class="am-g am-padding" style="padding-top: 0px;">
+			<button class="am-btn am-btn-secondary am-radius am-btn-block" style="margin-top: 8px;padding: .7em 1em;" onclick="window.location.href='{php echo $this->createMobileUrl('Mypack')}'">我已发的红包</button>
+	</div>
+
+	<div class="box" style="text-align: left; font-size: 12px; color: #ff8610;">
+	<span style="color: #000000;">步骤：</span>①塞钱进红包 <i style="color: #000000;" class="am-icon-angle-double-right"></i> ②编辑广告红包 <i style="color: #000000;" class="am-icon-angle-double-right"></i> ③分享好友/朋友圈
+	</div>
+	
+
+
+	<!--隐藏的回话弹出层开始-->
+	<div class="am-modal am-modal-alert" id="alert">
+		<div class="am-modal-dialog" style="border-radius: 3px;">
+			<div class="am-modal-hd" id="alert_title"></div>
+		    <div class="am-modal-bd" id="alert_text">
+		      	
+		    </div>
+			<div class="am-modal-footer">
+		      <span class="am-modal-btn">确定</span>
+		    </div>
+		</div>
+	</div>
+	<!--隐藏的回话弹出层结束-->
+
+	<div class="am-modal am-modal-loading am-modal-no-btn" tabindex="-1" id="my-modal-loading">
+		<div class="am-modal-dialog">
+			<div class="am-modal-bd am-text-secondary">      
+	    	<span class="am-icon-spinner am-icon-spin"></span>
+		    	<p>提交中...</p>
+		    </div>
+		</div>
+	</div>
+
+	
+<script type="text/javascript">
+		function alertwindow(content) {
+			$('#alert_text').text(content);
+			$('#alert').modal('open');
+		}
+		/*选择红包类型的方法*/
+		var packettype = 0;
+		//选择不同的类型红包
+		function packet_type(val, id) {
+			packettype = val;
+			//隐藏所有，显示对应
+			$("#packet_0").addClass("am-hide");
+			$("#packet_1").addClass("am-hide");
+			$("#packet_" + id).removeClass("am-hide");
+            $(".redpack_0").show();
+            $(".redpack_1").show();
+			$(".redpack_"+id).hide();
+		}
+
+		/*计算金额的方法*/
+		var allprice = 0;
+		var packetprice = 0;
+		var serverprice = 0;
+		var packet_numbers = 0;
+
+		function jdmoney(money) {
+			var t = /^\d+(\.\d+)?$/;
+			return t.test(money)
+		}
+
+		var is_number = /^\d+$/g;
+		var is_price = /^\d+(\.\d+)?$/;
+
+		//拼手气红包
+		
+		$("input[name='packet_price']").blur(function(){
+			allprice = 0;
+			packetprice = 0;
+			serverprice = 0;
+			packet_numbers = $("#packet_numbers").val() * 1;
+			packetprice = $("#packet_price").val() * 1;
+			if (packet_numbers < 1) {
+				alertwindow("请输入红包个数");
+			}
+			if (!is_price.test(packetprice) || packetprice == 0) {
+				alertwindow("请输入正确的价格");
+			}
+			//红包总额
+			if (packetprice > 100000) {
+				alertwindow("红包总额不能超过10万元");
+			}
+
+{if $gettype==1}//提现方式
+            if(packetprice/packet_numbers >200 || packetprice/packet_numbers < 0.01){
+				alertwindow("单个红包金额0.01 -200元");
+			}
+{else}
+            if(packetprice/packet_numbers >200 || packetprice/packet_numbers < 1){
+				alertwindow("单个红包金额 1-200元");
+			}
+{/if}
+			
+			
+			
+			
+
+			$("#packet_price_count").text(packetprice.toFixed(2));
+
+			serverprice = packetprice * {$FEE}/100;
+			$("#server_price").text(serverprice.toFixed(2));
+
+			allprice = packetprice + serverprice;
+			$("#all_price").text(allprice.toFixed(2));
+
+		});
+		$("input[name='packet_price']").keyup(function(){
+			allprice = 0;
+			packetprice = 0;
+			serverprice = 0;
+			packet_numbers = $("#packet_numbers").val() * 1;
+			packetprice = $("#packet_price").val() * 1;
+			$("#packet_price_count").text(packetprice.toFixed(2));
+			serverprice = packetprice * {$FEE}/100;
+			$("#server_price").text(serverprice.toFixed(2));
+			allprice = packetprice + serverprice;
+			$("#all_price").text(allprice.toFixed(2));
+
+		});
+		//普通红包
+		$("input[name='general_packet_price']").blur(function(){
+			allprice = 0;
+			packetprice = 0;
+			serverprice = 0;
+			packet_numbers = $("#packet_numbers").val() * 1;
+			packetprice = $("#general_packet_price").val() * 1;
+			
+			if (!is_price.test(packetprice) || packetprice == 0) {
+				alertwindow("请输入正确的价格");
+			}
+			
+{if $gettype==1}//提现方式
+			if (packetprice > 200 || packetprice < 0.01) {
+				alertwindow("单个红包金额0.01-200元");
+			}
+{else}
+            if (packetprice > 200 || packetprice < 1) {
+				alertwindow("单个红包金额 1-200元");
+			}
+
+{/if}
+			var allpacketprice = packetprice * packet_numbers;
+
+			if (allpacketprice > 100000) {
+				alertwindow("红包总额不能大于10万元");
+			}
+		});
+		$("input[name='general_packet_price']").keyup(function(){
+			allprice = 0;
+			packetprice = 0;
+			serverprice = 0;
+			packet_numbers = $("#packet_numbers").val() * 1;
+			packetprice = $("#general_packet_price").val() * 1;
+			var allpacketprice = packetprice * packet_numbers;
+			$("#general_packet_price_count").text(allpacketprice.toFixed(2));
+			serverprice = allpacketprice * 0.05;
+			$("#general_server_price").text(serverprice.toFixed(2));
+			allprice = allpacketprice + serverprice;
+			$("#general_all_price").text(allprice.toFixed(2));
+		});
+		/*提交支付的方法*/
+		function pay_ajax(type) {
+			packet_numbers = $('#packet_numbers').val();
+			
+			if(packet_numbers<1){
+				alertwindow('红包数量不能少于1');
+				return;
+			}
+			
+			
+			if(type == 0){
+				packetprice = $('#packet_price').val();
+				if (packetprice > 100000) {
+					alertwindow("红包总额不能超过10万元");
+					return;
+				}
+
+{if $gettype==1}//提现方式
+				//单个红包
+				if ((packetprice / packet_numbers) > 200 ||
+					(packetprice / packet_numbers) < 0.01) {
+					    alertwindow(packet_numbers+"个红包最低金额"+packet_numbers+"元");
+					return;
+				}
+{else}
+                //单个红包
+				if ((packetprice / packet_numbers) > 200 ||
+					(packetprice / packet_numbers) < 1) {
+					alertwindow(packet_numbers+"个红包最低金额"+packet_numbers+"元");
+					return;
+				}
+{/if}
+						
+
+			}else{
+				packetprice = $('#general_packet_price').val();
+				
+				
+{if $gettype==1}//提现方式				
+				if (packetprice > 200 || packetprice < 0.01) {
+					alertwindow("单个红包金额0.01-200元");
+					return;
+				}
+{else}				
+				if (packetprice > 200 || packetprice < 1) {
+					alertwindow("单个红包金额 1-200元");
+					return;
+				}
+
+{/if}		
+				//红包总额
+				var allpacketprice = packetprice * packet_numbers;
+				if (allpacketprice > 100000) {
+					alertwindow("红包总额不能大于10万元");
+					return;
+				}
+			}
+			
+			$.ajax({
+				type : "post",
+				url : "{php echo $this->createMobileUrl('sendpacket')}",
+				data : { 
+					type : type,
+					packet_numbers : packet_numbers,
+					packetprice : packetprice,
+				},
+				dataType : "json",
+				beforeSend : function(XMLHttpRequest) {
+					$("#my-modal-loading").modal('open');
+				},
+				success : function(res) {
+					$("#my-modal-loading").modal('close');
+					if (res.status == 200) {
+						window.location.href = res.pay_url;
+					} else if(res.status == 201){
+						window.location.href = res.pay_url;
+					}else{
+						alertwindow(res.errmsg);
+					}
+				},
+				error : function(res, type) {
+					$("#my-modal-loading").modal('close');
+					alertwindow(res.errmsg);
+				}
+			});
+		}
+	</script>
+
+{template 'footer'}

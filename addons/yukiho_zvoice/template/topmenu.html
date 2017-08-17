@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+{if empty($_W['isajax'])}
+{template 'common/top'}
+{/if}
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">顶部菜单列表</h3>
+				<div class="box-tools">
+					<a href="{php echo $this->createWebUrl('topmenu',array('act'=>'edit'))}" class="btn btn-info">新增</a>
+				</div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example2" class="table table-hover">
+            <thead>
+            <tr>
+                <th style="width:8%;">排序</th>
+                <th style="width:17%;">名称</th>
+                <th style="width:17%;">页面</th> 
+                <th style="width:15%;">类型</th>
+                <th style="width:10%;">首页栏目</th>
+                <th style="width:10%;">仅在首页</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {loop $list['list'] $li}
+            <tr>
+                <td>{$li['displayorder']}</td>
+                <td>{$li['title']}</td>
+				<td>
+					<label class="label label-{if $li['page']=='find'}info{else if $li['page']=='index'}success{else if $li['page']=='task'}warning{else if $li['page']=='speech'}primary{/if}">
+						{if $li['page']=='find'}专家列表页
+						{else if $li['page']=='index'}专家问题列表页
+						{else if $li['page']=='task'}悬赏问题列表页
+						{else if $li['page']=='speech'}小讲列表页
+						{/if}
+					</label>
+				</td>
+				<td>
+					<label class="label label-info">
+						{if $li['type']=='new'}最新
+						{else if $li['type']=='task'}悬赏
+						{else if $li['type']=='recommend'}推荐
+						{else if $li['type']=='cate'}分类下拉
+						{else if $li['type']=='star'}按评分
+						{else if $li['type']=='focus'}按粉丝数
+						{else if $li['type']=='answers'}按回答数
+						{else if $li['type']=='spec'}具体分类
+						{else if $li['type']=='outlink'}外部链接
+						{else if $li['type']=='free'}限免
+						{else if $li['type']=='end'}已完结
+						{else if $li['type']=='unend'}未完结
+						{/if}
+					</label>
+				</td>
+				<td>
+					<label class="label label-{if $li['ismain']=='1'}success{else}warning{/if}">
+						{if $li['ismain']=='1'}是{else}否{/if} 
+					</label>
+				</td>
+				<td>
+					<label class="label label-{if $li['onlymain']=='1'}success{else}warning{/if}">
+						{if $li['onlymain']=='1'}是{else}否{/if} 
+					</label>
+				</td>
+                <td>
+                    <a href="{php echo $this->createWebUrl('topmenu',array('act'=>'edit','id'=>$li['id']))}" class="btn btn-success">编辑</a>
+                    <a href="{php echo $this->createWebUrl('topmenu',array('act'=>'delete','id'=>$li['id']))}" class="btn btn-danger">删除</a>
+                </td>
+            </tr>
+            {/loop}
+            </tbody>
+              </table>
+            </div>
+			<div class="box-footer">
+				{php echo $list['pager']}
+			</div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+</div>
+<!-- ./wrapper -->
+{if empty($_W['isajax'])}
+{template 'common/foot'}
+<script type="text/javascript">
+	$('.mutdelete').click(function(){
+		var url = $(this).data('href');
+		var ids = [];
+		var idss = [];
+		$('input:checkbox[name="ids[]"]').each(function() {
+			var _that = $(this)[0];
+			if(_that.checked){
+				ids = ids.concat($(this).val());
+			}else{
+				idss = idss.concat($(this).val());
+			}
+		});
+		console.log(ids);
+		if(confirm("您确定要删除么？")){
+			$.post(url,{ids:ids},function(data){
+				util.message("删除成功","{php echo $_W['siteurl']}",'success');
+			},'json');
+		}
+	});
+	$('.unmutdelete').click(function(){
+		var ids = [];
+		var idss = [];
+		$('input:checkbox[name="ids[]"]').each(function() {
+			var _that = $(this)[0];
+			if(_that.checked){
+				ids = ids.concat($(this).val());
+			}else{
+				idss = idss.concat($(this).val());
+			}
+		});
+		console.log(idss);
+		if(confirm("您确定要删除么？")){
+			$.post(url,{ids:idss},function(data){
+				util.message("删除成功","{php echo $_W['siteurl']}",'success');
+			},'json');
+		}
+	})
+	$("#checkall").click(function(){
+		console.log('checkall');
+		$('input[name="ids[]"').each(function(){
+			var _that = $(this)[0];
+			if(_that.checked){
+				_that.checked = false;
+			}else{
+				_that.checked = true;
+			}
+		});
+	});
+</script>
+{/if}

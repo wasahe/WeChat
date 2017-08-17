@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com" versionCode="0.6">
+	<application setting="false">
+		<name><![CDATA[快微信息查询]]></name>
+		<identifie><![CDATA[kuaiwei_xxcx]]></identifie>
+		<version><![CDATA[1.6]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[信息管理及查询]]></ability>
+		<description><![CDATA[快微信息查询是一款方便管理及查询的信息系统！]]></description>
+		<author><![CDATA[折翼天使资源社区]]></author>
+		<url><![CDATA[www.012wz.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+	<rule embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="大厅首页" do="superindex" state="" direct="false"/>
+			<entry title="信息查询首页" do="index2" state="" direct="false"/>
+			<entry title="业务查询首页" do="index" state="" direct="false"/>
+		</cover>
+
+		<menu>
+			<entry title="信息数据管理" do="import_manage" state="" direct="false"/>
+			<entry title="业务进度管理" do="manage" state="" direct="false" />
+			<entry title="业务类型设置" do="business_manage" state="" direct="false" />
+			<entry title="模板管理" do="tlmanage" state="" direct="false" />
+			 <entry title="参数设置" do="form" state="" direct="false" />
+			<entry title="广告管理" do="admanage" state="" direct="false" />
+			<entry title="借权设置" do="sysset" state="" direct="false"/>
+		</menu>
+	</bindings>
+	<install><![CDATA[
+
+CREATE TABLE IF NOT EXISTS `ims_kuaiwei_xxcx_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `typecn` varchar(50) DEFAULT '',
+  `typename` varchar(50) DEFAULT '' COMMENT '类型',
+  `typelen` int(11) DEFAULT '0' COMMENT '长度',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_kuaiwei_xxcx_field` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT '0' COMMENT '公众号id',
+  `cnname` varchar(50) DEFAULT '' COMMENT '字段中文名',
+  `enname` varchar(50) DEFAULT '' COMMENT '字段英文名',
+  `typename` varchar(50) DEFAULT '' COMMENT '类型',
+  `length` int(11) DEFAULT '0' COMMENT '长度',
+  `tbname` varchar(50) DEFAULT '' COMMENT '表名',
+  `is_import` tinyint(2) DEFAULT '0' COMMENT '是否导入',
+  `is_search` tinyint(2) DEFAULT '0' COMMENT '是否检索',
+  PRIMARY KEY (`id`),
+  KEY `indx_uniacid` (`uniacid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_kuaiwei_xxcx_fans` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT '0' COMMENT '公众号id',
+  `fansID` int(11) DEFAULT '0',
+  `from_user` varchar(50) DEFAULT '' COMMENT '用户ID',
+  `tel` varchar(20) DEFAULT '' COMMENT '手机',
+  `fname` varchar(20) DEFAULT '' COMMENT '姓名',
+  `fqq` varchar(20) DEFAULT '' COMMENT 'QQ',
+  `femail` varchar(50) DEFAULT '' COMMENT 'email',
+  `faddr` varchar(300) DEFAULT '' COMMENT '地址',
+  `todaynum` int(11) DEFAULT '0' ,
+  `avatar` varchar(512) NOT NULL DEFAULT '' COMMENT '微信头像',
+  `totalnum` int(11) DEFAULT '0',
+  `last_time` int(10) DEFAULT '0',
+  `createtime` int(10) DEFAULT '0',
+  `minad` tinyint(1) DEFAULT '0' COMMENT '首次广告',
+  `cutnum` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '拉黑状态',
+  PRIMARY KEY (`id`),
+  KEY `indx_from_user` (`from_user`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_kuaiwei_xxcx_flow` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT '0' COMMENT '公众号id',
+  `number` int(10) DEFAULT '0' COMMENT '模板编号',
+  `name` varchar(250) DEFAULT '' COMMENT '模板名称',
+  `type` int(10) DEFAULT '0' COMMENT '业务类型',
+  `typename` varchar(50) DEFAULT '' COMMENT '业务类型名称',
+  `sequence` int(10) DEFAULT '0' COMMENT '排序',
+  `lcname` varchar(250) DEFAULT '' COMMENT '流程名称',
+  `state` tinyint(2) DEFAULT '0' COMMENT '状态（是否完成）',
+  `status` tinyint(2) DEFAULT '0' COMMENT '状态（是否启用）',
+  PRIMARY KEY (`id`),
+  KEY `indx_uniacid` (`uniacid`),
+  KEY `indx_number` (`number`),
+  KEY `indx_status` (`status`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_kuaiwei_xxcx_template` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT '0' COMMENT '公众号id',
+  `number` int(10) DEFAULT '0' COMMENT '模板编号',
+  `name` varchar(250) DEFAULT '' COMMENT '模板名称',
+  `type` int(10) DEFAULT '0' COMMENT '业务类型',
+  `typename` varchar(50) DEFAULT '' COMMENT '业务类型名称',
+  PRIMARY KEY (`id`),
+  KEY `indx_uniacid` (`uniacid`),
+  KEY `indx_number` (`number`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_kuaiwei_xxcx_progress` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT '0' COMMENT '公众号id',
+  `companyname` varchar(250) DEFAULT '' COMMENT '公司名称',
+  `number` int(10) DEFAULT '0' COMMENT '模板编号',
+  `name` varchar(250) DEFAULT '' COMMENT '模板名称',
+  `type` int(10) DEFAULT '0' COMMENT '操作类型',
+  `typename` varchar(50) DEFAULT '' COMMENT '操作类型名称',
+  `sequence` int(10) DEFAULT '0' COMMENT '排序',
+  `lcname` varchar(250) DEFAULT '' COMMENT '流程名称',
+  `state` varchar(50) DEFAULT '0' COMMENT '状态（是否完成）',
+  `status` tinyint(2) DEFAULT '0' COMMENT '状态（是否启用）',
+  `endtime` int(11) DEFAULT '0' COMMENT '完成时间',
+  PRIMARY KEY (`id`),
+  KEY `indx_uniacid` (`uniacid`),
+  KEY `indx_number` (`number`),
+  KEY `indx_companyname` (`companyname`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_kuaiwei_xxcx_paramset` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT '0' COMMENT '公众号id',
+  `share_type` tinyint(1) DEFAULT '0',
+  `guanzhu_txt` varchar(300) DEFAULT '',
+  `guanzhu_img` varchar(250) DEFAULT '' COMMENT '关注二维码',
+  `share_title` varchar(200) DEFAULT '',
+  `share_desc` varchar(1000) DEFAULT '',
+  `share_img` varchar(300) DEFAULT '',
+  `btm_adtype` tinyint(1) DEFAULT '0' COMMENT '底部广告类型',
+  `top_adtitle` varchar(250) DEFAULT '' COMMENT '头部广告标题',
+  `top_adimg` varchar(250) DEFAULT '' COMMENT '头部广告图片',
+  `top_adurl` varchar(250) DEFAULT '0' COMMENT '头部广告链接',
+  `btm_adtitle` varchar(250) DEFAULT '' COMMENT '底部广告标题',
+  `btm_adimg` varchar(250) DEFAULT '' COMMENT '底部广告图片',
+  `btm_adurl` varchar(250) DEFAULT '0' COMMENT '底部广告链接',
+  PRIMARY KEY (`id`),
+  KEY `indx_uniacid` (`uniacid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_kuaiwei_xxcx_business` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT '0' COMMENT '公众号id',
+  `typename` varchar(250) DEFAULT '' COMMENT '业务类型名称',
+  `status` tinyint(2) DEFAULT '0' COMMENT '状态（是否启用）',
+  PRIMARY KEY (`id`),
+  KEY `indx_uniacid` (`uniacid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_kuaiwei_xxcx_ad` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT '0',
+  `type` tinyint(1) DEFAULT '0',
+  `adtitle` varchar(250) DEFAULT '' COMMENT '广告标题',
+  `adimg` varchar(250) DEFAULT '' COMMENT '广告图片',
+  `adurl` varchar(250) DEFAULT '0' COMMENT '广告链接',
+  `status` tinyint(2) DEFAULT '0' COMMENT '状态',
+  PRIMARY KEY (`id`),
+  KEY `indx_uniacid` (`uniacid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+
+ CREATE TABLE IF NOT EXISTS `ims_kuaiwei_xxcx_sysset` (
+  `id` int(11)  AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT 0 ,
+  `appid` varchar(255) default '',
+  `appsecret` varchar(255) default '',
+  `appid_share` varchar(255) default '',
+  `appsecret_share` varchar(255) default '',
+  PRIMARY KEY (`id`),KEY `idx_uniacid` (`uniacid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+INSERT INTO `ims_kuaiwei_xxcx_type` (`id`,`typecn`,`typename`,`typelen`) VALUES
+(1, '整型', 'int', 11),
+(2, '文本', 'varchar', 255),
+(3, '小数', 'float', 0),
+(4, '是否', 'tinyint', 2),
+(5, '长文本', 'text', 0);
+
+]]></install>
+
+<uninstall>
+  <![CDATA[
+  drop table if exists ims_kuaiwei_xxcx_type;
+  drop table if exists ims_kuaiwei_xxcx_field;
+  drop table if exists ims_kuaiwei_xxcx_info;
+  drop table if exists ims_kuaiwei_xxcx_flow;
+  drop table if exists ims_kuaiwei_xxcx_template;
+  drop table if exists ims_kuaiwei_xxcx_progress;
+  drop table if exists ims_kuaiwei_xxcx_paramset;
+  drop table if exists ims_kuaiwei_xxcx_business;
+  drop table if exists ims_kuaiwei_xxcx_fans;
+  drop table if exists ims_kuaiwei_xxcx_ad;
+  drop table if exists ims_kuaiwei_xxcx_sysset;
+  ]]>
+</uninstall>
+	<upgrade><![CDATA[
+
+	]]></upgrade>
+</manifest>

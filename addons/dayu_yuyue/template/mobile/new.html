@@ -1,0 +1,328 @@
+{template 'header'}
+{template 'common'}
+	<link type="text/css" rel="stylesheet" href="/addons/dayu_yuyue/template/skin3/style.css">
+    <script src="/addons/dayu_yuyue/template/skin3/js/mobiscroll_002.js" type="text/javascript"></script>
+	<script src="/addons/dayu_yuyue/template/skin3/js/mobiscroll_004.js" type="text/javascript"></script>
+	<link href="/addons/dayu_yuyue/template/skin3/css/mobiscroll_002.css" rel="stylesheet" type="text/css">
+	<link href="/addons/dayu_yuyue/template/skin3/css/mobiscroll.css" rel="stylesheet" type="text/css">
+	<script src="/addons/dayu_yuyue/template/skin3/js/mobiscroll.js" type="text/javascript"></script>
+	<script src="/addons/dayu_yuyue/template/skin3/js/mobiscroll_003.js" type="text/javascript"></script>
+	<script src="/addons/dayu_yuyue/template/skin3/js/mobiscroll_005.js" type="text/javascript"></script>
+	<link href="/addons/dayu_yuyue/template/skin3/css/mobiscroll_003.css" rel="stylesheet" type="text/css">
+<style>
+html, body, form{margin:0;padding:0;height:100%;}
+body{background:#f7f7f7;}
+.basic-accordian{width:100%;padding:5px 0 0;-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;}
+.dropdown-select, .datetimepicker{border:0; font-size:14px; padding:0 8px 0 0;width:90%;}
+.form-table label{color:#434343; padding:0 0 0 18px; font-size:16px; font-weight:normal;text-align:left;}
+.userinfotop span.none{color:#fff;background:#e86691;text-align:center;margin-left:16px;position:absolute; top:150px;font-size:16px;height:20px;padding:5px 22px;border:0;-webkit-border-radius:0 0 5px 5px;border-radius:0 0 5px 5px;}
+.mobile-content { border-bottom: 0px solid #fff; margin:0 auto; overflow: hidden;width: 92%;}
+.mobile-content1 {margin: 0px auto 10px; overflow: hidden; padding-bottom:4px;width: 92%;}
+.tdd{ border:1px solid #c4c4c4;height:38px; background:#fff;line-height:36px; margin:5px auto; padding:2px 0 2px 12px;-webkit-border-radius: 2px;-moz-border-radius: 2px;-o-border-radius: 2px;}
+.form-table td{ padding-bottom:2px;}
+.ui-select { text-align: center;}  
+.ui-select select { position: absolute; left: 0px; top: 0px; width: 100%; height: 3em; opacity: 0;}  
+.btn-success1 { background-color: #AC9359; background-image: linear-gradient(to bottom, #AC9359, #AC9359); background-repeat: repeat-x; border-color: #AC9359; color: #ffffff;text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); padding:10px 0; border-radius: 6px;}
+.mobile-content2 { overflow: hidden; padding:10px 10px;}
+textarea{  background-color: #ffffff; border: 1px solid #c4c4c4;-webkit-border-radius: 2px;-moz-border-radius: 2px;-o-border-radius: 2px;padding:2px 8px;}
+.info, .blue {background:#e6f8ff;}
+.info input {background:#e6f8ff;width:90%;}
+.submit {background-color:#499a68;padding:8px;height:50px;font-size:18px;text-decoration:none;border:0px solid #0B8E00;color: #ffffff;display:block;text-align:center;text-shadow:0 1px rgba(0, 0, 0, 0.2);-webkit-border-radius: 0px;-moz-border-radius: 0px;-o-border-radius: 0px;}
+.member{width:100px;}
+.info a{float:right; border:1px solid #499a68;background-color:#64bf87;color:#fff;line-height:22px;-webkit-border-radius: 5px;-moz-border-radius: 5px;-o-border-radius: 5px;padding:2px 5px;margin:2px 5px 0 0;}
+input.form-control{width:60%;border:0;background-color:blue;float:right;}
+i{line-height:30px;text-indent:0px;margin-right:5px;}
+label{margin-left:10px;font-weight:normal}
+.time, .time input{color:#499a68;background:#fff;}
+.header_highlight{padding-bottom:40px;}
+footer {float:left;margin:0;bottom: 0;height: 50px;position: fixed;width: 100%;z-index: 10;}
+
+</style>
+	{if !empty($advs)}
+		<div id="banner_box" class="box_swipe">
+		<ul>
+			{loop $advs $adv}
+			<li>
+				<a href="{if !empty($adv['link'])}#{else}{$adv['link']}{/if}"><img src="{$_W['attachurl']}{$adv['thumb']}" alt=""  width='100%' height='180px'/>
+				</a>
+				<span class="title">{$adv['advname']}</span>
+			</li>
+			{/loop}
+		</ul>
+		<ol>
+		   {php $slideNum = 1;}
+				{loop $advs $adv}
+				<li{if $slideNum == 1} class="on"{/if}></li>
+				{php $slideNum++;}
+			{/loop}
+		</ol>
+	</div>
+	<script>
+		$(function() {
+			new Swipe($('#banner_box')[0], {
+			speed:500,
+			auto:3000,
+			callback: function(){
+			var lis = $(this.element).next("ol").children();
+			lis.removeClass("on").eq(this.index).addClass("on");
+			}
+			});
+		});
+	</script>
+	{else if !empty($activity['thumb'])}
+	<img class="research-thumb" src="{$_W['attachurl']}{$activity['thumb']}">
+	{/if}
+	
+	<div class="basic-accordian">
+		<form action="" method="post" enctype="multipart/form-data" onsubmit="return validate();">
+		<div id="test0-header" class="accordion_headings  header_highlight">
+		<div class="mobile-content">
+			<div class="tdd info" style="margin-top:10px;"><i class="fa fa-user"></i>
+			<input name="member"  type="text" class="dropdown-select member" id="member" style="width:50%;" value="{$userinfo['realname']}" placeholder="请输入您的真实姓名">
+			<a href="{php echo $this->createMobileUrl('myresearch', array('name' => 'dayu_yuyue', 'weid' => $row[weid]))}"><span>{$mname}</span></a>
+			</div>
+			<div class="tdd info"><i class="fa fa-tablet"></i>
+			<input name="mobile"  type="text" class="dropdown-select" id="mobile" value="{$userinfo['mobile']}" placeholder="请输入您的手机号码">
+			</div>
+			<div id="pca">
+					<select id="sel-provance" name="resideprovince" onChange="selectCity();" class="dropdown-select blue" style="width:30%; margin-right:1%;">
+						<option value="" selected="true">省/直辖市</option>
+					</select>
+					<select id="sel-city" name="residecity" onChange="selectcounty()" class="dropdown-select blue" style="width:35%; margin-right:1%;">
+						<option value="" selected="true">请选择</option>
+					</select>
+					<select id="sel-area" name="residedist" class="dropdown-select blue" style="width:30%;">
+						<option value="" selected="true">请选择</option>
+					</select>
+			</div>
+			<div class="tdd info" id="address"><i class="fa fa-home"></i>
+					<input type="text" name="address" value="{$userinfo['address']}" class="dropdown-select" id="address" placeholder="请输入您的详细地址">
+					<input type="hidden" id="addressid" value="" />
+			</div>
+		</div>
+	
+		<div class="mobile-content1">
+			<div class="tdd"><i class="fa fa-sitemap"></i>
+					<select name="yyfs" class="dropdown-select" id="yyfs">
+						<option value="0">店面预约</option>
+						{if $shangmen=='1'}<option value="1">上门服务</option>{/if}
+					</select>
+			</div>
+			<div class="tdd"><i class="fa fa-language"></i>
+				<select name="oid" class="dropdown-select" onchange="fetchgetjs(this)" id="oid">
+					<option value="">选择分店</option>
+					{loop $outlets $outlet}
+					<option value="{$outlet['id']}">{$outlet['name']}</option>
+					{/loop}
+				</select>
+			</div>
+			<div class="tdd"><i class="fa fa-group"></i>
+				<select name="jsid" class="dropdown-select" id="jsid" onchange="showjishi(this)" style="width:70%">
+					<option value="" >请选择{$zhicheng}</option>
+				</select>
+			</div>
+			<div class="tdd"><i class="fa fa-tasks"></i>
+				<select name="xmid" class="dropdown-select" id="xmid" onchange="showDate(this.value)">
+					<option value="">选择服务项目</option>
+					{loop $xms $xm}
+					<option value="{$xm['id']}">{$xm['title']}</option>
+					{/loop}
+				</select>
+			</div>
+			<div class="tdd info time"><i class="fa fa-clock-o"></i>
+			<input placeholder="预约时间" type="text" class="dropdown-select" name="yystarttime" id="appDateTime" type="text" readonly >
+			</div>
+		
+	<script type="text/javascript">
+        $(function () {
+			var currYear = (new Date()).getFullYear();	
+			var opt={};
+			opt.date = {preset : 'date'};
+			opt.datetime = {preset : 'datetime'};
+			opt.time = {preset : 'time'};
+	var nowData=new Date();
+			opt.default = {
+				theme: 'wp', //皮肤样式
+		        display: 'bottom', //显示方式 
+		        mode: 'scroller', //日期选择模式
+				dateFormat: 'yyyy-mm-dd',
+				lang: 'zh',
+				showNow: true,
+				nowText: "今天",
+        cancelText: '取消',
+        setText: '确定',
+		    //    startYear: currYear - 0, //开始年份
+		    //    endYear: currYear + 0 //结束年份
+		minDate: new Date(nowData.getFullYear(),nowData.getMonth(),nowData.getDate(),nowData.getHours()+{$stime},00), 
+		maxDate: new Date(nowData.getFullYear(),nowData.getMonth(),nowData.getDate()+{$eday},{$etime},00), 
+			};
+
+		  	var optDateTime = $.extend(opt['datetime'], opt['default']);
+		    $("#appDateTime").mobiscroll(optDateTime).datetime(optDateTime);
+        });
+    </script>
+			<div class="texta"><textarea name="beizhu" rows="3" placeholder="备注"></textarea></div>
+		</div>
+	</div>
+<footer>
+		<input type="hidden" name="token" value="{$_W['token']}" />
+		<input type="submit" class="btn-large btn-success submit" value="提 交 预 约" name="submit" style="width:100%;">
+</footer>
+
+</form>
+</div>
+
+
+<script type="text/javascript" src="/addons/dayu_yuyue/images/cascade.js"></script>
+<script type="text/javascript">	
+	cascdeInit('{$userinfo['resideprovince']}','{$userinfo['residecity']}','{$userinfo['residedist']}');
+	$('#datepicker_yystarttime').change(function(){
+		$.post('{php echo $this->createMobileUrl('getendtime')}',{'time':$(this).val()},function(s){
+			$('#datepicker_yyendtime').val(s);
+		});
+	});
+	var yyfs=$('#yyfs').val();
+		//alert(yyfs);
+		if(yyfs==1){
+			$('#pca').css('display','');
+			$('#address').css('display','');
+			$('#trout').css('display','none');
+			getjss();
+		}else{
+			$('#pca').css('display','none');
+			$('#address').css('display','none');
+			$('#trout').css('display','');
+			$('#jsid').empty();
+			$('#jsid').append('<option value="">请选择{$zhicheng}</option>');
+		}
+	$('#yyfs').change(function(){
+		var yyfs=$(this).val();
+		//alert(yyfs);
+		if(yyfs==1){
+			$('#trout').css('display','none');
+			$('#pca').css('display','');
+			$('#address').css('display','');
+			getjss();
+		}else{
+			$('#pca').css('display','none');
+			$('#address').css('display','none');
+			$('#trout').css('display','');
+			$('#jsid').empty();
+			$('#jsid').append('<option value="">请选择{$zhicheng}</option>');
+		}
+	});
+	function validate(){
+		if($('#yyfs').val()==1){
+			if($.trim($('#jsid').val())==''){
+				alert('请选择{$zhicheng}.');
+				return false;
+			}
+			if($.trim($('#xmid').val())==''){
+				alert('请选择预约项目.');
+				return false;
+			}
+			return validateadd();
+		}else{
+			if($.trim($('#member').val())==''){
+				alert('请输入姓名.');
+				return false;
+			}
+			if($.trim($('#mobile').val())==''){
+				alert('请输入手机号码.');
+				return false;
+			}
+			if($.trim($('#oid').val())==''){
+				alert('请选择门店.');
+				return false;
+			}
+			if($.trim($('#jsid').val())==''){
+				alert('请选择{$zhicheng}.');
+				return false;
+			}
+			if($.trim($('#xmid').val())==''){
+				alert('请选择预约项目.');
+				return false;
+			}
+			if($.trim($('#appDateTime').val())==''){
+				alert('请选择预约时间.');
+				return false;
+			}
+			//return validateadd();
+		}
+		return true;
+	}
+	function validateadd(){
+		if($.trim($('#sel-provance').val())==''){
+				alert('请选择省份.');
+				return false;
+			}
+		if($.trim($('#sel-city').val())==''){
+				alert('请选择市.');
+				return false;
+			}
+		if($.trim($('#sel-area').val())==''){
+				alert('请选择县区.');
+				return false;
+			}
+		return true;	
+	}
+	function getjss() {
+		$('#jsid').empty();
+		$('#jsid').append('<option value="">请选择{$zhicheng}</option>');
+		$.getJSON('{php echo $this->createMobileUrl('getjss')}', function(s){
+			if (s.message.status == 0) {
+				alert(s.message.jss, '', 'error');
+				return;
+			}
+			$('#jsid').empty();
+			if (s.message.jss) {
+				for (i in s.message.jss) {
+					$('#jsid').append('<option value="'+s.message.jss[i].id+'">'+s.message.jss[i].name+'</option>');
+				}
+			} 
+		});
+	}
+	function fetchgetjs(obj) {
+		$('#jsid').empty();
+		$('#jsid').append('<option value="">请选择{$zhicheng}</option>');
+		if (!$(obj).val()) {
+			return false;
+		}
+
+		$.getJSON('{php echo $this->createMobileUrl('getjs')}', {'oid' : $(obj).val()}, function(s){
+			if (s.message.status == 0) {
+				alert(s.message.jss, '', 'error');
+				return;
+			}
+			$('#jsid').empty();
+			if (s.message.jss) {
+				for (i in s.message.jss) {
+					$('#jsid').append('<option value="'+s.message.jss[i].id+'">'+s.message.jss[i].name+'</option>');
+				}
+			} 
+		});
+	}
+	function showDate(val) {
+		if (!val) {
+			$('#date_tr').hide();
+			return false;
+		}		
+		if(val){
+			$('#date_tr').show();
+		}else{
+			$('#date_tr').hide();
+		}	
+	}
+	function showjishi(val) {
+		if (!val) {
+			$('#jishiinfo').hide();
+			return false;
+		}		
+		if(val){
+			$('#jishiinfo').show();
+		}else{
+			$('#jishiinfo').hide();
+		}	
+	}
+</script>
+{template 'footer'}

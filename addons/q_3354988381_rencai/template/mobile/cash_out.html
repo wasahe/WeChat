@@ -1,0 +1,261 @@
+﻿{template 'common_header'}
+<!-- 已领取任务 提交 -->
+<link rel="stylesheet" href="{CURR_UI_DIR}weui/style/weui.css"/>
+<script src="{CURR_UI_DIR}weui/weui.js"></script>
+<style type="text/css">
+    body,html{height:100%;-webkit-tap-highlight-color:transparent}.page,body{background-color:#fbf9fe}.page{overflow-y:auto;-webkit-overflow-scrolling:touch}.hd{padding:2em 0}.page_title{text-align:center;font-size:34px;color:#3cc51f;font-weight:400;margin:0 15%}
+p, hr, ul, ol, dl, blockquote, pre, address, fieldset, figure {
+    margin: 0 0 0 0;
+}
+</style>
+<style>
+.page_title {
+    font-size: 1.4rem;
+    color: #F96A0E;
+}
+.weui_media_box .weui_media_title {
+    color: #F96A0E;
+}
+
+.page_top_item {
+    text-align: center;
+}
+.page_top_item span{
+    width: 20%;
+    line-height: 25px;
+    border-radius: 3px;
+    border: 1px solid #ff5f27;
+    margin-top: 7px;
+    text-align: center;
+    color: #ff5f27;	
+    display: inline-block;	
+}
+.font_activity {
+    background: #ff5f27!important;
+    color: #fff!important;
+}
+
+</style>
+	<div class="page_top_item">
+        <a href="{php echo $this->createmobileUrl('cash_out', array('show' => 'tixian'));}"><span {if !$_GPC['show'] || $_GPC['show']=='tixian'}class="font_activity"{/if}>我要提现</span></a>
+        <!--<a href="{php echo $this->createmobileUrl('cash_out', array('show' => 'income'));}"><span {if $_GPC['show']=='income'}class="font_activity"{/if}>我的收入</span></a>-->
+        <a href="{php echo $this->createmobileUrl('cash_out', array('show' => 'award'));}"><span {if $_GPC['show']=='award'}class="font_activity"{/if}>我的收入</span></a>
+        <a href="{php echo $this->createmobileUrl('cash_out', array('show' => 'outcome'));}"><span {if $_GPC['show']=='outcome'}class="font_activity"{/if}>我的支出</span></a>
+        {if $type=='C'}
+        <a href="{php echo $this->createmobileUrl('cash_out', array('show' => 'charge'));}"><span {if $_GPC['show']=='charge'}class="font_activity"{/if}>充值记录</span></a>
+		{/if}
+    </div>
+
+
+{if $show == 'award'}     
+    <div class="weui_panel">
+    	<div class="weui_panel_bd">
+        
+			{loop $list $row}     
+                <div class="weui_media_box weui_media_text" style=" margin-bottom:-30px">
+                </div>                      
+                <div class="weui_panel_bd">
+                    <a href="javascript:void(0);" class="weui_media_box weui_media_appmsg">
+                        <div class="weui_media_bd">
+                            <p class="weui_media_desc">
+                            	<span>{$award_name}</span>
+                                <span style="float:right;color:#{php echo $row['finish_flag']=='S'?'F63':'0C3';};">{php echo $row['award_price']?$row['award_price']:'-';} </span>                            
+                            </p>
+                            <p class="weui_media_desc">
+                            	<span>{$row['create_at']}</span>
+                                <span style="float:right;color:#{php echo $row['finish_flag']=='S'?'F63':'0C3';};">{php echo $this->get_tixian_status($row['finish_flag']);} </span>
+                            </p>
+                        </div>  
+                    </a>                 
+                </div>                            
+            {/loop}
+
+            {if empty($list)}
+                <div class="weui_media_box weui_media_text">
+                    <h4 class="weui_media_title">暂无记录</h4>
+                </div>       
+            {/if}        
+            
+            
+        </div>
+     </div> 
+{else if $show == 'income'}
+    <div class="weui_panel">
+    	<div class="weui_panel_bd">
+        
+			{loop $list $row}     
+                <div class="weui_media_box weui_media_text" style=" margin-bottom:-30px">
+                </div>                      
+                <div class="weui_panel_bd">
+                    <a href="javascript:void(0);" class="weui_media_box weui_media_appmsg">
+                        <div class="weui_media_bd">
+                            <p class="weui_media_desc">
+                            	<span>提现</span>
+                                <span style="float:right;color:#{php echo $row['finish_flag']=='S'?'F63':'0C3';};">{php echo $row['tixian_msg']?$row['tixian_msg']:'-';} </span>                            
+                            </p>
+                            <p class="weui_media_desc">
+                            	<span>{$row['createtime']}</span>
+                                <span style="float:right;color:#{php echo $row['finish_flag']=='S'?'F63':'0C3';};">{php echo $this->get_tixian_status($row['finish_flag']);} </span>
+                            </p>
+                        </div>  
+                    </a>                 
+                </div>                            
+            {/loop}
+
+            {if empty($list)}
+                <div class="weui_media_box weui_media_text">
+                    <h4 class="weui_media_title">暂无记录</h4>
+                </div>       
+            {/if}        
+            
+            
+        </div>
+     </div> 
+{else if $show == 'outcome'}     
+    <div class="weui_panel">
+    	<div class="weui_panel_bd">
+        
+			{loop $list $row}     
+                <div class="weui_media_box weui_media_text" style=" margin-bottom:-30px">
+                </div>                      
+                <div class="weui_panel_bd">
+                    <a href="javascript:void(0);" class="weui_media_box weui_media_appmsg">
+                        <div class="weui_media_bd">
+                            <p class="weui_media_desc">
+                            	<span>查看简历</span>
+                                <span style="float:right;color:#{php echo $row['finish_flag']=='S'?'F63':'0C3';};">{php echo '- '.$row['fee'];} </span>                            
+                            </p>
+                            <p class="weui_media_desc">
+                            	<span>{$row['createat']}</span>
+                                <span style="float:right;color:#{php echo $row['finish_flag']=='S'?'F63':'0C3';};">{php //echo $this->get_tixian_status($row['finish_flag']);} </span>
+                            </p>
+                        </div>  
+                    </a>                 
+                </div>                            
+            {/loop}
+
+            {if empty($list)}
+                <div class="weui_media_box weui_media_text">
+                    <h4 class="weui_media_title">暂无记录</h4>
+                </div>       
+            {/if}        
+            
+            
+        </div>
+     </div> 
+ {else if $show == 'charge'}     
+     <div class="weui_panel">
+    	<div class="weui_panel_bd">
+        
+			{loop $list $row}     
+                <div class="weui_media_box weui_media_text" style=" margin-bottom:-30px">
+                </div>                      
+                <div class="weui_panel_bd">
+                    <a href="javascript:void(0);" class="weui_media_box weui_media_appmsg">
+                        <div class="weui_media_bd">
+                            <p class="weui_media_desc">
+                            	<span>{php echo $this->getChargeType($row['pay_type']);}</span>
+                                <span style="float:right;color:#{php echo $row['status']==1?'F63':'0C3';};">{php echo $row['fee'];} </span>                            
+                            </p>
+                            <p class="weui_media_desc">
+                            	<span>{$row['create_at']}</span>
+                                <span style="float:right;color:#{php echo $row['status']==1?'F63':'0C3';};">{php echo $row['status']==1?'成功':'失败';} </span>
+                            </p>
+                        </div>  
+                    </a>                 
+                </div>                            
+            {/loop}
+
+            {if empty($list)}
+                <div class="weui_media_box weui_media_text">
+                    <h4 class="weui_media_title">暂无记录</h4>
+                </div>       
+            {/if}        
+            
+            
+        </div>
+     </div>      
+{else}
+	<style type="text/css">
+        body,html{height:100%;-webkit-tap-highlight-color:transparent}.page,body{background-color:#fbf9fe}.page{overflow-y:auto;-webkit-overflow-scrolling:touch}.hd{padding:2em 0}.page_title{text-align:center;font-size:34px;color:#3cc51f;font-weight:400;margin:0 15%}
+    </style>
+    <div class="page">
+        <div class="weui_cells">
+            <div class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>我已提现总额</p>
+                </div>
+                <div class="weui_cell_ft"><span style="color:#F63">{$have_tixian_moneys} </span><span style="font-size:1.5rem">元</span></div>
+            </div>  
+
+             
+            <div class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>可提现总金额</p>
+                </div>
+                <div class="weui_cell_ft"><span style="color:#F63">{$can_tixian_money} </span><span style="font-size:1.5rem">元</span></div>
+            </div>                
+                
+                
+            <div class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>提现金额</p>
+                </div>
+                <div class="weui_cell_ft" style="width:70%">
+                    <span style="float:left;width:40%; ">
+                    <input style="text-align:left;" class="weui_input" type="number" placeholder="最低1元" name="addmoney" id="addmoney">
+                    </span>
+                    <span style="float:right;" id="bt_tixian_all">元&nbsp;&nbsp;&nbsp;全部提现</span>
+                </div>
+            </div>  
+                                          
+        </div>    
+        <div class="weui_btn_area">
+            <button class="weui_btn weui_btn_primary weui_btn_disabled" id="btn_recharge">提 现</button>
+        </div>
+    </div>
+    
+<script type="text/javascript">
+    var flag = 0;
+    $('#addmoney').bind('input propertychange', function() {
+        if($(this).val().length > 0){
+            $("#btn_recharge").removeClass("weui_btn_disabled");
+            flag = 1;
+        }else{
+            $("#btn_recharge").addClass("weui_btn_disabled");
+            flag = 0;
+        }
+    });
+	$('#bt_tixian_all').click(function() {
+		$('#addmoney').val('{$can_tixian_money}');	
+		{if $can_tixian_money >= 1}
+		$("#btn_recharge").removeClass("weui_btn_disabled");
+		flag = 1;		
+		{/if}
+	});
+    $('#btn_recharge').click(function() {
+        if (flag == 1) {
+            var money = $("#addmoney").val();
+			if (money < 1) {
+				alert('提现金额1元起');return;
+			}
+            $("#btn_recharge").addClass("weui_btn_disabled");
+            flag = 0;
+            $.ajax({
+                url: '{php echo $this->createMobileUrl('tixianapply');}',
+                type: 'post',
+                dataType: 'json',
+                data: {addmoney: money},
+                success:function(data){
+                    if (data.status == 1) {
+                        window.location.href = '{php echo $this->createMobileUrl('tixianapplyflb');}&addmoney=' + money;
+                    }else{
+                        Weui.alert({"title":"提现失败","content":data.msg});
+                    }
+                }
+            });            
+        }
+    });
+</script>                   
+{/if}     
+{template 'common_footer'}

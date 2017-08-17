@@ -1,0 +1,20 @@
+{template 'header'}
+<div class="container" id="container">
+<div class="weui_msg">
+    <div class="weui_icon_area"><i class="weui_icon_msg weui_icon_{$_GPC['style']}"></i></div>
+    <div class="weui_text_area">
+        <h2 class="weui_msg_title">{$_GPC['title']}</h2>
+        <p class="weui_msg_desc">{$_GPC['info']}</p>
+    </div>
+    <div class="weui_opr_area">
+        <p class="weui_btn_area">
+            <a href="{php echo referer();}" class="weui_btn weui_btn_primary" id="showPay">返回</a>
+        </p>
+    </div>
+    <div class="weui_extra_area">
+
+    </div>
+</div>
+</div>
+{template 'footer'}
+<!---bbs_heirui_cn-->

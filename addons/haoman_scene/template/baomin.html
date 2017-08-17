@@ -1,0 +1,138 @@
+{template 'common/header'}
+<div class="main">
+	
+    <div class="panel panel-info">
+	<div class="panel-heading">筛选</div>
+	<div class="panel-body">
+		<form action="./index.php" method="get" class="form-horizontal" role="form">
+			<input type="hidden" name="c" value="site" />
+			<input type="hidden" name="a" value="entry" />
+        	<input type="hidden" name="m" value="haoman_scene" />
+        	<input type="hidden" name="do" value="baomin" />
+        	<input type="hidden" name="rid" value="{$_GPC['rid']}" />
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">真实姓名</label>
+				<div class="col-xs-12 col-sm-8 col-lg-9">
+					<input class="form-control" name="nickname" id="" type="text" value="{$_GPC['nickname']}" placeholder="名称">
+				</div>
+			</div>
+			<div class="form-group">
+				<!-- <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">手机号码</label>
+				<div class="col-xs-12 col-sm-8 col-lg-9">
+					<input class="form-control" name="mobile" id="" type="text" value="{$_GPC['mobile']}" placeholder="手机号码"> 
+				</div> -->
+				<div class=" col-xs-12 col-sm-2 col-lg-2">
+					<button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+				</div>
+			</div>			
+
+		</form>
+	</div>
+</div>
+
+
+	<!-- <button class="btn btn-success" onclick="location.href='{php echo $this->createWebUrl('download',array('rid'=>$_GPC['rid']))}'" type="button"><i class="fa fa-search"></i> 导出数据</button> -->
+	<div class="panel panel-default">
+<div class="panel-heading">
+
+	<div class="alert" style="margin-bottom:0;">
+		本次活动报名总数：{$num1}个　　 
+	</div>
+
+</div>
+	<form method="post" class="form-horizontal" id="formfans">
+	<input type="hidden" name="op" value="del" />
+	<div style="position:relative">
+		<div class="panel-body table-responsive">
+			<table class="table table-hover" style="position:relative;table-layout: auto;">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:120px;">序号</th>
+					<th style="width:250px;">姓名</th>
+					<th style="width:280px;">微信OpenId</th>
+					<th style="width:120px;">联系电话</th>
+					<th style="width:300px;">联系地址</th>
+					<th style="width:150px;">报名时间</th>
+					<!-- <th style="width:140px;">操作</th> -->
+					<!-- <th style="width:120px;">操作</th> -->
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $row}
+				<tr>
+					<td>{$row['id']}</td>
+					<td> {$row['realname']}</td>
+					<td>{$row['from_user']}</td>
+					<td>{$row['mobile']}</td>
+					<td>{$row['address']}</td>
+					<td>{php echo date('Y/m/d H:i',$row['createtime']);}</td>
+					<!-- <td>
+					{if $row['status'] == 2}
+					<a href="{php echo $this->createWebUrl('SetfansStatus',array('status'=>1,'fansid'=>$row['id']))}" class="btn btn-primary btn-sm lahei" style="width:60px;">恢复</a>
+					{else}
+					<a href="{php echo $this->createWebUrl('SetfansStatus',array('status'=>2,'fansid'=>$row['id']))}" class="btn btn-success btn-sm lahei" style="width:60px;">拉黑</a>
+					{/if}
+					<a href="javascript:void(0)" id="{$row['id']}" class="btn btn-success btn-sm awardinfo" style="width:60px;" data-toggle="tooltip" data-placement="top" title="中奖详情">详情</a></td>
+					 --><!-- <td><button class="btn btn-default recharge" data-id="{$row['id']}"> <span>修改状元数</span></button></td> -->
+				</tr>
+				{/loop}
+
+			</tbody>
+		</table>
+	</div>
+</div>
+</form>
+</div>
+{$pager}
+</div>
+
+
+
+<div id="guanbi" class="hide">
+	<span type="button" class="pull-right btn btn-primary" data-dismiss="modal" aria-hidden="true">关闭</span>
+</div>
+<script>
+	require(['jquery', 'util'], function($, u){
+
+
+		$(".delete").click(function(){
+			var del_openid = $("#del_openid").val();
+
+			var submitData = {
+				del_openid:del_openid,
+
+			}
+
+			$.post("{php echo $this->createWebUrl('delete_openid',array('rid'=>$rid))}", submitData, function(data) {
+
+				if (data.success == 1) {
+
+					alert(data.msg);
+					location.href="{php echo $this->createWebUrl('fanslist', array('rid' => $rid))}";
+
+				} else {
+					alert(data.msg);
+					location.href="{php echo $this->createWebUrl('fanslist', array('rid' => $rid))}";
+				}
+			},"json")
+			return false;
+		})
+
+		$('.awardinfo').click(function(){
+			var uid = parseInt($(this).attr('id'));
+			$.get("{php echo url('site/entry/axq',array('m' => 'haoman_updatehb','rid' => $rid))}&uid=" + uid, function(data){
+				if(data == 'dataerr') {
+					u.message('未找到指定粉丝', '', 'error');
+				} else {
+					var obj = u.dialog('中奖详细情况', data, $('#guanbi').html());
+				}
+				obj.modal('show');
+			});
+		})
+
+		$(".isnot").click(function(){
+			$('.cztl').hide();
+		})
+	});	
+</script>
+{template 'common/footer'}

@@ -1,0 +1,39 @@
+{template 'top'}
+
+<div id="add_title">
+<div class="add_title_a"><a href="javascript:history.go(-1);"><div class="add_title_a_1"><img src="{MODULE_URL}template/mobile/images/a.png"/></div></a></div>
+
+<div class="add_title_b">发布二手交易信息</div>
+
+<div class="add_title_c"><a href="{php echo $this->createMobileUrl('fengmian');}"><div class="add_title_c_1"><img src="{MODULE_URL}template/mobile/images/b.png"/></div></a></div>
+</div>
+
+
+<div id="zhaopin_one">
+<form action="" method="POST">
+
+<div class="zhaopin_one_a">物品名称：</div>
+<div class="zhaopin_one_b"><input type="text" name="ershouname" placeholder="请输入物品名称" required="required"/></div>
+
+<div class="zhaopin_one_a">物品品牌：</div>
+<div class="zhaopin_one_b"><input type="text" name="ershoupinpai" placeholder="请输入物品品牌" required="required"/></div>
+
+<div class="zhaopin_one_a">新旧程度：</div>
+<div class="zhaopin_one_b"><input type="text" name="ershounewor" placeholder="请输入新旧程度（如：九成新）" required="required"/></div>
+
+<div class="zhaopin_one_a">二手价格：</div>
+<div class="zhaopin_one_b"><input type="text" name="ershouprice" placeholder="请输入二手价格" required="required"/></div>
+
+<div class="zhaopin_one_a">联系电话：</div>
+<div class="zhaopin_one_b"><input type="text" name="tel" placeholder="请输入联系电话" required="required"/></div>
+
+<div class="zhaopin_one_a">截止日期：</div>
+<div class="zhaopin_one_b"><input type="datetime-local" name="validity" required="required"/></div>
+
+</div>
+
+<div id="add_ok"><input type="submit" value="发 布"/></div>
+
+</form>
+
+{template 'foot'}

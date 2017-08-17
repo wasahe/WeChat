@@ -1,0 +1,283 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="format-detection" content="telephone=no">
+	<link href="{MODULE_URL}assets/styles/menus.css" rel="stylesheet" type="text/css">
+	<link href="{MODULE_URL}assets/styles/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
+	<link href="{MODULE_URL}assets/styles/font-awesome.css" rel="stylesheet" type="text/css">
+	<title>{$member['realname']}{php echo $this->template['authname']}的主页</title>
+	<script type="text/javascript" src="{MODULE_URL}assets/scripts/jquery.js"></script>
+	<script type="text/javascript" src="{MODULE_URL}assets/scripts/elink-framework.js"></script>
+	<script type="text/javascript" src="{MODULE_URL}assets/scripts/noty/packaged/jquery.noty.packaged.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+	<style type="text/css">*{font-family:"Microsoft YaHei",Arial,Helvetica,sans-serif,"宋体";font-size:1em}</style>
+   <script>
+        var jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || {};
+        // 是否启用调试
+        jssdkconfig.debug = false;
+        jssdkconfig.jsApiList = [
+            'checkJsApi',
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage',
+            'onMenuShareQQ',
+            'onMenuShareWeibo',
+            'hideMenuItems',
+            'showMenuItems',
+            'hideAllNonBaseMenuItem',
+            'showAllNonBaseMenuItem',
+            'translateVoice',
+            'startRecord',
+            'stopRecord',
+            'onRecordEnd',
+            'playVoice',
+            'pauseVoice',
+            'stopVoice',
+            'uploadVoice',
+            'downloadVoice',
+            'chooseImage',
+            'previewImage',
+            'uploadImage',
+            'downloadImage',
+            'getNetworkType',
+            'openLocation',
+            'getLocation',
+            'hideOptionMenu',
+            'showOptionMenu',
+            'closeWindow',
+            'scanQRCode',
+            'chooseWXPay',
+            'openProductSpecificView',
+            'addCard',
+            'chooseCard',
+            'openCard',
+			'translateVoice',
+            'openAddress'
+        ];
+        wx.config(jssdkconfig);
+        var _TUTOR_URL = "{php echo $this->createMobileUrl('tutor')}";
+        var _follow = "{php echo intval($_W['fans']['follow'])}";
+        var _openid = "{php echo $_W['openid']}";
+        var _qrcode = "{php echo $_W['account']['qrcode']}";
+    </script>
+	<style>
+	.split-title{ font-weight:400;font-size:14px;display:inline-block; width:88%; white-space:nowrap; word-break:keep-all; overflow:hidden; text-overflow:ellipsis;}
+	</style>
+</head> 
+<body bgcolor="#efeef3" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" >
+<div id="footer-fixed" class="footer-menu footer-light">
+	{php $footerbars = M('quickmenu')->getall();}
+	{php $count = count($footerbars);}
+	{loop $footerbars $footer}
+	<a style='width:{php echo 100/$count}%;-webkit-tap-highlight-color:rgba(0,0,0,0);text-decoration:none;-webkit-box-sizing:border-box;' href="{php echo $footer['link']}" class="{if $_GPC['do']==$footer['ido']}active-footer-item{/if} footer-mobile"><i class="{php echo $footer['icon']}"></i>{$footer['title']}</a>
+	{/loop}
+</div>
+<div align="center" style='margin-bottom:90px;'>
+
+	<div style="background-color:#FFF;height:60px;width:100%;margin:20px 0 20px 0;padding:5px 0px 5px 0px">
+
+		<table clear=both width="95%" border="0">
+		  <tr >
+			<td rowspan="2" style="width:50px"><img style="height:50px;width:50px;border-radius:50px;" src="{php echo $member['avatar']}"</td>
+			<td style="padding:0 0 0 10px;width:200px;font-weight:bold;">{$member['realname']}</td>
+			<!--<td style="border:1px solid #E6E4E4;width:100px;" rowspan="2"><a style="color:#9D9D9D;font-size:14px;margin:0 0 0 20%" width="70%"><i class="fa fa-plus"></i> 关注我</a></td>-->			
+			{php $check = M('follow')->check($member['openid'])}
+			{if !empty($check)}
+			<td style="width:100px;" rowspan="2"><img data-act='unfollow' data-openid="{$member['openid']}" class='focus' src="{MODULE_URL}assets/images/qxgz.png" style="margin:0 0 0 20%" width="70%"></td>
+			{else}
+			<td style="width:100px;" rowspan="2"><img data-act='follow' data-openid="{$member['openid']}" class='focus' src="{MODULE_URL}assets/images/gz.png" style="margin:0 0 0 20%" width="70%"></td>
+			{/if}
+		  </tr>
+		</table>
+	</div>
+	
+	<div style="width:90%">
+	        <button onclick="window.location.href='{php echo $this->createMobileUrl('making',array('openid'=>$member['openid']))}'" style="border:none;background:#27ae60;border-radius:5px;line-height:40px;font-size:18px;color:#FFF;width:100%;height:40px;text-align:center">开始问{php echo $this->template['authname']}</button>
+	</div>
+
+	<div align="left"style="margin:20px 0 10px 20px;color:#9D9D9D"><a>{php echo $this->template['authname']}介绍</a></div>
+	<div align="left" style="font-size:14px;background-color:#FFF;padding:5px 0px 5px 10px;margin:0 0 20px 0">
+		<div style="line-height:40px">
+			<a style="font-weight:bold;margin:0 45px 0 10px">专业</a>
+			{php $category = M('category')->getInfo($member['category_id'])}
+			<a style="color:#9D9D9D">{$category['title']}</a>
+		</div>
+		<hr style="margin:2% 0 0 0;width:98%;height:1px;border:none;border-top:1px solid #E6E4E4;" >
+		<div style="line-height:40px;padding:0 10px 0 10px">
+			<a style="font-weight:bold;margin:0 17px 0 0px">{php echo $this->template['authname']}头衔</a>
+			<span style="color:#9D9D9D;padding:0 10px 0 0">{$member['tags']}</span>
+		</div>
+		<hr style="margin:2% 0 0 0;width:98%;height:1px;border:none;border-top:1px solid #E6E4E4;" >
+		<div style="line-height:40px;padding:0 10px 0 10px">
+			<a style="font-weight:bold;margin:0 17px 0 0px">个人介绍</a>
+			<span style="color:#9D9D9D;padding:0 10px 0 0">{$member['desc']}</span>
+		</div>
+	</div>
+	
+	<div align="left"style="margin:5px 0 10px 20px;color:#9D9D9D"><a>{php echo $this->template['authname']}动态</a></div>
+	<div align="left" style="font-size:14px;background-color:#FFF;padding:5px 0px 5px 10px;margin:0 0 20px 0">
+		{if $this->pro['openFeedback']=='1'}
+		<div style="line-height:40px">
+			<a style="font-weight:bold;margin:0 20px 0 10px">获得评价</a>
+			<a style="color:#9D9D9D"><div style="display:inline;" id="star"></div></a>
+		</div>
+		<hr style="margin:2% 0 0 0;width:98%;height:1px;border:none;border-top:1px solid #E6E4E4;" >
+		<script type="text/javascript" src="{MODULE_URL}assets/scripts/raty/jquery.raty.js"></script>
+		<script>
+		$('#star').raty({ readOnly: true, score: "{$member['score']}" });
+		</script>
+		{/if}
+		<div style="line-height:40px">
+			<a style="font-weight:bold;margin:0 20px 0 10px">答题数量</a>
+			<a style="color:#9D9D9D">已回答 {php echo M('answer')->getAnsTotal(array('openid'=>$openid))} 个问题</a>
+		</div>
+		<hr style="margin:2% 0 0 0;width:98%;height:1px;border:none;border-top:1px solid #E6E4E4;" >
+		<div style="line-height:40px">
+			<a style="font-weight:bold;margin:0 20px 0 10px">{php echo $this->template['learnName']}次数</a>
+			<a style="color:#9D9D9D">已获得 {php echo M('listen_log')->gettotalByOpenid($openid)} 次{php echo $this->template['learnName']}</a>
+		</div>
+		<hr style="margin:2% 0 0 0;width:98%;border:none;border-top:1px solid #E6E4E4;" >
+		<div style="line-height:40px">
+			<a style="font-weight:bold;margin:0 20px 0 10px">{php echo $this->template['userName']}关注</a>
+			<a style="color:#9D9D9D">已有 {php echo M('follow')->getTotal($member['openid'])} 位{php echo $this->template['userName']}关注</a>
+		</div>
+	</div>
+	{if !empty($questions['list'])}
+	<div align="left"style="margin:20px 0 10px 20px;color:#9D9D9D"><a>已解答的问题</a></div>
+	<div align="left" style="font-size:14px;background-color:#FFF;padding:5px 0px 15px 10px;margin:0 0 20px 0">
+		{loop $questions['list'] $li}
+		<div id='questions' style="line-height:30px">
+			<a onclick="window.location.href='{php echo $this->createMobileUrl('question',array('id'=>$li['id']))}'" style="color:#000">
+				<div class="split-title">{$li['title']}</div>
+				<i style='color:#9D9D9D;font-size:25px;float:right;padding-top:15px;padding-right:20px;' class="fa fa-angle-right"></i>
+				<em style='line-height:25px;font-size:12px;font-style: normal;float: left;color:#9D9D9D;'>{php echo date('Y-m-d',$li['create_time'])}<t style="padding-left:20px;">{php echo M('listen_log')->gettotal($li['id'])}人已{php echo $this->template['learnName']}</t></em>
+			</a>
+		</div>
+		<hr style="margin:2% 0 0 0%;width:98%;height:1px;border:none;border-top:1px solid #E6E4E4;" >
+		{/loop}
+	</div>
+	{/if}
+    <script type="text/javascript" src="{MODULE_URL}public/libs/jquery_weui/jquery-weui.js"></script>
+	<script src="{MODULE_URL}public/js/loadmore.js"></script>		
+	<script src="{MODULE_URL}public/libs/fastclick.js"></script>
+	<input type="hidden" name="share_title" value="{$member['realname']}{php echo $this->template['authname']}的主页"/>
+	<input type="hidden" name="share_image" value="{php echo tomedia($member['avatar'])}"/>
+	<input type="hidden" name="share_desc" value="简介：{php echo $member['desc']}"/>
+	<input type="hidden" name="share_link" value=""/>
+	<script>
+	initload("{php echo $this->createMobileUrl('tutor')}",callback);
+	loadmore("{php echo $this->createMobileUrl('tutor')}",callback);
+	function callback(html){
+		$('#questions').append(html);
+	}
+	$('.focus').click(function(){
+		var openid = $(this).data('openid');
+		var act = $(this).data('act');
+		var _that = $(this);
+		$.post("{php echo $this->createMobileUrl('members')}",{act:act,openid:openid},function(data){
+			if(data.status == 1){
+				bingo(data.message);
+				if('follow'==act){
+					_that.data('act','unfollow');
+					_that.attr('src','{MODULE_URL}assets/images/qxgz.png');
+				}else if('unfollow'==act){
+					_that.data('act','follow');
+					_that.attr('src','{MODULE_URL}assets/images/gz.png');
+				}
+			}else{
+				warn(data.message);
+			}
+		},'json');
+	});
+	wx.config(jssdkconfig);
+	initshare();
+
+	function initshare(){
+		var title = $('input[name="share_title"]').val();
+		var imgUrl = $('input[name="share_image"]').val();
+		var desc = $('input[name="share_desc"]').val();
+		var link = $('input[name="share_link"]').val();
+		wx.ready(function(cb1,cb2){
+			wx.onMenuShareTimeline({
+				title: title, // 分享标题
+				link: link, // 分享链接
+				imgUrl: imgUrl, // 分享图标
+				success: function () {
+					// 用户确认分享后执行的回调函数
+					cb1();
+				},
+				cancel: function () {
+					// 用户取消分享后执行的回调函数
+					cb2();
+				}
+			});
+			wx.onMenuShareAppMessage({
+				title: title, // 分享标题
+				desc: desc, // 分享描述
+				link: link, // 分享链接
+				imgUrl: imgUrl, // 分享图标
+				type: '', // 分享类型,music、video或link，不填默认为link
+				dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+				success: function () {
+					// 用户确认分享后执行的回调函数
+					cb1()
+				},
+				cancel: function () {
+					// 用户取消分享后执行的回调函数
+					cb2();
+				}
+			});
+			wx.onMenuShareQQ({
+				title: title, // 分享标题
+				desc: desc, // 分享描述
+				link: link, // 分享链接
+				imgUrl: imgUrl, // 分享图标
+				success: function () {
+					// 用户确认分享后执行的回调函数
+					cb1();
+				},
+				cancel: function () {
+					// 用户取消分享后执行的回调函数
+					cb2();
+				}
+			});
+			wx.onMenuShareWeibo({
+				title: title, // 分享标题
+				desc: desc, // 分享描述
+				link:link, // 分享链接
+				imgUrl: imgUrl, // 分享图标
+				success: function () {
+					// 用户确认分享后执行的回调函数
+					cb1();
+				},
+				cancel: function () {
+					// 用户取消分享后执行的回调函数
+					cb2();
+				}
+			});
+			wx.onMenuShareQZone({
+				title: title, // 分享标题
+				desc: desc, // 分享描述
+				link: link, // 分享链接
+				imgUrl: imgUrl, // 分享图标
+				success: function () {
+					// 用户确认分享后执行的回调函数
+					cb1();
+				},
+				cancel: function () {
+					// 用户取消分享后执行的回调函数
+					cb2()
+				}
+			});
+		});
+	}
+	$(function() {
+		FastClick.attach(document.body);
+	});
+	</script>
+</body>
+</html>

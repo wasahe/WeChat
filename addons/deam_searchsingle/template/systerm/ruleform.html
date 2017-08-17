@@ -1,0 +1,16 @@
+<div class="panel panel-default">
+    <div class="panel-heading">回复设置（一个活动只能对接一个回复规则名称）</div>
+    <div class="panel-body">
+    	<div class="form-group">
+            <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">关联活动</label>
+            <div class="col-sm-8 col-xs-12">
+               <select class="form-control" name="actid" autocomplete="off">
+               {loop $getact $v}
+               <option value="{$v['id']}" {if $rid == $v['rule_id'] && !empty($rid)} selected{/if}>{$v['id']}.{$v['act_name']}</option>
+               {/loop}
+               </select>
+            </div>
+        </div>
+        
+    </div>
+</div>

@@ -1,0 +1,376 @@
+﻿{template 'header'}
+<link rel="stylesheet" href="{php echo MODULE_URL;}template/static/css/amazeui.datetimepicker.css" >
+
+	<style>
+.div-input{
+	position: relative;
+	width: 100%;
+	height: 48px;
+	padding-left: 80px;
+	padding-right: 8px;
+	background-color: white;
+	border-radius: 2px;
+	line-height: 48px;
+}
+.input{
+	display: block;
+	position: relative;
+	width: 100%;
+	height: 48px;
+	border: 0px;
+
+	outline: none;
+	text-align: right;
+
+}	
+.redpack_type{padding:0;
+    font-size: 0.8em;padding-top: 8px;
+}
+.redpack_type span{ color: #009EF2;}
+.datetimepicker{ width:90%; margin:0 5%;}	
+.btn-buttom{
+	position: fixed;
+	bottom: 0px;
+	z-index: 4;
+	background: #FFF;
+	padding: 1rem;border: 1px solid #E5E5E5;
+}
+.footer{padding-bottom: 70px;}
+</style>
+</head>
+<body style="background-color: #EBEBEB;">
+<!--[if lte IE 9]>
+<p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a
+  href="http://browsehappy.com/" target="_blank">升级浏览器</a>
+  以获得更好的体验！</p>
+<![endif]-->
+
+
+<div class="am-g am-padding-horizontal am-margin-top">
+	<div class="div-input">
+		<div style="position: absolute; top: 0px; left: 8px;">活动名称</div>
+		<input onkeyup="limit_string(16,'activity_name','activity_name_input_num');" id="activity_name" name="activity_name" class="input" value="{$redata['act_name']}" type="text">
+	</div>
+	<div style="margin-top: 8px;width: 20%;float: right;" class="am-text-right am-text-xs color-ccc"><span id="activity_name_input_num" style="color: brown;"></span>/16</div>
+	<div class="redpack_type">
+			 <div onclick="fpack_type(0,0);" class="type_0" {if $redata['secret_key']=="" }style="display:none"{/if}>当前为口令红包，<span>改为摇一摇红包</span></div>
+			 <div onclick="fpack_type(1,1);" class="type_1" {if $redata['secret_key']!="" }style="display:none"{/if}>当前为摇一摇红包，<span>改为口令红包</span></div>
+    </div>
+</div>
+	<!--口令红包开始-->
+	<div class="am-g am-padding-horizontal {if $redata['secret_key']=="" }am-hide{/if}" style="margin-top: 8px;" id="key_box" data-packtype="{if $redata['secret_key']=="" }0{else}1{/if}">
+		<div class="div-input">
+			<div style="position: absolute; top: 0px; left: 8px;">口令</div>
+			<input id="secret_key" onkeyup="limit_string(64,'secret_key','secret_key_input_num');" name="secret_key" class="input" value="{$redata['secret_key']}" type="text">
+		</div>
+		<div style="margin-top: 8px;" class="am-text-right am-text-xs color-ccc"><span id="secret_key_input_num" style="color: brown;"></span>/32</div>
+	</div>	
+	<!--口令红包结束-->
+	<div class="am-g am-padding-horizontal" style="margin-top: 8px;">
+	<div class="div-input">
+		<div style="position: absolute; top: 0px; left: 8px;">祝福语</div>
+		<input id="activity_blessing" onkeyup="limit_string(64,'activity_blessing','activity_blessing_input_num');" name="activity_blessing" class="input" value="{$redata['wishing']}" type="text">
+	</div>
+	<div style="margin-top: 8px;" class="am-text-right am-text-xs color-ccc"><span id="activity_blessing_input_num" style="color: brown;"></span>/64</div>
+</div>	
+
+<!--广告红包开始-->
+<div id="packet_0">
+<div class="am-g am-padding-horizontal">	
+	<div class="div-input" style="margin-top: 8px; padding-left: 96px;">
+		<div style="position: absolute; top: 0px; left: 8px;">广告商名称</div>
+		<input id="ad_name" onkeyup="limit_string(16,'ad_name','ad_name_input_num');" name="ad_name" class="input" type="text" value="{$redata['send_name']}">
+	</div>
+	<div style="margin-top: 8px;" class="am-text-right am-text-xs color-ccc"><span id="ad_name_input_num" style="color: brown;"></span>/16</div>
+	
+	<div>
+		<span onclick="select_radio();">
+			<img id="radio_img" src="{php echo MODULE_URL;}/template/static/images/{if $redata['onlyshare']==1 }radio_in.png{else}radio.png{/if}" width="18" height="18">   是否在红包广场隐藏，默认显示。
+		</span>
+	</div>
+
+</div>
+
+		
+
+
+<div class="am-g am-padding-horizontal am-margin-top">
+	<p>广告商图片</p>
+	<img id="ad_icon" src="{$redata['addimg']}" width="72" height="72" onclick="onchooseImg(1);" style="margin-right:20px">
+	<img id="ad_bg" src="{$redata['adbg']}" width="72" height="72" onclick="onchooseImg(2);">
+	<div class="am-text-left am-text-xs  color-ccc" style="padding: 5px 0;color: #AB2A2A;"><span style="width:96px;display: inline-block;">①LOGO图标</span>②	{if $template==1}广告图片，建议600*300{else}红包背景，建议480*800{/if}	尺寸图片</div>
+</div>
+
+<div class="am-g am-padding-horizontal am-margin-top">
+	<div class="div-input">
+		<div style="position: absolute; top: 0px; left: 8px;">广告地址</div>
+		<input id="ad_url" class="input" placeholder="为空时候点击广告不跳转" type="text" value="{$redata['adurl']}">
+	</div>
+</div>
+
+<div class="am-input-group date form_datetime-2 am-g am-padding-horizontal am-margin-top">
+  <div style="position: absolute; top: 10px; left: 25px;z-index: 3;">开始时间</div>
+  <input size="16" type="text" name="starttime" id="starttime"  value="{php echo date('Y-m-d H:i', $redata['starttime']);}" class="am-form-field " readonly="readonly" style="background-color: white;HEIGHT: 48px;border-radius: 2px;text-align: right;border: 1px solid #fff;">
+  <span class="am-input-group-label add-on" style="background-color: white;border-radius: 2px;border: 1px solid #fff;"><i class="icon-th am-icon-calendar"></i></span>
+</div>
+
+<div class="am-g am-padding-horizontal am-margin-top">
+	<div class="div-input">
+		<div style="position: absolute; top: 0px; left: 8px;">每天数量</div>
+		<input  id="maximum" name="maximum" class="input" value="{$redata['maximum']}" type="number">
+	</div>
+</div>
+
+<script>
+  $(function() {
+	  $.fn.datetimepicker.dates['zh-CN'] = {
+		days: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"],
+		daysShort: ["周日", "周一", "周二", "周三", "周四", "周五", "周六", "周日"],
+		daysMin:  ["日", "一", "二", "三", "四", "五", "六", "日"],
+		months: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+		monthsShort: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+		today: "今日",
+		suffix: [],
+		meridiem: ["上午", "下午"]
+	  };
+    $('.form_datetime-2').datetimepicker({
+        format: 'yyyy-mm-dd hh:ii',
+        autoclose: true,
+        todayBtn: true,
+        pickerPosition: 'top-left'
+    });
+  })
+</script>
+
+
+<div class="am-g am-padding btn-buttom">
+	<button class="am-btn am-radius am-btn-block" style="color: white; background-color: #ff8610;" onclick="edit_ajax();">保存配置</button>
+</div>
+</div>
+<!--广告红包结束-->
+
+
+<!--隐藏的回话弹出层开始-->
+<div class="am-modal am-modal-alert" id="alert">
+	<div class="am-modal-dialog" style="border-radius: 3px;">
+		<div class="am-modal-hd" id="alert_title"></div>
+		<div class="am-modal-bd" id="alert_text">
+
+		</div>
+		<div class="am-modal-footer">
+			<span class="am-modal-btn">确定</span>
+		</div>
+	</div>
+</div>
+<!--隐藏的回话弹出层结束-->
+
+	<div class="am-modal am-modal-loading am-modal-no-btn" tabindex="-1" id="my-modal-loading">
+		<div class="am-modal-dialog">
+			<div class="am-modal-hd">提交中...</div>
+			<div class="am-modal-bd">
+				<span class="am-icon-spinner am-icon-spin"></span>
+			</div>
+		</div>
+	</div>
+	
+
+
+<script type="text/javascript">
+function alertwindow(content) {
+	$('#alert_text').text(content);
+	$('#alert').modal('open');
+}
+
+wx.ready(function () {
+	wx.hideOptionMenu();
+});
+
+{if $redata['secret_key']=="" }
+var pack_type = 0;	
+{else}
+var pack_type = 1;	
+{/if}
+
+function fpack_type(val, id) {
+	pack_type = val;
+	//隐藏所有，显示对应
+    if(val==1){
+	   $("#key_box").removeClass("am-hide");
+	}else{
+	   $("#key_box").addClass("am-hide");
+	}
+	
+	$(".type_0").show();
+	$(".type_1").show();
+	$(".type_"+id).hide();
+}
+var serverId1 = '';
+function onchooseImg(ty){
+	wx.chooseImage({
+	    count: 1, // 默认9
+	    sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
+	    sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+	    success: function (res) {
+	        var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+	        upload_image(localIds,ty);
+	    }
+	});
+}
+
+var serverId1="";
+var serverId2="";
+function upload_image(localIds,ty){
+    if(ty==1){
+	    var obt = $('#ad_icon');
+	}else{
+	    var obt = $('#ad_bg');
+	}
+	 wx.uploadImage({
+         localId: localIds.toString(), // 需要上传的图片的本地ID，由chooseImage接口获得
+         isShowProgressTips: 1, // 默认为1，显示进度提示
+         success: function (res) {
+			if(ty==1){
+				serverId1 = res.serverId; // 返回图片的服务器端ID
+			}else{
+				serverId2 = res.serverId; // 返回图片的服务器端ID
+			}
+         	obt.attr("src",localIds); 
+         }
+     });
+}
+
+/*提交支付的方法*/
+function edit_ajax(type) {
+	var activity_name = $('#activity_name').val();
+	var activity_blessing = $('#activity_blessing').val();
+	var adurl=$('#ad_url').val();
+	var maximum=$('#maximum').val();
+	if(activity_name == ''){
+		alertwindow('活动名称不能为空');
+		return;
+	}
+	var secret_key=$('#secret_key').val();
+	if(pack_type==1){
+	    if(secret_key==''){
+			alertwindow('口令不能为空');
+		    return;
+		}
+	}
+	if(activity_blessing == ''){
+		alertwindow('祝福语不能为空');
+		return;
+	}
+	if(maximum <1){
+		alertwindow('每天红包个数必须大于0');
+		return;
+	}
+	
+	if(adurl!=''){
+	    /*
+	    if(!isURL(adurl)){
+			alertwindow('请输入正确的url，例如：http://www.qq.com');
+			return;
+		}
+		*/
+	}
+
+	$.ajax({
+		type : "post",
+		url : "{php echo $this->createMobileUrl('Redpack',array('ty'=>'edit','tid'=>$_GPC['tid']))}",
+		data : {
+			activity_name : activity_name,
+			activity_blessing : activity_blessing,
+			ad_name : $('#ad_name').val(),
+			ad_url : adurl,
+			serverId1:serverId1,
+			serverId2:serverId2,
+			onlyshare:radio_var,
+			secret_key:secret_key,
+			pack_type:pack_type,
+			maximum:maximum,
+			starttime:$('#starttime').val(),
+		},
+		dataType : "json",
+		beforeSend : function(XMLHttpRequest) {
+			$("#my-modal-loading").modal('open');
+		},
+		success : function(res) {
+			$("#my-modal-loading").modal('close');
+			if (res.status == 200) {
+				window.location.href = '{php echo $this->createMobileUrl('Redpack',array('ty'=>'lucky','tid'=>$_GPC['tid'],'tokenkey'=>$_GPC['tokenkey']))}';
+			} else {
+				alertwindow(res.errmsg);
+			}
+		},
+		error : function(res, type) {
+			$("#my-modal-loading").modal('close');
+			alertwindow("保存失败");
+		}
+	});
+}
+
+/*限制字符串的方法*/
+//限制长度，传人的字符串，要表现的dom
+function limit_string(numbers,str,show){
+	
+	var this_string = $("#"+str).val();
+	var this_string_length = 0;
+	
+	for(i=0; i<this_string.length; i++) {
+		if ((this_string.charCodeAt(i) & 0xff00) != 0) {
+			this_string_length ++;
+		} 
+		this_string_length ++;
+	}
+	
+	if(this_string_length>numbers){		
+		$("#"+str).val(this_string.substring(0,numbers));
+	}else{
+		$("#"+show).text(this_string_length);
+	}
+}
+//页面载入完成初始输入计算
+limit_string(32,'activity_name','activity_name_input_num');
+limit_string(128,'activity_blessing','activity_blessing_input_num');
+limit_string(32,'ad_name','ad_name_input_num');
+limit_string(32,'secret_key','secret_key_input_num');
+
+
+/*选择不同的类型红包*/
+{if $redata['onlyshare']==1 }
+    var radio_var = 1;
+{else}
+    var radio_var = 0;
+{/if}
+function select_radio(){
+	if(radio_var == 0){
+		$("#radio_img").attr("src","{php echo MODULE_URL;}/template/static/images/radio_in.png");
+		radio_var = 1;
+	}
+	else if(radio_var == 1){
+		$("#radio_img").attr("src","{php echo MODULE_URL;}/template/static/images/radio.png");
+		radio_var = 0;
+	}
+}
+function isURL(str_url) {// 验证url
+	var strRegex = "^((https|http)?://)"
+	+ "?(([0-9a-z_!~*'().&=+$%-]+: )?[0-9a-z_!~*'().&=+$%-]+@)?" // ftp的user@
+	+ "(([0-9]{1,3}\.){3}[0-9]{1,3}" // IP形式的URL- 199.194.52.184
+	+ "|" // 允许IP和DOMAIN（域名）
+	+ "([0-9a-z_!~*'()-]+\.)*" // 域名- www.
+	+ "([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]\." // 二级域名
+	+ "[a-z]{2,6})" // first level domain- .com or .museum
+	+ "(:[0-9]{1,4})?" // 端口- :80
+	+ "((/?)|" // a slash isn't required if there is no file name
+	+ "(/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+/?)$";
+	var re = new RegExp(strRegex);
+	//return re.test(str_url);
+	if (re.test(str_url)){
+            return (true); 
+        }else{ 
+            return (false); 
+    }
+}
+</script>
+<script type="text/javascript" src="{php echo MODULE_URL;}template/static/js/amazeui.datetimepicker.js"></script>
+{template 'footer'}

@@ -1,0 +1,150 @@
+/* 
+* @Author: Mark
+* @Date:   2015-03-26 10:37:44
+* @Last Modified by:   Mark
+* @Last Modified time: 2015-07-14 17:01:22
+*/
+*{box-sizing:border-box;-moz-box-sizing:border-box; /* Firefox */-webkit-box-sizing:border-box; /* Safari */font-family:Microsoft YaHei;}
+html {overflow-y:scroll;font-size: 20px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;-webkit-tap-highlight-color:rgba(0, 0, 0, 0);-webkit-touch-action: none;}/*解决 iPhone 横屏时默认会放大文字的*/
+body,div,ol,ul,h1,h2,h3,h4,h5,h6,p,th,td,dl,dd,form,iframe,input,textarea,select,label,article,aside,footer,header,menu,nav,section,time,audio,video {
+  margin:0; padding:0;}
+.rDialog{font-size: 16px;}
+img{border:none;}
+.o-onlyl,ul {list-style:none;}
+ul{font-size:0;}
+li{list-style-type:none;}
+article,aside,footer,header,hgroup,nav,section {display: block;}
+input,select,button,textarea {border:none;outline: 0;}
+input[type="button"],
+input[type="submit"],
+input[type="reset"]{-webkit-appearance: none;}
+::-webkit-input-placeholder { /* WebKit browsers */    color: #999;}
+table{width:100%;border-collapse: collapse;border-spacing: 0;table-layout: fixed;word-wrap: break-word;}
+em, i {font-style: normal;}
+
+td,th{border-bottom:1px solid #f1f1f1;padding:2px 0; text-align:center}
+th{text-align:center;}
+td{font-size:16px; text-align:center}
+.pr{ position:relative;}
+.pa{ position:absolute;}
+.min28{min-height:24.4rem}
+.orange{ color:#fe4200}
+strong,b,h4,h6{ font-weight:normal}
+
+
+a{transition:color .2s;outline:none;text-decoration:none;}
+.fl { float: left; display: inline; }
+.fr { float: right; display: inline; }
+.clearfix:after{ content:""; display:block; clear:both; height:0; visibility:hidden;}
+.clearfix{ display:block;}
+.mb20{ margin-bottom:0.5rem;}
+.mt20{ margin-top:0.5rem;}
+.mt40{ margin-top:0.8rem; margin-bottom:0.3rem; }
+.pb40{ padding-bottom:1rem;}
+.pb30{padding-bottom:3rem}
+.pb44{padding-bottom:4rem}
+.pb10{padding-bottom:0.2rem}
+.load img {display: block;margin: 0 auto;width: 1.6rem;height: 1.6rem;}
+.blank10{ height:0.3rem; clear:both;}
+.blank20{ height:0.6rem; clear:both;}
+.blank30{ height:1rem; clear:both;}
+
+
+/*--------------公共部份-------------------------*/
+/*------------------新人专享--------------------------*/
+.gift_list_gg{margin-top:0.8rem; width:98%; margin:0 1%;}
+.gift_bt{ text-align:center; font-size:0.65rem; font-weight:normal; color:#757575;letter-spacing:-1px;}
+.gift_bt b{letter-spacing:0; color:#333;}
+.gift_list_ul{ width:100%; -webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box; margin-top:0.4rem;0 margin-bottom:0.5rem;}
+.gift_list_ul li{  background:#fff;width:48%; margin:0 1%; float:left; margin-bottom:0.3rem; height:11.8rem; overflow:hidden;}
+.gift_list_ul li .gift_a{ display:block; overflow:hidden; height:7.4rem;}
+.gift_list_ul li .gift_a_a{ display:block; overflow:hidden; height:11.8rem;}
+.gift_list_ul li .gift_a_a img{ display:inline-block; background-size:auto 13.825rem; width:100%; height:11.8rem;}
+.gift_list_ul li div{ width:100%;}
+.gift_list_ul li div img{ width:100%;vertical-align: middle;}
+.btn-box { width:96%; color:#333; padding:2%;}
+.gift_name{ font-size: 0.55rem; color: #333; overflow: hidden; display: block; background:#fff; margin-bottom:0.3rem; border-bottom:1px dashed #ddd; padding-bottom:0.2rem;text-overflow: ellipsis;   white-space: nowrap;}
+.btn-box .item-price{ width:100%; height:1rem;color:#fe5a00; font-size: 0.6rem;line-height:0.4rem;font-weight:bold; padding-top:0.1rem;}
+.btn-box .item-dl{display: -webkit-box;display:box;display: -moz-box; background:#ffa133;border-radius:0.2rem;}
+.btn-box .item-dl dd{-webkit-box-flex: 1;box-flex: 1;color: #fff;text-align: center;font-size: 0.6rem; height:1.8rem; line-height:1.8rem; }
+.btn-box .item-dl dd a{ display: inline-block; width:100%; height:1.8rem; color:#fff; font-weight:bold;letter-spacing: -1px;border-radius:0.1rem;}
+.btn-box .item-dl .dd01{ background:#fe4e00;}
+.btn-box .item-dl .dd01.active{ background:#bdb8b2;}
+.btn-box .item-dl .dd02{ background:#ffa133}
+.btn-box .item-price b{ color:#757575; font-size:0.45rem; font-weight:normal}
+.btn-box .buy-bg{  width:26%; line-height:0.6rem; color:#333; float:right; background:#fe4e00; color:#fff; font-size:0.5rem; padding:3% 2%; position:relative; text-align:center; border-radius:0.2rem;}
+.btn-box .buy-bg-0{ background:#ccc;}
+.gift_list_gg .more-cont{width: 100%;font-size:0.6rem;padding:0.2rem 0;text-align: center;color: #e23b29;display: block;}
+.buy-bg a{ color:#fff}
+
+/*------------------新人专享--------------------------*/
+/*.gift_list_gg{margin-top:0.8rem; width:98%; margin:0 1%;}
+.gift_bt{ text-align:center; font-size:0.65rem; font-weight:normal; color:#757575;letter-spacing:-1px;}
+.gift_bt b{letter-spacing:0; color:#333;}
+.gift_list_ul{ width:48%; -webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box; margin-top:0.4rem;margin:0 1%; margin-bottom:0.5rem; float:left; padding-top:0.2rem;}
+.gift_list_ul li{  background:#fff;  float:left; margin-bottom:0.3rem;}
+.gift_list_ul li .gift_a{ display:block; overflow:hidden; min-height:7.4rem;}
+.gift_list_ul li div{ width:100%;}
+.gift_list_ul li div img{ width:100%;vertical-align: middle;}
+.btn-box { width:96%; color:#333; padding:2%;}
+.gift_name{ font-size: 0.55rem; color: #333; overflow: hidden; display: block; background:#fff; margin-bottom:0.3rem;}
+.btn-box .item-price{ width:50%; height:1.8rem; color:#fe5a00; font-size: 0.6rem;line-height:0.4rem;font-weight:bold; padding-top:0.2rem;}
+.btn-box .item-price b{ color:#757575; font-size:0.45rem; font-weight:normal}
+.btn-box .buy-bg{  width:26%; line-height:0.6rem; color:#333; float:right; background:#fe4e00; color:#fff; font-size:0.5rem; padding:3% 2%; position:relative; text-align:center; border-radius:0.2rem;}
+.btn-box .buy-bg-0{ background:#ccc;}
+.gift_list_gg .more-cont{width: 100%;font-size:0.6rem;padding:0.2rem 0;text-align: center;color: #e23b29;display: block;}
+.buy-bg a{ color:#fff}*/
+
+
+/*------------------导航--------------------------*/
+.footer {position: fixed; bottom: 0; height: 2.25rem;left: auto;background: #f1f1f1;border-top: 1px solid #d8d6d6;padding: 0.25rem 0;width: 100%;line-height: 1rem;z-index: 5;display: -webkit-box;display: box; width:100%}
+.footer a{ display:block;font-size:0.5rem; color:#757575; -moz-box-flex: 1;-webkit-box-flex: 1;box-flex: 1;text-align:center; width:33.3%; }
+.footer a:before{ content:""; display:block; margin:0 auto; width:1.1rem; height:1.1rem; background:url(../images/nav.png) no-repeat; background-size:2.2rem 3.3rem;}
+.footer a:nth-of-type(1):before{background-position:0 0;}
+.footer a:nth-of-type(2):before{background-position:0 -1.1rem}
+.footer a:nth-of-type(3):before{background-position:0 -2.2rem}
+.footer a:nth-of-type(1).active:before{background-position:-1.1rem 0;}
+.footer a:nth-of-type(2).active:before{background-position:-1.1rem -2.2rem}
+.footer a:nth-of-type(3).active:before{background-position:-1.1rem -2.2rem}
+
+
+.footer a.active{ color:#fe5c05;}
+
+/*------------------广告位--------------------------*/
+.gift_list_gg01{ padding-bottom:1rem; margin-top:0.9rem;}
+.gift_adv{ background:#fff; width:96%; margin:0 2%;display: -webkit-box;display: box;box-sizing: border-box;padding:0.3rem 0.5rem; border:1px solid #e5e5e5;margin-bottom:0.2rem; border-radius:0.2rem;}
+
+/*.index .gift_adv a{ display:block; width:100%; padding:0 2%; }
+.index .gift_adv a img{ width:100%; height:2.2rem;}
+*/
+/*------------------名片式的--------------------------*/
+.gift_adv .fot_img{ width:2rem; margin-right:0.5rem; }
+.gift_adv .fot_img span{ display:block; width:2rem; height:2rem; }
+.gift_adv .fot_img span img{display:block; width:2.2rem; height:2.2rem; border-radius:50%;}
+.gift_adv .fot_txt{-webkit-box-flex:1;-moz-box-flex:1;-ms-box-flex:1;-o-box-flex:1;box-flex:1;width:55%;}
+.gift_adv .fot_txt p{ font-size:0.55rem; color:#666; display: table-cell;vertical-align: middle; height:2.2rem;display: table-cell;vertical-align: middle; padding-right:0.5rem;}
+.gift_adv .fot_btn{-webkit-box-flex:1;-moz-box-flex:1;-ms-box-flex:1;-o-box-flex:1;box-flex: 1; width:3rem;text-overflow: ellipsis; font-size:0.7rem;display: table-cell;vertical-align: middle; height:2.2rem;}
+.gift_adv .fot_btn_a{ display:inline-block;width:3rem; height:1.5rem;line-height:1.35rem;border-radius:0.2rem; text-align:center; color:#fff;  border:1px solid #00b800; color:#00b800}
+/*------------------文字链接式的--------------------------*/
+.fot_txt_0{-webkit-box-flex:1;-moz-box-flex:1;-ms-box-flex:1;-o-box-flex:1;box-flex:1; padding-right:0.5rem; display: table-cell;vertical-align: middle; min-height:1.2rem; width:90%; padding-top:0.2rem; padding-bottom:0.2rem;}
+.fot_txt_0 a{ font-size:0.55rem; color:#757575; display: table-cell;vertical-align: middle; color:#666; line-height:0.8rem;}
+.fot_btn_0{-webkit-box-flex:1;-moz-box-flex:1;-ms-box-flex:1;-o-box-flex:1;box-flex: 1; width:1.4rem;text-overflow: ellipsis; font-size:1rem;display: table-cell;vertical-align: middle;  text-align:center}
+.fot_btn_a_0{ display:inline-block;width:1.1rem; height:1.1rem;line-height:0.85rem;text-align:center; color:#fff;color:#00b800;display: table-cell;vertical-align: middle;}
+/*------------------广告图--------------------------*/
+.gift_tu{display:block; width:100%; overflow:hidden; }
+.gift_tu img{ width:100%; height:100%; display:block;}
+
+.gift_adv_b{ display:block; width:90%; height:1.5rem;margin-left:5%; line-height:1.5rem; margin-right:5%; margin-top:2%; text-align:center; font-size:0.65rem; color:#fff; background:#adadad; 
+border-radius:0.2rem;}
+
+.f-log{ width:100%;color:#999;font-size:0.55rem; text-align:center; margin-top:0.5rem; padding-bottom:0.5rem;}
+
+
+/*------------------先加我模式--------------------------*/
+.addMe{ width:96%; margin-left:2%; margin-right:2%; height:1.5rem; line-height:1.5rem;text-align:center; background:#fe5a03; color:#fff; border-radius:0.4rem; font-size:0.8rem; margin-top:0.5rem;}
+
+
+
+
+
+

@@ -1,0 +1,50 @@
+{template 'common/header'}
+<div class="main">
+	<ul class="nav nav-tabs">
+		<li class="active"><a href="{php echo $this->createWebUrl('manage');}">游戏管理</a></li>
+		<li><a href="{php echo url('platform/reply/post', array('m'=>'aj_conste'));}">添加游戏</a></li>
+	</ul>
+    <style>
+    th{
+        text-align: center !important;
+    }
+    td{
+        text-align: center !important;
+        white-space: normal !important;
+        word-break: break-all !important;
+    }
+    </style>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            表单列表
+        </div>
+        <div class="panel-body">
+            <table class="table table-hover">
+                <thead class="navbar-inner">
+                     <tr>
+                        <th style="width: 5%;">编号</th>
+                        <th style="width: 35%;">游戏名称</th>
+                        <th style="width: 15%;">关键词</th>
+                        <th style="width: 20%;">操作</th>
+                     </tr>
+                </thead>
+                <tbody>
+                    {loop $list $row}
+                        <tr>            
+                            <td class="row-first">{$row['id']}</td>
+                            <td>{$row['title']} </td>
+                            <td>{$row['content']} </td>
+                            <td align="center">
+                                <a class="btn btn-default" data-toggle="tooltip" data-placement="top" href="{php echo url('platform/reply/post',array('m'=>'aj_conste','rid'=>$row['rid']));}" title="编辑"><i class="fa fa-edit"></i></a>
+                                <a class="btn btn-default" data-toggle="tooltip" data-placement="top" href="{php echo url('platform/reply/delete', array('m'=>'aj_conste','rid'=>$row['rid']));}" onclick="return confirm('此操作将同时删除游戏的数据,确定要删除吗?')" title="删除"><i class="fa fa-times"></i></a>
+                            </td>
+                        </tr>
+                    {/loop}
+                </tbody>
+            </table>
+            {$pager}
+        </div>
+    </div>
+</div>
+{template 'common/footer'}

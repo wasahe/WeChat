@@ -1,0 +1,174 @@
+{template 'common/header'}
+<div class="main">
+	<ul class="nav nav-tabs">
+		<li{if $_GPC['do'] == 'import_manage' || $_GPC['do'] == '' } class="active"{/if}><a href="{php echo $this->createWebUrl('import_manage');}">查询信息管理</a></li>
+		<li{if $_GPC['do'] == 'import_table' } class="active"{/if}><a href="{php echo $this->createWebUrl('import_table');}">初始化表设置</a></li>
+	</ul>
+
+	<div class="panel panel-primary">
+		<div class="panel-heading" style="text-align: right;">
+			<button class="btn btn-warning wzxx" id="addinfo" style="margin-right:5px;" type="button"><i class="fa fa-search"></i> 新增信息</button><button class="btn btn-success wzxx" type="button" onclick="location.href='{php echo $this->createWebUrl('import_csv')}'"><i class="fa fa-search"></i> 数据导入</button>
+		</div>
+		<div class="panel-body table-responsive">
+			<table class="table table-hover">
+				<thead class="navbar-inner">
+				<tr>
+					<th style="width:80px;">序号</th>
+					{loop $colcn_arr $col_cnname}
+					<th style="width:150px;">{$col_cnname}</th>
+					{/loop}
+					<th style="width:150px;">操作</th>
+				</tr>
+				</thead>
+				<tbody>
+				{loop $infolist $row}
+				<tr>
+					<td>{$row['id']}</td>
+					{loop $col_arr $col_enname}
+					<td>{$row[$col_enname]}</td>
+					{/loop}
+					<td>
+						<a class="btn btn-default" data-toggle="tooltip" data-placement="top" href="javascript:void(0);" onclick="edit_info({$row['id']});"title="编辑"><i class="fa fa-edit"></i></a>
+						<a class="btn btn-default" data-toggle="tooltip" data-placement="top" href="javascript:void(0);" onclick="del_info({$row['id']});" title="删除"><i class="fa fa-times"></i></a>
+					</td>
+				</tr>
+				{/loop}
+
+				</tbody>
+			</table>
+		</div>
+	</div>
+	{$pager}
+</div>
+
+
+
+
+<div class="modal fade" id="wzmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="myModalLabel" style="text-align: center;">信息编辑</h4>
+			</div>
+
+			<div class="modal-body" style="height: 550px;">
+				<input type="hidden" id="edit_id" value="0">
+				{php $flag=0;}
+				{loop $colcn_arr $col_cnname}
+				<div class="col-sm-12 col-xs-12" style="margin-bottom: 15px;">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">{$col_cnname}</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" id="{$col_arr[$flag]}" class="form-control" placeholder="" name="{$col_arr[$flag]}" value="">
+					</div>
+				</div>
+				{php $flag++;}
+				{/loop}
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" id="editinfo">保存</button>
+				<button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+			</div>
+
+		</div>
+
+
+
+	</div>
+</div>
+
+
+<script>
+	
+	$('#addinfo').bind("click", function() {
+		$('#edit_id').val('0');
+		var col_enarr = <?php echo json_encode($col_arr);?>;
+		for(var i=0;i<col_enarr.length;i++)
+		{
+			$('#'+col_enarr[i]).val('');
+		}
+		$('#wzmodal').modal('show');
+	});
+
+	$('#editinfo').bind("click", function() {
+		
+		var id = $('#edit_id').val();
+		var col_enarr = <?php echo json_encode($col_arr);?>;
+		var submitData = {
+			id: id,
+		};
+
+		for(var i=0;i<col_enarr.length;i++)
+		{
+			submitData[col_enarr[i]] = $('#'+col_enarr[i]).val();
+			
+		}
+		
+		$.post('{php echo $this->createWebUrl('import_edit')}',submitData,function(data)
+		{
+			if (data.success ==0)
+			{
+				$('#wzmodal').modal('hide');
+				window.location.reload();
+				alert(data.msg);
+			}
+			else
+			{
+				alert(data.msg);
+			}
+		},"json");
+	});
+
+	function edit_info(id)
+	{
+		var submitData = {
+			id: id,
+		};
+        var col_enarr = <?php echo json_encode($col_arr);?>;
+		//var col_enarr = '{php echo json_encode($col_arr)}';
+		$.post('{php echo $this->createWebUrl('edit_info')}',submitData,function(data)
+		{
+			if (data.success ==0)
+			{
+				var col_record = data.record;
+				$('#edit_id').val(id);
+				for(var i=0;i<col_record.length;i++)
+				{
+					$('#'+col_enarr[i]).val(col_record[i]);
+				}
+				$('#wzmodal').modal('show');
+			}
+			else
+			{
+				alert(data.msg);
+			}
+		},"json");
+	}
+
+	function del_info(id)
+	{
+		var submitData = {
+			id: id,
+		};
+		$.post('{php echo $this->createWebUrl('import_del')}',submitData,function(data)
+		{
+			if (data.success ==0)
+			{
+				alert(data.msg);
+				window.location.reload();
+			}
+			else
+			{
+				alert(data.msg);
+			}
+		},"json");
+	}
+
+
+	function drop_confirm(msg, url){
+		if(confirm(msg)){
+			window.location = url;
+		}
+	}
+</script>
+{template 'common/footer'}

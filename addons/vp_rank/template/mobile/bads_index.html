@@ -1,0 +1,93 @@
+{php $title=$rank['name']}
+{template 'inc/header'}
+
+<style>
+	body{}
+	.weui_cell_ft{}
+	.weui_cell_ft em{color:#ff0042;}
+</style> 
+
+
+
+
+<div class="weui_tab">
+	<div class="weui_tab_bd">
+		<div class="weui_tab_bd_item weui_tab_bd_item_active">
+			<div>
+				<img style="width:100%;" src="{php echo empty($rank['settings']['banner_bads'])?(MODULE_URL.'/static/mobile/images/rank_bads.jpg'):tomedia($rank['settings']['banner_bads']) }"/> 
+			</div>
+
+			<div id="ranks_list" class="weui_cells" style="margin-top:0px;" data-url="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('rank',array('cmd'=>'bads','submit'=>'list','rid'=>pencode($rank['id']))), 2)}" data-loading=false data-start=0 data-more=1 >
+			</div>
+			<div id="ranks_list_loader" class="weui-infinite-scroll"><div class="infinite-preloader"></div>加载...</div>
+
+			<script id="ranks_list_tpl" type="text/template" >
+				<%
+					if(!list){
+						return;
+					}
+					for(var i=0;i<list.length;i++){
+						var item = list[i];
+						var rank=i+1;
+				%>
+					<div class="weui_cell">
+						<div class="weui_cell_hd">
+							<% if(rank<=3){%><img src="{MODULE_URL}/static/mobile/images/bad_<%=rank%>.png"  style="width:20px;margin-right:5px;display:block"/><%  }else{ %><span style="width:20px;margin-right:5px;display:block;text-align:center;"><%=rank%></span><%  } %>
+						</div>
+						<div class="weui_cell_bd weui_cell_primary">
+							<p><%=item.name%></p>
+						</div>
+						<div class="weui_cell_ft"><em><%=item.bads%></em></div>
+					</div>
+				<%  } %>
+			</script>
+
+		</div>
+	</div>
+	
+	{php $menu='bads'}
+	{template 'inc/menu'}
+</div>
+
+
+{template 'inc/script'}
+<script type="text/javascript">
+$(function(){
+	
+	var list = $("#ranks_list");
+	var list_tpl=baidu.template($('#ranks_list_tpl').html());
+	var loadList=function(refresh){
+		/**
+		if(list.attr('data-loading')==true){
+			return;
+		}
+		**/
+		if(refresh){
+			list.attr('data-start',0);
+			list.attr('data-more',1);
+		}
+		list.attr('data-loading',true);
+		$.post(list.attr('data-url'), {
+		},function(resp) {
+			list.attr('data-loading',false);
+			if(resp.status==0){
+				alert(resp.info);
+			}else{
+
+				if(resp.data.more==0){
+					$('#ranks_list_loader').hide();
+				}
+				if(refresh){
+					 list.html('');
+				}
+
+				var html=list_tpl(resp.data);
+
+				list.html(list.html()+html);
+			}
+		});	
+	}
+	loadList(true);
+});
+</script>
+{template 'inc/footer'}

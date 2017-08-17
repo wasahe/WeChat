@@ -1,0 +1,221 @@
+
+{template 'header'}
+
+</head>
+<body>
+<div id="page0" class="ub ub-ver bga">
+    <div class="c-gre3 ub ub-ver ub-ac ub-pc" style=" padding:2rem 0rem 3rem 0rem ">
+    	<div><i class="iconfont icon-ayiluru t-yel" style="font-size:5rem"></i> </div>
+        <div class="umar-t ulev1 t-yel">员工加盟申请</div>
+        <div class="absolute tx-c ulev-4 t-yel ubt b-bla01" style="left:0; bottom:0;width:100%; 
+
+padding:0.5rem 0">请真实填写以下资料</div>
+    </div>
+    <div class="ub-f1">
+    	<!--<form class="form-horizontal ub ub-f1 ub-ver" id="form1" action="javascript:;" method="post">-->
+        <form class="form-horizontal ub ub-f1 ub-ver" id="form1" action="{php echo $this->createMobileUrl('StaffRegok',array())}" method="post" onSubmit="return submit1()">
+        <div class="uinn8 umar-t1 tx-c">
+            <ul class="userlist c-wh uc-a15 umar-b">
+                <li class="ub ub-ac">
+                    <div style="width:3.5rem">
+                        <i class="iconfont icon-nan ulev2 umar-r1 umar-l1 t-gre1"></i>
+                    </div>
+                    <div class="ub ub-f1 ub-ac ubb ubl b-bla01 uinn">
+                        <div class="ub ulev0 ub-f1 ">
+                            <input type="text" name="staff_name" id="staff_name" placeholder="姓名" class="uinn ulev0 ub-f1 block" />
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <ul class="userlist c-wh uc-a15 umar-b">
+                <li class="ub ub-ac">
+                    <div style="width:3.5rem">
+                        <i class="iconfont icon-icon02 ulev2 umar-r1 umar-l1 t-gre1"></i>
+                    </div>
+                    <div class="ub ub-f1 ub-ac ubb ubl b-bla01 uinn">
+                        <div class="ub ulev0 ub-f1 ">
+                            <input type="text" name="card" id="card" placeholder="身份证号"  class="uinn ulev0 ub-f1 block" />
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            
+            <ul class="userlist c-wh uc-a15 umar-b">
+                <li class="ub ub-ac">
+                    <div style="width:3.5rem">
+                        <i class="iconfont icon-phone ulev2 umar-r1 umar-l1 t-gre1"></i>
+                    </div>
+                    <div class="ub ub-f1 ub-ac ubb ubl b-bla01 uinn">
+                        <div class="ub ulev0 ub-f1 ">
+                            <input type="tel" name="staff_mobile" id="staff_mobile" placeholder="手机号" class="uinn ulev0 ub-f1 block" />
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            
+            <ul class="userlist c-wh uc-a15 umar-b">
+                <li class="ub ub-ac">
+                    <div style="width:3.5rem">
+                        <i class="iconfont icon-phone ulev2 umar-r1 umar-l1 t-gre1"></i>
+                    </div>
+                    <div class="ub ub-f1 ub-ac ubb ubl b-bla01 uinn">
+                        <div class="kk-check t-gra" style="padding:0.5rem 0.5rem 0.1rem 0.5rem ">
+                            <input name="sex" type="radio" id="hh1" value="2" checked>
+                            <label class="block uinn3 uba b-gra umar-b umar-r ufl ulev-1 uc-a15" for="hh1">女士<i class="iconfont icon-dagouxuanzhong ulev0 t-org"></i></label>
+                            <input name="sex" type="radio" id="hh2" value="1">
+                            <label class="block uinn3 uba b-gra umar-b umar-r ufl ulev-1 uc-a15" for="hh2">先生<i class="iconfont icon-dagouxuanzhong ulev0 t-org"></i></label>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            
+            <ul class="userlist c-wh uc-a15 umar-b">
+                <li class="ub ub-ac">
+                    <div style="width:3.5rem">
+                        <i class="iconfont icon-phone ulev2 umar-r1 umar-l1 t-gre1"></i>
+                    </div>
+                    <div class="ub ub-f1 ub-ac ubb ubl b-bla01 uinn">
+                        <div class="ub ulev0 ub-f1 ">
+                            <input type="tel" name="age" id="age" placeholder="年龄" class="uinn ulev0 ub-f1 block" />
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            
+            <ul class="userlist c-wh uc-a15 umar-b">
+                <li class="ub ub-ac">
+                    <div style="width:3.5rem">
+                        <i class="iconfont icon-phone ulev2 umar-r1 umar-l1 t-gre1"></i>
+                    </div>
+                    <div class="ub ub-f1 ub-ac ubb ubl b-bla01 uinn">
+                        <div class="ub ulev0 ub-f1 ">
+                            <input type="tel" name="age" id="age" placeholder="工龄[月数]" class="uinn ulev0 ub-f1 block" />
+                        </div>
+                        <span class="help-block">填入月数：12、24、</span>
+                    </div>
+                </li>
+            </ul>
+                
+            <ul class="userlist c-wh uc-a15 umar-b">
+                <li class="ub ub-ac">
+                    <div style="width:3.5rem">
+                         <i class="iconfont icon-icon02 ulev2 umar-r1 umar-l1 t-gre1"></i>
+                    </div>
+                    <div class="ub ub-f1 ub-ac ubb ubl b-bla01 uinn">
+                    	<div class="ub ulev0 ub-f1 ">
+                            <select name="company_id" id="company_id" class="uinn ulev0 ub-f1 block">
+                                <option value="" selected>选择所属公司</option>
+                                <option value="shouye">首页</option>
+                            </select>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            
+            <ul class="userlist c-wh uc-a15 umar-b">
+                <li class="ub ub-ac">
+                    <div style="width:4rem; padding:0 1rem" class="tx-c t-gra ulev-1">申请项目</div>
+                    <div class="ub-f1 ubb ubl b-bla01 kk-check t-gra" style="padding:0.5rem 0.5rem 
+
+0.1rem 0.5rem ">
+                    {php $n=0;}
+                    {loop $list $vo}
+                    {php $n+=1;}
+                        <input name="servetype[]" type="checkbox" id="hh{$n}" value="{$vo['id']}">
+                        <label class="block uinn3 uba b-gra umar-b umar-r ufl ulev-1 uc-a15" for="hh{$n}">{$vo['type_name']}<i class="iconfont icon-dagouxuanzhong ulev0 t-org"></i></label>
+                    {/loop}    
+                        <div class="clear"></div>
+                    </div>
+                </li>
+            </ul>
+    	</div>
+        
+        <div class="uinn8 ub">
+        	<input name="submit" type="submit" value="下一步" class="c-gre3 ub uc-a1 ub-f1 btnn ulev0 t-wh" style="margin-bottom:0.5em; padding:0.75rem 3rem" />
+            <input type="hidden" name="token" value="{$_W['token']}" />
+            <!--            
+            <button class="c-gre3 ub ub-pc uc-a1 ub-f1 btnn block" onClick="submit1()" style="margin-bottom:0.5em;padding:0.75rem 3rem" type="submit"><span class="ulev0 t-wh">下一步</span></button>
+            -->
+        </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript" src="{MODULE_URL}/template/mobile/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="{MODULE_URL}/template/mobile/js/main.js"></script>
+<script type="text/javascript" src="{MODULE_URL}/template/mobile/js/jquery_min.js"></script>
+<script type="text/javascript" src="{MODULE_URL}/template/mobile/js/main.js"></script>
+
+<script type="text/javascript">
+function submit1(){
+	var staff_name = document.getElementById('staff_name').value;
+	var card = document.getElementById('card').value;	
+	var staff_mobile = document.getElementById('staff_mobile').value;	
+	var lat = localStorage['lat'];
+	var lng = localStorage['lng'];
+			
+	if(staff_name == ''){
+		alert("请输入姓名");
+		return false;
+	}
+	/*
+	if(card == ''){
+		alert("请输入身份证号");
+		return false;
+	}
+	*/
+	if(staff_mobile == ''){
+		alert("请输入手机号码");
+		return false;
+	}
+	if (!/^1[358]{1}[0-9]{9}/.test(staff_mobile)) {
+		alert('请输入正确的手机号码！');
+		return false;
+	}
+	
+	var str=document.getElementsByName("servetype[]");
+	var objarray=str.length;
+	var chestr="";
+	for (i=0;i<objarray;i++)
+	{
+		if(str[i].checked == true)
+		{
+			chestr+=str[i].value+",";
+		}
+	}
+	
+	if(chestr == "")
+	{
+		alert("请先选择申请项目！");
+	  	return false;
+	}
+	
+	/*
+	$.ajax({
+		url: "{php echo $this->createMobileUrl('Regok', array());}",
+		type:"POST",
+		data:{"staff_name":staff_name,"card":card,"staff_mobile":staff_mobile,"serve_type":chestr,"lat":lat,"lng":lng},
+		dataType:"json",
+		success: function(res){
+			alert(res);
+			if(res == "0"){
+				alert('对不起,申请失败,请重新提交！');
+			}
+			if($res == "1"){
+				alert('恭喜您，申请成功！');
+				//WeixinJSBridge.call('closeWindow'); 
+				window.location.href = "{php echo $this->createMobileUrl('Validate',array())}";  
+			}
+			if($res == '2'){
+				alert('此微信账号已申请，不能重复申请！');
+			}
+		}
+	});
+	*/
+}
+
+</script>
+
+</body>
+</html>

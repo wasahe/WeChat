@@ -1,0 +1,348 @@
+{template 'header'}
+<link rel="stylesheet" href="http://cdn.amazeui.org/amazeui/2.5.0/css/amazeui.min.css">
+<link rel="stylesheet" href="{php echo MODULE_URL;}template/static/css/app.css">
+<script type="text/javascript" src="{php echo MODULE_URL;}template/static/js/amazeui.min.js"></script>
+	<style>
+.box{
+	position: relative;
+	width: 100%;
+	height: auto;
+	margin: 0px;
+	overflow: hidden;
+}
+	
+
+.div-img{
+
+	position: relative;
+
+	width: 60px;
+
+	height: 60px;
+
+	margin: 0 auto;
+
+	overflow: hidden;
+
+	border-radius: 50%;margin-top: 20px;
+
+}
+
+.edit{
+	position: absolute;
+	padding: 4px 6px;
+	font-size: 12px;
+	color: white;
+	top: 4px;
+	right: 10px;
+	border-radius: 2px;
+	background: rgba(0,0,0,.6);
+}
+
+.two-code{
+	position: absolute;
+	height: auto;
+	width: auto;
+	padding: 4px 6px;
+	font-size: 12px;
+	color: white;
+	top: 16px;
+	left: 16px;
+	border-radius: 2px;
+	background: rgba(0,0,0,.6);
+}
+
+.close{
+
+	position: absolute;
+
+	top:0;
+
+	left:0;
+
+	width: 32px;
+
+	height: 32px;
+
+	color: #d7bc8e;
+
+	font-weight: bolder;
+
+	
+
+	border-radius: 50%;
+
+	text-align: center; line-height: 32px;
+
+}
+/*    */
+.red_top{height:54px;border-top: 20px solid #ebe5d2;background: #fff;width: 88.889%;margin: 0 auto;position: fixed;top: 0;    left: 5.55556%;    z-index: 2;}
+.red_main{width:88.889%;  margin: 0 auto; padding:10px 10px 60px 10px; background:#fff;    min-height: 80px;}
+.red_main .add_img{ width: 100%;
+    min-height: 200px;
+    margin: o auto;
+    text-align: center;
+    background: #ccc;}
+#list_content{ text-align:left;}
+.red_bottom{position: fixed;
+    bottom: 0;}
+.red_bottom img{width:100%}
+	</style>
+</head>
+<body id="main" style="background-color:#ebe5d2;">
+<!--[if lte IE 9]>
+<p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a
+  href="http://browsehappy.com/" target="_blank">升级浏览器</a>
+  以获得更好的体验！</p>
+<![endif]-->
+<div class="red_top"><div onclick="history.go(-1)" class="close"><i class="am-icon-close"></i></div>
+{if $isme==1}
+	<div class="edit" onclick="window.location.href='{php echo $this->createMobileUrl('Redpack',array('ty'=>'edit','tid'=>$_GPC['tid'],'tokenkey'=>$_GPC['tokenkey']))}'">编辑红包</div>
+	{/if}
+</div>
+
+<div class="red_main">
+    <div style="max-height:200px; overflow:hidden;padding:0;position:relative;" onclick="Count_succes('adclick');">
+	    {if !empty($redata['adurl'])}
+	<div  style="position: absolute; right: 0px; bottom: 0px; width: auto; color: white; background: rgba(0,0,0,.6);; color: #888888; padding: 0px 8px; border-radius: 2px 0px 0px 0px; font-size: 12px;" >活动详情</div>
+    {/if}
+    <img src="{$redata['adbg']}" class="add_img" />
+	</div>
+	<div class="am-g am-text-center" style="position: relative;
+
+bottom: 0;">	
+
+<div class="div-img">
+
+					<img src="{$redata['addimg']}" width="100%" height="100%">	</div>
+
+	<div style="color: #c4ae7e; padding-top:5px">{$redata['act_name']}</div>
+
+	<div class="am-text" style="color: #d5c3a1;">{$redata['wishing']}</div>
+
+	<div class="am-g am-padding am-text-center" style="position: relative;">
+{if $isme==1}
+<!--  本人 -->
+	<button onclick="$('#share').modal('open')" class="am-btn am-btn-secondary am-radius am-btn-block">分享给大家领取</button>
+		
+	<button class="am-btn am-radius am-btn-block" style="margin-top: 8px; color: white; background-color: #ff8610;" onclick="showBrows();">抢红包页面</button>
+	<button class="am-btn am-btn-success am-radius am-btn-block" style="margin-top: 8px;" onclick="window.location.href='{php echo $this->createMobileUrl('Mypack')}'">我已发的红包</button>
+
+<!-- 本人end -->
+{else}
+<button onclick="window.location.href='{php echo $this->createMobileUrl('Plus')}'" class="am-margin-bottom-sm am-radius am-btn am-btn-block" style="background-color: #D03020;color: white; ">我也要发带广告红包</button>
+	{/if}
+</div>
+
+
+
+
+	
+
+	<div class="am-text-xs am-padding-xs" style="text-align:left;    color: #bba471;">
+	已领{$luckycount}/{$redata['number']}个，共{$redata['amount']}元
+</div>
+<div id="list_content" class="box" style="background-color: white; border-top: 1px solid #efebdf;    color: #bba471;">
+</div>
+<div id="list_more" class="box" style="margin-top: 16px; text-align: center;"><span class="am-text-secondary" onclick="get_list();">查看更多</span></div>
+	<div onclick="window.location.href='{php echo $this->createMobileUrl('mypack',array('ty'=>'lucky'))}'" class="box am-text-primary" style="font-size: 14px; margin-bottom: 8px; text-align: center;">
+
+		查看我的红包
+
+	</div>
+
+</div>
+</div>
+
+
+
+<div class="red_bottom"><img src="{php echo MODULE_URL;}/template/static/images/rebbottom.png"/></div>
+
+
+
+
+<!--复制分享链接开始-->
+<div class="am-modal am-modal-alert" id="share_url">
+	<div class="am-g" style="position: relative; height: auto; background-color: brown; border-radius: 8px;">
+
+		<div class="box" style="width: 80%; padding: 16px 0px; margin: 0 auto;" id="gg_img">
+			<img src="" width="100%" style="border-radius: 8px;">
+		</div>
+
+		<div class="am-u-sm-12 am-text-center" style="padding: 8px;color: white;">
+			
+			<input type="text" value="{php echo $this->createMobileUrl('Redpack',array('tid'=>$_GPC['tid'],'tokenkey'=>$_GPC['tokenkey']))}" class="box" style="margin-bottom: 8px; padding: 8px; outline: none; color: white; background-color: brown; font-size: 12px; border: 1px dashed #CCCCCC; text-align: center;">
+			<span class="am-text-xs" style="color: #888888;">长按复制分享链接</span>
+		</div>
+
+		<div onclick="$('#share_url').modal('close');" class="close"><i class="am-icon-close"></i></div>
+
+	</div>
+</div>
+<!--复制分享链接开始-->
+
+
+<!--隐藏的分享开始-->
+<div class="am-modal-actions" style="top: 0px;" id="share" onclick="$('#share').modal('close')" >
+		<img width="100%"  src="{php echo MODULE_URL;}/template/static/images/share.png">
+</div>
+<!--隐藏的分享结束-->
+{if $isme==1}
+<!--二维码关注开始-->
+<div class="am-modal am-modal-alert" tabindex="-1" id="two_code">
+  <div class="am-modal-dialog" style="border-radius: 2px;border-radius: 5px;background: #AC0000;">
+    <div class="am-modal-bd" style="border-bottom: none">
+    	<div class="am-g am-text-center">
+    		<div class="am-u-sm-12 am-padding-top am-text-center am-text-sm" style="text-align: justify;">
+    			<img src="{php echo $this->createMobileUrl('Url')}&url={php echo urlencode($redata['short_url']);}" width="80%"style="border-radius: 5px;">
+				    <p><input type="text" id="copyurl" class="am-form-field am-radius" value="{$redata['short_url']}" style="background-color: #AC0000;border: 1px solid #ccc;
+border: dashed 1px #ccc;color: #fff;ime-mode: disabled; text-align:center" /></p>
+					<div class="am-margin-top am-text-xs">长按选择，复制连接</div>
+    		</div>
+    	</div>
+    </div>
+  </div>
+</div>
+<!--二维码关注结束-->
+{else}
+<!--二维码关注开始-->
+<div class="am-modal am-modal-alert" tabindex="-1" id="two_code">
+  <div class="am-modal-dialog" style="border-radius: 2px;">
+    <div class="am-modal-bd">
+    	<div class="am-g am-text-center">
+    		<div class="am-u-sm-12 am-padding-top am-text-center am-text-sm" style="text-align: justify;">
+    			<img src="{php echo $_W['account']['qrcode'];}" width="80%">
+					<div class="am-margin-top am-text-xs">长按关注【{$_W['account']['name']}】，可查看我的红包</div>
+    		</div>
+    	</div>
+    </div>
+  </div>
+</div>
+<!--二维码关注结束-->
+{/if}
+
+<script src="http://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+<script src="http://cdn.amazeui.org/amazeui/2.5.0/js/amazeui.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+<script type="text/javascript">
+
+wx.ready(function () {
+	wx.showOptionMenu();
+});
+
+/*获取红包记录方法*/
+var limit = 1;
+function get_list(){	
+	$("#list_more").html('<div class="am-modal-bd am-text-secondary"><span class="am-icon-spinner am-icon-spin"></span> Loading...</div>');
+	$.ajax({
+	    type : "post",
+	    url : "{php echo $this->createMobileUrl('Redpack',array('ty'=>'ajaxpage','tid'=>$_GPC['tid'],'tokenkey'=>$_GPC['tokenkey']))}",
+	    data : {
+	    	limit:limit,
+	    },
+        dataType : "json",		
+	    success : function(data) {
+	    	if(data.status==200){
+						var list = data.content;
+						var content = '';
+						$("#list_content").append(list);
+						for(var i=0; i<list.length; i++){
+							content = '<div class="box" style="padding: 16px; padding-left:80px; border-bottom: 1px solid #EEEEEE">'
+							+'<img src="'+list[i]['avatar']+'" width="48" height="48" style="position: absolute; top: 16px; left: 16px;  border-radius: 50%;" />'
+							+'<div><span>'+list[i]['nickname']+'</span>'
+							+'<span class="am-text-sm am-fr">'+list[i]['get_money']+'元</span>'
+							+'</div><div>'
+							+'<span class="am-text-xs" style="color: #CCCCCC;">'+list[i]['createtime']+'</span></div></div>';
+							
+							$("#list_content").append(content);
+						}
+						if(list.length==10){
+							$("#list_more").html('<span class="am-text-secondary" onclick="get_list();">查看更多</span>');
+						}else{
+							$("#list_more").html('<span></span>');
+						}
+						limit++;		
+		    }else if(data.status==-103){
+	    		$("#list_more").html('<span>没有更多记录！</span>');
+	    	}else{
+			    $("#list_more").html('<span>没有更多记录！</span>');
+			}    	
+	    },
+	    error : function(xhr, type) {
+
+	    }
+	});
+}
+get_list();
+
+
+/*预览红包*/
+function showBrows(){
+	window.location.href="{php echo $this->createMobileUrl('Redpack',array('tid'=>$_GPC['tid'],'tokenkey'=>$_GPC['tokenkey']))}";
+}
+/**
+
+ * 转发统计
+
+ */
+
+function Count_succes(ty){
+
+	$.ajax({
+
+		type : "post",
+
+		url : "{php echo $this->createMobileUrl('Count',array('tid'=>$_GPC['tid'],'tokenkey'=>$_GPC['tokenkey']))}",
+
+		data : {
+
+			ty:ty,
+
+		},
+
+		dataType : "json",
+
+		beforeSend : function(XMLHttpRequest) {
+
+		},
+
+		success : function(res) {
+
+		},
+
+		error : function(res, type) {
+
+		}
+
+	});
+
+
+
+	{if !empty($redata['adurl'])}
+
+		window.location.href="{$redata['adurl']}"; 
+
+	{else}
+
+	    var imgArray = [];
+
+		var itemSrc = "{$redata['adbg']}";
+
+		imgArray.push(itemSrc);
+
+	    wx.previewImage({
+
+                current: itemSrc,
+
+                urls: imgArray
+
+        });
+
+	{/if}
+
+}
+
+
+</script>
+
+{template 'footer'}

@@ -1,0 +1,25 @@
+{template 'common_header'}
+    <!-- 基本信息 -->
+    <div class="am-g" style="background-color:#FFF;">
+        <div class="am-u-sm-12" style="margin-top:5px">
+		  <table class="am-table">
+		    <thead>
+		        <tr>
+		            <th>应聘公司</th>
+		            <th>申请职位</th>
+		            <th>应聘时间</th>
+		        </tr>
+		    </thead>
+		    <tbody>
+		    	{loop $applys $apply}
+		        <tr onclick="location.href='{php echo $this->createMobileUrl('JobShow', array('job_id' => $apply['job_id']));}';">
+		            <td><span style="color:#00F">{$companys[$apply['company_id']]['name']}</span></td>
+		            <td>{$jobs[$apply['job_id']]['title']}</td>
+		            <td>{$apply['dateline']}</td>
+		        </tr>
+		        {/loop}
+		   </tbody>
+		 </table>
+	   </div>
+	 </div>
+{template 'common_footer'}	 

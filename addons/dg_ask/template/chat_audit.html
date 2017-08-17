@@ -1,0 +1,94 @@
+{template 'common/header'}
+<style type="text/css">
+.table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td{
+  white-space:normal;
+}
+</style>
+<div class="main">
+	<div class="panel panel-info">
+		<div class="panel-heading">筛选</div>
+		<div class="panel-body">
+			<form  method="get" class="form-horizontal" role="form">				
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">审核状态</label>
+						<div class="col-sm-6 col-lg-8">
+						<input type="hidden" name="c" value="site">
+						<input type="hidden" name="a" value="entry">
+						<input type="hidden" name="do" value="chat_audit">
+						<input type="hidden" name="m" value="dg_ask">
+						<select name="status" class="form-control">
+							<option value="" selected="selected">不限</option>
+							<option value="0"{if '0' == $status} selected="selected"{/if}>待审核</option>
+							<option value="1"{if '1' == $status} selected="selected"{/if}>审核通过</option>
+							<option value="2"{if '2' == $status} selected="selected"{/if}>审核未通过</option>
+						</select>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">查询关键词</label>
+					<div class="col-sm-6 col-lg-8">
+						<input class="form-control" name="keyword" id="" type="text" value="{$_GPC['keyword']}" placeholder="请输入用户昵称">
+					</div>
+					<div class="pull-right col-xs-12 col-sm-3 col-lg-2">
+						<button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="panel panel-default">
+	<div class="panel-heading">	
+			<div class="row-fluid">
+				<div class="span8 control-group">
+					共计 {$total} 条数据
+				</div>
+			</div>
+		</div>
+		<div class="panel-body table-responsive">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:65px;" align="center">头像</th>
+					<th>昵称</th>
+					<th>手机号</th>
+					<th>认证照片</th>
+					<th align="center">申请时间</th>
+					<th align="center">审核时间</th>
+					<th>状态</th>
+					<th style="width:150px;">快捷操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $records $row}
+				<tr>
+					<td><img alt="" src="{$row['headimg']}" width='auto' style="max-width:50px; max-height:50px;" height='auto'></td>
+					<td>{$row['nickname']}</td>
+					<td>{$row['phone']}</td>
+					<td><a target="_blank" href="{php echo $this->createWebUrl('audit_img',array('id'=>$row['id']))}"><img alt="" src="{$row['imgurl']}" width='auto' style="max-height:100px;" height='auto'></a></td>
+					<td>{$row['addtime']}</td>
+					<td>{$row['audittime']}</td>
+					<td>{$row['status']}</td>
+					<td>
+					 {if $row['status']=="待审核"}
+					 <label style="cursor:pointer;" data="{$row['id']}" onclick="setStatus({$row['id']},1)">通过</label>
+					 <label style="cursor:pointer;" data="{$row['id']}" onclick="setStatus({$row['id']},2)">不通过</label>
+					 {/if}
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+		</table>
+	</div>
+	</div>
+	{$pager}
+</div>
+<script type="text/javascript">
+function setStatus(id,status){
+	$.post(location.href,{id:id,status:status},function(result){
+		alert("审核成功！");
+		location.reload();
+	});
+}
+</script>
+{template 'common/footer'}

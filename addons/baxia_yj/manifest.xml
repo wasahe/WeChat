@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com" versionCode="0.6,0.7,0.8">
+	<application setting="true">
+		<name><![CDATA[大屏幕现场活动摇奖抽奖]]></name>
+		<identifie><![CDATA[baxia_yj]]></identifie>
+		<version><![CDATA[1.7]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[现场活动摇奖，年会摇奖，可以投影到大屏幕]]></ability>
+		<description><![CDATA[现场活动摇奖，年会摇奖，可以投影到大屏幕]]></description>
+		<author><![CDATA[新田源码论坛]]></author>
+		<url><![CDATA[http://bbs.xtec.cc]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+		<card embed="false" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="中奖名单" do="winning" state="" direct="false" />
+			<entry title="摇奖开始" do="start" state="" direct="false" />
+			
+		</menu>
+	</bindings>
+	<permissions>
+	</permissions>
+	<install><![CDATA[
+CREATE TABLE `ims_wx_yj_users` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL DEFAULT '0',
+  `md5` varchar(32) NOT NULL DEFAULT '',
+  `headurl` varchar(255) NOT NULL DEFAULT '',
+  `nickname` varchar(100) NOT NULL DEFAULT '',
+  `let` tinyint(1) NOT NULL DEFAULT '1',
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `addtime` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `rid` (`rid`,`uniacid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE `ims_wx_yj_winning` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `headurl` varchar(255) NOT NULL DEFAULT '',
+  `nickname` varchar(100) NOT NULL DEFAULT '',
+  `addtime` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;]]></install>
+	<uninstall><![CDATA[DROP TABLE IF EXISTS `ims_wx_yj_users`;
+	DROP TABLE IF EXISTS `ims_wx_yj_winning`;
+	]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

@@ -1,0 +1,33 @@
+{template 'top'}
+
+<div id="add_title">
+<div class="add_title_a"><a href="javascript:history.go(-1);"><div class="add_title_a_1"><img src="{MODULE_URL}template/mobile/images/a.png"/></div></a></div>
+
+<div class="add_title_b">发布临时工信息</div>
+
+<div class="add_title_c"><a href="{php echo $this->createMobileUrl('fengmian');}"><div class="add_title_c_1"><img src="{MODULE_URL}template/mobile/images/b.png"/></div></a></div>
+</div>
+
+
+<div id="zhaopin_one">
+<form action="" method="POST">
+
+<div class="zhaopin_one_a">姓名：</div>
+<div class="zhaopin_one_b"><input type="text" name="linshiname" placeholder="请输入姓名" required="required"/></div>
+
+<div class="zhaopin_one_a">联系电话：</div>
+<div class="zhaopin_one_b"><input type="text" name="tel" placeholder="请输入联系电话" required="required"/></div>
+
+<div class="zhaopin_one_a">截止日期：</div>
+<div class="zhaopin_one_b"><input type="datetime-local" name="validity" required="required"/></div>
+
+<div class="zhaopin_one_c"><textarea name="linshispecial" placeholder="请输入你的特长" required="required"/></textarea></div>
+
+
+</div>
+
+<div id="add_ok"><input type="submit" value="发 布"/></div>
+
+</form>
+
+{template 'foot'}

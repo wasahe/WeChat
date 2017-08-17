@@ -1,0 +1,180 @@
+<!doctype html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta charset="utf-8">
+	    <link rel="stylesheet" href="{TEMPLATE_PATH}/images/ux/iconfont.css" />
+		<link rel="stylesheet" href="{TEMPLATE_PATH}/css/animate.css" />
+		<link rel="stylesheet" href="{TEMPLATE_PATH}/css/style.css" />
+		<script src="//cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+		<script type="text/javascript" src="{TEMPLATE_PATH}/js/script.js" ></script>
+		<script src="{TEMPLATE_PATH}/js/ask_main.js?v=1"></script>
+		<title>{$pagename}</title>
+		<script type="text/javascript">
+		var globalObj=new Object();
+		var pindex=1;
+		var upindex=1;
+		var answer_url="{php echo $this->createMobileUrl('ask_answer')}";
+		var ask_detailurl="{php echo $this->createMobileUrl('ask_detail')}";
+		var get_user_url="{php echo $this->createMobileUrl('ask_index_ajax')}";
+		var my_ask_index="{php echo $this->createMobileUrl('my_ask_index')}";
+		var follow_url="{php echo $this->createMobileUrl('ask_follow_ajax')}";
+		var listen_money={$cfg['listen_money']};
+		var send_url="{php echo $this->createMobileUrl('my_ask_sendnotice')}";
+		var is_myindex=false;
+		var keyword="";
+		var expert_order="";
+	  $(function(){
+	     pageLoadCommon($(document),ajax_users_list);
+	     Follow();
+	     $(".mytag").click(function(){
+				$(".mytag").removeClass('active');
+				$(this).toggleClass('active');
+				globalObj.isloading=false;
+				upindex=0;
+				$(".expertList ul").empty();
+				ajax_users_list();
+				$(this).parents(".slideInDown ").hide();
+				$(".tabCon").find(".blackBg").hide(0);
+		 });
+	     //价格排序
+	     $(".price_order").click(function(){
+	    	 globalObj.isloading=false;
+				upindex=0;
+				$(".expertList ul").empty();
+				expert_order=$(this).attr("attr-order");
+				ajax_users_list();
+				$(this).parents(".slideInDown ").hide();
+				$(".tabCon").find(".blackBg").hide(0);
+	     });
+	     
+	     $("#btn_search").click(function(){
+				keyword=$("#keyword").val();
+				upindex=0;
+				globalObj.isloading=false;
+				$(".expertList ul").empty();
+				$(".search,body").toggleClass("active");
+				
+				ajax_users_list();
+			});
+	 });
+ </script>
+	</head>
+
+	<body id="mbody">
+	<div class="main expert">
+		
+		<!--专家筛选 start-->
+		<div class="expertSeclect">
+			<ul class="flex tabTit">
+				<li>类别</li>
+				<li style="display:none;">综合排序</li>
+				<li>价格</li>
+			</ul>
+		</div>
+		<div class="tabCon expertItem">
+			<div class="tabInner animated slideInDown columns">
+				<ul class="clearfix">
+				    <li class="mytag active" attr-id="0">全部</li>
+					{loop $tag_record  $trecord}
+						 <li class="mytag" attr-id="{$trecord['id']}">{$trecord['tag_name']}</li>
+					{/loop}
+				</ul>
+			</div>
+			<div class="tabInner animated slideInDown rows">
+				<ul>
+					<li>默认</li>
+					<li>天猫</li>
+					<li>唯品会</li>
+				</ul>
+			</div>
+			<div class="tabInner animated slideInDown rows">
+				<ul>
+				   <li class="price_order" attr-order="">默认</li>
+					<li class="price_order" attr-order="asc">价格从低到高</li>
+					<li class="price_order" attr-order="desc">价格从高到低</li>
+				</ul>
+			</div>
+			<div class="blackBg floatBox animated fadeIn"></div>
+		</div>
+		<!--专家筛选 end-->
+		<!--专家列表 start-->
+		<div class="expertList">
+			<ul>
+			 {loop $user_records $guest}
+				<li class="flex2">
+					<div class="avatar {if $guest['vstatus']==1}renzheng{/if}">
+					<a href="{php echo $this->createMobileUrl('my_ask_index',array('uid'=>$guest['id']));}">
+						<img src="{$guest['avatar']}" width="60" height="60">
+					</a>
+					</div>
+					
+					<div class="info sub">
+						<div class="indro">
+
+							<h3 class="f16">
+								<span class="green"><i class="iconfont"></i> {$guest['follow_num']}人</span>
+								<span class="yel"><i class="iconfont"></i> {$guest['pay_money']}</span>
+<a href="{php echo $this->createMobileUrl('my_ask_index',array('uid'=>$guest['id']));}">
+								   {$guest['real_name']}
+								</a> 
+							</h3>
+							<p class="mt5 f12">{$guest['user_title']}</p>
+							<p class="mt5 gray f12">
+							    {$guest['user_desc']}
+							</p>
+						</div>
+						<div class="tags mt10 clearfix">
+						{if $guest['tags']}
+						   {loop $guest['tags'] $tag}
+							<span>{$tag}</span>
+						   {/loop}
+						{/if}
+						</div>
+						<div class="mt10 btn">
+							<a href="{php echo $this->createMobileUrl('my_ask_index',array('uid'=>$guest['id']));}" class="putQ">向TA提问</a>
+							<a href="javaScript:;" data="{$guest['id']}" class="listen ml10 {if $guest['listen']==1}active{/if}">收听 <i class="iconfont">&#xe617;</i></a>
+						</div>
+					</div>
+				</li>
+				{/loop}
+				
+			</ul>
+		</div>
+		<!--专家列表 end-->
+
+
+		<div class="loading gray" style="display:none;">
+			<span class="f18"><i class="iconfont">&#xe61a;</i></span>正在加载中…
+		</div>
+		
+		<div class="noMore gray" style="display:none;">
+			没有更多内容了！
+		</div>
+
+	</div>
+	
+	<!--搜索及发布悬赏-->
+	<div class="fastNav">
+		<ul>
+			<li class="s"><i class="iconfont">&#xe61b;</i></li>
+			
+		</ul>
+	</div>
+	
+	<!--搜索-->
+	<div class="floatBox search">
+		<div class="floatBox blackBg animated slideInRight"></div>
+		<div class="box flex2 animated fadeInDown">
+			<div class="close"></div>
+			<label class="sub">
+				<input type="text" id="keyword" value="" placeholder="搜索最想了解的人">
+				<button class="f18" id="btn_search"><i class="iconfont">&#xe61b;</i></button></label>
+		</div>
+	</div>
+	
+	{template footer}
+
+	</body>
+
+</html>

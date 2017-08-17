@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+{if empty($_W['isajax'])}
+{template 'common/top'}
+{/if}
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Main content -->
+    <section class="content">
+		{if !empty($verifys)}
+		  <div class="row">
+			<div class="col-xs-12">
+			  <div class="box">
+				<div class="box-header">
+				  <h3 class="box-title">待审核用户</h3>
+				</div>
+				<!-- /.box-header -->
+				<div class="box-body">
+				  <table id="example2" class="table table-hover">
+					<thead>
+					<tr>
+						<th class='col-md-2 col-xs-5 col-sm-5'>用户</th>
+						<th class='col-md-1 hidden-xs hidden-sm'>姓名</th>
+						<th class='col-md-2 hidden-xs hidden-sm'>头衔</th>
+						<th class='col-md-1 hidden-xs hidden-sm'>费用</th>
+						<th class='col-md-2 hidden-xs hidden-sm'>申请时间</th>
+						<th>操作</th>
+					</tr>
+					</thead>
+					<tbody>
+					{loop $verifys $li}
+					<tr>
+						<td>
+							<img src="{php echo tomedia($li['avatar'])}" style="width:2em;height:2em;" class="img-rounded"/>
+							{$li['nickname']}
+						</td>
+						<td>{$li['realname']}</td>
+						<td>{$li['tags']}</td>
+						<td>{$li['credit']}元</td>
+						<td>
+							<label class="label label-success">{php echo date('Y-m-d H:i',$li['create_time'])}</label>
+						</td>
+						<td>
+							<a href="{php echo $this->createWebUrl('member',array('act'=>'pass','id'=>$li['id']))}" class="btn btn-success">通过</a>
+							<a href="{php echo $this->createWebUrl('member',array('act'=>'status','id'=>$li['id']))}" class="btn btn-default">查看介绍</a>
+						</td>
+					</tr>
+					{/loop}
+					</tbody>
+				  </table>
+				</div>
+				<!-- /.box-body -->
+			  </div>
+			  <!-- /.box -->
+			</div>
+		  </div>
+		  <!-- /.row -->
+		{/if}
+		<div class="row">
+        {php $total = M('member')->totalid()}
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-aqua"><i class="fa fa-plus"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">会员总数</span>
+              <span class="info-box-number">{$total['all']['sum']}</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-red"><i class="fa fa-check-square-o"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">今日新增</span>
+              <span class="info-box-number">{$total['day']['sum']}</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+ 
+        <!-- fix for small devices only -->
+        <div class="clearfix visible-sm-block"></div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-green"><i class="fa fa-line-chart"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">本周新增</span>
+              <span class="info-box-number">{$total['week']['sum']}</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-yellow"><i class="fa fa-flag-checkered"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">本月新增</span>
+              <span class="info-box-number">{$total['month']['sum']}</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+				<h3 class="box-title">会员列表</h3>
+				<div class="box-tools">
+					<a href="{php echo $this->createWebUrl('member',array('act'=>'edit'))}" class="btn btn-info">新增会员</a>
+				</div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example2" class="table table-hover">
+                <thead>
+				<tr>
+					<th class='col-md-3 col-xs-5 col-sm-5'>用户</th>
+					<th class='col-md-1 hidden-xs hidden-sm'>类型</th>
+					<th class='col-md-1 hidden-xs hidden-sm'>评分</th>
+					<th class='col-md-1 hidden-xs hidden-sm'>费用</th>
+					<th class='col-md-3 hidden-xs hidden-sm'>加入时间</th>
+					<th>操作</th>
+				</tr>
+                </thead>
+				<tbody>
+				{loop $list['list'] $li}
+				<tr>
+					<td>
+						<img src="{php echo tomedia($li['avatar'])}" style="width:2em;height:2em;" class="img-rounded"/>
+						{if $li['status']=='3'}
+							{$li['realname']}
+						{else}
+							{$li['nickname']}
+						{/if}
+					</td>
+					<td class='hidden-xs hidden-sm'>
+						<label class="label label-{if $li['status']==0}info{else if $li['status']==1}danger{else if $li['status']==2}danger{else if $li['status']==3}warning{/if}">
+							{if $li['status']==0}会员{else if $li['status']==1}审核{else if $li['status']==2}驳回{else if $li['status']==3}专家{/if}
+						</label>
+					</td>
+					<td class='hidden-xs hidden-sm'>{$li['score']}</td>
+					<td class='hidden-xs hidden-sm'>{$li['credit']}</td>
+					<td class='hidden-xs hidden-sm'>
+						<label class="label label-success">{php echo date('Y-m-d H:i',$li['create_time'])}</label>
+					</td>
+					<td>
+						<a href="{php echo $this->createWebUrl('member',array('act'=>'edit','id'=>$li['id']))}" class="btn btn-success">编辑</a>
+						<a href="{php echo $this->createWebUrl('follow',array('to_openid'=>$li['openid']))}" class="btn btn-warning">收听</a>
+						<a href="{php echo $this->createWebUrl('member',array('act'=>'delete','id'=>$li['id']))}" class="btn btn-danger">删除</a>
+					</td>
+				</tr>
+				{/loop}
+				</tbody>
+              </table>
+            </div>
+			<div class="box-footer">
+				{php echo $list['pager']}
+			</div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">会员搜索</h3></div>
+            <!-- /.box-header -->
+            <form action="./index.php" method="get"  class="form-horizontal">
+			<input type="hidden" name="c" value="{php echo $_GPC['c']}"/>
+			<input type="hidden" name="a" value="{php echo $_GPC['a']}"/>
+			<input type="hidden" name="m" value="{php echo $_GPC['m']}"/>
+			<input type="hidden" name="do" value="{php echo $_GPC['do']}"/>
+			<input type="hidden" name="act" value="{php echo $_GPC['act']}"/>
+            <div class="box-body">
+              <div class="form-group">
+                <label class="col-sm-2 control-label">会员状态</label>
+                <div class="col-sm-10">
+					<select name="status" value="{$_GPC['status']}" class="form-control">
+                        <option value="-1">全部会员</option>
+						<option value="0">普通会员</option>
+						<option value="1">等待审核</option>
+						<option value="2">审核未通过</option>
+						<option value="3">认证会员</option>
+					</select>
+                  <span class="help-block"></span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">会员昵称</label>
+                <div class="col-sm-10">
+                    <input type="text" name="nickname" placeholder="" value="{$_GPC['nickname']}" class="form-control"/>
+					<span class="help-block"></span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">真实姓名</label>
+                <div class="col-sm-10">
+                    <input type="text" name="realname" placeholder="" value="{$_GPC['realname']}" class="form-control"/>
+					<span class="help-block"></span>
+                </div>
+              </div>
+            </div>
+            <div class="box-footer">
+              <input type="hidden" name="token" value="{$_W['token']}" />
+              <button type="submit" class="btn btn-info center-block">搜索</button></div>
+            <!-- /.box-body -->
+			</div>
+            </form>
+          <!-- /.box -->
+        </div>
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+</div>
+<!-- ./wrapper -->
+{if empty($_W['isajax'])}
+{template 'common/foot'}  
+{/if}

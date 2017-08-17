@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="{TEMPLATE_PATH}/images/ux/iconfont.css" />
+		<link rel="stylesheet" href="{TEMPLATE_PATH}/css/animate.css" />
+		<link rel="stylesheet" href="{TEMPLATE_PATH}/css/style.css" />
+		<script src="//cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+		<script type="text/javascript" src="{TEMPLATE_PATH}/js/script.js" ></script>
+		<script src="{TEMPLATE_PATH}/js/ask_main.js?v=1"></script>
+		<title>我的旁听</title>
+		{php echo register_jssdk();}
+		<script type="text/javascript">
+	var globalObj=new Object();
+	var pindex=1;
+	var answer_url="{php echo $this->createMobileUrl('ask_answer')}";
+	var ask_detailurl="{php echo $this->createMobileUrl('ask_detail')}";
+	var send_url="{php echo $this->createMobileUrl('my_ask_sendnotice')}";
+	var follow_url="{php echo $this->createMobileUrl('ask_follow_ajax')}";
+	var listen_money={$cfg['listen_money']};
+	var is_openask={$db_user['is_openask']};
+	var my_ask_index=location.href;
+	var reward_detailurl="{php echo $this->createMobileUrl('reward_detail')}";
+	var get_user_url="{php echo $this->createMobileUrl('ask_index_ajax')}";
+	var ask_type="all";
+	var is_myindex=true;
+	function ajax_list() {
+		    $(".loading").show();
+			$(".noMore").hide();
+			pindex++;
+			$.post(location.href, {pindex: pindex,ask_type:ask_type}, function(result){
+				$(".loading").hide();
+				if(result.pages<pindex){
+					$(".noMore").show();
+					return false;
+				}
+				pindex=result.pindex;
+				
+				var html=getAskHtml(result);
+				$(".itemList ul").append(html);
+
+				voicePlay();
+				QuestionBind();
+			});		
+	    }
+	$(function(){
+		voicePlay();
+		QuestionBind();
+
+		$(".barWrap ul li").click(function(){
+			$(".barWrap ul li").removeClass('active');
+			$(this).addClass('active');
+			ask_type=$(this).attr('attr-type');
+			pindex=0;
+			globalObj.isloading=false;
+			$(".itemList ul").empty();
+			ajax_list();
+		});
+		  pageLoadCommon($(document),ajax_list);
+	});
+	</script>
+	</head>
+
+	<body>
+	<div class="main">
+	<audio id="dgAudioPlayer" >Your browser does not support the audio element.您的浏览器不支持 audio 标签。</audio>      	
+		<div class="barWrap">
+			<ul class="flex">
+				<li class="active" attr-type="reward">悬赏</li>
+				<li attr-type="public">定向</li>
+			</ul>
+		</div>
+		
+		
+		<div class="itemList mt20">
+			 <ul>	
+		   {loop $records $record}
+				{if $record['ask_type']=='reward'}
+						{template temp_reward}
+				{else}
+					    {template temp_public}
+				{/if}
+		  {/loop} 
+	   </ul>
+		</div>
+		
+		<div class="loading gray" style="display:none">
+			<span class="f18"><i class="iconfont">&#xe61a;</i></span>正在加载中…
+		</div>
+		
+		<div class="noMore gray" style="display:none">
+			没有更多内容了！
+		</div>
+
+	</div>
+	
+	   {template footer}
+
+	</body>
+
+</html>

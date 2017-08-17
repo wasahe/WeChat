@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>客户池</title>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta content="telephone=no,email=no" name="format-detection" />
+    <link href="../addons/hc_deluxejjr/style/jkt/css/Common1.css?rand=1" rel="stylesheet" type="text/css" />
+    <script src="../addons/hc_deluxejjr/style/jkt/js/jquery-1.4.4.min.js" type="text/javascript"></script>
+	<script src="../addons/hc_deluxejjr/style/js/com.js"></script>	
+	<link href="../addons/hc_deluxejjr/style/css/mobile.css" rel="stylesheet" type="text/css">
+	<style>
+		.pagination li{
+			margin-left:20px;
+			background-color: #fa614b;
+			display: inline-block;
+			padding: 0 5px;
+			border-radius: 5px;
+			
+		}
+		.pagination li .pager-nav{
+			color: #fff;
+		}
+	</style>
+</head>
+<body>
+<div style="display:none;" id="cusmat">
+<div class="wjques maxtop question M_sorting">
+	<div class="topic_title">
+	  <span>
+		<span style="color:#FF0000">
+		  <span style="font-size:16px">
+			<span style="font-family:microsoft yahei">
+			  意向区域
+			</span>
+		  </span>
+		</span>
+	  </span>
+	</div>
+	<div class="topic_con M_topic">
+	  <ul class="unstyled M_sorting">
+		<li class="Ulist">
+		  <select name="area_location_p" id="area_location_p" class="U_select option"></select>
+		</li>
+		<li class="Ulist">
+		  <select name="area_location_c" id="area_location_c" class="U_select option"></select>
+		</li>
+		<li class="Ulist">
+		  <select name="area_location_a" id="area_location_a" class="U_select option"></select>
+		</li>
+		<script type="text/javascript" src="../addons/hc_deluxejjr/style/js/region_select.js"></script>
+		<script type="text/javascript">
+			var area_location_p = "{if !empty($cusmatlog['area_location_p'])}{$cusmatlog['area_location_p']}{else}{/if}";
+			var area_location_c = "{if !empty($cusmatlog['area_location_c'])}{$cusmatlog['area_location_c']}{else}{/if}";
+			var area_location_a = "{if !empty($cusmatlog['area_location_a'])}{$cusmatlog['area_location_a']}{else}{/if}";
+			new PCAS("area_location_p", "area_location_c", "area_location_a", area_location_p, area_location_c, area_location_a);
+		</script>
+	  </ul>
+	</div>
+</div>
+<div class="M_topic maxtop question">
+	<div class="topic_title">
+	  <span>
+		<span style="color:#FF0000">
+		  <span style="font-size:16px">
+			<span style="font-family:microsoft yahei">
+			  意向户型
+			</span>
+		  </span>
+		</span>
+	  </span>
+	</div>
+	<div class="topic_con checkbox_wrap">
+	  <ul class="unstyled">
+		<li id="litype1" onclick="select($('#litype1'), type1, 'type')">
+		  <div class="checked_wrap">
+			<i>
+			</i>
+			<input type="checkbox" name="type[]" id="type1" value="1" style="display:none;">
+			<span>
+			  一房
+			</span>
+		  </div>
+		</li>
+		<li id="litype2" onclick="select($('#litype2'), type2, 'type')">
+		  <div class="checked_wrap">
+			<i>
+			</i>
+			<input type="checkbox" name="type[]" id="type2" value="2" style="display:none;">
+			<span>
+			  两房
+			</span>
+		  </div>
+		</li>
+		<li id="litype3" onclick="select($('#litype3'), type3, 'type')">
+		  <div class="checked_wrap">
+			<i>
+			</i>
+			<input type="checkbox" name="type[]" id="type3" value="3" style="display:none;">
+			<span>
+			  三房
+			</span>
+		  </div>
+		</li>
+		<li id="litype4" onclick="select($('#litype4'), type4, 'type')">
+		  <div class="checked_wrap">
+			<i>
+			</i>
+			<input type="checkbox" name="type[]" id="type4" value="4" style="display:none;">
+			<span>
+			  复式
+			</span>
+		  </div>
+		</li>
+		<li id="litype5" onclick="select($('#litype5'), type5, 'type')">
+		  <div class="checked_wrap">
+			<i>
+			</i>
+			<input type="checkbox" name="type[]" id="type5" value="5" style="display:none;">
+			<span>
+			  公寓
+			</span>
+		  </div>
+		</li>
+		<li id="litype6" onclick="select($('#litype6'), type6, 'type')">
+		  <div class="checked_wrap">
+			<i>
+			</i>
+			<input type="checkbox" name="type[]" id="type6" value="6" style="display:none;">
+			<span>
+			  别墅
+			</span>
+		  </div>
+		</li>
+	  </ul>
+	</div>
+</div>
+<div class="M_topic maxtop question">
+	<div class="topic_title">
+	  <span>
+		<span style="color:#FF0000">
+		  <span style="font-size:16px">
+			<span style="font-family:microsoft yahei">
+			  公积金情况
+			</span>
+		  </span>
+		</span>
+	  </span>
+	</div>
+	<div class="topic_con">
+	  <div class="phone_select">
+		<select name="cpf" id="cpf">
+			<option value="0">
+				--请选择一个选项--
+			</option>
+			<option value="1" {if $cusmatlog['cpf']==1}selected{/if}>
+				有
+			</option>
+			<option value="2" {if $cusmatlog['cpf']==2}selected{/if}>
+				无
+			</option>
+			<option value="3" {if $cusmatlog['cpf']==3}selected{/if}>
+				不详
+			</option>
+		</select>
+		<!-- <p>点击选择一项</p> -->
+		<!-- <div class="DownArrow"></div> -->
+	  </div>
+	</div>
+</div>
+<div class="M_topic maxtop question">
+	<div class="topic_title" style="color:#FF0000">
+	  购房原因
+	</div>
+	<div class="topic_con checkbox_wrap">
+	  <ul class="unstyled">
+		<li id="libuy1">
+		  <div class="checked_wrap" onclick="select($('#libuy1'), buy1, 'buy')">
+			<i>
+			</i>
+			<input type="checkbox" name="buyreason[]" value="1" id="buy1" style="display:none;">
+			<span>
+			  自住，不想再租房了
+			</span>
+		  </div>
+		</li>
+		<li id="libuy2">
+		  <div class="checked_wrap" onclick="select($('#libuy2'), buy2, 'buy')">
+			<i>
+			</i>
+			<input type="checkbox" name="buyreason[]" value="2" id="buy2" style="display:none;">
+			<span>
+			  改善，卖小买大，提高生活品质
+			</span>
+		  </div>
+		</li>
+		<li id="libuy3">
+		  <div class="checked_wrap" onclick="select($('#libuy3'), buy3, 'buy')">
+			<i>
+			</i>
+			<input type="checkbox" name="buyreason[]" value="3" id="buy3" style="display:none;">
+			<span>
+			  投资，看准房价会涨，手里闲钱多
+			</span>
+		  </div>
+		</li>
+		<li id="libuy4">
+		  <div class="checked_wrap" onclick="select($('#libuy4'), buy4, 'buy')">
+			<i>
+			</i>
+			<input type="checkbox" name="buyreason[]" value="4" id="buy4" style="display:none;">
+			<span>
+			  养老，响应政府提倡
+			</span>
+		  </div>
+		</li>
+		<li id="libuy5">
+		  <div class="checked_wrap" onclick="select($('#libuy5'), buy5, 'buy')">
+			<i>
+			</i>
+			<input type="checkbox" name="buyreason[]" value="5" id="buy5" style="display:none;">
+			<span>
+			  结婚，需要房子
+			</span>
+		  </div>
+		</li>
+		<li id="libuy6">
+		  <div class="checked_wrap" onclick="select($('#libuy6'), buy6, 'buy')">
+			<i>
+			</i>
+			<input type="checkbox" name="buyreason[]" value="6" id="buy6" style="display:none;">
+			<span>
+			  读书，为了小孩读书，落实学区
+			</span>
+		  </div>
+		</li>
+	  </ul>
+	</div>
+</div>
+<div class="M_topic maxtop question">
+	<div class="topic_title" style="color:#FF0000">
+	  现居住情况
+	</div>
+	<div class="topic_con">
+	  <div class="phone_select">
+		<select name="livecondition" id="livecondition">
+			<option value="0">
+				--请选择一个选项--
+			</option>
+			<option value="1" {if $cusmatlog['livecondition']==1}selected{/if}>
+				商品房
+			</option>
+			<option value="2" {if $cusmatlog['livecondition']==2}selected{/if}>
+				经济适用房
+			</option>
+			<option value="3" {if $cusmatlog['livecondition']==3}selected{/if}>
+				二手房
+			</option>
+			<option value="4" {if $cusmatlog['livecondition']==4}selected{/if}>
+				自建私有房
+			</option>
+			<option value="5" {if $cusmatlog['livecondition']==5}selected{/if}>
+				租赁房
+			</option>
+			<option value="6" {if $cusmatlog['livecondition']==6}selected{/if}>
+				单位福利分房
+			</option>
+		</select>
+		<!-- <p>点击选择一项</p> -->
+		<!-- <div class="DownArrow"></div> -->
+	  </div>
+	</div>
+</div>
+<div class="M_topic maxtop question">
+	<div class="topic_title" style="color:#FF0000">
+	  家庭结构
+	</div>
+	<div class="topic_con">
+	  <div class="phone_select">
+		<select name="homeformation" id="homeformation">
+			<option value="0">
+				--请选择一个选项--
+			</option>
+			<option value="1" {if $cusmatlog['homeformation']==1}selected{/if}>
+				单身贵族
+			</option>
+			<option value="2" {if $cusmatlog['homeformation']==2}selected{/if}>
+				三口之家
+			</option>
+			<option value="3" {if $cusmatlog['homeformation']==3}selected{/if}>
+				三世同堂
+			</option>
+			<option value="4" {if $cusmatlog['homeformation']==4}selected{/if}>
+				四世同堂
+			</option>
+			<option value="5" {if $cusmatlog['homeformation']==5}selected{/if}>
+				单亲家庭
+			</option>
+		</select>
+		<!-- <p>点击选择一项</p> -->
+		<!-- <div class="DownArrow"></div> -->
+	  </div>
+	</div>
+</div>
+<div class="M_topic maxtop question">
+	<div class="topic_title">
+	  <span>
+		<span style="color:#FF0000">
+		  <span style="font-size:16px">
+			<span style="font-family:microsoft yahei">
+			  心理单价（元/㎡）
+			</span>
+		  </span>
+		</span>
+	  </span>
+	</div>
+	<div class="topic_con">
+	  <div class="topic_input" style="text-align:center;">
+		<input class="option" style="width:45%;" name="wantprice1" id="wantprice1" type="text"> ~ 
+		<input class="option" style="width:45%;" name="wantprice2" id="wantprice2" type="text">
+	  </div>
+	</div>
+</div>
+<div class="M_topic maxtop question">
+	<div class="topic_title">
+	  <span>
+		<span style="color:#FF0000">
+		  <span style="font-size:16px">
+			<span style="font-family:microsoft yahei">
+			  总价预算（万元）
+			</span>
+		  </span>
+		</span>
+	  </span>
+	</div>
+	<div class="topic_con">
+	  <div class="topic_input" style="text-align:center;">
+		<input class="option" style="width:45%;" name="allprice1" id="allprice1" type="text"> ~ 
+		<input class="option" style="width:45%;" name="allprice2" id="allprice2" type="text">
+	  </div>
+	</div>
+</div>
+</div>
+<div class="customer_boundary" onclick="opencusmat(this);" style="color:white;font-size:15px;background-color:rgb(208, 78, 78);text-align:center;">
+	打开客户素材匹配
+</div>
+	<!-----////------->
+<div class="customer_fiox" style="position: inherit;">
+	<div class="customer_content">
+		<div class="customer_inp">
+			<input type="text" name="keyword" id="key" placeholder="请输入姓名搜索" value="{$keyword}" />
+			<div id="icosou" class="customer_inp_ico1">
+			</div>
+		</div>
+		<a href="javascript:void(0)" onclick="sort($('#cuspool'))">高级搜索</a>
+	</div>
+</div>
+	<!-----////------->
+	<div class="customer_boundary">
+		<p style="color: #333333;">客户池列表</p>
+		<a href="{php echo $this->createMobileurl('recommend')}" style="position: absolute; right: 12px;top: 0px; font-size: 0.9em; color: #999999;">我要推荐
+			<img src="../addons/hc_deluxejjr/style/jkt/images/arr_right.png" width="12" height="16" style="margin-bottom: -2px; margin-left: 5px;" /><!--<div class="customer_inp_ico2">
+		</div>-->
+		</a>
+	</div>
+<!-----////------->
+<style>
+.customer_inp_ico3{
+	background:url()
+}
+.customer_inp_ico4{
+	background:url()
+}
+</style>
+<div id="cuspool">
+	{loop $cuspool $c}
+		<div class="customer_main customer_main1" id="cuspool{$c['id']}">
+			<div class="customer_main_wap">
+				<div class="customer_detailed" style="margin-right: 135px; border-right: none;" onclick="location.href = '{php echo $this->createMobileurl('customer', array('op'=>'detail', 'opp'=>'cuspool', 'cid'=>$c['id']))}'">
+					<p class="font_black">{$c['realname']}</p>
+					<p class="top font_min">{php echo hoho1($c['mobile'])}</p>
+				</div>
+				<div class="customer_ico" style="width: 140px;">
+					<div class="customer_inp_ico3" style="margin-left:22px; height:30px;" ></div>
+					<div class="customer_inp_ico4" style="margin-left:6px; width:30px; height:30px; margin-top:2px;" ></div>
+					<div onclick="isexchange({$c['id']});" class="customer_inp_ico5" style="margin-left:6px; height:30px;"></div>
+				</div>
+			</div>
+			<div class="line_ph">
+				<div class="customer_font customer_font1 customer_no">
+					<div class="customer_no2">
+						<span>[{$location_c[$c['loupan']]}]
+							<font>{$location_a[$c['loupan']]}</font><font></font><font></font>
+						</span>
+					</div>
+					<div style="font-size:.8em; padding-right:25%; text-align:right; position:absolute; right:0; top:0; color:#999999;">积分：{$rule['cpcredit']}</div>
+					<div class="customer_flow"><a href="{php echo $this->createMobileurl('customer', array('op'=>'detail', 'opp'=>'cuspool', 'cid'=>$c['id']))}" style="color:RGB(178,178,178)">{$status[$c['status']]}</a></div>
+				</div>
+			</div>
+		</div>
+	{/loop}
+	{$pager}
+</div>
+<div style="filter:alpha(opacity=0); opacity:0;" class="customer_main customer_main1" style="height:20px;"></div>
+<link rel="stylesheet" href="../addons/hc_deluxejjr/style/css/style.css?r=4"/>
+<nav class="nav fn-clear">
+	<a href="{php echo $this->createMobileUrl('index')}"><i class="icon-angle-left"></i>首页</a>
+	<a href="{php echo $this->createMobileUrl('cuspool')}" class="active"><i class="icon-users"></i>客户池</a>
+	<a href="{php echo $this->createMobileUrl('my')}" ><i class="icon-adult"></i>个人中心</a>
+</nav>
+<script type="text/javascript">
+var currentPosition,timer; 
+function GoTop(){ 
+	timer=setInterval("runToTop()",1); 
+} 
+function runToTop(){ 
+	currentPosition = document.documentElement.scrollTop || document.body.scrollTop; 
+	currentPosition-=50; 
+	if(currentPosition>0) { 
+		window.scrollTo(0,currentPosition); 
+	} else { 
+		window.scrollTo(0,0); 
+		clearInterval(timer); 
+	} 
+} 
+function opencusmat(obj){
+	if(obj.innerHTML == '关闭客户素材匹配'){
+		$('#cusmat').css('display', 'none');
+		obj.innerHTML = '打开客户素材匹配';
+		GoTop();
+	} else {
+		$('#cusmat').css('display', 'block');
+		obj.innerHTML = '关闭客户素材匹配';
+	}
+	
+}
+
+$(function () {
+	var Weight = $(window).width();
+	$(".customer_gaili ul li").width(Weight / 2 - 1);
+});
+
+function sort(cuspool){
+	var keyword = $('#key').val();
+	var area_location_p = $('#area_location_p').val();
+	var area_location_c = $('#area_location_c').val();
+	var area_location_a = $('#area_location_a').val();
+	var cpf = $('#cpf').val();
+	var livecondition = $('#livecondition').val();
+	var homeformation = $('#homeformation').val();
+	var wantprice1 = $('#wantprice1').val();
+	var wantprice2 = $('#wantprice2').val();
+	var allprice1 = $('#allprice1').val();
+	var allprice2 = $('#allprice2').val();
+	var b = document.getElementsByName("buyreason[]");
+	var t = document.getElementsByName("type[]");
+	for (var i=0; i<b.length; i++){
+		if(b[i].checked == true){
+			var buyreason = b[i].value;
+			break;
+		}
+	}
+	for (var i=0; i<t.length; i++){
+		if(t[i].checked == true){
+			var type = t[i].value;
+			break;
+		}
+	}
+	$.post("{php echo $this->createMobileUrl('cuspool', array('op'=>'sort'))}"
+		,{keyword:keyword, area_location_p:area_location_p, area_location_c:area_location_c, area_location_a:area_location_a, cpf:cpf, livecondition:livecondition, homeformation:homeformation, wantprice1:wantprice1, wantprice2:wantprice2, allprice1:allprice1, allprice2:allprice2, buyreason:buyreason, type:type}
+		,function(d){
+			if(d==0){
+				cuspool.html('');
+			} else if (d==-1){
+				
+			} else {
+				var html = '';
+				for(i in d){
+					html = html + '<div class="customer_main customer_main1"><div class="customer_main_wap"><div class="customer_detailed" style="margin-right: 135px; border-right: none;" onclick="location.href = '+"'"+d[i]['url']+"'"+'"><p class="font_black">'+d[i]['realname']+'</p><p class="top font_min">'+d[i]['mobile']+'</p></div><div class="customer_ico" style="width: 140px;"><div class="customer_inp_ico3" style="margin-left:22px; height:30px;" ></div><div class="customer_inp_ico4" style="margin-left:6px; width:30px; height:30px; margin-top:2px;" ></div><div onclick="isexchange('+d[i]['id']+');" class="customer_inp_ico5" style="margin-left:6px; height:30px;"></div></div></div><div class="line_ph"><div class="customer_font customer_font1 customer_no"><div class="customer_no2"><span>['+d[i]['location_c']+']<font> '+d[i]['location_a']+'</font><font></font><font></font></span></div><div style="font-size:.8em; padding-right:25%; text-align:right; position:absolute; right:0; top:0; color:#999999;">积分：'+{$rule['cpcredit']}+'</div><div class="customer_flow"><a href="'+d[i]['url']+'">'+d[i]['status']+'</a></div></div></div></div>';
+				}
+				cuspool.html(html);
+			}
+		}
+		,"json"
+	);
+}
+
+function isexchange(cpid){
+	if(cpid!=0){
+		if(confirm('是否确认要提取该客户？')){
+			$.post("{php echo $this->createMobileUrl('cuspool', array('op'=>'exchange'))}"
+			,{cpid:cpid}
+			,function(d){
+				if(d==1){
+					TopBox.alert("提取成功!");
+					window.location.href = "{php echo $this->createMobileUrl('customer')}";
+					var cuspool = 'cuspool'+cpid;
+					$('#cuspool').html('');
+				}
+				if(d==0){
+					 TopBox.alert("出错了!");
+				}
+				if(d==2){
+					 TopBox.alert("积分不够!");
+				}
+			}
+			,"json"
+		);
+		}
+	}
+}
+
+function select(liobj, checkobj, flag){
+	if(flag == 'type'){
+		var t = document.getElementsByName("type[]");
+		var j = 1;
+		for (var i=0; i<t.length; i++){
+			t[i].checked = false;
+			var litype = 'litype' + j;
+			$('#'+litype).removeClass("checked");
+			j++;
+		}
+	}
+	if(flag == 'buy'){
+		var b = document.getElementsByName("buyreason[]");
+		var j = 1;
+		for (var i=0; i<b.length; i++){
+			b[i].checked = false;
+			var libuy = 'libuy' + j;
+			$('#'+libuy).removeClass("checked");
+			j++;
+		}
+	}
+	if(liobj.attr('class')==undefined || liobj.attr('class')==''){
+		liobj.addClass("checked");
+		checkobj.checked = true;
+	} else {
+		liobj.removeClass("checked");
+		checkobj.checked = false;
+	}
+}
+
+window.onload = function(){
+	var inputs = document.getElementsByTagName("input");
+	var checkboxArray = [];
+	for(var i=0; i<inputs.length; i++){
+		var obj = inputs[i];
+		if(obj.type=='checkbox'){
+			checkboxArray.push(obj);
+		}
+	}
+	for(j=0; j<checkboxArray.length; j++){
+		if(checkboxArray[j].checked == true){
+			var lilabel = 'li' + checkboxArray[j].id;
+			$('#'+lilabel).addClass("checked");
+		} else {
+			var lilabel = 'li' + checkboxArray[j].id;
+			$('#'+lilabel).removeClass("checked");
+		}
+	}
+}
+</script>
+</body>
+</html>

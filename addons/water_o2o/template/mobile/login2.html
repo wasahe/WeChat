@@ -1,0 +1,92 @@
+<html class="hairlines"><head>
+<meta charset="utf-8">
+<title>登录</title>
+<meta property="wb:webmaster" content="26f01d0b94394447">
+<meta property="qc:admins" content="2541756431167376730756375">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" type="text/css" href="http://static.qingsongchou.com/css/mobile.min.css?v=275">
+<link rel="apple-touch-icon" href="http://static.qingsongchou.com/images/icon/touch-icon-iphone.png">
+<link rel="apple-touch-icon" sizes="72x72" href="http://static.qingsongchou.com/images/icon/touch-icon-ipad.png">
+<link rel="apple-touch-icon" sizes="114x114" href="http://static.qingsongchou.com/images/icon/touch-icon-iphone-retina.png">
+<link rel="apple-touch-icon" sizes="144x144" href="http://static.qingsongchou.com/images/icon/touch-icon-ipad-retina.png">
+<link rel="dns-prefetch" href="http://mmbiz.qpic.cn">
+<link rel="dns-prefetch" href="http://res.wx.qq.com">
+<script type="text/javascript">
+            var baseURL = 'http://m.qschou.com/';
+            var uploadURL = 'http://uploads.qingsongchou.com/';
+            var staticURL = 'http://static.qingsongchou.com/';
+            var themeURL = 'http://static.qingsongchou.com/';
+            var fileNumLimit = 9;
+            var queryParam = '';
+            var logged = '0';
+            var clientId = '0';
+            var projectUrl = '';
+            var platform = 'mobile';
+            var geo = '';
+            if(window!=parent&&window.location.toString().indexOf("iframe=true")==-1){if(typeof baseURL!="undefined"&&window.location.toString().indexOf(baseURL)!=-1){top.location.href=window.location.href}else{top.location.href=baseURL}}
+            var _paq = _paq || [];
+            var share = {name: '登录', introduction : '轻松筹社交版', pic: 'http://static.qschou.com/themes/touch/assets/images/icon/touch-icon-ipad.png', url: 'http://m.qschou.com/sign/sms'};
+                    </script>
+<style type="text/css">.fancybox-margin{margin-right:0px;}</style></head>
+<body ontouchstart="" class="platform_mobile">
+<div class="qsc-alert qsc-alert-success" style="display: none;" id="qsc-alert-id-success">
+<i class="success-white-base64"></i><span>短信发送成功</span>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-white icon-loading-base64"><i class="icon-white icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading-new">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-loading-base64"><i class="icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<div class="content top bottom">
+<form action="/sign/sms?token=373avO8CZKsFY5ykU3zCjlftf2mrXV5Mr%2BM0hTj38k2pkFtTkSe9EHHiCb3DhPfkAImcaFM%2Bw0pBvalhGYrzUmumMW8rQ1pk6MwOAA" method="POST" class="qsc-form verify_mobile" name="loginForm" id="loginForm">
+<div class="input-row">
+<label class="control-label">手机号</label>
+<input type="tel" name="mobile" id="mobile" class="control-input disabled" value="+86 0755-61910103">
+</div>
+<div class="input-row">
+<label class="control-label">验证码</label>
+<input type="tel" class="control-input" name="sms" id="verify_sms" maxlength="5" placeholder="请输入5位验证码">
+</div>
+<div class="footer-btn">
+<input name="csrf" type="hidden" value="a5e7d1592b0790552357965c79f8c7e3"><input name="token" type="hidden" value="3094V2Y0xPR66aslau5K01CI5+laNLvJTAZrKM5Upxr053Tn66MxzbdC219eYRPser8jYxq280YV7Z/Yvc2xI9vFjzxoO2JW">
+<input name="signature" type="hidden" value="066csyr44pABfKbAmDEdNkrkODlI/cXsaSKm5a74rZ5LA5Witeh15geBaRvwnmA2gmJoMjA6">
+<input name="type" type="hidden" value="sms">
+<input name="lifetime" type="hidden" value="0">
+<button type="submit" class="btn btn-success btn-lg btn-block">登录</button>
+<div class="btn btn-link btn-lg btn-block" id="modal-button-top"><i class="icon icon-help-sm"></i><span>没收到验证码</span></div>
+<div>
+<a href="javascript:void(0);" class="btn btn-success btn-lg btn-block btn-voice">重发语音验证码 <small></small></a>
+<a href="javascript:void(0);" class="btn btn-primary btn-lg btn-block btn-sms disabled">重发短信验证码 <small>(稍等25秒)</small></a>
+</div>
+</div>
+</form>
+</div>
+<div class="modal qsc-modal qsc-modal-button sign-sms" id="login-help" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog bottom">
+<div class="modal-content clearfix">
+<div class="modal-header">
+<h4 class="modal-title text-center">没收到验证码？</h4>
+</div>
+<div class="modal-footer">
+<a href="javascript:void(0);" class="btn btn-success btn-block">发送语音验证码 <small></small></a>
+<a href="javascript:void(0);" class="btn btn-primary btn-block">重发短信验证码 <small></small></a>
+<a href="javascript:void(0);" class="btn btn-default btn-block" data-dismiss="modal">取消</a>
+</div>
+</div>
+</div>
+</div>
+<script type="text/javascript" src="http://static.qingsongchou.com/js/main.min.js?v=275"></script>
+
+</body></html>

@@ -1,0 +1,107 @@
+{template 'header'}
+<body ontouchstart="" class="platform_mobile">
+	<div class="qsc-alert" style="display: none;">
+		<i class="info-base64"></i><span></span>
+	</div>
+	<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading"
+		tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog middle">
+			<div class="modal-content">
+				<i class="icon-white icon-loading-base64"><i
+					class="icon-white icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+			</div>
+		</div>
+	</div>
+	<div class="modal qsc-modal qsc-modal-loading"
+		id="qsc-modal-loading-new">
+		<div class="modal-dialog middle">
+			<div class="modal-content">
+				<i class="icon-loading-base64"><i
+					class="icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+			</div>
+		</div>
+	</div>
+	<div class="content project-support">
+		<form action="{php echo $this->createMobileUrl('doorderpl')}" method="POST" name="project-support"
+			id="project-support">
+			<input name="quantity" type="hidden" value="1">
+			<div class="qsc-list-group project-forhead">
+				<a href="php echo $this->createMobileUrl('service',array('serviceid'=>$order['svid'])}"
+					class="list-item">
+					<div class="project-thumb">
+						<img class="lazy-load"
+							data-original="{$_W['attachurl']}{$order['slogo']}"
+							src="{$_W['attachurl']}{$order['slogo']}"
+							width="48" height="48" style="display: inline;">
+						<div class="project-thumb-title">
+							<span>{$order['svname']}--{$order['sprice']}元/{$order['sminute']}分钟</span>
+						</div>
+						<i class="icon icon-arrow-right"></i>
+					</div>
+				</a>
+			</div>
+			<div class="btn-group btn-block lib-radio reward-lib-radio"
+				id="support-rewards" data-toggle="buttons">
+				<h5>服务评价</h5>
+				<label for="rank-1"
+					class="btn btn-block is_reward is_money first active"
+					data-id="1"> <input type="radio" id="rank-1"
+					name="rank" value="1" checked="checked"> <i
+					class="icon"> <img
+						src="../addons/water_o2o/template/images/pl1.png"
+						width="32" height="32">
+				</i> <span>
+						<h5>
+							 <strong class="text-danger">好评</strong>
+						</h5> <small>服务太棒了！</small>
+				</span>
+				</label> 
+				<label for="rank-2" class="btn btn-block is_reward is_money"
+					data-id="2"> <input type="radio" id="rank-2"
+					name="rank" value="2"> <i class="icon"> <img
+						src="../addons/water_o2o/template/images/pl2.png"
+						width="32" height="32">
+				</i> <span>
+						<h5>
+							 <strong class="text-danger">一般</strong>
+						</h5> <small>服务一般哦！</small>
+				</span>
+				</label> 
+				<label for="rank-3" class="btn btn-block is_reward is_money"
+					data-id="3"> <input type="radio" id="rank-3"
+					name="rank" value="3"> <i class="icon"> <img
+						src="../addons/water_o2o/template/images/pl3.png"
+						width="32" height="32">
+				</i> <span>
+						<h5>
+							 <strong class="text-danger">不满意</strong>
+						</h5> <small>服务不满意</small>
+				</span>
+				</label> 
+			</div>
+			<div class="qsc-list-group">
+				<h5>说出您的意见吧</h5>
+				<div class="qsc-form">
+					<div class="input-row input-cell">
+						<textarea rows="3" name="comments" id="comments"
+							class="control-input" placeholder="默认: 好评"></textarea>
+					</div>
+				</div>
+			</div>
+			<input type="hidden" name="orderid" value="{$order['id']}">
+			<input type="hidden" name="serviceid" value="{$order['svid']}">
+			<input type="hidden" name="workerid" value="{$order['wid']}">
+			<input type="hidden" name="shopid" value="{$order['sid']}">
+			<input type="hidden" name="statetype" value="{$statetype}">
+			<div class="footer-btn">
+				<input type="submit" name="submit"
+					class="btn btn-success btn-lg btn-block" value="提交评价">
+			</div>
+		</form>
+	</div>
+	<script type="text/javascript"
+		src="../addons/water_o2o/template/js/project.min.js"></script>
+
+</body>
+</html>

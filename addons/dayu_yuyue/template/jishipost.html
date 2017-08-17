@@ -1,0 +1,107 @@
+{template 'common/header'}
+<style type="text/css">
+.form .alert{width:700px;}
+</style>
+<ul class="nav nav-tabs">
+	<li><a href="{php echo $this->createWebUrl('jishidisplay')}">{$zhicheng}列表</a></li>
+	<li{if !$reid} class="active"{/if}><a href="{php echo $this->createWebUrl('jishipost')}">新建{$zhicheng}</a></li>
+	{if $reid}<li class="active"><a href="{php echo $this->createWebUrl('jishipost', array('id' => $reid))}">编辑{$zhicheng}</a></li>{/if}
+</ul>
+<div class="main">
+	<form class="form-horizontal form" action="" method="post" enctype="multipart/form-data" onsubmit="return validate(this);">
+    	<div class="panel panel-default">
+            <div class="panel-heading">
+                {$zhicheng} <span class="text-muted">添加{$zhicheng}</span>
+            </div>
+            <div class="panel-body">
+			
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">{$zhicheng}姓名</label>
+                    <div class="col-xs-12 col-sm-9">
+                         <input type="text" class="form-control" placeholder="" name="jsname" value="{$js['name']}" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">接收通知手机</label>
+                    <div class="col-xs-12 col-sm-9">
+                         <input type="tel" class="form-control" placeholder="" name="jstel" value="{$js['telephone']}" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">接收通知Email</label>
+                    <div class="col-xs-12 col-sm-9">
+                         <input type="text" class="form-control" placeholder="" name="noticeemail" value="{$js['noticeemail']}" />
+                    </div>
+                </div>
+			<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">所属门店</label>
+				<div class="col-xs-12 col-sm-9" style="width:300px;">
+					  <select id="select01" name="gid">
+						{loop $outlets $outlet}
+						<option value="{$outlet['id']}" <?php if ($outlet['id']==$js['oid']){ echo selected; }?> >{$outlet['name']}</option>
+						{/loop}
+                
+              </select>
+				</div>
+			</div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">是否显示</label>
+                    <div class="col-xs-12 col-sm-9">
+                		<label class="radio-inline"><input type="radio" name="isshow" value="1" {if empty($js)}checked="checked"{elseif $js['isshow']==1}checked="checked"{/if} /> 显示</label>
+		 				<label class="radio-inline"><input type="radio" name="isshow" value="0" {if empty($js)}checked="checked"{elseif $js['isshow']==0}checked="checked"{/if} /> 隐藏</label>
+                    <div class="help-block">是否在手机端显示该{$zhicheng}</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">排序</label>
+                    <div class="col-xs-12 col-sm-9">
+                         <input type="text" class="form-control" name="displayorder" id="displayorder" value="{if empty($js)}0{else}{$js['displayorder']}{/if}" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">{$zhicheng}介绍</label>
+                    <div class="col-xs-12 col-sm-9">
+                         <textarea style="height:200px;" class="form-control" placeholder="" name="content" cols="70">{$js['content']}</textarea>
+                    </div>
+                </div>
+			
+     </div>
+     </div>
+        <div class="form-group col-sm-12">
+			<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+			<input type="hidden" name="token" value="{$_W['token']}" />
+		</div>
+	</form>
+</div>
+
+<script type="text/javascript" src="./resource/script/jquery-ui-1.10.3.min.js"></script>
+<script text="text/javascript">
+	kindeditor($('.richtext-clone'));
+	var currentItem = null;
+	function validate() {
+		if($.trim($(':text[name="jsname"]').val()) == '') {
+			message('必须填写技师姓名.', '', 'error');
+			return false;
+		}
+		if($.trim($(':tel[name="jstel"]').val()) == '') {
+			message('必须填写技师联系方式.', '', 'error');
+			return false;
+		}
+		if($.trim($(':text[name="noticeemail"]').val()) == '') {
+			message('必须填写技师邮箱确保技师能收到预约通知信息.', '', 'error');
+			return false;
+		}
+		if($.trim($('textarea[name="content"]').val()) == '') {
+			message('必须填写技师相关介绍.', '', 'error');
+			return false;
+		}
+		var isError = false;
+		$(':text[name="title[]"]').each(function(){
+			if($.trim($(this).val()) == '') {
+				isError = true;
+			}
+		});
+		return true;
+	}
+</script>
+{template 'common/footer'}

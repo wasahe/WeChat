@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta content="telephone=no,email=no" name="format-detection" />
+	<link rel="stylesheet" href="../addons/hc_deluxejjr/style/css/style.css"/>
+    <link href="../addons/hc_deluxejjr/style/css/Common21.css?rand=1" rel="stylesheet" type="text/css" />
+    <link href="../addons/hc_deluxejjr/style/css/Common1.css?rand=1" rel="stylesheet" type="text/css" />
+    
+    <style type="text/css">
+        input
+        {
+            background: no-repeat 0 0 scroll ＃EEEEEE;
+            border: none;
+            outline: medium;
+        }
+    </style>
+    
+    <title>上传认证</title>
+     
+    <style type="text/css">
+        body
+        {
+            max-width: 640px;
+            margin: 0px auto;
+            min-height: 100%;
+            background: #EEE;
+        }
+        
+        .reminder
+        {
+            box-shadow: 1px 1px 2px #CCC;
+            border-radius: 5px;
+            background: #fff;
+            margin: 0px auto;
+            width: 96%;
+        }
+        .reminder h2
+        {
+            font-size: 14px;
+            color: #e84236;
+            margin-left: 10px;
+            padding-top: 10px;
+        }
+        .reminder .txt
+        {
+            font-size: 14px;
+            margin: 10px;
+            text-indent: 1em;
+            word-wrap: break-word;
+            padding-bottom: 10px;
+            color: #747474;
+        }
+        .middle
+        {
+            border-radius: 5px;
+            width: 96%;
+            background: #fff;
+            margin: 5px auto;
+            box-shadow: 1px 1px 2px #CCC;
+        }
+        .middle p
+        {
+            color: #747474;
+            padding: 10px;
+            text-align: center;
+        }
+        .middle .pic
+        {
+            border-radius: 5px;
+            margin: 5px auto;
+            width: 200px;
+        }
+        .pic img
+        {
+            width: 200px;
+            }
+        .picture
+        {
+            padding: 0px;
+            margin: 0 auto;
+            border-style: none;
+        }
+        .code
+        {
+            width: 100%;
+        }
+        .bottom
+        {
+            margin-bottom: 20px;
+        }
+        .states, .txtcolor
+        {
+            color: #156f49;
+            font-family: "微软雅黑";
+            font-weight: bold;
+        }
+        /*     .txtcolor{ font-family:"微软雅黑"; color:#e84236; font-weight:bold;}*/
+        
+        /*border:1px solid #bdcbd1;*/
+        .nav_btm
+        {
+            max-width: 640px;
+            margin: auto;
+            background: #fbfbfb;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 3.2em;
+            border-top: 1px solid #ccc;
+        }
+        .nav_btm a
+        {
+            text-decoration: none;
+        }
+        .nav_div2
+        {
+            padding-left: 4px;
+            float: left;
+            color: #666666;
+            line-height: 2.8em;
+            font-weight: normal;
+            font-size: 1.1em;
+        }
+        .nav_div1
+        {
+            padding-left: 15px;
+            float: left;
+            padding-top: 11px;
+        }
+    </style>
+
+</head>
+<body>
+    
+<div id="content">
+    <div class="reminder">
+        <h2>
+            友情提示:</h2>
+        <p class="txt">
+            请上传清晰、完整的图片；身份证、照片.<label class="states">请点击图片区域进行上传</label>,<label class="txtcolor">部份手机型号暂不支持上传功能,请登录到官网个人中心上传认证资料.</label>
+        </p>
+    </div>
+    <div class="middle">
+        <p>当前上传照片</p>
+        <div class="pic">
+            <div id="ImgUrl">
+            <img src="../addons/hc_deluxejjr/style/images/pic.jpg" data="" id="ImgShow" class="picture" alt="上传" /></div>
+            <input type="file" id="file" style="position:relative;bottom:87px;left:0;filter:alpha(opacity=0);opacity:0;">
+        </div>
+        <div class="bottom">
+            <input class="btn" id="sub" type="submit" style="border: none; display: none;" />
+            <input class="btn" id="aback" style="border: none;" value="提交" onclick="identityPost('{$_GPC['opp']}post');" type="button" />
+        </div>
+    </div>
+    
+    <div style="clear: both; height: 60px;">
+    </div>
+    <div class="nav_btm">
+        <a id="home_rtn" href="javascript:history.go(-1);" data-ajax="false">
+            <div class="nav_div1">
+                <img src="../addons/hc_deluxejjr/style/images/fanhui_xico_054.png" width="20" height="26" /></div>
+            <div class="nav_div2">返回</div>
+        </a>
+    </div>
+</div>
+<script src="../addons/hc_deluxejjr/style/js/jquery.min.js"></script>
+<script src="../addons/hc_deluxejjr/imgupload/dist/lrz.all.bundle.js?v=a1a6749"></script>
+<script src="../addons/hc_deluxejjr/style/js/com.js"></script>
+<script>
+function identityPost(opp){
+	var identity_url = $("#ImgShow").attr("data");
+	$.ajax({
+		type: "POST",
+		url: "{php echo $this->createMobileurl('my', array('op'=>'identity'))}",
+		data: { 'identity_url': identity_url, 'opp':opp},
+		dataType: "text",
+		
+		success: function (d) {
+			if (d == "1") {
+				$("#J_saveCard").hide();
+				TopBox.alert("上传成功.", function () { window.location.href = "{php echo $this->createMobileurl('my', array('op'=>'identity'))}"});
+				
+			} else if (d == "0") {
+				
+				TopBox.alert("上传失败.");
+			} else if (d == -1){
+				
+				TopBox.alert("请勿重复上传.");
+			} else {
+				TopBox.alert("未知错误.");
+			}
+		},
+		
+		error: function (xml, text, thrown) {
+			TopBox.alert("出错啦!");
+		}
+	});
+}
+
+window.onerror = function (errMsg, scriptURI, lineNumber, columnNumber, errorObj) {
+    setTimeout(function () {
+        var rst = {
+            "错误信息：": errMsg,
+            "出错文件：": scriptURI,
+            "出错行号：": lineNumber,
+            "出错列号：": columnNumber,
+            "错误详情：": errorObj
+        };
+
+       // alert('出错了，下一步将显示错误信息');
+       // alert(JSON.stringify(rst, null, 10));
+    });
+};
+
+
+[].forEach.call(document.querySelectorAll('[data-src]'), function (el) {
+    (function (el) {
+        el.addEventListener('click', function () {
+            el.src = 'img/loading.gif';
+
+            lrz(el.dataset.src)
+                .then(function (rst) {
+                    el.src = rst.base64;
+
+
+                    return rst;
+                });
+        });
+
+        fireEvent(el, 'click');
+    })(el);
+});
+document.querySelector('#file').addEventListener('change', function () {
+    var that = this;
+
+    lrz(that.files[0], {
+        width: 800
+    })
+        .then(function (rst) {
+            var img = new Image(),
+                div = document.createElement('div'),
+                p = document.createElement('p'),
+                sourceSize = toFixed2(that.files[0].size / 1024),
+                resultSize = toFixed2(rst.fileLen / 1024),
+                scale = parseInt(100 - (resultSize / sourceSize * 100));
+
+            p.style.fontSize = 13 + 'px';
+            p.innerHTML      = '源文件：<span class="text-danger">' +
+                sourceSize + 'KB' +
+                '</span> <br />' +
+                '压缩后传输大小：<span class="text-success">' +
+                resultSize + 'KB (省' + scale + '%)' +
+                '</span> ';
+
+            div.className = 'col-sm-6';
+            //div.appendChild(img);
+            //div.appendChild(p);
+
+            img.onload = function () {
+                //document.querySelector('#upload-container').appendChild(div);
+            };
+
+            img.src = rst.base64;
+
+             /!* ==================================================== *!/
+             // 原生ajax上传代码，所以看起来特别多 ╮(╯_╰)╭，但绝对能用
+             // 其他框架，例如ajax处理formData略有不同，请自行google，baidu。
+             var xhr = new XMLHttpRequest();
+             xhr.open('POST', '../addons/hc_deluxejjr/imgupload/ajax.php');
+             xhr.onload = function () {
+				 if (xhr.status === 200) {
+				 // 上传成功
+					//console.log(xhr);
+					var data = JSON.parse(xhr.response);				
+					//console.log(data.name);
+					//$("#upload-container").append("<div class='img' ><img src=../attachment/hc_zhongchou/" + data.name + "><input type='hidden' name='img[]' value="+data.name+"></div>");
+					
+					//var li = '<li class="img"><div class="am-form-group am-form-file"><img height="50px" src="../attachment/hc_deluxejjr/' + data.name + '" /></div><input id="img[]" name="bgphotos[]" type="hidden" value="../attachment/hc_deluxejjr/' + data.name + '" /></li>';
+					
+					$("#ImgShow").attr("data", '../attachment/hc_deluxejjr/' + data.name);
+					$("#ImgShow").attr("src", '../attachment/hc_deluxejjr/' + data.name);
+				 } else {
+				 // 处理其他情况
+				 }
+             };
+             xhr.onerror = function () {
+             // 处理错误
+				alert(xhr.message);
+             };
+
+             // issues #45 提到似乎有兼容性问题,关于progress
+             xhr.upload.onprogress = function (e) {
+             // 上传进度
+             var percentComplete = ((e.loaded / e.total) || 0) * 100;
+             };
+
+             // 添加参数和触发上传
+             rst.formData.append('a', '我是参数');
+             xhr.send(rst.formData);
+             /!* ==================================================== *!/
+            return rst;
+        });
+});
+
+function toFixed2 (num) {
+    return parseFloat(+num.toFixed(2));
+}
+
+/**
+ * 替换字符串 !{}
+ * @param obj
+ * @returns {String}
+ * @example
+ * '我是!{str}'.render({str: '测试'});
+ */
+String.prototype.render = function (obj) {
+    var str = this, reg;
+
+    Object.keys(obj).forEach(function (v) {
+        reg = new RegExp('\\!\\{' + v + '\\}', 'g');
+        str = str.replace(reg, obj[v]);
+    });
+
+    return str;
+};
+
+/**
+ * 触发事件 - 只是为了兼容演示demo而已
+ * @param element
+ * @param event
+ * @returns {boolean}
+ */
+function fireEvent (element, event) {
+    var evt;
+
+    if (document.createEventObject) {
+        // IE浏览器支持fireEvent方法
+        evt = document.createEventObject();
+        return element.fireEvent('on' + event, evt)
+    }
+    else {
+        // 其他标准浏览器使用dispatchEvent方法
+        evt = document.createEvent('HTMLEvents');
+        // initEvent接受3个参数：
+        // 事件类型，是否冒泡，是否阻止浏览器的默认行为
+        evt.initEvent(event, true, true);
+        return !element.dispatchEvent(evt);
+    }
+}
+</script>
+</body>
+</html>

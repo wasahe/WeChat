@@ -1,0 +1,305 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta charset="utf-8">
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" href="{MODULE_URL}resource/css/style.css" />
+    <script type="text/javascript" src="{MODULE_URL}resource/js/jquery-2.1.0.js"></script>
+    <script type="text/javascript" src="{MODULE_URL}resource/js/script.js" ></script>
+    <title>{$title}</title>
+    {php echo register_jssdk(false);}
+</head>
+
+<body>
+<div class="main">
+    <!--轮播图 start-->
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            {loop $slide $row}
+            <div class="swiper-slide"><a href="{$row['link']}"><img src="{php echo tomedia($row['thumb'])}" width="100%"></a></div>
+            {/loop}
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination"></div>
+    </div>
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="{MODULE_URL}/resource/css/swiper.css" />
+    <!-- Swiper JS -->
+    <script src="{MODULE_URL}/resource/js/swiper.jquery.min.js"></script>
+    <script>
+        var swiper = new Swiper('.swiper-container', {
+            pagination: '.swiper-pagination',
+            autoplay : 3000,
+            speed:400,
+            autoplayDisableOnInteraction : false,
+        });
+    </script>
+    <!--轮播图 end-->
+    {if !empty($tags)}
+    <div class="tagNav">
+        <ul>
+            <li class="active" id="quan" onclick="quan();">全部</li>
+            {loop $tags $row}
+            <li data="{$row['id']}" onclick="Slabel(this,'sla');">{$row['tag_name']}</li>
+            {/loop}
+        </ul>
+    </div>
+    {/if}
+    <div class="proList">
+        <ul class="over">
+            {loop $attpro $item}
+            <li class="gridXb">
+                <a href="javascript:void(0);" onclick="skip(this);" data="{$item['id']}">
+                    <div class="pic">
+                        <img src="{php echo tomedia($item['icon'])}" width="100%">{if $item['readcount']>0}<i class="count">{$item['readcount']}</i>{/if}
+                        {if $item['money']>0}
+                        <span>&yen; {$item['money']}</span>
+                        {/if}
+                    </div>
+                    <div class="info">
+                        <h2>{$item['name']}</h2>
+                        <p><span>{if empty($item['count'])}0{else}{$item['count']}{/if}  人订阅 </span><span>{php echo date('m-d',$item['time'])}日更新</span></p>
+                    </div>
+                    {if !empty($tags)}
+                    <div class="tags clearfix">
+                        {loop $item['tags'] $row}
+                        <span class="gridFour">{$row['tag_name']}</span>
+                        {/loop}
+                    </div>
+                    {/if}
+                </a>
+                <button class="actions gridFour active" data="{$item['id']}" {if !empty($item['money'])} data-mon="{$item['money']}"{/if} onclick="attions(this,'on');">
+                    已订阅
+                </button>
+            </li>
+            {/loop}
+        </ul>
+        <ul id="unsub">
+            {loop $allpro $item}
+            <li class="gridXb">
+                <a href="javascript:void(0);" onclick="skip(this);" data="{$item['id']}">
+                    <div class="pic">
+                        <img src="{php echo tomedia($item['icon'])}" width="100%">
+                        {if $item['money']>0}
+                        <span>&yen; {$item['money']}</span>
+                        {/if}
+                    </div>
+                    <div class="info">
+                        <h2>{$item['name']}</h2>
+                        <p><span>{if empty($item['count'])}0{else}{$item['count']}{/if} 人订阅 </span><span>{php echo date('m-d',$item['time'])}日更新</span></p>
+                    </div>
+                    {if !empty($tags)}
+                    <div class="tags clearfix">
+                        {loop $item['tags'] $row}
+                        <span class="gridFour">{$row['tag_name']}</span>
+                        {/loop}
+                    </div>
+                    {/if}
+                </a>
+                <button class="actions gridFour" data="{$item['id']}" {if !empty($item['money'])} data-mon="{$item['money']}"{/if} onclick="attions(this,'on');">
+                    订阅
+                </button>
+            </li>
+            {/loop}
+        </ul>
+    </div>
+</div>
+<div class="floatBox popupTip" style="display: none;"  id="subscibes">
+    <div class="mid box">
+        <div class="txt">
+            <p><img src="{$_W['attachurl']}qrcode_{$_W['uniacid']}.jpg" width="100%"></p>
+            <p>订阅产品之前请先关注公众号</p>
+        </div>
+        <div class="btn">
+            <ul class="flex">
+                <li class="gray" id="qclose">关闭</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="floatBox popupTip" style="display: none;"  id="subscibe">
+    <div class="mid box">
+        <div class="txt">
+            <p>订阅之后,该产品更新时你将会收到更新提示</p>
+        </div>
+        <div class="btn">
+            <ul class="flex">
+                <li class="gray" id="sclose">取消</li>
+                <li class="red" id="ssub">确定</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+</body>
+<script>
+    $(function(){
+        initShare();
+        function initShare(){
+            wx.ready(function () {
+                shareMeta = {
+                    imgUrl:"{$_W['attachurl']}qrcode_{$_W['uniacid']}.jpg",
+                    link :  "",
+                    desc : "{$title}",
+                    title : "{$title}",
+                    success: function(){
+
+                    },
+                    cancel: function(){
+                        // alert("分享失败，可能是网络问题，一会儿再试试？");
+                    }
+                };
+                wx.onMenuShareTimeline(shareMeta);
+                wx.onMenuShareAppMessage(shareMeta);
+                wx.onMenuShareWeibo(shareMeta);
+                wx.onMenuShareQQ(shareMeta);
+                wx.onMenuShareQZone(shareMeta);
+            });
+        }
+    })
+</script>
+<script type="text/javascript">
+
+    function jsApiCall(pay)
+    {
+        WeixinJSBridge.invoke(
+                'getBrandWCPayRequest',
+                pay,
+                function(res){
+                    WeixinJSBridge.log(res.err_msg);
+                    if(res.err_msg == "get_brand_wcpay_request:ok") {
+                        location.href=location.href;
+                    } else if(res.err_msg == "get_brand_wcpay_request:cancel"){
+                        alert("已取消付费!");
+                    }else{
+                        alert(res.err_code+res.err_desc+res.err_msg);
+                    }
+                }
+        );
+    }
+
+    function callpay(pay)
+    {
+        if (typeof WeixinJSBridge == "undefined"){
+            if( document.addEventListener ){
+                document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+            }else if (document.attachEvent){
+                document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+                document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+            }
+        }else{
+            jsApiCall(pay);
+        }
+    }
+</script>
+<script>
+    function attions(obj,op){
+        var id=$(obj).attr('data');
+        $.post(location.href,{'id':id,"op":op},function(res){
+            if(res.result==1){
+                $(obj).removeClass('active');
+                $(obj).empty();
+                $(obj).text("订阅");
+                location.href=location.href;
+                return;
+            }else if(res.result==2){
+                $("#subscibes").show();
+                return;
+            }else if(res.result==3){
+                callpay(res.data);
+                return;
+            }else{
+                $(obj).addClass('active');
+                $(obj).empty();
+                $(obj).text("已订阅");
+        }
+            location.href=location.href;
+        });
+    }
+    $("#qclose").click(function(){
+        $("#subscibes").hide();
+    });
+    function skip(obj){
+        var id=$(obj).attr('data');
+        location.href="{php echo $this->createmobileurl('single')}&id="+id;
+    }
+    function Slabel(obj,op){
+        var tagid=$(obj).attr('data');
+        $("#quan").toggleClass('active');
+        $(obj).toggleClass('active').siblings().removeClass('active');;
+        $.post(location.href,{"tagid":tagid,"op":op},function(data){
+            $(".proList").empty();
+            var sublist=data.sublist;
+            var unsublist=data.unsublist;
+            if(sublist&&sublist.length>0){
+                var s=$(".proList").append("<ul class='over'></ul>");
+                s=$(".over");
+                for(var i=0;i<sublist.length;i++){
+                    var html='<li class="gridXb"><a href="javascript:void(0);" onclick="skip(this);" data="'+sublist[i].id+'">';
+                    html+='<div class="pic"><img src="'+sublist[i].icon+'" width="100%">';
+                    if(sublist[i].money>0){
+                        html+='<span>&yen; '+sublist[i].money+'</span>';
+                    }
+                    if(parseInt(sublist[i].readcount)>0){
+                        html+='<i class="count">'+sublist[i].readcount+'</i>';
+                    }
+                    html+='</div>';
+                    html+='<div class="info"><h2>'+sublist[i].name+'</h2>';
+                    if(parseInt(sublist[i].count)>0){
+                        html+='<p><span>'+sublist[i].count+'人订阅 </span>';
+                    }else{
+                        html+='<p><span>0人订阅 </span>';
+                    }
+                    html+='<span>'+sublist[i].time+'日更新</span></p></div>';
+                    html+='<div class="tags clearfix">';
+                    for(var j=0;j<sublist[i].tags.length;j++){
+                    html+='<span class="gridFour">'+sublist[i].tags[j].tag_name+'</span>';
+                    }
+                    html+='</div></a>';
+                    html+='<button class="actions gridFour active" data="'+sublist[i].id+'" onclick="attions(this,\'on\');">已订阅</button></li>';
+                    s.append(html);
+                }
+            }else if(unsublist&&unsublist.length>0){
+                var us=$(".proList").append("<ul id='sub'></ul>");
+                us=$("#sub");
+                for(var i=0;i<unsublist.length;i++){
+                    var html='<li class="gridXb"><a href="javascript:void(0);" onclick="skip(this);" data="'+unsublist[i].id+'">';
+                    html+='<div class="pic"><img src="'+unsublist[i].icon+'" width="100%">';
+                    if(unsublist[i].money>0){
+                        html+='<span>&yen; '+unsublist[i].money+'</span>';
+                    }
+                    if(parseInt(unsublist[i].readcount)>0){
+                        html+='<i class="count">'+unsublist[i].readcount+'</i>';
+                    }
+                    html+='</div>';
+                    html+='<div class="info"><h2>'+unsublist[i].name+'</h2>';
+                    if(parseInt(unsublist[i].count)>0){
+                        html+='<p><span>'+unsublist[i].count+'人订阅 </span>';
+                    }else{
+                        html+='<p><span>0人订阅 </span>';
+                    }
+                    html+='<span>'+unsublist[i].time+'日更新</span></p></div>';
+                    html+='<div class="tags clearfix">';
+                    for(var j=0;j<unsublist[i].tags.length;j++){
+                        html+='<span class="gridFour">'+unsublist[i].tags[j].tag_name+'</span>';
+                    }
+                    html+='</div></a>';
+                    html+='<button class="actions gridFour" data="'+unsublist[i].id+'" onclick="attions(this,\'on\');">订阅</button></li>';
+                    us.append(html);
+                }
+            }else{
+                var html='<div class="tips tc p15">该标签下暂无内容！</div>';
+                $(".proList").append(html);
+            }
+        })
+    }
+    function quan(){
+        $("#quan").toggleClass('active');
+        location.href=location.href;
+    }
+</script>
+</html>

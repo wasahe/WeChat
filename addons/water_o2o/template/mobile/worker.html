@@ -1,0 +1,121 @@
+{template 'header'}
+<body ontouchstart="" class="platform_mobile">
+<div class="qsc-alert" style="display: none;">
+<i class="info-base64"></i><span></span>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-white icon-loading-base64"><i class="icon-white icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading-new">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-loading-base64"><i class="icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<div class="mod-project-card funding" style="margin-bottom: 2px;">
+	<div class="mod-project-card_header clearfix" style="margin-bottom: 1px;">
+		<a href="javascript:void(0);">
+		<div class="mod-project-card_header__avatar">
+			<img class="lazy-load"
+				src="../addons/water_o2o/template/img/grey.png" data-original="{$_W['attachurl']}{$worker['wimg']}"
+				style="display: inline;width: 100;height:100;">
+		</div>
+		<div class="mod-project-card_header__user">
+			<span style="font-weight: bold;display:block;padding-top: 4%;">{$worker['wname']}</span>
+				<p class="mod-project-card_header__time" style="font-size: 14px;padding-top: 5%;">
+				<span style="font-size: 12px;color: #2eb676;">{$worker['wcity']}</span></p>
+				<p style="margin: 0;padding-top: 2%;font-size: 12px;color: #2eb676;">认证技师</p>
+				<p style="margin: 0;padding-top: 2%;font-size: 12px;color: #2eb676;">从业{$worker['wyears']}年</p>
+		</div>
+		<style>
+.mod-project-card_header__user button {
+    background: #fff;
+	position:inherit;
+    border: 1px solid #2eb676;
+    color: #2eb676;
+    font-size: 12px;
+    line-height: 26px;
+    border-radius: 4px;
+	margin-top: 25%;
+}
+		</style>
+		<div class="mod-project-card_header__user" style="float: right; text-align: right;">
+		    <a href="{php echo $this->createMobileUrl('workerpl',array('workerid'=>$worker['id']))}">
+		    <button>用户评价({$plsum['cnt']})</button></a>
+		    
+		</div>
+		</a>
+	</div>
+</div>
+<div class="content-main bottom">
+
+<div class="mod-project-card funding" style="margin-bottom: 8px;margin-top: 5px;">
+	<div class="mod-project-card_content">
+		<a href="tel:{$shop['smobile']}"><header class="mod-project-card_content__header">
+				<span class="ribbon labels">推荐技师</span>
+				<h2>{$worker['wname']}</h2><span><!-- {$worker['mobile']} --></span>
+			</header>
+		</a>
+		<div class="mod-project-card_content__detail">
+			<p class="description">{$shop['saddress']}</p>
+			<p class="description">{$worker['wdesc']}</p>
+		</div>
+	</div>
+</div>
+<style>
+.mod-project-card_header__user button {
+    background: #fff;
+	position:inherit;
+    border: 1px solid #2eb676;
+    color: #2eb676;
+    font-size: 12px;
+    line-height: 26px;
+    border-radius: 4px;
+	margin-top: 30%;
+}
+</style>
+{loop $list $item}
+<div class="mod-project-card funding" style="margin-bottom: 2px;">
+	<div class="mod-project-card_header clearfix" style="margin-bottom: 1px;">
+		<a href="{php echo $this->createMobileUrl('service',array('serviceid'=>$item['id'],type=>$type,workerid=>$worker['id']))}">
+		<div class="mod-project-card_header__avatar">
+			<img class="lazy-load"
+				src="../addons/water_o2o/template/img/grey.png" data-original="{$_W['attachurl']}{$item['slogo']}"
+				style="display: inline;width: 80;height: 80;">
+		</div>
+		<div class="mod-project-card_header__user">
+			<span style="font-weight: bold;display:block;padding-top: 2%;">{$item['sname']}</span>
+				<p class="mod-project-card_header__time" style="font-size: 14px;padding-top: 5%;">
+				<span style="font-size: 14px;color: green;">{$item['sprice']}</span>元/{$item['sminute']}分钟</p>
+				<p style="margin: 0;padding-top: 5%;font-size: 12px;color: gray;">{$item['sdesc']}</p>
+		</div>
+		</a>
+		<div class="mod-project-card_header__user" style="float: right;width: 22%; text-align: right;">
+		    <a href="{php echo $this->createMobileUrl('attend',array('serviceid'=>$item['id'],type=>$type,workerid=>$worker['id']))}">
+		    <button>预约</button></a>
+		    <span style="display:block; font-size: 10px;padding-top: 10%;">10000人选择</span>
+		</div>
+	</div>
+</div>	
+{/loop}
+		<ul class="pager">
+			<li class="previous disabled"><a href="javascript:void(0);">←
+					上一页</a></li>
+			<li class="active"><select name="pager"
+				onchange="document.location.href=this.options[this.selectedIndex].getAttribute('rel')">
+					<option value="1" selected="selected" rel="/projects/recommend/1">第
+						1 页</option>
+					<option value="2" rel="/projects/recommend/2">第 2 页</option>
+					<option value="3" rel="/projects/recommend/3">第 3 页</option>
+			</select></li>
+			<li class="next"><a href="/projects/recommend/2">下一页 →</a></li>
+		</ul>
+	</div>
+	{template 'footer'}
+<script type="text/javascript" src="../addons/water_o2o/template/js/index.min.js"></script>
+</body></html>

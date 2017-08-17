@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com" versionCode="0.6">
+	<application setting="false">
+		<name><![CDATA[美业O2O]]></name>
+		<identifie><![CDATA[water_o2o]]></identifie>
+		<version><![CDATA[1.2.3]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[美业O2O]]></ability>
+		<description><![CDATA[美业O2O]]></description>
+		<author><![CDATA[微赞]]></author>
+		<url><![CDATA[http://www.012wz.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="首页入口" do="index" />
+			<entry title="我的订单" do="order" />
+			<entry title="会员中心" do="center" />
+			<entry title="商家管理入口" do="shoperentry" />
+			<entry title="工作人员入口" do="workerentry" />
+		</cover>
+		<menu>
+			<entry title="店铺管理" do="shop" />
+			<entry title="员工管理" do="worker" />
+			<entry title="订单管理" do="order" />
+			<entry title="综合服务" do="service" />
+			<entry title="上门服务" do="servicehome" />
+			<entry title="会员信息" do="fans" />
+		</menu>
+	</bindings>
+	<install><![CDATA[CREATE TABLE IF NOT EXISTS `ims_water_o2o_evaluate` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `shopid` int(11) DEFAULT '0' COMMENT '商铺id',
+  `workerid` int(11) DEFAULT '0' COMMENT '员工id',
+  `orderid` int(11) DEFAULT NULL COMMENT '订单id',
+  `serviceid` int(11) DEFAULT NULL COMMENT '服务id',
+  `content` varchar(200) DEFAULT NULL COMMENT '评论内容',
+  `rank` int(2) DEFAULT '1' COMMENT '星级',
+  `etime` datetime DEFAULT NULL COMMENT '完整时间',
+  `state` int(2) DEFAULT '0' COMMENT '状态',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_water_o2o_fans` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `openid` varchar(300) DEFAULT NULL,
+  `nickname` varchar(100) DEFAULT NULL,
+  `headimg` varchar(300) DEFAULT NULL,
+  `fname` varchar(20) DEFAULT NULL,
+  `mobile` varchar(20) DEFAULT NULL,
+  `address` varchar(300) DEFAULT NULL,
+  `fopenid` varchar(300) DEFAULT NULL,
+  `flocation` varchar(300) DEFAULT NULL,
+  `balance` float DEFAULT '0' COMMENT '余额',
+  `shopid` int(11) DEFAULT '0' COMMENT '所属店铺',
+  `state` int(2) DEFAULT '0',
+  `stitle` varchar(30) DEFAULT NULL COMMENT '店铺名称',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_water_o2o_orders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `orderno` varchar(100) DEFAULT NULL COMMENT ' 单号',
+  `ordertime` datetime DEFAULT NULL COMMENT '订单时间',
+  `orderfee` float DEFAULT NULL COMMENT '价格',
+  `type` int(2) DEFAULT NULL COMMENT '订单类型',
+  `sid` int(11) DEFAULT NULL COMMENT '店铺id',
+  `stitle` varchar(100) DEFAULT NULL COMMENT '店铺名称',
+  `svid` int(11) DEFAULT NULL COMMENT '服务项目id',
+  `svname` varchar(100) DEFAULT NULL COMMENT '服务项目名称',
+  `stime` varchar(100) DEFAULT NULL COMMENT '服务时间',
+  `smsg` varchar(200) DEFAULT NULL COMMENT '留言',
+  `wid` int(11) DEFAULT NULL COMMENT '员工id',
+  `wname` varchar(20) DEFAULT NULL COMMENT '员工姓名',
+  `wmobile` varchar(20) DEFAULT NULL COMMENT '员工电话',
+  `fid` int(11) DEFAULT NULL COMMENT '粉丝id',
+  `fname` varchar(20) DEFAULT NULL COMMENT '联系人',
+  `fmobile` varchar(20) DEFAULT NULL COMMENT '联系方式',
+  `faddress` varchar(300) DEFAULT NULL COMMENT '服务地址',
+  `openid` varchar(300) DEFAULT NULL COMMENT '付款人',
+  `paytype` int(2) DEFAULT '0',
+  `paystate` int(2) DEFAULT '0' COMMENT '支付状态',
+  `paytime` datetime DEFAULT NULL COMMENT '支付时间',
+  `comment` varchar(300) DEFAULT NULL COMMENT '评论',
+  `state` int(2) DEFAULT '0' COMMENT '状态',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_water_o2o_services` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `svhmid` int(11) DEFAULT NULL,
+  `rank` int(2) DEFAULT '1' COMMENT '服务等级',
+  `sid` int(11) DEFAULT '0' COMMENT '店铺id',
+  `stitle` varchar(100) DEFAULT NULL COMMENT '店铺名称',
+  `wid` int(11) DEFAULT NULL COMMENT '员工id',
+  `wname` varchar(50) DEFAULT NULL COMMENT '员工姓名',
+  `wopenid` varchar(200) DEFAULT NULL COMMENT '发布员工openid',
+  `sname` varchar(100) DEFAULT NULL COMMENT '服务名称',
+  `slogo` varchar(300) DEFAULT NULL COMMENT '服务logo',
+  `sbanners` varchar(1000) DEFAULT NULL COMMENT '轮播图片',
+  `simgs` varchar(1000) DEFAULT NULL COMMENT '服务图片',
+  `sdesc` varchar(100) DEFAULT NULL COMMENT '简介',
+  `scontent` varchar(500) DEFAULT NULL COMMENT '服务内容',
+  `syynotice` varchar(500) DEFAULT NULL COMMENT '预约须知',
+  `sreminder` varchar(500) DEFAULT NULL COMMENT '温馨提示',
+  `sprice` float DEFAULT NULL COMMENT '价格',
+  `sminute` int(11) DEFAULT NULL COMMENT '耗时分钟数',
+  `state` int(2) DEFAULT '0' COMMENT '状态',
+  `dohome` int(2) DEFAULT '0' COMMENT '服务类型：0是不支持上门，1是支持上门',
+  `spublicer` int(2) DEFAULT '0' COMMENT '发布者0是商家发布，1是独立员工发布',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_water_o2o_serviceshome` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `shname` varchar(100) DEFAULT NULL COMMENT '服务名称',
+  `shlogo` varchar(300) DEFAULT NULL COMMENT '服务logo',
+  `shimgs` varchar(1000) DEFAULT NULL COMMENT '服务图片',
+  `shbanners` varchar(1000) DEFAULT NULL COMMENT '轮播',
+  `shdesc` varchar(100) DEFAULT NULL COMMENT '简介',
+  `shcontent` varchar(500) DEFAULT NULL COMMENT '服务内容',
+  `shyynotice` varchar(500) DEFAULT NULL COMMENT '预约须知',
+  `shreminder` varchar(500) DEFAULT NULL COMMENT '温馨提示',
+  `ssum` int(11) DEFAULT NULL COMMENT '选择人数',
+  `state` int(2) DEFAULT '0' COMMENT '状态',
+  `sprice` float DEFAULT NULL COMMENT '价格',
+  `sminute` int(11) DEFAULT NULL COMMENT '耗时分钟数',
+  `dohome` int(2) DEFAULT '0' COMMENT '服务类型：0是不支持上门，1是支持上门',
+  `spublicer` int(2) DEFAULT '0' COMMENT '发布者0是商家发布，1是独立员工发布',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_water_o2o_shops` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `stitle` varchar(100) DEFAULT NULL COMMENT '店铺名称',
+  `scity` int(11) DEFAULT NULL COMMENT '所属城市',
+  `slogo` varchar(300) DEFAULT NULL COMMENT '店铺logo',
+  `sbanners` varchar(1000) DEFAULT NULL COMMENT '店铺轮播',
+  `simgs` varchar(1000) DEFAULT NULL COMMENT '店铺图片',
+  `sdesc` varchar(500) DEFAULT NULL COMMENT '简介',
+  `slocation` varchar(300) DEFAULT NULL COMMENT '坐标',
+  `slocation2` varchar(300) DEFAULT NULL COMMENT '微信高德标准坐标',
+  `sopenid` varchar(200) DEFAULT NULL COMMENT '店主id',
+  `suname` varchar(50) DEFAULT NULL COMMENT '店长姓名',
+  `spwd` varchar(100) DEFAULT NULL COMMENT '密码',
+  `smobile` varchar(20) DEFAULT NULL COMMENT '联系方式',
+  `saddress` varchar(300) DEFAULT NULL COMMENT '地址',
+  `state` int(2) DEFAULT '0' COMMENT '状态',
+  `dohome` int(2) DEFAULT '0' COMMENT '是否支持上门服务，0是不支持，1是支持',
+  `totalw` int(11) DEFAULT '0' COMMENT '人员总数',
+  `totals` int(11) DEFAULT '0' COMMENT '服务总数',
+  `sewm` varchar(200) DEFAULT NULL COMMENT '二维码',
+  `wxadd` int(2) DEFAULT '0' COMMENT '微信端增加',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC AUTO_INCREMENT=2 ;
+
+CREATE TABLE IF NOT EXISTS `ims_water_o2o_time` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `shopid` int(11) DEFAULT '0' COMMENT '商铺id',
+  `workerid` int(11) DEFAULT '0' COMMENT '员工id',
+  `strtotime` varchar(50) DEFAULT NULL COMMENT '服务时间戳',
+  `stime` varchar(100) DEFAULT NULL COMMENT '服务时间',
+  `sdatetime` datetime DEFAULT NULL COMMENT '完整时间',
+  `state` int(2) DEFAULT '0' COMMENT '状态',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_water_o2o_workers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `sid` int(11) DEFAULT '0' COMMENT '店铺id',
+  `stitle` varchar(100) DEFAULT NULL COMMENT '店铺',
+  `openid` varchar(300) DEFAULT NULL,
+  `nickname` varchar(100) DEFAULT NULL,
+  `headimg` varchar(300) DEFAULT NULL,
+  `wimg` varchar(300) DEFAULT NULL,
+  `isfree` int(2) DEFAULT '1' COMMENT '是否空闲:1为空闲',
+  `type` int(2) DEFAULT '0' COMMENT '类型1为可上门服务',
+  `wname` varchar(20) DEFAULT NULL COMMENT '姓名',
+  `wage` int(2) DEFAULT '18' COMMENT '年龄',
+  `wyears` int(2) DEFAULT '0' COMMENT '工龄',
+  `wcity` varchar(50) DEFAULT NULL COMMENT '户籍',
+  `wdesc` varchar(500) DEFAULT NULL COMMENT '简介',
+  `mobile` varchar(20) DEFAULT NULL COMMENT '手机号码',
+  `pwd` varchar(100) DEFAULT NULL COMMENT '密码',
+  `wsinfos` varchar(2000) DEFAULT NULL COMMENT '服务项目信息',
+  `wlocation` varchar(300) DEFAULT NULL COMMENT '位置',
+  `fopenid` varchar(300) DEFAULT NULL,
+  `balance` float DEFAULT '0' COMMENT '余额',
+  `state` int(2) NOT NULL DEFAULT '0',
+  `wewm` varchar(200) DEFAULT NULL COMMENT '二维码图片',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC AUTO_INCREMENT=1 ;]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

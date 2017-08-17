@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+{if empty($_W['isajax'])}
+{template 'common/top'}
+{/if}
+  <link rel="stylesheet" href="{MODULE_URL}assets/admin/css/select2.min.css">
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <!-- right column -->
+        <div class="col-md-12">
+          <!-- Horizontal Form -->
+          <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">编辑会员信息</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+           <form action="" method="post"  class="form-horizontal" enctype="multipart/form-data">
+              <div class="box-body">
+				{if !empty($item['openid'])}
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">OPENID</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" readonly name='openid' value="{$item['openid']}" placeholder="">
+					<span class="help-block"></span>
+                  </div>
+                </div>
+				{else}
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">OPENID</label>
+                  <div class="col-sm-10">
+					<div class="input-group">
+						<input type="text" class="form-control" id="openid" name='openid' value="{$item['openid']}" placeholder="新建用户请先生成OPENID">
+						<span id="getOpenid" class="input-group-addon">重新生成	</span>
+					</div>
+					<span class="help-block"></span>
+                  </div>
+                </div>
+				{/if}
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">昵称</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name='nickname' value="{$item['nickname']}" placeholder="">
+					<span class="help-block"></span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">真实姓名</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name='realname' value="{$item['realname']}" placeholder="">
+					<span class="help-block"></span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">头像</label>
+                  <div class="col-sm-10">
+                     {php echo tpl_form_field_image('avatar',$item['avatar'])}
+					<span class="help-block"></span>
+                  </div>
+                </div>
+				<div class="form-group">
+                  <label class="col-sm-2 control-label">专业领域</label>
+                  <div class="col-sm-10">
+					<select name="category_id" id="category_id" multiple="multiple"  class="form-control">
+                        {php $options = M('category')->getByType(1)}
+                        {loop $options $option}
+						{php $labels = explode(',',$item['labels'])}
+							{php $mark = false}
+							{loop $labels $it}
+							{if !empty($it)}	
+							{if $it==$option['id']}{php $mark = true}{/if}				
+							{/if} 
+							{/loop}
+							<option value="{$option['id']}" {if $mark}selected{/if}>{$option['title']}</option>	
+						{/loop}
+                    </select>
+					<span class="help-block"></span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">会员状态</label>
+                  <div class="col-sm-10">
+                    <select name="status" id="" class="form-control">
+                        <option value="0" {if $item['status']==0}selected{/if}>普通会员</option>
+                        <option value="1" {if $item['status']==1}selected{/if}>等待审核</option>
+                        <option value="2" {if $item['status']==2}selected{/if}>审核未通过</option>
+                        <option value="3" {if $item['status']==3}selected{/if}>认证专家</option>
+                    </select>
+					<span class="help-block"></span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">头衔</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name='tags' value="{$item['tags']}" placeholder="">
+					<span class="help-block"></span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">手机号</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name='mobile' value="{$item['mobile']}" placeholder="">
+					<span class="help-block"></span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">简介</label>
+                  <div class="col-sm-10">
+                    <textarea name="desc"  class="form-control" id="desc" cols="30" rows="10">{$item['desc']}</textarea>
+					<span class="help-block"></span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">虚拟数据</label>
+                  <div class="col-sm-10">
+						<div class="input-group">
+							<span class="input-group-addon">关注人数</span>
+							<input type="text" class="form-control" name="follow" value="{php echo $item['follow']}" placeholder="">
+							<span class="input-group-addon">回答次数</span>
+							<input type="text" class="form-control" name="number" value="{php echo $item['number']}" placeholder="">
+							<span class="input-group-addon">{php echo $this->template['learnName']}次数</span>
+							<input type="text" class="form-control" name="learn" value="{php echo $item['learn']}" placeholder="">
+						</div> 
+						<span class="help-block">专家关注人数=真实关注人数+虚拟关注人数</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">提问费用</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name='credit' value="{$item['credit']}" placeholder="">
+					<span class="help-block"></span>
+                  </div>
+                </div>
+                <div class="form-group">
+					<label class="col-sm-2 control-label">推荐</label>
+					  <div class="col-sm-10">
+						<select name="isrecommend" class="form-control">
+							<option value="">请选择...</option>
+							<option value="1" {if $item['isrecommend']==1}selected{/if}>是</option>
+							<option value="0" {if $item['isrecommend']==0}selected{/if}>否</option>
+						</select>
+						<span class="help-block">推荐的认证用户会出现在推荐相关栏目中，并且头像显示黄V认证</span>
+					</div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">评价分值</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name='score' value="{$item['score']}" placeholder="">
+					<span class="help-block"></span>
+                  </div>
+                </div>
+                <div class="form-group">
+					<label class="col-sm-2 control-label">管理员</label>
+					  <div class="col-sm-10">
+						<select name="admin" class="form-control">
+							<option value="">请选择...</option>
+							<option value="1" {if $item['admin']==1}selected{/if}>是</option>
+							<option value="0" {if $item['admin']==0}selected{/if}>否</option>
+						</select>
+						<span class="help-block">具有可接受认证提醒，免费查看所有问题的权限</span>
+					</div>
+                </div>
+              </div>
+			  <div class="box-footer">
+                <input type="hidden" name="token" value="{$_W['token']}" />
+                <input type="hidden" name="labels" id="labels" value="{$item['labels']}" />
+                <button type="submit" class="btn btn-info center-block">写好了</button>
+              </div>
+            </form>
+          </div>
+          <!-- /.box -->
+        </div>
+        <!--/.col (right) -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+{if empty($_W['isajax'])}
+{template 'common/foot'}
+<script src="{MODULE_URL}assets/admin/js/select2.full.min.js"></script>
+<script>
+	$(document).ready(function() {
+		var labels = ',';
+		$("#category_id").select2({
+			tags: true,
+			maximumSelectionLength:3
+		});
+		$("select").on("select2:select", function (evt) {
+			var element = evt.params.data.element;
+			var $element = $(element);
+			$element.detach();
+			$(this).append($element);
+			$(this).trigger("change");
+		});
+		$("#category_id").on('change keyup',function(){
+			labels = ',';
+			$("#category_id option:selected").each(function(){
+				labels += $(this).val()+',';
+			});
+			$("#labels").val(labels);
+		});
+	});
+	$("#getOpenid").click(function(){
+        $("#openid").val(password(28));
+	});
+	$("#getOpenid").trigger("click");
+	
+	function password(length, special) {
+	  var iteration = 0;
+	  var password = "";
+	  var randomNumber;
+	  if(special == undefined){
+		  var special = false;
+	  }
+	  while(iteration < length){
+		randomNumber = (Math.floor((Math.random() * 100)) % 94) + 33;
+		if(!special){
+		  if ((randomNumber >=33) && (randomNumber <=47)) { continue; }
+		  if ((randomNumber >=58) && (randomNumber <=64)) { continue; }
+		  if ((randomNumber >=91) && (randomNumber <=96)) { continue; }
+		  if ((randomNumber >=123) && (randomNumber <=126)) { continue; }
+		}
+		iteration++;
+		password += String.fromCharCode(randomNumber);
+	  }
+	  return password;
+	}
+	require(['bootstrap']);
+</script>
+{/if}

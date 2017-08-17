@@ -1,0 +1,60 @@
+{template 'top'}
+
+<div id="my_one">
+<div class="my_one_a"><img src="{$fans['tag']['avatar']}"></div><div class="my_one_p">{$fans['nickname']}</div>
+</div>
+<div id="my_two">
+</div>
+
+
+    <!--开始-->
+	<div id="fengmian">
+
+	<div id="fengmian_one">我发布的</div>
+      {loop $all $key $all}
+	  <a href="{php echo $this->createMobileUrl('view',array('vid'=>$all['id']))}">
+	  <div id="fengmian_two">
+<div class="fengmian_two_a"><div class="fengmian_two_a_1">
+{if $all['list']=='1'}{$all['jobname']}
+{elseif $all['list']=='2'}{$all['housetype']}
+{elseif $all['list']=='3'}{$all['ershouname']}
+{elseif $all['list']=='4'}{$all['chestart']}->{$all['cheend']}
+{elseif $all['list']=='5'}{$all['chestart']}->{$all['cheend']}
+{elseif $all['list']=='6'}{$all['linshiname']}
+{else}
+{/if}</div><div class="fengmian_two_a_2">
+{if $all['pid'] == 1}未审核
+{elseif $all['pid'] == 2}真
+{elseif $all['pid'] == 3}假
+{elseif $all['pid'] == 4}已删除
+{else}
+{/if}
+</div></div>
+<div class="fengmian_two_b">
+{if $all['list']=='1'}{$all['jobsalary']}/{$all['jobcontent']}
+{elseif $all['list']=='2'}{$all['houseaddress']}
+{elseif $all['list']=='3'}{$all['ershoupinpai']}/{$all['ershounewor']}
+{elseif $all['list']=='4'}{$all['validity']}
+{elseif $all['list']=='5'}{$all['validity']}
+{elseif $all['list']=='6'}{$all['linshispecial']}
+{else}
+{/if}
+</div>
+<div class="fengmian_two_c"><div class="fengmian_two_c_1">
+{if $all['list']=='1'}{$all['jobaddress']}/{$all['jobfactory']}
+{elseif $all['list']=='2'}{$all['houseprice']}/{$all['housename']}
+{elseif $all['list']=='3'}{$all['ershouprice']}
+{elseif $all['list']=='4'}可带{$all['cheperson']}人/车牌号：{$all['chechepai']}
+{elseif $all['list']=='5'}有{$all['cheperson']}搭乘
+{elseif $all['list']=='6'}{$all['validity']}
+{else}
+{/if}
+</div><div class="fengmian_two_c_2">发布日期：{php echo date("m-d",$all['time']);}</div></div>
+</div>
+</a>
+	  {/loop}
+  
+<!--结束-->
+   </div>
+
+{template 'bottom'}

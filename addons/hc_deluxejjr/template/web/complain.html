@@ -1,0 +1,88 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li class="active"><a href="">投诉与建议</a></li>
+</ul>
+{if $op == 'detail'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" id="form1">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				投诉与建议
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">姓名</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="realname" class="form-control" value="{$complain['realname']}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">电话</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="mobile" class="form-control" value="{$complain['mobile']}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">问题描述</label>
+					<div class="col-sm-9 col-xs-12">
+						<textarea name="complain" class="form-control" cols="70">{$complain['complain']}</textarea>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">提交时间</label>
+					<div class="col-sm-9 col-xs-12">
+						{php echo date('Y-m-d H:i:s', $complain['createtime'])}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-group col-sm-12">
+			<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+			<input type="hidden" name="token" value="{$_W['token']}" />
+		</div>
+	</form>
+</div>
+
+{elseif $op == 'display'}
+<div class="main">
+	<div class="complain">
+		<form action="" method="post" onsubmit="return formcheck(this)">
+			<div class="panel panel-default">
+				<div class="panel-body table-responsive">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>姓名</th>
+								<th>电话</th>
+								<th>投诉与建议</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody>
+						{loop $complains $row}
+						<tr>
+							<td>
+								{$row['realname']}
+							</td>
+							<td>
+								{$row['mobile']}
+							</td>
+							<td>
+								{php echo hehe1($row['complain'])}
+							</td>
+							<td>
+								<a href="{php echo $this->createWebUrl('complain', array('op' => 'detail', 'id' => $row['id']))}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="详情"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;
+								<a href="{php echo $this->createWebUrl('complain', array('op' => 'delete', 'id' => $row['id']))}" onclick="return confirm('确认删除吗？');return false;" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="删除"><i class="fa fa-times"></i></a>
+							</td>
+						</tr>
+						{/loop}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div style="text-align:center;">{$pager}</div>
+</div>
+{/if}
+{template 'common/footer'}

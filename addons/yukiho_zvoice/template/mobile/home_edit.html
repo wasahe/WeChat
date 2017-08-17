@@ -1,0 +1,229 @@
+{php $g_title='信息修改'}
+{php $menu='4'}
+{template 'common/header1'} 
+{template 'common/menu'}
+		<style type="text/css">
+		.imagesShowArea{ 
+			float:left;
+			width:20%;
+			height:50px;
+			padding-left:3px;
+		} 
+		.imagesUploadArea{ 
+			float:left;
+			width:20%;
+			height:50px;
+		} 
+		.images-content{ 
+			position: absolute; 
+			z-index: 1;
+			color: #fff; 
+			background: rgba(0,0,0,.7); 
+			overflow: hidden; 
+			margin-top:-15px;
+			opacity:0.8;filter:alpha(opacity=80);
+			width:50px;
+			line-height:15px;
+			font-size:12px;
+			padding-left:15px;
+		} 
+		</style> 
+		<div id="content" class="snap-content">
+			<div class="content">
+				<div class="one-half-responsive">
+					<div class="container heading-style-5"></div>
+				</div>
+				<form method="post" action="" id="contactForm" class="contactForm" enctype="multipart/form-data">
+					<input type="hidden" name="MAX_FILE_SIZE" value="2000000">
+					<fieldset>
+						<div class="formFieldWrap">
+							<label class="field-title contactNameField" for="contactNameField">我的昵称：<span>起一个个性的名字</span></label>
+							<input value="{$member['nickname']}" type="text" name="nickname" id="nickname" placeholder="请输入您喜欢的昵称..." class="contactField requiredField">
+						</div>
+						<div class="formFieldWrap">
+							<label class="field-title contactNameField" for="contactNameField">我的手机：<span>请填写您的手机号</span></label>
+							<input value="{$member['mobile']}" type="tel" name="mobile" id="mobile" placeholder="请填写您的手机号..." class="contactField requiredField">
+						</div>
+						<div class="clear"></div>
+						<div class="formFieldWrap">
+							<label class="field-title contactNameField" for="contactNameField">头像设置：<span>建议选择正方形图片</span></label>
+							<span id='imagesTr2' style="width:100%;border:0px">
+								<div class='imagesUploadIcon2' style="text-align:center;height:50px;width:100%;border: 1px dotted #cacaca">
+									<a style='font-size:15px;padding:6px;'>+添加</a>
+								</div>
+							</span>
+						</div>
+						<div class="clear"></div>
+						<div style='margin-top:10px;' class="formFieldWrap">
+							<label class="field-title contactNameField" for="contactNameField">主页封面设置：<span>建议宽高比为4:3</span></label>
+							<span id='imagesTr' style="width:100%;border:0px">
+								<div class='imagesUploadIcon' style="text-align:center;height:50px;width:100%;border: 1px dotted #cacaca">
+									<a style='font-size:15px;padding:6px;'>+添加</a>
+								</div>
+							</span>
+						</div>
+						<div class="clear"></div>
+						<input type="hidden" id="status" value="{$member['status']}" />
+						<input type="hidden" name="token" value="{$_W['token']}" />
+						<div style='margin-top:20px;' class="formSubmitButtonErrorsWrap contactFormButton">
+							<button type="button" class="buttonWrap button button-green contactSubmitButton"
+								id="save">保存信息</button>
+						</div>	
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</div>
+	<script>
+	var images = {
+		localId: [],
+		serverId: []
+	};
+	var avatarPath = '';
+	var imagePath = '';
+	
+
+	$("#imagesTr2").delegate(".imagesUploadIcon2,.imagesUploadArea2","click",function(){
+		var that =$(this);
+		// 删除已上传的图片
+		if(that.data('edit')=='1'){
+			that.remove();
+			$(".imagesUploadIcon2").show();
+			return false;
+		}
+		
+		images.localId = [];
+		var canChooseCount = 1;
+		$('.imagesUploadArea2').each(function(){
+			if($(this).data('edit')=='1') canChooseCount--;
+		});
+		wx.chooseImage({
+			count: canChooseCount,
+			sizeType: ['original', 'compressed'],
+			sourceType: ['album', 'camera'],
+			success: function (res) {
+			images.localId = res.localIds;
+			if (images.localId.length == 0) {
+				warn('请先使用 chooseImage 接口选择图片');
+				return;
+			}
+			if(images.localId.length > 1) {
+				warn('最多支持1张照片,请重新选择');
+				images.localId = [];
+				return;
+			}
+			var i = 0, length = images.localId.length;
+			images.serverId = [];
+			$('.imagesUploadDesc2').hide();
+			function upload() {
+				wx.uploadImage({
+					localId: images.localId[i],
+					success: function (res) {			
+						$('.imagesUploadIcon2').before('<div align="left" class="imagesUploadArea2" data-sid="'+res.serverId+'" data-edit="1">'
+							+'<img id="imagePreview" src="'+images.localId[i]+'" style="display:block;width:50px;height:50px;"><span class="images-content">删除<span></div>');			
+						avatarPath = res.serverId;
+						i++;
+						if (i < length) {
+							upload();
+						}
+						var count = 0;
+						$('.imagesUploadArea2').each(function(){
+							if($(this).data('edit')=='1'){
+								count++;
+							}
+						});
+						if(count>=1){
+							$(".imagesUploadIcon2").hide();
+						}
+					},
+					fail: function (res) {
+						warn(JSON.stringify(res));
+					}
+				});
+			}
+			upload();
+		  }
+		});
+	});
+	
+	$("#imagesTr").delegate(".imagesUploadIcon,.imagesUploadArea","click",function(){
+		var that =$(this);
+		// 删除已上传的图片
+		if(that.data('edit')=='1'){
+			that.remove();
+			$(".imagesUploadIcon").show();
+			return false;
+		}
+		
+		images.localId = [];
+		var canChooseCount = 1;
+		$('.imagesUploadArea').each(function(){
+			if($(this).data('edit')=='1') canChooseCount--;
+		});
+		wx.chooseImage({
+			count: canChooseCount,
+			sizeType: ['original', 'compressed'],
+			sourceType: ['album', 'camera'],
+			success: function (res) {
+			images.localId = res.localIds;
+			if (images.localId.length == 0) {
+				warn('请先使用 chooseImage 接口选择图片');
+				return;
+			}
+			if(images.localId.length > 1) {
+				warn('最多支持1张照片,请重新选择');
+				images.localId = [];
+				return;
+			}
+			var i = 0, length = images.localId.length;
+			images.serverId = [];
+			$('.imagesUploadDesc').hide();
+			function upload() {
+				wx.uploadImage({
+					localId: images.localId[i],
+					success: function (res) {			
+						$('.imagesUploadIcon').before('<div align="left" class="imagesUploadArea" data-sid="'+res.serverId+'" data-edit="1">'
+							+'<img id="imagePreview" src="'+images.localId[i]+'" style="display:block;width:50px;height:50px;"><span class="images-content">删除<span></div>');			
+						imagePath = res.serverId;
+						i++;
+						if (i < length) {
+							upload();
+						}
+						var count = 0;
+						$('.imagesUploadArea').each(function(){
+							if($(this).data('edit')=='1'){
+								count++;
+							}
+						});
+						if(count>=1){
+							$(".imagesUploadIcon").hide();
+						}
+					},
+					fail: function (res) {
+						warn(JSON.stringify(res));
+					}
+				});
+			}
+			upload();
+		  }
+		});
+	});
+	
+    var post = {};
+    $('#save').click(function(){
+		_b = $(this);
+        post.nickname = $('#nickname').val();
+        post.mobile = $('#mobile').val();
+        post.image = imagePath;
+        post.avatar = avatarPath;
+		_b.attr("disabled", "disabled");
+		_b.html("数据发射中，请稍等...");
+        $.post('',post,function(data){
+            bingo(data.message,function(){
+				window.location.href = "{php echo $this->createMobileUrl('home')}";
+            });
+        },'json');
+        return false;
+    });
+	</script>
+</body>

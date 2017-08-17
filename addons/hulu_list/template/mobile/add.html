@@ -1,0 +1,31 @@
+{template 'top'}
+  <div data-am-widget="slider" class="am-slider am-slider-default" style="height:150px;" data-am-slider='{}' >
+  <ul class="am-slides">
+  {loop $lunbo $key $lunbo}
+      <li>
+        	<a href="{$lunbo['linkurl']}"><img style="height:150px;" src="{$_W['attachurl']}{$lunbo['linkimg']}" alt="{$lunbo['linkalt']}"></a>
+         
+      </li>
+	  {/loop}
+    </ul>
+</div>
+
+<div id="add_one">
+
+<a href="{php echo $this->createMobileUrl('zhaopin');}"><div class="add_one_a"><div class="add_one_a_img"><img src="{MODULE_URL}/template/mobile/images/1.png"/></div>招聘求职</div></a>
+
+<a href="{php echo $this->createMobileUrl('fangwu');}"><div class="add_one_b"><div class="add_one_b_img"><img src="{MODULE_URL}/template/mobile/images/2.png"/></div>房屋租售</div></a>
+
+<a href="{php echo $this->createMobileUrl('ershou');}"><div class="add_one_a"><div class="add_one_a_img"><img src="{MODULE_URL}/template/mobile/images/3.png"/></div>二手交易</div></a>
+
+<a href="{php echo $this->createMobileUrl('che1');}"><div class="add_one_a"><div class="add_one_a_img"><img src="{MODULE_URL}/template/mobile/images/4.png"/></div>车找人</div></a>
+
+<a href="{php echo $this->createMobileUrl('che2');}"><div class="add_one_b"><div class="add_one_b_img"><img src="{MODULE_URL}/template/mobile/images/5.png"/></div>人找车</div></a>
+
+<a href="{php echo $this->createMobileUrl('linshi');}"><div class="add_one_a"><div class="add_one_a_img"><img src="{MODULE_URL}/template/mobile/images/6.png"/></div>临时工</div></a>
+
+
+
+</div>
+
+{template 'bottom'}

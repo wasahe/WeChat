@@ -1,0 +1,114 @@
+﻿@charset "utf-8";
+/* 
+   copyright by wanglai QQ：35146983
+*/
+div.top_head,div.top_header {background: rgba(8,180,172,0.8);}
+div.top_nav {border-bottom: 5px solid #08b3ab;}
+div.this_login {border: 2px solid #08b3ab;}
+ul.h_login li span {background-color: #08b3ab;}
+div.bottom,a.m_bottom,div.tuangou_qiang_fix,span.m_fr,input.go,div.chips_tanchu_tittle,ul.here_price li span,a.this_price {background: #08b3ab;}
+ul.here_price li em {background: #8dfffa;}
+div.main_tittle {background: #008d86;}
+*.mobile_color {color: #08b3ab !important;}
+*.base_ground {background: #08b3ab}
+div.top_header #page_top {color: #fff;}
+div.top_header #page_top span {color: #f0ff00;}
+div.page_right a {color: #fff;}
+div.page_right a:hover, div.page_right a:active, div.page_right a:link {color: #fff;}
+div.mobile_blist .mobile_hover em {color: #08b3ab;}
+div.mobile_my_color {background: #08b3ab;}
+h3.libao_nav {background-color: #08b3ab;}
+li.vote_new_bottom p {color: #08b3ab;}
+p.box_desc {color: #08b3ab;}
+li.vote-text {background-color: #08b3ab;}
+a.tuangou_qiang_r {background: #006762;}
+div.xianshi_time ul.yomi li {background-color: #08b3ab;}
+div.xianshi_time ul.yomi li.split {color: #08b3ab; background: none;}
+ul.yomi li {background: #08b3ab;}
+ul.yomi li.split {color: #08b3ab; background: none;}
+div.dalin_begin span {background-color: #4bc1e1;}
+div.dl_tittle1 {background-color: #54c9e8;}
+p.dl_list_name input {background-color: #08b3ab; color: #fff;}
+a.mxitie_yuema {background-color: #08b3ab; color: #fff;}
+p.zixun_min1 {color: #08b3ab;}
+div.mobile_select p {color: #ff0;}
+div.tuangou_qiang_r {background: #08b3ab;}
+div.aifenxiang_color {background: #08b3ab;}
+div.ds_dialog_title {background: #08b3ab; border-bottom: 1px solid #08b3ab;}
+div.ds_dialog_buttons .ds_dialog_yes,div.ds_dialog_buttons .ds_dialog_yes:active,div.ds_dialog_buttons .ds_dialog_yes:hover {border-color: #08b3ab; background: #08b3ab;}
+div.ds_dialog_buttons .ds_dialog_yes {text-shadow: 0 -1px 0 #08b3ab;}
+div.zhongchou_gobottom a.chips_gohome {background-color: #08b3ab;}
+
+/*--底部图标--*/
+span.home_s1 {background: url(../img/mobile/home_s1.png);}
+span.home_s2 {background: url(../img/mobile/home_s2.png);}
+span.home_s3 {background: url(../img/mobile/home_s3.png);}
+span.home_s4 {background: url(../img/mobile/home_s4.png);}
+span.home_s5 {background: url(../img/mobile/home_s5.png);}
+span.home_s6 {background: url(../img/mobile/home_s6.png);}
+span.home_s7 {background: url(../img/mobile/home_s7.png);}
+span.home_s8 {background: url(../img/mobile/home_s8.png);}
+span.home_s_my {background: url(../img/mobile/home_s_my.png);}
+
+div.mobile_blist .mobile_hover span.home_s1 {background: url(../img/mobile/home_s1_on.png);}
+div.mobile_blist .mobile_hover span.home_s2 {background: url(../img/mobile/home_s2_on.png);}
+div.mobile_blist .mobile_hover span.home_s3 {background: url(../img/mobile/home_s3_on.png);}
+div.mobile_blist .mobile_hover span.home_s4 {background: url(../img/mobile/home_s4_on.png);}
+div.mobile_blist .mobile_hover span.home_s5 {background: url(../img/mobile/home_s5_on.png);}
+div.mobile_blist .mobile_hover span.home_s6 {background: url(../img/mobile/home_s6_on.png);}
+div.mobile_blist .mobile_hover span.home_s7 {background: url(../img/mobile/home_s7_on.png);}
+div.mobile_blist .mobile_hover span.home_s8 {background: url(../img/mobile/home_s8_on.png);}
+/*--众筹颜色--*/
+div.zhongchou_list_tittle i {color: #08b3ab;}
+div.zhongchou_list_tittle span {color: #08b3ab;}
+div.zhongchou_list_tittle em {background-color: #08b3ab;}
+a.zhongchou_topnav em {color: #08b3ab;}
+a.zhongchou_totittle {border-top: 1px solid #08b3ab;}
+a.zhongchou_totittle em {background-color: #08b3ab;}
+div.zhongchou_list_tittle span {color: #08b3ab;}
+div.zhongchou_list_tittle i {color: #08b3ab;}
+div.zhongchou_list_tittle em {color: #08b3ab;}
+div.zhongchou_font span {color: #fff;}
+div.zhongchou_font em {color: #fdff9d;}
+div.zhongchou_bottom span {color: #fff;}
+div.zhongchou_zhankai {background-color: #08b3ab;}
+h2.zhongchou_faqi {border-bottom: 1px solid #08b3ab;}
+h2.zhongchou_faqi a em {color: #08b3ab;}
+div.zhongchou_share span {background-color: #b1191a;}
+li.zhichi_tittle span {color: #b1191a;}
+ul.zhongchou_zhichi {border-bottom: 1px solid #08b3ab;}
+div.zhongchou_gobottom a.chips_gohome {background-color: #08b3ab;}
+div.chips_xuan_content {color: #08b3ab; background-color: #f3f3f3;}
+p.zhongchou_head em.chips_give_me i {color: #08b3ab;}
+div.chips_ht_bottom a {color: #08b3ab;}
+li.zhichi_tittle a {background-color: #08b3ab;}
+ul.ships_right li span {color: #333;}
+input.uesr_name {border-bottom: 1px solid #333;}
+div.dl_texear_1 h2 {color: #08b3ab;}
+div.dl_texear_1 p textarea {border: 1px solid #08b3ab;}
+p.chips_faqi input {background-color: #08b3ab;}
+span.zhongchou_close {background-color: #08b3ab;}
+div.zhongchou_share span {background-color: #08b3ab;}
+div.login_tab ul.mobile_login_change li a {color: #08b3ab;}
+table.table_list tr td.td_color {color: #08b3ab;}
+
+/*
+************************
+	网站淡色背景
+************************
+*/
+div.my_zichanbg {background-color: #81d8d0;}
+a.mobile_login_subimie {background-color: #81d8d0;}
+div.mobile_my_left a {background-color: #81d8d0;}
+div.mobile_my_right a {background-color: #81d8d0;}
+li.mobile_login_hover {background-color: #81d8d0 !important;}
+div.zhongchou_gobottom {background-color: #81d8d0;}
+div.zhongchou_share {background-color: #81d8d0;}
+div.zhongchou_bottom {background-color: #81d8d0;}
+div.zhongchou_line {background-color: #08b3ab; border-bottom: 1px solid #cafffa;}/*分割线颜色*/
+div.zhongchou_font {background-color: #81d8d0;}
+span.zhongchou_ajax b {background-color: #81d8d0;}
+div.chips_guize {border: 2px solid #81d8d0;}
+div.tuangou_qiang_fix {border-top: 1px solid #81d8d0;}
+body.new_background_color {background-color: #81d8d0;}
+div.zhongchou_gobottom {background-color: #81d8d0;}

@@ -1,0 +1,41 @@
+{template 'top'}
+
+<div id="add_title">
+<div class="add_title_a"><a href="javascript:history.go(-1);"><div class="add_title_a_1"><img src="{MODULE_URL}template/mobile/images/a.png"/></div></a></div>
+
+<div class="add_title_b">发布招聘信息</div>
+
+<div class="add_title_c"><a href="{php echo $this->createMobileUrl('fengmian');}"><div class="add_title_c_1"><img src="{MODULE_URL}template/mobile/images/b.png"/></div></a></div>
+</div>
+
+
+<div id="zhaopin_one">
+<form action="" method="POST">
+
+<div class="zhaopin_one_a">公司名称：</div>
+<div class="zhaopin_one_b"><input type="text" name="jobfactory" placeholder="请输入公司名称" required="required"/></div>
+
+<div class="zhaopin_one_a">招聘职位：</div>
+<div class="zhaopin_one_b"><input type="text" name="jobname" placeholder="请输入招聘职位" required="required"/></div>
+
+<div class="zhaopin_one_a">薪资范围：</div>
+<div class="zhaopin_one_b"><input type="text" name="jobsalary" placeholder="请输入薪资范围" required="required"/></div>
+
+<div class="zhaopin_one_a">联系电话：</div>
+<div class="zhaopin_one_b"><input type="text" name="tel" placeholder="请输入联系电话" required="required"/></div>
+
+<div class="zhaopin_one_a">工作地址：</div>
+<div class="zhaopin_one_b"><input type="text" name="jobaddress" placeholder="请输入工作地址" required="required"/></div>
+
+<div class="zhaopin_one_a">截止日期：</div>
+<div class="zhaopin_one_b"><input type="datetime-local" name="validity" required="required"/></div>
+
+<div class="zhaopin_one_c"><textarea name="jobcontent" placeholder="请输入招聘信息补充说明" required="required"/></textarea></div>
+
+</div>
+
+<div id="add_ok"><input type="submit" value="发 布"/></div>
+
+</form>
+
+{template 'foot'}

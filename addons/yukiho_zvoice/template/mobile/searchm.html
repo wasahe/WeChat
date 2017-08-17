@@ -1,0 +1,57 @@
+{php $g_title='搜索'.$this->template['authname'].'结果'}
+{php $menu='3'}
+{template 'common/header1'}
+{template 'common/menu'}
+		<div id="content" class="snap-content">
+			<div class="content half-bottom half-top">
+				<div class="home-tabs">
+					<a style="width:50%;" class="activate-tab-1" href="{php echo $this->createMobileUrl('searchq')}&key={$key}">搜问题</a>
+					<a style="width:50%;" class="activate-tab-2 active-home-tab" href="{php echo $this->createMobileUrl('searchm')}&key={$key}">搜{php echo $this->template['authname']}</a>
+					<div class="clear"></div>
+				</div>
+			</div>
+			<div class="content">
+				<div class="portfolio-filter">
+					<div id="append" class="portfolio-filter-wrapper" style="margin-left:5px;">
+						{if !empty($members['list'])}
+						{loop $members['list'] $follow}
+						{php $member = M('member')->getInfo($follow['openid'])}
+						<div class="cat{$member['category_id']} all-cat gallery-filter-item" style="display: block;width:100%;">
+								<p class="user-list-follow">
+									<t onclick="window.location.href='{php echo $this->createMobileUrl('tutor',array('openid'=>$member['openid']))}'">
+										<img style='margin-top:3px;border-radius:42px;width:42px;height:42px;' src="{php echo $member['avatar']}" alt="img">
+										{if $member['isrecommend']=='1'}<i class="icon icon_vip" style='bottom:-20px;left:21px;'></i>{/if}
+										<strong style='font-size:14px;font-weight:700;color:#333;'>{$member['realname']}
+											<em style='font-size:12px;' class="split-title">{$member['tags']}</em>
+										</strong>
+									</t> 
+									{php $credit = intval($member['credit'])}
+									<a onclick="window.location.href = '{php echo $this->createMobileUrl('making',array('openid'=>$member['openid']))}'" class="follow button-green">{if $credit>0}{$credit}元{/if}提问</a>
+								</p>
+						</div>
+						<div style="margin-bottom:5px;margin-top:10px;" class="decoration"></div>	
+						{/loop}
+						{else}
+						<div class="content" style="margin-top:150px;">
+							<div class="show-no-detection device-detected">
+								<h5>啊呀，什么都没搜到呢</h5>
+								<a href="{php echo $this->createMobileUrl('main')}" class="button-small button-orange button-center" style="margin-top:20px;">回到首页</a>
+							</div>
+						</div>
+						{/if}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<script src="{MODULE_URL}public/js/loadmore.js"></script>	
+	<script>
+    var player = document.getElementById('player');
+	initload("{php echo $this->createMobileUrl('searchq')}&key={$key}",callback);
+	loadmore("{php echo $this->createMobileUrl('searchq')}&key={$key}",callback);
+	function callback(html){
+		$('#members').append(html);
+	}
+	</script>
+</body>

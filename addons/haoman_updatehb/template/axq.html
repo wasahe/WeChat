@@ -1,0 +1,52 @@
+    <div class="table-responsive" style="height:300px;overflow-Y: auto; overflow-X:hidden;">
+	    <table class="table" style="min-width:568px;">
+				<tr>
+				    <td style="border-top:none;vertical-align:middle;"><strong>微信昵称</strong> {$data['nickname']}</td>
+				    <td style="border-top:none;vertical-align:middle;"><strong>用户OpenID</strong> {$data['from_user']}</td>
+				    <!-- <td style="border-top:none;vertical-align:middle"><strong>手机</strong> {if $data['mobile']} {$data['mobile']} {else} 未完善 {/if}</td> -->
+				</tr>
+			<tr>
+				<td style="border-top:none;vertical-align:middle;"><strong>账户可提现余额：</strong> &nbsp;<span style="color: red;">{$hbtotal}</span>元</td>
+			</tr>
+		</table>
+
+		<table class="table" style="min-width:568px;">
+			<thead>
+					<tr>
+					<th style="width:100px;">序列号</th>
+					<th style="width:100px;">红包金额</th>
+					<th style="width:120px;">类型</th>
+					<th style="width:140px;">中奖时间</th>
+					<th style="width:120px;">状态</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $row}
+				<tr>
+					<td>{$row['id']}</td>
+					<td>{php echo $row['credit']/100}</td>
+					<td>
+						{if $row['prizetype']==1}
+						转发得红包
+						{elseif $row['prizetype']==2}
+						口令得红包
+						{elseif $row['prizetype']==3}
+						扫码得红包
+						{else}
+						刷新得红包
+						{/if}
+					</td>
+					
+					<td>{php echo date('Y/m/d H:i',$row['createtime']);}</td>
+					<td>{if $row['status']==3}<span class="label label-default">被取消</span>
+						{elseif $row['status']==2}
+							<span class="label label-success">已提现</span>
+						{else}
+							<span class="label label-danger">未提现</span>
+						{/if}
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+		</table>
+	</div>

@@ -1,0 +1,152 @@
+
+{template 'header'}
+<script type="text/javascript">
+var pagename="ucindex";
+</script>
+<style>
+.hnav > div:nth-child(1n+1) .iconn{
+	background-color:#8e5cd4;
+}
+.hnav > div:nth-child(2n+1) .iconn{
+	background-color: #FF7C06;
+}
+.hnav > div:nth-child(3n+1) .iconn{
+	background-color: #CC99CC;
+}
+.hnav > div:nth-child(4n+1) .iconn{
+	background-color: #99CC33;
+}
+.hnav > div:nth-child(5n+1) .iconn{
+	background-color: #F8976D;
+}
+.hnav > div .iconn img{
+	opacity: .8;
+}
+.hnav > div{
+	width:25%;
+}
+/*.hnav > div .iconn{
+	width:3rem; 
+	height:3rem
+}*/
+
+</style>
+</head>
+<body>
+<div id="page0" class="ub ub-ver bga">
+	<div class="c-gre3">
+        <div class="connn ub ub-ver ub-ac ub-pc" style=" padding:2rem 0rem 1rem 0;">
+            <div class="ub ub-ac ub-pc uc-a50 uba2 b-wh30">
+                {if $headurl == ''}
+                <div class="ub-img1 uc-a50" style="height:5rem; width:5rem; background-image:url({MODULE_URL}/template/mobile/images/default.jpg)"></div>
+                {else}
+                <div class="ub-img1 uc-a50" style="height:5rem; width:5rem; background-image:url({$headurl})"></div>
+                {/if}
+            </div>
+            <div class="umar-t ulev1 t-yel font-b">{$nickname}</div>
+        </div>
+        <div class="connn ubt b-bla01">
+            <div class="ub ub-ac uinn11">
+                <div class="tx-c" style="width:33.33%">
+                    <div class="ulev-4 t-bla04">订单</div>
+                    <div class="t-yel"><span class="ulev1">{$total}</span></div>
+                </div>
+                <div class="ubl b-bla01 tx-c" style="width:33.33%">
+                    <div class="ulev-4 t-bla04">积分</div>
+                    <div class="t-yel"><span class="ulev1">{php echo floor($item['credit1'])}</span></div>
+                </div>
+                <div class="ubl b-bla01 tx-c" style="width:33.33%">
+                    <div class="ulev-4 t-bla04">余额</div>
+                    <div class="t-yel"><span class="ulev-1">￥</span><span class="ulev1">{$item['credit2']}</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="ub-f1 hnav" style="padding:0.5rem 0.75rem">
+        <div class="ufl">
+            <a href="{php echo $this->createMobileUrl('order',array())}" class="ub ub-ver ub-ac block"  style="padding:0.5rem 0.5rem 0.3rem 0.5rem">
+                <div class="uc-a1 c-blu ub ub-ac ub-pc iconn">
+                    <i class="iconfont icon-dingdan ulev3 t-wh80"></i> 
+                </div>
+                <div class="ulev-4 t-gra" style="padding-top:0.2rem">我的订单</div>
+            </a>
+        </div>
+        <div class="ufl">
+            <a href="{php echo $this->createMobileUrl('uselist',array())}" class="ub ub-ver ub-ac block"  style="padding:0.5rem 0.5rem 0.3rem 0.5rem">
+                <div class="uc-a1 c-blu ub ub-ac ub-pc iconn">
+                    <i class="iconfont icon-yiwancheng ulev3 t-wh80"></i> 
+                </div>
+                <div class="ulev-4 t-gra" style="padding-top:0.2rem">消费记录</div>
+            </a>
+        </div>
+        <div class="ufl">
+            <a href="{php echo $this->createMobileUrl('recharge',array())}" class="ub ub-ver ub-ac block"  style="padding:0.5rem 0.5rem 0.3rem 0.5rem">
+                <div class="uc-a1 c-blu ub ub-ac ub-pc iconn">
+                    <i class="iconfont icon-licaishouyi ulev3 t-wh80"></i> 
+                </div>
+                <div class="ulev-4 t-gra" style="padding-top:0.2rem">充值</div>
+            </a>
+        </div>
+        <div class="ufl">
+            <a href="{php echo $this->createMobileUrl('edit',array())}" class="ub ub-ver ub-ac block"  style="padding:0.5rem 0.5rem 0.3rem 0.5rem">
+                <div class="uc-a1 c-blu ub ub-ac ub-pc iconn">
+                    <i class="iconfont icon-shezhi ulev3 t-wh80"></i> 
+                </div>
+                <div class="ulev-4 t-gra" style="padding-top:0.2rem">修改资料</div>
+            </a>
+        </div>
+        <div class="ufl">
+            <a href="{php echo $this->createMobileUrl('mycomment',array())}" class="ub ub-ver ub-ac block"  style="padding:0.5rem 0.5rem 0.3rem 0.5rem">
+                <div class="uc-a1 c-blu ub ub-ac ub-pc iconn">
+                    <i class="iconfont icon-shezhi ulev3 t-wh80"></i> 
+                </div>
+                <div class="ulev-4 t-gra" style="padding-top:0.2rem">我的评论</div>
+            </a>
+        </div>
+        <div class="ufl">
+            <a href="{php echo $this->createMobileUrl('question',array())}" class="ub ub-ver ub-ac block"  style="padding:0.5rem 0.5rem 0.3rem 0.5rem">
+                <div class="uc-a1 c-blu ub ub-ac ub-pc iconn">
+                    <i class="iconfont icon-shezhi ulev3 t-wh80"></i> 
+                </div>
+                <div class="ulev-4 t-gra" style="padding-top:0.2rem">常见问题</div>
+            </a>
+        </div>
+        <div class="ufl">
+            <a href="{php echo $this->createMobileUrl('shuoming',array())}" class="ub ub-ver ub-ac block"  style="padding:0.5rem 0.5rem 0.3rem 0.5rem">
+                <div class="uc-a1 c-blu ub ub-ac ub-pc iconn">
+                    <i class="iconfont icon-shezhi ulev3 t-wh80"></i> 
+                </div>
+                <div class="ulev-4 t-gra" style="padding-top:0.2rem">服务说明</div>
+            </a>
+        </div>
+		
+		
+		
+        <div class="ufl">
+            <a href="{php echo $this->createMobileUrl('Tui',array())}" class="ub ub-ver ub-ac block" onClick="return confirm('确认注销账号?');"  style="padding:0.5rem 0.5rem 0.3rem 0.5rem">
+                <div class="uc-a1 c-blu ub ub-ac ub-pc iconn">
+                    <i class="iconfont icon-shezhi ulev3 t-wh80"></i> 
+                </div>
+                <div class="ulev-4 t-gra" style="padding-top:0.2rem">注销账号</div>
+            </a>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="ubt b-bla01 uinn ulev-4 tx-c uc-copy">{php echo $this->banquan}</div>
+    <div class="" style="height:3.125rem"></div>
+    
+    {template 'footer'}
+    
+</div>
+
+<script type="text/javascript" src="{MODULE_URL}/template/mobile/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="{MODULE_URL}/template/mobile/js/main.js"></script>
+<script>
+$(document).ready(function(){
+	localStorage['type_id'] = '';
+});
+</script>
+
+</body>
+</html>

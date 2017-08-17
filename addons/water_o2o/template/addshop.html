@@ -1,0 +1,162 @@
+{template 'common/header'}
+<div class="shop">
+    <ul class="nav nav-tabs">
+        <li><a href="{php echo $this->createWebUrl('shop');}">商铺列表</a></li>
+        <li class="active"><a href="javascript:void(0);">商铺信息</a></li>
+    </ul>
+</div>       
+<style>
+.table td span{display:inline-block;margin-top:4px;}
+.table td input{margin-bottom:0;}
+</style>
+<div class="clearfix">
+<form class="form-horizontal form" action="" method="post" enctype="multipart/form-data">
+    <div class="panel panel-default">
+        <div class="panel-heading">商铺信息编辑</div>
+        <div class="panel-body">
+                <input type="hidden" name="shopid" value="{$shop['id']}">
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">商铺名称</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control"  placeholder="" name="stitle" {if !empty($shop['stitle'])}readonly="readonly"{/if} value="{$shop['stitle']}">
+                    	<span class="help-block">商铺名称，注意：确定提交后不可更改</span>
+                    </div>
+                </div>
+				
+ 
+                {if !empty($fans['nickname'])}
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">店主微信昵称</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control"  placeholder="" readonly="readonly"  value="{$fans['nickname']}">
+                    	<span class="help-block">商铺绑定店主微信昵称</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">店主微信头像</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <img style="width: 150px;height: 150px;" src="{$fans['headimg']}">
+                    	<span class="help-block">商铺绑定店主的微信头像</span>
+                    </div>
+                </div>                                
+                {/if}   
+                {if !empty($sewm)}
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">关联店主</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <img style="width: 150px;height: 150px;" src="{$sewm}">
+                    	<span class="help-block">{if empty($shop['sopenid'])}尚未绑定店主，微信扫一扫，进入商铺中心则表示绑定成功{else}该商铺已经绑定店主的微信{/if}</span>
+                    </div>
+                </div>         
+                {else}
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">关联店主</label>
+                    <div class="col-sm-8 col-xs-12">
+                         <input type="text" class="form-control"  placeholder="" readonly="readonly"  value="完善商铺信息点击保存之后在此处扫码或者识别生成的二维码进行绑定店主">
+                    	<span class="help-block">需要先完善商铺信息点击保存</span>
+                    </div>
+                </div>            
+                
+                
+                {/if}
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">商铺电话</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control" placeholder="" name="smobile" value="{$shop['smobile']}">
+                    	<span class="help-block">商铺电话</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">商铺地址</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control" placeholder="" name="saddress" value="{$shop['saddress']}">
+                    	<span class="help-block">商铺地址</span>
+                    </div>
+                </div> 
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">商铺坐标</label>
+                    <div class="col-sm-8 col-xs-12">
+                       {php echo tpl_form_field_coordinate('slocation',$slocation);}
+                       <span class="help-block">商铺的经纬度坐标</span>
+                    </div>
+               </div>                                                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">商铺LOGO</label>
+                    <div class="col-sm-8 col-xs-12">
+                       {php echo tpl_form_field_image('slogo',$shop['slogo']);}
+                    </div>
+               </div>
+               <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+                    <div class="col-sm-9 col-xs-12">
+                        <div class="help-block">建议100*100</div>
+                    </div>
+               </div> 
+               <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">介绍图片</label>
+                    <div class="col-sm-8 col-xs-12">
+                       {php echo tpl_form_field_multi_image('simgs',$simgs);}
+                    </div>
+                </div>
+               <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+                    <div class="col-sm-9 col-xs-12">
+                        <div class="help-block">建议100*100</div>
+                    </div>
+               </div>                 
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">店铺简介</label>
+					<div class="col-sm-9 col-xs-12">
+						<textarea style="height:100px; width:90%;" id='rule' class="form-control span7 richtext" name="sdesc" cols="70">{$shop['sdesc']}</textarea>
+						<span class="help-block">店铺简介</span>
+					</div>
+				</div>
+               <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">轮播图片</label>
+                    <div class="col-sm-8 col-xs-12">
+                       {php echo tpl_form_field_multi_image('sbanners',$sbanners);}
+                    </div>
+                </div>
+               <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+                    <div class="col-sm-9 col-xs-12">
+                        <div class="help-block">注意：尺寸：768*220;轮播限前三张</div>
+                    </div>
+               </div> 				              
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">店长姓名</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control"  placeholder="" name="suname"  value="{$shop['suname']}">
+                    	<span class="help-block">店长姓名</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                	<label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">上门服务</label>
+                	<div class="col-sm-8 col-xs-12">
+                    <label class="checkbox">
+					  <input type="checkbox" name="dohome" value="1" {if $shop['dohome'] == 1}checked="checked"{/if}>勾选则表示支持上门服务
+					</label>
+					 </div>
+                </div>
+                
+                <div class="form-group">
+                	<label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">是否启用</label>
+                	<div class="col-sm-8 col-xs-12">
+                    <label class="checkbox">
+					  <input type="checkbox" name="state" value="2" {if $shop['state'] == 2}checked="checked"{/if}>勾选则表示启用，展示在前端
+					</label>
+					 </div>
+                </div>                                  
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-12">
+            <input name="submit" type="submit" value="提交" class="btn btn-primary col-lg-1">
+            <input type="hidden" name="token" value="{$_W['token']}" />
+        </div>
+    </div>
+</form>
+</div>
+{template 'common/footer'}

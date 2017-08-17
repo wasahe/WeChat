@@ -1,0 +1,23 @@
+<div class="weui_tabbar">
+	{php $menu_urls=array('index'=>$_W['siteroot'] . 'app/' . substr($this->createMobileUrl('index',array('rid'=>pencode($rank['id']))), 2),'mine'=>$_W['siteroot'] . 'app/' . substr($this->createMobileUrl('mine',array('rid'=>pencode($rank['id']))), 2),'goods'=>$_W['siteroot'] . 'app/' . substr($this->createMobileUrl('rank',array('cmd'=>'goods','rid'=>pencode($rank['id']))), 2),'bads'=>$_W['siteroot'] . 'app/' . substr($this->createMobileUrl('rank',array('cmd'=>'bads','rid'=>pencode($rank['id']))), 2) );}
+
+	{loop $rank['menus'] $_menu}
+		{if in_array($_menu['code'],array('index','goods','bads','mine'))}
+
+			<a href="{php echo $menu_urls[$_menu['code']]}" class="weui_tabbar_item {if $menu==$_menu['code']}weui_bar_item_on{/if}">
+				<div class="weui_tabbar_icon">
+					 {if $menu==$_menu['code']}
+						<img src="{php echo empty($_menu['active']['icon'])?(MODULE_URL.'/static/mobile/images/m_'.$_menu['code'].'_ac.png'):tomedia($_menu['active']['icon'])}"/>
+					 {else}
+						<img src="{php echo empty($_menu['normal']['icon'])?(MODULE_URL.'/static/mobile/images/m_'.$_menu['code'].'.png'):tomedia($_menu['normal']['icon'])}"/>
+					 {/if}
+				</div>
+				{if $menu==$_menu['code']}
+					<p class="weui_tabbar_label" style="{php echo empty($_menu['active']['font'])?'':('color:'.$_menu['active']['font'])}">{$_menu['name']}</p>
+				 {else}
+					<p class="weui_tabbar_label" style="{php echo empty($_menu['normal']['font'])?'':('color:'.$_menu['normal']['font'])}">{$_menu['name']}</p>
+				{/if}
+			</a>
+		{/if}
+	{/loop}
+</div>

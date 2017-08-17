@@ -1,0 +1,60 @@
+﻿
+@charset "utf-8";
+/*
+   copyright by wanglai QQ：35146983
+*/
+.metro_container {padding: 0; background: none !important;}
+.metro_container p {margin-bottom: 5px;}
+.qixi_head {position: fixed; width: 100%; height: 46px; line-height: 46px; background: none; top: 0; left: 0;}
+.metro_container dl {width: 31.33%; height: auto; float: left; margin: 0 1%;}
+.metro_container dl dt {width: 100%; background: #9c01e3; text-align: center;}
+.chips_bottom {position: fixed; height: 48px; width: 100%; left: 0; bottom: 0; z-index: 1001;}
+.chips_bottom span {float: left; height: 48px; line-height: 48px; text-align: center; color: #fff; width: 50%; background-color: #ff3893; font-size: 20px;}
+.chips_bottom a,.chips_bottom a:hover,.chips_bottom a:active {float: left; height: 48px; line-height: 48px; text-align: center; color: #fff;  width: 50%; background-color: #09c0e0; font-size: 20px;}
+
+.qixi_list {padding: 5px; background: none;}
+.qixi_main {width: 100%; height: auto; margin-bottom: 5px;}
+.qixi_img {width: 100%; height: auto; position: relative;}
+.qixi_img span {position: absolute; top: 0; left: 0; display: block;}
+.qixi_img b {display: block; height: auto; width: auto; position: absolute; left: 0; bottom: 20px; background: rgba(255,255,255,.8); border: 1px solid #fe00fd; color: #fe00fd; border-left: none; border-radius: 0 10px 10px 0; font-size: 18px; text-align: left; padding: 2px 25px; font-weight: normal;}
+.qixi_button {width: 100%; height: 48px;}
+.qixi_button a {display: block; width: 50%; float: left; height: 48px; line-height: 48px; text-align: center; color: #fff; font-size: 20px;}
+.qixi_color1 {background: #ff7f00;}
+.qixi_color2 {background: #e33067;}
+.qixi_taocan {width: 100%; height: auto; margin-bottom: 5px;}
+.qixi_sbutton {width: 100%; height: 48px; overflow: hidden; background: #6734ff;}
+.qixi_sbutton b {line-height: 52px; float: left; font-size: 14px; color: #fff; margin-left: 5px;}
+.qixi_sbutton span {line-height: 48px; float: left; height: 48px; font-size: 24px; color: #fff; margin-left: 5px;}
+.qixi_sbutton em {line-height: 54px; font-size: 14px; text-decoration: line-through; color: #fff; margin-left: 5px;}
+.qixi_sbutton a {float: right; background: #1fc1b4; padding: 0 10px; line-height: 48px; font-size: 20px; color: #fff;}
+
+/*--红包--*/
+.red_h3 {height: 58px; line-height: 58px; text-align: center; color: #b40001; font-size: 28px; font-style:oblique; font-weight: 600;}
+.red_p {text-align: center; line-height: 23px; margin: 0 10px; font-size: 16px; color: #000;}
+.hongbao_main {width: 24.33%; padding: 0 4.5%; float: left; margin-top: 15px;}
+.hongbao_main_4 {width: 23%; padding: 0 1%;}
+.open_hongbao {position: relative;}
+.open_hongbao span {position: absolute; display: block; width: 100%; height: 32px; line-height: 32px; top: 0; left: 0; overflow: hidden; color: #000; text-align: center;}
+.open_hongbao span img {width: 32px; height: 32px; border-radius: 50%;}
+.open_hongbao em {width: 100%; height: 32px; line-height: 32px; text-align: center; font-size: 16px; position: absolute; top: 64%; left: 0; display: block;}
+.open_hongbao em b {font-size: 12px; font-weight: normal;}
+.han_huoban {height: 120px; background: #fd7332; width: 100%; margin-top: 30px; text-align: center;}
+.han_huoban input {-webkit-appearance:none; appearance:none; height: 42px; line-height: 42px; background: #ffe300; width: 70%; text-align: center; font-size: 22px; border: none; border-radius: 15px; color: #ee1c3c; margin-top: 39px;}
+.box_main {border: 1px solid #fbd439; padding: 10px; margin-top: 40px;  position: relative;}
+.box_main ul {width: 100%; border-bottom: 1px dashed #fd7332; height: 60px; line-height: 30px; padding-bottom: 5px; padding-top: 5px;}
+.box_main ul li {float: left; width: 100%; height: 30px; overflow: hidden; color: #fd7332;}
+.box_main ul li img {width: 30px; height: 30px; border-radius: 50%;}
+.hbs_1 {width: 115px; height: 48px; position: absolute; left: -1px; top: -48px;}
+.hbs_2 {width: 38px; height: 16px; position: absolute; top: -30px; right: 40px;}
+.hbs_3 {width: 18px; height: 12px; position: absolute; top: -6px; right: -7px;}
+
+.alert_hong {width: 256px; height: 316px; position: fixed; top: 50%; margin-top: -158px; left: 50%; margin-left: -128px; background: #ffffff; border-radius: 10px; z-index: 1003;}
+.close_this {width: 28px; height: 28px; position: absolute; right: -10px; top: -10px;}
+.close_this img {width: 28px; height: 28px;}
+.alert_hong h3 {text-align: center; color: #6c6c6c; font-size: 28px; margin-top: 24px;}
+.alert_hong p {text-align: center; color: #48bbf1; margin-top: 5px;}
+.lingqu {-webkit-appearance:none; appearance:none; width: 182px; height: 40px; background: #ff482a; color: #fff; font-size: 18px; line-height: 40px; border: none; outline: none; border-radius: 20px;}
+.red_h3 span {color: #e80000;}
+
+input[type=number] {-moz-appearance:textfield; -webkit-appearance:textfield;}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button {-webkit-appearance: none; margin: 0;}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+	<link href="css/weui.css" rel="stylesheet" type="text/css">
+</head>
+
+
+
+
+
+<!--菜单栏-->
+      <div class="page" class="z-index:2000" >
+            <div style="position:fixed;bottom:0;height:50px" class="weui-tabbar">
+                 <a  onclick="changeSrc1" href="{php echo $this->createMobileUrl('ask')}" class="weui-tabbar__item ">
+                    <span  style="display: inline-block;position: relative;">
+                        {if $menu=='ask'}
+						<img id="icon1" src="{MODULE_URL}assets/images/icon_12.png" alt="" class="weui-tabbar__icon">
+						{else}
+						<img id="icon1" src="{MODULE_URL}assets/images/icon_11.png" alt="" class="weui-tabbar__icon">
+						{/if}
+                        <!--<span class="weui-badge" style="position: absolute;top: -2px;right: -13px;"></span>-->
+                    </span>
+                    <p class="weui-tabbar__label">中韩汇</p>
+                </a>
+                <a id=""  onclick="changeSrc2"  href="{php echo $this->createMobileUrl('follow')}" class="weui-tabbar__item">
+					{if $menu=='follow'}
+                    <img id="icon2" src="{MODULE_URL}assets/images/icon_22.png" alt="" class="weui-tabbar__icon">
+					{else}
+					<img id="icon2" src="{MODULE_URL}assets/images/icon_21.png" alt="" class="weui-tabbar__icon">
+					{/if}
+				   <p class="weui-tabbar__label">已关注</p>
+                </a>
+                <a href="{php echo $this->createMobileUrl('faxian')}" class="weui-tabbar__item">
+				   <span style="display: inline-block;position: relative;">
+					{if $menu=='find'}                      
+					  <img id="icon3" src="{MODULE_URL}assets/images/icon_32.png" alt="" class="weui-tabbar__icon">
+                    {else}
+					 <img id="icon3" src="{MODULE_URL}assets/images/icon_31.png" alt="" class="weui-tabbar__icon">
+					 {/if}
+                    </span>
+                    <p class="weui-tabbar__label">发现</p>
+                </a>
+                <a href="{php echo $this->createMobileUrl('home')}" class="weui-tabbar__item">
+					{if $menu=='info'}
+                        <img id="icon3" src="{MODULE_URL}assets/images/icon_41.png" alt="" class="weui-tabbar__icon">
+					{else}
+						<img id="icon3" src="{MODULE_URL}assets/images/icon_42.png" alt="" class="weui-tabbar__icon">
+					{/if}
+                    <p class="weui-tabbar__label">我 </i></p>
+                </a>
+            </div>
+		</div>
+
+	
+	
+	
+</body>
+</html>

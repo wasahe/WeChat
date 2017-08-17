@@ -1,0 +1,40 @@
+<!DOCTYPE html><html>{if empty($_W['isajax'])}{template 'common/top'}{/if}  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">    <!-- Main content -->
+    <section class="content">		<div class="row">         {php $total = M('defray')->totalcredit()}        <div class="col-md-3 col-sm-6 col-xs-12">          <div class="info-box">            <span class="info-box-icon bg-aqua"><i class="fa fa-plus"></i></span>            <div class="info-box-content">              <span class="info-box-text">总金额</span>              <span class="info-box-number">{$total['all']['sum']}</span>            </div>            <!-- /.info-box-content -->
+          </div>          <!-- /.info-box -->
+        </div>        <!-- /.col -->        <div class="col-md-3 col-sm-6 col-xs-12">          <div class="info-box">            <span class="info-box-icon bg-red"><i class="fa fa-check-square-o"></i></span>            <div class="info-box-content">              <span class="info-box-text">今日金额</span>
+              <span class="info-box-number">{$total['day']['sum']}</span>            </div>
+            <!-- /.info-box-content -->          </div>          <!-- /.info-box -->        </div>        <!-- /.col -->         <!-- fix for small devices only -->        <div class="clearfix visible-sm-block"></div>        <div class="col-md-3 col-sm-6 col-xs-12">          <div class="info-box">            <span class="info-box-icon bg-green"><i class="fa fa-line-chart"></i></span>            <div class="info-box-content">              <span class="info-box-text">本周金额</span>              <span class="info-box-number">{$total['week']['sum']}</span>            </div>            <!-- /.info-box-content -->          </div>          <!-- /.info-box -->        </div>        <!-- /.col -->        <div class="col-md-3 col-sm-6 col-xs-12">          <div class="info-box">            <span class="info-box-icon bg-yellow"><i class="fa fa-flag-checkered"></i></span>            <div class="info-box-content">              <span class="info-box-text">本月金额</span>              <span class="info-box-number">{$total['month']['sum']}</span>            </div>            <!-- /.info-box-content -->          </div>          <!-- /.info-box -->        </div>        <!-- /.col -->      </div>      <div class="row">        <div class="col-xs-12">          <div class="box">            <div class="box-header">              <h3 class="box-title">收入记录列表</h3>
+				<div class="box-tools">					<a data-href="{php echo $this->createWebUrl('defray',array('act'=>'mutdelete'))}" href="javascript:;" class="btn btn-danger mutdelete">删除选中</a>
+				</div>            </div>            <!-- /.box-header -->            <div class="box-body">              <table id="example2" class="table table-hover">				<thead>				<tr>					<th style="width:3%;">						<input type="checkbox" id="checkall"/>
+					</th>					<th style="width:13%;">来源</th>					<th style="width:10%;">状态</th>
+					<th style="width:12%;">订单金额</th>					<th style="width:17%;">付款用户</th>					<th style="width:14%;">操作时间</th>
+					<th>操作</th>				</tr>				</thead>				<tbody>				{loop $list['list'] $li}				<tr>					<td><input type="checkbox" name="ids[]" value="{$li['id']}"/></td>
+					<td>						<label class="label label-info">
+							{if $li['type']==1}专家提问							{else if $li['type']==2}偷听回答							{else if $li['type']==4}打赏赏金							{else if $li['type']==5}悬赏提问							{else if $li['type']==6}小讲讲票							{/if}						</label>					</td>						<td>						<label class="label label-{if $li['status']==0}warning{else if $li['status']==1}success{/if}">							{if $li['status']==0}未支付{else if $li['status']==1}已支付	{/if}
+						</label>					</td>					<td>{$li['credit']}元</td>
+					{php $member = M('member')->getInfo($li['openid'])}					<td>						<img src="{php echo tomedia($member['avatar'])}" style="width:2em;height:2em;" class="img-rounded"/>
+						{$member['nickname']}					</td>					<td>						<label class="label label-success">{php echo date('Y-m-d H:i',$li['create_time'])}</label>					</td>					<td>						<a data-sn="{$li['sn']}" class="sn btn btn-success">订单码</a>
+						<a href="{php echo $this->createWebUrl('defray',array('act'=>'delete','id'=>$li['id']))}" class="btn btn-danger">删除</a>					</td>				</tr>				{/loop}				</tbody>              </table>            </div>			<div class="box-footer">				{php echo $list['pager']}
+			</div>            <!-- /.box-body -->
+          </div>          <!-- /.box -->
+        </div>      </div>      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>{if empty($_W['isajax'])}{template 'common/foot'}
+<script>$('.mutdelete').click(function(){	var url = $(this).data('href');	var ids = [];
+	var idss = [];	$('input:checkbox[name="ids[]"]').each(function() {		var _that = $(this)[0];		if(_that.checked){			ids = ids.concat($(this).val());		}else{
+			idss = idss.concat($(this).val());		}	});	console.log(ids);	if(confirm("您确定要删除么？")){
+		$.post(url,{ids:ids},function(data){			util.message("删除成功","{php echo $_W['siteurl']}",'success');
+		},'json');	}
+});$('.sn').click(function(){
+	util.message("订单码："+$(this).data('sn'),"",'info');})
+$('.unmutdelete').click(function(){	var ids = [];
+	var idss = [];	$('input:checkbox[name="ids[]"]').each(function() {
+		var _that = $(this)[0];		if(_that.checked){
+			ids = ids.concat($(this).val());		}else{
+			idss = idss.concat($(this).val());
+		}
+	});	if(confirm("您确定要删除么？")){
+		$.post(url,{ids:idss},function(data){			util.message("删除成功","{php echo $_W['siteurl']}",'success');		},'json');	}})$("#checkall").click(function(){	console.log('checkall');	$('input[name="ids[]"').each(function(){		var _that = $(this)[0];		if(_that.checked){			_that.checked = false;		}else{			_that.checked = true;		}	});});
+</script>{/if}

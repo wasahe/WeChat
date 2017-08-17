@@ -1,0 +1,29 @@
+{template 'common/header'}
+<div class="main">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{php echo $this->createWebUrl('ywmanage');}">业务类型列表</a></li>
+    </ul>
+
+    <!-- Modal -->
+
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <form action="" method="post" class="form" enctype="multipart/form-data">
+                <input type="hidden" value="{$list['id']}" name="listid">
+                <div class="form-group">
+                    <label for="lxname" class="control-label">业务类型名称:</label>
+                    <input type="text" class="form-control" name="lxname" value="{$list['lxname']}">
+                </div>
+
+
+                <div class="form-group col-sm-12">
+                    <input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+                    <input type="hidden" name="op" value="updata" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{template 'common/footer'}

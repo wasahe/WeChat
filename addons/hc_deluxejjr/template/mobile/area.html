@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+	<title>城市导航</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+	<style>
+		body{background-color:#F6F6F6;}
+		.app-view{position: relative; overflow:hidden;}
+		.app-page{overflow: hidden;}
+		*{margin:0; padding:0;}
+		#sousuozong{width:100%; border-top:#E1E1E1 solid 1px; margin:0px auto; background-color:#F6F6F6;}
+		#sousuozong1{width:100%; border-top:#E1E1E1 solid 1px; margin:30px auto; background-color:#F6F6F6;}
+		#shiji{width:100%;}
+		.shengji{position:relative;margin-top:-1px;padding-top:7px;padding-left:7px; color:white; background-color:#A23D3D;height:28px;}
+		.shiji{width:33%; background-color:#FFF; padding:10px 20px; display:-webkit-inline-box;}
+		ul li{text-decoration:none; color:#999;}
+	</style>
+</head>
+<body>
+<div class="app-view">
+    <div class="app-page">
+		{loop $location_ps $p}
+		<div id="sousuozong">
+			<h3 class="shengji"><font style="top:10px;">{$p['location_p']}</font></h3>
+        	 <ul id="shiji">
+       	 		{loop $location_cs $c}
+					{if $c['location_p']==$p['location_p']}
+						<a style="text-decoration:none;" href="{php echo $this->createMobileUrl('index', array('location_c'=>$c['location_c']));}"><li class="shiji">{$c['location_c']}</li></a>
+					{/if}
+				{/loop}
+       		 </ul>
+		</div>
+		{/loop}
+	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{if $_GPC['do']=='index' && ($cfg['adv1'] || $cfg['adv_switch1'])}
+	{php $adv = $cfg['adv1'];$switch = $cfg['adv_switch1'];$url = $cfg['adv_url1']}
+{elseif $_GPC['do']=='square' && ($cfg['adv2'] || $cfg['adv_switch2'])}
+	{php $adv = $cfg['adv2'];$switch = $cfg['adv_switch2'];$url = $cfg['adv_url2']}
+{/if}
+
+{if $adv}
+<div style="position: fixed;bottom: 0;width: 100%;z-index: 99;">
+<div style="position: relative;">
+<span onclick="$(this).parent().parent().remove();" style="position: absolute;right: 5px;border: 1px solid ghostwhite;border-radius: 50%;display: inline-block;width: 20px;height: 20px;line-height: 20px;text-align: center;top: 5px;font-size: 20px;background: ghostwhite;opacity: 0.8;">×</span>
+<img onclick="location.href='{$url}'" style="width: 100%;margin-bottom: -3px" src="{php echo toimage($adv)}">
+</div>
+</div>
+{/if}

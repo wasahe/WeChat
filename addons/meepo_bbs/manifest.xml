@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com" versionCode="0.6">
+	<application setting="false">
+		<name><![CDATA[智慧论坛]]></name>
+		<identifie><![CDATA[meepo_bbs]]></identifie>
+		<version><![CDATA[9.4.1]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[微社区]]></ability>
+		<description><![CDATA[微社区，新版微社区9大亮点High翻天]]></description>
+		<author><![CDATA[微赞]]></author>
+		<url><![CDATA[http://www.012wz.com/]]></url>
+	</application>
+	<platform>
+		<subscribes>
+			<message type="text" />
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+		<card embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="任务大厅" do="task" state="" direct="false" />
+			<entry title="o2o店员申请" do="oto" state="" direct="false" />
+			<entry title="个人中心" do="home" state="" direct="false" />
+			<entry title="社区首页" do="forum" state="" direct="true" />
+			<entry title="板块入口" do="forum_cat" state="" direct="false" />
+		</cover>
+		<menu>
+			<entry title="板块管理" do="threadclass" state="" direct="false" />
+			<entry title="最新帖子" do="manage" state="" direct="false" />
+			<entry title="管理社区" do="index" state="" direct="false" />
+			<entry title="基础设置" do="set" state="" direct="false" />
+			<entry title="任务大厅" do="task" state="" direct="false" />
+			<entry title="会员管理" do="member" state="" direct="false" />
+		</menu>
+	</bindings>
+	<install><![CDATA[install.php]]></install>
+	<uninstall><![CDATA[DROP TABLE IF EXISTS `ims_meepo_bbs_adv`;
+DROP TABLE IF EXISTS `ims_meepo_bbs_api`;
+DROP TABLE IF EXISTS `ims_meepo_bbs_begging`;
+DROP TABLE IF EXISTS `ims_meepo_bbs_blacklist`;
+DROP TABLE IF EXISTS `ims_meepo_bbs_credit_goods`;
+DROP TABLE IF EXISTS `ims_meepo_bbs_credit_request`;
+DROP TABLE IF EXISTS `ims_meepo_bbs_ec_chong_log`;
+DROP TABLE IF EXISTS `ims_meepo_bbs_groups`;
+DROP TABLE IF EXISTS `ims_meepo_bbs_home_message`;
+DROP TABLE IF EXISTS `ims_meepo_bbs_log`;
+DROP TABLE IF EXISTS `ims_meepo_bbs_member`;
+DROP TABLE IF EXISTS `ims_meepo_bbs_msg_template`;
+DROP TABLE IF EXISTS `ims_meepo_bbs_msg_template_data`;
+DROP TABLE IF EXISTS `ims_meepo_bbs_navs`;
+DROP TABLE IF EXISTS `ims_meepo_bbs_o2o_user`;
+DROP TABLE IF EXISTS `ims_meepo_bbs_o2o_user_log`;
+DROP TABLE IF EXISTS `ims_meepo_bbs_reply_ups`;
+DROP TABLE IF EXISTS `ims_meepo_bbs_rss`;
+DROP TABLE IF EXISTS `ims_meepo_bbs_set`;
+DROP TABLE IF EXISTS `ims_meepo_bbs_setting`;
+DROP TABLE IF EXISTS `ims_meepo_bbs_share`;
+DROP TABLE IF EXISTS `ims_meepo_bbs_task`;
+DROP TABLE IF EXISTS `ims_meepo_bbs_task_user`;
+DROP TABLE IF EXISTS `ims_meepo_bbs_threadclass`;
+DROP TABLE IF EXISTS `ims_meepo_bbs_topic`;
+DROP TABLE IF EXISTS `ims_meepo_bbs_topic_like`;
+DROP TABLE IF EXISTS `ims_meepo_bbs_topic_read`;
+DROP TABLE IF EXISTS `ims_meepo_bbs_topic_replie`;
+DROP TABLE IF EXISTS `ims_meepo_bbs_topic_share`;
+DROP TABLE IF EXISTS `ims_meepo_bbs_topics`;
+DROP TABLE IF EXISTS `ims_meepo_bbs_user`;
+]]></uninstall>
+	<upgrade><![CDATA[upgrade.php]]></upgrade>
+</manifest>

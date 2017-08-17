@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+<title>这道题想了一夜没想出来答案，求大神帮忙！！！（获取答案）</title>
+<link href="{MODULE_URL}template/style/style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="{MODULE_URL}template/style/jquery.js"></script>
+<script type="text/javascript" src="{MODULE_URL}template/style/lazyload.js"></script>
+<script src="{MODULE_URL}template/style/floating-frame.js" type="text/javascript"></script>
+
+<style>
+@media print {
+	#cb9g1upw0wrn3ik9 {
+		display: none
+	}
+}
+</style>
+
+<style>
+button {
+	display: inline-block;
+	width: 100%;
+	height: 50px;
+	border-radius: 3px;
+	background: #ff391f;
+	text-decoration: none;
+	line-height: 39px;
+	text-align: center;
+	font-size: 17px;
+	color: #fff;
+	font-weight: 900;
+	border: none;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	background-image: url(images/button.jpg);
+	background-size: 100% 100%;
+}
+
+.STYLE1 {
+	color: #FF0000
+}
+</style>
+
+<script>
+
+$(document).ready(function(){
+
+	$("button").each(function(n){
+
+		$(this).click(function(){
+
+			   document.getElementById("share-wx").style.display='block';
+
+		})        
+
+	})  
+
+});
+
+</script>
+
+</head>
+<body>
+
+	<div class="inner" id="inner">
+
+		<div class="wrap">
+
+			<div class="header">
+				<h3 class="title" id="title">这道题想了一夜没想出来答案，求大神帮忙！！！（获取答案）</h3>
+				<!--<span class="STYLE1">客服微信号：</span>-->
+				<div class="owner">
+					<span class="date"><em>{php echo date('Y-m-d', time())}</em></span> &nbsp; 
+					<a href="" id="wechatName">{$settings['wechat_name']}</a>
+				</div>
+			</div>
+			<div class="content" id="lazyload">
+				<div id="content">
+					<h3 style="white-space: normal;">
+						<strong><span style="color: #E53333;">想知道答案吗？只需要2步即可！</span></strong>
+					</h3>
+					<h3 style="white-space: normal;">给自己3分钟时间思考！</h3>
+					<h3 style="white-space: normal;">实在看不出来了就长按二维码揭晓！</h3>
+					<p style="white-space: normal;">
+						<img src="{php echo tomedia($settings['followimgurl'])}" alt="" >
+					</p>
+					<h3 style="white-space: normal;">
+						①长按上面图片↑↑↑选<span style="color: #E53333;">识别二维码</span>并点击关注<br>
+					</h3>
+					<h2 style="white-space: normal;">
+						②关注后回复：<span style="color: #E56600;">解答</span>&nbsp;，立马查看答案哦
+					</h2>
+					<div style="margin-top: 5px;"></div>
+				</div>
+			</div>
+			<!--ssssssssssss-->
+
+			<div class="footer">
+				<div class="clearfix media-tool">
+					<div class="readsource"></div>
+					<div class="readernum gray">
+						阅读 <span id="readNum">100000+</span>
+					</div>
+					<div class="gray meta_praise" id="like">
+						<i class="icon_praise_gray"></i><span class="praise_num" id="likeNum">78456</span>
+					</div>
+					<div class="fr">
+						<a href="http://www.zsdzkj.net/jubao/jubao1.htm">举报</a>
+					</div>
+				</div>
+
+			</div>
+
+			<!--footer-->
+
+		</div>
+	</div>
+
+
+
+
+
+
+	</div>
+
+</body>
+</html>

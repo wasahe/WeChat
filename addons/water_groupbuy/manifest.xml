@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com" versionCode="0.6,0.7,0.8">
+	<application setting="true">
+		<name><![CDATA[新品团购]]></name>
+		<identifie><![CDATA[water_groupbuy]]></identifie>
+		<version><![CDATA[1.5]]></version>
+		<type><![CDATA[other]]></type>
+		<ability><![CDATA[新品团购]]></ability>
+		<description><![CDATA[新品团购]]></description>
+		<author><![CDATA[折翼天使资源社区]]></author>
+		<url><![CDATA[http://www.012wz.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+		<card embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="员工管理" do="worker" state="" direct="false" />
+		</cover>
+		<menu>
+			<entry title="主题活动" do="theme" state="" direct="false" />
+			<entry title="价格管理" do="pricegroup" state="" direct="false" />
+			<entry title="用户管理" do="fans" state="" direct="false" />
+			<entry title="支付订单" do="order" state="" direct="false" />
+		</menu>
+	</bindings>
+	<permissions>
+	</permissions>
+	<install><![CDATA[install.php]]></install>
+	<uninstall><![CDATA[DROP TABLE IF EXISTS `water_groupbuy_order`;
+DROP TABLE IF EXISTS `water_groupbuy_price`;
+DROP TABLE IF EXISTS `water_groupbuy_pricegroup`;
+DROP TABLE IF EXISTS `water_groupbuy_share`;
+DROP TABLE IF EXISTS `water_groupbuy_theme`;
+]]></uninstall>
+	<upgrade><![CDATA[upgrade.php]]></upgrade>
+</manifest>

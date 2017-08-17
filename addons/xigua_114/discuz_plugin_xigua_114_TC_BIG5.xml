@@ -1,0 +1,855 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<root>
+	<item id="Title"><![CDATA[Discuz! Plugin]]></item>
+	<item id="version"><![CDATA[X2,X2.5,X3,X3.1,X3.2,F1.0]]></item>
+	<item id="Time"><![CDATA[2016-12-24 16:01]]></item>
+	<item id="From"><![CDATA[¤À¨É§a¡]www.012wz.com¡^]]></item>
+	<item id="Data">
+		<item id="plugin">
+			<item id="available"><![CDATA[1]]></item>
+			<item id="adminid"><![CDATA[1]]></item>
+			<item id="name"><![CDATA[·½½X­ô_¡i¦è¥Ê¡j·LªÀ°Ï114]]></item>
+			<item id="identifier"><![CDATA[xigua_114]]></item>
+			<item id="description"><![CDATA[]]></item>
+			<item id="datatables"><![CDATA[]]></item>
+			<item id="directory"><![CDATA[xigua_114/]]></item>
+			<item id="copyright"><![CDATA[·½½X­ô¡]www.012wz.com¡^]]></item>
+			<item id="version"><![CDATA[36.20161007]]></item>
+			<item id="__modules">
+				<item id="35">
+					<item id="name"><![CDATA[myyapmagoo]]></item>
+					<item id="menu"><![CDATA[<span style="color:#E53333;"><b>·½½X­ô</b></span>]]></item>
+					<item id="url"><![CDATA[]]></item>
+					<item id="type"><![CDATA[3]]></item>
+					<item id="adminid"><![CDATA[0]]></item>
+					<item id="displayorder"><![CDATA[0]]></item>
+					<item id="navtitle"><![CDATA[]]></item>
+					<item id="navicon"><![CDATA[]]></item>
+					<item id="navsubname"><![CDATA[]]></item>
+					<item id="navsuburl"><![CDATA[]]></item>
+				</item>
+				<item id="0">
+					<item id="name"><![CDATA[cat]]></item>
+					<item id="param"><![CDATA[]]></item>
+					<item id="menu"><![CDATA[¤ÀÃþºÞ²z]]></item>
+					<item id="url"><![CDATA[]]></item>
+					<item id="type"><![CDATA[3]]></item>
+					<item id="adminid"><![CDATA[0]]></item>
+					<item id="displayorder"><![CDATA[0]]></item>
+					<item id="navtitle"><![CDATA[]]></item>
+					<item id="navicon"><![CDATA[]]></item>
+					<item id="navsubname"><![CDATA[]]></item>
+					<item id="navsuburl"><![CDATA[]]></item>
+				</item>
+				<item id="1">
+					<item id="name"><![CDATA[xigua_114]]></item>
+					<item id="param"><![CDATA[]]></item>
+					<item id="menu"><![CDATA[°Ó¤á114]]></item>
+					<item id="url"><![CDATA[]]></item>
+					<item id="type"><![CDATA[1]]></item>
+					<item id="adminid"><![CDATA[0]]></item>
+					<item id="displayorder"><![CDATA[0]]></item>
+					<item id="navtitle"><![CDATA[]]></item>
+					<item id="navicon"><![CDATA[]]></item>
+					<item id="navsubname"><![CDATA[]]></item>
+					<item id="navsuburl"><![CDATA[]]></item>
+				</item>
+				<item id="2">
+					<item id="name"><![CDATA[manage]]></item>
+					<item id="param"><![CDATA[]]></item>
+					<item id="menu"><![CDATA[°Ó¤áºÞ²z]]></item>
+					<item id="url"><![CDATA[]]></item>
+					<item id="type"><![CDATA[3]]></item>
+					<item id="adminid"><![CDATA[0]]></item>
+					<item id="displayorder"><![CDATA[1]]></item>
+					<item id="navtitle"><![CDATA[]]></item>
+					<item id="navicon"><![CDATA[]]></item>
+					<item id="navsubname"><![CDATA[]]></item>
+					<item id="navsuburl"><![CDATA[]]></item>
+				</item>
+				<item id="3">
+					<item id="name"><![CDATA[lang]]></item>
+					<item id="param"><![CDATA[]]></item>
+					<item id="menu"><![CDATA[»y¨¥¥]]]></item>
+					<item id="url"><![CDATA[]]></item>
+					<item id="type"><![CDATA[3]]></item>
+					<item id="adminid"><![CDATA[0]]></item>
+					<item id="displayorder"><![CDATA[5]]></item>
+					<item id="navtitle"><![CDATA[]]></item>
+					<item id="navicon"><![CDATA[]]></item>
+					<item id="navsubname"><![CDATA[]]></item>
+					<item id="navsuburl"><![CDATA[]]></item>
+				</item>
+				<item id="4">
+					<item id="name"><![CDATA[app]]></item>
+					<item id="param"><![CDATA[]]></item>
+					<item id="menu"><![CDATA[§ó¦h¦è¥ÊÀ³¥Î]]></item>
+					<item id="url"><![CDATA[]]></item>
+					<item id="type"><![CDATA[3]]></item>
+					<item id="adminid"><![CDATA[0]]></item>
+					<item id="displayorder"><![CDATA[99]]></item>
+					<item id="navtitle"><![CDATA[]]></item>
+					<item id="navicon"><![CDATA[]]></item>
+					<item id="navsubname"><![CDATA[]]></item>
+					<item id="navsuburl"><![CDATA[]]></item>
+				</item>
+			</item>
+		</item>
+		<item id="version"><![CDATA[X2,X2.5,X3,X3.1,X3.2,F1.0]]></item>
+		<item id="var">
+			<item id="0">
+				<item id="displayorder"><![CDATA[0]]></item>
+				<item id="title"><![CDATA[­º­¶¼ÐÃD]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[title]]></item>
+				<item id="type"><![CDATA[text]]></item>
+				<item id="value"><![CDATA[°Ó¤á¤¤¤ß]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="1">
+				<item id="displayorder"><![CDATA[1]]></item>
+				<item id="title"><![CDATA[«t¸ß¼ö½u]]></item>
+				<item id="description"><![CDATA[°Ó®a¤J¾n­¶­±©³³¡Åã¥Ü¡AÂIÀ»¼·¥´¹q¸Ü¡C
+¯dªÅ«h¤£Åã¥Ü]]></item>
+				<item id="variable"><![CDATA[hotline]]></item>
+				<item id="type"><![CDATA[text]]></item>
+				<item id="value"><![CDATA[]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="2">
+				<item id="displayorder"><![CDATA[2]]></item>
+				<item id="title"><![CDATA[¦Cªí­¶Åã¥Ü¼·¸¹«ö¶s]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[callinlist]]></item>
+				<item id="type"><![CDATA[radio]]></item>
+				<item id="value"><![CDATA[1]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="3">
+				<item id="displayorder"><![CDATA[3]]></item>
+				<item id="title"><![CDATA[·j¯Á¹w¸m»y]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[searchlabel]]></item>
+				<item id="type"><![CDATA[text]]></item>
+				<item id="value"><![CDATA[§ä°Ó¤á¡B·j¸¹½X]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="4">
+				<item id="displayorder"><![CDATA[4]]></item>
+				<item id="title"><![CDATA[¦Cªí¨C­¶±ø¼Æ]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[lpp]]></item>
+				<item id="type"><![CDATA[number]]></item>
+				<item id="value"><![CDATA[24]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="6">
+				<item id="displayorder"><![CDATA[6]]></item>
+				<item id="title"><![CDATA[·LªÀ°ÏÅã¥Ü°Ó¤á]]></item>
+				<item id="description"><![CDATA[¿ï¤¤Ãþ«¬ªº°Ó¤á·|¥X²{¦b³»³¡¥i¤Á´«°Ï°ì¡C
+§ó§ï¦¹¶µ¦Zµ¥¹L¤F¡§·LªÀ°ÏÅã¥Ü½w¦s®É¶¡¡¨¤~·|¥Í®Ä¡C]]></item>
+				<item id="variable"><![CDATA[company]]></item>
+				<item id="type"><![CDATA[selects]]></item>
+				<item id="extra"><![CDATA[1=µL
+new=³Ì·s°Ó¤á
+hot=¼öªù°Ó¤á
+hui=É¬´f°Ó¤á]]></item>
+				<item id="__value">
+					<item id="0"><![CDATA[1]]></item>
+				</item>
+			</item>
+			<item id="7">
+				<item id="displayorder"><![CDATA[7]]></item>
+				<item id="title"><![CDATA[·LªÀ°ÏÅã¥Ü¤ÀÃþ]]></item>
+				<item id="description"><![CDATA[¿ï¤¤Ãþ«¬ªº°Ó¤á¤ÀÃþ·|¥X²{¦b·LªÀ°Ï³»³¡¥i«ê´«°Ï°ì¡C
+§ó§ï¦¹¶µ¦Zµ¥¹L¤F¡§·LªÀ°ÏÅã¥Ü½w¦s®É¶¡¡¨¤~·|¥Í®Ä¡C]]></item>
+				<item id="variable"><![CDATA[cat]]></item>
+				<item id="type"><![CDATA[selects]]></item>
+				<item id="extra"><![CDATA[1=µL
+hot=¼öªù¤ÀÃþ
+new=³Ì·s¤ÀÃþ]]></item>
+				<item id="__value">
+					<item id="0"><![CDATA[1]]></item>
+				</item>
+			</item>
+			<item id="8">
+				<item id="displayorder"><![CDATA[8]]></item>
+				<item id="title"><![CDATA[·LªÀ°ÏÅã¥Ü½w¦s®É¶¡]]></item>
+				<item id="description"><![CDATA[³æ¦ì¬í¡C1¤p®É=3600¬í¡C]]></item>
+				<item id="variable"><![CDATA[cache_ttl]]></item>
+				<item id="type"><![CDATA[number]]></item>
+				<item id="value"><![CDATA[86400]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="9">
+				<item id="displayorder"><![CDATA[99]]></item>
+				<item id="title"><![CDATA[°Ó¤á¤¤¤ß¨óÄ³]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[agreement]]></item>
+				<item id="type"><![CDATA[textarea]]></item>
+				<item id="value"><![CDATA[<h4>¡]¥H¤UÂ²ºÙ¡§¥»¨óÄ³¡¨¡^Óì¥Î¤_©Ò¦³¦b°Ó¤á¤¤¤ß¤Wµo¥¬«H®§ªº°Ó¤á¡C</h4>
+    <p>¥»¨óÄ³Óì¥Î¤_©Ò¦³¦b°Ó¤á¤¤¤ß¤W»{»â¡B¤J¾n©Mµo¥¬¥ø·~«H®§ªº°Ó¤á¡C¤@¸g°Ó¤á¦P·N±µ¨ü¦Z§Y§Î¦¨°Ó¤áÉO¥»ÊI¯¸¶¡¦³ªk«ß¬ù§ô¤O¤§¤å¥ó¡A¦¹¦Z¡A°Ó¤á¤£±o¥H¥¼¾\Åª¥»¨óÄ³¤º®e§@¥ô¦ó§Î¦¡ªº§ÜÅG¡C°Ó¤á¦b°Ó¤á¤¤¤ßª`¥U©Î´£¨Ñ¡B¤W¶Ç¡B¤U¸ü¡BÂà¸ü°Ó¤áªº§@«~±N¨ü¥»±ø´Ú¤§³W­S¡C</p>
+    <p>¦p°Ó¤á¤£¦P·N¥»¨óÄ³¥ô·N¤º®eªº¡A°Ó¤á±NµLªk¦b°Ó¤á¤¤¤ßµo¥¬©M¶Ç¼½¥ô¦ó§@«~¤@¥¹°Ó¤á±µ¨ü¥»±ø´Ú¡A°Ó¤á«Oµý°Ó¤á¤w¹Fªk©w¦~ÄÖ¥B¨ã¦³§¹¥þ¤§¦æ¬°¯à¤O¡A¦pªG°Ó¤á¥Nªí¤@­Ó¤½¥q¡A²ÕÂ´©Î¨ä¥Lªk«ß¹êÊ^¡A°Ó¤á«Oµý°Ó¤áªº¤½¥q©Î²ÕÂ´¬O®ÚÕu°Ó¤á©~¦í¦a¤§ªk«ß©Ò¦¨¥ß¥B«ùÄò¦³®Äªºªk«ß¹êÊ^¡A°Ó¤áÁn©ú¦}«Oµý°Ó¤áªº¤½¥q©Î²ÕÂ´¤w¦Xªk±ÂÅv°Ó¤á¥Nªí°Ó¤áªº¤½¥q©Î²ÕÂ´¥[¤J°Ó¤á¤¤¤ß¡C</p>
+    <p>¥»ÊI¯¸¼f®Ö°Ó¤á¤Î¨ä§@«~ªº¦æ¬°¦}¤£·N¨ýµÛ¥»ÊI¯¸¹ï¨ä¼f®Öµ²ªG©Ó¾á¥ô¦óªk«ß³d¥ô¡A¥]¬A¹ï°Ó¤áªº¸ê½è¡B¨ä§@«~©Ó¾á¥ô¦ó«Oµý©Îªk«ß³d¥ô¡C¹ï¤_¦]¨Ï¥Î©ÎµLªk¨Ï¥Î°Ó¤á¤¤¤ßªA°È¦Ó­l¥Í¥ô¦óª½±µ¡B¶¡±µ¡B·N¥~¡B¯S§O©Î­«¤j·l§¥¡B§Q¯q³à¥¢©Î·~°È¤¤Â_¡A¥»ÊI¯¸·§¤£­t³d¡C</p>]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="10">
+				<item id="displayorder"><![CDATA[100]]></item>
+				<item id="title"><![CDATA[¥[¤J´£¥Ü]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[jointip]]></item>
+				<item id="type"><![CDATA[text]]></item>
+				<item id="value"><![CDATA[¹q¸Ü¸¹½X¨S¦³¦¬¿ý¡S°¨¤W¥[¤J&#187;]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="11">
+				<item id="displayorder"><![CDATA[101]]></item>
+				<item id="title"><![CDATA[AppId]]></item>
+				<item id="description"><![CDATA[¥ýµn¿ý·L«H¤½²³¥­¥x¶i¤J¡§¤½²³¸¹³]¸m¡¨ªº¡§¥\¯à³]¸m¡¨¨½¶ñ¼g½×¾Â¦a§}¨ì¡§JS±µ¤f¦w¥þ°ì¦W¡¨¡C
+¶ñ¼g¥¿ÚÌ§Y¥i§¹¾ã¨Ï¥Î¤À¨É¥\¯à¡C]]></item>
+				<item id="variable"><![CDATA[appid]]></item>
+				<item id="type"><![CDATA[text]]></item>
+				<item id="value"><![CDATA[]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="12">
+				<item id="displayorder"><![CDATA[102]]></item>
+				<item id="title"><![CDATA[AppSecret]]></item>
+				<item id="description"><![CDATA[¶ñ¼g¥¿ÚÌ§Y¥i§¹¾ã¨Ï¥Î¤À¨É¥\¯à]]></item>
+				<item id="variable"><![CDATA[appsecret]]></item>
+				<item id="type"><![CDATA[text]]></item>
+				<item id="value"><![CDATA[]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="13">
+				<item id="displayorder"><![CDATA[103]]></item>
+				<item id="title"><![CDATA[¤¹³\¹q¸£³X°Ý]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[allowpc]]></item>
+				<item id="type"><![CDATA[radio]]></item>
+				<item id="value"><![CDATA[1]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="14">
+				<item id="displayorder"><![CDATA[105]]></item>
+				<item id="title"><![CDATA[¹q¸£ª©-¦a°Ï¿z¿ï]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[filter1]]></item>
+				<item id="type"><![CDATA[select]]></item>
+				<item id="value"><![CDATA[city]]></item>
+				<item id="extra"><![CDATA[city=«ö«°¥«
+dist=«ö°Ï]]></item>
+			</item>
+			<item id="15">
+				<item id="displayorder"><![CDATA[106]]></item>
+				<item id="title"><![CDATA[¹q¸£ª©-¤Gºû½X©³³¡¤å¦r]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[subfont]]></item>
+				<item id="type"><![CDATA[textarea]]></item>
+				<item id="value"><![CDATA[¥Î·L«H±½¤Gºû½X
+§â114©ñ¶i¤f³U]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="16">
+				<item id="displayorder"><![CDATA[107]]></item>
+				<item id="title"><![CDATA[¹q¸£ª©-¤Gºû½XÃö³¬¦³®Ä´Á]]></item>
+				<item id="description"><![CDATA[³æ¦ì¬í¡C]]></item>
+				<item id="variable"><![CDATA[qrclose]]></item>
+				<item id="type"><![CDATA[number]]></item>
+				<item id="value"><![CDATA[86400]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="17">
+				<item id="displayorder"><![CDATA[108]]></item>
+				<item id="title"><![CDATA[¹q¸£ª©-³»³¡½ü¼½¼s§i]]></item>
+				<item id="description"><![CDATA[¹Ï¤ù¦a§},Ãì±µ¦a§}
+http://...a.jpg,http://a.cn
+http://...b.jpg,http://b.cn
+¹Ï¤ù,Ãì±µ ¥Î­^¤å¡§ªÅ®æ¡¨©Î¡§³r¸¹¡¨¹j¶},¨C¦æ¤@­Ó¡C]]></item>
+				<item id="variable"><![CDATA[topnavslider]]></item>
+				<item id="type"><![CDATA[textarea]]></item>
+				<item id="value"><![CDATA[source/plugin/xigua_114/upload/1.jpg,#
+source/plugin/xigua_114/upload/2.jpg,#
+source/plugin/xigua_114/upload/3.jpg,#]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="18">
+				<item id="displayorder"><![CDATA[109]]></item>
+				<item id="title"><![CDATA[¹q¸£ª©-¥DÃD¦â]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[customcolor]]></item>
+				<item id="type"><![CDATA[color]]></item>
+				<item id="value"><![CDATA[#0089e0]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="19">
+				<item id="displayorder"><![CDATA[110]]></item>
+				<item id="title"><![CDATA[¹q¸£ª©-¯¶«Ì½ü¼½¼s§i¼e«×]]></item>
+				<item id="description"><![CDATA[¯¶«Ì­·®æ®É­Ôªº¼s§i¼e«×¡A®ÚÕu¦Û¤vªº¼ÒªO¼e«×©w¡C
+³æ¦ì¡R¹³¯À¡C]]></item>
+				<item id="variable"><![CDATA[topnavsliderwidth1]]></item>
+				<item id="type"><![CDATA[number]]></item>
+				<item id="value"><![CDATA[960]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="20">
+				<item id="displayorder"><![CDATA[112]]></item>
+				<item id="title"><![CDATA[¹q¸£ª©-¼e«Ì½ü¼½¼s§i¼e«×]]></item>
+				<item id="description"><![CDATA[¼e«Ì­·®æ®É­Ôªº¼s§i¼e«×¡A®ÚÕu¦Û¤vªº¼ÒªO¼e«×©w¡C
+³æ¦ì¡R¹³¯À¡C]]></item>
+				<item id="variable"><![CDATA[topnavsliderwidth2]]></item>
+				<item id="type"><![CDATA[number]]></item>
+				<item id="value"><![CDATA[1200]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="21">
+				<item id="displayorder"><![CDATA[113]]></item>
+				<item id="title"><![CDATA[²¾°Êª©­º­¶¤£­n³»³¡]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[nohead]]></item>
+				<item id="type"><![CDATA[radio]]></item>
+				<item id="value"><![CDATA[1]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="22">
+				<item id="displayorder"><![CDATA[114]]></item>
+				<item id="title"><![CDATA[²¾°Êª©Åã¥Ü¤ÀÃþ]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[tt]]></item>
+				<item id="type"><![CDATA[radio]]></item>
+				<item id="value"><![CDATA[1]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="23">
+				<item id="displayorder"><![CDATA[115]]></item>
+				<item id="title"><![CDATA[²¾°Êª©³»³¡¤J¾n«ö¶s]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[topjoin]]></item>
+				<item id="type"><![CDATA[text]]></item>
+				<item id="value"><![CDATA[°¨¤W¥[¤J&#187;]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="24">
+				<item id="displayorder"><![CDATA[116]]></item>
+				<item id="title"><![CDATA[²¾°Êª©¸Ô±¡­¶ÂsÄý¶q]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[viewsword]]></item>
+				<item id="type"><![CDATA[text]]></item>
+				<item id="value"><![CDATA[ÂsÄý¶q]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="25">
+				<item id="displayorder"><![CDATA[118]]></item>
+				<item id="title"><![CDATA[²¾°Êª©¸Ô±¡­¶½ü¼½°ª«×]]></item>
+				<item id="description"><![CDATA[³æ¦ì¹³¯À]]></item>
+				<item id="variable"><![CDATA[lunheight]]></item>
+				<item id="type"><![CDATA[number]]></item>
+				<item id="value"><![CDATA[200]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="26">
+				<item id="displayorder"><![CDATA[119]]></item>
+				<item id="title"><![CDATA[«e¥x¤J¾n¦r¬q¿ï¾Ü]]></item>
+				<item id="description"><![CDATA[¿ï¤¤ªº¦r¬q·|Åã¥Ü¡A¥¼¿ï¤¤ªº¤£·|Åã¥Ü]]></item>
+				<item id="variable"><![CDATA[field]]></item>
+				<item id="type"><![CDATA[selects]]></item>
+				<item id="extra"><![CDATA[phone=¹q¸Ü
+qq=QQ¸¹½X
+wechat=·L«H¸¹
+qr=·L«H¤Gºû½X
+weibo=·L³Õ¦a§}
+site=ÊI¯¸¦a§}
+catid=°Ó¤á¤ÀÃþ
+company_name=°Ó¤á¦WºÙ
+company_desc=°Ó¤áÂ²¤¶
+logo=°Ó¤á¹Ï¼Ð
+cover=®i¥Ü¹Ï¤ù
+address=¦a§}
+realname=¥Ó½Ð¤H©m¦W
+idcard=¥Ó½Ð¤H¨­¥÷µý
+mobile=¥Ó½Ð¤HÁp¨t¹q¸Ü]]></item>
+				<item id="__value">
+					<item id="0"><![CDATA[phone]]></item>
+					<item id="1"><![CDATA[qq]]></item>
+					<item id="2"><![CDATA[wechat]]></item>
+					<item id="3"><![CDATA[qr]]></item>
+					<item id="4"><![CDATA[catid]]></item>
+					<item id="5"><![CDATA[company_name]]></item>
+					<item id="6"><![CDATA[company_desc]]></item>
+					<item id="7"><![CDATA[logo]]></item>
+					<item id="8"><![CDATA[cover]]></item>
+					<item id="9"><![CDATA[address]]></item>
+				</item>
+			</item>
+			<item id="27">
+				<item id="displayorder"><![CDATA[120]]></item>
+				<item id="title"><![CDATA[¤J¾n¤Þ¾É­¶­±´y­z]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[joindesc]]></item>
+				<item id="type"><![CDATA[textarea]]></item>
+				<item id="value"><![CDATA[<h2>Åwªï¡T</h2>
+<p>½ÐÂIÀ»¡§¥ß§Y¤J¾n¡¨¡A¨Ó³Ð«Ø±zªº¥ø·~¡C</p>
+<p>»Ý­n±z´£¨Ñ¥ø·~¦WºÙ¡B¹q¸Ü¸¹½X¡B¦a§}¡BÀç·~°õ·Óµ¥°ò¥»«H®§¡C</p>
+<p>´£¨Ñªº«H®§°È¥²¯u¹ê¡B¦³®Ä¡C</p>
+<p>³o¥u¬O¤@¥y¤Þ¾É¡A§A¥i¥H¦Û¦æ­×§ï¡T</p>]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="28">
+				<item id="displayorder"><![CDATA[121]]></item>
+				<item id="title"><![CDATA[Åã¥Ü¤À¨É¶q]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[showsh]]></item>
+				<item id="type"><![CDATA[radio]]></item>
+				<item id="value"><![CDATA[1]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="29">
+				<item id="displayorder"><![CDATA[122]]></item>
+				<item id="title"><![CDATA[Åã¥ÜÂsÄý¶q]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[showvi]]></item>
+				<item id="type"><![CDATA[radio]]></item>
+				<item id="value"><![CDATA[1]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="30">
+				<item id="displayorder"><![CDATA[123]]></item>
+				<item id="title"><![CDATA[Åã¥Ü¬ÛÃö°Ó¤á]]></item>
+				<item id="description"><![CDATA[¯dªÅ«h¤£Åã¥Ü¬ÛÃö°Ó¤á¼Ò¶ô¡T]]></item>
+				<item id="variable"><![CDATA[aboutsh]]></item>
+				<item id="type"><![CDATA[text]]></item>
+				<item id="value"><![CDATA[±z¥i¯à¦b§ä]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="31">
+				<item id="displayorder"><![CDATA[124]]></item>
+				<item id="title"><![CDATA[°Ó¤áµû½×]]></item>
+				<item id="description"><![CDATA[¯dªÅ«h¤£·|¶}±Òµû½×¡A³o¨½¶ñ¼gªÀ·|¤Æµû½×¤u¨ã¦w¸Ë¥N½X
+¤ä«ù¡RºZ¨¥¡B¦h»¡¡B¤Í¨¥
+¥Ó½Ð¦a§}:
+http://changyan.kuaizhan.com
+http://duoshuo.com
+http://www.uyan.cc]]></item>
+				<item id="variable"><![CDATA[pinglun]]></item>
+				<item id="type"><![CDATA[textarea]]></item>
+				<item id="value"><![CDATA[]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="32">
+				<item id="displayorder"><![CDATA[125]]></item>
+				<item id="title"><![CDATA[¬ÛÃö°Ó¤á±ø¥Ø¼Æ]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[aboutshnum]]></item>
+				<item id="type"><![CDATA[number]]></item>
+				<item id="value"><![CDATA[10]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="33">
+				<item id="displayorder"><![CDATA[126]]></item>
+				<item id="title"><![CDATA[ÖÃ§Ú³Ìªñ]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[nearby]]></item>
+				<item id="type"><![CDATA[text]]></item>
+				<item id="value"><![CDATA[ÖÃ§Ú³Ìªñ]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="34">
+				<item id="displayorder"><![CDATA[127]]></item>
+				<item id="title"><![CDATA[¤º®e­¶¾É¯è¤Þ¾É]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[mapguide]]></item>
+				<item id="type"><![CDATA[text]]></item>
+				<item id="value"><![CDATA[¶ZÖÃ¸Ó°Ó®a¬ù %s ¡AÂIÀ»¤@Áä¾É¯è]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+		</item>
+		<item id="language">
+			<item id="scriptlang">
+				<item id="logy_m_g"><![CDATA[<h2 style="text-align:-webkit-center;">
+	<span style="color:#4C33E5;">±À¯ò¤@­Ódz°Ó</span><span style="color:#4C33E5;">·~´¡¥ó¼Òª©¤U¸üªº</span><span style="color:#4C33E5;"></span><span style="color:#4C33E5;">ÊI¯¸µ¹¤j®a</span><a href="http://www.012wz.com" target="_blank"><span style="color:#4C33E5;">·½½X­ô¤À¨É§a</span></a><span style="color:#4C33E5;">¡]www.012wz.com¡^</span> 
+</h2>
+<h3 style="text-align:-webkit-center;">
+	<span style="color:#E53333;">³o</span><span style="color:#E53333;">¬O¤@­Ó</span><span style="color:#E53333;">dz°Ó·~</span><a href="http://www.012wz.com/forum.php?mod=forumdisplay&fid=2" target="_blank"><span style="color:#337FE5;">´¡</span><u><span style="color:#337FE5;"></span></u><span style="color:#337FE5;">¥ó</span></a><a href="http://www.012wz.com/forum.php?mod=forumdisplay&fid=36" target="_blank"><u><span style="color:#337FE5;">¼Ò</span></u><u><span style="color:#337FE5;"></span></u><u><span style="color:#337FE5;">ª©</span></u></a><span style="color:#E53333;">¸ê·½¯}¸Ñ¤À¨ÉªºÊI¯¸¡A¦Ó¥BÁÙ¦³«Ü¦hºë«~ªºÊI¯¸·½½X¤U¸ü</span> 
+</h3>
+<h3 style="text-align:-webkit-center;">
+	<span style="color:#E53333;">¥L­Ì¸ê·½¨C¤Ñ§ó·s¡A¦}¥B«Ü¦h³£¬O¥L­Ì¦Û¤v¥X¿ú¦bÀ³¥Î¤¤¤ßÁÊ¶R¦Z¯}¸Ñ¤À¨É¥X¨Óªº</span><br />
+</h3>
+<h3>
+	<div style="text-align:center;">
+		<span style="color:#E53333;">¤£¹LÁÙ¬O´À¥L­Ì»¡¤@¤U</span> 
+	</div>
+	<div style="text-align:center;">
+		<span style="color:#E53333;">&nbsp;¥L­Ì¯¸¤U¸üªº¸ê·½¥u­­¤_¦Û¤v¾Ç²ß¬ã¨s¤º§tªº³]­p«ä·Q©M­ì²z ½Ð¤Å¦³¥ô¦ó°Ó·~¬Õ§Q¦æ¬°</span> 
+	</div>
+</h3>
+<h3 style="text-align:center;">
+	<span style="color:#999999;">¤¶²Ð¤]¤¶²Ð§¹¤F¡Aµ¹¤j®a°µ­Ó¤p¾É¯è§a</span> 
+</h3>
+<h3 style="text-align:center;">
+	<span style="color:#337FE5;"><a href="http://www.012wz.com/forum.php?mod=forumdisplay&fid=2" target="_blank">dz°Ó·~¯}¸Ñ´¡¥ó¤U¸ü</a> &nbsp; <a href="http://www.012wz.com/forum.php?mod=forumdisplay&fid=36" target="_blank">dz°Ó·~­·®æ¼Òª©¤U¸ü</a> &nbsp; &nbsp;<a href="http://www.012wz.com/forum.php?mod=forumdisplay&fid=50" target="_blank">ºë«~ÊI¯¸·½½X¤U¸ü</a> &nbsp; &nbsp;<a href="http://www.012wz.com/forum.php?mod=forumdisplay&fid=51" target="_blank">¤u¨ã¯À§÷¤U¸ü</a></span><span style="color:#337FE5;">&nbsp; &nbsp; <a href="http://www.012wz.com/forum.php?mod=forumdisplay&fid=41" target="_blank">ºë¿ï±Ðµ{°Ï</a></span> 
+</h3> ]]></item>
+				<item id="category_tip"><![CDATA[<li>­¶­±¦a§}¡]¤âÉó³X°Ý¡^¡R%s¡A±N¸Ó¦a§}¥[¤J¨ì¡§<a target="_blank" href="http://www.012wz.com/gg/addon.php?/?@xigua_navigation_wsq.plugin"><b>¡i¦è¥Ê¡j·LªÀ°Ï¾É¯è</b></a>¡¨¤¤¡A©ÎÂIÀ»·LªÀ°Ï¦Cªí­¶<b>³»³¡¥i¤Á´«°Ï°ì</b>&gt;<b>°Ó¤á¬ÛÃöÄæ¥Ø</b>&gt;¡§<b>§ó¦h&gt;&gt;</b>¡¨§Y¥i¶i¤J¡C</li><li>¤ÀÃþ¦WºÙ¥²¶ñ¡Q¤ÀÃþ¹Ï¼Ð¿ï¶ñ¡A³W®æ±À¯ò<b>100*100</b>¡Q¤ÀÃþ¼s§i¹Ï¤ù¿ï¶ñ¡A³W®æ±À¯ò<b>320*90©Î640*180</b>¡AÃì±µ¿ï¶ñ¡A¦p¤£¶ñ«h¶i¤J¸Ó¤ÀÃþ¡C¶ñ¤Fª½±µ¶i¤J¥~Ãì¡C</li><li>¤ÀÃþ¤£©y¤Ó¦h¡A¦X²z¤ÀÃþ·|Åý°Ó¤á¤¤¤ß§ó¦n¥Î</li><li>³qÄæ¶ÈÅã¥Ü1­Ó¡AÅã¥Ü¦b¾É¯è©Mªþªñ¤§¶¡¡A¦p¦ì¸m¬°¡§½ü¼½°Ï¡¨©M¡§³qÄæ¡¨¡A«h¥²¶·¤W¶Ç¼s§i¹Ï¤ù¤~·|Åã¥Ü¥X¨Ó</li>]]></item>
+				<item id="order"><![CDATA[Åã¥Ü¶¶§Ç]]></item>
+				<item id="UPLOAD_ERR_OK"><![CDATA[¤W¶Ç¦¨¥\]]></item>
+				<item id="UPLOAD_ERR_INI_SIZE"><![CDATA[¤W¶Çªº¤å¥ó¤j¤p¶W¹LªA°È¾¹­­¨î¡C]]></item>
+				<item id="UPLOAD_ERR_FORM_SIZE"><![CDATA[¤W¶Ç¤å¥óªº¤j¤p¶W¹L«È¤áºÝ­­¨î]]></item>
+				<item id="UPLOAD_ERR_PARTIAL"><![CDATA[¤å¥ó¥u¦³³¡¤À¤W¶Ç]]></item>
+				<item id="UPLOAD_ERR_NO_FILE"><![CDATA[¨S¦³¤å¥ó¤W¶Ç]]></item>
+				<item id="UPLOAD_ERR_NO_TMP_DIR"><![CDATA[§ä¤£¨ìÁ{®É¤å¥ó§¨]]></item>
+				<item id="UPLOAD_ERR_CANT_WRITE"><![CDATA[¤å¥ó¼g¤JªA°È¾¹¥¢±Ñ]]></item>
+				<item id="ONLY_IMAGE_ALLOW"><![CDATA[¥u¯à¤W¶Çpng,jpg,jpegÃþ«¬ªº¤å¥ó]]></item>
+				<item id="exit"><![CDATA[¾Þ§@]]></item>
+				<item id="del"><![CDATA[§R¡S]]></item>
+				<item id="hot"><![CDATA[¼ö]]></item>
+				<item id="new"><![CDATA[·s]]></item>
+				<item id="del_confirm"><![CDATA[ÚÌ©w§R°£¤ÀÃþ ]]></item>
+				<item id="del_confirm_company"><![CDATA[ÚÌ©w§R°£°Ó¤á ]]></item>
+				<item id="audit_confirm_company"><![CDATA[ÚÌ©w³q¹L¼f®Ö°Ó¤á ]]></item>
+				<item id="delcat_error"><![CDATA[µLªk§R°£¦³¤l¤ÀÃþªº¤ÀÃþ¡T]]></item>
+				<item id="delcat_succeed"><![CDATA[¤ÀÃþ§R°£¦¨¥\¡T]]></item>
+				<item id="succeed"><![CDATA[¾Þ§@¦¨¥\¡T]]></item>
+				<item id="error"><![CDATA[¾Þ§@¥¢±Ñ¡T]]></item>
+				<item id="error_"><![CDATA[¼ÆÕuÉÝ±`¡A½Ð¨ê·s­¶­±¦A¸Õ¡C]]></item>
+				<item id="del_succeed"><![CDATA[§R°£¦¨¥\¡T]]></item>
+				<item id="del_error"><![CDATA[§R°£¥¢±Ñ¡T]]></item>
+				<item id="crts"><![CDATA[²K¥[®É¶¡]]></item>
+				<item id="cat"><![CDATA[¤ÀÃþ]]></item>
+				<item id="cat_name"><![CDATA[¤ÀÃþ¦WºÙ]]></item>
+				<item id="cat_icon"><![CDATA[¤ÀÃþ¹Ï¼Ð]]></item>
+				<item id="cat_ad"><![CDATA[¤ÀÃþ¼s§i¹Ï¤ù/Ãì±µ]]></item>
+				<item id="ad_child_cat"><![CDATA[²K¥[¤l¤ÀÃþ]]></item>
+				<item id="ad_new_cat"><![CDATA[²K¥[·s¤ÀÃþ]]></item>
+				<item id="new_cat_name"><![CDATA[·s¤ÀÃþ¦WºÙ]]></item>
+				<item id="child_cat_name"><![CDATA[¤l¤ÀÃþ¦WºÙ]]></item>
+				<item id="company_manage"><![CDATA[<li>²K¥[¹q¸Ü¤£¯à­«Î`¡A¦Z¥x²K¥[ªº°Ó¤á¦Û°Ê¼f®Ö³q¹L</li><li>¼f®Ö°Ó¤á®É¡A½Ð¥ýÂI¡§¼f®Ö¡¨¬d¬Ý¡A¿ï¾Ü¤ÀÃþ¦ZÂI¡§³q¹L¡¨</li>]]></item>
+				<item id="phone_union"><![CDATA[¡]¹q¸Ü¤£¯à­«Î`¡^]]></item>
+				<item id="none"><![CDATA[µL]]></item>
+				<item id="xigua_114"><![CDATA[¡i¦è¥Ê¡j·LªÀ°Ï114]]></item>
+				<item id="online"><![CDATA[<span class="green">¤w¤W½u</span>]]></item>
+				<item id="offline"><![CDATA[<span class="red">¤w¤U½u</span>]]></item>
+				<item id="waiter"><![CDATA[<span class="orange">«Ý¼f®Ö</span>]]></item>
+				<item id="nav_waiter"><![CDATA[°Ó¤á¼f®Ö]]></item>
+				<item id="nav_report"><![CDATA[ªÈ¿ùÉOÁ|³ø]]></item>
+				<item id="nav_manage"><![CDATA[°Ó¤áºÞ²z]]></item>
+				<item id="audit"><![CDATA[¼f®Ö]]></item>
+				<item id="audit__"><![CDATA[³q¹L¼f®Ö]]></item>
+				<item id="profile"><![CDATA[¸Ô±¡]]></item>
+				<item id="company_profile"><![CDATA[°Ó¤á¸Ô±¡]]></item>
+				<item id="edit"><![CDATA[­×§ï]]></item>
+				<item id="cat_error"><![CDATA[½Ð¿ï¾Ü°Ó¤á¤ÀÃþ]]></item>
+				<item id="company_audit"><![CDATA[°Ó¤á¼f®Ö]]></item>
+				<item id="company_name"><![CDATA[°Ó¤á¦WºÙ]]></item>
+				<item id="company_phone"><![CDATA[¹q¸Ü]]></item>
+				<item id="phone"><![CDATA[¹q¸Ü]]></item>
+				<item id="address"><![CDATA[¦a§}]]></item>
+				<item id="wechat"><![CDATA[·L«H¸¹]]></item>
+				<item id="applyandtime"><![CDATA[¥Ó½Ð¤H/¥Ó½Ð®É¶¡]]></item>
+				<item id="status"><![CDATA[ª¬ºA]]></item>
+				<item id="opartion"><![CDATA[¾Þ§@]]></item>
+				<item id="qq"><![CDATA[Áp¨tQQ]]></item>
+				<item id="qr"><![CDATA[·L«H¤Gºû½X]]></item>
+				<item id="qr_"><![CDATA[·L«H¤Gºû½X¡]¤Ø¤o¤£­­¡A¿ï¶ñ¡^]]></item>
+				<item id="weibo"><![CDATA[·L³Õ¦a§}]]></item>
+				<item id="weibo_"><![CDATA[·L³Õ]]></item>
+				<item id="site"><![CDATA[ÊI¯¸¦a§}]]></item>
+				<item id="site_"><![CDATA[ÊI¯¸]]></item>
+				<item id="company_name_"><![CDATA[¦WºÙ¡]¥²¶ñ¡BÅã¥Ü¥Î¡^]]></item>
+				<item id="company_desc"><![CDATA[Â²¤¶]]></item>
+				<item id="company_logo"><![CDATA[¹Ï¼Ð¡]¤Ø¤o100*100¡A¿ï¶ñ¡^]]></item>
+				<item id="company_cover"><![CDATA[®i¥Ü¹Ï¤ù¡]¤Ø¤o600*300¡A¿ï¶ñ¡^]]></item>
+				<item id="company_cover_"><![CDATA[®i¥Ü¹Ï¤ù]]></item>
+				<item id="logo"><![CDATA[¹Ï¼Ð]]></item>
+				<item id="address_"><![CDATA[¦a§}«H®§]]></item>
+				<item id="address_profile"><![CDATA[¸Ô²Ó¦a§}]]></item>
+				<item id="applyer"><![CDATA[¥Ó½Ð¤H]]></item>
+				<item id="applyer_"><![CDATA[¥Ó½Ð¤H©m¦W¡]¥²¶ñ¡^]]></item>
+				<item id="applyer_idcard"><![CDATA[¥Ó½Ð¤H¨­¥÷µý¸¹]]></item>
+				<item id="applyer_mobile"><![CDATA[¥Ó½Ð¤HÁp¨t¤è¦¡]]></item>
+				<item id="del_confirm_report"><![CDATA[ÚÌ©w­n§R°£³o±øÁ|³ø/ªÈ¿ù«H®§¶Ü¡S]]></item>
+				<item id="ignore"><![CDATA[©¿²¤]]></item>
+				<item id="hasignore"><![CDATA[¤w©¿²¤]]></item>
+				<item id="ignore_confirm_report"><![CDATA[ÚÌ©w­n©¿²¤³o±øÁ|³ø/ªÈ¿ù«H®§¶Ü¡S]]></item>
+				<item id="hasdo"><![CDATA[¤w¸Ñ¨M]]></item>
+				<item id="needdo"><![CDATA[«Ý¸Ñ¨M]]></item>
+				<item id="do_confirm_report"><![CDATA[ÚÌ©w¤w¸g¸Ñ¨M³o±øÁ|³ø/ªÈ¿ù«H®§¶Ü¡S]]></item>
+				<item id="searchlabel"><![CDATA[°Ó¤á¦WºÙ/¹q¸Ü]]></item>
+				<item id="search"><![CDATA[·j¯Á]]></item>
+				<item id="searchresult"><![CDATA[¥H¤U¬O¡§<b class="green">%s</b>¡¨·j¯Áªºµ²ªG¡]<b class="orange">%d</b>­Ó¡^:]]></item>
+				<item id="type1"><![CDATA[³o¬O¨p¤H¸¹½X]]></item>
+				<item id="type1_"><![CDATA[³o­Ó¬O§Úªº¨p¤H¸¹½X]]></item>
+				<item id="type1__"><![CDATA[½Ð¶ñ¼g±z©Ò¤F¸Ñªº«H®§¡A¨Ò¦p³o­Ó¬O§Úªº¨p¤H¸¹½Xµ¥]]></item>
+				<item id="type2"><![CDATA[¹q¸Ü¸¹½Xµ¥«H®§¿ù»~]]></item>
+				<item id="type2_"><![CDATA[½Ð¶ñ¼g±z©Ò¤F¸Ñªº«H®§¡A¨Ò¦p¥¿ÚÌªº¹q¸Ü¸¹½X¡B¦a§}¡B¬O§_°±¤îÀç·~µ¥]]></item>
+				<item id="type3"><![CDATA[Á|³ø¸Ó°Ó¤á]]></item>
+				<item id="type3_"><![CDATA[½Ð¶ñ¼g±z©Ò¤F¸Ñªº«H®§¡A¨Ò¦p¦â±¡¤º®e¡B´c·NÀç¾P¡B¯A¶û¬Fªv¡Bµê°²¡]¥é«_¡^«H®§µ¥]]></item>
+				<item id="report_type"><![CDATA[Á|³øÃþ«¬]]></item>
+				<item id="extra"><![CDATA[¸É¥R¤º®e]]></item>
+				<item id="extra_"><![CDATA[¸É¥R¤º®e¡]¥²¶ñ¡^]]></item>
+				<item id="extra__"><![CDATA[½Ð¶ñ¼g±z©Ò¤F¸Ñªº«H®§¡A¨Ò¦p¥¿ÚÌªº¹q¸Ü¸¹½X¡B¦a§}¡B¬O§_°±¤îÀç·~µ¥]]></item>
+				<item id="connect"><![CDATA[Áp¨t¤è¦¡]]></item>
+				<item id="connect__"><![CDATA[½Ð¶ñ¼g±zªºÁp¨t¤è¦¡¡A«K¤_·¾³qÚÌ»{]]></item>
+				<item id="report_ts"><![CDATA[Á|³ø®É¶¡]]></item>
+				<item id="phone_vaild"><![CDATA[½Ð¶ñ¼g­nÁ|³øªº¹q¸Ü¸¹½X]]></item>
+				<item id="phone__vaild"><![CDATA[½Ð¶ñ¼g¹q¸Ü¸¹½X¡A©T¸Ü½Ð¥[°Ï¸¹]]></item>
+				<item id="mobile_qq_vaild"><![CDATA[½Ð¶ñ¼g±zªºÁp¨t¤è¦¡]]></item>
+				<item id="extra_vaild"><![CDATA[½Ð¶ñ¼g¸É¥R¤º®e]]></item>
+				<item id="back"><![CDATA[ªð¦^]]></item>
+				<item id="report_title"><![CDATA[ªÈ¿ùÉOÁ|³ø]]></item>
+				<item id="i_report"><![CDATA[§Ú­nÁ|³ø]]></item>
+				<item id="report_phone"><![CDATA[½Ð¶ñ¼g­nÁ|³øªº¹q¸Ü¸¹½X]]></item>
+				<item id="report_submit"><![CDATA[´£¥æ¥Ó½Ð]]></item>
+				<item id="bottom_list1"><![CDATA[¦â±¡¤º®e]]></item>
+				<item id="bottom_list2"><![CDATA[´c·NÀç¾P]]></item>
+				<item id="bottom_list3"><![CDATA[¯A¶û¬Fªv]]></item>
+				<item id="bottom_list4"><![CDATA[µê°²¡]¥é«_¡^«H®§]]></item>
+				<item id="report_succeed"><![CDATA[ªÈ¿ù/Á|³ø¦¨¥\¡T]]></item>
+				<item id="company_name_exists"><![CDATA[¸Ó¹q¸Ü¸¹½X¤w¸g¦s¦b¡T]]></item>
+				<item id="company_name_vaild"><![CDATA[½Ð¶ñ¼g°Ó¤á¦WºÙ]]></item>
+				<item id="realname_vaild"><![CDATA[½Ð¶ñ¼g¥Ó½Ð¤H©m¦W]]></item>
+				<item id="join_succeed"><![CDATA[®¥³ß¡T¤J¾n¦¨¥\¡T¼f®Ö³q¹L¦Z§Y®i¥Ü¡T]]></item>
+				<item id="in"><![CDATA[°Ó¤á¤J¾n]]></item>
+				<item id="welcome"><![CDATA[Åwªï¡T]]></item>
+				<item id="welcome_desc"><![CDATA[<p>½ÐÂIÀ»¡§³Ð«Ø·sªº°Ó¤á¡¨¡A¨Ó³Ð«Ø±zªº¥ø·~¡C</p> <p>»Ý­n±z´£¨Ñ¥ø·~¦WºÙ¡B¹q¸Ü¸¹½X¡B¦a§}¡BÀç·~°õ·Óµ¥°ò¥»«H®§¡C</p> <p>´£¨Ñªº«H®§°È¥²¯u¹ê¡B¦³®Ä¡C</p>]]></item>
+				<item id="new_"><![CDATA[ÂIÀ»¥ß§Y¤J¾n]]></item>
+				<item id="hotline"><![CDATA[¤J¾n«t¸ß¼ö½u]]></item>
+				<item id="hotline_"><![CDATA[ÂIÀ»¥k°¼¤@Áä¼·¸¹]]></item>
+				<item id="company_title"><![CDATA[°Ó¤á¸ê®Æ]]></item>
+				<item id="phone_tip"><![CDATA[¹q¸Ü¡]¥²¶ñ¡B©T¸Ü½Ð¥[°Ï¸¹¡^]]></item>
+				<item id="qq1"><![CDATA[QQ¸¹½X]]></item>
+				<item id="nameanddesc"><![CDATA[°Ó¤á¦WºÙ©MÂ²¤¶]]></item>
+				<item id="apply_name"><![CDATA[¥Ó½Ð¤H«H®§]]></item>
+				<item id="idcard"><![CDATA[¨­¥÷µý¸¹½X]]></item>
+				<item id="phoneqq"><![CDATA[Áp¨t¹q¸Ü©ÎQQ¸¹¡]¥²¶ñ¡^]]></item>
+				<item id="iagree"><![CDATA[§Ú¤w¾\Åª¦}¦P·N]]></item>
+				<item id="agreement"><![CDATA[¡m°Ó¤á¤¤¤ß¨óÄ³¡n]]></item>
+				<item id="submit_apply"><![CDATA[´£¥æ¥Ó½Ð]]></item>
+				<item id="agreement_doc"><![CDATA[°Ó¤á¤¤¤ß¨óÄ³]]></item>
+				<item id="close"><![CDATA[Ãö³¬]]></item>
+				<item id="must"><![CDATA[¡]¥²¿ï¡^]]></item>
+				<item id="position"><![CDATA[Åã¥Ü¦ì¸m]]></item>
+				<item id="slider"><![CDATA[½ü¼½°Ï]]></item>
+				<item id="nav"><![CDATA[¾É¯è°Ï]]></item>
+				<item id="list"><![CDATA[¦Cªí°Ï]]></item>
+				<item id="nil"><![CDATA[ÁôÂÃ]]></item>
+				<item id="near"><![CDATA[ªþªñ]]></item>
+				<item id="near_s"><![CDATA[ªþªñ]]></item>
+				<item id="bar"><![CDATA[³qÄæ]]></item>
+				<item id="share"><![CDATA[¤À¨É]]></item>
+				<item id="home"><![CDATA[°Ó¤á¤¤¤ß]]></item>
+				<item id="joinnow"><![CDATA[¹q¸Ü¸¹½X¨S¦³¦¬¿ý¡S°¨¤W¥[¤J&raquo;]]></item>
+				<item id="delshort"><![CDATA[§R]]></item>
+				<item id="mainnew"><![CDATA[·s]]></item>
+				<item id="mainhot"><![CDATA[¼ö]]></item>
+				<item id="mainhui"><![CDATA[´f]]></item>
+				<item id="hotlist"><![CDATA[¼öªù¤ÀÃþ]]></item>
+				<item id="digest"><![CDATA[³»]]></item>
+				<item id="more"><![CDATA[§ó¦h«H®§]]></item>
+				<item id="search_guide"><![CDATA[<p>½Ð¦b·L«H«È¤áºÝ¤¤·j¯Á¦}²K¥[·L«H¸¹</p><p>·L«H¸¹¡R<span class="c3">%s</span></p>]]></item>
+				<item id="guide"><![CDATA[<p>ÂIÀ»·L«H­º­¶¥k¤W¨¤¥[¸¹¡§+¡¨</p><p>¿ï¾Ü¡§²K¥[ªB¤Í¡¨¡Aªø«ö¦}Öß¶K %s¡A</p><p>·j¯Á¶i¤J¤½²³¸¹¤¶²Ð­¶¡AÂIÀ»©³³¡¡§Ãöª`¡¨¡C</p>]]></item>
+				<item id="know"><![CDATA[Ãö³¬]]></item>
+				<item id="hold_guide"><![CDATA[½Ð¦b·L«H¤¤ªø«ö¤Gºû½X¡AÃÑ§O¹Ï¤¤¤Gºû½X]]></item>
+				<item id="near_by"><![CDATA[ªþªñ]]></item>
+				<item id="search_result"><![CDATA[·j¯Áµ²ªG]]></item>
+				<item id="nothing"><![CDATA[«Ü©êºp¡A¨S¦³§ä¨ì¡§%s¡¨¬ÛÃö°Ó¤á]]></item>
+				<item id="item"><![CDATA[±ø]]></item>
+				<item id="add"><![CDATA[²K¥[]]></item>
+				<item id="addnew"><![CDATA[²K¥[·s°Ó¤á]]></item>
+				<item id="wsqcat_hot"><![CDATA[¼öªù¤ÀÃþ]]></item>
+				<item id="wsqcat_new"><![CDATA[³Ì·s¤ÀÃþ]]></item>
+				<item id="wsqcompany_new"><![CDATA[³Ì·s°Ó¤á]]></item>
+				<item id="wsqcompany_hui"><![CDATA[¼öªù°Ó¤á]]></item>
+				<item id="wsqcompany_hot"><![CDATA[É¬´f°Ó¤á]]></item>
+				<item id="link"><![CDATA[Ãì±µ¦a§}]]></item>
+				<item id="or"><![CDATA[©Î]]></item>
+				<item id="dot"><![CDATA[¡A]]></item>
+				<item id="allcat"><![CDATA[¥þ³¡¤ÀÃþ]]></item>
+				<item id="joinnow1"><![CDATA[¥ß§Y¤J¾n]]></item>
+				<item id="catmain"><![CDATA[°Ó¤á¤ÀÃþ¡R]]></item>
+				<item id="all"><![CDATA[¥þ³¡]]></item>
+				<item id="dist"><![CDATA[¦a°Ï¡R]]></item>
+				<item id="defaultsort"><![CDATA[Àq»{±Æ§Ç]]></item>
+				<item id="newest"><![CDATA[³Ì·s]]></item>
+				<item id="pt1"><![CDATA[»{µý°Ó¤á]]></item>
+				<item id="pt2"><![CDATA[¯S´f°Ó¤á]]></item>
+				<item id="pt3"><![CDATA[¼öªù°Ó¤á]]></item>
+				<item id="pt4"><![CDATA[³Ì·s°Ó¤á]]></item>
+				<item id="nodata"><![CDATA[¨S¦³§ä¨ì²Å¦X±ø¥óªº°Ó¤á¡A´«­Ó¿z¿ï±ø¥ó¸Õ¸Õ§a]]></item>
+				<item id="loadingmore"><![CDATA[¥¿¦b¸ü¤J§ó¦h°Ó¤á...]]></item>
+				<item id="nomore"><![CDATA[¨S¦³§ó¦h°Ó¤á¤F]]></item>
+				<item id="address_dot"><![CDATA[¦a§}¡R]]></item>
+				<item id="wechat_dot"><![CDATA[·L«H¸¹¡R]]></item>
+				<item id="site_dot"><![CDATA[°Ó¤áÊI§}¡R]]></item>
+				<item id="weibo_dot"><![CDATA[·L³Õ¦a§}¡R]]></item>
+				<item id="qq_dot"><![CDATA[Áp¨tQQ¡R]]></item>
+				<item id="report"><![CDATA[ªÈ¿ùÁ|³ø]]></item>
+				<item id="d1"><![CDATA[¦a°Ï]]></item>
+				<item id="d2"><![CDATA[¤ÀÃþ]]></item>
+				<item id="d3"><![CDATA[Ãþ«¬]]></item>
+				<item id="fx"><![CDATA[µo²{]]></item>
+				<item id="guidenav"><![CDATA[¥´¶}¤@Áä¾É¯è]]></item>
+				<item id="ranktitle"><![CDATA[±Æ¦æº]]]></item>
+				<item id="index"><![CDATA[­º­¶]]></item>
+				<item id="rankrt"><![CDATA[±Æ¦æ]]></item>
+				<item id="joind"><![CDATA[¤J¾n]]></item>
+				<item id="bo1"><![CDATA[¼·¥´¹q¸Ü]]></item>
+				<item id="viewsshares"><![CDATA[ÂsÄý¶q/¤À¨É¼Æ]]></item>
+				<item id="hottab"><![CDATA[¼öªù]]></item>
+				<item id="newtab"><![CDATA[·s¤J]]></item>
+				<item id="youtab"><![CDATA[É¬´f]]></item>
+				<item id="rentab"><![CDATA[»{µý]]></item>
+				<item id="tuitab"><![CDATA[±À¯ò]]></item>
+				<item id="shanger"><![CDATA[¥X¿ù¤F¡A¦a§}¤£¥¿ÚÌ¡T]]></item>
+				<item id="please_input_address"><![CDATA[½ÐÂIÀ»¿ï¾Ü¦a§}]]></item>
+				<item id="loadmore"><![CDATA[ÂIÀ»¥[¸ü§ó¦h]]></item>
+			</item>
+			<item id="templatelang">
+				<item id="or"><![CDATA[©Î]]></item>
+				<item id="dot"><![CDATA[¡A]]></item>
+				<item id="allcat"><![CDATA[¥þ³¡¤ÀÃþ]]></item>
+				<item id="joinnow1"><![CDATA[¥ß§Y¤J¾n]]></item>
+				<item id="catmain"><![CDATA[°Ó¤á¤ÀÃþ¡R]]></item>
+				<item id="all"><![CDATA[¥þ³¡]]></item>
+				<item id="dist"><![CDATA[¦a°Ï¡R]]></item>
+				<item id="defaultsort"><![CDATA[Àq»{±Æ§Ç]]></item>
+				<item id="newest"><![CDATA[³Ì·s]]></item>
+				<item id="pt1"><![CDATA[»{µý°Ó¤á]]></item>
+				<item id="pt2"><![CDATA[¯S´f°Ó¤á]]></item>
+				<item id="pt3"><![CDATA[¼öªù°Ó¤á]]></item>
+				<item id="pt4"><![CDATA[³Ì·s°Ó¤á]]></item>
+				<item id="nodata"><![CDATA[¨S¦³§ä¨ì²Å¦X±ø¥óªº°Ó¤á¡A´«­Ó¿z¿ï±ø¥ó¸Õ¸Õ§a]]></item>
+				<item id="loadingmore"><![CDATA[¥¿¦b¸ü¤J§ó¦h°Ó¤á...]]></item>
+				<item id="nomore"><![CDATA[¨S¦³§ó¦h°Ó¤á¤F]]></item>
+				<item id="address_dot"><![CDATA[¦a§}¡R]]></item>
+				<item id="wechat_dot"><![CDATA[·L«H¸¹¡R]]></item>
+				<item id="site_dot"><![CDATA[°Ó¤áÊI§}¡R]]></item>
+				<item id="weibo_dot"><![CDATA[·L³Õ¦a§}¡R]]></item>
+				<item id="qq_dot"><![CDATA[Áp¨tQQ¡R]]></item>
+				<item id="report"><![CDATA[ªÈ¿ùÁ|³ø]]></item>
+				<item id="d1"><![CDATA[¦a°Ï]]></item>
+				<item id="d2"><![CDATA[¤ÀÃþ]]></item>
+				<item id="d3"><![CDATA[Ãþ«¬]]></item>
+			</item>
+			<item id="installlang">
+				<item id="l1"><![CDATA[(14, 126, '¤u°Ó»È¦æ', '', 'source/plugin/xigua_114/upload/gg553bb92897f9f1728.png', '', '95588', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 2, 1429247785, 0, 1, '0', 1),
+(17, 126, '¤¤«H»È¦æ', '', 'source/plugin/xigua_114/upload/gg553bbaf471fb58030.jpeg', '', '95558', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 8, 1429322581, 0, 1, '0', 1),
+(19, 126, '¤¤°ê»È¦æ', '', 'source/plugin/xigua_114/upload/gg553bb907c5f622307.png', '', '95566', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 1, 1429323471, 0, 1, '0', 1),
+(20, 126, '¼sµo»È¦æ', '', 'source/plugin/xigua_114/upload/gg553bbadb457c04985.jpeg', '', '4008308003', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 8, 1429498161, 0, 1, '', 1),
+(22, 126, '¿³·~»È¦æ', '', 'source/plugin/xigua_114/upload/gg553bb9e7b3c4b6159.jpeg', '', '95561', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 8, 1429516668, 0, 1, '0', 1),
+(23, 126, 'µØ®L»È¦æ', '', 'source/plugin/xigua_114/upload/gg553bba1621bc1649.jpeg', '', '95577', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 8, 1429523725, 0, 1, '', 1),
+(26, 126, '¶l¬FÀx»W»È¦æ', '', 'source/plugin/xigua_114/upload/gg553bb8e2075e86890.png', '', '94480', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 2, 1429790766, 0, 1, '', 1),
+(38, 126, '©Û°Ó»È¦æ', '', 'source/plugin/xigua_114/upload/gg553bb026155121450.png', '', '95555', '', '', '©Û°Ó»È¦æ', 'http://www.cmbchina.com/', 'http://weibo.com/p/1006061653150224', '', '', '', '', '', '', '', '', '', 1, 6, 1429608179, 0, 1, '', 1),
+(40, 126, '¥æ³q»È¦æ', '', 'source/plugin/xigua_114/upload/gg553bb67a07f2e2965.png', '', '95559', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 5, 1429894855, 0, 1, '', 1),
+(41, 126, '«Ø³]»È¦æ', 'ªÑ¥÷¨î°Ó·~»È¦æ¡A ¬O°ê¦³¤­¤j°Ó·~»È¦æ¤§¤@¡C', 'source/plugin/xigua_114/upload/gg553bb65261f988062.png', '', '95533', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 4, 1429930915, 0, 1, '', 1),
+(42, 126, '¥Á¥Í»È¦æ', '', 'source/plugin/xigua_114/upload/gg553bb63c3e0c78431.png', '', '95568', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 8, 1429931062, 0, 1, '', 1),
+(43, 126, '¹A·~»È¦æ', '', 'source/plugin/xigua_114/upload/gg553bb4e6951416399.png', '', '95599', '', '', '¤¤°ê¹A·~»È¦æ', 'http://www.abchina.com/cn/', 'http://weibo.com/abchina', '', '', '', '', '', '', '', '', '', 1, 3, 1429931110, 0, 1, '', 1),
+(45, 126, '«n¨Ê»È¦æ', '', 'source/plugin/xigua_114/upload/gg553bb423456984245.jpg', '', '4008896400', '', '', '«n¨Ê»È¦æ', 'http://www.njcb.com.cn/', 'http://weibo.com/njcb', '', '', '', '', '', '', '', '', '', 1, 9, 1429975269, 0, 1, '', 1),
+(46, 126, '¥ú¤j»È¦æ', '', 'source/plugin/xigua_114/upload/gg553bbb59b7b058291.jpeg', '', '95595', '', '', '', '', '', '', '', '', '', '', '', 'admin', '', '', 1, 8, 1429977916, 0, 1, '', 1),
+(47, 123, '¤¤°ê¤H¹Ø«OÀI', '', 'source/plugin/xigua_114/upload/gg553bbd6ddfd113488.png', '', '95519', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 0, 1429978477, 0, 1, '', 1),
+(48, 123, '¤Ó¥­¬v«OÀI', '', 'source/plugin/xigua_114/upload/gg553bbdeac090e772.png', '', '95500', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 0, 1429978602, 0, 1, '', 1),
+(49, 125, '«Ø³]»È¦æ«H¥Î¥d', '', 'source/plugin/xigua_114/upload/gg553bbe4110e2b4067.png', '', '4008200588', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 0, 1429978689, 0, 1, '', 0),
+(50, 125, '¥æ³q»È¦æ«H¥Î¥d', '', 'source/plugin/xigua_114/upload/gg553bbe747fd824259.png', '', '4008009888', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 0, 1429978740, 0, 1, '', 0),
+(51, 125, '©Û°Ó»È¦æ«H¥Î¥d', '', 'source/plugin/xigua_114/upload/gg553bbeb14d4727538.jpeg', 'source/plugin/xigua_114/upload/gg553bca182dc127381.jpg', '4008205555', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 0, 1429978801, 0, 1, '', 0),
+(52, 157, '³Á·í³Ò', '', 'source/plugin/xigua_114/upload/gg553bd7504a6e62533.jpg', '', '4008517517', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 0, 1429985104, 0, 1, '', 1),
+(53, 157, 'ªÖ¼w°ò', '', 'source/plugin/xigua_114/upload/gg553bd8a515e413345.jpeg', '', '4008823823', '', 'source/plugin/xigua_114/upload/gg553bddb5c7e107986.jpg', 'ªÖ¼w°ò', 'http://www.kfc.com.cn/kfccda/index.aspx', 'http://weibo.com/kfcchina', '', '', '', '', '', '', '', '', '', 1, 0, 1429985445, 0, 1, '', 1),
+(54, 157, '¥²Ð`«È', '', 'source/plugin/xigua_114/upload/gg553bd9abee498623.jpg', '', '4008123123', '', '', '', 'http://www.pizzahut.com.cn/', '', '', '', '', '', '', '', '', '', '', 1, 0, 1429985707, 0, 0, '', 1),
+(55, 167, '¯u¥\¤Ò', '', 'source/plugin/xigua_114/upload/gg553bdb06efd736457.jpg', '', '4006927927', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 0, 1429986054, 0, 0, '', 1),
+(56, 157, '¼w§J¤h', '', 'source/plugin/xigua_114/upload/gg553bdc00d634a2715.jpg', '', '4006309907', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 0, 1429986176, 0, 1, '', 1),
+(57, 167, '»]©öÀí', '¤U¤ÈÀç·~®É¶¡±µ¨ü±ßÀ\¹w­q¡A¶ºÂI°e¹F¡T¥i¥H¹q¸Ü«t¸ß¡T¤£¤è«K°e¤W¼Ó®@¡T', 'source/plugin/xigua_114/upload/gg553be659e95252132.jpeg', '', '13952031440', '', '', '', '', '', '', '', '¦¿Ä¬¬Ù', '«n¨Ê¥«', '«Ø¿ó°Ï', 'ùÚ¤s¸ô179-5¸¹', '', '', '', 1, 0, 1429988953, 0, 0, '', 0),
+(58, 167, '«¢º¸ÀØ¤ô»å', '', 'source/plugin/xigua_114/upload/gg553be728230fc4114.jpeg', '', '02587759669', '', '', '', '', '', '', '', '¦¿Ä¬¬Ù', '«n¨Ê¥«', '¥ÈªZ°Ï', 'xx¸ô', '', '', '', 1, 0, 1429989160, 0, 0, '', 1),
+(59, 168, '85«×C', '', 'source/plugin/xigua_114/upload/gg553be8e4bab4f6155.jpeg', '', '025-86557885', '', '', '', '', '', '', '', '¦¿Ä¬¬Ù', '«n¨Ê¥«', '«Ø¿ó°Ï', '¤ô¦èªù¤jµó99¸¹1¼ÓA®y', '', '', '', 1, 0, 1429989604, 0, 0, '', 1),
+(60, 161, '¶ê³q³t»¼', '', 'source/plugin/xigua_114/upload/gg553c50a63928c7920.jpeg', '', '95554', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 0, 1430016166, 0, 0, '', 1),
+(61, 187, '­êÄµ', '', 'source/plugin/xigua_114/upload/gg553c51b94f1eb6562.jpg', '', '110', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 0, 1430016441, 0, 0, '', 0),
+(62, 186, '114¹q¸Ü¾É¯è', '', 'source/plugin/xigua_114/upload/gg553c525a4c313827.jpg', '', '114', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 0, 1430016602, 0, 0, '', 0),
+(63, 187, '¤õÄµ', '', 'source/plugin/xigua_114/upload/gg553c52b35cd91561.jpg', '', '119', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 0, 1430016691, 0, 0, '', 0),
+(64, 225, '¤¤°ê²¾°Ê', '', 'source/plugin/xigua_114/upload/gg553d90a13a9f16903.png', '', '10086', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 0, 1430098081, 0, 1, '', 0),
+(65, 226, '¤¤°êÁp³q', '', 'source/plugin/xigua_114/upload/gg553d90c53dc066159.png', '', '10010', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 0, 1430098117, 0, 0, '', 0);]]></item>
+				<item id="l2"><![CDATA[(1, 0, '»È¦æ', 'source/plugin/xigua_114/static/cat/gg553d941d15a3a7305.png', 'source/plugin/xigua_114/static/cat/gg553d927f8180e6673.jpg', '', 0, 2, '', 'nav', 1),
+(123, 1, 'ª÷¿Ä«OÀI', '', '', '', 0, 3, '', '', 0),
+(125, 1, '«H¥Î¥d', '', '', '', 0, 2, '', '', 0),
+(126, 1, '»È¦æ', '', '', '', 1429089942, 1, '', '', 0),
+(130, 0, '¥ð¶~®T¼Ö', 'source/plugin/xigua_114/static/cat/gg553c5715cb8c1406.png', '', '', 1429090222, 1, 'new', 'nav', 0),
+(131, 0, 'ÁÊª«', 'source/plugin/xigua_114/static/cat/gg553cddd07afda465.png', '', '', 1429090222, 2, 'hot', 'nav', 1),
+(134, 0, '¨T¨®¥æ³q', 'source/plugin/xigua_114/static/cat/gg553ce5df00204247.png', '', '', 1429090459, 5, '', 'nav', 0),
+(135, 0, 'ÂåÀø°·±d', 'source/plugin/xigua_114/static/cat/gg553ce1a3f200e1339.png', '', '', 1429092032, 6, '', 'near', 0),
+(136, 0, '¤½¦@¼ö½u', 'source/plugin/xigua_114/static/cat/gg553c56a4bddda3751.png', '', '', 1429092032, 7, 'hot', 'nav', 0),
+(140, 0, '¬ü­¹', 'source/plugin/xigua_114/static/cat/gg553cda7343b37636.png', '', '', 1429606098, 0, 'hot', 'nav', 1),
+(141, 0, '°s©±', 'source/plugin/xigua_114/static/cat/gg553cdc7aed3923191.png', '', '', 1429628290, 0, '', 'near', 1),
+(142, 0, '¤õ¨®Éó²¼', 'source/plugin/xigua_114/static/cat/gg553cdbbe2b01a3187.png', 'source/plugin/xigua_114/static/cat/gg553ce844259187039.jpg', '', 1429628290, 0, '', 'slider', 0),
+(143, 0, '§Ö»¼', 'source/plugin/xigua_114/static/cat/gg553ce09d243862921.png', '', '', 1429628368, 0, 'hot', 'nav', 1),
+(151, 0, '¹B°Ê°·¨­', 'source/plugin/xigua_114/static/cat/gg553c5798b2e185273.png', '', '', 1429969656, 0, '', 'nav', 0),
+(152, 0, '±Ð¨|°ö°V', 'source/plugin/xigua_114/static/cat/gg553ce0f0383436524.png', '', '', 1429969656, 0, '', 'list', 1),
+(153, 0, '¥»¦a¥Í¬¡', 'source/plugin/xigua_114/static/cat/gg553cdd2f2f7bb9667.png', '', '', 1429969656, 0, '', 'list', 0),
+(157, 140, '¬ü­¹¥~½æ', '', '', '', 1429981852, 2, '', '', 0),
+(158, 130, '©@°ØÆU', '', '', '', 1429987708, 0, '', '', 1),
+(159, 130, 'KTV', '', '', '', 1429987708, 0, '', '', 1),
+(160, 130, '¼v°|', '', '', '', 1429987708, 0, '', '', 1),
+(161, 143, '±`¥Î§Ö»¼', '', '', '', 1429987776, 0, '', '', 1),
+(162, 141, '°s©±¹w­q', '', '', '', 1429987847, 0, '', '', 0),
+(163, 141, '§Ö±¶°s©±', '', '', '', 1429987847, 0, '', '', 0),
+(164, 141, '°ª¯Å³sÂê', '', '', '', 1429987847, 0, '', '', 0),
+(165, 142, '¤õ¨®²¼¹w­q', '', '', '', 1429987907, 0, '', '', 1),
+(166, 142, 'Éó²¼¹w­q', '', '', '', 1429987907, 0, '', '', 1),
+(167, 140, '¤¤¦¡¬ü­¹', '', '', '', 1429989278, 1, '', '', 0),
+(168, 140, '²¢ÂI', '', '', '', 1429989422, 3, '', '', 1),
+(169, 151, '°·¨­©Ð', '', '', '', 1430014851, 0, '', '', 1),
+(170, 151, '·ì¦÷', '', '', '', 1430014851, 0, '', '', 1),
+(171, 151, 'Ê^¨|³õÀ]', '', '', '', 1430014851, 0, '', '', 1),
+(172, 152, 'Â¾·~°ö°V', '', '', '', 1430014897, 3, '', '', 1),
+(173, 152, 'ÃÀ³N°ö°V', '', '', '', 1430014897, 2, '', '', 1),
+(174, 152, '¤j¾Ç', '', '', '', 1430014897, 1, '', '', 1),
+(175, 153, '«K¥ÁªA°È', '', '', '', 1430014970, 1, '', '', 0),
+(176, 153, '®a¹qºû­×', '', '', '', 1430014970, 2, '', '', 1),
+(177, 153, '«OÏ¡', '', '', '', 1430014970, 3, '', '', 1),
+(178, 153, '·h®a', '', '', '', 1430014970, 4, '', '', 1),
+(182, 131, 'ºî¦X¹q°Ó', '', '', '', 1430015080, 0, '', '', 0),
+(183, 131, '¥Í¬¡ªA°È', '', '', '', 1430015080, 0, '', '', 0),
+(184, 131, 'ªA¹¢', '', '', '', 1430015080, 0, '', '', 0),
+(185, 131, '«K±¶¤ä¥I', '', '', '', 1430015080, 0, '', '', 0),
+(186, 136, '«K¥ÁªA°È', '', '', '', 1430015182, 0, '', '', 0),
+(187, 136, '³øÄµ¨D§U', '', '', '', 1430015182, 0, '', '', 0),
+(188, 136, '«t¸ß§ë¶D', '', '', '', 1430015182, 0, '', '', 0),
+(189, 134, '¥N¾r', '', '', '', 1430015348, 0, '', '', 1),
+(190, 134, '¥´¨®/«÷¨®', '', '', '', 1430015348, 0, '', '', 1),
+(191, 134, '¯²¨®', '', '', '', 1430015348, 0, '', '', 1),
+(192, 134, '¨®½ø«OÀI', '', '', '', 1430015348, 0, '', '', 1),
+(193, 134, '4S©±', '', '', '', 1430015348, 0, '', '', 1),
+(194, 135, '¨D§U¼ö½u', '', '', '', 1430015383, 0, '', '', 0),
+(195, 135, 'Âå°|', '', '', '', 1430015383, 0, '', '', 1),
+(196, 0, 'µ²±BÄR¤H', 'source/plugin/xigua_114/static/cat/gg553cdcc0ed3791252.png', '', '', 1430015647, 0, '', 'list', 0),
+(197, 0, '®È´å¥X¦æ', 'source/plugin/xigua_114/static/cat/gg553c5662dae207726.png', '', '', 1430015647, 0, '', 'list', 0),
+(198, 0, '¤p¦Y¥~½æ', 'source/plugin/xigua_114/static/cat/gg553cdac9d275d4709.png', '', '', 1430015647, 0, 'new', 'nav', 1),
+(199, 196, '¬ü®e¬üµo', '', '', '', 1430015816, 0, '', '', 1),
+(200, 196, '¬ü¥Ò', '', '', '', 1430015816, 0, '', '', 1),
+(201, 196, '±B¯½Äá¼v', '', '', '', 1430015816, 0, '', '', 1),
+(202, 196, '±B¼y¤½¥q', '', '', '', 1430015816, 0, '', '', 1),
+(203, 197, '®È¦æªÀ', '', '', '', 1430015816, 0, '', '', 1),
+(204, 197, '©Û«Ý©Ò', '', '', '', 1430015816, 0, '', '', 1),
+(205, 197, '´ºÂI', '', '', '', 1430015816, 0, '', '', 1),
+(206, 197, '¨®¯¸', '', '', '', 1430015816, 0, '', '', 1),
+(207, 198, '¤¤À\', '', '', '', 1430015816, 0, '', '', 0),
+(208, 198, '¥x¦¡', '', '', '', 1430015816, 0, '', '', 0),
+(209, 198, '¤ôªG', '', '', '', 1430015816, 0, '', '', 1),
+(210, 198, 'º~³ù', '', '', '', 1430015816, 0, '', '', 1),
+(211, 198, '¦è¦¡', '', '', '', 1430015816, 0, '', '', 0),
+(212, 198, '¤é¦¡', '', '', '', 1430015816, 0, '', '', 0),
+(213, 0, '´åÀ¸', 'source/plugin/xigua_114/static/cat/gg553ce72cb6cf86146.png', '', '', 1430015876, 0, '', 'list', 0),
+(214, 213, '¹qª±«°', '', '', '', 1430015932, 5, '', '', 1),
+(215, 213, '´ÑµP®à´å', '', '', '', 1430015932, 4, '', '', 1),
+(216, 213, '¤â´å', '', '', '', 1430015932, 3, '', '', 0),
+(217, 213, 'ÊIµ¸´åÀ¸', '', '', '', 1430015932, 2, '', '', 0),
+(219, 0, '¤é±`¥Í¬¡', 'source/plugin/xigua_114/static/cat/gg553cdf64327e6184.png', '', '', 1430016000, 0, '', 'list', 0),
+(220, 135, 'ÃÄ©±', '', '', '', 1430016021, 0, '', '', 1),
+(221, 219, '¶W¥«', '', '', '', 1430016070, 0, '', '', 1),
+(222, 219, 'ATM', '', '', '', 1430016070, 0, '', '', 1),
+(223, 219, '°Ó³õ', '', '', '', 1430016070, 0, '', '', 1),
+(224, 0, '¸Ü¶O¥R­È', 'source/plugin/xigua_114/static/cat/gg553cf07b57d188780.png', 'source/plugin/xigua_114/static/cat/gg553d9296db0da7589.png', '', 1430055001, 0, '', 'slider', 0),
+(225, 224, '²¾°Ê', '', '', '', 1430057083, 0, '', '', 1),
+(226, 224, 'Áp³q', '', '', '', 1430057083, 0, '', '', 1),
+(227, 224, '¹q«H', '', '', '', 1430057083, 0, '', '', 1);]]></item>
+			</item>
+		</item>
+		<item id="installfile"><![CDATA[install.php]]></item>
+		<item id="upgradefile"><![CDATA[upgrade.php]]></item>
+		<item id="uninstallfile"><![CDATA[uninstall.php]]></item>
+	</item>
+</root>

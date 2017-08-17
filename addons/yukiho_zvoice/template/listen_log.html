@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+{if empty($_W['isajax'])}
+{template 'common/top'}
+{/if}
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">偷听列表</h3>
+				<div class="box-tools">
+					<a href="javascript:history.back();" class="btn btn-info">返回列表</a>
+				</div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example2" class="table  table-hover">
+				<thead>
+				<tr>
+					<th style="width:20%;">用户</th>
+					<th style="width:10%;">状态</th>
+					<th style="width:35%;">订单编号</th>
+					<th style="width:10%;">金额</th>
+					<th>操作</th>
+				</tr>
+				</thead>
+				<tbody>
+				{loop $list['list'] $li}
+				<tr>
+					{php $member = M('member')->getInfo($li['openid'])}
+					<td>
+						<img src="{php echo tomedia($member['avatar'])}" style="width:2em;height:2em;" class="img-rounded"/>
+						{$member['nickname']}
+					</td>
+					<td>
+						<label class="label label-{if $li['status']==1}success{else}danger{/if}">{if $li['status']==1}有效{else}无效{/if}</label>
+					</td>
+					<td>{$li['sn']}</td>
+					<td>
+						<label class="label label-info">{$li['credit']}</label>
+					</td>
+					<td>
+						<a href="{php echo $this->createWebUrl('listen_log',array('act'=>'delete','question_id'=>$question_id,'id'=>$li['id']))}" class="btn btn-danger">删除</a>
+					</td>
+				</tr>
+				{/loop}
+                </tbody>
+              </table>
+            </div>
+			<div class="box-footer">
+				{php echo $list['pager']}
+			</div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+</div>
+<!-- ./wrapper -->
+{if empty($_W['isajax'])}
+{template 'common/foot'}
+<script>
+	$('.mutdelete').click(function(){
+		var url = $(this).data('href');
+		var ids = [];
+		var idss = [];
+		$('input:checkbox[name="ids[]"]').each(function() {
+			var _that = $(this)[0];
+			if(_that.checked){
+				ids = ids.concat($(this).val());
+			}else{
+				idss = idss.concat($(this).val());
+			}
+		});
+		console.log(ids);
+		if(confirm("您确定要删除么？")){
+			$.post(url,{ids:ids},function(data){
+				util.message("删除成功","{php echo $_W['siteurl']}",'success');
+			},'json');
+		}
+	});
+	$('.unmutdelete').click(function(){
+		var ids = [];
+		var idss = [];
+		$('input:checkbox[name="ids[]"]').each(function() {
+			var _that = $(this)[0];
+			if(_that.checked){
+				ids = ids.concat($(this).val());
+			}else{
+				idss = idss.concat($(this).val());
+			}
+		});
+		console.log(idss);
+		if(confirm("您确定要删除么？")){
+			$.post(url,{ids:idss},function(data){
+				util.message("删除成功","{php echo $_W['siteurl']}",'success');
+			},'json');
+		}
+	})
+	$("#checkall").click(function(){
+		console.log('checkall');
+		$('input[name="ids[]"').each(function(){
+			var _that = $(this)[0];
+			if(_that.checked){
+				_that.checked = false;
+			}else{
+				_that.checked = true;
+			}
+		});
+	});
+	$('body').on('click','.open_modal',function(){
+		var title = '';
+		var url = $(this).data('href');
+		var name = $(this).data('name');
+		console.log(url);
+		$.get(url,function(data){
+			var content = data;
+			var footer = '<button class="btn btn-danger close2">关闭</button>';
+			var options = {containerName:''+name};
+			var model = name+'_modal';
+			eval(model+'=util.dialog(title, content, footer,options);');
+			eval(model+'.show();');
+			eval(model+'.removeClass("fade");');
+			eval(model+'.find(".close2").click(function(){'+model+'.hide();})');
+		},'html');
+	});
+</script>
+{/if}

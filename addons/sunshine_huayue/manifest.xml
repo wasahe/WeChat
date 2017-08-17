@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com" versionCode="0.8">
+	<application setting="true">
+		<name><![CDATA[超级粉丝社区]]></name>
+		<identifie><![CDATA[sunshine_huayue]]></identifie>
+		<version><![CDATA[8.0]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[唯一一款同时支持乐视云直播和腾讯云直播的系统模块，不同的客户可以针对自己的需求，来选择合适的平台。 创建房间时可以进行选择视频平台类型，以及可以选择是否公开、加密、付费等。]]></ability>
+		<description><![CDATA[唯一一款同时支持乐视云直播和腾讯云直播的系统模块，不同的客户可以针对自己的需求，来选择合适的平台。 创建房间时可以进行选择视频平台类型，以及可以选择是否公开、加密、付费等。]]></description>
+		<author><![CDATA[微赞]]></author>
+		<url><![CDATA[http://www.012wz.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="首页" do="index" />
+			<entry title="聊天室列表" do="chatroomlist" />
+			<entry title="附近列表" do="list" />
+			<entry title="大厅列表" do="hall" />
+			<entry title="动态列表" do="moments" />
+			<entry title="好友列表" do="messagebox" />
+			<entry title="个人中心" do="usercenter" />
+			<entry title="发布新帖" do="MomentAdd" />
+
+		</cover>
+		<menu>
+			<entry title="主后台" do="manage" direct="1"/>
+		</menu>
+	</bindings>
+	<install><![CDATA[install.php]]></install>
+	<uninstall><![CDATA[uninstall.php]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

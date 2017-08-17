@@ -1,0 +1,83 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+    <li><a href="{php echo  $this->createWebUrl('servetemp', array());}">服务模板管理</a></li>
+    <li class="active"><a href="{php echo  $this->createWebUrl('servetempadd', array());}">添加服务模板</a></li>
+</ul>
+
+
+<div class="clearfix">    
+    <form id="theform" class="form form-horizontal" action="{php echo $this->createWebUrl('servetempok', array());}" method="post">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                添加模板代码
+            </div>
+            <div class="panel-body">
+                
+                 <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">模板名称</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="temp_name" id="temp_name" placeholder="" class="form-control">
+                        <span class="block-help"></span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">描述备注</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <textarea name="bewrite" id="bewrite" class="form-control" rows="5" placeholder=""></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">标识</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="input_name" id="input_name" placeholder="" class="form-control">
+                        <span class="block-help" style="color:red;">注意：标识只能是英文</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">执行代码</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <textarea name="code" id="code" class="form-control" rows="15" placeholder=""></textarea>
+                    </div>
+                    
+                    <span class="block-help"><a href="" data-toggle="modal" data-target="#myModal">查看格式</a></span>
+                    
+                </div>
+                
+               
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+                    <div class="col-md-2 col-lg-1">
+                        <input name="submit" type="submit" value="保存" class="btn btn-primary btn-block" />
+                        <input type="hidden" name="token" value="{$_W['token']}" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">执行代码格式</h4>
+          </div>
+          <div class="modal-body">
+            demo1|demo2|demo3###测试1|测试2|测试3###xm_gohome_demo###`demo1` nvarchar(300) DEFAULT NULL,`demo2` int(11) DEFAULT NULL,`money` nvarchar(100) DEFAULT NULL###1|1|1###1|1|1
+          </div>
+          <div style="color:red;">
+          注意：1.字段顺序必须与建表顺序一致;2.表名必须是xm_gohome_名称形式;3.字段顺序与名称顺序必须一直[demo1对应测试1];4.价格字段为money
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+{template 'common/footer'}

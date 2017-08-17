@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="{TEMPLATE_PATH}/images/ux/iconfont.css" />
+		<link rel="stylesheet" href="{TEMPLATE_PATH}/css/animate.css" />
+		<link rel="stylesheet" href="{TEMPLATE_PATH}/css/style.css" />
+		<script src="//cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+		<script type="text/javascript" src="{TEMPLATE_PATH}/js/script.js" ></script>
+		{php echo register_jssdk();}
+		<title>{$pagename}</title>
+	</head>
+
+	<body>
+	<div class="main">
+      
+      <div class="myAavatar animated slideInDown tc">
+      	 <div class="avatar {if $db_user['vstatus']==1}renzheng{/if}"><img src="{$head_imgurl}" width="80" height="80"></div>
+      	 <p class="f16">{$nickname}</p>
+      	 <a href="{php echo $this->createMobileUrl('my_ask_info')}" class="edit"><i class="iconfont">&#xe623;</i> 编辑</a>
+      </div>
+      
+      <div class="myItem f16 mt20">
+      	<ul>
+      		<li class="animated fadeInDown"><a href="{$my_url}"><i class="iconfont">&#xe61c;</i> 我的回答</a></li>
+      		<li class="animated fadeInDown"><a href="{$myquestion_url}"><i class="iconfont">&#xe61d;</i> 我的提问</a></li>
+      		<li class="animated fadeInDown"><a href="{php echo $this->createMobileUrl('my_ask_listen')}"><i class="iconfont">&#xe60b;</i> 我的旁听</a></li>
+      		<li class="animated fadeInDown"><a href="{php echo $this->createMobileUrl('my_ask_follow')}"><i class="iconfont">&#xe614;</i> 我的收听</a></li>
+      		<li class="animated fadeInDown"><a href="{$myamount_url}"><i class="iconfont">&#xe61e;</i> 我的收益</a></li>
+      		<li class="animated fadeInDown"><a href="{$myaudit_url}"><i class="iconfont">&#xe61e;</i> 申请认证</a></li>
+      	</ul>
+      </div>
+
+	</div>
+	
+	{template footer}
+	<script>
+	wx.ready(function () {
+	    sharedata = {
+	        title: "{$sharedata['title']}",
+	        desc: "{$sharedata['desc']}",
+	        link: "{$sharedata['link']}",
+	        imgUrl: "{$sharedata['imgUrl']}",
+	        success:function(){
+	        	//ajax
+	        }
+	    };
+	    wx.onMenuShareAppMessage(sharedata);
+	    wx.onMenuShareTimeline(sharedata);
+	});
+	</script>
+	</body>
+
+</html>

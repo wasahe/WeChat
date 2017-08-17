@@ -1,0 +1,415 @@
+<!doctype html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="{TEMPLATE_PATH}/images/ux/iconfont.css" />
+		<link rel="stylesheet" href="{TEMPLATE_PATH}/css/animate.css" />
+		<link rel="stylesheet" href="{TEMPLATE_PATH}/css/style.css" />
+		<script src="//cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+		<script type="text/javascript" src="{TEMPLATE_PATH}/js/script.js" ></script>
+		<script src="{TEMPLATE_PATH}/js/ask_main.js?v=331"></script>
+		{php echo register_jssdk();}
+		<style>
+		input[type=checkbox]{border: 1px solid #ccc; border-radius:50px; width: 18px; height:18px; position: relative; -webkit-transition: all ease 0.25s; background: #fff; vertical-align: top;}
+		input[type=checkbox]:checked{ border: none; background:#09BB07;}
+		input[type=checkbox]:after{ content:""; display: block; border:2px solid; border-color: transparent transparent #fff #fff; width:8px; height:4px; position: absolute; left: 50%; top: 50%; -webkit-transform: translate(-75%,-60%) rotate(-45deg);transform: translate(-75%,-60%) rotate(-45deg); -webkit-transform-origin: center top;transform-origin: center top; border-radius: 3px;}
+		</style>
+		<script type="text/javascript">
+		var clock_index=0;
+		var clock_handler=null,current_voiclocalid=null;
+		var globalObj=new Object();
+		var ask_id={$ask_id};
+		
+		//alert(is_nm);
+		var send_url="{php echo $this->createMobileUrl('my_ask_sendnotice')}";
+		var my_ask_index="{php echo $this->createMobileUrl('ask_pay_ajax')}";
+		var ask_status={$ask_status};
+		var answer_count={$my_answercount};
+		var is_timeout={$is_timeout};
+		var is_myindex=false;
+		/*声音播放事件*/
+		function voicePlay(){
+			$(".chat").unbind();
+			$(".chat").click(function(){
+				$(".chat").removeClass("active");
+				var recordMsg=$(this);
+				var voice_str=recordMsg.attr('attr-src');
+				if(voice_str=='pay'){
+				   //var ask_id=recordMsg.parents(".box").attr('attr-id');
+				   //设置当前支付的问答信息
+				   globalObj.recordPay=recordMsg;
+				   var  answer_id=recordMsg.parents('.reply').attr('attr-id');
+				   showTips("努力请求中..",5000);
+				   $.getJSON(my_ask_index, {"op":"reward_listen",answer_id:answer_id,ask_id:ask_id,is_nm:is_nm}, function(json){
+						$(".min_tips_box").hide();  
+					    callpay(json,'reward_details');  
+				   });
+				   return;
+				}
+				
+				if(voice_str.indexOf('http')==0){
+		 		  	var media = $('#dgAudioPlayer')[0];
+		 		  	if($("#dgAudioPlayer").attr('src')!=voice_str)
+		 		  	   $("#dgAudioPlayer").attr('src',voice_str);
+		 		  	if(media.paused) { 
+		 		  		media.play();
+		 		  		recordMsg.addClass("active");
+		 		  		globalObj.isPlaying=true;
+		 		    } else {  
+		 		    	media.pause(); 
+		 		    	recordMsg.removeClass('active')
+		 		    }
+		 		  	globalObj.voicePlaying=recordMsg;
+
+		 		  	media.removeEventListener("ended",voicePlayOver,false);
+				  	media.addEventListener("ended",voicePlayOver,false);
+				  	return;
+				}
+				
+				if(recordMsg.attr("localid")){
+				    var localId=recordMsg.attr("localid");
+				    if($(this).hasClass('active')){
+				    	wx.pauseVoice({
+				    	    localId: localId // 需要暂停的音频的本地ID，由stopRecord接口获得
+				    	});
+				    	$(this).removeClass('active')
+				    }else{
+				    	wx.playVoice({
+				    	    localId: localId // 需要播放的音频的本地ID，由stopRecord接口获得
+				    	});
+				    	$(this).addClass("active");
+				    	wx.onVoicePlayEnd({
+				    	    success: function (res) {
+				    	    	recordMsg.removeClass("active");
+				    	    }
+				    	});
+				    }
+				    return;	 
+				 }
+				
+				  wx.downloadVoice({
+					    serverId: recordMsg.attr('attr-src'), // 需要下载的音频的服务器端ID，由uploadVoice接口获得
+					    isShowProgressTips: 0, // 默认为1，显示进度提示
+					    success: function (res) {
+					        var localId = res.localId; // 返回音频的本地ID
+					        recordMsg.addClass("active");
+					        recordVoice.attr('localid',localId);
+					        wx.playVoice({
+					            localId: localId // 需要播放的音频的本地ID，由stopRecord接口获得
+					        });
+					        wx.onVoicePlayEnd({
+					    	    success: function (res) {
+					    	    	recordMsg.removeClass("active");
+					    	    }
+					    	});
+					    }
+					});  
+			  });
+		}
+		
+		//当前正在播放语音信息
+		function startRec(){
+			$(".tc.tips").hide();
+			$(".tc.time").show();
+			$(".tc.time").eq(0).text(clock_index+"s / 60s");
+			clock_index++;
+			if(clock_index==60){
+				clock_index=60;
+				$(".recording.step2").click();
+			}
+		}
+				
+		wx.ready(function(){
+	 		wx.startRecord();
+	 	 	setTimeout(function(){
+	 	 		wx.stopRecord({
+	 	 		    success: function (res) {}
+	 	 		});
+	 	 	},1200)
+	 	});
+		
+		
+		//上传语音接口
+		function uploadVoic(localId){
+			wx.uploadVoice({
+			    localId: localId, // 需要上传的音频的本地ID，由stopRecord接口获得
+			    isShowProgressTips: 1, // 默认为1，显示进度提示
+			    success: function (res) {
+			    var serverId = res.serverId; // 返回音频的服务器端ID
+			    var posturl=location.href;
+				var is_nm=$(".is_nm").val();
+				//alert(is_nm);
+				var json_data={submit:true,content:serverId,time_last:clock_index,is_nm:is_nm};
+				$.post(posturl,json_data,function(data){	 
+					clock_index=0;
+					$.get(send_url,{ask_id:ask_id,notice_type:'reward_answer'},function(result){
+							  location.href=location.href;
+					});
+				 });
+			    }
+			});
+	}
+	
+	 $(function(){
+		 voicePlay();
+			 var zxx = {
+			      obj: function(){
+			             return {
+			                 sec: $("#sec"),
+			                 mini: $("#mini"),
+			                 hour: $("#hour"),
+			                 day: $("#day")
+			             }
+			      }
+		};
+			 
+		if(!is_timeout){
+		 fnTimeCountDown('{$ask_record["reward_expirytime"]}000', zxx.obj());
+		}
+			 /*开始录音*/
+			 $(".recording.step1").click(function(){
+				 $(this).hide();
+				 $(".recording.step2").show();
+			 		wx.startRecord();
+			 	    startRec();
+			 	    clock_handler=setInterval(startRec,1000);
+			 });
+			 
+			 /*停止录音*/
+			 $(".recording.step2").click(function(){
+				 $(this).hide();
+				 $(".recording.step3").show();
+				 $(".shiBo").show();
+				 clearInterval(clock_handler);
+				 wx.stopRecord({
+			 		 success: function (res) {
+			 		    current_voiclocalid = res.localId;
+			 		 }
+			 	 });
+			 });
+			 
+			 /*点击发送*/
+			 $(".recording.step3").click(function(){
+				 if(current_voiclocalid!=null){
+			 		uploadVoic(current_voiclocalid);
+			 	 }
+				 $(".cancel").click();
+			 });
+			 
+			 /*取消和重录*/
+			 $(".cancel,.again").click(function(){
+				 $(".recording.step1").show();
+				 $(".recording.step2").hide();
+				 $(".recording.step3").hide();
+				 $(".tc.time").eq(0).text("0s / 60s");
+				 $(".shiBo").hide();
+				 current_voiclocalid=null;
+				 clock_index=0;
+				 $(".tc.tips").show();
+				 $(".tc.time").hide();
+			 });
+			 
+			 /*试播*/
+			 $(".shiBo").click(function(){
+				 if(current_voiclocalid==null){
+					 alert("没有找到有效的录音！");
+					 return;
+				 }
+				 wx.playVoice({
+			    	    localId: current_voiclocalid
+			     });
+			 }); 
+			 //踩与不踩
+			 $(".dig").click(function(){
+				 //$(this).toggleClass("green").siblings(".dig").removeClass("active");
+				 var answer_id=$(this).parents(".reply").attr('attr-id');
+				 var dir=$(this).attr('attr-dir');
+				 var dig_handler=$(this);
+		         $.post(location.href,{op:"dig",answer_id:answer_id,dir:dir},function(result){
+		        	 if(result.success==1){
+		        		 dig_handler.find("i").eq(1).text(result.count);
+		        	 }
+		         });
+			 })
+			 
+			/*采纳答案 */
+		    $(".setAn").click(function(){
+		         var conf=confirm("确认采纳此条答案吗？确认后将无法改变");
+		         if(!conf){
+		        	 return false;
+		         }
+		         var answer_id=$(this).parents(".reply").attr('attr-id');
+		         $.post(location.href,{op:"over",answer_id:answer_id},function(result){
+		        	 alert(result.data);
+		        	 location.href=location.href;
+		         });
+	        })
+		 });
+		</script>
+		<title>悬赏</title>
+	</head>
+
+	<body>
+	<div class="main">
+      <audio id="dgAudioPlayer" >Your browser does not support the audio element.您的浏览器不支持 audio 标签。</audio>
+       <div class="od">
+					
+			<div class="questioner {if $ask_record['reward_overtime']>0}over{/if}">
+				<span class="f20 fr"><i class="iconfont"></i> {$ask_record['pay_money']}</span>
+				{if $ask_record['is_nm']}
+				<div class="avatar mr5 fl">
+					<img src="../web/resource/images/gw-wx.gif" width="30" height="30">
+				</div>
+				<div class="name fl">匿名</div>
+				{else}
+				<div class="avatar mr5 fl">
+					<img src="{$ask_record['pay_avatar']}" width="30" height="30">
+				</div>
+				<div class="name fl">{$ask_record['pay_nickname']}</div>
+				{/if}
+			</div>
+			<div class="ask">
+				<p>{$ask_record['ask_content']}</p>
+				<span class="fr mt15 f12 gray" style="display:none">举报</span>
+				<div class="tags clearfix mt15">
+				{loop $ask_record['reward_tags'] $tag}
+					<span>{$tag}</span>
+				{/loop}
+				</div>
+			</div>
+			
+			{if !$ask_record['reward_overtime'] }
+				<div class="tiemLeft">
+					 <div class="timeAn"><i></i></div>
+					 <div class="countdown">
+						<div class="con">
+						剩余时间：<i id="day">0</i>天<i id="hour">0</i>时<i id="mini">0</i>分<i id="sec">0</i>秒</div>
+					</div>
+					{if $is_timeout==0}
+						{if !$is_askowner}
+						 <div class="btn tc">
+							<button class="f16 answer">
+							{if $my_answercount>0}补充一条{else}我要回答{/if}
+							</button>					   
+						 </div>
+						{/if}
+					{/if}
+				</div>
+			{/if}
+			
+			<div class="replyList">
+			{if $records}
+			{loop $records $record}
+				<div class="reply" attr-id="{$record['id']}">
+					<div class="avatar fl">
+						<img src="{if $record['is_nm']}../web/resource/images/gw-wx.gif{else}{$record['avatar']}{/if}" width="40" height="40">
+					</div>
+					
+					<div class="voice">
+						<span class="visit gray fr">{$record['paycount']}人旁听</span>
+					
+					{if $record['show']==true}
+						<div class="chat audio_box" attr-src="{$record['answer_content']}">
+						   点击播放
+						</div>
+					{else}
+						 <div class="chat audio_box" attr-src="pay">
+							  {$cfg['listen_money']}元旁听
+						 </div>
+					{/if}
+											
+					</div>
+					
+					<div class="info">
+						{if $record['is_nm']}
+						<h3 class="gray">
+							匿名
+						</h3>
+						{else}
+						<h3 class="gray">
+							{if $record['real_name']}
+							{$record['real_name']}<span>{$record['user_title']}</span>
+							{else}
+							{$record['nickname']}
+							{/if}
+						</h3>
+						{/if}
+					</div>
+					<div class="btn">
+						<ul class="flex gray">
+							<li class="dig" attr-dir="up">
+								<span><i class="iconfont">&#xe620;</i><i>{$record['up_count']}</i></span>
+							</li>
+							<li class="dig" attr-dir="down">
+								<span><i class="iconfont">&#xe621;</i><i>{$record['down_count']}</i></span>
+							</li>
+							{if $is_askowner==true && !$is_over}
+							  <li class="setAn">
+								<button><i class="iconfont">&#xe619;</i> 采纳</button>
+							  </li>
+							{/if}
+							{if $record['score']==5}
+							<li class="yel">
+								<i class="iconfont "></i> 最佳答案
+							</li>
+							{/if}
+						</ul>
+					</div>
+				</div>
+			{/loop}	
+			{else}
+			<div class="wei tc">
+					<i class="text-tips">暂无回答~</i>
+			</div>
+			{/if}
+		</div>
+			
+		<div class="loading gray" style="display:none;">
+			<span class="f18"><i class="iconfont">&#xe61a;</i></span>正在加载中…
+		</div>
+
+       </div>
+    
+
+	</div>
+
+	<!--回答 start-->
+	<div class="answerBox animated slideInUp">
+		<div class="voice">
+		<input  name="is_nm" class="is_nm" type="checkbox" value="1"/>匿名？
+			<p class="tc tips">点击开始语音回答，最长60s</p>
+			<p class="tc time" style="display:none">0s / 60s</p>
+			<div class="con mt15">
+				<ul class="flex">
+					<li><div class="cancel btn gray">取消</div></li>
+					<li>
+						<div class="recording step1" style="display:"><i class="iconfont">&#xe61c;</i></div>
+						<div class="recording step2" style="display:none;"><i class="iconfont">&#xe606;</i></div>
+						<div class="recording step3" style="display:none;">点击发送</div>
+						
+					</li>
+					<li><div class="shiBo btn" style="display:none;">试播</div><div class="again btn">重录</div></li>
+				</ul>
+			</div>
+			<div class="voiceBg"></div>
+		</div>
+	</div>
+	<!--回答 end-->
+  <script type="text/javascript">
+		wx.ready(function () {
+		    sharedata = {
+		        title: "{$sharedata['title']}",
+		        desc: "{$sharedata['desc']}",
+		        link: "{$sharedata['link']}",
+		        imgUrl: "{$sharedata['imgUrl']}",
+		        success:function(){}
+		    };
+		    wx.onMenuShareAppMessage(sharedata);
+		    wx.onMenuShareTimeline(sharedata);
+		});
+	</script>
+	{template footer}
+ </body>
+
+</html>

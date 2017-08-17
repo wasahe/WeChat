@@ -1,0 +1,170 @@
+{template 'common/header'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				活动细规设置
+			</div>
+			<div id="marks">
+			{if empty($custsts)}
+			<div class="form-group" style="padding-top:12px;">
+				<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">状态设置</label>
+				<div>
+					<div class="col-sm-6">
+						<div class="input-group">
+							<span class="input-group-addon">顺序</span>
+							<input type="text" name="displayorder[]" class="form-control" style="width:45px;" value="" placeholder="" />
+							<span class="input-group-addon">名称</span>
+							<input type="text" name="title[]" class="form-control" style="width:90px;" value="" placeholder="" />
+							<span class="input-group-addon">有效期(天)</span>
+							<input type="text" name="indate[]" class="form-control" value="" placeholder="" />
+							<span class="input-group-addon">经纪人积分(%)</span>
+							<input type="text" name="jjrcredit[]" class="form-control" value="" placeholder="" />
+							<span class="input-group-addon" style="color:red; cursor:pointer;" onclick="deletethis(this, 0)">X</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			{else}
+			{loop $custsts $key $s}
+			<div class="form-group" {if $key==0}style="padding-top:12px;"{/if}>
+				<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">{if $key==0}状态设置{/if}</label>
+				<div>
+					<input type="hidden" name="csid[]" value="{$s['id']}"/>
+					<div class="col-sm-6">
+						<div class="input-group" >
+							<span class="input-group-addon">顺序</span>
+							<input type="text" name="displayorder[]" class="form-control" style="width:45px;" value="{$s['displayorder']}" placeholder="" />
+							<span class="input-group-addon">名称</span>
+							<input type="text" name="title[]" class="form-control" style="width:90px;" value="{$s['title']}" placeholder="" />
+							<span class="input-group-addon">有效期(天)</span>
+							<input type="text" name="indate[]" class="form-control" value="{$s['indate']}" placeholder="" />
+							<span class="input-group-addon">经纪人积分(%)</span>
+							<input type="text" name="jjrcredit[]" class="form-control" value="{$s['jjrcredit']}" placeholder="" />
+							<span class="input-group-addon" style="color:red; cursor:pointer;" onclick="deletethis(this, {$s['id']})">X</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			{/loop}
+			{/if}
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label"></label>
+				<div class="col-sm-9" style="color:red; cursor:pointer;" onclick="addCustomerStatus();">
+					添加客户状态+
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">服务电话</label>
+				<div class="col-sm-6">
+					<input type="text" name="mobile" class="form-control" value="{$theone['mobile']}" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">团队抽成</label>
+				<div class="col-sm-6">
+					<div class="input-group">
+						<input type="text" name="teamfy" class="form-control" value="{$theone['teamfy']}" />
+						<span class="input-group-addon">%</span>
+					</div>
+					<span class="help-block">1-100,百分比计算</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">团队积分</label>
+				<div class="col-sm-6">
+					<input type="text" name="teamcredit" class="form-control" value="{$theone['teamcredit']}" />
+					<span class="help-block">拉下级所能获得的积分</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">客户池积分</label>
+				<div class="col-sm-6">
+					<input type="text" name="cpcredit" class="form-control" value="{$theone['cpcredit']}" />
+					<span class="help-block">经纪人在客户池提取客户需要消费的积分</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">城市搜索</label>
+				<div class="col-sm-6">
+					<input type="radio" name="isopen" value="1" {if empty($theone) || $theone['isopen'] == 1}checked="true"{/if} />显示&nbsp;&nbsp;&nbsp;
+					<input type="radio" name="isopen" value="0" {if !empty($theone) && $theone['isopen'] == 0}checked="true"{/if} />隐藏
+					<span class="help-block">设置是否开启地区搜索的功能</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">城市选择</label>
+				<div class="col-sm-6">
+					<input type="radio" name="isselect_city" value="1" {if empty($theone) || $theone['isselect_city'] == 1}checked="true"{/if} />开启&nbsp;&nbsp;&nbsp;
+					<input type="radio" name="isselect_city" value="0" {if !empty($theone) && $theone['isselect_city'] == 0}checked="true"{/if} />关闭
+					<span class="help-block">关闭后将不再选择城市，首页显示全部城市的产品</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">关注引导页</label>
+				<div class="col-sm-6">
+					<input type="text" name="gzurl" class="form-control" value="{$theone['gzurl']}" />
+					<span class="help-block">引导粉丝关注的链接</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">全民经纪人豪华版须知</label>
+				<div class="col-sm-6">
+					<textarea style="height:180px;" class="form-control" name="rule" id="rule" >{$theone['rule']}</textarea>
+					<span class="help-block">活动的相关说明</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">注册条款</label>
+				<div class="col-sm-6">
+					<textarea style="height:180px;" class="form-control" name="teams" id="teams" >{$theone['teams']}</textarea>
+					<span class="help-block">注册条款相关说明</span>
+				</div>
+			</div>
+			<div class="form-group col-sm-12">
+				<input type="hidden" name="token" value="{$_W['token']}" />
+				<input type="hidden" name="id" value="{$theone['id']}" />
+				<input type="submit" class="btn btn-primary col-lg-1" name="submit" value="提交" />
+			</div>
+		</div>
+	</form>
+</div>
+<script>
+require(['jquery', 'util'], function($, u){
+	$(function(){
+		u.editor($('#rule')[0]);
+		u.editor($('#teams')[0]);
+	});
+});
+
+function addCustomerStatus(obj){
+	
+	var insert = '';
+
+	insert = "<div class='form-group'><label class='col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label'></label><input type='hidden' name='sharepersentid[]' value='0'/><div class='col-sm-6'><div class='input-group' ><span class='input-group-addon'>顺序</span><input type='text' name='displayorder[]' class='form-control' style='width:45px;' value='' placeholder='' /><span class='input-group-addon'>名称</span><input type='text' name='title[]' class='form-control' style='width:90px;' value='' placeholder='' /><span class='input-group-addon'>有效期(天)</span><input type='text' name='indate[]' class='form-control' value='' placeholder='' /><span class='input-group-addon'>经纪人积分(%)</span><input type='text' name='jjrcredit[]' class='form-control' value='' placeholder='' /><span class='input-group-addon' style='color:red; cursor:pointer;' onclick='deletethis(this, 0)'>X</span></div></div></div>";
+	$("#marks").append(insert);
+	//document.getElementById('marks').innerHTML = document.getElementById('marks').innerHTML + insert;
+	
+	return;
+}
+
+function deletethis(obj, id){
+	if(id>0){
+		if(confirm('是否确认删除该会员级别？删除不可逆！')){
+			$.post("{php echo $this->createWebUrl('rule', array('op'=>'delete'))}"
+				,{id:id}
+				,function(d){
+					if(d==1){
+						obj.parentNode.parentNode.parentNode.remove();
+					}
+				}
+				,"json"
+			);
+		}
+	}else {
+		obj.parentNode.parentNode.parentNode.remove();
+	}
+}
+</script>
+{template 'common/footer'}

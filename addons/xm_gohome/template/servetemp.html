@@ -1,0 +1,59 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+    <li><a href="{php echo  $this->createWebUrl('serveproject', array());}">服务项目管理</a></li>
+    <li class="active"><a href="{php echo  $this->createWebUrl('serveprojectadd', array());}">添加服务项目</a></li>
+</ul>
+
+
+<div class="clearfix">    
+    <form id="theform" class="form form-horizontal" action="{php echo $this->createWebUrl('servetempok', array());}" method="post">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                添加模板代码
+            </div>
+            <div class="panel-body">
+                
+                 <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">模板名称</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="temp_name" id="temp_name" placeholder="" class="form-control">
+                        <span class="block-help"></span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">描述备注</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <textarea name="bewrite" id="bewrite" class="form-control" rows="5" placeholder=""></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">标识</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="input_name" id="input_name" placeholder="" class="form-control">
+                        <span class="block-help" style="color:red;">注意：标识只能是英文</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">执行代码</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <textarea name="code" id="code" class="form-control" rows="15" placeholder="表单字段名1|表单字段名2|变动字段名3###表名###建表语句[CREATE...]###添加语句[insert into]###是否显示:0不显示1显示[101]###是否必填[101]"></textarea>
+                    </div>
+                </div>
+               
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+                    <div class="col-md-2 col-lg-1">
+                        <input name="submit" type="submit" value="保存" class="btn btn-primary btn-block" />
+                        <input type="hidden" name="token" value="{$_W['token']}" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+{template 'common/footer'}

@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>我的</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv="Cache-Control" content="no-siteapp">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="format-detection" content="email=no">
+		<meta name="format-detection" content="address=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<link rel="stylesheet" href="{TEMPLATE_PATH}/images/ux/iconfont.css?v={php echo time();}" />
+		<link rel="stylesheet" href="{TEMPLATE_PATH}/css/animate.css?v={php echo time();}" />
+		<link rel="stylesheet" href="{TEMPLATE_PATH}/css/style.css?v={php echo time();}" />
+		<script src="//cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+		<script type="text/javascript" src="{TEMPLATE_PATH}/js/script.js?v={php echo time();}" ></script>
+		<script type="text/javascript">
+			var ask_money={$ask_money};
+			var tags="{$db_user['tags']}";
+			$(function(){
+				$(".mytag").click(function(){
+					//$(this).toggleClass('active');
+					var size=$(".mytag.active").size();
+					if(size==3){
+						alert("最多只能选择2个标签");
+						$(this).removeClass('active');
+						return;
+					}
+				});
+				
+				if(tags.length>0){
+					tags=tags.split(',');
+					for(i=0;i<tags.length;i++){
+						$("#tag_"+tags[i]).addClass('active');
+					}
+				}
+			//提交
+			 $("#save").click(function(){
+				 var data={submit:true};
+				 data.real_name=$("#real_name").val();
+				 data.user_title=$("#user_title").val();
+				 data.user_desc=$("#user_desc").val();
+				 data.pay_money=$("#pay_money").val();
+				 
+				 if(data.pay_money==''){
+					 alert('请填写需要支付金额！');
+					 return;
+				 }
+				 if(data.pay_money<ask_money){
+					 alert("金额必须大于等于"+ask_money+"元");
+					 return;
+				 }
+				 if(data.real_name==''){
+					 alert('请填写您的姓名！');
+					 return;
+				 }
+				 if(data.user_title==''){
+					 alert('请填写您的头衔！');
+					 return;
+				 }
+				 
+				 var tag_ids=new Array();
+				 $(".mytag.active").each(function(){
+					 tag_ids.push($(this).attr('attr-id'));
+				 });
+				 
+				 tag_ids=tag_ids.join(',');
+		         data.tags=tag_ids;
+				 
+				 $.post(location.href,data,function(result){
+					 if(result.success==1){
+						 alert(result.data);
+						 location.href=location.href.replace('my_ask_info','my_ask_index');
+					     return;
+					 }
+					 alert(result.data);
+				 });
+			 });
+		});
+		
+		</script>
+	</head>
+	<body>
+	<div class="main">
+       <div class="edit">
+       	  <div class="top tc">
+	      	 <div class="avatar"><img src="{$head_imgurl}" width="60" height="60"></div>
+	      	 <p class="mt5">{$nickname}</p>
+       	  </div>
+       	  <div class="editItem">
+       	  	<ul>
+       	  		<li class="price">向我提问需要支付<input value="{$db_user['pay_money']}" id="pay_money" type="number">元</li>
+       	  		<li>
+       	  			<h3><span class="fr f12 gray">（8个汉字，16个英文字符）</span>姓名</h3>
+       	  			<div class="box"><input id="real_name" type="text" placeholder="8个字以内" value="{$db_user['real_name']}"></div>
+       	  		</li>
+       	  		<li>
+       	  			<h3><span class="fr f12 gray">（18个字以内）</span>你的头衔</h3>
+       	  			<div class="box"><input id="user_title" type="text" placeholder="18个字以内" value="{$db_user['user_title']}"></div>
+       	  		</li>
+       	  		<li>
+       	  			<h3><span class="fr f12 gray">（100个字以内）</span>详细介绍下自己</h3>
+       	  			<div class="box"><textarea id="user_desc" placeholder="100个字以内">{$db_user['user_desc']}</textarea></div>
+       	  		</li>
+				<li>
+					<h3><span class="fr f12 gray">（最多选2个）</span>选择自己擅长的领域</h3>
+					<div class="box ts">
+						<div class="tagSelect clearfix">
+							{loop $tag_record  $trecord}
+								<span class="mytag" id="tag_{$trecord['id']}" attr-id="{$trecord['id']}">{$trecord['tag_name']}</span>
+							{/loop}
+						</div>
+					</div>
+				</li>
+       	  	</ul>
+       	  </div>
+       	  <div class="btn p15" id="save">
+       	  	<button>提交保存</button>
+       	  </div>
+       </div>
+	</div>
+	<!--底部菜单 start-->
+	{template footer}
+	<!--底部菜单 end-->
+	</body>
+</html>

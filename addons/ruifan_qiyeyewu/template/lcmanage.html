@@ -1,0 +1,203 @@
+{template 'common/header'}
+<div class="main">
+	<ul class="nav nav-tabs">
+		<li{if $_GPC['do'] == 'lcmanage' || $_GPC['do'] == '' } class="active"{/if}><a href="{php echo $this->createWebUrl('lcmanage',array('number'=>$number));}">流程列表</a></li>
+<li><a href="#" class="wzxx">添加流程</a></li>
+	</ul>
+    
+	<div class="panel panel-primary">
+		<div class="panel-heading" style="text-align: left;">
+			<lable class="control-label"><i class="fa fa-search"></i> 模板： <span style="color:red">{$name}</span> 的业务流程</lable>
+		</div>
+		<div class="panel-body table-responsive">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<!-- <th style="width:200px;">模板编号</th> -->
+					<!--<th style="width:200px;">业务类型</th>-->
+					<th style="width:300px;">排序</th>
+					<th style="width:250px">流程名称</th>
+					<th style="width:100px">状态</th>
+					<th style="width:150px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $row}
+				<tr>
+					<!-- <td>{$row['number']}</td> -->
+					<!--<td>{$row['typename']}</td>-->
+					<td>{$row['sequence']}</td>
+					<td>{$row['lcname']}</td>
+					<td>{if $row['status']==0}下架{else}展示{/if}</td>
+					<td>
+						<a class="btn btn-default" data-toggle="tooltip" data-placement="top" href="{php echo $this->createWebUrl('lcupdata',array('id'=>$row['id'],'type'=>$row['type'],'number'=>$row['number']))}" title="编辑"><i class="fa fa-edit"></i></a>
+                        {if $row['status']==0}
+                        <a class="btn btn-default" title="展示" data-placement="top" href="#" onclick="drop_confirm('您确定要展示流程吗!', '{php echo $this->createWebUrl('setlcshow',array('id'=>$row['id'],'status'=>1))}');"><i class="fa fa-play"></i></a>
+                        {elseif $row['status']==1}
+                        <a class="btn btn-default" title="下架" data-placement="top" href="#" onclick="drop_confirm('您确定要下架流程吗!', '{php echo $this->createWebUrl('setlcshow',array('id'=>$row['id'],'status'=>0))}');"><i class="fa fa-stop"></i></a>
+                        {/if}
+                        <a class="btn btn-default" data-toggle="tooltip" data-placement="top" href="#" onclick="drop_confirm('您确定要删除吗?', '{php echo $this->createWebUrl('lcdelete',array('id'=>$row['id']))}');" title="删除"><i class="fa fa-times"></i></a>
+                  	</td>
+				</tr>
+				{/loop}
+
+			</tbody>
+		</table>
+	</div>
+	</div>
+	{$pager}
+</div>
+
+
+
+
+<div class="modal fade" id="wzmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="myModalLabel" style="text-align: center;">添加流程</h4>
+			</div>
+			<div class="modal-body" style="height: 550px;">
+
+				<div class="col-xs-12 col-sm-12" style="margin-top: 30px;margin-bottom: 15px;">
+					<span style='color:red'>*</span> 模板名称
+				</div>
+				<div class="col-sm-12 col-xs-12" style="margin-bottom: 15px;">
+					<input type="text" id="name" class="form-control" placeholder="" name="name" value="{$name}" readonly="true">
+				</div>
+
+				<!--<div class="col-xs-12 col-sm-12" style="margin-top: 30px;margin-bottom: 15px;">-->
+					<!--<span style='color:red'>*</span> 模板名称-->
+				<!--</div>-->
+				<div class="col-sm-12 col-xs-12" style="margin-bottom: 15px;display: none">
+					<input type="text" id="number" class="form-control" placeholder="" name="number" value="{$number}" readonly="true">
+				</div>
+
+				<!--<div class="col-xs-12 col-sm-12" style="margin-top: 30px;margin-bottom: 15px;">-->
+					<!--<span style='color:red'>*</span> 业务类型-->
+				<!--</div>-->
+				<!--<div class="col-sm-12 col-xs-12" style="margin-bottom: 15px;">-->
+					<!--<select id="type" name="type" class="form-control">-->
+						<!--{loop $ywlx $row}-->
+						<!--<option class="form-control" value="{$row[id]}">{$row[lxname]}</option>-->
+						<!--&lt;!&ndash;<option class="form-control" value="2">公司变更</option>&ndash;&gt;-->
+						<!--&lt;!&ndash;<option class="form-control" value="3">公司注销</option>&ndash;&gt;-->
+						<!--{/loop}-->
+					<!--</select>-->
+				<!--</div>-->
+
+				<div class="col-xs-12 col-sm-12" style="margin-top: 30px;margin-bottom: 15px;">
+					<span style='color:red'>*</span> 排序
+				</div>
+				<div class="col-sm-12 col-xs-12" style="margin-bottom: 15px;">
+					<input type="text" id="sequence" class="form-control" placeholder="" name="sequence" value="">
+				</div>
+
+
+				<div class="col-xs-12 col-sm-12" style="margin-top: 30px;margin-bottom: 15px;">
+					<span style='color:red'>*</span> 流程名称
+				</div>
+				<div class="col-sm-12 col-xs-12" style="margin-bottom: 15px;">
+					<input type="text" id="lcname" class="form-control" placeholder="" name="lcname" value="">
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" id="submit">确定</button>
+				<button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+
+
+
+<script>
+	require(['bootstrap'],function($){
+		$('.btn').tooltip();
+	});
+$(function(){
+   
+    $(".check_all").click(function(){
+       var checked = $(this).get(0).checked;
+		$(':checkbox').each(function(){this.checked = checked});
+    });
+	$("input[name=deleteall]").click(function(){
+ 
+		var check = $("input:checked");
+		if(check.length<1){
+			err('请选择要删除的记录!');
+			return false;
+		}
+        if( confirm("确认要删除选择的记录?")){
+		var id = new Array();
+		check.each(function(i){
+			id[i] = $(this).val();
+		});
+		$.post('{php echo $this->createWebUrl('deleteAll')}', {idArr:id},function(data){
+			if (data.errno ==0)
+			{
+				location.reload();
+			} else {
+				alert(data.error);
+			}
+
+
+		},'json');
+		}
+
+	});
+});
+</script>
+<script>
+
+	$(".wzxx").bind("click", function() {
+		$('#wzmodal').modal('show');
+	});
+
+
+	$("#submit").bind("click", function() {
+//		var type = $('#type').val();
+		var sequence = $('#sequence').val();
+		var lcname = $('#lcname').val();
+		var number = $('#number').val();
+		var name = $('#name').val();
+
+
+		if (sequence == '' || sequence == undefined) {
+			alert("排序不能为空");
+			return
+		}
+
+		if (lcname == '' || lcname == undefined) {
+			alert("流程名字不能为空");
+			return
+		}
+		var submitData = {
+			sequence: sequence,
+			lcname: lcname,
+			number: number,
+			name: name,
+		};
+
+		$.post('{php echo $this->createWebUrl('lcnew')}', submitData, function(data) {
+			if (data.success == 1) {
+				location.reload();
+//				window.location = "{php echo $this->createWebUrl('lcmanage',array('number'=>$number))}";
+			} else {
+				 alert(data.msg);
+			}
+		},"json")
+	});
+
+
+
+
+function drop_confirm(msg, url){
+    if(confirm(msg)){
+        window.location = url;
+    }
+}
+</script>
+{template 'common/footer'}

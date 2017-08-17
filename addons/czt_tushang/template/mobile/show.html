@@ -1,0 +1,224 @@
+{template 'header'}
+{if $record}
+<div class="bd">
+    <article class="weui_article">
+        <p><img src="{$settings['qiniu']['host']}{$rescource['url']}" width="100%"></p>
+        <a href="javascript:;" onclick="comment({$id},'up')" class="weui_btn weui_btn_mini weui_btn_plain_primary">超值(<span id="up">{$rescource['up']}</span>)</a>
+        <a href="javascript:;" onclick="comment({$id},'down')" class="weui_btn weui_btn_mini weui_btn_plain_default">巨坑(<span id="down">{$rescource['down']}</span>)</a>
+        <span style="float:right">
+      <a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_plain_primary" id="showQrcode">我也要发图</a>
+      <a href="{php  echo $this->createMobileUrl('report', array(),false)}" class="weui_btn weui_btn_mini weui_btn_plain_default">举报</a>
+      <!-- <a href="javascript:deal({$id});" class="weui_btn weui_btn_mini weui_btn_plain_default">屏蔽</a> -->
+    </span>
+    </article>
+</div>
+<script src="{JS_URL}zepto.min.js"></script>
+<script>
+function dialog(title, content, btn) {
+    $("#dialog .weui_dialog_title").html(title);
+    $("#dialog .weui_dialog_content").html(content);
+    $("#dialog .weui_btn_dialog").html(btn);
+    $('#dialog').show();
+    $('.weui_btn_dialog').click(function() {
+        $('#dialog').hide();
+    });
+}
+$('#showQrcode').click(function() {
+    {if (!empty($settings['subscribe_url']))}
+    location.href='{$settings['subscribe_url']}';
+    {else}
+    dialog('长按二维码识别关注{$_W['account']['name']}', '<img src="http://open.weixin.qq.com/qr/code/?username={$_W['account']['original']}" style="width:100%;margin-bottom:-10px;">', '确定');
+    {/if}
+});
+
+function comment(id,action) {
+    $.ajax({
+        url: "{php echo $this->createMobileUrl('comment');}",
+        type: "post",
+        dataType: "json",
+        data: {
+            id: id,
+            action: action,
+            uid:{$user['uid']},
+            type:{$type}
+        },
+        success: function(data) {
+            if (data) {
+                $('#' + action).text(parseInt($('#' + action).text())+1);
+                dialog('感谢评价', '你的评价能让本图获得更多打赏', '确定');
+            } else {
+                dialog('错误提示', '你已经评价过此图', '确定');
+            }
+        }
+    });
+}
+// function deal(id) {
+//     $.ajax({
+//         url: "{php echo $this->createMobileUrl('deal'); }",
+//         type: "post",
+//         dataType: "json",
+//         data: {
+//             id: id,
+//         },
+//         success: function(data) {
+//             if (data.errcode == 1111) {
+//                 dialog('屏蔽成功', data.errmsg, '确定');
+//             } else {
+//                 dialog('错误提示', data.errmsg, '确定');
+//             }
+//         }
+//     });
+// }
+</script>
+{else}
+<div class="container" id="container">
+    <article class="weui_article">
+        <p><img src="{$thumb}" width="100%"></p>
+    </article>
+    <div class="weui_msg" style="padding:0">
+        <!-- <div class="weui_icon_area"><i class="weui_icon_msg weui_icon_success"></i></div> -->
+        <div class="weui_text_area">
+            <h2 class="weui_msg_title">打赏{$rescource['price']}元看原图</h2>
+            <p class="weui_msg_desc">{if $rescource['show_times']}已有{$rescource['show_times']}人打赏过此图{else}暂未有人打赏过此图{/if}</p>
+        </div>
+        <div class="weui_opr_area">
+            <p class="weui_btn_area">
+                <a href="javascript:;" class="weui_btn weui_btn_primary" id="showPay">打赏看图</a>
+                <a href="javascript:;" class="weui_btn weui_btn_default" id="showQrcode">我也要发图</a>
+            </p>
+        </div>
+        <div class="weui_extra_area" style="position: static;">
+            <a href="javascript:;" id="showTip">打赏规则</a>
+        </div>
+    </div>
+</div>
+<div id="loadingToast" class="weui_loading_toast" style="display:none;">
+    <div class="weui_mask_transparent"></div>
+    <div class="weui_toast">
+        <div class="weui_loading">
+            <div class="weui_loading_leaf weui_loading_leaf_0"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_1"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_2"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_3"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_4"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_5"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_6"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_7"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_8"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_9"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_10"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_11"></div>
+        </div>
+        <p class="weui_toast_content">加载中...</p>
+    </div>
+</div>
+<style>
+  .qr-mask{
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background-color: #000;
+        opacity: 0.8;
+        display: none;
+        text-align: center;
+        z-index: 99;
+        top: 0;
+    }
+    #qr img{
+        display: inline-block!important;
+        border: 10px solid #fff!important;
+    }
+</style>
+<div class="qr-mask"></div>
+<div class="qr-mask" style="z-index:100;opacity:1;background:transparent">
+    <p style="color: #fff;margin-top:30%;padding:5px 10px;">不能支付，请长按识别下面二维码重新支付即可</p>
+    <div id="qr"></div>
+</div>
+<script src="{JS_URL}zepto.min.js"></script>
+<script src="{JS_URL}qrcode.min.js"></script>
+<script>
+function dialog(title, content, btn) {
+    $("#dialog .weui_dialog_title").html(title);
+    $("#dialog .weui_dialog_content").html(content);
+    $("#dialog .weui_btn_dialog").html(btn);
+    $('#dialog').show();
+    $('.weui_btn_dialog').click(function() {
+        $('#dialog').hide();
+    });
+}
+$('#showTip').click(function() {
+    dialog('打赏规则', '打赏所得归发图者所有', '确定');
+});
+$('#showQrcode').click(function() {
+    {if (!empty($settings['subscribe_url']))}
+    location.href='{$settings['subscribe_url']}';
+    {else}
+    dialog('长按二维码识别关注{$_W['account']['name']}', '<img src="http://open.weixin.qq.com/qr/code/?username={$_W['account']['original']}" style="width:100%;margin-bottom:-10px;">', '确定');
+    {/if}
+});
+$('#showPay').one('click',function () {
+   pay()
+});
+function pay() {
+  $('#loadingToast').show();
+  $.ajax({
+      url: "{php echo $this->createMobileUrl('json_pay'); }",
+      type: "post",
+      dataType: "json",
+      data: {id:{$id},type:{$type},uid:{$user['uid']},openid:'{$user['openid']}'},
+      success: function(data) {
+          if (data&&!data.errno) {
+            WeixinJSBridge.invoke('getBrandWCPayRequest', {
+              'appId' : data.appId,
+              'timeStamp':data.timeStamp.toString(),
+              'nonceStr' : data.nonceStr,
+              'package' : data.package,
+              'signType' : data.signType,
+              'paySign' : data.paySign
+              }, function(res) {
+              if(res.err_msg == 'get_brand_wcpay_request:ok') {
+                setTimeout(function () {
+                  window.location.href='{php echo $this->createMobileUrl('show', array('id' => $id,'done'=>1),false)}';
+                }, 500)
+              } else {
+                // alert('启动微信支付失败, 请检查你的支付参数. 详细错误为: ' + res.err_msg);
+                if (res.err_msg != 'get_brand_wcpay_request:cancel') {
+                  var w=parseInt($(window).width()*0.8);
+                  var qrcode = new QRCode(document.getElementById("qr"), {
+                      width : w,
+                      height : w
+                  });
+                  qrcode.makeCode(location.href);
+                  $('.qr-mask').css('display', 'block');
+                }
+              }
+              });
+          }else{
+            alert((data&&data.message)||data||'error');
+          }
+      },
+      error: function() {
+          alert("error");
+      },
+      complete:function () {
+        $('#loadingToast').hide();
+         $('#showPay').one('click',function () {
+             pay()
+          });
+      }
+  });
+}
+</script>
+{/if}
+<div class="weui_dialog_alert" id="dialog" style="display: none;">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+        <div class="weui_dialog_hd"><strong class="weui_dialog_title"></strong></div>
+        <div class="weui_dialog_bd weui_dialog_content"></div>
+        <div class="weui_dialog_ft">
+            <a href="javascript:;" class="weui_btn_dialog primary"></a>
+        </div>
+    </div>
+</div>
+{template 'footer'}
+<!---bbs_heirui_cn-->

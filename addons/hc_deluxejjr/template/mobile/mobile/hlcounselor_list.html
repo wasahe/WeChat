@@ -1,0 +1,217 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<title>我的客户列表 - 销售员</title>
+
+<meta charset="utf-8">
+
+<link rel="stylesheet" href="../addons/hc_deluxejjr/style/css/style.css"/>
+
+<link rel="apple-touch-icon-precomposed" href="/img/ico-startup-57x57.png" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" />
+
+
+
+<meta name="mobileOptimized" content="width" />
+
+<meta name="handheldFriendly" content="true" />
+
+<meta http-equiv="Cache-Control" content="max-age=0" />
+
+<meta name="apple-touch-fullscreen" content="yes" />
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+
+
+<style>
+
+.pagination li{
+
+	margin-left:10px;
+
+	background-color: #fa614b;
+
+	display: inline-block;
+
+	padding: 0 5px;
+
+	border-radius: 5px;
+
+	
+
+}
+
+.pagination li .pager-nav{
+
+color: #fff;
+
+
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+		<section class="main animated fadeInDown">
+
+			<div class="main-box">
+
+				<div class="client my-client-title">
+
+					<ul class="rb-row fn-clear">
+
+						<li>姓名</li>
+
+						<li>意向</li>
+
+						<li>电话</li>
+
+						<li>状态</li>
+
+					</ul>
+
+				</div>
+
+				<div class="client my-client-list">
+
+				{loop $customer $row}
+
+				
+
+					<a href="{php echo $this->createMobileurl('counselor',array('op'=>'detail','cid'=>$row['id']))}" class="rb-row my-client">
+
+								<ul class="fn-clear">
+
+									<li>{$row['realname']}</li>
+
+									<li>{$pan[$row['loupan']]}</li>
+
+									<li>{$row['mobile']}</li>
+
+									<li>
+
+										<span class="{if $row['status']==2}invalid{else}visit{/if}">{$status[$row['status']]}</span>
+
+									</li>
+
+								</ul>
+
+					</a>
+
+				{/loop}	
+
+					<ul class="fn-clear">
+
+						{$pager}
+
+					</ul>
+
+					
+
+				</div>
+
+				
+
+				
+
+			</div>
+
+		</section>
+
+		<footer class="foot"><a>&copy; {$_W['account']['name']}</a></footer>
+
+<nav class="nav fn-clear">
+
+	<a href="{php echo $this->createMobileUrl('counselor',array('op'=>'list'))}"><i class="icon-angle-left"></i>首页</a>
+
+	<a href="{php echo $this->createMobileUrl('counselor',array('op'=>'list','status'=>'0'))}" class="active"><i class="icon-users"></i>新客户</a>
+
+	<a href="{php echo $this->createMobileUrl('counselor',array('op'=>'my'))}"><i class="icon-adult"></i>个人中心</a>
+
+</nav>
+
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+
+<script src="../addons/hc_deluxejjr/style/js/com.js"></script>	
+
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+{php $signPackage=$_W['account']['jssdkconfig'];}	
+
+<script>
+
+wx.config({
+
+	debug: false,   
+
+	appId: '<?php echo $signPackage["appId"];?>',
+
+	timestamp: '<?php echo $signPackage["timestamp"];?>',
+
+	nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+
+	signature: '<?php echo $signPackage["signature"];?>',
+
+	jsApiList: ['checkJsApi','onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo',]
+
+});
+
+
+
+wx.ready(function () {
+
+	var shareData = {
+
+		title: "经纪人中心",
+
+		desc: "调动你的社交关系，推荐客源，获丰厚佣金！",
+
+		link: "{php echo $_W['siteroot'].'app/'.$this->createMobileUrl('index',array('id'=>$id))}",
+
+		imgUrl: "{$_W['siteroot']}addons/hc_deluxejjr/icon.jpg",
+
+		trigger: function (res) {},
+
+		complete: function (res) {},
+
+		success: function (res) {
+
+             TopBox.alert("分享后成功,等着收佣金吧!");
+
+			},
+
+		cancel: function (res) {
+
+            
+
+		},
+
+		fail: function (res) {}
+
+	};
+
+	wx.onMenuShareAppMessage(shareData);
+
+	wx.onMenuShareQQ(shareData);
+
+	wx.onMenuShareWeibo(shareData);
+
+	wx.onMenuShareTimeline(shareData);
+
+});
+
+</script>
+
+</body>
+
+</html>

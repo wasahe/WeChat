@@ -1,0 +1,135 @@
+{template 'header'}
+<style>
+body{background:#dedede;background-image:none;}
+.form-table th{width:30%;}
+.form-table td{width:70%;}
+table th:first-child{text-align:left;padding:0;padding-left:5px;vertical-align:middle;}
+.form-table th label{font-size:12px;}
+</style>
+{if $operation == 'display'}
+<div class="mobile-div img-rounded">
+	<div class="mobile-hd" style="border-bottom:0;">我的预约</div>
+	{loop $rows $item}
+	<a class="mobile-li" href="{php echo $this->createMobileUrl('myresearch', array('id' => $item['id'], 'op' => 'detail'))}">
+		<span class="pull-right muted">{php echo date('Y-m-d H:i:s', $item['createtime'])}</span>
+		{$research[$item['yid']]['title']} - {$row['member']}
+	</a>
+	{/loop}
+</div>
+{elseif $operation == 'detail'}
+<div class="mobile-div img-rounded">
+	<div class="mobile-hd">我的预约详情</div>
+	<div class="mobile-content">
+		<table class="form-table">
+			<tr>
+				<th><label for="">我的姓名</label></th>
+				<td>
+					{$row['member']}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">我的电话</label></th>
+				<td>
+					{$row['mobile']}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">预约方式</label></th>
+				<td>
+					{$yyfsfy}
+				</td>
+			</tr>
+			{if $row['yyfs']==0}
+			<tr>
+				<th><label for="">门店名称</label></th>
+				<td>
+					{$outletfy['name']}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">门店地址</label></th>
+				<td>
+					{$outletfy['province']}{$outletfy['city']}{$outletfy['dist']}{$outletfy['address']}
+				</td>
+			</tr>
+			{else if $row['yyfs']==1}
+			<tr>
+				<th><label for="">我的地址</label></th>
+				<td>
+					{php echo $userinfo['resideprovince'].", ".$userinfo['residecity'].", ".$userinfo['residedist'].", ".$userinfo['address'];}
+				</td>
+			</tr>
+			{/if}
+			<tr>
+				<th><label for="">{$zhicheng}</label></th>
+				<td>
+					{$jsinfo['name']}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">预约项目</label></th>
+				<td>
+					{$yyxmfy['title']}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">预约时间</label></th>
+				<td>
+					{php echo date('Y-m-d H:i:s', $row[yystarttime]);}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">备注</label></th>
+				<td>
+					{$beizhufy}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">提交时间</label></th>
+				<td>
+					{php echo date('Y-m-d H:i:s', $row['createtime']);}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">预约状态</label></th>
+				<td>
+            {if $row['status'] == 0} <span class="btn btn-default">等待客服确认</span>
+                {else if $row['status'] == 1} <span class="btn btn-primary">客服已确认</span> 
+                {else if $row['status'] == 2} <span class="btn btn-default">拒绝受理申请</span> 
+                {else if $row['status'] == 9} <span class="btn btn-default">我取消了预约</span> 
+                {else if $row['status'] == 3} <span class="btn btn-success">已完成</span> 				
+            {/if}
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>
+{if $row['status'] == 0}
+<script>
+function conf()
+{
+if(confirm("您确定要取消预约吗？"))
+return true;
+else
+return false;
+}
+</script>
+	<div class="mobile-content">
+    <form class="form" method="post" id="form" action="">
+	<div style="display:none">
+        <select id="status" name="status" class="form-control">
+             <option value="9" {if $row['status'] == 9}selected="selected"{/if}>取消我的预约</option>
+        </select>
+	</div>
+    <input type="hidden" name="id" value="{$row['id']}" />
+    <button type="submit" name="button" class="btn btn-primary span3" onclick="return conf();">取 消 预 约</button> 
+    <input type="hidden" name="token" value="{$_W['token']}" />
+    </form>
+	</div>
+{else}
+	<div class="mobile-content">
+    <button type="submit" name="button" class="btn btn-danger span3" disabled>客服受理中，不能取消</button>
+	</div>
+{/if}
+{/if}
+{template 'footer'}

@@ -1,0 +1,289 @@
+{php $title='发表'.($type==1?'好评':'差评')}
+{template 'inc/header'}
+
+<style>
+	body{background:#f8f8f8;}
+
+	#images_box{margin:5px 15px 5px 0;overflow:hidden;zoom:1;}
+	#images_box:after{content:"";display:block;height:0;line-height:0;clear:both;visibility:hidden;}
+	#images_box li{float:left;margin:0 5px 0 0;width:60px;height:60px;overflow:hidden;}
+	#images_box li a{display:block;width:60px;height:60px;line-height:60px;text-align:center;}
+	#images_box li a img{width:60px;min-height:60px;}
+	#image_adder a{background:url("{MODULE_URL}/static/mobile/images/image_adder_normal.png");background-size:60px 60px;}
+	
+	/** 解决搜索框奇怪的样式BUG **/
+	.weui_search_inner{height:auto;}
+	.weui_search_bar .weui_search_cancel {
+	  display: block;
+	}
+	.weui_icon_search{top:7px !important;}
+	.weui_icon_clear{top:7px !important;}
+</style> 
+
+<script type="text/javascript">
+
+</script>
+
+<div id="merchant_select" class="weui-popup-container fullscreen" style="z-index:11">
+	<div class="weui-popup-modal">
+		<div>
+
+			<div class="weui_search_bar" id="search_bar">
+				<form class="weui_search_outer">
+					<div class="weui_search_inner">
+						<i class="weui_icon_search"></i>
+						<input type="search" class="weui_search_input" id="search_input" placeholder="搜索并选择要评价的对象" required />
+						<a href="javascript:" class="weui_icon_clear" id="search_clear"></a>
+					</div>
+				</form>
+				<a href="javascript:$.closePopup();" class="weui_search_cancel" id="search_cancel">取消</a>
+			</div>
+
+			<div id="merchants_list" class="weui_cells weui_cells_radio" data-url="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('index',array('cmd'=>'merchants','rid'=>pencode($rank['id']))), 2)}" data-loading=false data-start=0 data-more=1 >
+			</div>
+			<div id="merchants_list_loader" class="weui-infinite-scroll"><div class="infinite-preloader"></div>正在查找...</div>
+
+
+			<script id="merchants_list_tpl" type="text/template" >
+				<%
+					if(!list){
+						return;
+					}
+					for(var i=0;i<list.length;i++){
+						var item = list[i];
+				%>
+					<label class="weui_cell weui_check_label" for="merchant_<%=item.id%>" data-name="<%=item.name%>" data-id="<%=item.id%>">
+						<div class="weui_cell_bd weui_cell_primary">
+							<p><%=item.name%></p>
+						</div>
+						<div class="weui_cell_ft">
+							<input type="radio" class="weui_check" name="merchant" id="merchant_<%=item.id%>">
+							<span class="weui_icon_checked"></span>
+						</div>
+					</label>
+				<%  } %>
+				<%
+					if(search){
+				%>
+					<label class="weui_cell weui_check_label" for="merchant_0" data-name="<%=search%>" data-id="0">
+						<div class="weui_cell_bd weui_cell_primary">
+							<h4>没有找到这个商户？</h4>
+							<h4>点击创建新商户： <%=search%></h4>
+						</div>
+						<div class="weui_cell_ft">
+							<input type="radio" class="weui_check" name="merchant" id="merchant_0">
+							<span class="weui_icon_checked"></span>
+						</div>
+					</label>
+				<%  } %>
+			</script>
+
+		</div>
+	</div>
+</div>
+
+<form id="feed_post_form" action="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('index',array('cmd'=>'post','rid'=>pencode($rank['id']))), 2)}" method="post">
+	<input type="hidden" name="submit" value="post"/>
+
+	<input id="feed_post_type" type="hidden" name="type" value="{$type}"/>
+	
+	<div class="weui_cells weui_cells_form" style="margin-top:0px;">
+
+		<div class="weui_cell">
+			<div class="weui_cell_bd weui_cell_primary">
+				<input id="feed_merchant_id" type="hidden" name="merchant_id" />
+				<input id="feed_merchant_name" class="weui_input open-popup" type="text" name="merchant_name" placeholder="请输入或选择商户"  readonly="readonly" data-target="#merchant_select"/>
+			</div>
+		</div>
+
+		<div class="weui_cell">
+			<div class="weui_cell_bd weui_cell_primary">
+				<textarea id="feed_post_content" name="content" class="weui_textarea" placeholder="请描述您的点评..." style="height:80px;"></textarea>
+				<ul id="images_box">
+					<li id="image_adder"><a></a></li>
+				</ul>
+				<h4>您还可以上传<span id="images_counter">4</span>张照片</h4>
+			</div>
+		</div>
+	</div>
+
+
+	<div style="padding:15px 15px 15px 15px;"><a id="btn_feed_post" class="weui_btn {php echo $type==1?'weui_btn_primary':'weui_btn_warn';}">发表{php echo $type==1?'好评':'差评';}</a></div>
+	
+</form>
+
+{template 'inc/script'}
+
+<script type="text/javascript">
+
+
+
+	$(function(){
+		
+		var list = $("#merchants_list");
+		var list_tpl=baidu.template($('#merchants_list_tpl').html());
+		var loadList=function(refresh){
+			/**
+			if(list.attr('data-loading')==true){
+				return;
+			}
+			**/
+			if(refresh){
+				list.attr('data-start',0);
+				list.attr('data-more',1);
+			}
+			list.attr('data-loading',true);
+			$.post(list.attr('data-url'), {
+				start:list.attr('data-start'),
+				search:$("#search_input").val()
+			},function(resp) {
+				list.attr('data-loading',false);
+				if(resp.status==0){
+					alert(resp.info);
+				}else{
+					list.attr('data-start',resp.data.start);
+					list.attr('data-more',resp.data.more);
+					if(list.attr('data-more')==0){
+						$('#merchants_list_container').destroyInfinite();
+						$('#merchants_list_loader').hide();
+					}
+					if(refresh){
+						 list.html('');
+					}
+
+					resp.data.search=$("#search_input").val();
+					var html=list_tpl(resp.data);
+
+					list.html(list.html()+html);
+				}
+			});	
+		}
+		$('#merchants_list_container').infinite().on("infinite", loadList(false));
+
+
+		$("#search_input").bind('input propertychange', function() {
+			loadList(true);
+		});
+
+		$('#merchants_list').on('click','.weui_cell',function(e){
+			$('#feed_merchant_id').val($(this).data('id'));
+			$('#feed_merchant_name').val($(this).data('name'));
+			$.closePopup();
+		});
+
+
+	
+
+		/** 图片 **/
+		var images_box = $('#images_box');
+		var image_adder = $('#image_adder');
+		var images_counter = $('#images_counter');
+
+		// 图片上传
+		images_box.on('image_upload',function(){
+			$(this).find('.image_wrap').each(function(){
+				var piv=$(this).find('.image_val');
+				if(piv.val()==''){
+					piv.val(-1);// -1表示正在上传
+					wx.uploadImage({
+						localId: $(this).data('localid'),
+						isShowProgressTips:0,
+						success: function (res) {
+							piv.val(res.serverId);
+							images_box.trigger('image_upload'); // 串行上传
+						},
+						fail: function () {
+							piv.val('');
+							images_box.trigger('image_upload'); // 串行上传
+						}
+					});
+					return false;
+				}
+			});
+		});
+		
+		// 添加图片
+		image_adder.on('click',function(){
+			wx.chooseImage({
+				count:5-images_box.children().length,
+				success: function (res) {
+					if(res.localIds){
+						for (var i in res.localIds){
+							image_adder.before('<li><a class="image_wrap" data-localid="'+res.localIds[i]+'" ><input class="image_val" type="hidden" name="images[]" value="" /><img src="'+res.localIds[i]+'"/></a></li>');
+						}
+						if(images_box.children().length>=5){
+							image_adder.hide();
+						}
+						images_counter.text(5-images_box.children().length);
+						images_box.trigger('image_upload');
+					}
+				}
+			});
+		});
+
+		// 处理图片
+		images_box.on('click','.image_wrap',function(){
+			var localId=$(this).data('localid');
+			$.confirm("确定移除这张照片？", function(text) {
+				images_box.children().each(function(){
+					if($(this).find('.image_wrap').data('localid')==localId){
+						$(this).remove();
+					}
+				});
+				images_counter.text(5-images_box.children().length);
+				if(images_box.children().length<=4){
+					image_adder.show();
+				}
+			});
+		});
+
+
+		/** 发新内容 **/
+		var wait=0;
+		var form = $('#feed_post_form');
+		function doPost(){
+			// 判断是否有图片，如果有图片，且图片正在上传中，则需要等待完成后再发表(对用户透明)
+			var imgs=$(form).find('.image_val');
+			var imgready=0;
+
+			for(var i=0;i<imgs.length;i++){
+				if($(imgs[i]).val()==''){
+					imgready=-2;
+					break;
+				}else if($(imgs[i]).val()==-1){
+					imgready=-1;
+					break;
+				}
+			}
+
+			if(imgready==-2){
+				alert('照片上传失败,请重新选择');
+			}else if(imgready==-1){
+				wait++;
+				setTimeout(doPost,1000);//间隔1秒等待图片上传
+			}else{
+				$.post(form.attr('action'), form.serialize(),function(resp) {
+					$.hideLoading();
+					if(resp.status==0){
+						$.alert(resp.info);
+					}else{
+						$.toast(resp.info, function() {
+							$.showLoading("正在返回...");
+							location.href=resp.data;
+						});
+					}
+				});
+			}
+		}
+
+		// 发布
+		$('#btn_feed_post').on('click',function(){
+			$.showLoading("正在提交...");
+			doPost();
+		});
+
+		// 先自动弹出商户选择框
+		$("#merchant_select").popup();
+	});
+</script>
+{template 'inc/footer'}

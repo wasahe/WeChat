@@ -1,0 +1,457 @@
+.container {
+    font-size: 14px;
+    width:100%;
+    margin: 0 auto;
+}
+
+.location {
+    padding:10px 0;
+    font-size: 12px;
+}
+
+.place-search {
+    float: right;
+    margin:8px 0;
+    height: 32px;
+    border: 1px #ddd solid;
+    background: #fff;
+    position: relative;
+    z-index: 3;
+    font-size: 14px;
+}
+.place-search-btn {
+    float: right;
+    display: inline-block;
+    width: 30px;
+    border-left: 1px #ddd solid;
+    text-align: center;
+    color: #999;
+    font-size: 20px;
+    cursor: pointer;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAARVBMVEUAAACorrOorrOorrOorrOorrOorrOorrOorrOorrOorrOorrOorrOorrOorrOorrOorrOorrOorrOorrOorrOorrOorrN7fvQJAAAAFnRSTlMA5zLGv4IcCe0rED/690uYktucm4d4lbUvlgAAANNJREFUKM99klmOxCAMBW3MFgiQ9PLuf9SJMg0tQpr6QLLKgLGhymI0rytrs9CVqNHQsVOuAH7LlsjmjYHiqBEEybTYvRMktEiwdxctO6TmFuyWOuyOx6cWpKHAJeG/KoGhAQM5k+DDKIOHOnM2umE7z9PIdzJDHyvD3kkLPtYVju7AOpXzY+cFzZ+iZk0gwWuUL0htvLo6VRtPBXwdGeP5HTarbh8DqvsmoUXvBIDbjN0T8CVb52wuHnhE3+xBFDQkEqnOkqqfWh1BsyPVavptdfgDoAEMIEt7GboAAAAASUVORK5CYII=') no-repeat center center;
+    background-size: 16px 16px;
+}
+.place-search-input, .place-search-btn {
+    padding: 0 8px;
+    margin: 4px 0;
+    line-height: 24px;
+    height: 24px;
+    font-size:14px;
+}
+.place-search-input {
+    width:320px;
+    border: 0;
+    transition: width 0.3s ease-in-out;
+    box-shadow: none;
+    outline: 0;
+}
+.place-search-input:focus,.place-search-input:hover{width:400px}
+
+/*
+ *折翼天使资源社区折翼天使资源社区www.zheyitianshi.com
+ *备用域名www.zheyitianshi.com
+ *更多精品资源请访问折翼天使资源社区官方网站免费获取
+ *本资源来源于网络收集,仅供个人学习交流，请勿用于商业用途，并于下载24小时后删除!
+ *如果侵犯了您的权益,请及时告知我们,我们即刻删除!
+ */
+div.slideBox{margin: 0 auto;position:relative; width:100%; height:90px; overflow:hidden;}
+div.slideBox ul.items{ position:absolute; float:left; background:none; list-style:none; padding:0; margin:0;}
+div.slideBox ul.items li{ float:left; background:none; list-style:none; padding:0; margin:0;}
+div.slideBox ul.items li a{ float:left; line-height:normal !important; padding:0 !important; border:none/*
+ *折翼天使资源社区折翼天使资源社区www.zheyitianshi.com
+ *备用域名www.zheyitianshi.com
+ *更多精品资源请访问折翼天使资源社区官方网站免费获取
+ *本资源来源于网络收集,仅供个人学习交流，请勿用于商业用途，并于下载24小时后删除!
+ *如果侵犯了您的权益,请及时告知我们,我们即刻删除!
+ */;}
+div.slideBox ul.items li a img{ margin:0 !important; padding:0 !important; display:block; border:none/*
+ *折翼天使资源社区折翼天使资源社区www.zheyitianshi.com
+ *备用域名www.zheyitianshi.com
+ *更多精品资源请访问折翼天使资源社区官方网站免费获取
+ *本资源来源于网络收集,仅供个人学习交流，请勿用于商业用途，并于下载24小时后删除!
+ *如果侵犯了您的权益,请及时告知我们,我们即刻删除!
+ */;
+    width: 960px}
+.widthauto div.slideBox ul.items li a img{ width:1200px}
+div.slideBox div.tips{ position:absolute; bottom:0; width:100%; height:20px; background:transparent; overflow:hidden;opacity:1!important;filter:Alpha(opacity=100)!important;}
+div.slideBox div.tips div.title{ position:absolute; left:0; top:0; height:100%;}
+div.slideBox div.tips div.title a{ color:#FFF; font-size:18px; line-height:50px; margin-left:10px; text-decoration:none;}
+div.slideBox div.tips div.title a:hover{ text-decoration:underline !important;}
+div.slideBox div.tips div.nums{ position:absolute; right:0; top:0; height:100%;}
+div.slideBox div.tips div.nums a{ display:inline-block; >float:left/*
+ *折翼天使资源社区折翼天使资源社区www.zheyitianshi.com
+ *备用域名www.zheyitianshi.com
+ *更多精品资源请访问折翼天使资源社区官方网站免费获取
+ *本资源来源于网络收集,仅供个人学习交流，请勿用于商业用途，并于下载24小时后删除!
+ *如果侵犯了您的权益,请及时告知我们,我们即刻删除!
+ */; width:10px; height:10px; background-color:#FFF; text-indent:-99999px; margin:0 10px 0 0;border-radius:50%}
+div.slideBox div.tips div.nums a.active{ background-color:#0089e0;}
+
+/*
+ *折翼天使资源社区折翼天使资源社区www.zheyitianshi.com
+ *备用域名www.zheyitianshi.com
+ *更多精品资源请访问折翼天使资源社区官方网站免费获取
+ *本资源来源于网络收集,仅供个人学习交流，请勿用于商业用途，并于下载24小时后删除!
+ *如果侵犯了您的权益,请及时告知我们,我们即刻删除!
+ */
+.place-tab {
+    line-height: 40px;
+    font-size: 18px;
+    border-bottom: 1px #e6e6e6 solid;
+}
+.place-tab-item {
+    float: left;
+    color: #666;
+    padding: 0 20px;
+    display: inline-block;
+}
+.place-tab-item.current {
+    color: #0089dc;
+    border-bottom: 3px #0089e0 solid;
+    margin-bottom: -2px;
+}
+.place-tab-line {
+     float: left;
+     height: 24px;
+     width: 1px;
+     margin: 8px 0;
+     background-color: #f5f5f5;
+     display: inline-block;
+ }
+/*
+ *折翼天使资源社区折翼天使资源社区www.zheyitianshi.com
+ *备用域名www.zheyitianshi.com
+ *更多精品资源请访问折翼天使资源社区官方网站免费获取
+ *本资源来源于网络收集,仅供个人学习交流，请勿用于商业用途，并于下载24小时后删除!
+ *如果侵犯了您的权益,请及时告知我们,我们即刻删除!
+ */
+
+/*
+ *折翼天使资源社区折翼天使资源社区www.zheyitianshi.com
+ *备用域名www.zheyitianshi.com
+ *更多精品资源请访问折翼天使资源社区官方网站免费获取
+ *本资源来源于网络收集,仅供个人学习交流，请勿用于商业用途，并于下载24小时后删除!
+ *如果侵犯了您的权益,请及时告知我们,我们即刻删除!
+ */
+/*
+ *折翼天使资源社区折翼天使资源社区www.zheyitianshi.com
+ *备用域名www.zheyitianshi.com
+ *更多精品资源请访问折翼天使资源社区官方网站免费获取
+ *本资源来源于网络收集,仅供个人学习交流，请勿用于商业用途，并于下载24小时后删除!
+ *如果侵犯了您的权益,请及时告知我们,我们即刻删除!
+ */
+.excavator-filter {
+    line-height: 26px;
+    padding: 10px;
+    background: #fff;
+    border: 1px solid #e6e6e6;
+    border-bottom: 0;
+    position: relative;
+    padding-left: 7em;
+}
+.excavator-filter-name {
+    color: #999;
+    position: absolute;
+    left:10px;
+    top:15px;
+}
+.excavator-filter-name, .excavator-filter-item {
+    padding: 0 10px;
+    margin-right: 8px;
+}
+.excavator-filter-item:hover {
+    background-color:#F3F3F3;
+    border-radius:3px;
+}
+.excavator-filter-item.focuss {
+    color: #fff;
+    background-color: #0089e0;
+    border-radius: 3px;
+}
+.excavator-filter-item {
+    color: #666;
+    cursor: pointer;
+    white-space: nowrap;
+    display: inline-block;
+    margin: 5px 6px;
+}
+/*
+ *折翼天使资源社区折翼天使资源社区www.zheyitianshi.com
+ *备用域名www.zheyitianshi.com
+ *更多精品资源请访问折翼天使资源社区官方网站免费获取
+ *本资源来源于网络收集,仅供个人学习交流，请勿用于商业用途，并于下载24小时后删除!
+ *如果侵犯了您的权益,请及时告知我们,我们即刻删除!
+ */
+/*
+ *折翼天使资源社区折翼天使资源社区www.zheyitianshi.com
+ *备用域名www.zheyitianshi.com
+ *更多精品资源请访问折翼天使资源社区官方网站免费获取
+ *本资源来源于网络收集,仅供个人学习交流，请勿用于商业用途，并于下载24小时后删除!
+ *如果侵犯了您的权益,请及时告知我们,我们即刻删除!
+ */
+.excavator-bgbar {
+    background-color: #f5f5f5;
+    border: 1px solid #e6e6e6;
+    border-top: 0;
+    color: #666;
+}
+.excavator-bgbar .place-search {
+    margin: 2px 0;
+    display: none;
+}
+.excavator-sort {
+    float: left;
+    line-height: 40px;
+    margin-left: 10px;
+}
+.excavator-sort .focuss {
+    color: #0089e0;
+}
+.excavator-sort-item {
+    padding: 0 10px;
+    float: left;
+    position: relative;
+}
+.excavator-sort-dropdown {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: -5px;
+    width: 80px;
+    background: #fff;
+    line-height: 30px;
+    padding: 40px 3px 4px 14px;
+    border: 1px #f5f5f5 solid;
+    border-width: 0 1px 1px 1px;
+    box-shadow: 0 1px 3px #000000;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    z-index: 6;
+}
+
+.excavator-option {
+    float: right;
+    margin: 3px 10px 3px 0;
+    line-height: 34px;
+    border-left: 1px #e6e6e6 solid;
+    padding: 0 10px;
+}
+.excavator-option-item {
+    cursor: pointer;
+}
+.excavator-option-item input {
+    margin-right: 3px;
+    vertical-align: middle;
+}
+/*
+ *折翼天使资源社区折翼天使资源社区www.zheyitianshi.com
+ *备用域名www.zheyitianshi.com
+ *更多精品资源请访问折翼天使资源社区官方网站免费获取
+ *本资源来源于网络收集,仅供个人学习交流，请勿用于商业用途，并于下载24小时后删除!
+ *如果侵犯了您的权益,请及时告知我们,我们即刻删除!
+ */
+
+/*
+ *折翼天使资源社区折翼天使资源社区www.zheyitianshi.com
+ *备用域名www.zheyitianshi.com
+ *更多精品资源请访问折翼天使资源社区官方网站免费获取
+ *本资源来源于网络收集,仅供个人学习交流，请勿用于商业用途，并于下载24小时后删除!
+ *如果侵犯了您的权益,请及时告知我们,我们即刻删除!
+ */
+.place-rstbox, .place-premiumrstbox {
+    position: relative;
+    border: 1px #e6e6e6 solid;
+    border-bottom: 0;
+    margin-top: 20px;
+    background: #fff;
+}
+.rstblock {
+    position: relative;
+    float: left;
+    background: #fff;
+    border-bottom: 1px #f5f5f5 solid;
+    font-size: 12px;
+    list-style: none;
+    width:33.333333333%;
+    height:140px;
+}
+.rstblock:hover {
+    background-color: #f5f5f5;
+}
+.rstblock:hover .rstblock-title {
+    color: #0080d9;
+}
+.widthauto .rstblock{width:25%}
+.rstblock-content {
+    padding:20px 0;
+}
+.rstblock-logo {
+    float: left;
+    padding: 20px;
+    font-size: 12px;
+    color: #999;
+    text-align: center;
+    position: relative;
+}
+.rstblock-logo-icon {
+    display: block;
+    width: 70px;
+    height: 70px;
+    margin-bottom: 10px;
+}
+.rstblock-logo-passicon {
+    position: absolute;
+    height: 25px;
+    top: 70px;
+    left: 77px;
+    z-index: 1;
+}
+.rstblock-title {
+    font-size: 16px;
+    margin-bottom: 6px;
+    font-weight: 600;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+/*
+ *折翼天使资源社区折翼天使资源社区www.zheyitianshi.com
+ *备用域名www.zheyitianshi.com
+ *更多精品资源请访问折翼天使资源社区官方网站免费获取
+ *本资源来源于网络收集,仅供个人学习交流，请勿用于商业用途，并于下载24小时后删除!
+ *如果侵犯了您的权益,请及时告知我们,我们即刻删除!
+ */
+.rstblock-starrating {
+    position: relative;
+    display: inline-block;
+    line-height: 1em;
+    color: #ccc;
+}
+.rstblock-starrating span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    color: #ffc30c;
+    white-space: nowrap;
+}
+.rstblock-monthsales {
+    color: #666;
+    text-align: left;
+    vertical-align: middle;
+    font-weight: bold;
+    font-size:15px;
+    height: 15px;
+    line-height: 15px;
+    display: block;
+    overflow:hidden;
+    word-break: break-all;
+    background: url(./phone_small.png) no-repeat left center;
+    background-size: 15px 15px;
+    padding-left: 17px;
+}
+.rstblock-monthsales img{
+    width:15px;
+    height:15px;
+    display:inline-block;
+}
+.rstblock-cost {
+    color: #999;
+    margin-top: 3px;
+    max-height: 250px;
+    overflow-y: auto;font-size:12px;
+}
+.rstblock-activity {
+    margin-top: 9px;
+}
+.rstblock-activity i {
+    display: inline-block;
+    vertical-align: middle;
+    color: #fff;
+    font-style: normal;
+    font-size: 12px;
+    line-height: 16px;
+    height: 16px;
+    overflow: hidden;
+    text-align: center;
+    width: 16px;
+    border-radius: 2px;
+    margin-right: 3px;
+    padding: 1px;
+    background-color: #f63;
+}
+/*
+ *折翼天使资源社区折翼天使资源社区www.zheyitianshi.com
+ *备用域名www.zheyitianshi.com
+ *更多精品资源请访问折翼天使资源社区官方网站免费获取
+ *本资源来源于网络收集,仅供个人学习交流，请勿用于商业用途，并于下载24小时后删除!
+ *如果侵犯了您的权益,请及时告知我们,我们即刻删除!
+ */
+/*
+ *折翼天使资源社区折翼天使资源社区www.zheyitianshi.com
+ *备用域名www.zheyitianshi.com
+ *更多精品资源请访问折翼天使资源社区官方网站免费获取
+ *本资源来源于网络收集,仅供个人学习交流，请勿用于商业用途，并于下载24小时后删除!
+ *如果侵犯了您的权益,请及时告知我们,我们即刻删除!
+ */
+.place-rstbox-loading {
+    display:none;
+    position: relative;
+    padding: 40px 20px 40px 40px;
+    font-size: 14px;
+    color: #999;
+    vertical-align: top;
+    line-height: 36px;
+    text-align: center;
+}
+.place-rstbox-loading>img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-top: -18px;
+    margin-left: -100px;
+}
+/*
+ *折翼天使资源社区折翼天使资源社区www.zheyitianshi.com
+ *备用域名www.zheyitianshi.com
+ *更多精品资源请访问折翼天使资源社区官方网站免费获取
+ *本资源来源于网络收集,仅供个人学习交流，请勿用于商业用途，并于下载24小时后删除!
+ *如果侵犯了您的权益,请及时告知我们,我们即刻删除!
+ */
+/*
+ *折翼天使资源社区折翼天使资源社区www.zheyitianshi.com
+ *备用域名www.zheyitianshi.com
+ *更多精品资源请访问折翼天使资源社区官方网站免费获取
+ *本资源来源于网络收集,仅供个人学习交流，请勿用于商业用途，并于下载24小时后删除!
+ *如果侵犯了您的权益,请及时告知我们,我们即刻删除!
+ */
+.place-rstbox-nodata {
+    text-align: center;
+    padding: 80px 20px;
+    color:#999;
+}
+.nodata {
+    margin-bottom: 20px;
+    padding-top: 50px;
+    text-align: center;
+}
+/*
+ *折翼天使资源社区折翼天使资源社区www.zheyitianshi.com
+ *备用域名www.zheyitianshi.com
+ *更多精品资源请访问折翼天使资源社区官方网站免费获取
+ *本资源来源于网络收集,仅供个人学习交流，请勿用于商业用途，并于下载24小时后删除!
+ *如果侵犯了您的权益,请及时告知我们,我们即刻删除!
+ */
+
+/*
+ *折翼天使资源社区折翼天使资源社区www.zheyitianshi.com
+ *备用域名www.zheyitianshi.com
+ *更多精品资源请访问折翼天使资源社区官方网站免费获取
+ *本资源来源于网络收集,仅供个人学习交流，请勿用于商业用途，并于下载24小时后删除!
+ *如果侵犯了您的权益,请及时告知我们,我们即刻删除!
+ */
+.cahngecity{color:#0089E0;margin-left: 10px}
+
+#xigua114_float_qrcode img{cursor:pointer}
+#xigua114_float_qrcode{text-align: center; float: left; position: fixed; top:50%; z-index: 100; margin-left: 2px; width:110px}
+a:hover{text-decoration:none!important;}
+.company-info .wechatqrlarge{max-width:300px!important;max-height:300px!important;}

@@ -1,0 +1,215 @@
+   {template 'header'}
+<!--script src="{$res}js/jquery.masonry.min.js"></script-->
+<!--script src="{$res}js/jquery.masonry.pkgd.min.js"></script-->
+<script src="../addons/bsht_tbk/res/js/main.js"></script>
+
+    <div id="msv">
+     <link rel="stylesheet" type="text/css" href="{$res}static/jwap/css/newpulic.css" />
+    </div>
+	
+    <div id="goods">
+     <section class="goods" id="pageCon">
+      <ul class="goods-list list_box clear" id="list_box">
+      </ul>
+     </section>
+	 {if $setting['autoclick']!=2}
+	 {php $tpage=$_GPC['page'];}
+     {if empty($_GPC['page'])}{php $tpage=1;$npage=$tpage-1;$npage2=$tpage+1;}{else}{php $npage=$tpage-1;$npage2=$tpage+1;}{/if}
+	 
+	 <div id="list_more" class="loading" style="margin-top:10px">
+	 <span onclick="get_list(0);">查看更多</span>
+	 </div>
+	 {else}
+	 {php $tpage=$_GPC['page'];}
+     {if empty($_GPC['page'])}{php $tpage=1;$npage=$tpage-1;$npage2=$tpage+1;}{else}{php $npage=$tpage-1;$npage2=$tpage+1;}{/if}
+	 <div id="list_more2" class="loading" style="margin-top:10px">
+
+     {if $tpage!=1}
+	 <span style="float:left;width:40%"><a href="{php echo $this->createMobileUrl('list_all', array('page' => $npage,'cate_id' => $_GPC['cate_id']));}">< 上一页</a></span>
+	 {/if}
+
+	 {if $tpage!=1}
+	 <span style="float:left;width:20%" id="shispage" onclick="$('#shispage').hide();$('#newpage').show();"><a href="javascript:">{$_GPC['page']}</a></span>
+	 <span style="float:left;width:20%;display:none" id="newpage"><input style="width:50%;text-align: center;" type="number" id="jumpPage" value="" placeholder="{$_GPC['page']}">&nbsp;<a href="javascript:" onclick="jumppage();">前往</a></span>
+	 <script>
+	 function jumppage(){
+	 var jumppagenum = $('#jumpPage').val();
+	 if(jumppagenum){
+	 if(jumppagenum<=0){jumppagenum=1;}
+	 var jumpurl = "{php echo $this->createMobileUrl('list_all');}&page="+jumppagenum;
+	 window.location.href=jumpurl;
+	 }else{
+	 
+	 }
+	 }
+	 </script>
+	 {/if}
+
+	 <span style="float:right;{if $tpage!=1}width:40%{else}width:100%{/if}"><a href="{php echo $this->createMobileUrl('list_all', array('page' => $npage2,'cate_id' => $_GPC['cate_id']));}">下一页 ></a></span>
+	 </div>
+	 {/if}
+    </div>
+ 
+	
+<script type="text/javascript">
+var limit = {$tpage};
+function get_list(ty){
+    
+    if(ty==1){
+	   $("#pageCon .list_box").html('');
+	}else{
+	   $("#list_more").html('<div class="am-text-secondary"><span class="am-icon-spinner am-icon-spin"></span> 卖命加载中...</div>');
+	   
+	}
+	
+	$.ajax({
+	    type : "post",
+	    url : "{php echo $this->createMobileUrl('list_all_ajax',array('op'=>'list','cate_id'=>$cate_id))}",
+	    data : {
+	    	limit:limit,
+	    },
+        dataType : "json",		
+	    success : function(data) {
+	    	if(data.status==200){
+						var list = data.content;
+						var content = '';
+						for(var i=0; i<list.length; i++){
+
+                            
+
+{if $setting['skin']==1 || empty($setting['skin'])}
+  
+content += '<li class="picCon"><div style="float:left; width:16px; height:16px; background:url('+list[i]['icon']+'); margin-left:5px; margin-top:5px;position:absolute;z-index:10"></div><a class="goods-a" href="'+list[i]['url']+'" target="_blank">'
++'<img class="loazd lazy-bk" src="../addons/bsht_tbk/res/images/load.gif" data-bk="'+list[i]['pic']+'{$setting['maxpic']}.jpg" /></a>'
++'<a href="'+list[i]['url']+'" target="_blank"><h3 class="tith3">'+list[i]['title']+'</h3>'
++'<div class="list-price buy"><span class="price-new"><i class="i-baoyou">包邮</i>'
++'<i class="i-quan">内部券'+list[i]['jiage2']+'元</i></span></div><div class="list-price buy">'
++'<span class="price-new fs12"><span style="text-decoration: line-through;color: rgba(171, 171, 171, 1);">￥'+list[i]['itemfee']+'</span> 券后 '+list[i]['jiage']+'<i>元</i></span></div></a>'
++'<div class="b-btndiv"><div class="btn-l"><div class="btn-wai">'
++'<div class="btn-nei"><a href="'+list[i]['yhjurl']+'" class="abuy">领券</a></div></div></div>'
++'<div class="btn-l"><div class="btn-wai">'
++'<div class="btn-nei2"><a href="'+list[i]['url']+'" class="ashare">详情</a></div></div></div></div></li>';
+		  
+{else}    
+
+         content += '<li class="picCon"><a class="goods-a" href="'+list[i]['url']+'" target="_blank">'
+		 +'<img class="loazd lazy-bk" src="../addons/bsht_tbk/res/images/load.gif" data-bk="'+list[i]['pic']+'{$setting['maxpic']}.jpg" /></a>'
+		 +'<a href="'+list[i]['url']+'" target="_blank">'
+		 +'<h3>'+list[i]['title']+'</h3>'
+         +'<div class="list-price buy">'
+         +'<span class="price-new"><i>券后 ￥</i>'+list[i]['jiage']+'</span>'
+         +'<!--span class="qhj" style="margin-left:5px">'+list[i]['tag']+'</span-->'
+         +'<a id="J_weixin" href="'+list[i]['url']+'" target="_blank" class="coupon"><span class="good-btn" style="color:#999">销量'+list[i]['itemmsell']+'</span></a>'
+         +'</div></a>'
+         +'<div class="lingquan">'
+         +'<a id="J_weixin" href="'+list[i]['yhjurl']+'" target="_blank" class="coupon"><span>'+list[i]['jiage2']+'元券</span></a>'
+         +'</div></li>';
+
+{/if}
+
+
+						}
+                        $("#pageCon .list_box").append(content);
+						var aa = $(".goods-list li").innerWidth();
+                        $(".goods-list li img").css('height',aa);
+						if(list.length=={if $setting['pageno']}{$setting['pageno']}{else}10{/if}){
+							$("#list_more").html('<span class="am-text-secondary" onclick="get_list(0);">点击查看更多</span>');
+						}else{
+							$("#list_more").html('<span></span>');
+							$("#list_more").fadeOut(500);
+						}		
+	                    limit++;
+
+						
+
+//waterfall();
+lazy_img();
+		    }else if(data.status==-103){
+	    		$("#list_more").html('<span>没有更多记录！</span>');
+				//dialog("没有更多记录！");
+				$("#list_more").fadeOut(500);
+
+	    	}else{
+			    $("#list_more").html('<span>没有更多记录！</span>');
+				//dialog("没有更多记录！！");
+				$("#list_more").fadeOut(500);
+			}    	
+	    },
+	    error : function(xhr, type) {
+
+	    }
+	});
+	    
+
+}
+
+
+get_list(0);
+
+
+//==============自动加载=============
+{if $setting['autoclick']==1}
+//获取滚动条当前的位置 
+function getScrollTop() { 
+var scrollTop = 0; 
+if (document.documentElement && document.documentElement.scrollTop) { 
+scrollTop = document.documentElement.scrollTop; 
+} 
+else if (document.body) { 
+scrollTop = document.body.scrollTop; 
+} 
+return scrollTop; 
+} 
+
+//获取当前可是范围的高度 
+function getClientHeight() { 
+var clientHeight = 0; 
+if (document.body.clientHeight && document.documentElement.clientHeight) { 
+clientHeight = Math.min(document.body.clientHeight, document.documentElement.clientHeight); 
+} 
+else { 
+clientHeight = Math.max(document.body.clientHeight, document.documentElement.clientHeight); 
+} 
+return clientHeight; 
+} 
+
+//获取文档完整的高度 
+function getScrollHeight() { 
+return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight); 
+} 
+
+
+$(window).scroll(function () { 
+if (getScrollTop() + getClientHeight() == getScrollHeight()) { 
+//alert("到达底部"); 
+get_list(0);
+} 
+});
+
+{/if}
+//==============自动加载=============  
+
+function waterfall(limit){
+$container = $('#list_box');
+$container.masonry('reload');
+	$container.imagesLoaded(function() {
+		lazy_img();	
+		$container.masonry({
+			itemSelector: '.picCon',
+			isFitWidth: false,//是否根据浏览器窗口大小自动适应默认false
+			//gutter: 20,
+			isAnimated: false,//是否采用jquery动画进行重拍版
+			isRTL:false,//设置布局的排列方式，即：定位砖块时，是从左向右排列还是从右向左排列。默认值为false，即从左向右
+            isResizable: true,//是否自动布局默认true
+			});
+		});
+}
+
+        
+</script>
+
+
+
+
+    {template 'foot'}
+	{template 'footer'}

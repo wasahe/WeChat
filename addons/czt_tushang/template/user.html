@@ -1,0 +1,73 @@
+{template 'common/header'}
+<div class="main">
+    <div class="panel panel-default">
+        <div class="panel-heading">搜索</div>
+        <div class="panel-body">
+            <form action="" method="get" class="form-horizontal" role="form">
+                <input type="hidden" name="a" value="entry" />
+                <input type="hidden" name="c" value="site" />
+                <input type="hidden" name="m" value="{MODULE_NAME}" />
+                <input type="hidden" name="do" value="user" />
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2 col-md-2 control-label">昵称</label>
+                    <div class="col-sm-8 col-md-8 col-lg-8 col-xs-12">
+                        <input class="form-control" name="nickname" type="text" value="{$_GPC['nickname']}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2 col-md-2 control-label"></label>
+                    <div class="col-sm-8 col-md-8 col-lg-8 col-xs-12">
+                        <button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body table-responsive">
+            <table class="table table-hover">
+                <thead class="navbar-inner">
+                    <tr>
+                        <th>ID</th>
+                        <th style="width:200px;">昵称</th>
+                        <th>头像</th>
+                        <th>状态</th>
+                        <th>余额</th>
+                        <th style="width:150px;">收入</th>
+                        <th style="width:170px;">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {loop $list $row}
+                    <tr>
+                        <td>{$row['uid']}</td>
+                        <td>{$row['nickname']}</td>
+                        <td><img src="{$row['headimgurl']}" height="50px" width="50px" /></td>
+                        <td>{if ($row['status']==1)}正常{else}屏蔽{/if}</td>
+                        <td>{$row['balance']}</td>
+                        <td><input style="width:100px;" type="number" value="{php echo intval($row['income']);}"><a data-uid="{$row['uid']}" href="javascript:;" class="js-btn btn btn-sm"><i class="fa fa-check"></i></a></td>
+                        <td>{if ($row['status']==1)}<a class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="top" href="{php echo $this->createWebUrl('user', array( 'uid' => $row['uid'], 'op' => 'block'))}" onclick="return confirm('确认要屏蔽该用户吗？');return false;" title="屏蔽"><i class="fa fa-times"></i> 屏蔽</a>{else}<a class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" href="{php echo $this->createWebUrl('user', array( 'uid' => $row['uid'], 'op' => 'resume'))}" onclick="return confirm('确认要恢复该用户吗？');return false;" title="恢复"><i class="fa fa-undo"></i> 恢复</a>{/if}&nbsp;&nbsp;<a class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" href="{php echo $this->createWebUrl('user_post', array( 'uid' => $row['uid']))}" ><i class="fa fa-reply"></i> Ta发布的</a></td>
+                    </tr>
+                    {/loop}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {$pager}
+</div>
+<script>
+    $(document).ready(function() {
+        $('.js-btn').click(function(event) {
+            if (confirm('确定要修改该用户收入吗？')) {
+                var income=$(this).prev('input').val();
+                var uid=$(this).attr('data-uid');
+                $.post('{php echo $this->createWebUrl('user')}', {uid: uid,income:income}, function(data, textStatus, xhr) {
+                    alert('修改成功')
+                });
+            }
+        });
+    });
+</script>
+</div>
+{template 'common/footer'}
+<!---bbs_heirui_cn-->

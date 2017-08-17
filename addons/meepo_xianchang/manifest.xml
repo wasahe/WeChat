@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com" versionCode="0.6,0.7,0.8">
+	<application setting="false">
+		<name><![CDATA[米波现场]]></name>
+		<identifie><![CDATA[meepo_xianchang]]></identifie>
+		<version><![CDATA[2.2.7]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[米波现场]]></ability>
+		<description><![CDATA[米波现场]]></description>
+		<author><![CDATA[微赞]]></author>
+		<url><![CDATA[http://www.012wz.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+		<card embed="false" />
+	</platform>
+	<bindings>
+		<rule>
+			<entry title="活动管理" do="urls" state="" direct="false" />
+		</rule>
+	</bindings>
+	<permissions>
+	</permissions>
+	<install><![CDATA[inc/angel/install.php]]></install>
+	<uninstall><![CDATA[inc/angel/uninstall.php]]></uninstall>
+	<upgrade><![CDATA[inc/angel/update.php]]></upgrade>
+</manifest>

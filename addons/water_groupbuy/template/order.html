@@ -1,0 +1,93 @@
+{template 'common/header'}
+
+<div class="main">
+	<ul class="nav nav-tabs">
+		<li {if $state == "all"}class="active"{/if}><a href="{php echo $this->createWebUrl('order',array('state'=>'all'));}">全部订单</a></li>
+		<li {if $state == "unpay"}class="active"{/if}><a href="{php echo $this->createWebUrl('order',array('state'=>'unpay'));}">未支付</a></li>
+		<li {if $state == "haspay"}class="active"{/if}><a href="{php echo $this->createWebUrl('order',array('state'=>'haspay'));}">已支付</a></li>
+	</ul>
+	<div class="panel panel-info">
+		<div class="panel-heading">当前数量： {$total}</div>
+		
+	</div>
+{if $state != 'haspay'}
+	<div class="panel panel-default">
+		<div class="panel-body table-responsive">
+			<table class="table table-hover">
+				<thead class="navbar-inner">
+					<tr>
+						<th style="width: 30px;">序号</th>
+						<th style="width: 140px;">订单号</th>
+						<th style="width: 40px;">订单金额</th>
+						<th style="width: 80px;">提交时间</th>
+						<th style="width: 50px;">订单状态</th>
+						<th style="width: 140px;">付款人信息</th>
+						<th style="width: 70px; text-align: right;">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					{loop $list $item}
+					<tr>
+						<td>{$item['id']}</td>
+						<td>{$item['orderno']}</td>
+						<td>{$item['fee']}</td>
+						<td>{$item['addtime']}</td>
+						<td>{if $item['state'] == 0}<button type="button" class="btn btn-warning btn-sm">未支付</button>{elseif $item['state'] == 1}<button type="button" class="btn btn-info btn-sm">已支付</button>{else}<button type="button" class="btn btn-info btn-sm">已领取</button>{/if}</td>
+						<td>{$item['nickname']}|{$item['fname']}|{$item['fmobile']}</td>
+						<td style="text-align: right;">
+							<a class="btn btn-default btn-sm" href="#"
+							onclick="drop_confirm('确定要删除吗?','{php echo $this->createWebUrl('addorder',array('op'=>'delete','orderid'=>$item['id']))}');"
+							title="删除"><i class="icon-remove"></i>删除</a></td>
+					</tr>
+					{/loop}
+				</tbody>
+			</table>
+		</div>
+		{$pager}
+	</div>
+{else}
+	<div class="panel panel-default">
+		<div class="panel-body table-responsive">
+			<table class="table table-hover">
+				<thead class="navbar-inner">
+					<tr>
+						<th style="width: 30px;">序号</th>
+						<th style="width: 140px;">订单号</th>
+						<th style="width: 40px;">订单金额</th>
+						<th style="width: 80px;">支付时间</th>
+						<th style="width: 50px;">核销状态</th>
+						<th style="width: 140px;">付款人信息</th>
+						<th style="width: 70px; text-align: right;">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					{loop $list $item}
+					<tr>
+						<td>{$item['id']}</td>
+						<td>{$item['orderno']}</td>
+						<td>{$item['fee']}</td>
+						<td>{$item['paytime']}</td>
+						<td>{if $item['verify'] == 0}<button type="button" class="btn btn-warning btn-sm">未核销</button>{else}<button type="button" class="btn btn-success btn-sm">已核销</button>{/if}</td>
+						<td>{$item['fname']}|{$item['fmobile']}</td>
+						<td style="text-align: right;">
+							<a class="btn btn-default btn-sm" href="#"
+							onclick="drop_confirm('确定要删除吗?','{php echo $this->createWebUrl('addorder',array('op'=>'delete','orderid'=>$item['id']))}');"
+							title="删除"><i class="icon-remove"></i>删除</a></td>
+					</tr>
+					{/loop}
+				</tbody>
+			</table>
+		</div>
+		{$pager}
+	</div>
+{/if}
+</div>
+
+<script type="text/javascript">
+    function drop_confirm(msg, url){
+        if(confirm(msg)){
+            window.location = url;
+        }
+    }
+</script>
+{template 'common/footer'}

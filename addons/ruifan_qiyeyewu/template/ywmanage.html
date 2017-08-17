@@ -1,0 +1,124 @@
+{template 'common/header'}
+<div class="main">
+    <ul class="nav nav-tabs">
+		<li{if $_GPC['do'] == 'manage'} class="active"{/if}><a href="{php echo $this->createWebUrl('manage');}">业务进度管理</a></li>
+        <li{if $_GPC['do'] == 'ywmanage' || $_GPC['do'] == '' } class="active"{/if}><a href="{php echo $this->createWebUrl('ywmanage');}">业务类型列表</a></li>
+		<li{if $_GPC['do'] == 'tlmanage'} class="active"{/if}><a href="{php echo $this->createWebUrl('tlmanage');}">模板管理</a></li>
+		<li{if $_GPC['do'] == 'formcs'} class="active"{/if}><a href="{php echo $this->createWebUrl('formcs');}">参数设置</a></li>
+		<li{if $_GPC['do'] == 'admanage'} class="active"{/if}><a href="{php echo $this->createWebUrl('admanage');}">广告管理</a></li>
+    </ul>
+
+    <div class="panel panel-primary">
+		<div class="panel-heading" style="text-align: left;">
+			<button class="btn btn-success wzxx" type="button"><i class="fa fa-search"></i> 添加业务类型</button>
+		</div>
+        <div class="panel-body table-responsive">
+            <table class="table table-hover">
+                <thead class="navbar-inner">
+                <tr>
+                    <th style="width:200px;">编号</th>
+                    <th style="width:300px;">业务类型名称</th>
+                    <th style="width:100px">状态</th>
+                    <th style="width:150px;">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {loop $list $row}
+                <tr>
+                    <td>{$row['id']}</td>
+                    <td>{$row['lxname']}</td>
+                    <td>{if $row['status']==0}下架{else}展示{/if}</td>
+                    <td>
+                        <a class="btn btn-default" data-toggle="tooltip" data-placement="top" href="{php echo $this->createWebUrl('updateyw',array('id'=>$row['id']))}" title="编辑"><i class="fa fa-edit"></i></a>
+                        {if $row['status']==0}
+                        <a class="btn btn-default" title="展示" data-placement="top" href="#" onclick="drop_confirm('您确定要展示业务类型吗!', '{php echo $this->createWebUrl('setywshow',array('id'=>$row['id'],'status'=>1))}');"><i class="fa fa-play"></i></a>
+                        {elseif $row['status']==1}
+                        <a class="btn btn-default" title="下架" data-placement="top" href="#" onclick="drop_confirm('您确定要下架业务类型吗!', '{php echo $this->createWebUrl('setywshow',array('id'=>$row['id'],'status'=>0))}');"><i class="fa fa-stop"></i></a>
+                        {/if}
+                        <a class="btn btn-default" data-toggle="tooltip" data-placement="top" href="#" onclick="drop_confirm('您确定要删除吗?', '{php echo $this->createWebUrl('deleteyw',array('id'=>$row['id']))}');" title="删除"><i class="fa fa-times"></i></a>
+                    </td>
+                </tr>
+                {/loop}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {$pager}
+</div>
+
+
+
+
+<div class="modal fade" id="wzmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel" style="text-align: center;">添加业务类型</h4>
+            </div>
+            <div class="modal-body" style="height: 550px;">
+
+
+                <div class="col-xs-12 col-sm-12" style="margin-top: 30px;margin-bottom: 15px;">
+                    <span style='color:red'>*</span> 业务类型名称
+                </div>
+                <div class="col-sm-12 col-xs-12" style="margin-bottom: 15px;">
+                    <input type="text" id="lxname" class="form-control" placeholder="" name="lxname" value="">
+                </div>
+
+
+            <div class="modal-footer" style="border: none">
+                <button type="button" class="btn btn-primary" id="submit">确定</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+    require(['bootstrap'],function($){
+        $('.btn').tooltip();
+    });
+
+</script>
+<script>
+
+    $(".wzxx").bind("click", function() {
+        $('#wzmodal').modal('show');
+    });
+
+
+    $("#submit").bind("click", function() {
+        var lxname = $('#lxname').val();
+
+        if (lxname == '' || lxname == undefined) {
+            alert("业务类型不能为空");
+            return
+        }
+        var submitData = {
+            lxname: lxname,
+        };
+
+        $.post('{php echo $this->createWebUrl('ywnew')}', submitData, function(data) {
+            if (data.success == 1) {
+                window.location = "{php echo $this->createWebUrl('ywmanage')}";
+            } else {
+                alert(data.msg);
+            }
+        },"json")
+    });
+
+
+
+
+    function drop_confirm(msg, url){
+        if(confirm(msg)){
+            window.location = url;
+        }
+    }
+</script>
+{template 'common/footer'}

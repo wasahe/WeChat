@@ -1,0 +1,42 @@
+{template 'common/header'}
+<link rel="stylesheet" type="text/css" href="../addons/qwx_shangmen/template/resource/css/animate.min.css">
+<link rel="stylesheet" type="text/css" href="../addons/qwx_shangmen/template/resource/css/style.css">
+<link rel="stylesheet" type="text/css" href="../addons/qwx_shangmen/template/resource/css/my.css">
+
+<body class="personal">
+	<!-- 头部导航栏 -->
+    {template 'header'}
+    <section>        
+        <dl class="userinfo">
+            <dt><img src="{$member['avatar']}"></dt>
+            <dd>
+                <h4>{$member['nickname']}</h4>
+                <p>{$member['mobile']}</p>
+            </dd>
+        </dl>
+        <ul class="usernum">
+            <li>
+                <a href="javascrpt:void(0);"><span><i>{$member['credit1']}</i></span><span>我的积分</span></a>               
+            </li>
+            <li>
+                <a href="javascript:void(0);"><span><i>{$member['credit2']}</i>
+                </span><span>我的余额</span></a>  
+            </li>
+        </ul>
+        <ul class="userlink">
+            <li class="order"><a href="{php echo $this->createMobileUrl('myorder'); }">我的订单</a></li>
+            <li class="address"><a href="{php echo $this->createMobileUrl('myaddress'); }">我的地址</a></li>
+            
+            {if $is_staff}
+            <li class="mrs"><a href="{php echo $this->createMobileUrl('staff_post',array('op'=>'post')); }">修改{php echo $this->getFieldsLabel('staff_name');}资料</a></li>
+            {else}
+            <li class="mrs"><a href="{php echo $this->createMobileUrl('mystaff'); }">我的{php echo $this->getFieldsLabel('staff_name');}</a></li>
+            {/if}
+        </ul>
+        <a class="logout hide" href="javascript:void(0);">退出登录</a>    
+    </section>
+    {template 'footer'}
+</body>
+</html>
+
+

@@ -1,0 +1,176 @@
+﻿{template 'common/header'}
+<style>
+
+.onlyshare{cursor:pointer;}
+
+</style>
+<div class="main">
+    <ul class="nav nav-tabs">
+        <li{if $_GPC['do'] == 'manage' || $_GPC['do'] == '' } class="active"{/if}><a href="{php echo $this->createWebUrl('manage');}">红包管理</a></li>        <li{if $_GPC['do'] == 'getredpack'} class="active"{/if}><a href="{php echo $this->createWebUrl('getredpack');}">提现管理</a></li>
+        <!-- li{if $_GPC['do'] == 'create'} class="active"{/if}><a href="{php echo $this->createWebUrl('create');}">添加红包活动</a></li -->
+
+    </ul>
+    
+ 
+    <div class="panel panel-info">
+	<div class="panel-heading">筛选</div>
+	<div class="panel-body">
+		<form action="./index.php" method="get" class="form-horizontal" role="form">
+			<input type="hidden" name="c" value="site" />
+			<input type="hidden" name="a" value="entry" />
+        	<input type="hidden" name="m" value="tyzm_scancode" />
+        	<input type="hidden" name="do" value="manage" />
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">关键字</label>
+				<div class="col-sm-8 col-lg-9">
+					<input class="form-control" name="keyword" id="" type="text" value="{$_GPC['keyword']}">
+				</div>
+                                <div class=" col-xs-12 col-sm-2 col-lg-2">
+					<button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+				</div>
+			</div>
+ 			<div class="form-group">
+			</div>
+		</form>
+	</div>
+ 
+    </div>
+ 
+    <div style="padding:15px;">
+        <table class="table table-hover">
+            <thead class="navbar-inner">
+                <tr><th class='with-checkbox' width="20">
+                    <input type="checkbox" class="check_all" /></th>
+                    <th >活动名称</th>										<th >广告商名称</th>
+                    <th  width="100">总额</th>										<th  width="100">数量</th>
+                    <th width="160">开始时间</th>
+					<th width="80">类型</th>
+					<th width="90">红包广场(点击修改)</th>
+                    <th width="80">状态</th>
+                    <th style="width: 120px;">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {loop $list $row}
+                <tr>
+
+                    <td class="with-checkbox"><input type="checkbox" name="check" value="{$row['id']}"></td>	 
+					<td>{$row['act_name']}</td>										<td>{$row['send_name']}</td>
+                    <td><span class="label label-success">{php echo $row['amount'];}元</span></td>
+	                <td  width="100">{php echo $row['number'];}</td>
+                    <td>{php echo date('Y-m-d H:i:s', $row[starttime]);}</td>
+					<td>{if $row['secret_key']==''}
+						<span class="label label-success">摇红包</span>
+                        {else}
+						<span class="label label-success">口令红包</span>
+						{/if}
+					</td>
+					<td>{if $row['onlyshare']==0}
+						<span class="label label-success onlyshare" data-id="{$row['id']}" data-s="1">显示</span>
+                        {else}
+						<span class="label label-danger onlyshare" data-id="{$row['id']}" data-s="0">不显示</span>
+						{/if}
+					</td>
+                    <td>
+						
+						                        {if $row['ispay']==0}						<span class="label label-danger">未支付</span>                        {elseif $row['ispay']==1}						<span class="label label-success">{if $row['status']==2}已领完{else}已支付{/if}</span>						{/if}
+					</td>
+                    <td >
+                    <!--a href="{php echo $this->createWebUrl('plusredpack',array('id'=>$row['id']))}" class="btn  btn-default" rel="tooltip" title="发送红包"><i class="fa fa-plus"></i></a -->					      <a class="btn btn-default" rel="tooltip" href="{php echo $this->createWebUrl('create',array('id'=>$row['id']))}" title="编辑"><i class="fa fa-edit"></i></a>{if $row['ispay']==1}
+                    <a href="{php echo $this->createWebUrl('redpacklist',array('id'=>$row['id']))}" class="btn  btn-default" rel="tooltip" title="红包列表"><i class="fa fa-money"></i></a>
+					{/if}
+                  <!--
+                        {if $row['status']==0}
+                        <a class="btn   btn-default" title="开始活动" href="#" onclick="drop_confirm('您确定要开始吗?', '{php echo $this->createWebUrl('setstatus',array('id'=>$row['id'],'status'=>1))}');"><i class="fa fa-play"></i></a>
+                        {elseif $row['status']==1}
+                        <a class="btn   btn-default" title="结束活动" href="#" onclick="drop_confirm('您确定要暂停吗!', '{php echo $this->createWebUrl('setstatus',array('id'=>$row['id'],'status'=>0))}');"><i class="fa fa-stop"></i></a>
+                        {/if}-->
+                        <!--a class="btn btn-danger" rel="tooltip" href="#" onclick="drop_confirm('您确定要删除吗?删除数据无法恢复。', '{php echo $this->createWebUrl('delete',array('id'=>$row['id']))}');" title="删除"><i class="fa fa-trash-o"></i></a -->
+                  
+                       
+                    </td>
+                </tr>
+                {/loop}
+            </tbody>
+        </table>
+        {$pager}
+    </div>
+
+</div>
+<script>
+$(function(){
+
+$(".onlyshare").click(function(){
+    var clickthis=$(this);
+    var did=clickthis.attr('data-id');
+	var onlyshare=clickthis.attr('data-s');
+	$.ajax({
+		type : "post",
+		url : "{php echo $this->createWebUrl('manage',array('ty'=>'ajaxonlyshare'))}",
+		data : {
+			id : did,
+			onlyshare : onlyshare,
+		},
+		dataType : "json",
+		success : function(res) {
+			$("#my-modal-loading").modal('close');
+			if (res.status == 200) {
+			    clickthis.attr('data-s',(1-onlyshare));
+				if(clickthis.hasClass('label-success')){
+				    clickthis.removeClass("label-success");
+                    clickthis.addClass('label-danger');
+					clickthis.html('不显示');
+                }else{
+				    clickthis.removeClass("label-danger");
+				    clickthis.addClass('label-success');
+					clickthis.html('显示');
+				}
+			}
+		}
+
+	});
+});
+
+
+
+            
+
+            $(".check_all").click(function(){
+            var checked = $(this).get(0).checked;
+                    $("input[type=checkbox]").attr("checked", checked);
+            });
+                    $("input[name=deleteall]").click(function(){
+
+            var check = $("input:checked");
+                    if (check.length < 1){
+            err('请选择要删除的记录!');
+                    return false;
+            }
+            if (confirm("确认要删除选择的记录?")){
+            var id = new Array();
+                    check.each(function(i){
+                    id[i] = $(this).val();
+                    });
+                    $.post('{php echo create_url('site/module', array('do' => 'deleteAll', 'name' => 'tyzm_scancode'))}', {idArr:id}, function(data){
+                    if (data.errno == 0)
+                    {
+                    location.reload();
+                    } else {
+                    alert(data.error);
+                    }
+
+
+                    }, 'json');
+            }
+
+            });
+                    });</script>
+<script>
+            function drop_confirm(msg, url){
+            if (confirm(msg)){
+            window.location = url;
+            }
+            }
+</script>
+
+{template 'common/footer'}

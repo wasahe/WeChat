@@ -1,0 +1,142 @@
+{template 'header'}
+<script type="text/javascript">
+var pagename="orderlist";
+</script>
+</head>
+<body>
+<div id="page0" class="ub ub-ver bga">
+    
+	<div class="ub ub-ac ub-pc mban" style="width:100%; height:100%;">
+    	<div class="c-wh uc-a15 ub ub-ver" style="height:100%; width:90%;">
+        	<div class="absolute c-wh uc-a100 uinn3" style="top:0rem; left:50%; margin-left:-2.1rem; z-index:2">
+            {if $item['avatar'] == ''}
+            	<div class="uc-a100 ub-img1 c-check" style="width:4rem; height:4rem; background-image:url({MODULE_URL}/template/mobile/images/bb.jpg);"></div>
+            {else}
+            	{if substr($item['avatar'],0,6) == 'images'}
+                    <div class="uc-a100 ub-img1 c-check" style="width:4rem; height:4rem; background-image:url({$_W['attachurl']}{$item['avatar']});"></div>
+                {else}
+                    <div class="uc-a100 ub-img1" style="background-image:url($_W['attachurl']gohome/avatar/{$item['avatar']}); height:3rem; width:3rem;" ></div>
+                {/if}
+            {/if}    
+            </div>
+            <div class=" bga uc-t15" style="margin-top:3em;">
+                <div class="ub" style="height:2.5rem">
+                    <div class="tx-c" style="padding:0.3rem 0.5rem">
+                        <i class="iconfont icon-anquanbaozhang ulev3 t-red"></i>
+                        <div class="ulev-2 t-org"><span>实名认证</span></div>
+                    </div>
+                    <div class="ub-f1"></div>
+                    
+                </div>
+                <div class="tx-c font-b">{$item['staff_name']}</div>
+                <div class="tx-c" style="padding-bottom:0.5rem 0.5rem">
+                    {if $this->getStaffFen($item['id']) == 1}
+                                <i class="iconfont icon-pingjiaxingxing ulev-1 t-org"></i>
+                                {/if}
+                                {if $this->getStaffFen($item['id']) == 2}
+                                <i class="iconfont icon-pingjiaxingxing ulev-1 t-org"></i>
+                                <i class="iconfont icon-pingjiaxingxing ulev-1 t-org"></i>
+                                {/if}
+                                {if $this->getStaffFen($item['id']) == 3}
+                                <i class="iconfont icon-pingjiaxingxing ulev-1 t-org"></i>
+                                <i class="iconfont icon-pingjiaxingxing ulev-1 t-org"></i>
+                                <i class="iconfont icon-pingjiaxingxing ulev-1 t-org"></i>
+                                {/if}
+                                {if $this->getStaffFen($item['id']) == 4}
+                                <i class="iconfont icon-pingjiaxingxing ulev-1 t-org"></i>
+                                <i class="iconfont icon-pingjiaxingxing ulev-1 t-org"></i>
+                                <i class="iconfont icon-pingjiaxingxing ulev-1 t-org"></i>
+                                <i class="iconfont icon-pingjiaxingxing ulev-1 t-org"></i>
+                                {/if}
+                                {if $this->getStaffFen($item['id']) == 5}
+                                <i class="iconfont icon-pingjiaxingxing ulev-1 t-org"></i>
+                                <i class="iconfont icon-pingjiaxingxing ulev-1 t-org"></i>
+                                <i class="iconfont icon-pingjiaxingxing ulev-1 t-org"></i>
+                                <i class="iconfont icon-pingjiaxingxing ulev-1 t-org"></i>
+                                <i class="iconfont icon-pingjiaxingxing ulev-1 t-org"></i>
+                                {/if}
+                </div>
+            </div>
+            <div class="tx-c" style="padding:0 0.5rem">
+            	<div class="ubb b-bla01 ub"  style="padding: 0.5rem 0">
+                	<div class="ub-f1 ubr b-bla01">
+                    	<div>{$item[get_order]}</div>
+                        <div class="ulev-4">总接单</div>
+                    </div>
+                    <div class="ub-f1 ubr b-bla01">
+                    	<div>{$item[good]}</div>
+                        <div class="ulev-4">好评</div>
+                    </div>
+                    <div class="ub-f1 ubr b-bla01">
+                    	<div>{$item[center]}</div>
+                        <div class="ulev-4">中评</div>
+                    </div>
+                    <div class="ub-f1">
+                    	<div>{$item[bad]}</div>
+                        <div class="ulev-4">差评</div>
+                    </div>
+                </div>
+            </div>
+            <ul class="ulev-4 uinn t-gra" style="padding-top:0">
+            	<li class="uinn3 ubb-blaimg ub">
+                	<div class="ub-f1 ub">
+                        <div class="tx-r uinn3" style="width:4.5rem">年龄：</div>
+                        <div class="ub-f1 uinn3">{$item[age]}岁</div>
+                    </div>
+                    <div class="ub-f1 ub">
+                        <div class="tx-r uinn3" style="">性别：</div>
+                    	<div class="ub-f1 uinn3">{if $item[good] == 1}男{else}女{/if}</div>
+                    </div>
+                    <div class="ub-f1 ub">
+                        <div class="tx-r uinn3" style="">工龄：</div>
+                    	<div class="ub-f1 uinn3">{$item[year]}个月</div>
+                    </div>
+                </li>
+                <li class="uinn3 ubb-blaimg ub">
+                	<div class="tx-r uinn3" style="width:4.5rem">服务项目：</div>
+                    <div class="ub-f1 uinn3">{php echo $this->getStaffPro($item['id'])}</div>
+                </li>
+                <!--
+                <li class="uinn3 ubb-blaimg ub">
+                	<div class="tx-r uinn3" style="width:4.5rem">服务保障：</div>
+                    <div class="ub-f1 uinn3">已缴纳1000元服务保证金</div>
+                </li>
+                <li class="uinn3 ubb-blaimg ub">
+                	<div class="tx-r uinn3" style="width:4.5rem">已投保险：</div>
+                    <div class="ub-f1 uinn3">100万意外险 / 10万财产险</div>
+                </li>
+                -->
+                <li class="uinn3 ubb-blaimg ub">
+                	<div class="tx-r uinn3" style="width:4.5rem">身份证明：</div>
+                    <div class="ub-f1 uinn3">已核验</div>
+                </li>
+                <li class="uinn3 ubb-blaimg ub">
+                	<div class="tx-r uinn3" style="width:4.5rem">所属公司：</div>
+                    <div class="ub-f1 uinn3">{$item[company_name]}</div>
+                </li>
+            </ul>
+            <div class="ub-f1"></div>
+        </div>
+
+</div>
+
+    
+    <ul class="ub-f1 uinn8 c-wh connn">
+    	  {php echo $this->getStaffProject($item[id])}
+    </ul>
+    
+    <div class="" style="height:3.125rem"></div>
+    
+    {template 'footer'}
+    
+</div>
+
+<script type="text/javascript" src="{MODULE_URL}/template/mobile/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="{MODULE_URL}/template/mobile/js/main.js"></script>
+<script>
+$(document).ready(function(){
+	localStorage['type_id'] = '';
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+    <li><a href="{php echo  $this->createWebUrl('Staffchong', array('id'=>$id,'flag'=>$flag));}">充值</a></li>
+    <li><a href="{php echo  $this->createWebUrl('staffchonglog', array('id'=>$id,'flag'=>$flag));}">充值流水</a></li>
+    <li class="active"><a href="{php echo  $this->createWebUrl('staffxiaolog', array('id'=>$id,'flag'=>$flag));}">消费流水</a></li>
+</ul>
+
+<div class="clearfix">    
+    <div class="panel panel-default">
+    	<div class="panel-heading">
+            消费列表
+        </div>
+        <div class="table-responsive panel-body" style="overflow:visible;">
+            <table class="table table-hover">
+            	<thead>
+                	<tr class="active">
+                    	<td>序号</td>
+                    	<td>用户名称</td>
+                        <td>消费金额</td>
+                        <td>消费用途</td>
+						<td>消费时间</td>
+                    </tr>
+                </thead>
+                <tbody>
+                	{loop $list $val}
+                	<tr>
+                    	<td>{$val[id]}</td>
+                    	<td>{php echo $this->getNickName($val[openid])}</td>
+                        <td>{$val[money]}</td>
+						<td>{php echo $this->getServeName($val['order_id'])}</td>
+                        <td>{$val[addtime]}</td>
+                    </tr>
+                    {/loop}
+                    
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="panel-body text-center">
+            {$pager}
+        </div>
+        
+    </div>
+</div>
+
+
+{template 'common/footer'}

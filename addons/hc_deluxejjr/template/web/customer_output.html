@@ -1,0 +1,102 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li><a href="{php echo $this->createWebUrl('customer');}">客户管理</a></li>
+	<li><a href="{php echo $this->createWebUrl('xlsupload');}">保护客户导入</a></li></a></li>
+	<li class="active"><a>客户导出</a></li>
+</ul>
+    <div class="main">
+		<div class="stat">
+			<div class="sub-item">
+					<form action="" method="get">
+					<div class="pull-left">
+						<input name="c" type="hidden" value="site" />
+						<input name="a" type="hidden" value="entry" />
+						<input name="m" type="hidden" value="hc_deluxejjr" />
+						<input name="do" type="hidden" value="download" />
+						<input name="op" type="hidden" value="customer" />
+					
+					<table class="table sub-search">
+						<tbody>
+							<tr>
+								<th style="width:100px;">日期选择</th>
+								<td>
+									{php echo tpl_form_field_daterange('outputdate', array('start'=>date('Y-m-d',time()-3600*24), 'end'=>date('Y-m-d',time())))}
+								</td>
+							</tr>
+							<tr>
+								<th style="width:100px;">楼盘</th>
+								<td>
+									<select name="loupan" style="width:150px;" class="location span2 form-control">
+										<option value="">所有楼盘</option>
+										{loop $loupan $l}
+											<option value="{$l['id']}">{$l['title']}</option>
+										{/loop}
+										
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th style="width:100px;">状态</th>
+								<td>
+									<select name="status" style="width:150px;" class="location span2 form-control">
+										<option value="1000">所有状态</option>
+										{php $k=0;}
+										{loop $pstatus $p}
+											<option value="{$k}">{$p}</option>
+										{php $k++;}
+										{/loop}
+										
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th></th>
+								<td>
+									<input type="submit" name="" value="导出客户" class="btn btn-primary">
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					</div>
+					</form>
+				</div>
+			
+		</div>
+    </div>
+<ul class="nav nav-tabs">
+	<li><a>经纪人导出</a></li>
+</ul>
+<div class="main">
+<div class="stat">
+	<div class="sub-item">
+		<form action="" method="get">
+		<div class="pull-left">
+			<input name="c" type="hidden" value="site" />
+			<input name="a" type="hidden" value="entry" />
+			<input name="m" type="hidden" value="hc_deluxejjr" />
+			<input name="do" type="hidden" value="download" />
+			<input name="op" type="hidden" value="hc_deluxejjr" />
+		
+		<table class="table sub-search">
+			<tbody>
+				<tr>
+					<th style="width:100px;">日期选择</th>
+					<td>
+						{php echo tpl_form_field_daterange('outputdate', array('start'=>date('Y-m-d',time()-3600*24), 'end'=>date('Y-m-d',time())))}
+					</td>
+				</tr>
+				
+				<tr>
+					<th></th>
+					<td>
+						<input type="submit" name="" value="导出经纪人" class="btn btn-primary">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+		</form>
+	</div>
+</div>
+</div>
+{template 'common/footer'}

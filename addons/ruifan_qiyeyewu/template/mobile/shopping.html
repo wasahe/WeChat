@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" name="viewport" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="keywords" content=""/>
+    <meta name="description" content="积分兑换商城"/>
+    <title>积分兑换商城</title>
+    <script src="../addons/ruifan_qiyeyewu/images/jquery-2.1.4.min.js"></script>
+    <link rel="stylesheet" href="../addons/ruifan_qiyeyewu/images/animate.min.css?v=543345454">
+
+
+    <style type="text/css" media="screen">
+	*{margin: 0;padding:0;}
+    html,body{width: 100%;font-size: 0;line-height: 0;display: block;margin: 0;overflow: hidden; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline;
+    background:#bd3741;
+    }
+        .prize_btn1 {
+            width: 44%;
+            margin: 0;
+            position: absolute;
+            left: 50%;
+            margin-left: -22%;
+            top: 55%;
+        }
+	.page1{width: 100%;}
+    .page1 img{width: 100%;}
+	.page2{width: 100%;overflow: auto;}
+    .foot {position: fixed;bottom: 0;width: 100%;}
+    .foot ul {width: 100%;}
+    .foot ul li {width: 25%;float: left;border-right: 1px solid rgba(255, 255, 255, 0.5);box-sizing: border-box;list-style: none;}
+    .foot ul li:last-child {border: none;}
+    .foot ul li a {text-decoration:none;display: inline-block;float: left;width: 100%;background: #c52a2a;color: #fff;text-align: center;transition: all 0.4s;height: 40px;line-height: 40px;}
+    .foot ul li a:hover {background: #c52a2a;}
+    .list{text-align: center;}
+    .list ul{margin-top:15px; }
+    .list li{display: inline-block;width: 42%;padding: 5px;}
+    .list li img{width: 100%;border-radius: 10px;}
+    .list li span{white-space: nowrap;overflow: hidden;width: 100%;display: inline-block;height: 30px;line-height: 30px;font-size: 16px;color: #f5de09;left;}
+	#shadow {display: none;position: fixed;width: 100%;height: 100%;top: 0;left: 0;background: rgba(0, 0, 0, .87);z-index: 993}
+    #shadow.up {z-index: 993}
+
+	.phone_tip {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0;
+    font-size: 16px;
+    color: #ffc;
+    text-align: center;
+    overflow: hidden;
+    z-index: 994;
+    opacity: 1
+	}
+
+	.phone_tip .share .yes {
+		display: block;
+		margin-top: 5px;
+		color: #8e8e8e;
+	}
+
+
+	.phone_tip .yes .back {
+		display: block;
+		position: relative;
+		width: 71.8666667%;
+		height: 42px;
+		margin: 10% auto 0;
+		padding: 6px 0;
+		border: 1px dashed #606060;
+		border-radius: 17px;
+		font-size: 16px;
+		line-height: 28px;
+		color: #8e8e8e;
+		text-align: center;
+		background-color: rgba(0,0,0,0);
+	}
+	.phone_tip .share {
+		font-size: 16px;
+		color: #fff;
+	}
+
+	#shadow {
+		display: none;
+		position: fixed;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		background: rgba(0, 0, 0, .87);
+		z-index: 993
+	}
+
+	#shadow.up {
+		z-index: 993
+	}
+
+	.formitem {
+		margin-top: 25px;
+		text-align: center;
+	}
+
+	.formitem label {
+		display: block;
+		width: 100%;
+		line-height: 30px;
+		text-align: left;
+		vertical-align: top;
+	}
+
+	.formitem input,
+	.formitem textarea {
+		width: 80%;
+		height: 40px;
+		border: 1px solid #dbdbdb;
+		background-color: #fff;
+		line-height: 28px;
+		color: #cbcbcb;
+		text-indent: 8px;
+		border-radius: 10px;
+	}
+
+	.formitem input:hover,
+	.formitem input:focus {
+		color: #333
+	}
+
+	.formitem textarea {
+		width: 68.27%;
+		height: 73px;
+	}
+
+    </style>
+</head>
+<body>
+
+<div class="page2">
+
+	<div>
+		<img style="width: 100%;" src="../addons/ruifan_qiyeyewu/images/shop_top.jpg" alt="">
+	</div>
+
+	<div class="list">
+		<ul>
+			{loop $list $row}
+			<li>
+				<img src="{php echo tomedia($row['sp_img'])}">
+				<span>{$row['sp_title']}</span>
+				<span>数量： {$row['sp_numbers']}</span>
+				<span>积分：{$row['sp_integrals']}</span>
+				<span onclick="duihuan('您确定花{$row[sp_integrals]}积分兑换{$row[sp_title]}吗!', {$row['id']});" style="background-color: #b03e00;color: #d2e6e9" >兑换</span>
+			</li>
+			{/loop}
+		</ul>
+	</div>
+
+<!--	<div>
+		<img style="width: 100%;" src="../addons/ruifan_qiyeyewu/images/shop_bottom.jpg">
+	</div>-->
+	<div style="height: 60px;"></div>
+
+    <div class="foot">
+        <ul>
+            <li><a href="{php echo $this->createMobileUrl('Rhsc')}">商城首页</a></li>
+            <li><a href="{php echo $this->createMobileUrl('Grzx')}">我的积分</a></li>
+            <li><a href="{php echo $this->createMobileUrl('zjlist')}">兑奖记录</a></li>
+            <li><a href="{php echo $this->createMobileUrl('cx')}">业务查询</a></li>
+        </ul>
+    </div>
+
+
+</div>
+
+
+<!--
+<div style="text-align:center;color:#f5de09;">
+    &copy;{$_W['account']['name']}
+</div>-->
+
+<div id="shadow"  style="display: none" ></div>
+<div class="phone_tip" id="phone_tip" {if ckopenid == 1}style="display: block"{/if}>
+    <div class="share" style="width: 90%;margin-left: auto;margin-right: auto;height: 100%;overflow-y: auto;">
+        <div class="r" style="margin-top: 30%">
+            <p style="color:#eede04;font-size: 24px;">填写兑奖信息</p>
+            <div class="formitem">
+                <input type="text" name="realname" value="" id="realname" placeholder="填写您的昵称">
+            </div>
+            <div class="formitem">
+                <input type="text" name="tel" value="" id="tel" placeholder="填写您的手机号码">
+            </div>
+            <div class="formitem">
+                <input type="text" name="addr" value="" id="addr" placeholder="填写联系地址">
+            </div>
+            <div id="spid" ></div>
+
+        </div>
+        <div class="yes" id="phoneyes" style="margin-bottom: 0px">
+            <button class="back" onclick="check()"  type="submit">提交信息</button>
+        </div>
+		<div class="yes" id="phoneback" style="margin-bottom: 30px">
+            <button class="back" onclick="back()"  type="submit">返回商城</button>
+        </div>
+
+    </div>
+</div>
+
+</body>
+
+<script type="text/javascript">
+    $(function(){
+        $(".page2").css("height",$(window).height());
+    })
+    function duihuan(msg, ids){
+		if(confirm(msg)){
+			$("#shadow").show();
+			$("#phone_tip").show();
+			$("#spid").val(ids);
+		}
+    }
+
+    function check() {
+
+        var tel = $("#tel").val();
+        var realname = $("#realname").val();
+        var addr = $("#addr").val();
+        var ids = $("#spid").val();
+        var bValidate = RegExp(/^(0|86|17951)?(13[0-9]|15[012356789]|18[0-9]|17[0-9]|14[57])[0-9]{8}$/);
+        if (tel == '' || realname == '') {
+            alert("请输入手机号码和姓名");
+            return;
+        }
+        if(!bValidate.test(tel)){
+            alert("请输入正确手机格式");;
+            return;
+        }
+
+        var submitData = {
+            tel: tel,
+            realname: realname,
+            addr: addr,
+            ids: ids,
+            ac: "settel"
+        };
+        $.post('{php echo $this->createMobileUrl('phone', array('id' => $id))}', submitData, function(idata) {
+            if (idata.success == 1) {
+				alert(idata.msg);
+                location.href="{php echo $this->createMobileUrl('Rhsc')}";
+            } else {
+                alert(idata.msg);
+                $("#shadow").hide();
+				$("#phone_tip").hide();
+
+            }
+        },"json");
+    }
+	function back()
+	{
+		$("#shadow").hide();
+        $("#phone_tip").hide();
+	}
+
+</script>
+
+</html>
+
+
+
+

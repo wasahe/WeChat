@@ -1,0 +1,47 @@
+{template 'common/header'}
+{template 'top'}
+<style type="text/css">
+body{background-color:#DDD;}
+</style>
+
+<div id="add_title">
+<div class="add_title_a"><a href="javascript:history.go(-1);"><div class="add_title_a_1"><img src="{MODULE_URL}template/mobile/images/a.png"/></div></a></div>
+
+<div class="add_title_b">信息详情</div>
+
+<div class="add_title_c"><a href="{php echo $this->createMobileUrl('fengmian');}"><div class="add_title_c_1"><img src="{MODULE_URL}template/mobile/images/b.png"/></div></a></div>
+</div>
+
+<div id="view_one">
+<div class="view_one_a">{$info['linshiname']}</div>
+
+<div class="view_one_b">有效期</div><div class="view_one_c">{php echo date("Y-m-d H:i:s",strtotime($info['validity']));}</div>
+<div class="view_one_b">联系电话</div><div class="view_one_c">
+{if $res<'0'}<a href="tel:{$info['tel']}">{$info['tel']}</a>
+{else}信息已经过期，号码自动隐藏
+{/if}</div>
+<div class="view_one_b">浏览量</div><div class="view_one_c">{$info['view']}</div>
+</div>
+
+<div id="view_two">
+<div class="view_two_a"><img src="{MODULE_URL}template/mobile/images/c.png"/>特长优点</div>
+<div class="view_two_b">{$info['linshispecial']}</div>
+</div>
+
+<div id="view_three">
+<div class="view_two_a"><img src="{MODULE_URL}template/mobile/images/d.png"/>发布者信息</div>
+<div class="view_three_b">发布者：</div><div class="view_three_c">{$info['nickname']}</div>
+<div class="view_three_b">发布时间：</div><div class="view_three_c">{php echo date("Y-m-d H:i:s",$info['time'])}</div>
+<div class="view_three_b">IP：</div><div class="view_three_c">{$info['ip']}</div>
+<div class="view_three_b">平台：</div><div class="view_three_c">{$info['container']}</div>
+<div class="view_three_b">设备：</div><div class="view_three_c">{$info['os']}</div>
+</div>
+
+<div class="view_four">把此条信息转发给<span>{$codehu['codestart']}</span>位以上好友，此条信息会自动置顶。每次置顶<span>{$codehu['codeday']}</span>天，每次消耗<span>{$codehu['codeonce']}</span>积分。</div>
+
+<div id="view_tel">
+{if $res<'0'}<a href="tel:{$info['tel']}">一 键 拨 打</a>
+{else}已 失 效
+{/if}
+</div>
+{template 'common/footer'}

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+{if empty($_W['isajax'])}
+{template 'common/top'}
+{/if}
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">分类列表</h3>
+				<div class="box-tools">
+					<a href="{php echo $this->createWebUrl('category',array('act'=>'edit'))}" class="btn btn-info">新增</a>
+				</div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example2" class="table table-hover">
+            <thead>
+            <tr>
+                <th style="width:15%;">顺序</th>
+                <th style="width:15%;">分类名</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {loop $list['list'] $li}
+            <tr>
+                <td>
+                    <label class="label label-info">{$li['displayorder']}</label>
+                </td>
+                <td>{$li['title']}</td>
+                <td>
+                    <!--<a href="{php echo $this->createWebUrl('category',array('act'=>'edit','fid'=>$li['id']))}" class="btn btn-default">+添加子分类</a>-->
+                    <a href="{php echo $this->createWebUrl('category',array('act'=>'edit','id'=>$li['id']))}" class="btn btn-success">编辑</a>
+                    <a href="{php echo $this->createWebUrl('category',array('act'=>'delete','id'=>$li['id']))}" class="btn btn-danger">删除</a>
+                </td>
+            </tr>
+            {php $class = M('category')->getall(array('fid'=>$li['id']))}
+            {loop $class $c}
+            <tr>
+                <td>---|{$c['title']}</td>
+                <td>
+                    <label class="label label-info">{$c['displayorder']}</label>
+                </td><!--
+                <td>
+                    <img src="{php echo tomedia($c['image'])}" style="width:4em;height:4em;" class="img-rounded"/>
+                </td>-->
+                <td>
+                    <a href="{php echo $this->createWebUrl('category',array('act'=>'edit','id'=>$c['id']))}" class="btn btn-success">编辑</a>
+                    <a href="{php echo $this->createWebUrl('category',array('act'=>'delete','id'=>$c['id']))}" class="btn btn-danger">删除</a>
+                </td>
+            </tr>
+            {/loop}
+            {/loop}
+            </tbody>
+              </table>
+				{php echo $list['pager']}
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+</div>
+<!-- ./wrapper -->
+{if empty($_W['isajax'])}
+{template 'common/foot'}
+<script type="text/javascript">
+	$('.mutdelete').click(function(){
+		var url = $(this).data('href');
+		var ids = [];
+		var idss = [];
+		$('input:checkbox[name="ids[]"]').each(function() {
+			var _that = $(this)[0];
+			if(_that.checked){
+				ids = ids.concat($(this).val());
+			}else{
+				idss = idss.concat($(this).val());
+			}
+		});
+		console.log(ids);
+		if(confirm("您确定要删除么？")){
+			$.post(url,{ids:ids},function(data){
+				util.message("删除成功","{php echo $_W['siteurl']}",'success');
+			},'json');
+		}
+	});
+	$('.unmutdelete').click(function(){
+		var ids = [];
+		var idss = [];
+		$('input:checkbox[name="ids[]"]').each(function() {
+			var _that = $(this)[0];
+			if(_that.checked){
+				ids = ids.concat($(this).val());
+			}else{
+				idss = idss.concat($(this).val());
+			}
+		});
+		console.log(idss);
+		if(confirm("您确定要删除么？")){
+			$.post(url,{ids:idss},function(data){
+				util.message("删除成功","{php echo $_W['siteurl']}",'success');
+			},'json');
+		}
+	})
+	$("#checkall").click(function(){
+		console.log('checkall');
+		$('input[name="ids[]"').each(function(){
+			var _that = $(this)[0];
+			if(_that.checked){
+				_that.checked = false;
+			}else{
+				_that.checked = true;
+			}
+		});
+	});
+</script>
+{/if}

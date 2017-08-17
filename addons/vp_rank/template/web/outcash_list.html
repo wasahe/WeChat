@@ -1,0 +1,175 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li class="active"><a href="{php echo $this->createWebUrl('outcash')}">提现管理</a></li>
+</ul>
+
+<div class="panel panel-default">
+	<nav role="navigation" class="navbar navbar-default navbar-static-top" style="margin-bottom:0;">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a href="javascript:;" class="navbar-brand">提现记录</a>
+			</div>
+			<ul class="nav navbar-nav nav-btns">
+				<li {if !isset($_GPC['stat'])} class="active" {/if} >
+					<a href="{php echo $this->createWebUrl('outcash',array('rank_id'=>$_GPC['rank_id']))}">全部</a>
+				</li>
+
+				<li {if isset($_GPC['stat']) && $_GPC['stat'] == '0'} class="active" {/if} >
+					<a href="{php echo $this->createWebUrl('outcash',array('rank_id'=>$_GPC['rank_id'],'stat'=>'0'))}">待处理</a>
+				</li>
+	
+				<li {if $_GPC['stat'] == '1'} class="active" {/if}>
+					<a href="{php echo $this->createWebUrl('outcash',array('rank_id'=>$_GPC['rank_id'],'stat'=>'1'))}">已发放</a>
+				</li>
+
+				<li {if $_GPC['stat'] == '2'} class="active" {/if}>
+					<a href="{php echo $this->createWebUrl('outcash',array('rank_id'=>$_GPC['rank_id'],'stat'=>'2'))}">已拒绝</a>
+				</li>
+	
+			</ul>
+		</div>
+	</nav>
+
+
+	<div class="panel-body table-responsive" style="overflow:visible;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:80px;">UID</th>
+					<th style="width:60px;">圈子</th>
+					<th></th>
+					<th style="text-align:right;">金额</br>实际到账</th>
+					<th style="text-align:right;">服务费</br>费率</th>
+					<th style="text-align:right;">提现前</br>提现后</th>
+					<th style="text-align:right;">总收入</br>总提现</th>
+					<th>状态</th>
+					<th style="width:80px;">渠道</th>
+					<th style="width:250px;">订单号</th>
+					<th style="width:200px;">处理说明</th>
+					<th style="width:150px;">提交时间</br>处理时间</th>
+					<th style="text-align:right;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td>{$item['id']}</td>
+					<td><img src="{php echo VP_AVATAR($item['avatar'],'s');}" style="width:40px;"/></td>
+					<td>{$item['nickname']}</br>#{$item['uid']}</td>
+					<td style="text-align:right;">{php echo $item['money']/100}</br>{php echo $item['cash']/100}</td>
+					<td style="text-align:right;">{php echo $item['tax']/100}</br>{$item['rate']}</td>
+					<td style="text-align:right;">{php echo $item['money_before']/100}</br>{php echo $item['money_after']/100}</td>
+					<td style="text-align:right;">{php echo $item['income']/100}</br>{php echo $item['outcash']/100}</td>
+					<td>
+						{if $item['status']==0}  
+							<label>
+								待处理
+							</label>
+						{/if}
+						{if $item['status']==1}  
+							<label class='label label-success' >
+								已发放
+							</label>
+						{/if}
+						{if $item['status']==2}  
+							<label class='label label-danger' >
+								已拒绝
+							</label>
+						{/if}
+					</td>
+					<td>{if $item['channel']==1}微信红包{/if}{if $item['channel']==2}微信企业付款{/if}</td>
+					<td>{$item['mch_billno']}</br>{$item['out_billno']}</td>
+					<td>{$item['remark']}</br>{$item['fedback']}</td>
+					<td>{php echo date('Y-m-d h:i:s', $item[create_time]);}</br>{php echo date('Y-m-d h:i:s', $item[update_time]);}</td>
+
+					<td style="text-align:right;overflow:visible;">
+						{if $item['status']==0 ||  $item['status']==2}  
+							<label>
+								<a href="javascript:;" class="btn btn-success btn-sm" onclick="out_cash('{$item['id']}','{$item['nickname']}','{php echo $item['money']/100}元');">发放</a>
+								<a href="javascript:;" class="btn btn-danger btn-sm" onclick="refuse_cash('{$item['id']}','{$item['nickname']}');">拒绝</a>
+							</label>
+						{/if}
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+		</table>
+		{$pager}
+	</div>
+	</div>
+</div>
+<script type="text/javascript">
+	require(['bootstrap'],function($){
+		$('.btn').hover(function(){
+			$(this).tooltip('show');
+		},function(){
+			$(this).tooltip('hide');
+		});
+	});
+
+	function out_cash(ids,name,money) {
+		require(['jquery', 'util'], function($, u) {
+			var content =  '	<div class="form-group">';
+				content += '	<h4>发放'+money+'</h4>';
+				content += '	<label><input name="channel" type="radio" value="1" checked="checked"/>微信红包</label>  <label><input name="channel" type="radio" value="2"/>微信企业付款</label>';
+                content += '	<textarea name="remark" class="remark form-control" rows="5" placeholder="发放备注"></textarea>';
+				content += '	</div>';
+
+			var footer =
+					'<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>' +
+					'<button type="button" class="btn btn-success">确定发放</button>';
+			var diaobj = u.dialog(name?name:ids, content, footer);
+			diaobj.find('.btn-default').click(function() {
+				diaobj.modal('hide');
+			});
+			diaobj.find('.btn-success').click(function() {
+				$.post("{php echo $this->createWebUrl('outcash', array('rank_id'=>$_GPC['rank_id'],'cmd' => 'outcash'))}",{
+					ids:ids,
+					channel:diaobj.find('input[name="channel"]:checked').val(),
+					remark:diaobj.find('.remark').val()
+				},function(resp) {
+					if(resp.status==1){
+						alert(resp.info);
+						location.reload();
+					}else{
+						alert(resp.info);
+					}
+				});
+			});
+			diaobj.modal('show');
+		});
+	}
+
+	function refuse_cash(id,name) {
+		require(['jquery', 'util'], function($, u) {
+			var content =  '	<div class="form-group">';
+				content += '	<h4>拒绝提现</h4>';
+                content += '	<textarea name="fedback" class="fedback form-control" rows="5" placeholder="拒绝原因"></textarea>';
+				content += '	</div>';
+
+			var footer =
+					'<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>' +
+					'<button type="button" class="btn btn-success">确定拒绝</button>';
+			var diaobj = u.dialog(name?name:id, content, footer);
+			diaobj.find('.btn-default').click(function() {
+				diaobj.modal('hide');
+			});
+			diaobj.find('.btn-success').click(function() {
+				$.post("{php echo $this->createWebUrl('outcash', array('rank_id'=>$_GPC['rank_id'],'cmd' => 'refusecash'))}",{
+					id:id,
+					fedback:diaobj.find('.fedback').val()
+				},function(resp) {
+					if(resp.status==1){
+						alert(resp.info);
+						location.reload();
+					}else{
+						alert(resp.info);
+					}
+				});
+			});
+			diaobj.modal('show');
+		});
+	}
+</script>
+
+{template 'common/footer'}

@@ -1,0 +1,292 @@
+
+{template 'header'}
+
+<link rel="stylesheet" href="{MODULE_URL}/template/mobile/css/iconfont/iconfont.css">
+
+<style>
+.hnav > div:nth-child(1n+1) .iconn{
+	background-color:#8e5cd4;
+}
+.hnav > div:nth-child(2n+1) .iconn{
+	background-color: #FF7C06;
+}
+.hnav > div:nth-child(3n+1) .iconn{
+	background-color: #CC99CC;
+}
+.hnav > div:nth-child(4n+1) .iconn{
+	background-color: #99CC33;
+}
+.hnav > div:nth-child(5n+1) .iconn{
+	background-color: #F8976D;
+}
+.hnav > div .iconn img{
+	opacity: .8;
+}
+.hnav > div{
+	width:25%;
+}
+.hnav > div .iconn{
+	width:3rem; 
+	height:3rem
+}
+
+</style>
+</head>
+<body>
+<div id="page0" class="ub ub-ver bga">
+    <div class="c-gre3 ub ub-ver ub-ac ub-pc" style=" padding:2rem 0rem 3rem 0rem ">
+    	{if $item['company_flag'] == 1}
+        	{if $item1['avatar'] == ''}
+                <div class="uc-a50 c-gra ub-img1 uba3 b-wh50" style="height:4em; width:4em; background-image:url({MODULE_URL}/template/mobile/images/default.jpg)"></div>
+            {else}
+                {if strstr($item1['avatar'],'images')}
+                <div class="uc-a50 c-gra ub-img1 uba3 b-wh50" style="height:4em; width:4em; background-image:url({$_W['attachurl']}{$item1[avatar]})"></div>
+                {else}
+                <div class="uc-a100 c-gra ub-img1 uba3 b-wh50" style="background-image:url({$_W['attachurl']}gohome/avatar/{$item1[avatar]}); height:4rem; width:4rem;" ></div>
+                {/if}
+            {/if}
+        {else}
+        	{if $item['avatar'] == ''}
+                <div class="uc-a50 c-gra ub-img1 uba3 b-wh50" style="height:4em; width:4em; background-image:url({MODULE_URL}/template/mobile/images/default.jpg)"></div>
+            {else}
+                {if strstr($item['avatar'],'images')}
+                <div class="uc-a50 c-gra ub-img1 uba3 b-wh50" style="height:4em; width:4em; background-image:url({$_W['attachurl']}{$item[avatar]})"></div>
+                {else}
+                <div class="uc-a100 c-gra ub-img1 uba3 b-wh50" style="background-image:url({$_W['attachurl']}gohome/avatar/{$item[avatar]}); height:4rem; width:4rem;" ></div>
+                {/if}
+            {/if}
+        {/if}
+        
+        {if $isCheck != 0}
+            {if $item['company_flag'] == 0}
+                <div class="umar-t ulev1 t-yel">{$item['staff_name']}</div>
+                <div class="umar-t ulev-4 t-yel">用户余额:{$item['money']}元[未结算{$yucount}元&nbsp;&nbsp;充值{$rcount}元]</div>
+				<div class="umar-t ulev-4 t-yel">保证金：{$item['grade_money']}元</div>
+            {else}
+                <div class="umar-t ulev1 t-yel">{$item['company_name']}</div>
+                
+                <div class="umar-t ulev-4 t-yel">用户余额:{$item1['money']}元[未结算{$yucount}元&nbsp;&nbsp;充值{$rcount}元]</div>
+				<div class="umar-t ulev-4 t-yel">保证金：{$item1['grade_money']}元</div>
+            {/if}
+            	<!--
+                <div class="umar-t ulev-4 t-yel">未结算金额：{$yucount}元</div>
+                -->
+                <div class="umar-t ulev-4 t-yel">已结算未提现金额：{$weicount}元</div>
+                <div class="umar-t ulev-4 t-yel">累积单数：{$ordercount}单</div>
+                <div class="umar-t ulev-4 t-yel">今日收入：{$daycount}元</div>
+        {/if}
+        <div class="absolute tx-c ulev-4 t-bla04 ubt b-bla01" style="left:0; bottom:0;width:100%; padding:0.5rem 0">管理中心</div>
+    </div>
+    <div class="ub-f1 hnav" style="padding:0.5rem 0.75rem">
+        
+        {if $isCheck == 0}
+        <div class="ufl">
+        	<a href="{php echo $this->createMobileUrl('StaffAuth',array());}" class="ub ub-ver ub-ac block"  style="padding:0.5rem 0.5rem 0.3rem 0.5rem">
+                <div class="uc-a1 c-blu ub ub-ac ub-pc iconn">
+                    <i class="iconfont icon-65 ulev2 t-wh80"></i> 
+                </div>
+                <div class="ulev-4 t-gra" style="padding-top:0.2rem">绑定验证</div>
+            </a>
+        </div>
+        
+        <div class="ufl">
+        	<a href="{php echo $this->createMobileUrl('PersonReg',array());}" class="ub ub-ver ub-ac block"  style="padding:0.5rem 0.5rem 0.3rem 0.5rem">
+            	<div class="uc-a1 c-blu ub ub-ac ub-pc iconn">
+                	<i class="iconfont icon-mubiaowancheng ulev2 t-wh80"></i> 
+                </div>
+                <div class="ulev-4 t-gra" style="padding-top:0.2rem">个人加盟</div>
+            </a>
+         </div>
+         
+         <div class="ufl">
+        	<a href="{php echo $this->createMobileUrl('CompanyReg',array());}" class="ub ub-ver ub-ac block"  style="padding:0.5rem 0.5rem 0.3rem 0.5rem">
+            	<div class="uc-a1 c-blu ub ub-ac ub-pc iconn">
+                	<i class="iconfont icon-mubiaowancheng ulev2 t-wh80"></i> 
+                </div>
+                <div class="ulev-4 t-gra" style="padding-top:0.2rem">公司加盟</div>
+            </a>
+         </div>
+        {/if}
+        
+        {if $isCheck == 2}
+        	<div class="ufl">
+                <div class="ub ub-ver ub-ac block" style="padding:0.5rem 0.5rem 0.3rem 0.5rem">
+                    <div class="uc-a1 c-blu ub ub-ac ub-pc iconn">
+                        <i class="iconfont icon-mubiaowancheng ulev2 t-wh80"></i> 
+                    </div>
+                    <div class="ulev-4 t-gra" style="padding-top:0.2rem">等待审核</div>
+                </div>
+            </div>
+            
+            <div class="ufl">
+                <a href="{php echo $this->createMobileUrl('Cardlist',array());}" class="ub ub-ver ub-ac block"  style="padding:0.5rem 0.5rem 0.3rem 0.5rem">
+                    <div class="uc-a1 c-blu ub ub-ac ub-pc iconn">
+                        <i class="iconfont icon-dingdan ulev2 t-wh80"></i> 
+                    </div>
+                    <div class="ulev-4 t-gra" style="padding-top:0.2rem">上传证件</div>
+                </a>
+            </div>
+        {/if}
+            
+        {if $isCheck == 1}
+            <div class="ufl">
+                <a href="{php echo $this->createMobileUrl('Stafforder',array());}" class="ub ub-ver ub-ac block"  style="padding:0.5rem 0.5rem 0.3rem 0.5rem">
+                    <div class="uc-a1 c-blu ub ub-ac ub-pc iconn">
+                        <i class="iconfont icon-dingdan ulev2 t-wh80"></i> 
+                    </div>
+                    <div class="ulev-4 t-gra" style="padding-top:0.2rem">订单管理</div>
+                </a>
+            </div>
+            
+            <div class="ufl">
+                <a href="{php echo $this->createMobileUrl('Staffmoney',array());}" class="ub ub-ver ub-ac block"  style="padding:0.5rem 0.5rem 0.3rem 0.5rem">
+                    <div class="uc-a1 c-blu ub ub-ac ub-pc iconn">
+                        <i class="iconfont icon-licaishouyi ulev2 t-wh80"></i> 
+                    </div>
+                    <div class="ulev-4 t-gra" style="padding-top:0.2rem">财务管理</div>
+                </a>
+            </div>
+            
+            <div class="ufl">
+                <a href="{php echo $this->createMobileUrl('baozheng',array());}" class="ub ub-ver ub-ac block"  style="padding:0.5rem 0.5rem 0.3rem 0.5rem">
+                    <div class="uc-a1 c-blu ub ub-ac ub-pc iconn">
+                        <i class="iconfont icon-licaishouyi ulev2 t-wh80"></i> 
+                    </div>
+                    <div class="ulev-4 t-gra" style="padding-top:0.2rem">保证金</div>
+                </a>
+            </div>
+			
+			<div class="ufl">
+                <a href="{php echo $this->createMobileUrl('srecharge',array());}" class="ub ub-ver ub-ac block"  style="padding:0.5rem 0.5rem 0.3rem 0.5rem">
+                    <div class="uc-a1 c-blu ub ub-ac ub-pc iconn">
+                        <i class="iconfont icon-licaishouyi ulev2 t-wh80"></i> 
+                    </div>
+                    <div class="ulev-4 t-gra" style="padding-top:0.2rem">余额充值</div>
+                </a>
+            </div>
+            
+            <div class="ufl">
+                <a href="{php echo $this->createMobileUrl('Tiixan',array());}" class="ub ub-ver ub-ac block"  style="padding:0.5rem 0.5rem 0.3rem 0.5rem">
+                    <div class="uc-a1 c-blu ub ub-ac ub-pc iconn">
+                        <i class="iconfont icon-dingdan ulev2 t-wh80"></i> 
+                    </div>
+                    <div class="ulev-4 t-gra" style="padding-top:0.2rem">申请提现</div>
+                </a>
+            </div>
+            
+            <div class="ufl">
+                <a href="{php echo $this->createMobileUrl('Tiixanlist',array());}" class="ub ub-ver ub-ac block"  style="padding:0.5rem 0.5rem 0.3rem 0.5rem">
+                    <div class="uc-a1 c-blu ub ub-ac ub-pc iconn">
+                        <i class="iconfont icon-dingdan ulev2 t-wh80"></i> 
+                    </div>
+                    <div class="ulev-4 t-gra" style="padding-top:0.2rem">提现日志</div>
+                </a>
+            </div>
+            
+            {if $item['stop'] == 1}
+            <div class="ufl">
+                <a href="{php echo $this->createMobileUrl('gowork',array('flag'=>0));}" class="ub ub-ver ub-ac block"  style="padding:0.5rem 0.5rem 0.3rem 0.5rem">
+                    <div class="uc-a1 c-blu ub ub-ac ub-pc iconn">
+                        <i class="iconfont icon-licaishouyi ulev2 t-wh80"></i> 
+                    </div>
+                    <div class="ulev-4 t-gra" style="padding-top:0.2rem">下班</div>
+                </a>
+            </div>
+            {else}
+            <div class="ufl">
+                <a href="{php echo $this->createMobileUrl('gowork',array('flag'=>1));}" class="ub ub-ver ub-ac block"  style="padding:0.5rem 0.5rem 0.3rem 0.5rem">
+                    <div class="uc-a1 c-blu ub ub-ac ub-pc iconn">
+                        <i class="iconfont icon-licaishouyi ulev2 t-wh80"></i> 
+                    </div>
+                    <div class="ulev-4 t-gra" style="padding-top:0.2rem">上班</div>
+                </a>
+            </div>
+            {/if}
+            
+            {if $item['company_flag'] == 1}
+            	<div class="ufl">
+                    <a href="{php echo $this->createMobileUrl('staffadd',array());}" class="ub ub-ver ub-ac block"  style="padding:0.5rem 0.5rem 0.3rem 0.5rem">
+                        <div class="uc-a1 c-blu ub ub-ac ub-pc iconn">
+                            <i class="iconfont icon-mubiaowancheng ulev2 t-wh80"></i> 
+                        </div>
+                        <div class="ulev-4 t-gra" style="padding-top:0.2rem">添加员工</div>
+                    </a>
+                </div>
+                
+                <div class="ufl">
+                    <a href="{php echo $this->createMobileUrl('staffmanager',array());}" class="ub ub-ver ub-ac block"  style="padding:0.5rem 0.5rem 0.3rem 0.5rem">
+                        <div class="uc-a1 c-blu ub ub-ac ub-pc iconn">
+                            <i class="iconfont icon-mubiaowancheng ulev2 t-wh80"></i> 
+                        </div>
+                        <div class="ulev-4 t-gra" style="padding-top:0.2rem">员工管理</div>
+                    </a>
+                </div>
+                
+                <div class="ufl">
+                    <a href="{php echo $this->createMobileUrl('fa',array());}" class="ub ub-ver ub-ac block"  style="padding:0.5rem 0.5rem 0.3rem 0.5rem">
+                        <div class="uc-a1 c-blu ub ub-ac ub-pc iconn">
+                            <i class="iconfont icon-mubiaowancheng ulev2 t-wh80"></i> 
+                        </div>
+                        <div class="ulev-4 t-gra" style="padding-top:0.2rem">发放工资</div>
+                    </a>
+                </div>
+                
+                <div class="ufl">
+                    <a href="{php echo $this->createMobileUrl('falist',array());}" class="ub ub-ver ub-ac block"  style="padding:0.5rem 0.5rem 0.3rem 0.5rem">
+                        <div class="uc-a1 c-blu ub ub-ac ub-pc iconn">
+                            <i class="iconfont icon-mubiaowancheng ulev2 t-wh80"></i> 
+                        </div>
+                        <div class="ulev-4 t-gra" style="padding-top:0.2rem">工资流水</div>
+                    </a>
+                </div>
+                
+                <div class="ufl">
+                    <a href="{php echo $this->createMobileUrl('gscomment',array());}" class="ub ub-ver ub-ac block"  style="padding:0.5rem 0.5rem 0.3rem 0.5rem">
+                        <div class="uc-a1 c-blu ub ub-ac ub-pc iconn">
+                            <i class="iconfont icon-licaishouyi ulev2 t-wh80"></i> 
+                        </div>
+                        <div class="ulev-4 t-gra" style="padding-top:0.2rem">评论查看</div>
+                    </a>
+                </div>
+            {else}
+            	<div class="ufl">
+                    <a href="{php echo $this->createMobileUrl('staffcomment',array());}" class="ub ub-ver ub-ac block"  style="padding:0.5rem 0.5rem 0.3rem 0.5rem">
+                        <div class="uc-a1 c-blu ub ub-ac ub-pc iconn">
+                            <i class="iconfont icon-licaishouyi ulev2 t-wh80"></i> 
+                        </div>
+                        <div class="ulev-4 t-gra" style="padding-top:0.2rem">评论查看</div>
+                    </a>
+                </div>
+            {/if}
+                
+        	<div class="ufl">
+                <a href="{php echo $this->createMobileUrl('Cardlist',array());}" class="ub ub-ver ub-ac block"  style="padding:0.5rem 0.5rem 0.3rem 0.5rem">
+                    <div class="uc-a1 c-blu ub ub-ac ub-pc iconn">
+                        <i class="iconfont icon-dingdan ulev2 t-wh80"></i> 
+                    </div>
+                    <div class="ulev-4 t-gra" style="padding-top:0.2rem">上传证件</div>
+                </a>
+            </div>
+        {/if}
+        
+        <div class="clear"></div>
+    </div>
+    {if $isCheck == 0}
+    <div class="ubt b-bla01 uinn8 ulev-4 tx-c">如果你已被运营者添加，请输入你的手机号码及给你验证密码进行绑定验证</div>
+    <div class="ubt b-bla01 uinn8 ulev-4 tx-c">如果你是个人用户，请进行个人加盟</div>
+    <div class="ubt b-bla01 uinn8 ulev-4 tx-c">如果你是公司机构，请进行公司加盟</div>
+    {/if}
+    <!--<div class="ubt b-bla01 uinn8 ulev-4 tx-c">以上流程可通过模板消息、图文消息、微信菜单进入</div>-->
+</div>
+
+<script type="text/javascript" src="{MODULE_URL}/template/mobile/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="{MODULE_URL}/template/mobile/js/main.js"></script>
+<script type="text/javascript">
+function yesAuth(){
+	alert('员工身份已验证');
+	return false;
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,208 @@
+{template 'common/header'}
+<div class="main">
+	<form class="form-horizontal form" id="form2" action="" method="post">
+		<div class="panel panel-success">
+			<div class="panel-heading">
+				基本参数
+			</div>
+			<div class="panel-body">
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-3 col-lg-3 control-label">平台名称</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" name="site_name" value="{$settings['site_name']}" />
+						<span class="helper">* 该名称将显示在手机网页的顶部。</span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-3 col-lg-3 control-label">客服电话</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" name="service_phone" value="{$settings['service_phone']}" />
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-3 col-lg-3 control-label">VIP会员组</label>
+					<div class="col-sm-8">
+						<select name="vip_usergroup" class="form-control">
+							<option>请选择会员组</option>
+							{loop $user_group $key $group}
+							<option value="{$group[groupid]}" {if ($group[groupid] == $settings['vip_usergroup'])}selected{/if}>{$group[title]}</option>
+							{/loop}
+						</select>
+						
+					</div>
+				</div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-3 col-lg-3 control-label">开启GPS定位用户功能</label>
+                    <div class="col-sm-8">
+                    <input type="checkbox" value="Y" name="open_gps" {if $settings['open_gps']=='Y'}checked="checked"{/if} />&nbsp;是
+                    <br />用户进入时将开始定位用户当前位置，并只显示所在城市数据。
+                    </div>           
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-3 col-lg-3 control-label">可在非微信环境中打开</label>
+                    <div class="col-sm-8">
+                    <input type="checkbox" value="Y" name="can_all_platform" {if $settings['can_all_platform']=='Y'}checked="checked"{/if} />&nbsp;是
+                    </div>           
+                </div>                  
+		</div>
+        
+		<div class="panel panel-success">
+			<div class="panel-heading">
+				分享设置
+			</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-3 col-lg-3 control-label">分享的标题</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" name="share_title" value="{$settings['share_title']}" />
+						
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-3 col-lg-3 control-label">分享的图片</label>
+					<div class="col-sm-8">
+						{php echo tpl_form_field_image('share_photo',$settings['share_photo']);}
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-3 col-lg-3 control-label">分享的描述</label>
+					<div class="col-sm-8">
+						<textarea class="form-control" name="share_desc">{$settings['share_desc']}</textarea>
+						
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-3 col-lg-3 control-label">产品页分享时内容调用产品信息</label>
+					<div class="col-sm-8">
+						<input type="checkbox" value="Y" name="share_get_product_info" {if $settings['share_get_product_info']=='Y'}checked="checked"{/if} />&nbsp;是
+						<span class="help-block">标题：产品名+价格，图片：产品图片，描述：产品简述。</span>
+						
+					</div>
+				</div>                
+                
+		</div>
+        
+
+		<div class="panel panel-success">
+			<div class="panel-heading">
+				链接地址
+			</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-3 col-lg-3 control-label">首页网址</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" name="" value="{$home_url}" readonly="" />
+						<span class="help-block">该网址可以复制用于设定菜单使用</span>
+						
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-3 col-lg-3 control-label">我的订单网址</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" name="" value="{$myorder_url}" readonly="" />
+						<span class="help-block">该网址可以复制用于设定菜单使用</span>
+						
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-3 col-lg-3 control-label">个人中心网址</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" name="" value="{$my_url}" readonly="" />
+						<span class="help-block">该网址可以复制用于设定菜单使用</span>
+						
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-3 col-lg-3 control-label">申请成为VIP会员网址</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" name="" value="{$apply_vip_url}" readonly="" />
+						<span class="help-block">该网址可以复制用于设定菜单使用</span>
+						
+					</div>
+				</div>
+                
+        </div>
+
+		<div class="panel panel-success">
+			<div class="panel-heading">
+				到店有奖、新手通道、企业福利 链接设置
+			</div>     
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-3 col-lg-3 control-label">启用</label>
+                    <div class="col-sm-8">
+                    <input type="checkbox" value="Y" name="open_diaodianyoujiang" {if $settings['open_diaodianyoujiang']=='Y'}checked="checked"{/if} />&nbsp;是
+                    </div>           
+                </div>                        				
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-3 col-lg-3 control-label">到店有奖</label>
+					<div class="col-sm-8">
+                    	<input type="text" placeholder="以http://开头" class="form-control" name="diaodianyoujiang_url" value="{$settings['diaodianyoujiang_url']}" />
+						<span class="help-block">可以设置为一个微信文章或一个场景地址</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-3 col-lg-3 control-label">新手通道</label>
+					<div class="col-sm-8">
+                    	<input type="text" placeholder="以http://开头" class="form-control" name="xinshoutongdao_url" value="{$settings['xinshoutongdao_url']}" />
+						<span class="help-block">可以设置为一个微信文章或一个场景地址</span>
+					</div>
+				</div>                
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-3 col-lg-3 control-label">企业福利</label>
+					<div class="col-sm-8">
+                    	<input type="text" placeholder="以http://开头" class="form-control" name="qiyefuli_url" value="{$settings['qiyefuli_url']}" />
+						<span class="help-block">可以设置为一个微信文章或一个场景地址</span>
+					</div>
+				</div>                
+        </div>        
+                
+                
+                
+		<div class="panel panel-success">
+			<div class="panel-heading">
+				通知/支付设置
+			</div>                				
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-3 col-lg-3 control-label">支付说明</label>
+					<div class="col-sm-8">
+						<span class="help-block">用户预约服务默认为微信支付（可同时开启：如余额、支付宝等），请到“功能选项-支付参数”配置好微信支付信息（选择“JS API网页支付参数”方式，同时到公众号平台添加微信支付的授权目录）</span>
+						
+					</div>
+				</div>
+                               
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-3 col-lg-3 control-label">通知{php echo $this->getFieldsLabel('staff_name');}的模板消息ID</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" name="msgid_staff" value="{$settings['msgid_staff']}" />
+						<span class="help-block">
+                        模板ID索引：OPENTM218161978 - 新预约通知 - 医疗护理 - 护理美容
+                        </span>
+                        
+                        <input type="text" placeholder="默认为：1_2_3_4_5" class="form-control" name="msgid_resort" value="{$settings['msgid_resort']}" />
+						<span class="help-block">
+                        模板keyword重新排序（场合：你选择的模板id与此处要求有冲突时），比如设置为 2_1_3_4_5，则会将客户名称与客户手机对换位置。
+                        </span>
+                                                
+						<span class="help-block">
+                        模板格式：<img src="../addons/qwx_shangmen/images/notify_tojishi_shangmen.png" border="1" />
+                        </span>                        
+					</div>
+				</div>
+                                
+			</div>
+		</div>
+        
+		<div class="form-group col-sm-12">
+			<input name="token" type="hidden" value="{$_W['token']}" />
+			<input type="submit" class="btn btn-primary col-lg-1" name="submit" value="提交" />
+		</div>
+	</form>
+</div>
+{template 'common/footer'}

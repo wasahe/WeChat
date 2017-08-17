@@ -1,0 +1,162 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li {if $op == 'display'}class="active"{/if}><a href="{php echo $this->createWebUrl('order', array('op' => 'display'))}">订单管理</a></li>
+	<li {if $op == 'detail'}class="active"{/if}><a href="{php echo $this->createWebUrl('order', array('op' => 'detail','id'=>$id))}">订单详情：{$order[order_sn]}</a></li>
+</ul>
+
+<!-- 添加回复内容 -->
+<div class="main">
+	<form class="form-horizontal form" id="form2" action="" method="post">
+		<div class="panel panel-success">
+			<div class="panel-heading">
+				基本信息：[{$order[order_sn]}]
+			</div>
+			<div class="panel-body ">
+				<table class="table table-bordered">
+					<tr>
+						<td style="width:20%">订单编号</td>
+						<td>{$order[order_sn]}</td>
+					</tr>
+					<tr>
+						<td style="width:20%">总计</td>
+						<td>{php echo $order['price'] + $order['daojia_fee'];}（上门费用：￥{$order['daojia_fee']}）</td>
+					</tr>
+					<tr>
+						<td style="width:20%">实际付款</td>
+						<td>{php echo $order[buy_price] + $order['daojia_fee']}</td>
+					</tr>
+					<tr>
+						<td style="width:20%">订单备注</td>
+						<td>{$order['memo']}</td>
+					</tr>
+					<tr>
+						<td style="width:20%">服务总时长</td>
+						<td>{$sum_time} 分钟</td>
+					</tr>
+					<tr>
+						<td style="width:20%">服务地址</td>
+						<td>{$address['province']},{$address['city']},{$address['district']} {$address['address']}，联系人:{$address[name]} ，电话:{$address[phone]}</td>
+					</tr>
+					<tr>
+						<td style="width:20%">{php echo $this->getFieldsLabel('staff_name');}</td>
+						<td>{$staff_name}</td>
+					</tr>
+					<tr>
+						<td style="width:20%">预约时间</td>
+						<td>{$order[yuyue_time]}</td>
+					</tr>
+					<tr>
+						<td style="width:20%">订单，付款、服务状态</td>
+						<td>
+                        {php echo get_order_status($order['status'],1)},
+                        {php echo get_payment_status($order['payment_status'],1)},
+                        {php echo get_service_status($order['service_status'],1)}
+                        </td>
+					</tr>
+					<tr>
+						<td style="width:20%">订单创建时间</td>
+						<td>{$order[create_time]}</td>
+					</tr>
+					
+				</table>
+			</div>
+        </div>
+        
+		<div class="panel panel-success">
+			<div class="panel-heading">
+				订单商品
+			</div>
+			<div class="panel-body ">
+				<table class="table table-bordered">
+					<tr>
+						<th class="text-center" style="width:200px">商品名称</th>
+						<th class="text-center" style="width:150px">图片</th>
+						<th class="text-center"  style="width:100px">服务时长</th>
+						<th class="text-center" style="width:100px">服务方式</th>
+						<th class="text-center" style="width:100px">单价</th>
+						<th class="text-center" style="width:100px">购买数量</th>
+						<th class="text-center" style="width:100px">合计</th>
+                        
+                        <th class="text-center" style="width:100px">实际总价</th
+					></tr>
+					{loop $goods $key $g}
+					<tr>
+						<td>{$g['goods_name']}</td>
+						<td class="text-center"><img src="{$_W['attachurl']}{$g['goods'][photo]}" style="width:100px" /></td>
+						<td class="text-center">{$g['goods'][shijian]} 分</td>
+						<td class="text-center">{php echo get_daojia_statsu($g[daojia])}</td>
+						<td class="text-center">{$g[price]}</td>
+						<td class="text-center">{$g[buy_num]}</td>
+						<td class="text-center">{$g[price_total]}</td>
+                        
+                        <td class="text-center">{$g[price_total_real]}</td>
+					</tr>
+					{/loop}
+				</table>
+
+			</div>
+        </div>
+        
+		<div class="panel panel-success">
+			<div class="panel-heading">
+				订单处理
+			</div>
+			<div class="panel-body ">
+				<div class="form-group">
+					<label class="col-md-2 control-label text-left" style="float: left;text-align: left;" >订单操作</label>
+					<div class="col-sm-9 col-xs-12">
+						{if $order['status']<1}
+						<input type="button" class="btn btn-primary" value="确认" onclick="update_status('status',1);" />
+						{/if}
+						<input type="button" class="btn btn-success" value="成功" onclick="update_status('status',2);"/>
+						<input type="button" class="btn btn-danger" value="取消" onclick="update_status('status',5);"/>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-md-2 control-label text-left" style="float: left;text-align: left;" >付款操作</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="button" class="btn btn-primary" value="货到付款" onclick="update_status('payment_status',1);" />
+						<input type="button" class="btn btn-success" value="已付款" onclick="update_status('payment_status',2);" />
+						<input type="button" class="btn btn-danger" value="取消" onclick="update_status('payment_status',5);" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-md-2 control-label text-left" style="float: left;text-align: left;" >服务状态操作</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="button" class="btn btn-primary" value="服务中" onclick="update_status('service_status',1);" />
+						<input type="button" class="btn btn-success" value="服务完成"  onclick="update_status('service_status',2);" />
+						<input type="button" class="btn btn-danger" value="取消" onclick="update_status('service_status',5);" />
+					</div>
+				</div>
+
+				<div></div>
+				
+			</div>
+
+
+		</div>
+
+		
+	</form>
+</div>
+
+<script>
+function update_status(act_type,status_val){
+	$.ajax({
+		url:'<?php echo $this->createWebUrl('order',array('op'=>'ajax_update_status'));?>',
+		type:'post',
+		data:{'order_id':'{$id}','val':status_val,'act_type':act_type},
+		success:function(data){
+			alert(data.msg);
+			if (data.code==1){
+				window.location.reload();
+			}else{
+
+			}
+		},
+		dataType:'json'
+	})
+}
+</script>

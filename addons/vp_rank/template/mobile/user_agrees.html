@@ -1,0 +1,176 @@
+{php $title=$you['nickname'].'赞同的'}
+{template 'inc/header'}
+
+<style>
+	body{background:#f8f8f8;}
+
+		#feeds_list{padding:0px;margin:0px;background:#f8f8f8;}
+		.feed{}
+		.feed:active{background:#EEEEEE;}
+		.feed.weui_cell{
+			background:#FFFFFF;
+			padding-left:8px;
+			padding-right:8px;
+			margin-bottom:10px;
+			display:block !important;
+			height:auto;
+		}
+		.feed.weui_cell::before {
+			left: 0;
+			display:none !important;
+		}
+		
+
+		.sdtitle{position:relative;font-size:15px;}
+		.sdtitle i{display:inline-block;vertical-align:middle;width:16px;height:16px;line-height:16px;text-align:center;font-size:11px;color:#FFFFFF;background-size:16px 16px;}
+		.sdhead{position:relative;width:100%;}
+		.sdtou{position:absolute;top:0px;left:0px;width:45px;}
+		.sdavatar{display:block;width:42px;height:42px;overflow:hidden;border-radius:42px;}
+		.sdavatar img{width:42px;}
+		/**.sdtou i{position:absolute;display:inline-block;top:-8px;right:-2px;width:18px;height:18px;background:url("{MODULE_URL}/static/mobile/images/ico_top.png") no-repeat;background-size:18px 18px;}**/
+		.sdwhat{margin-left:52px;font-size:15px;}
+		.sdwhat dt{padding:0 0 2px 0;}
+
+		.sdnick{color:#576b95;}
+		.sdnick i{display:inline-block;height:20px;vertical-align:top;}
+		.sdnick i img{height:20px;}
+		.sdtimer{position:absolute;top:2px;right:0px;color:#999999;font-size:12px;}
+		.sdcont{color:#000000;text-indent:50px;display:-webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp:2;overflow: hidden;}/**padding-left:24px;background:url("{MODULE_URL}/static/mobile/images/m_add_ac.png") no-repeat left center;background-size:20px 20px;**/
+		.sdcont.type1{background:url("{MODULE_URL}/static/mobile/images/good_tag.png") no-repeat left 2px;background-size:45px 18px;}/*color:#22bc38;*/
+		.sdcont.type2{background:url("{MODULE_URL}/static/mobile/images/bad_tag.png") no-repeat left 2px;background-size:45px 18px;}/*color:#ff0042;*/
+		
+
+		.sdbody{padding-left:52px;}
+
+		.sdimgs{display:block;overflow:hidden;zoom:1;}
+		.sdimgs.cont{padding:10px 0 0 0;}
+		.sdimgs:after{content:"";display:block;height:0;line-height:0;clear:both;visibility:hidden;}
+		.sdimgs .sdimg{float:left;width:80px;height:80px;overflow:hidden;text-align:center;}
+		.sdimgs .sdimg img{width:80px;}
+		/**.sdimgs .sdimg img{min-height:70px;width:70px;overflow:hidden; }**/
+		.sdimgs .sdimg.c1{width:100%;height:auto;max-height:200px;}
+		.sdimgs .sdimg.c1 img{width:100%;}
+		.sdimgs .sdimg.c2{width:49%;height:auto;max-height:200px;}
+		.sdimgs .sdimg.c2.i0{margin-right:2%;}
+		.sdimgs .sdimg.c2 img{width:100%}
+		.sdimgs .sdimg.c3{width:32%;height:auto;max-height:200px;}
+		.sdimgs .sdimg.c3.i0{margin-right:2%;}
+		.sdimgs .sdimg.c3.i1{margin-right:2%;}
+		.sdimgs .sdimg.c3 img{width:100%}
+
+		.sdtail{position:relative;padding-left:52px;margin-top:10px;height:20px;line-height:20px;color:#999999;font-size:12px;}
+		.sdtail span{display:inline-block;width:50px;}
+		.sdtail .agrees.ed{color:#576b95;}
+		.sdtail .disagrees.ed{color:#576b95;}
+		.sdact{position:absolute;right:0px;top:2px;}
+</style> 
+
+<div>
+
+	<div id="feeds_list" class="weui_cells" data-url="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('user',array('cmd'=>'agrees','submit'=>'list','rid'=>pencode($rank['id']),'uid'=>pencode($you['uid']))), 2)}" data-loading=false data-start=0 data-more=1 >
+	</div>
+	<div id="feeds_list_loader" class="weui-infinite-scroll"><div class="infinite-preloader"></div>加载...</div>
+
+
+	<script id="feeds_list_tpl" type="text/template" >
+		<%
+			if(!list){
+				return;
+			}
+			for(var i=0;i<list.length;i++){
+				var item = list[i];
+				var imgs = item['images'];
+		%>
+				<div class="feed weui_cell">
+					<a href="<%=item._url%>">
+						<div class="sdhead">
+							<div class="sdtou">
+								<span class="sdavatar"><img src="<%=item._user.avatar%>"/></span>
+							</div>
+							<dl class="sdwhat">
+								<dt class="sdtitle">
+									<span class="sdnick">
+										<%=item._user.nickname%><i><img src="<%=item._user._authority.flag%>"/></i>
+									<span class="sdtimer"><%=VP_FORMAT(item.create_time,'MM-dd h:m')%></span> 
+								</dt>
+								<dd class="sdcont type<%=item.type%>"><%=item.content%></dd>
+							</dl>
+						</div>
+						<div class="sdbody">
+							<% if(imgs){ %>
+								<div>
+									<ul class="sdimgs <%=(item.content?'cont':'') %>">
+										<% if(imgs.length==1){%>
+											<li class="sdimg c1" ><img src="<%=imgs[0]%>"/></li>
+										<% }%>
+
+										<% if(imgs.length==2){%>
+											<% for(var j=0;j<imgs.length;j++){ %>
+												<li class="sdimg c2 i<%=j%>" ><img src="<%=imgs[j]%>"/> </li>
+											<% }%>
+										<% }%>
+
+										<% if(imgs.length>2){%>
+											<% for(var j=0;j<3;j++){ %>
+												<li class="sdimg c3 i<%=j%>" ><img src="<%=imgs[j]%>"/> </li>
+											<% }%>
+										<% }%>
+									</ul>
+								</div>
+							<% } %>
+						</div>
+					</a>
+					<div class="sdtail" data-fid="<%=item.id%>" >
+						<span class="agrees">赞<em><%=item.agrees%></em></span>
+						<span class="disagrees">反<em><%=item.disagrees%></em></span>
+						<span class="replys">评<em><%=item.replys%></em></span>
+					</div>
+				</div>
+		<%  } %>
+	</script>
+
+</div>
+
+{template 'inc/script'}
+<script type="text/javascript">
+$(function(){
+	
+
+	var list = $("#feeds_list");
+	var list_tpl=baidu.template($('#feeds_list_tpl').html());
+	var loadList=function(refresh){
+		if(list.attr('data-loading')==true){
+			return;
+		}
+		if(refresh){
+			list.attr('data-start',0);
+			list.attr('data-more',1);
+		}
+		list.attr('data-loading',true);
+		$.post(list.attr('data-url'), {
+			start:list.attr('data-start')
+		},function(resp) {
+			list.attr('data-loading',false);
+			$('#feeds_list_container').pullToRefreshDone();
+			if(resp.status==0){
+				alert(resp.info);
+			}else{
+				list.attr('data-start',resp.data.start);
+				list.attr('data-more',resp.data.more);
+				if(list.attr('data-more')==0){
+					$('#feeds_list_container').destroyInfinite();
+					$('#feeds_list_loader').hide();
+				}
+				if(refresh){
+					 list.html('');
+				}
+				var html=list_tpl(resp.data);
+				list.html(list.html()+html);
+			}
+		});	
+	}
+	$('#feeds_list_container').infinite().on("infinite", loadList(false));
+
+});
+</script>
+{template 'inc/footer'}

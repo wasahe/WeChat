@@ -1,0 +1,67 @@
+
+{template 'header'}
+<div class="container" id="container">
+<div class="weui_tab">
+  <div class="weui_tab_bd">
+    <div class="hd">
+      <h1 class="page_title">{$title}</h1>
+    </div>
+    <div class="bd">
+      <div class="weui_panel weui_panel_access">
+        <div class="weui_panel_bd" id="list">
+        </div>
+        <a class="weui_panel_ft view_more" href="javascript:;">查看更多</a>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="{JS_URL}zepto.min.js"></script>
+<script>
+$(function(){
+  getimg(1);
+  $(".view_more").click(function(){
+    var page = $(".view_more").attr('data-page');
+    if (page > 0) {
+      getimg(page);
+    }
+  });
+});
+function getimg(page){
+  if (!page) page = 1;
+  $.ajax({
+    url : "{php echo $this->createMobileUrl($_GPC['do']=='list2'?'list2':'list');}",
+    type : 'post',
+    dataType : 'json',
+    data : {
+      page : page,
+      op : '{$op}',
+      type : '{$type}'
+    },
+    success : function(data) {
+      $(".view_more").attr('data-page', data.next_page);
+      if (data.data) {
+        var list = data.data;
+        for (var i=0, len=list.length; i<len; i++) {
+          var item = '<a href="'+list[i].url+'" class="weui_media_box weui_media_appmsg">'+
+            '<div class="weui_media_hd">'+
+              '<img style="border-bottom: 1px solid #D9D9D9;border-right: 1px solid #D9D9D9;" class="weui_media_appmsg_thumb" src="'+list[i].icon+'">'+
+            '</div>'+
+            '<div class="weui_media_bd">'+
+              '<h4 class="weui_media_title">'+list[i].title+'</h4>'+
+              '<p class="weui_media_desc">'+(list[i].show_times>0?(list[i].show_times+'人已打赏，'+list[i].up+'人觉得值，'+list[i].down+'人觉得坑'):'暂未收到打赏')+'</p>'+
+            '</div>'+
+          '</a>';
+          $("#list").append(item);
+        }
+      }
+      if (data.next_page == 0) {
+        $('.view_more').html('没有更多了');
+      }
+    },
+    error : function() {
+    }
+  });
+}
+</script>
+{template 'footer'}
+<!---bbs_heirui_cn-->

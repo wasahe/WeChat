@@ -1,0 +1,121 @@
+{template 'head'}
+<section class="g-con v-player-par f-mgb" block="player">
+{if $news['play']=="0"}
+<div class="video">
+<iframe src="{$_W['siteroot']}addons/siyuan_vod/play/?url={$kv['url']}" width="100%" scrolling="no" height="100%" align="middle" frameborder="no" hspace="0" vspace="0" marginheight="0" marginwidth="0" name="tv"></iframe>
+</div>
+{else}
+<script type="text/javascript" src="http://7xjfim.com2.z0.glb.qiniucdn.com/Iva.js"></script>
+<div class="video" id="iva"></div>
+<script type='text/javascript'>
+var ivaInstance = new Iva('iva' ,{
+appkey: '{$play[videojj_key]}',
+video:'{$kv[url]}',
+title: '{$news[title]}',
+videoStartPrefixSeconds: 0,
+videoEndPrefixSeconds: 0,
+autoplay: true,
+autoFormat: true,
+cover: ''});
+</script>
+{/if}
+<h1 class="m-app-guide j-install-btn j-app-cur-video">{$news['title']}</h1>
+<div class="v-player-func f-mglr-10 f-cb">
+<a class="quality current f-fl" href="{php echo $this->createmobileUrl('bug',array('id' => $news['id'],'ji' => $kv['ji'],'openid' => $user['openid']))}">视频无法播放?</a>
+<div class="f-fr">
+<!--<a class="j-install-btn j-app-cur-video tool-btn" href="#"><i class="i-download"></i>边下边看</a>-->
+<a class="tool-btn j-share-toggle" href="javascript:;" onclick="document.getElementById('mcover').style.display='block';"><i class="i-share"></i>分享给好友</a>
+<div id="mcover" onclick="document.getElementById('mcover').style.display='';" style="display: none;">
+<img src="{$_W['siteroot']}addons/siyuan_vod/img/fenxiang.jpg">
+</div>
+</div>
+</div>
+</section>
+<section>
+<div class="g-con f-mgb">
+<h2 class="m-h2-tit f-cb"><span class="tit">播放视频</span></h2>
+<div class="j-torr-wrap j-torr-swipe v-torr-grid">
+{loop $news['kvs'] $kv}
+<div class="j-item torr-item {if $vid == $kv['id']}current{/if}"><a href="{php echo $this->createmobileUrl('news',array('id' => $kv['vid'],'vid' => $kv['id']))}">{$kv['ji']}</a></div>
+{/loop}
+</div>
+</div>
+</section>
+<a href="{$set['ad_url']}"><img class="ad_pic" src="{$_W['attachurl']}{$set['ad_pic']}" style="margin-top:-3px;margin-bottom:1px;"></a>
+<section>
+<div class="g-con f-mgb f-pd-10 v-detail">
+<a href="###" onclick="openShutManager(this,'box')"><div class="f-cb">
+<div class="f-fr">
+<i class="i-down-s"></i>
+</div>
+<div class="left">
+<h1 class="title">{$news['title']}</h1>
+<p class="desc j-video-vv">点击查看详情</p>
+</div></a>
+</div>
+<ul class="info" id="box" style="display:none">
+<article id="news-article">{$news['body']}</article>
+</ul>
+</div>
+</section>
+<script type="text/javascript">  
+function openShutManager(oSourceObj,oTargetObj,shutAble,oOpenTip,oShutTip){  
+var sourceObj = typeof oSourceObj == "string" ? document.getElementById(oSourceObj) : oSourceObj;  
+var targetObj = typeof oTargetObj == "string" ? document.getElementById(oTargetObj) : oTargetObj;  
+var openTip = oOpenTip || "";  
+var shutTip = oShutTip || "";  
+if(targetObj.style.display!="none"){  
+   if(shutAble) return;  
+   targetObj.style.display="none";  
+   if(openTip  &&  shutTip){  
+    sourceObj.innerHTML = shutTip;   
+   }  
+} else {  
+   targetObj.style.display="block";  
+   if(openTip  &&  shutTip){  
+    sourceObj.innerHTML = openTip;   
+   }  
+}  
+}  
+</script>
+<section class="g-con">
+<h2 class="m-h2-tit f-cb">
+<span class="tit">相关视频</span>
+</h2>
+<div class="f-mgt-10 m-cd-list">
+{loop $list $item}
+<div class="m-cd-i-wrap poster">
+<a class="m-cd-i" href="{php echo $this->createmobileUrl('news',array('id' => $item['id']))}">
+<div class="pic">
+<img src="{$_W['attachurl']}{$item['thumb']}">
+<span class="sd">{if $item['lianzai']}{$item['lianzai']}{/if}</span>
+<i class="ico-app">{$item['shuxing']}</i>
+</div>
+<div class="info">
+<h3 class="tit">{$item['title']}</h3>
+</div>
+</a>
+</div>
+{/loop}
+</div>
+</section>
+{php echo register_jssdk(false);}
+<script type="text/javascript">
+wx.ready(function () {
+sharedata = {
+title: "{$news['title']}高清视频微信在线观看",
+desc: "{$news['title']}高清视频微信在线观看",
+link: "{if $set['share_url']}{$set['share_url']}{else}{$_W['siteroot']}app{php echo str_replace('./','/',$this->createMobileUrl('news', array('id'=>$news['id'])))}{/if}",
+imgUrl: "{$_W['attachurl']}{$news['thumb']}",
+success: function (res) {},
+cancel: function(){
+}
+};
+wx.onMenuShareAppMessage(sharedata);
+wx.onMenuShareTimeline(sharedata);
+wx.onMenuShareQQ(sharedata);
+wx.onMenuShareWeibo(sharedata);
+wx.onMenuShareQZone(sharedata);
+});
+</script>
+{template 'end'}

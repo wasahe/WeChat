@@ -1,0 +1,316 @@
+
+{template 'header'}
+<script type="text/javascript">
+var pagename="orderlist";
+</script>
+<style>
+.loadaaa{
+    background: url({MODULE_URL}/template/mobile/images/zp_loading_new.png) center top no-repeat;
+    background-size: 100%;
+    -webkit-animation: loading 3s linear infinite;
+    animation: loading 3s linear infinite;
+}
+@-webkit-keyframes loading{0%{-webkit-transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg)}}
+@keyframes loading{0%{-webkit-transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg)}}
+.loginmask {
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display:none;
+  
+}
+</style>
+</head>
+<body>
+<div id="page0" class="ub ub-ver bga">
+    <div class="c-gre3">
+        <div class="ub ub-ver ub-ac ub-pc connn  " style=" padding:2rem 0rem 3rem 0rem ">
+            <a href="{php echo $this->createMobileUrl('order',array('id' => $id))}" class="uc-a15 t-yel uba b-yel absolute ulev-4" style="left:1rem; top:1rem; padding:0.2rem 0.5rem;">查看订单</a>
+            {if in_array(1,$idStr)==0}
+            <a onClick="orderDel({$id})" class="uc-a15 t-yel uba b-yel absolute ulev-4" style="right:1rem; top:1rem; padding:0.2rem 0.5rem;">取消订单</a>
+            {/if}
+            <div class="ub ub-ver" style="width:5rem; height:5rem">
+                <div class="loadaaa absolute" style="left:0; top:0;width:100%; height:100%"></div>
+                <div class="ub-f1 tx-c ub ub-ver ub-pc">
+                    <div class="t-yel"><span class="ulev4" id="num">{php echo count($list);}</span></div>
+                </div>
+            </div>
+            <div class="t-wh umar-t">已有竞单人</div>
+            <div class="absolute tx-c ulev-4 t-yel ubt b-bla01" style="left:0; bottom:0;width:100%; padding:0.5rem 0">请从以下竞单人中选定接单人</div>
+        </div>
+    </div>
+    
+    <form class="ub-f1 blcok connn" action="{php echo $this->createMobileUrl('selectedsure',array())}" method="post" onSubmit="return checkform()">
+    <input type="hidden" name="order_id" value="{$id}" />
+    <ul class="uinn8 ww-check">
+    	<!--竞单人显示开始-->
+        {if $list[0]['id'] == ''}
+        	<div>
+                <ul style="padding:60px 30px 50px 30px">
+                    <li style="text-align:center">
+                        <div class="wks ub-img1"></div>
+                    </li>
+                    <li class="t-gra" style="text-align:center; margin-top:30px">暂无接单人竟单</li>
+                </ul>
+                
+            </div>
+        {else}
+        	{php $n=0;}
+            {loop $list $vo}
+            {php $n+=1;}
+            	<li class="uba b-bla01 uc-a15 ub umar-b">
+                    <div class="uinn ub ub-ver tx-c">
+                        {if $this->getStaffInfo($vo['staff_id'],"avatar") == ''}
+                        	<div class="uc-a100 ub-img1" style="background-image:url({MODULE_URL}/template/mobile/images/11.jpg); height:3rem; width:3rem;" ></div>
+                        {else}
+                        	{if substr($this->getStaffInfo($vo['staff_id'],"avatar"),0,6) == 'images'}
+                            <div class="uc-a100 ub-img1" style="background-image:url({$_W['attachurl']}{php echo $this->getStaffInfo($vo['staff_id'],"avatar")}); height:3rem; width:3rem;" ></div>       
+                        	{else}
+                            <div class="uc-a100 ub-img1" style="background-image:url({$_W['attachurl']}gohome/avatar/{php echo $this->getStaffInfo($vo['staff_id'],"avatar")}); height:3rem; width:3rem;" ></div>
+                            {/if}
+                        {/if}
+                        
+                        <a href="{php echo $this->createMobileUrl('staffinfo',array('id'=>$vo['staff_id']))}" class="block uba b-gre1 uinn3 ulev-4 t-gre1 uc-a15 umar-t">资料</a>
+                        
+                    </div>
+                    <div class="ub-f1 uinn ubl b-bla01 ub ub-ver" style="">
+                        <div class="ub ub-ac ub-f1">
+                            <div class="ub-f1 ">
+                            {php echo $this->getStaffInfo($vo['staff_id'],"staff_name")}
+                            {if $this->getStaffInfo($vo['staff_id'],"company_flag")==1}
+                            	<span class="ulev-1 t-gra">(公司)</span>
+                            {else}
+                            	<span class="ulev-1 t-gra">(个人)</span>
+                            {/if}
+                            </div>
+                            <div class="t-gra ulev-4">报价</div>
+                            <div class="tx-r ub ub-ac ulev1">{$vo['offer']}</div>
+                        </div>
+                        <div class="ulev-4 t-gra">
+                            <div class="ub">
+                                <div class="ub-f1">工龄：{php echo $this->getStaffInfo($vo['staff_id'],"year")}个月</div>
+                                <div class="ub-f1">年龄：{php echo $this->getStaffInfo($vo['staff_id'],"age")}岁</div>
+                            </div>
+                            
+                            <div class="ulev-2">
+                            	<span class="ulev-4">星级：</span>
+                                {if $this->getStaffFen($vo['staff_id']) == 0}
+                                <span class="t-gra ulev-4">暂无评价</span>
+                                {/if}
+                                {if $this->getStaffFen($vo['staff_id']) == 1}
+                                <i class="iconfont icon-pingjiaxingxing ulev-1 t-org"></i>
+                                {/if}
+                                {if $this->getStaffFen($vo['staff_id']) == 2}
+                                <i class="iconfont icon-pingjiaxingxing ulev-1 t-org"></i>
+                                <i class="iconfont icon-pingjiaxingxing ulev-1 t-org"></i>
+                                {/if}
+                                {if $this->getStaffFen($vo['staff_id']) == 3}
+                                <i class="iconfont icon-pingjiaxingxing ulev-1 t-org"></i>
+                                <i class="iconfont icon-pingjiaxingxing ulev-1 t-org"></i>
+                                <i class="iconfont icon-pingjiaxingxing ulev-1 t-org"></i>
+                                {/if}
+                                {if $this->getStaffFen($vo['staff_id']) == 4}
+                                <i class="iconfont icon-pingjiaxingxing ulev-1 t-org"></i>
+                                <i class="iconfont icon-pingjiaxingxing ulev-1 t-org"></i>
+                                <i class="iconfont icon-pingjiaxingxing ulev-1 t-org"></i>
+                                <i class="iconfont icon-pingjiaxingxing ulev-1 t-org"></i>
+                                {/if}
+                                {if $this->getStaffFen($vo['staff_id']) == 5}
+                                <i class="iconfont icon-pingjiaxingxing ulev-1 t-org"></i>
+                                <i class="iconfont icon-pingjiaxingxing ulev-1 t-org"></i>
+                                <i class="iconfont icon-pingjiaxingxing ulev-1 t-org"></i>
+                                <i class="iconfont icon-pingjiaxingxing ulev-1 t-org"></i>
+                                <i class="iconfont icon-pingjiaxingxing ulev-1 t-org"></i>
+                                {/if}
+                            </div>
+                        </div>
+                        <div class="ubt b-bla01 ub" style="margin-top:0.2rem; padding:0.2rem 0 0 0">
+                            <div class="ulev-1 umar-r">接单{php echo $this->getStaffInfo($vo['staff_id'],"get_order")}</div>
+                            <div class="ulev-4 t-gra ub-f1">好{php echo $this->getStaffInfo($vo['staff_id'],"good")} / 中{php echo $this->getStaffInfo($vo['staff_id'],"center")} / 差{php echo $this->getStaffInfo($vo['staff_id'],"bad")}</div>
+                        </div>
+                        
+                    </div>
+                    <input name="radio_v" type="radio" id="ww{$n}" value="{$vo['id']}|{$vo['staff_id']}" >
+                    <label class="ubl b-bla01 ub ub-ac ub-pc block" for="ww{$n}" style="padding:0.5rem 0.75rem">
+                        <i class="iconfont icon-iconfontcolor94 ulev2 t-dgra"></i>
+                    </label>
+                </li>
+            {/loop}
+        {/if}    
+        <!--竞单人显示结束-->	
+    </ul>
+    
+    <div class="ulev-4 t-dgra tx-c" style="padding:0 0.5rem">系统将通知您选定的接单人上门服务</div>
+    <div class="uinn"></div>
+
+    <!--<div class="uinn8 ub connn">-->
+
+    <div class="uinn8 ub">
+        {if count($list) != 0}
+        	{if in_array(1,$idStr)==0}
+            <input name="submit" type="submit" value="选定接单人" class="c-gre3 ulev0 uc-a1 ub-f1 btnn block t-wh" style="margin-bottom:0.5em; padding:0.75rem 3rem" />
+            <input type="hidden" name="token" value="{$_W['token']}" />
+            {/if}
+            
+            {if in_array(1,$idStr)==1}
+            <div class="uinn211 c-gra ub ub-pc uc-a1 ub-f1 btnn" style="margin-bottom:0.5em;"><span class="ulev0 t-wh">已选定人员</span></div>
+            {/if}
+        {/if}
+    </div>
+    </form>
+    <div class="" style="height:3.125rem"></div>
+    
+    {template 'footer'}
+    
+</div>
+
+<div class="loginmask c-bla80">
+	<div class="ub ub-ac ub-pc mban" style="width:100%; height:100%;top:-800px">
+    	<div class="c-wh uc-a15 ub ub-ver" style="height:80%; width:90%;">
+        	<div class="absolute c-wh uc-a100 uinn3" style="top:-2.1rem; left:50%; margin-left:-2.1rem; z-index:2">
+            	<div class="uc-a100 ub-img1 c-check" style="width:4rem; height:4rem; background-image:url(images/bb.jpg);"></div>
+            </div>
+            <div class=" bga uc-t15">
+                <div class="ub" style="height:2.5rem">
+                    <div class="tx-c" style="padding:0.3rem 0.5rem">
+                        <i class="iconfont icon-anquanbaozhang ulev3 t-red"></i>
+                        <div class="ulev-2 t-org"><span>实名认证</span></div>
+                    </div>
+                    <div class="ub-f1"></div>
+                    <div class="closealert"  style="padding:0.3rem 0.5rem"><i class="iconfont icon-guanbi ulev2 t-gra"></i></div>
+                </div>
+                <div class="tx-c font-b">王昭君</div>
+                <div class="tx-c" style="padding-bottom:0.5rem">
+                    <i class="iconfont icon-pingjiaxingxing ulev0 t-org"></i>
+                    <i class="iconfont icon-pingjiaxingxing ulev0 t-org"></i>
+                    <i class="iconfont icon-pingjiaxingxing ulev0 t-org"></i>
+                    <i class="iconfont icon-pingjiaxingxing ulev0 t-org"></i>
+                    <i class="iconfont icon-pingjiaxingxing ulev0 t-org"></i>
+                    <div class="uba b-org uc-a15 absolute" style="padding:0.2rem 0.5rem; right:0.5rem; bottom:0.5rem">
+                        <i class="iconfont icon-jifen ulev-1 t-org"></i> <span class="ulev-4">收藏</span>
+                    </div>
+                </div>
+            </div>
+            <div class="tx-c" style="padding:0 0.5rem">
+            	<div class="ubb b-bla01 ub"  style="padding: 0.5rem 0">
+                	<div class="ub-f1 ubr b-bla01">
+                    	<div>368</div>
+                        <div class="ulev-4">总接单</div>
+                    </div>
+                    <div class="ub-f1 ubr b-bla01">
+                    	<div>300</div>
+                        <div class="ulev-4">好评</div>
+                    </div>
+                    <div class="ub-f1 ubr b-bla01">
+                    	<div>60</div>
+                        <div class="ulev-4">中评</div>
+                    </div>
+                    <div class="ub-f1">
+                    	<div>8</div>
+                        <div class="ulev-4">差评</div>
+                    </div>
+                </div>
+            </div>
+            <ul class="ulev-4 uinn t-gra" style="padding-top:0">
+            	<li class="uinn3 ubb-blaimg ub">
+                	<div class="ub-f1 ub">
+                        <div class="tx-r uinn3" style="width:4.5rem">年龄：</div>
+                        <div class="ub-f1 uinn3">32岁</div>
+                    </div>
+                    <div class="ub-f1 ub">
+                        <div class="tx-r uinn3" style="">性别：</div>
+                    	<div class="ub-f1 uinn3">女</div>
+                    </div>
+                    <div class="ub-f1 ub">
+                        <div class="tx-r uinn3" style="">工龄：</div>
+                    	<div class="ub-f1 uinn3">38个月</div>
+                    </div>
+                </li>
+                <li class="uinn3 ubb-blaimg ub">
+                	<div class="tx-r uinn3" style="width:4.5rem">服务项目：</div>
+                    <div class="ub-f1 uinn3">小时工 / 保姆 / 厨师</div>
+                </li>
+                <li class="uinn3 ubb-blaimg ub">
+                	<div class="tx-r uinn3" style="width:4.5rem">服务保障：</div>
+                    <div class="ub-f1 uinn3">已缴纳1000元服务保证金</div>
+                </li>
+                <li class="uinn3 ubb-blaimg ub">
+                	<div class="tx-r uinn3" style="width:4.5rem">已投保险：</div>
+                    <div class="ub-f1 uinn3">100万意外险 / 10万财产险</div>
+                </li>
+                <li class="uinn3 ubb-blaimg ub">
+                	<div class="tx-r uinn3" style="width:4.5rem">健康证明：</div>
+                    <div class="ub-f1 uinn3">已核验</div>
+                </li>
+                <li class="uinn3 ubb-blaimg ub">
+                	<div class="tx-r uinn3" style="width:4.5rem">所属公司：</div>
+                    <div class="ub-f1 uinn3">花木兰家政公司</div>
+                </li>
+            </ul>
+            <div class="ub-f1"></div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="order_id" value="{$id}" />
+<script type="text/javascript" src="{MODULE_URL}/template/mobile/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="{MODULE_URL}/template/mobile/js/main.js"></script>
+<script type="text/javascript" src="{MODULE_URL}/template/mobile/js/jquery_min.js"></script>
+
+<script type="text/javascript">
+$(".closealert").click(function() {
+	 $(".mban").animate({top:'-800px'})
+	 $(".loginmask").fadeOut(500);
+});
+function openPe(){
+	$(".loginmask").fadeIn(500), $(".mban").animate({top:'0px'})
+} 
+
+$(document).ready(function(){  
+	setTimeout(function(){
+		window.location.reload();	
+	},15000);
+}); 
+
+function checkform(){
+	var radio=document.getElementsByName("radio_v");
+	var selectvalue=null;   //  selectvalue为radio中选中的值
+    for(var i=0;i<radio.length;i++){
+		if(radio[i].checked==true) {
+			selectvalue=radio[i].value;
+			break;
+		}
+	}
+	
+	if(selectvalue == '' || selectvalue == null){
+		alert('请选择一个竞单人');
+		return false;
+	}
+}
+
+function orderDel(id){
+	if(window.confirm('确定取消该订单？')){
+		$.ajax({
+			url: "{php echo $this->createMobileUrl('orderDel', array());}",
+			type:"POST",
+			data:{'id':id},
+			dataType:"json",
+			success: function(res){
+				if(res == "0"){
+					alert('对不起,取消失败！请稍后再试');
+				}else{
+					window.location.href = "{php echo $this->createMobileUrl('Index', array())}";  
+				}
+			}
+		});
+    }else{
+		return false;
+	}
+}
+</script>
+
+
+</body>
+</html>

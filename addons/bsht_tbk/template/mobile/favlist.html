@@ -1,0 +1,167 @@
+   {template 'header'}
+<!--script src="{$res}js/jquery.masonry.min.js"></script-->
+<!--script src="{$res}js/jquery.masonry.pkgd.min.js"></script-->
+<script src="../addons/bsht_tbk/res/js/main.js"></script>
+
+
+    <div id="msv">
+     <link rel="stylesheet" type="text/css" href="{$res}static/jwap/css/newpulic.css" />
+    </div>
+	
+    <div id="goods">
+     <section class="goods" id="pageCon">
+      <ul class="goods-list list_box clear" id="list_box">
+      </ul>
+     </section>
+	 <div id="list_more" class="loading" style="margin-top:10px"><span class="am-text-secondary" onclick="get_list(0);">查看更多</span></div>
+     <!--div class="loading" id="loading" style="display: none;">
+      <span>正在加载中，请稍后...</span>
+     </div-->
+    </div>
+ 
+	
+<script type="text/javascript">
+var limit = 1;
+function get_list(ty){
+    
+    if(ty==1){
+	   $("#pageCon .list_box").html('');
+	}else{
+	   $("#list_more").html('<div class="am-text-secondary"><span class="am-icon-spinner am-icon-spin"></span> 卖命加载中...</div>');
+	   
+	}
+	
+	$.ajax({
+	    type : "post",
+	    url : "{php echo $this->createMobileUrl('favlist_ajax',array('op'=>'list','openid'=>$openid))}",
+	    data : {
+	    	limit:limit,
+	    },
+        dataType : "json",		
+	    success : function(data) {
+	    	if(data.status==200){
+						var list = data.content;
+						var content = '';
+						for(var i=0; i<list.length; i++){
+
+                            
+
+    
+
+         content += '<li class="picCon"><a class="goods-a" href="'+list[i]['url']+'" target="_self">'
+		 +'<img class="loazd lazy-bk" src="../addons/bsht_tbk/res/images/load.gif" data-bk="'+list[i]['itempic']+'{$setting['maxpic']}.jpg" /></a>'
+		 +'<a href="'+list[i]['url']+'" target="_self">'
+		 +'<h3>'+list[i]['itemtitle']+'</h3>'
+         +'<div class="list-price buy">'
+         +'<span class="price-new"><i>券后 ￥</i>'+list[i]['itemfee2']+'</span>'
+         +'<a id="J_weixin" href="'+list[i]['url']+'" target="_blank" class="coupon"><span class="good-btn" style="color:#999">销量'+list[i]['itemmsell']+'</span></a>'
+         +'</div></a>'
+         +'<div class="lingquan">'
+         +'<a id="J_weixin" href="'+list[i]['yhjurl']+'" target="_self" class="coupon"><span>'+list[i]['itemfee3']+'元券</span></a>'
+         +'</div></li>';
+
+
+
+
+						}
+                        $("#pageCon .list_box").append(content);
+						var aa = $(".goods-list li").innerWidth();
+                        $(".goods-list li img").css('height',aa);
+						if(list.length==10){
+							$("#list_more").html('<span class="am-text-secondary" onclick="get_list(0);">点击查看更多</span>');
+						}else{
+							$("#list_more").html('<span></span>');
+							$("#list_more").fadeOut(500);
+						}		
+	                    limit++;
+
+						
+
+//waterfall();
+lazy_img();
+
+		    }else if(data.status==-103){
+	    		$("#list_more").html('<span>没有更多记录！</span>');
+				//dialog("没有更多记录！");
+				$("#list_more").fadeOut(500);
+
+	    	}else{
+			    $("#list_more").html('<span>没有更多记录！</span>');
+				//dialog("没有更多记录！！");
+				$("#list_more").fadeOut(500);
+			}    	
+	    },
+	    error : function(xhr, type) {
+
+	    }
+	});
+	    
+
+}
+
+
+get_list(0);
+
+
+//==============自动加载=============
+{if $setting['autoclick']==1}
+//获取滚动条当前的位置 
+function getScrollTop() { 
+var scrollTop = 0; 
+if (document.documentElement && document.documentElement.scrollTop) { 
+scrollTop = document.documentElement.scrollTop; 
+} 
+else if (document.body) { 
+scrollTop = document.body.scrollTop; 
+} 
+return scrollTop; 
+} 
+
+//获取当前可是范围的高度 
+function getClientHeight() { 
+var clientHeight = 0; 
+if (document.body.clientHeight && document.documentElement.clientHeight) { 
+clientHeight = Math.min(document.body.clientHeight, document.documentElement.clientHeight); 
+} 
+else { 
+clientHeight = Math.max(document.body.clientHeight, document.documentElement.clientHeight); 
+} 
+return clientHeight; 
+} 
+
+//获取文档完整的高度 
+function getScrollHeight() { 
+return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight); 
+} 
+
+
+$(window).scroll(function () { 
+if (getScrollTop() + getClientHeight() == getScrollHeight()) { 
+//alert("到达底部"); 
+get_list(0);
+} 
+});
+
+{/if}
+//==============自动加载=============  
+
+
+function waterfall(limit){
+$container = $('#list_box');
+$container.masonry('reload');
+	$container.imagesLoaded(function() {
+		lazy_img();	
+		$container.masonry({
+			itemSelector: '.picCon',
+			isFitWidth: false,//是否根据浏览器窗口大小自动适应默认false
+			//gutter: 20,
+			isAnimated: false,//是否采用jquery动画进行重拍版
+			isRTL:false,//设置布局的排列方式，即：定位砖块时，是从左向右排列还是从右向左排列。默认值为false，即从左向右
+            isResizable: true,//是否自动布局默认true
+			});
+		});
+}
+        
+</script>
+
+	{template 'footer'}

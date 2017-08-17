@@ -1,0 +1,210 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta charset="utf-8">
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" href="{MODULE_URL}/resource/css/style.css" />
+    <script type="text/javascript" src="{MODULE_URL}/resource/js/jquery-2.1.0.js"></script>
+    <script type="text/javascript" src="{MODULE_URL}/resource/js/script.js" ></script>
+    <title>{$categroy['name']}</title>
+    {php echo register_jssdk(false);}
+</head>
+
+<body>
+
+<div class="detail">
+
+    <div class="tit gridXb">
+        <a href="{php echo $this->createmobileurl('index',array('rand'=>time()))}" class="back">回到主页</a>
+        <div class="ff">
+            <img src="{php echo tomedia($categroy['icon'])}" width="60" height="60">
+            {if $categroy['money']>0}
+            <span>&yen;{$categroy['money']}</span>
+            {/if}
+        </div>
+
+        <div class="info tc mt10">
+            <h2 class="f18">{$categroy['name']}</h2>
+            {if !empty($categroy['tags'])}
+            <div class="tags clearfix">
+                {loop $alltags $row}
+                <span class="gridFour">{$row['tag_name']}</span>
+                {/loop}
+            </div>
+            {/if}
+            <p class="f12 mt10 gray">
+                {if !empty($vesion['version'])}
+                <span>最新版本：{$vesion['version']}</span>
+                {/if}
+                <span class="ml10">更新日期：{php echo date('m-d',$vesion['createtime'])}</span></p>
+        </div>
+        <div class="add mt15">
+            <ul class="tc">
+                <li>
+                    <a href="javascript:void(0);" class="gridFour" onclick="yanshi();">介绍</a>
+                </li>
+                {if !empty($categroy['buyurl'])}
+                <li>
+                    <a href="{$categroy['buyurl']}" target="_blank" class="gridFour">{if !empty($categroy['rename'])}{$categroy['rename']}{else}购买{/if}</a>
+                </li>
+                {/if}
+                <li>
+                    <button class="actions gridFour {if $user['followstatus']==2}active{/if}" onclick="sub('sub')">{if $user['followstatus']==2}已订阅{else}订阅{/if}</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    {if $content==1}
+    <div class="tipRss">
+        <p>已发布<span>{$num}</span>条记录</p>
+        提示：订阅之后才能查看内容！
+    </div>
+    {else}
+    <div class="updateList gridFour">
+
+        {loop $list $row}
+        <div class="items gridXb {if $user['followstatus']==2 && $row['read']==1} noRead {/if}" onclick="read(this,'on');" data="{$row['id']}">
+            <h2>{$row['title']}</h2>
+            <p class="gray f12">{php echo date('Y-m-d',$row['createtime'])}</p>
+            <div class="con gridXt" style="display: none;">
+                {$row['content']}
+            </div>
+            <i class="gridFourCirle"></i>
+            <input type="hidden" id="id" value="{$id}">
+        </div>
+        {/loop}
+
+
+    </div>
+    {/if}
+</div>
+
+<!--关注提示 start-->
+<div class="floatBox popupTip" style="display: none;"  id="subscibes">
+    <div class="mid box">
+        <div class="txt">
+            <p><img src="{$_W['attachurl']}qrcode_{$_W['uniacid']}.jpg" width="100%"></p>
+            <p>订阅产品之前请先关注公众号</p>
+        </div>
+        <div class="btn">
+            <ul class="flex">
+                <li class="gray" id="qclose">关闭</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--关注提示end-->
+
+<!--二维码 start-->
+<div class="floatBox popupTip large" style="display: none;" id="qrcode" >
+    <div class="box">
+        <div class="txt">
+            <p>{$categroy['attpro']}</p>
+        </div>
+        <div class="btn">
+            <ul class="flex">
+                <li class="gray" id="close">关闭</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--二维码 end-->
+</body>
+<script type="text/javascript">
+
+    function jsApiCall(pay)
+    {
+        WeixinJSBridge.invoke(
+                'getBrandWCPayRequest',
+                pay,
+                function(res){
+                    WeixinJSBridge.log(res.err_msg);
+                    if(res.err_msg == "get_brand_wcpay_request:ok") {
+                        location.href=location.href;
+                    } else if(res.err_msg == "get_brand_wcpay_request:cancel"){
+                        alert("已取消付费!");
+                    }else{
+                        alert(res.err_code+res.err_desc+res.err_msg);
+                    }
+                }
+        );
+    }
+
+    function callpay(pay)
+    {
+        if (typeof WeixinJSBridge == "undefined"){
+            if( document.addEventListener ){
+                document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+            }else if (document.attachEvent){
+                document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+                document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+            }
+        }else{
+            jsApiCall(pay);
+        }
+    }
+</script>
+<script>
+    function read(obj,op){
+        $(obj).toggleClass("active").siblings(".items").removeClass("active");
+        $(obj).siblings(".items").find(".con").slideUp(300);
+        $(obj).find(".con").slideToggle(300);
+        var recid=$(obj).attr('data');
+        var id=$("#id").val();
+        $.post(location.href,{'recid':recid,'op':op,'id':id},function(res){
+            if(res.result==1){
+                $(obj).removeClass('noRead');
+            }
+        });
+    }
+    function yanshi(){
+        $("#qrcode").show();
+    }
+    $("#close").click(function(){
+        $("#qrcode").hide();
+    });
+    $("#qclose").click(function(){
+        $("#subscibes").hide();
+    });
+    function sub(op){
+        $.post(location.href,{'op':op},function(ress){
+            if(ress.result==1){
+                $("#subscibes").show();
+                return;
+            }else if(ress.result==2){
+                callpay(ress.data);
+                return;
+            }else{
+                location.href=location.href+"&a=2";
+            }
+        })
+    }
+    $(function(){
+        $(".updateList .gridXb").eq(0).click();
+        initShare();
+        function initShare(){
+            wx.ready(function () {
+                shareMeta = {
+                    imgUrl:"{php echo tomedia($categroy['icon'])}",
+                    link :  "",
+                    desc : "{$categroy['name']}",
+                    title : "{$categroy['name']}",
+                    success: function(){
+
+                    },
+                    cancel: function(){
+                        // alert("分享失败，可能是网络问题，一会儿再试试？");
+                    }
+                };
+                wx.onMenuShareTimeline(shareMeta);
+                wx.onMenuShareAppMessage(shareMeta);
+                wx.onMenuShareWeibo(shareMeta);
+                wx.onMenuShareQQ(shareMeta);
+                wx.onMenuShareQZone(shareMeta);
+            });
+        }
+    })
+    
+</script>
+</html>

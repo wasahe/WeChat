@@ -1,0 +1,764 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.6">
+	<application setting="false">
+		<name><![CDATA[全能O2O]]></name>
+		<identifie><![CDATA[xm_gohome]]></identifie>
+		<version><![CDATA[3.93]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[全能O2O]]></ability>
+		<description><![CDATA[全能O2O]]></description>
+		<author><![CDATA[不错吧]]></author>
+		<url><![CDATA[http://www.bcb5.com/]]></url>
+	</application>
+	<platform>
+		<subscribes>
+			<message type="text" />
+			<message type="image" />
+			<message type="voice" />
+			<message type="video" />
+			<message type="shortvideo" />
+			<message type="location" />
+			<message type="link" />
+			<message type="subscribe" />
+			<message type="unsubscribe" />
+			<message type="qr" />
+			<message type="trace" />
+			<message type="click" />
+			<message type="view" />
+			<message type="merchant_order" />
+		</subscribes>
+		<handles>
+			<message type="text" />
+			<message type="image" />
+			<message type="voice" />
+			<message type="video" />
+			<message type="shortvideo" />
+			<message type="location" />
+			<message type="link" />
+			<message type="subscribe" />
+			<message type="qr" />
+			<message type="trace" />
+			<message type="click" />
+			<message type="merchant_order" />
+		</handles>
+		<rule embed="false" />
+		<card embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="入口设置" do="index" state="" direct="false" />
+			<entry title="员工入口" do="validate" state="" direct="false" />
+		</cover>
+		<menu>
+			<entry title="基础数据" do="base" state="" direct="false" />
+			<entry title="运营管理" do="running" state="" direct="false" />
+			<entry title="系统更新" do="version" state="" direct="false" />
+			<entry title="常见问题" do="question" state="" direct="false" />
+			<entry title="服务说明" do="shuoming" state="" direct="false" />
+			<entry title="保证金等级" do="grade" state="" direct="false" />
+			<entry title="工人管理" do="serveperson" state="" direct="false" />
+			<entry title="公司管理" do="company" state="" direct="false" />
+			<entry title="项目管理" do="servetype" state="" direct="false" />
+			<entry title="业务模型管理" do="servetemp" state="" direct="false" />
+			<entry title="订单管理" do="order" state="" direct="false" />
+			<entry title="幻灯片管理" do="adv" state="" direct="false" />
+			<entry title="推荐服务[广告]" do="gg" state="" direct="false" />
+			<entry title="模板消息管理" do="tempmessage" state="" direct="false" />
+			<entry title="短信功能设置" do="message" state="" direct="false" />
+			<entry title="云打印设置" do="cloudprint" state="" direct="false" />
+			<entry title="佣金列表" do="fall" state="" direct="false" />
+			<entry title="提现操作" do="txlog" state="" direct="false" />
+			<entry title="评论列表" do="commentlist" state="" direct="false" />
+			<entry title="黑名单管理" do="blacklist" state="" direct="false" />
+		</menu>
+	</bindings>
+	<permissions>
+	</permissions>
+	<install><![CDATA[
+	CREATE TABLE IF NOT EXISTS `ims_xm_gohome_adv` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT NULL,
+  `adv_name` varchar(300) DEFAULT NULL,
+  `show_adr` varchar(100) DEFAULT NULL,
+  `link` varchar(300) DEFAULT NULL,
+  `pic` varchar(100) DEFAULT NULL,
+  `top` int(11) DEFAULT '0',
+  `stop` int(11) DEFAULT NULL,
+  `addtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_base` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT NULL,
+  `bili` int(11) DEFAULT NULL,
+  `lead` varchar(100) DEFAULT NULL,
+  `lng` varchar(100) DEFAULT NULL,
+  `lat` varchar(100) DEFAULT NULL,
+  `yuming` varchar(100) DEFAULT NULL,
+  `logo` varchar(100) DEFAULT NULL,
+  `title` varchar(500) DEFAULT NULL,
+  `key_info` varchar(200) DEFAULT NULL,
+  `xianzhi` int(11) DEFAULT '0',
+  `version` float DEFAULT NULL,
+  `banquan` varchar(3000) DEFAULT NULL,
+  `authen` int(11) DEFAULT '0',
+  `addtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=137 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_blacklist` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `openid` varchar(100) DEFAULT NULL,
+  `state` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_card` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `openid` varchar(100) NOT NULL,
+  `staff_id` int(11) DEFAULT NULL,
+  `person` int(11) DEFAULT '0',
+  `card_name` varchar(100) NOT NULL,
+  `pic1` varchar(100) DEFAULT NULL,
+  `pic2` varchar(100) DEFAULT '',
+  `pic3` varchar(800) NOT NULL,
+  `addtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_code` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT NULL,
+  `mobile` varchar(100) DEFAULT NULL,
+  `code` int(11) DEFAULT NULL,
+  `starttime` datetime NOT NULL,
+  `endtime` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_comment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `openid` varchar(100) DEFAULT NULL,
+  `staff_id` int(11) DEFAULT NULL COMMENT '服务人员id',
+  `order_id` int(11) DEFAULT NULL COMMENT '订单id',
+  `xing` int(11) DEFAULT NULL COMMENT '星个数',
+  `comment` varchar(3000) DEFAULT NULL COMMENT '评价内容',
+  `addtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=38 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_companygetmoney` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `staff_id` int(11) DEFAULT NULL COMMENT '服务人员id',
+  `order_id` int(11) DEFAULT NULL COMMENT '订单id',
+  `type` int(11) DEFAULT NULL,
+  `way` int(11) DEFAULT NULL COMMENT '结算方式',
+  `serve_type` int(11) DEFAULT NULL COMMENT '服务类型',
+  `getmoney` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '得到金额',
+  `addtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `way2` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=28 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_falog` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT NULL,
+  `openid` varchar(100) DEFAULT NULL,
+  `money` decimal(10,2) DEFAULT NULL,
+  `staff_id` int(11) DEFAULT NULL,
+  `addtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_gg` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT NULL,
+  `gg_name` varchar(300) DEFAULT NULL,
+  `gg_adr` varchar(100) DEFAULT NULL,
+  `link` varchar(300) DEFAULT NULL,
+  `pic` varchar(100) DEFAULT NULL,
+  `top` int(11) DEFAULT '0',
+  `stop` int(11) DEFAULT NULL,
+  `addtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_grab` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `openid` varchar(100) DEFAULT NULL,
+  `staff_id` int(11) DEFAULT NULL COMMENT '服务人员id',
+  `serve_type` int(11) DEFAULT NULL COMMENT '服务类别id',
+  `order_id` int(11) DEFAULT NULL COMMENT '订单id',
+  `offer` varchar(100) DEFAULT NULL COMMENT '我的报价',
+  `suremoney` float DEFAULT '0',
+  `selected` int(11) DEFAULT '0' COMMENT '订单是否选中0未选中1选中2失败隐藏',
+  `addtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `selectedtime` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=94 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_grade` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `grade_name` varchar(300) DEFAULT NULL,
+  `icon` varchar(100) DEFAULT NULL,
+  `grade_money` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
+  `remark` text,
+  `addtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `delstate` int(11) DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_message` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `platform` varchar(300) NOT NULL,
+  `plat_name` varchar(300) DEFAULT NULL,
+  `plat_pwd` varchar(100) DEFAULT NULL,
+  `qianming` varchar(500) DEFAULT NULL,
+  `message1` int(11) DEFAULT '0',
+  `message1_content` text,
+  `message2` int(11) DEFAULT '0',
+  `message2_content` text,
+  `message3` int(11) DEFAULT '0',
+  `message3_content` text,
+  `addtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_moneylog` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT NULL,
+  `tid` int(11) DEFAULT NULL,
+  `money1` decimal(10,2) DEFAULT NULL,
+  `money2` decimal(10,2) DEFAULT NULL,
+  `remark` text,
+  `username` varchar(100) DEFAULT NULL,
+  `s_openid` varchar(100) DEFAULT NULL,
+  `addtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_msglog` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `openid` varchar(100) DEFAULT NULL,
+  `staff_id` int(11) DEFAULT NULL COMMENT '服务人员id',
+  `serve_type` int(11) DEFAULT NULL COMMENT '服务类别id',
+  `order_id` int(11) DEFAULT NULL COMMENT '订单id',
+  `state` int(11) DEFAULT '0' COMMENT '订单状态0抢单中1已抢单',
+  `addtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `selectedtime` varchar(100) DEFAULT NULL COMMENT '选定时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=291 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_order` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `openid` varchar(100) DEFAULT NULL,
+  `serve_type` int(11) DEFAULT NULL,
+  `table_name` varchar(300) DEFAULT NULL COMMENT '模板表名',
+  `other_id` int(11) DEFAULT NULL COMMENT '模板表写入的id',
+  `state` int(11) DEFAULT '0' COMMENT '0暂无抢单1指定服务人员2完工3已有人抢单',
+  `staff_id` int(11) DEFAULT '0' COMMENT '服务人员ID[选定的服务人员]',
+  `temp_id` int(11) DEFAULT '0',
+  `lat` varchar(100) DEFAULT NULL,
+  `lng` varchar(100) DEFAULT NULL,
+  `overtime` varchar(100) DEFAULT NULL,
+  `addtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=228 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_paylog` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `openid` varchar(100) DEFAULT NULL,
+  `staff_id` int(11) DEFAULT NULL COMMENT '服务人员id',
+  `order_id` int(11) DEFAULT NULL COMMENT '订单id',
+  `type` int(11) DEFAULT NULL COMMENT '支付类型',
+  `money` varchar(100) DEFAULT NULL COMMENT '支付金额',
+  `remark` varchar(1000) DEFAULT NULL,
+  `getMoney` varchar(100) DEFAULT NULL,
+  `state` int(11) DEFAULT '0',
+  `suanstate` int(11) DEFAULT '0',
+  `fastate` int(11) DEFAULT '0',
+  `addtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=66 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_pic` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `pic` varchar(100) DEFAULT NULL,
+  `random` int(11) DEFAULT NULL,
+  `addtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=168 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_print` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `staff_id` int(11) DEFAULT NULL,
+  `printer_sn` varchar(100) DEFAULT NULL,
+  `key_info` varchar(300) DEFAULT NULL,
+  `ip` varchar(100) DEFAULT NULL,
+  `number` int(11) DEFAULT NULL,
+  `xiaopiao` varchar(5000) DEFAULT NULL,
+  `addtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_question` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT NULL,
+  `q_name` varchar(500) DEFAULT NULL,
+  `question` text,
+  `addtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_rechargelog` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `openid` varchar(100) DEFAULT NULL,
+  `type` int(11) DEFAULT NULL COMMENT '支付类型',
+  `money` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '充值金额',
+  `remark` varchar(800) DEFAULT NULL,
+  `addtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=55 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_running` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `type` int(11) DEFAULT '0',
+  `type_id` varchar(100) DEFAULT NULL,
+  `addtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_servetemp` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `temp_name` varchar(300) DEFAULT NULL COMMENT '模板名称',
+  `bewrite` varchar(500) DEFAULT NULL COMMENT '描述',
+  `input_name` varchar(500) DEFAULT NULL COMMENT '标识',
+  `code` text COMMENT '执行代码',
+  `addtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_servetype` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `type_name` varchar(100) NOT NULL,
+  `icon` varchar(100) DEFAULT NULL,
+  `icon_pc` varchar(100) DEFAULT NULL,
+  `top` int(11) DEFAULT '0',
+  `remark` varchar(800) DEFAULT NULL,
+  `stop` int(11) DEFAULT NULL,
+  `temp_id` int(11) DEFAULT '0' COMMENT '模板id',
+  `parent_id` int(11) NOT NULL DEFAULT '0' COMMENT '父类id',
+  `child_num` int(11) NOT NULL DEFAULT '0' COMMENT '子类个数',
+  `price` decimal(10,2) DEFAULT NULL,
+  `price_unit` decimal(10,2) DEFAULT NULL,
+  `unit` varchar(100) DEFAULT NULL,
+  `gettype` int(11) DEFAULT NULL,
+  `bili_bai` float DEFAULT NULL,
+  `bili_money` float DEFAULT NULL,
+  `start` float DEFAULT NULL,
+  `end` float DEFAULT NULL,
+  `times` int(11) DEFAULT NULL,
+  `basemoney` decimal(10,2) DEFAULT '0.00',
+  `otmpmsg_id` int(11) DEFAULT '0',
+  `qtmpmsg_id` int(11) DEFAULT '0',
+  `xtmpmsg_id` int(11) DEFAULT '0',
+  `delstate` int(11) DEFAULT '1',
+  `addtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=29 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_shuoming` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT NULL,
+  `s_name` varchar(500) DEFAULT NULL,
+  `shuoming` text,
+  `addtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_staff` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `openid` varchar(100) NOT NULL,
+  `staff_name` varchar(100) NOT NULL,
+  `staff_mobile` varchar(100) NOT NULL,
+  `pwd` varchar(100) DEFAULT NULL,
+  `sex` int(11) DEFAULT NULL,
+  `avatar` varchar(200) DEFAULT NULL,
+  `age` int(11) DEFAULT NULL,
+  `year` int(11) DEFAULT NULL,
+  `card` varchar(200) DEFAULT NULL,
+  `serve_type` varchar(500) DEFAULT NULL,
+  `bank` varchar(300) DEFAULT NULL,
+  `bank_num` varchar(100) DEFAULT NULL,
+  `alipay` varchar(300) DEFAULT NULL,
+  `stop` int(11) DEFAULT NULL,
+  `flag` int(11) DEFAULT '0',
+  `print_state` int(11) DEFAULT '0',
+  `company_name` varchar(300) DEFAULT NULL,
+  `contact` varchar(100) DEFAULT NULL,
+  `address` varchar(100) DEFAULT NULL,
+  `license` varchar(100) DEFAULT NULL,
+  `license_pic` varchar(100) DEFAULT NULL,
+  `company_mge` int(11) DEFAULT '0',
+  `company_flag` int(11) DEFAULT '0',
+  `staff_num` int(11) DEFAULT '0',
+  `card_all` varchar(300) DEFAULT NULL,
+  `money` decimal(10,2) DEFAULT '0.00' COMMENT '余额',
+  `grade_id` int(11) DEFAULT NULL COMMENT '保证金级别',
+  `grade_money` decimal(10,2) DEFAULT NULL COMMENT '保证金金额',
+  `get_order` int(11) DEFAULT '0' COMMENT '接单数',
+  `grab_order` int(11) DEFAULT '0' COMMENT '抢单数',
+  `good` int(11) DEFAULT '0' COMMENT '好评数',
+  `center` int(11) DEFAULT '0' COMMENT '中评数',
+  `bad` int(11) DEFAULT '0' COMMENT '差评数',
+  `xing` int(11) DEFAULT '0',
+  `cperson` int(11) DEFAULT '0',
+  `log` varchar(100) DEFAULT NULL COMMENT '经度',
+  `lat` varchar(100) DEFAULT NULL COMMENT '纬度',
+  `adrstr` varchar(100) DEFAULT NULL,
+  `permanent` varchar(500) DEFAULT NULL,
+  `delstate` int(11) DEFAULT '1',
+  `addtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatetime` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=146 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_temp` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT NULL,
+  `temp_name` varchar(100) DEFAULT NULL,
+  `temp_token` varchar(300) DEFAULT NULL,
+  `bgcolor` varchar(300) NOT NULL,
+  `bgimage` varchar(300) NOT NULL,
+  `jsgs` text COMMENT '计算公式',
+  `html` text,
+  `cid` int(11) DEFAULT NULL,
+  `delstate` int(11) DEFAULT '1',
+  `updatetime` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=66 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_templat_xm_cleancar_3_4156` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `openid` varchar(100) DEFAULT NULL,
+  `serve_type` int(11) DEFAULT NULL,
+  `staff_id` int(11) DEFAULT NULL,
+  `ftime` varchar(100) DEFAULT NULL,
+  `fmobile` varchar(100) DEFAULT NULL,
+  `fname` varchar(100) DEFAULT NULL,
+  `fsex` int(11) DEFAULT NULL,
+  `fadr` varchar(300) DEFAULT NULL,
+  `fperson` varchar(100) DEFAULT NULL,
+  `random` int(11) DEFAULT NULL,
+  `flag` int(11) DEFAULT '0',
+  `dealprice` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
+  `addtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `cartype` varchar(500) DEFAULT NULL,
+  `cleaytype` varchar(500) DEFAULT NULL,
+  `fujia` varchar(500) DEFAULT NULL,
+  `cleanwater` varchar(500) DEFAULT NULL,
+  `carnums` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_templat_xm_cleancar_3_9345` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `openid` varchar(100) DEFAULT NULL,
+  `serve_type` int(11) DEFAULT NULL,
+  `staff_id` int(11) DEFAULT NULL,
+  `ftime` varchar(100) DEFAULT NULL,
+  `fmobile` varchar(100) DEFAULT NULL,
+  `fname` varchar(100) DEFAULT NULL,
+  `fsex` int(11) DEFAULT NULL,
+  `fadr` varchar(300) DEFAULT NULL,
+  `fperson` varchar(100) DEFAULT NULL,
+  `random` int(11) DEFAULT NULL,
+  `flag` int(11) DEFAULT '0',
+  `dealprice` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
+  `addtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `cartype` varchar(500) DEFAULT NULL,
+  `cleaytype` varchar(500) DEFAULT NULL,
+  `fujia` varchar(500) DEFAULT NULL,
+  `cleanwater` varchar(500) DEFAULT NULL,
+  `carnums` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_templat_xm_cleanlete_3_9510` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `openid` varchar(100) DEFAULT NULL,
+  `serve_type` int(11) DEFAULT NULL,
+  `staff_id` int(11) DEFAULT NULL,
+  `ftime` varchar(100) DEFAULT NULL,
+  `fmobile` varchar(100) DEFAULT NULL,
+  `fname` varchar(100) DEFAULT NULL,
+  `fsex` int(11) DEFAULT NULL,
+  `fadr` varchar(300) DEFAULT NULL,
+  `fperson` varchar(100) DEFAULT NULL,
+  `random` int(11) DEFAULT NULL,
+  `flag` int(11) DEFAULT '0',
+  `dealprice` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
+  `addtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `cleanlite_type` varchar(500) DEFAULT NULL,
+  `cleanlite_size` varchar(500) DEFAULT NULL,
+  `cleanlite_duration` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_templat_xm_express_3_7312` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `openid` varchar(100) DEFAULT NULL,
+  `serve_type` int(11) DEFAULT NULL,
+  `staff_id` int(11) DEFAULT NULL,
+  `ftime` varchar(100) DEFAULT NULL,
+  `fmobile` varchar(100) DEFAULT NULL,
+  `fname` varchar(100) DEFAULT NULL,
+  `fsex` int(11) DEFAULT NULL,
+  `fadr` varchar(300) DEFAULT NULL,
+  `fperson` varchar(100) DEFAULT NULL,
+  `random` int(11) DEFAULT NULL,
+  `flag` int(11) DEFAULT '0',
+  `dealprice` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
+  `addtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `destination` varchar(500) DEFAULT NULL,
+  `weight` varchar(500) DEFAULT NULL,
+  `volume` varchar(500) DEFAULT NULL,
+  `sendname` varchar(500) DEFAULT NULL,
+  `phone` varchar(500) DEFAULT NULL,
+  `address` varchar(500) DEFAULT NULL,
+  `extype` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_templat_xm_express_3_9709` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `openid` varchar(100) DEFAULT NULL,
+  `serve_type` int(11) DEFAULT NULL,
+  `staff_id` int(11) DEFAULT NULL,
+  `ftime` varchar(100) DEFAULT NULL,
+  `fmobile` varchar(100) DEFAULT NULL,
+  `fname` varchar(100) DEFAULT NULL,
+  `fsex` int(11) DEFAULT NULL,
+  `fadr` varchar(300) DEFAULT NULL,
+  `fperson` varchar(100) DEFAULT NULL,
+  `random` int(11) DEFAULT NULL,
+  `flag` int(11) DEFAULT '0',
+  `dealprice` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
+  `addtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `destination` varchar(500) DEFAULT NULL,
+  `weight` varchar(500) DEFAULT NULL,
+  `volume` varchar(500) DEFAULT NULL,
+  `sendname` varchar(500) DEFAULT NULL,
+  `phone` varchar(500) DEFAULT NULL,
+  `address` varchar(500) DEFAULT NULL,
+  `extype` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_templat_xm_kitchener_3_1859` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `openid` varchar(100) DEFAULT NULL,
+  `serve_type` int(11) DEFAULT NULL,
+  `staff_id` int(11) DEFAULT NULL,
+  `ftime` varchar(100) DEFAULT NULL,
+  `fmobile` varchar(100) DEFAULT NULL,
+  `fname` varchar(100) DEFAULT NULL,
+  `fsex` int(11) DEFAULT NULL,
+  `fadr` varchar(300) DEFAULT NULL,
+  `fperson` varchar(100) DEFAULT NULL,
+  `random` int(11) DEFAULT NULL,
+  `flag` int(11) DEFAULT '0',
+  `dealprice` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
+  `addtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `denji` varchar(500) DEFAULT NULL,
+  `leixing` varchar(500) DEFAULT NULL,
+  `renshu` varchar(500) DEFAULT NULL,
+  `shijian` varchar(500) DEFAULT NULL,
+  `chujv` varchar(500) DEFAULT NULL,
+  `kouwei` varchar(500) DEFAULT NULL,
+  `caiping` varchar(500) DEFAULT NULL,
+  `beizhu` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_templat_xm_kitchener_3_3664` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `openid` varchar(100) DEFAULT NULL,
+  `serve_type` int(11) DEFAULT NULL,
+  `staff_id` int(11) DEFAULT NULL,
+  `ftime` varchar(100) DEFAULT NULL,
+  `fmobile` varchar(100) DEFAULT NULL,
+  `fname` varchar(100) DEFAULT NULL,
+  `fsex` int(11) DEFAULT NULL,
+  `fadr` varchar(300) DEFAULT NULL,
+  `fperson` varchar(100) DEFAULT NULL,
+  `random` int(11) DEFAULT NULL,
+  `flag` int(11) DEFAULT '0',
+  `dealprice` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
+  `addtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `denji` varchar(500) DEFAULT NULL,
+  `leixing` varchar(500) DEFAULT NULL,
+  `renshu` varchar(500) DEFAULT NULL,
+  `shijian` varchar(500) DEFAULT NULL,
+  `chujv` varchar(500) DEFAULT NULL,
+  `kouwei` varchar(500) DEFAULT NULL,
+  `caiping` varchar(500) DEFAULT NULL,
+  `beizhu` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_templat_xm_monthlyme_3_8198` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `openid` varchar(100) DEFAULT NULL,
+  `serve_type` int(11) DEFAULT NULL,
+  `staff_id` int(11) DEFAULT NULL,
+  `ftime` varchar(100) DEFAULT NULL,
+  `fmobile` varchar(100) DEFAULT NULL,
+  `fname` varchar(100) DEFAULT NULL,
+  `fsex` int(11) DEFAULT NULL,
+  `fadr` varchar(300) DEFAULT NULL,
+  `fperson` varchar(100) DEFAULT NULL,
+  `random` int(11) DEFAULT NULL,
+  `flag` int(11) DEFAULT '0',
+  `dealprice` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
+  `addtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `monthlyman_clean` varchar(500) DEFAULT NULL,
+  `monthlyman_cook` varchar(500) DEFAULT NULL,
+  `monthlyman_flavor` varchar(500) DEFAULT NULL,
+  `monthlyman_laundry` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_templat_xm_taxt_3_3084` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `openid` varchar(100) DEFAULT NULL,
+  `serve_type` int(11) DEFAULT NULL,
+  `staff_id` int(11) DEFAULT NULL,
+  `ftime` varchar(100) DEFAULT NULL,
+  `fmobile` varchar(100) DEFAULT NULL,
+  `fname` varchar(100) DEFAULT NULL,
+  `fsex` int(11) DEFAULT NULL,
+  `fadr` varchar(300) DEFAULT NULL,
+  `fperson` varchar(100) DEFAULT NULL,
+  `random` int(11) DEFAULT NULL,
+  `flag` int(11) DEFAULT '0',
+  `dealprice` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
+  `addtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `destinations` varchar(500) DEFAULT NULL,
+  `headcount` varchar(500) DEFAULT NULL,
+  `cartype` varchar(500) DEFAULT NULL,
+  `mileage` varchar(500) DEFAULT NULL,
+  `Carpooling` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_tempmessage` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT NULL,
+  `message_name` varchar(100) DEFAULT NULL,
+  `msg_id` varchar(300) DEFAULT NULL,
+  `color_title` varchar(100) DEFAULT NULL,
+  `color_content` varchar(100) DEFAULT NULL,
+  `dataname` varchar(1000) DEFAULT NULL,
+  `datavalue` text,
+  `msg_content` text,
+  `addtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_tempmessagedefault` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT NULL,
+  `stmpmsg_id` int(11) DEFAULT NULL,
+  `otmpmsg_id` int(11) DEFAULT NULL,
+  `qtmpmsg_id` int(11) DEFAULT NULL,
+  `xtmpmsg_id` int(11) DEFAULT NULL,
+  `addtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_tempmsg` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT NULL,
+  `msg_id` varchar(100) DEFAULT NULL,
+  `color_title` varchar(100) DEFAULT NULL,
+  `color_content` varchar(100) DEFAULT NULL,
+  `dataname` varchar(500) DEFAULT NULL,
+  `datavalue` varchar(500) DEFAULT NULL,
+  `flag` int(11) DEFAULT NULL,
+  `addtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_tempvalue` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT NULL,
+  `temp_id` int(11) DEFAULT NULL,
+  `temp_token` varchar(300) DEFAULT NULL,
+  `input_type` varchar(500) DEFAULT NULL,
+  `input_laber` varchar(1000) DEFAULT NULL,
+  `input_name` varchar(1000) DEFAULT NULL,
+  `input_value` varchar(1000) DEFAULT NULL,
+  `value_name` varchar(1000) DEFAULT NULL,
+  `input_default` varchar(1000) DEFAULT NULL,
+  `remark` varchar(1000) DEFAULT NULL,
+  `prompts` varchar(1000) DEFAULT NULL,
+  `top` int(11) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=369 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_tixianlog` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT NULL,
+  `openid` varchar(100) DEFAULT NULL,
+  `money` decimal(10,2) DEFAULT NULL,
+  `start` datetime DEFAULT NULL,
+  `end` datetime DEFAULT NULL,
+  `yumoney` decimal(10,2) DEFAULT NULL,
+  `famoney` decimal(10,2) DEFAULT NULL,
+  `staff_id` int(11) DEFAULT NULL,
+  `state` int(11) DEFAULT '0',
+  `addtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+CREATE TABLE IF NOT EXISTS `ims_xm_gohome_userrechargelog` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT NULL,
+  `openid` varchar(100) DEFAULT NULL,
+  `type` int(11) DEFAULT NULL,
+  `money` decimal(10,2) DEFAULT NULL,
+  `addtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+	
+	]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

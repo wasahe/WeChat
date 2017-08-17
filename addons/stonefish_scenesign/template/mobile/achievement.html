@@ -1,0 +1,300 @@
+{if !empty($fans)}
+<style>
+.panel-box a:link,.panel-box a:visited,.panel-box a:hover,.panel-box a:active {color:{$template['watchtextcolor']}}
+</style>
+<div class="panel-box" id="panel_achievement">
+    <div class="panel-content" id="panel-content" style="height:220px;">
+        <span class="icon-prize-useless" id="achievementimg"></span><br/>
+		<div id="achievement">
+		    <hr class="common-hr" />
+			<div style="font-size:12px;text-align:left;line-height:24px;height:60px;overflow-y:auto;">
+			<div style="font-size:15px;line-height:24px;text-align:center;">于 {php echo date('Y/m/d H:i',$fans['createtime']);} 签到成功</div>
+			{if !empty($prize)}<div style="font-size:15px;line-height:24px;text-align:center;">{if $fans['zhongjiang']}恭喜中奖！{else}好可惜没有中奖！{/if}</div>{/if}
+			</div>
+			<div class="btn-layout">
+				<input class="btn-confirm" name="关闭" id="achievementhide" type="button" value="关闭">
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+$("#achievementnavshow").click(function(){
+    {if $reply['power']==2}
+    $("#achievementimg").css({"background-image": "url({$userinfo['headimgurl']})"});
+    {/if}
+	$("#panel_achievement").show();
+});
+$("#achievementhide").click(function(){
+	$("#panel_achievement").hide();
+});
+</script>
+{else}
+{if $isfans}
+{if $exchange['group'] && !empty($parent) && !empty($children)}
+<style>
+.form-control {
+    margin: 0.5em 0;
+    position: relative;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3) inset;
+    background-color: #FFFFFF;
+    border-radius: 0.6em 0.6em 0.6em 0.6em;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    color: #333333;
+    text-shadow: 0 1px 0 #FFFFFF;
+    display: block;
+    width: 100%;
+    padding: 6px 10px;
+    margin: 8px 0 0 0;
+    font-family: Arial, Helvetica, sans-serif;
+    -webkit-appearance: none;
+}
+.form-control:hover {border: 1px solid #ff6501;}
+
+.form-control:focus {border: 1px solid #ff6501;box-shadow: 0 0 5px #ff6501;}
+
+.form-control[select]  {
+    width: 100%;float:right;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+.panel-box .panel-content{height:400px;}
+.panel-box .panel-content #isfans{height:180px; overflow-y:auto;}
+</style>
+{/if}
+{if $exchange['group'] && !empty($parent) && empty($children)}
+<style>
+.panel-box .panel-content{height:360px;}
+.panel-box .panel-content #isfans{height:140px; overflow-y:auto;}
+</style>
+{/if}
+<!--注册、修改、结果-->
+<div class="panel-box" id="panel_boxuser">
+    <div class="panel-content" id="panel-content"{if !$isfansinfo} style="height:240px;{/if}">
+        <span class="icon-prize-useless" id="panelimg"></span><br/>
+		{if $isfansinfo}
+		<div id="cccc">{$exchange['awarding_tips']}</div>
+		<div id="result_info" style="display:none">
+		    <hr class="common-hr" />
+			<div id="isfans">
+            {if $exchange['isrealname']}<div style="float: left;width:100%;"><label>{$isfansname[0]}</label><input name="realname" class="px" id="realname" value="{$profile['realname']}" type="text" placeholder="请输入{$isfansname[0]}"></div>{/if}
+			{if $exchange['ismobile']}<div style="float: left;width:100%;"><label>{$isfansname[1]}</label><input name="mobile" class="px" id="mobile" value="{$profile['mobile']}" type="tel" placeholder="请输入{$isfansname[1]}"></div>{/if}
+			{if $exchange['isqq']}<div style="float: left;width:100%;"><label>{$isfansname[2]}</label><input name="qq" class="px" id="qq" value="{$profile['qq']}" type="tel" placeholder="请输入{$isfansname[2]}"></div>{/if}
+			{if $exchange['isemail']}<div style="float: left;width:100%;"><label>{$isfansname[3]}</label><input name="email" class="px" id="email" value="{$profile['email']}" type="text" placeholder="请输入{$isfansname[3]}"></div>{/if}
+			{if $exchange['isaddress']}<div style="float: left;width:100%;"><label>{$isfansname[4]}</label><input name="address" class="px" id="address" value="{$profile['address']}" type="text" placeholder="请输入{$isfansname[4]}"></div>{/if}
+			{if $exchange['isgender']}<div style="float: left;width:100%;"><label>{$isfansname[5]}</label><select name="gender" id="gender" class="px">
+				<option value="0"{if $profile['gender']==0} selected {/if}>选择{$isfansname[5]}</option>
+				<option value="1"{if $profile['gender']==1} selected {/if}>男</option>
+				<option value="2"{if $profile['gender']==2} selected {/if}>女</option>
+			</select></div>{/if}
+			{if $exchange['istelephone']}<div style="float: left;width:100%;"><label>{$isfansname[6]}</label><input name="telephone" class="px" id="telephone" value="{$profile['telephone']}" type="tel" placeholder="请输入{$isfansname[6]}"></div>{/if}
+			{if $exchange['isidcard']}<div style="float: left;width:100%;"><label>{$isfansname[7]}</label><input name="idcard" class="px" id="idcard" value="{$profile['idcard']}" type="text" placeholder="请输入{$isfansname[7]}"></div>{/if}
+			{if $exchange['iscompany']}<div style="float: left;width:100%;"><label>{$isfansname[8]}</label><input name="company" class="px" id="company" value="{$profile['company']}" type="text" placeholder="请输入{$isfansname[8]}"></div>{/if}
+			{if $exchange['isoccupation']}<div style="float: left;width:100%;"><label>{$isfansname[9]}</label><input name="occupation" class="px" id="occupation" value="{$profile['occupation']}" type="text" placeholder="请输入{$isfansname[9]}"></div>{/if}
+			{if $exchange['isposition']}<div style="float: left;width:100%;"><label>{$isfansname[10]}</label><input name="position" class="px" id="position" value="{$profile['position']}" type="text" placeholder="请输入{$isfansname[10]}"></div>{/if}
+			{if $exchange['group'] && !empty($parent) && !empty($children)}<div style="float: left;width:100%;"><label>内部分组<br><br></label>{php echo tpl_form_field_category_2level('group', $parent, $children, 0, 0)}</div>{/if}
+			{if $exchange['group'] && !empty($parent) && empty($children)}<div style="float: left;width:100%;"><label>内部分组</label><select name="group_parent" id="group_parent" class="px">
+				<option value="0" selected>选择内部分组</option>
+				{loop $parent $group_parent}				
+				<option value="{$group_parent['id']}">{$group_parent['name']}</option>
+				{/loop}
+			</select></div>{/if}
+		    </div>
+            <div id="result_info_tip"></div>
+			<div class="btn-layout">
+				{if !empty($fans)}
+				<input class="btn-confirm" name="提交资料" id="save-btn" type="button" value="提交资料">
+				{else}
+				<input class="btn-confirm2" name="我再看看" id="save-close" type="button" value="我再看看">
+				<input class="btn-confirm2" name="立即签到" id="save-btn" type="button" value="立即签到">
+				{/if}
+            </div>
+        </div>
+		{else}
+		<div id="cccc">{$reply['intips']}</div>
+		<div id="result_info">
+			<div id="result_info_tip"></div>
+			<div class="btn-layout">
+				<input class="btn-confirm2" name="我再看看" id="save-close" type="button" value="我再看看">
+				<input class="btn-confirm2" name="立即签到" id="save-btn" type="button" value="立即签到">
+            </div>
+        </div>
+		{/if}
+    </div>
+</div>
+<!--注册、修改、结果-->
+{/if}
+<script type="text/javascript">
+{if $isfans}
+{if $isfansshow}
+$("#result_info").show();
+$("#panel_boxuser").show();
+{/if}
+$("#save-close").click(function(){
+	$("#panel_boxuser").hide();
+});
+$("#joinshow").click(function(){
+    $("#result_info").show();
+    $("#panel_boxuser").show();
+});
+{if $reply['power']==2}
+$("#panelimg").css({"background-image": "url({$userinfo['headimgurl']})"});
+{/if}
+<!--保存数据-->
+$("#save-btn").bind("click",function () {
+	{if $isfansinfo}
+	var btn = $(this);
+    {if $exchange['isrealname']}
+	var realname = $("#realname").val();
+	if (realname == '') {
+	    $("#result_info_tip").text("请输入{$isfansname[0]}");
+	    return;
+	}
+	var partten = /[\u4e00-\u9fa5]/g;
+	if(!partten.test(realname)){
+	    $("#result_info_tip").text("请输入正确的{$isfansname[0]}");
+	    return;
+	}
+	{/if}
+	{if $exchange['ismobile']}
+	var mobile = $("#mobile").val();
+	if (mobile == '') {
+	    $("#result_info_tip").text("请输入{$isfansname[1]}");
+	    return;
+	}
+	var partten = /^1\d{10}$/;
+	if(!partten.test(mobile)){
+	    $("#result_info_tip").text("请输入正确的{$isfansname[1]}");
+	    return;
+	}
+	{/if}
+	{if $exchange['isqq']}
+	var qq = $("#qq").val();
+	if (qq == '') {
+	    $("#result_info_tip").text("请输入{$isfansname[2]}");
+	    return;
+	}			
+	var partten = /^[1-9]{1}\d{4,11}$/;
+	if(!partten.test(qq)){
+	    $("#result_info_tip").text("请输入正确的{$isfansname[2]}");
+	    return;
+	}
+	{/if}
+	{if $exchange['isemail']}
+	var email = $("#email").val();
+	if (email == '') {
+	    $("#result_info_tip").text("请输入{$isfansname[3]}");
+	    return;
+	}
+	var partten = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+	if(!partten.test(email)){
+	    $("#result_info_tip").text("请输入正确的{$isfansname[3]}");
+	    return;
+	}
+	{/if}
+	{if $exchange['isaddress']}
+	var address = $("#address").val();
+	if (address == '') {
+	    $("#result_info_tip").text("请输入{$isfansname[4]}");
+	    return;
+	}
+	{/if}
+	{if $exchange['isgender']}
+	var gender = $("#gender").val();
+	if (gender == '0') {
+	    $("#result_info_tip").text("请选择{$isfansname[5]}");
+	    return;
+	}
+	{/if}
+	{if $exchange['istelephone']}
+	var telephone = $("#telephone").val();
+	if (telephone == '') {
+	    $("#result_info_tip").text("请输入{$isfansname[6]}");
+	    return;
+	}
+	{/if}
+	{if $exchange['isidcard']}
+	var idcard = $("#idcard").val();
+	if (idcard == '') {
+	    $("#result_info_tip").text("请输入{$isfansname[7]}");
+	    return;
+	}
+	{/if}
+	{if $exchange['iscompany']}
+	var company = $("#company").val();
+	if (company == '') {
+	    $("#result_info_tip").text("请输入{$isfansname[8]}");
+	    return;
+	}
+	{/if}
+	{if $exchange['isoccupation']}
+	var occupation = $("#occupation").val();
+	if (occupation == '') {
+	    $("#result_info_tip").text("请输入{$isfansname[9]}");
+	    return;
+	}
+	{/if}
+	{if $exchange['isposition']}
+	var position = $("#position").val();
+	if (position == '') {
+	    $("#result_info_tip").text("请输入{$isfansname[10]}");
+	    return;
+	}
+	{/if}
+	{if $exchange['group'] && !empty($parent) && !empty($children)}
+	var group_parent = $("#group_parent").val();
+	if (group_parent == '0') {
+	    $("#result_info_tip").text("请选择内部分组一级分类");
+	    return;
+	}
+	var group_child = $("#group_child").val();
+	if (group_child == '0') {
+	    $("#result_info_tip").text("请选择内部分组二级分类");
+	    return;
+	}
+	{/if}
+	{if $exchange['group'] && !empty($parent) && empty($children)}
+	var group_parent = $("#group_parent").val();
+	if (group_parent == '0') {
+	    $("#result_info_tip").text("请选择内部分组");
+	    return;
+	}
+	{/if}
+	var submitData = {
+        {if $exchange['isrealname']}realname: realname,{/if}
+		{if $exchange['ismobile']}mobile: mobile,{/if}
+		{if $exchange['isqq']}qq: qq,{/if}
+		{if $exchange['isemail']}email: email,{/if}
+		{if $exchange['isaddress']}address: address,{/if}
+		{if $exchange['isgender']}gender: gender,{/if}
+		{if $exchange['istelephone']}telephone: telephone,{/if}
+		{if $exchange['isidcard']}idcard: idcard,{/if}
+		{if $exchange['iscompany']}company: company,{/if}
+		{if $exchange['isoccupation']}occupation: occupation,{/if}
+		{if $exchange['isposition']}position: position,{/if}
+		{if $exchange['group'] && !empty($parent) && !empty($children)}group_parent: group_parent,{/if}
+		{if $exchange['group'] && !empty($parent) && !empty($children)}group_child: group_child,{/if}
+		{if $exchange['group'] && !empty($parent) && empty($children)}group_parent: group_parent,{/if}
+	};
+	$.post('{php echo $this->createMobileUrl('regfans', array('rid' => $rid,'isfansinfo' => $isfansinfo))}', submitData, function(data) {
+	{else}
+	$.post('{php echo $this->createMobileUrl('regfans', array('rid' => $rid,'isfansinfo' => $isfansinfo))}', function(data) {
+	{/if}
+	if (data.success == 1) {
+		$("#cccc").hide();
+		$("#result_info").html('<hr class="common-hr" /><br>'+data.msg);
+		setTimeout(function () {
+			$("#panel_boxuser").hide();
+			location.reload();
+		},3000)
+		return;
+	}else{
+		$("#result_info_tip").text(data.msg);
+		return;
+	}
+	},"json")
+});	
+<!--保存数据-->
+{/if}
+</script>
+{/if}

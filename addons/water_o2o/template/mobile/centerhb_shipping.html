@@ -1,0 +1,40 @@
+{template 'header'}
+<body ontouchstart="" class="platform_mobile">
+<div class="qsc-alert" style="display: none;">
+<i class="info-base64"></i><span></span>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-white icon-loading-base64"><i class="icon-white icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading-new">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-loading-base64"><i class="icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<header class="qsc-tab bar-fixed wallet-tab">
+<ul class="tab-item nav-tabs-green" role="tablist">
+<li role="presentation" >
+<a href="{php echo $this->createMobileUrl('centerhb',array('type'=>'unship'))}" role="tab">待发货</a>
+</li>
+<li role="presentation" class="active">
+<a href="{php echo $this->createMobileUrl('centerhb',array('type'=>'shipping'))}" role="tab">待收货</a>
+</li>
+<li role="presentation" class="tabs-more">
+<a href="{php echo $this->createMobileUrl('centerhb',array('type'=>'shipped'))}" role="tab">已收货</a>
+</li>
+</ul>
+</header>
+<div class="content bottom mod-user-wallet tab-content">
+<div class="mod-user-wallet_list user-reward-list">
+</div>
+</div> 
+{template 'footer'}
+<script type="text/javascript" src="../addons/water_o2o/template/js/user.min.js"></script>
+
+</body></html>

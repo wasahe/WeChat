@@ -1,0 +1,63 @@
+{template 'common/header'}
+<link rel="stylesheet" type="text/css" href="../addons/qwx_shangmen/template/resource/css/animate.min.css">
+<link rel="stylesheet" type="text/css" href="../addons/qwx_shangmen/template/resource/css/style.css">
+<link rel="stylesheet" type="text/css" href="../addons/qwx_shangmen/template/resource/css/myaddress.css">
+
+<body>
+    <!-- 头部导航栏 -->
+    {template 'header'}
+    <section>
+        <div class="adrList">
+            {loop $list $key $item}
+            <div class="adrwrap">
+                <div class="adritem">
+                    <a class="adrdetail2" href="{php echo $this->createMobileUrl('myaddresspost',array('id'=>$item['id'])); }" data-id='{$item['id']}'>
+                        <p><i>{$item['name']}</i><span>{$item['phone']}</span></p>
+                        <p><span>{$item['province']},{$item['city']},{$item['district']} {$item['address']}</span></p>
+                    </a>
+                    <a class="editAdrBtn" href="{php echo $this->createMobileUrl('myaddresspost',array('id'=>$item['id'])); }">修改</a>
+                </div>
+            </div>
+            {/loop}
+        </div>
+    </section>
+
+    {if $source == 'order'}
+    <script>
+    $(function(){
+        $('.adrdetail2').click(function(){
+            //选择该地址：
+            var id = $(this).attr('data-id');
+            // alert(id);return false;
+            $.ajax({
+                url:'{php echo $this->createMobileUrl('myaddress',array('op'=>'select_address'))}',
+                type:'post',
+                data:{'address_id':id},
+                success:function(data){
+                    if (data.code == 1){
+                        //back order:
+                        var url = '{php echo $this->createMobileUrl('order')}';
+                        window.location.href=url;
+                        return false;
+                    }else{
+                        alert(data.msg);
+                    }
+                },
+                dataType:'json'
+            })
+            return false;
+        });
+
+    })
+        
+    </script>
+    {/if}
+
+    <aside>
+        <a class="book" id="addAdr" href="{php echo $this->createMobileUrl('myaddresspost',array('source'=>$source)); }">添加地址</a>
+    </aside>
+
+    <script src="../addons/qwx_shangmen/template/resource/js/zepto.min.js"></script>
+    <script src="../addons/qwx_shangmen/template/resource/js/list.min4.js"></script>
+</body>
+</html>

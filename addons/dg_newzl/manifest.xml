@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.guifox.com" versionCode="0.6,0.7,0.8">
+	<application setting="false">
+		<name><![CDATA[传播达人]]></name>
+		<identifie><![CDATA[dg_newzl]]></identifie>
+		<version><![CDATA[1.5]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[传播达人]]></ability>
+		<description><![CDATA[传播达人]]></description>
+		<author><![CDATA[鬼狐源码社区]]></author>
+		<url><![CDATA[http://www.guifox.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+			<message type="text" />
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+		<card embed="false" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="管理中心" do="manage" state="" direct="false" />
+		</menu>
+	</bindings>
+	<permissions>
+	</permissions>
+	<install><![CDATA[
+CREATE TABLE `ims_newzl_altgs` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `t_id` int(11) NOT NULL COMMENT '助力id',
+  `thumb` varchar(255) NOT NULL COMMENT '图集',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `ims_newzl_helpuser` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `rid` int(11) NOT NULL COMMENT 'rid',
+  `uniacid` int(11) NOT NULL COMMENT '公众号id',
+  `usernick` varchar(255) NOT NULL COMMENT '助力者昵称',
+  `userheadimg` varchar(255) NOT NULL COMMENT '助力者头像',
+  `h_id` int(11) NOT NULL COMMENT '助力id',
+  `fromuserid` varchar(255) NOT NULL COMMENT '被助力者id',
+  `helpopenid` varchar(255) NOT NULL COMMENT '助力者ID',
+  `addtime` int(11) NOT NULL COMMENT '助力的时间',
+  `ip` varchar(255) DEFAULT NULL COMMENT '帮助者IP',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `ims_newzl_reply` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) NOT NULL COMMENT '公众号ID',
+  `rid` int(11) NOT NULL COMMENT 'rid',
+  `titile` varchar(255) NOT NULL COMMENT '活动标题',
+  `starttime` int(11) DEFAULT NULL COMMENT '开始时间',
+  `endtime` int(11) DEFAULT NULL COMMENT '结束时间',
+  `desc` text COMMENT '商品简介',
+  `tw_title` varchar(255) NOT NULL COMMENT '图文标题',
+  `tw_img` varchar(255) NOT NULL COMMENT '图片',
+  `tw_desc` varchar(255) NOT NULL COMMENT '图文描述',
+  `share_title` varchar(255) NOT NULL COMMENT '分享标题',
+  `share_img` varchar(255) NOT NULL COMMENT '分享图片',
+  `share_desc` varchar(255) NOT NULL COMMENT '分享描述',
+  `subscribes` tinyint(4) NOT NULL DEFAULT '1',
+  `province` varchar(255) DEFAULT NULL COMMENT '省份',
+  `city` varchar(255) DEFAULT NULL COMMENT '城市',
+  `ipcount` int(11) DEFAULT NULL COMMENT 'ip次数',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `ims_newzl_user` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `uniacid` int(11) NOT NULL COMMENT '公众号id',
+  `rid` int(11) NOT NULL COMMENT 'rid',
+  `nick` varchar(255) NOT NULL COMMENT '昵称',
+  `headimg` varchar(255) NOT NULL COMMENT '头像',
+  `username` varchar(250) NOT NULL COMMENT '用户姓名',
+  `userphone` varchar(250) NOT NULL COMMENT '用户手机号',
+  `openid` varchar(250) NOT NULL COMMENT 'openid',
+  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '活动状态',
+  `count` int(11) NOT NULL COMMENT '支持数',
+  `addtime` int(11) NOT NULL COMMENT '添加时间',
+  `province` varchar(255) DEFAULT NULL COMMENT '省份',
+  `city` varchar(255) DEFAULT NULL COMMENT '城市',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;]]></install>
+	<uninstall><![CDATA[
+DROP TABLE IF EXISTS `ims_newzl_altgs`;
+DROP TABLE IF EXISTS `ims_newzl_helpuser`;
+DROP TABLE IF EXISTS `ims_newzl_reply`;
+DROP TABLE IF EXISTS `ims_newzl_user`;
+]]></uninstall>
+	<upgrade><![CDATA[do_upgrade.php]]></upgrade>
+</manifest>

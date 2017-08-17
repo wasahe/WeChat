@@ -1,0 +1,197 @@
+{template 'header'}
+<script src="../addons/hawk_ticket/images/seat.js"></script>
+<style type="text/css">
+    .demo{width:800px; margin:40px auto 0 auto; min-height:450px;}
+    @media screen and (max-width: 720px) {.demo {width:700px}}
+
+    .front{width: auto;margin: 5px 32px 20px 32px;background-color: #f0f0f0;	color: #666;text-align: center;padding: 3px;border-radius: 5px;}
+    .booking-details {float:left;clear:both; top:60px; width:auto;height: 370px;}
+    .booking-details h3 {margin: 5px 5px 0 0;font-size: 16px;}
+    .booking-details p{line-height:26px; font-size:16px; color:#999}
+    .booking-details p span{color:#666}
+    div.seatCharts-cell {color: #182C4E;height: 25px;width: 25px;line-height: 25px;margin: 3px;float: left;text-align: center;outline: none;font-size: 13px;}
+    div.seatCharts-seat {color: #fff;cursor: pointer;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px; text-indent:-999em}
+    div.seatCharts-row {height: 35px;}
+    div.seatCharts-seat.available {background-color: #B9DEA0;}
+    div.seatCharts-seat.focused {background-color: #76B474;border: none;}
+    div.seatCharts-seat.selected {background-color: #E6CAC4;}
+    div.seatCharts-seat.unavailable {background-color: #472B34;cursor: not-allowed;}
+    div.seatCharts-container {width:auto;padding:20px;float: left; }
+    div.seatCharts-seat.available.first-class {background-color: #3a78c3;}
+    #seat-info{position:absolute; padding:4px 8px; background:#ffc;border-radius: 5px; display:none}
+    div.seatCharts-legend {padding-left: 0px;position: relative;margin-top: 16px;float:left;clear:all}
+    ul.seatCharts-legendList {padding-left: 0px;}
+    .seatCharts-legendItem{float:left; width:90px;margin-top: 10px;line-height: 2;}
+    span.seatCharts-legendDescription {margin-left: 5px;line-height: 30px;}
+    .checkout-button {display: block;width:100px; height:24px; line-height:20px;margin: 10px auto;border:1px solid #999;font-size: 14px; cursor:pointer}
+    #selected-seats {padding-left:0px;max-height: auto;overflow-y: auto;overflow-x: none;width: 420px;}
+    #selected-seats li{float:left; list-style:none;width:100px; border:1px solid #d3d3d3; background:#f7f7f7; margin:6px; font-size:14px; font-weight:bold; text-align:center}
+</style>
+<link type="text/css" rel="stylesheet" href="../addons/hawk_ticket/images/style.css?{TIMESTAMP}">
+<div class="head">
+    <span class="title">开始选座</span>
+</div>
+<form action="{php echo $this->createMobileUrl('ajax',array('actid'=>$ds['id']));}" method="post" class="form-horizontal form" enctype="multipart/form-data" id="form1">
+
+<div id="main">
+    <div class="demo">
+        <div class="container">
+            <div id="seat-map">
+                <div class="front">选座</div>
+
+                <div id="seat-info"></div>
+            </div>
+            <div class="booking-details">
+                <h3> 选座信息：</h3>
+                <ul id="selected-seats"></ul>
+                <p>票数: <span id="counter"></span></p>
+                <p>总计: ￥<span id="total">0</span></p>
+                <p><input name="seats" type="hidden" value="" id="seats"></p>
+                <p><input name="tmoney" type="hidden" value="" id="tmoney"></p>
+                <button style="margin-left:100px;" class="btn btn-success btn-lg active " onclick="checkajax();">确定购买</button>
+
+            </div>
+        </div>
+    </div>
+
+    <br/>
+</div>
+    </form>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var $cart = $('#selected-seats'),
+                $counter = $('#counter'),
+                $total = $('#total'),
+                sc = $('#seat-map').seatCharts({
+                    map: [ //座位图
+                        {$ds['seatset']}
+                    ],
+                    seats: { //定义座位属性
+                            {$ds['seattype']}
+                    },
+                    naming : { //定义行列等信息
+                        top : true,
+                        {$ds['crset']}
+                        getLabel : function (character, row, column) {
+                            return row+column;
+                        }
+                    },
+                    click: function () {
+                        if (this.status() == 'available') {//可选座
+                            $('<li>'+this.data().category+'<br/>'+this.settings.label+'号<br/>￥'+this.data().price+'</li>')
+                                    .attr('id', 'cart-item-'+this.settings.id)
+                                    .data('seatId', this.settings.id)
+                                    .appendTo($cart);
+                            //更新票数
+                            $counter.text(sc.find('selected').length+1);
+                            //计算总计金额
+                            $total.text(recalculateTotal(sc)+this.data().price);
+                            return 'selected';
+                        } else if (this.status() == 'selected') {//已选中
+                            $counter.text(sc.find('selected').length-1);
+                            $total.text(recalculateTotal(sc)-this.data().price);
+                            //删除已预订座位
+                            $('#cart-item-'+this.settings.id).remove();
+                            return 'available';
+                        } else if (this.status() == 'unavailable') {//已售出
+                            //已售出
+                            return 'unavailable';
+                        } else {
+                            return this.style();
+                        }
+                    },
+                    focus  : function() {
+                        if (this.status() == 'available') {
+                            $("#seat-info").show().html(this.settings.label);
+                            var cd = getMousePoint(event);
+                            $("#seat-info").css({"left":(cd.x+10)+'px',"top":(cd.y-30)+"px"});
+                            return 'focused';
+                        } else  {
+                            return this.style();
+                        }
+                    }
+                });
+
+        //已售出不可选座
+        sc.get([{$ds['usedseats']}]).status('unavailable');
+    });
+
+    //计算总金额
+    function recalculateTotal(sc) {
+        var total = 0;
+        sc.find('selected').each(function () {
+            total += this.data().price;
+        });
+
+        return total;
+    }
+
+    //ajax验证座位
+    function checkajax(){
+        //选中座位号
+        var seats='';
+        $("#selected-seats li").each(function () {
+            tmp=$(this).attr('id');
+            arr=tmp.split('-');
+            nums= arr.length - 1;
+            seats += "'" + arr[nums] + "'" + ',';
+
+        });
+        $("#seats").val(seats);
+        total = $("#total").text();
+        $("#tmoney").val(total);
+        //对选定座位ajax验证
+
+        /*$.post(
+            "{php echo $this->createMobileUrl('ajax',array('actid'=>$ds['id']));}",
+            {name:seats},
+            function(data) {
+                alert(data);
+                if(data=='true'){
+                    alert('123');
+                    $("#form1").submit();
+                }else{
+                    alert("您的座位已经被人选了，请重新选择");
+                    $("＃form1").submit(function(e){
+                        e.preventDefault();
+                    });
+                    window.location.reload();
+                }
+            }
+        );*/
+    }
+
+    //获取鼠标坐标位置
+    function getMousePoint(ev) {
+        // 定义鼠标在视窗中的位置
+        var point = {
+            x:0,
+            y:0
+        };
+
+        // 如果浏览器支持 pageYOffset, 通过 pageXOffset 和 pageYOffset 获取页面和视窗之间的距离
+        if(typeof window.pageYOffset != 'undefined') {
+            point.x = window.pageXOffset;
+            point.y = window.pageYOffset;
+        }
+        // 如果浏览器支持 compatMode, 并且指定了 DOCTYPE, 通过 documentElement 获取滚动距离作为页面和视窗间的距离
+        // IE 中, 当页面指定 DOCTYPE, compatMode 的值是 CSS1Compat, 否则 compatMode 的值是 BackCompat
+        else if(typeof document.compatMode != 'undefined' && document.compatMode != 'BackCompat') {
+            point.x = document.documentElement.scrollLeft;
+            point.y = document.documentElement.scrollTop;
+        }
+        // 如果浏览器支持 document.body, 可以通过 document.body 来获取滚动高度
+        else if(typeof document.body != 'undefined') {
+            point.x = document.body.scrollLeft;
+            point.y = document.body.scrollTop;
+        }
+
+        // 加上鼠标在视窗中的位置
+        point.x += ev.clientX;
+        point.y += ev.clientY;
+
+        // 返回鼠标在视窗中的位置
+        return point;
+    }
+</script>
+{template 'footer'}

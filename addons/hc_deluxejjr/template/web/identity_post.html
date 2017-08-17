@@ -1,0 +1,65 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li class="active"><a href="{php echo $this->createWebUrl('identity',array('op'=>'post'));}">添加身份</a></li>	
+	<li><a href="{php echo $this->createWebUrl('identity', array('op'=>'display'));}">身份管理</a></li>	
+	<li><a href="{php echo $this->createWebUrl('identity', array('op'=>'codepost'));}">添加邀请码</a></li>	
+	<li><a href="{php echo $this->createWebUrl('identity', array('op'=>'codelist'));}">邀请码管理</a></li>	
+</ul>
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" onsubmit="return validate(this);">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				修改身份设置
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">排序</label>
+					<div class="col-sm-5">
+						<input type="text" name="listorder" class="form-control" value="{$theone['listorder']}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">名称</label>
+					<div class="col-sm-5">
+						<input type="text" name="identity_name" class="form-control" value="{$theone['identity_name']}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">客户优先级</label>
+					<div class="col-sm-5">
+							<input type="text" name="cuspri" class="form-control" value="{$theone['cuspri']}" />
+						<span class="help-block">在客户池选择客户的优先级数，数字越低优先级越大</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">是否需要邀请码</label>
+					<div class="col-sm-5">
+						<label class="radio-inline">
+							<input type="radio" name="iscode" value="1" {if $theone['iscode'] == 1}checked="true"{/if}> 是
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="iscode" value="0" {if $theone['iscode'] == 0}checked="true"{/if}>否
+						</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">是否显示</label>
+					<div class="col-sm-5">
+						<label class="radio-inline">
+							<input type="radio" name="status" value="1" {if $theone['status'] == 1}checked="true"{/if}> 是
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="status" value="0" {if $theone['status'] == 0}checked="true"{/if}>否
+						</label>
+					</div>
+				</div>
+				<div class="form-group col-sm-12">
+					<input type="hidden" name="token" value="{$_W['token']}" />
+					<input type="hidden" name="id" value="{$theone['id']}" />
+					<input type="submit" class="btn btn-primary col-lg-1" name="submit" value="提交" />
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+{template 'common/footer'}

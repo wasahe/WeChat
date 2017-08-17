@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com/" versionCode="0.6,0.7,0.8">
+	<application setting="true">
+		<name><![CDATA[微城市]]></name>
+		<identifie><![CDATA[enjoy_city]]></identifie>
+		<version><![CDATA[2.1.3]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[模仿城市114，增加更多功能来适应本地运营的需求]]></ability>
+		<description><![CDATA[模仿城市114，增加更多功能来适应本地运营的需求]]></description>
+		<author><![CDATA[不错吧]]></author>
+		<url><![CDATA[http://www.012wz.com/]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+			<message type="image" />
+			<message type="subscribe" />
+			<message type="trace" />
+		</handles>
+		<rule embed="false" />
+		<card embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="微城市入口" do="entry" state="data" direct="false" />
+		</cover>
+		<menu>
+			<entry title="招聘管理" do="job" state="data" direct="false" />
+			<entry title="商户标签审核" do="tag" state="data" direct="false" />
+			<entry title="业务员管理" do="seller" state="data" direct="false" />
+			<entry title="会员人脉管理" do="contact" state="data" direct="false" />
+			<entry title="微信粉丝管理" do="fans" state="data" direct="false" />
+			<entry title="商户管理" do="firm" state="data" direct="false" />
+			<entry title="商户分类" do="kind" state="data" direct="false" />
+			<entry title="广告" do="ad" state="data" direct="false" />
+			<entry title="基本信息" do="basic" state="data" direct="false" />
+			<entry title="自定义菜单" do="custom" state="data" direct="false" />
+
+		</menu>
+	</bindings>
+	<permissions>
+	</permissions>
+	<install><![CDATA[install.php]]></install>
+	<uninstall><![CDATA[DROP TABLE IF EXISTS `ims_enjoy_city_ad`;
+DROP TABLE IF EXISTS `ims_enjoy_city_contact`;
+DROP TABLE IF EXISTS `ims_enjoy_city_custom`;
+DROP TABLE IF EXISTS `ims_enjoy_city_fans`;
+DROP TABLE IF EXISTS `ims_enjoy_city_fansxx`;
+DROP TABLE IF EXISTS `ims_enjoy_city_fimg`;
+DROP TABLE IF EXISTS `ims_enjoy_city_firm`;
+DROP TABLE IF EXISTS `ims_enjoy_city_firmfans`;
+DROP TABLE IF EXISTS `ims_enjoy_city_firmlabel`;
+DROP TABLE IF EXISTS `ims_enjoy_city_forward`;
+DROP TABLE IF EXISTS `ims_enjoy_city_job`;
+DROP TABLE IF EXISTS `ims_enjoy_city_kind`;
+DROP TABLE IF EXISTS `ims_enjoy_city_pics`;
+DROP TABLE IF EXISTS `ims_enjoy_city_reply`;
+DROP TABLE IF EXISTS `ims_enjoy_city_seller`;
+DROP TABLE IF EXISTS `ims_enjoy_city_taglap`;
+]]></uninstall>
+	<upgrade><![CDATA[upgrade.php]]></upgrade>
+</manifest>

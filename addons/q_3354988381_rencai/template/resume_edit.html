@@ -1,0 +1,281 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+    <li class="active"><a href="{php echo $this->createWebUrl('Resume');}">简历信息{php echo $resumeid > 1 ? '编辑' : '添加'}</a></li>
+</ul>
+<div class="main">
+    <form class="form-horizontal" action="" role="form" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="token" value="{$_W['token']}" />
+        <input type="hidden" name="cid" value="{$row['id']}" />
+        <div class="form-group">
+            <label for="inputPassword3" class="col-sm-2 control-label">绑定微信Openid</label>
+            <div class="col-sm-6">
+                <input type="text" name="data[from_user]" value="{$row['from_user']}" class="form-control"  placeholder="如o4dYfsy2cx6xyq1rfQ4OzfGHM6u4" >如o4dYfsy2cx6xyq1rfQ4OzfGHM6u4
+            </div>
+        </div>  
+                
+<?php if ($fields_list) { foreach($fields_list as $field => $field_item) {
+?>
+	{if in_array($field, array('price', 'username', 'age', 'professional', 'mobile', 'qq', 'workaddress', 'attach_a', 'attach_b', 'attach_c', 'attach_d', 'attach_e'))}
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">{php echo $field_item['user_label'] ? $field_item['user_label'] : $field_item['label'];}</label>
+            <div class="col-sm-6">
+            	{if $field=='price'} <div class="input-group">{/if}
+                <input type="text" name="data[{$field}]" value="{$row[$field]}" class="form-control">
+                {if $field=='price'} 
+                <span class="input-group-addon">元/次</span>                
+                </div>
+                <span class="help-block"> <strong class="text-danger">企业查看简历时的费用（不重复扣），不设置将采用全局参数</strong></span>
+                {/if}
+            </div>
+        </div>                
+    {else if $field == 'headimgurl'}   
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">{php echo $field_item['user_label'] ? $field_item['user_label'] : $field_item['label'];}</label>
+            <div class="col-sm-9 col-xs-12">
+            	{php echo tpl_form_field_image('data[headimgurl]', $row['headimgurl'])}
+                <br />建议图片比例：120*120
+            </div>
+        </div>  
+    {else if $field == 'sex'}   
+        <div class="form-group">
+            <label for="inputPassword3" class="col-sm-2 control-label">{php echo $field_item['user_label'] ? $field_item['user_label'] : $field_item['label'];}</label>
+            <div class="col-sm-6">
+                <select class="form-control" name="data[sex]">
+                    <option value="1" {if $row['sex'] == 1} selected {/if}>男</option>
+                    <option value="0" {if $row['sex'] == 0} selected {/if}>女</option>
+                </select>
+            </div>
+        </div>        
+    {else if $field == 'educational'}   
+        <div class="form-group">
+            <label for="inputPassword3" class="col-sm-2 control-label">{php echo $field_item['user_label'] ? $field_item['user_label'] : $field_item['label'];}</label>
+            <div class="col-sm-6">
+                <select class="form-control" name="data[educational]">
+                    {loop $config['educational'] $key $payroll}
+                    <option value="{$key}" {if intval($row['educational']) == intval($key)} selected {/if}>{$payroll}</option>
+                    {/loop}
+                </select>
+            </div>
+        </div>       
+	{else if $field == 'workexperience'}
+        <div class="form-group">
+            <label for="inputPassword3" class="col-sm-2 control-label">{php echo $field_item['user_label'] ? $field_item['user_label'] : $field_item['label'];}</label>
+            <div class="col-sm-6">
+                  <select name="data[workexperience]" class="am-input-sm">
+                    {loop $config['workexperience'] $key $xperience}
+                    <option value="{$xperience}" {if trim($row['workexperience']) == trim($xperience)}selected{/if}>{$xperience}</option>
+                    {/loop}
+                  </select>             
+            </div>
+        </div>  
+	{else if $field == 'assessment'}        
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">{php echo $field_item['user_label'] ? $field_item['user_label'] : $field_item['label'];}</label>
+            <div class="col-sm-8">
+                <textarea name="data[assessment]" rows="4" class="form-control">{$row['assessment']}</textarea>
+            </div>
+        </div>  
+    {else if $field == 'cid'} 
+        <div class="form-group">
+            <label for="inputPassword3" class="col-sm-2 control-label">{php echo $field_item['user_label'] ? $field_item['user_label'] : $field_item['label'];}</label>
+            <div class="col-sm-6">
+                <select class="form-control" name="data[cid]">
+                    {loop $offices $key $parent}
+                        <option value="{$parent['id']}" {if $row['cid'] == $parent['id']} selected {/if}>{$parent['name']}</option>
+                        {loop $parent['sub'] $sub}
+                        <option value="{$sub['id']}" {if $row['cid'] == $sub['id']} selected {/if}>&nbsp;&nbsp;|—{$sub['name']}</option>
+                        {/loop}
+                    {/loop}
+                </select>
+            </div>
+        </div>    
+    {else if $field == 'payroll'} 
+        <div class="form-group">
+            <label for="inputPassword3" class="col-sm-2 control-label">{php echo $field_item['user_label'] ? $field_item['user_label'] : $field_item['label'];}</label>
+            <div class="col-sm-6">
+                <select class="form-control" name="data[payroll]">
+                    {loop $config['payroll'] $key $payroll}
+                    <option value="{$key}" {if intval($row['payroll']) == intval($key)} selected {/if}>{$payroll}</option>
+                    {/loop}
+                </select>
+            </div>
+        </div> 
+    {else if $field == 'province'} 
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">所在城市</label>
+            <div class="col-sm-6">
+            <select id="p"  name="data[province]" class="form-control" style=" width:30%;display:inline; float:left"></select>
+            <select id="c"  name="data[city]" class="form-control" style=" width:30%;display:inline; margin-left:10px"></select>  
+            <select id="d"  name="data[district]" class="form-control" style=" width:30%;display:inline; margin-left:10px"></select>           
+            </div>
+        </div>  
+    {else if $field == 'outline'} 
+        <div class="form-group">
+            <label for="inputPassword3" class="col-sm-2 control-label">{php echo $field_item['user_label'] ? $field_item['user_label'] : $field_item['label'];}</label>
+            <div class="col-sm-6">
+                <select class="form-control" name="data[outline]">
+                    <option value="0" {if $row['outline'] == 0} selected {/if}>是</option>
+                    <option value="1" {if $row['outline'] == 1} selected {/if}>否</option>
+                </select>
+                <span class="help-block"> <strong class="text-danger">是：表示正在求职，否：表示已经找到工作了</strong></span>
+            </div>
+        </div>                                                                                 
+    {/if}
+
+            
+<?php }} else {?>
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">姓名</label>
+            <div class="col-sm-4">
+                <input type="text" name="data[username]" value="{$row['username']}" class="form-control">
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">头像</label>
+            <div class="col-sm-9 col-xs-12">
+            	{php echo tpl_form_field_image('data[headimgurl]', $row['headimgurl'])}
+                <br />建议图片比例：120*120
+            </div>
+        </div>  
+                
+        <div class="form-group">
+            <label for="inputPassword3" class="col-sm-2 control-label">性别</label>
+            <div class="col-sm-4">
+                <select class="form-control" name="data[sex]">
+                    <option value="1" {if $row['sex'] == 1} selected {/if}>男</option>
+                    <option value="0" {if $row['sex'] == 0} selected {/if}>女</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputPassword3" class="col-sm-2 control-label">年龄</label>
+            <div class="col-sm-4">
+                <input type="text" name="data[age]" value="{$row['age']}" class="form-control">
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="inputPassword3" class="col-sm-2 control-label">学历</label>
+            <div class="col-sm-4">
+                <select class="form-control" name="data[educational]">
+                    {loop $config['educational'] $key $payroll}
+                    <option value="{$key}" {if intval($row['educational']) == intval($key)} selected {/if}>{$payroll}</option>
+                    {/loop}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputPassword3" class="col-sm-2 control-label">专业</label>
+            <div class="col-sm-4">
+                <input type="text" name="data[professional]" value="{$row['professional']}" class="form-control">
+            </div>
+        </div>        
+        
+
+        <div class="form-group">
+            <label for="inputPassword3" class="col-sm-2 control-label">手机</label>
+            <div class="col-sm-4">
+                <input type="text" name="data[mobile]" value="{$row['mobile']}" class="form-control">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputPassword3" class="col-sm-2 control-label">QQ</label>
+            <div class="col-sm-4">
+                <input type="text" name="data[qq]" value="{$row['qq']}" class="form-control">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputPassword3" class="col-sm-2 control-label">工作经验</label>
+            <div class="col-sm-4">
+                  <select name="data[workexperience]" class="am-input-sm">
+                    {loop $config['workexperience'] $key $xperience}
+                    <option value="{$xperience}" {if trim($row['workexperience']) == trim($xperience)}selected{/if}>{$xperience}</option>
+                    {/loop}
+                  </select>             
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputPassword3" class="col-sm-2 control-label">应聘职位</label>
+            <div class="col-sm-4">
+                <select class="form-control" name="data[cid]">
+                    {loop $offices $key $parent}
+                        <option value="{$parent['id']}" {if $row['cid'] == $parent['id']} selected {/if}>{$parent['name']}</option>
+                        {loop $parent['sub'] $sub}
+                        <option value="{$sub['id']}" {if $row['cid'] == $sub['id']} selected {/if}>&nbsp;&nbsp;|—{$sub['name']}</option>
+                        {/loop}
+                    {/loop}
+                </select>
+            </div>
+        </div>
+    
+        <div class="form-group">
+            <label for="inputPassword3" class="col-sm-2 control-label">期望薪资</label>
+            <div class="col-sm-4">
+                <select class="form-control" name="data[payroll]">
+                    {loop $config['payroll'] $key $payroll}
+                    <option value="{$key}" {if intval($row['payroll']) == intval($key)} selected {/if}>{$payroll}</option>
+                    {/loop}
+                </select>
+            </div>
+        </div>
+    
+        <div class="form-group">
+            <label for="inputPassword3" class="col-sm-2 control-label">期望工作地点</label>
+            <div class="col-sm-4">
+                <input type="text" name="data[workaddress]" value="{$row['workaddress']}" class="form-control">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">自我评价</label>
+            <div class="col-sm-4">
+                <textarea name="data[assessment]" class="form-control">{$row['assessment']}</textarea>
+            </div>
+        </div>
+<?php }?>
+
+        <div class="form-group">
+            <label for="inputPassword3" class="col-sm-2 control-label">浏览数</label>
+            <div class="col-sm-4">
+                <input type="text" name="data[views]" value="{$row['views']}" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword3" class="col-sm-2 control-label">简历被购买虚拟数</label>
+            <div class="col-sm-4">
+                <input type="text" name="data[buy_virtual_total]" value="{$row['buy_virtual_total']}" class="form-control">
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">置顶有效期</label>
+            <div class="col-sm-4" style="margin-top:8px">
+                {php echo date('Y-m-d H:i:s',$row['expiration'])}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input type="submit" class="btn btn-primary" name="save_info" value="保存">
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+require(['jquery', 'district'], function($, d){
+	$(function(){
+		d.render(
+			{province: $('#p')[0], city: $('#c')[0], district: $('#d')[0]},
+			{province: '{$row['province']}', city: '{$row['city']}', district: '{$row['district']}'},
+			{withTitle: true}
+		);
+	});
+});
+</script>
+{template 'common/footer'}

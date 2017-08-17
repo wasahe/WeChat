@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0, maximum-scale=1.0,user-scalable=0">
+    <meta name="format-detection" content="telephone=no"/>
+    <title>{if !empty($title)}{$title} - {else if !empty($_W['page']['title'])}{$_W['page']['title']} - {/if}{if !empty($_W['page']['sitename'])}{$_W['page']['sitename']}{else}{$_W['account']['name']}{/if}</title>
+    <link rel="stylesheet" href="{MODULE_URL}public/libs/vux/vux.css">
+    <link rel="stylesheet" href="{MODULE_URL}public/libs/weui/weui.min.css"/>
+    <link rel="stylesheet" href="{MODULE_URL}public/libs/jquery_weui/jquery-weui.css"/>
+    <script>
+        var timer = null;
+        // jssdk config 对象
+        var jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || {};
+        // 是否启用调试
+        jssdkconfig.debug = false;
+        jssdkconfig.jsApiList = [
+            'checkJsApi',
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage',
+            'onMenuShareQQ',
+            'onMenuShareWeibo',
+            'hideMenuItems',
+            'showMenuItems',
+            'hideAllNonBaseMenuItem',
+            'showAllNonBaseMenuItem',
+            'translateVoice',
+            'startRecord',
+            'stopRecord',
+            'onRecordEnd',
+            'playVoice',
+            'pauseVoice',
+            'stopVoice',
+            'uploadVoice',
+            'downloadVoice',
+            'chooseImage',
+            'previewImage',
+            'uploadImage',
+            'downloadImage',
+            'getNetworkType',
+            'openLocation',
+            'getLocation',
+            'hideOptionMenu',
+            'showOptionMenu',
+            'closeWindow',
+            'scanQRCode',
+            'chooseWXPay',
+            'openProductSpecificView',
+            'addCard',
+            'chooseCard',
+            'openCard'
+        ];
+    </script>
+    <script src="{MODULE_URL}public/js/require.js"></script>
+    <script src="{MODULE_URL}public/js/config.js?t={php echo time()}"></script>
+</head>
+<body>
+{template 'default/common/share'}
+<link rel="stylesheet" href="{MODULE_URL}public/css/iconfont/iconfont.css"/>
+{php $member = M('member')->getInfo($_W['openid'])}
+<link rel="stylesheet" href="{MODULE_URL}public/libs/vux/components/scroller/style.css"/>
+<link rel="stylesheet" href="{MODULE_URL}template/mobile/default/task/detail.css?t={php echo time()}"/>
+<div id="message">
+    <div id="map" style="position:fixed;top:0px;left:0px;right:0px;height:220px;width:100%;"></div>
+    <div class="weui_panel" style="height: 40px;position: absolute;left: 0px;right: 0px;top: 190px;">
+        <div class="weui_panel_bd">
+            <div class="weui_media_box weui_media_small_appmsg">
+                <div class="weui_cells weui_cells_access">
+                    <a class="weui_cell" href="javascript:;" style="padding: 5px;">
+                        <div class="weui_cell_hd"><img class="avatar" src="{$member['avatar']}"></div>
+                        <div class="weui_cell_bd weui_cell_primary">
+                            <p>&nbsp;
+                                <span>
+                                    <i class="icon iconfont icon-31guanzhu1" style="font-size:1.5em;"></i>&nbsp;752
+                                </span>&nbsp;&nbsp;
+                                <span>
+                                    <i class="icon iconfont icon-31xiaoxi" style="font-size:1.5em;"></i>&nbsp;2790
+                                </span>
+                                <clocker time="2018-08-08" slot="value" style="display: inline-block;margin-left: 10px;">
+                                    <span class="day">%_H1</span>
+                                    <span class="day">%_H2</span>时
+                                    <span class="day">%_M1</span>
+                                    <span class="day">%_M2</span>分
+                                    <span class="day">%_S1</span>
+                                    <span class="day">%_S2</span>秒
+                                </clocker>
+                                <circle style="width: 2em;height: 2em;float: right;" :percent="percent" :stroke-width="10" stroke-color="#04BE02">
+                                    <span>{{percent/10}}</span>
+                                </circle>
+                            </p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="position: absolute;bottom: 0px;left: 0px;right: 0px;top: 240px;overflow:hidden;">
+        <scroller lock-x scrollbar-y use-pullup use-pulldown height="600px"
+                  @pullup:loading="loadMore"
+                  @pulldown:loading="refresh" :pullup-status.sync="pullupStatus" v-ref:scroller>
+            <div class="box2">
+                <div v-for="msg in tasks_log">
+                    <div class="rightd" v-if="msg.openid != order.openid">
+                        <div class="speech right">
+                            {{msg.content}}
+                        </div>
+                    </div>
+                    <span style="clear:both;"></span>
+                    <div class="leftd" v-if="msg.openid == order.openid">
+                        <div class="speech left">
+                            {{msg.content}}
+                        </div>
+                    </div>
+                    <span style="clear:both;"></span>
+                </div>
+            </div>
+            <!--pullup slot-->
+            <div slot="pullup" class="xs-plugin-pullup-container xs-plugin-pullup-up" style="position: absolute; width: 100%; height: 40px; bottom: -40px; text-align: center;">
+                <span v-show="pullupStatus === 'default'"></span>
+                <span class="pullup-arrow" v-show="pullupStatus === 'down' || pullupStatus === 'up'" :class="{'rotate': pullupStatus === 'up'}">↑</span>
+                <span v-show="pullupStatus === 'loading'"><spinner type="ios-small"></spinner></span>
+            </div>
+        </scroller>
+    </div>
+    {template 'default/task/message_footer'}
+</div>
+<link rel="stylesheet" href="{MODULE_URL}public/libs/vux/components/scroller/style.css"/>
+<script src="http://map.qq.com/api/js?v=2.exp&key=4MHBZ-JVL35-WLMII-Q3NME-3Z2G2-PKBJJ"></script>
+<script>
+    require([
+        "vue","jquery","core",
+        "{MODULE_URL}public/libs/socket.io.js","weixin",
+        'libs/vux/components/scroller/index',
+        'libs/vux/components/divider/index',
+        'libs/vux/components/switch/index',
+        'libs/vux/components/spinner/index',
+        'libs/vux/components/circle/index',
+        'libs/vux/components/clocker/index',
+        "{MODULE_URL}public/libs/jquery_weui/jquery-weui.js",
+    ],function(Vue,$,core,io,wx,Scroller,Divider,Switch,Spinner,Circle,Clocker){
+
+        Vue.component('scroller', Scroller);
+        Vue.component('divider', Divider);
+        Vue.component('switch', Switch);
+        Vue.component('spinner', Spinner);
+        Vue.component('circle', Circle);
+        Vue.component('clocker',Clocker);
+
+        console.log(Scroller);
+
+        var socket = io.connect("ws://{php echo $this->system['socket_url']}");
+        //会员信息
+        var info = {};
+        info.uniacid = "{php echo $_W['uniacid']}";
+        info.taskid = "{php echo intval($_GPC['id'])}";
+        info.openid = "{php echo $_W['openid']}";
+        info.nickname = "{php echo $member['nickname']}";
+        info.avatar = "{php echo $member['avatar']}";
+
+        socket.on('connect',function(){
+            socket.emit('task.join',info);
+        });
+
+        var vm = new Vue({
+            el: "#message",
+            data: {
+                percent:100,
+                total:3*60*60,
+                members:[],
+                info:info,
+                order:{php echo json_encode($order)},
+                role:"{php echo $role}",
+                tasks_log:{php echo json_encode($tasks_log['list'])},
+            },
+            ready:function(){
+                socket.emit('task.members',{});
+            },
+            methods:{
+                loadMore:function(){
+                    this.$refs.scroller.reset()
+                },
+                openPopup:function(){
+                    console.log('recive-btn');
+                    $("#popup").popup();
+                },
+                cuiyicui:function(){
+                    core.post("cuiyicui",{taskid:"{php echo $_GPC['id']}"},function(data){
+                        $.closePopup();
+                        $.toast(data.message,function(){});
+                    });
+                },
+            }
+        });
+        //创建地图
+        var map = new qq.maps.Map(document.getElementById("map"), {
+            center: new qq.maps.LatLng(39.916527,116.397128),
+            zoom:18,
+            disableDefaultUI: true
+        });
+
+        /**
+         * 任务导航
+         * */
+        var directionsService = new qq.maps.DrivingService({
+            complete : function(response){
+                var start = response.detail.start,
+                        end = response.detail.end;
+
+                var anchor = new qq.maps.Point(6, 6),
+                        size = new qq.maps.Size(24, 36),
+                        start_icon = new qq.maps.MarkerImage(
+                                '{MODULE_URL}public/images/busmarker.png',
+                                size,
+                                new qq.maps.Point(0, 0),
+                                anchor
+                        ),
+                        end_icon = new qq.maps.MarkerImage(
+                                '{MODULE_URL}public/images/busmarker.png',
+                                size,
+                                new qq.maps.Point(24, 0),
+                                anchor
+
+                        );
+                start_marker && start_marker.setMap(null);
+                end_marker && end_marker.setMap(null);
+                clearOverlay(route_lines);
+
+                start_marker = new qq.maps.Marker({
+                    icon: start_icon,
+                    position: start.latLng,
+                    map: map,
+                    zIndex:1
+                });
+                end_marker = new qq.maps.Marker({
+                    icon: end_icon,
+                    position: end.latLng,
+                    map: map,
+                    zIndex:1
+                });
+                directions_routes = response.detail.routes;
+                var routes_desc=[];
+                //所有可选路线方案
+                for(var i = 0;i < directions_routes.length; i++){
+                    var route = directions_routes[i],
+                            legs = route;
+                    //调整地图窗口显示所有路线
+                    map.fitBounds(response.detail.bounds);
+                    //所有路程信息
+                    //for(var j = 0 ; j < legs.length; j++){
+                    var steps = legs.steps;
+                    route_steps = steps;
+                    polyline = new qq.maps.Polyline(
+                            {
+                                path: route.path,
+                                strokeColor: '#3893F9',
+                                strokeWeight: 6,
+                                map: map
+                            }
+                    )
+                    route_lines.push(polyline);
+                }
+            }
+        });
+
+        var directions_routes,directions_placemarks = [],directions_labels = [],start_marker,end_marker,route_lines = [],step_line,route_steps = [];
+        function initTask(){
+            var policy = "PREDICT_TRAFFIC";
+            var receivelon = "{php echo $order['detail']['receivelon']}";
+            var receivelat = "{php echo $order['detail']['receivelat']}";
+            {if !empty($order['detail']['sendlon'])}
+            var sendlon = "{php echo $order['detail']['sendlon']}";
+            var sendlat = "{php echo $order['detail']['sendlat']}";
+            {else}
+            var sendlon = info.longitude;
+            var sendlat = info.latitude;
+            {/if}
+
+            route_steps = [];
+            directionsService.setLocation("{$order['city']}");
+            directionsService.setPolicy(qq.maps.DrivingPolicy[policy]);
+            var start = new qq.maps.LatLng(sendlat,sendlon);
+            //var start = new qq.maps.LatLng(39.916527,116.397128);
+            var end = new qq.maps.LatLng(receivelat,receivelon);
+            console.log(start);
+            console.log(end);
+            directionsService.search(start,end);
+        }
+
+        initTask();
+
+        /**
+         * 清空地图上的marker
+         * */
+        function clearOverlay(overlays){
+            var overlay;
+            while(overlay = overlays.pop()){
+                overlay.setMap(null);
+            }
+        }
+        function renderStep(index){
+            var step = route_steps[index];
+            //clear overlays;
+            step_line && step_line.setMap(null);
+            //draw setp line
+            step_line = new qq.maps.Polyline(
+                    {
+                        path: step.path,
+                        strokeColor: '#ff0000',
+                        strokeWeight: 6,
+                        map: map
+                    }
+            )
+        }
+
+        function showP(){
+            var showPlacemark  = document.getElementById('sp');
+            if(showPlacemark.checked){
+                for(var i=0;i<directions_placemarks.length;i++){
+                    var placemarks = directions_placemarks[i];
+                    for(var j=0;j<placemarks.length;j++){
+                        var placemark = placemarks[j];
+                        var label = new qq.maps.Label({
+                            map: map,
+                            position: placemark.latLng,
+                            content:placemark.name
+                        });
+                        directions_labels.push(label);
+                    }
+                }
+            }else{
+                clearOverlay(directions_labels);
+            }
+        }
+
+        //jssdkconfig.debug = true;
+        wx.config(jssdkconfig);
+        wx.ready(function(){
+            wx.getLocation({
+                type: 'wgs84',
+                success: function (res) {
+                    info.latitude = res.latitude;
+                    info.longitude = res.longitude;
+                    info.speed = res.speed;
+                    info.accuracy = res.accuracy;
+                    info.center = new qq.maps.LatLng(info.latitude, info.longitude);
+                    //
+                    initTask();
+                    /*setTimeout(function(){
+                        drawUser(info)
+                        map.panTo(info.center);
+                        map.zoomTo(17);
+                    },2000);*/
+
+                    //定位成功 发送位置消息
+                    socket.emit('task.join',info);
+                }
+            });
+        });
+
+        function autoMax(){
+            setTimeout(function() {
+                map.zoomTo((map.getZoom() + 1) % 17);
+                autoMax();
+            }, 2000);
+        }
+
+        /**
+         * 地图定位新增人员
+         * */
+        function drawUser(info){
+            if(info.latitude && info.longitude){
+                info.center = new qq.maps.LatLng(info.latitude, info.longitude);
+                //map.panTo(info.center);
+                var anchor = new qq.maps.Point(6, 6),
+                        size = new qq.maps.Size(24, 24),
+                        origin = new qq.maps.Point(0, 0),
+                        icon = new qq.maps.MarkerImage(''+info.avatar,size,origin,anchor);
+                var marker = new qq.maps.Marker({
+                    icon: icon,
+                    position: info.center,
+                    map: map
+                });
+            }
+        }
+        socket.on('task.members',function(members){
+            for(var i=0;i<members.length;i++){
+                drawUser(members[i]);
+            }
+        });
+        socket.on('task.message',function(info){
+
+        });
+        socket.on('task.join',function(info){
+            console.log(info);
+            drawUser(info);
+            $.notification({
+                title: info.nickname + "查看了此任务",
+                text: "",
+                media: "<img src='"+info.avatar+"'>",
+                data: "123",
+                onClick: function(data) {
+
+                },
+                onClose: function(data) {
+                    socket.emit('task.members',{});
+                }
+            });
+        });
+    });
+</script>
+{template 'default/common/footer'}

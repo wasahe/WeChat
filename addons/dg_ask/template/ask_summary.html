@@ -1,0 +1,83 @@
+{template 'common/header'}
+<style type="text/css">
+.table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td{
+  white-space:normal;
+}
+</style>
+<div class="main" style="padding-top:5px;">
+	<div class="panel panel-info">
+		<div class="panel-heading">筛选</div>
+		<div class="panel-body">
+			<form action="{php echo $this->createWebUrl('ask_payment',array('issucc' => $_GPC['status']))}" method="get" class="form-horizontal" role="form">				
+				<div class="form-group" style="display:none;">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">汇总分类</label>
+					<div class="col-sm-6 col-lg-8">
+					<input type="hidden" name="c" value="site">
+					<input type="hidden" name="a" value="entry">
+					<input type="hidden" name="do" value="ask_summary">
+					<input type="hidden" name="m" value="dg_ask">
+						<select name="ask_type" class="form-control">
+							<option value="" selected="selected">全部</option>
+							<option value="listen"{if 'listen' == $_GPC['ask_type']} selected="selected"{/if}>提问</option>
+							<option value="ask"{if 'ask' == $_GPC['ask_type']} selected="selected"{/if}>旁听</option>
+						</select>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">时间范围</label>
+					<div class="col-sm-6 col-lg-8">
+						{php echo tpl_form_field_daterange('time', array('starttime'=>date('Y-m-d', $starttime),'endtime'=>date('Y-m-d', $endtime)));}
+					</div>
+					<div class="pull-right col-xs-12 col-sm-3 col-lg-2">
+						<button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+ <div class="panel panel-default">
+ <div class="panel-heading">	
+			<div class="row-fluid">
+				<div class="span8 control-group">
+					<span>共计 {$all_array['mcount']} 条数据，总收入{$all_array['pay_money']}元  </span>
+					
+				</div>
+			</div>
+</div>
+            <div class="table-responsive panel-body">
+                <table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:85px;" align="center">日期</th>
+					<th>提问数</th>
+					<th>提问收入</th>
+					<th>旁听数</th>
+					<th>旁听收入</th>
+					<th>总数</th>
+					<th>总收入</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $records $row}
+				<tr>
+				<td>{$row['days']}</td>
+					<td>{$row['mcount']}</td>
+					<td>{$row['pay_money']}</td>
+					<td>{$row['l_count']}</td>
+					<td>{$row['l_pay_money']}</td>
+					<td>{$row['a_count']}</td>
+					<td>{$row['a_pay_money']}</td>
+				</tr>
+				{/loop}
+			</tbody>
+		</table>
+            </div>
+    </div>
+    {$pager}
+    <script type="text/javascript">
+     
+    </script>
+</div>
+{template 'common/footer'}

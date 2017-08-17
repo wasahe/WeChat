@@ -1,0 +1,99 @@
+{template 'header'}
+<body ontouchstart="" class="platform_mobile">
+<div class="qsc-alert" style="display: none;">
+<i class="info-base64"></i><span></span>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-white icon-loading-base64"><i class="icon-white icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading-new">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-loading-base64"><i class="icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<header class="qsc-bar bar-fixed bar-tab bar-line line headroom headroom--top" id="headroom">
+<a href="{php echo $this->createMobileUrl('index')}" class="tab-item"><span>预约到店</span></a>
+<a href="{php echo $this->createMobileUrl('homesvs')}" class="tab-item active"><span>上门项目</span></a>
+<a href="{php echo $this->createMobileUrl('homewks')}" class="tab-item"><span>上门技师</span></a>
+</header>
+<div class="content-fixed top-inline">
+		<div class="lib-banner swiper-container">
+		<div class="swiper-wrapper" 
+		style="padding-left: 0px; padding-right: 0px; transform: translate3d(-1242px, 0px, 0px); transition-duration: 0.3s; width: 2070px; height: 120px;">
+			<div class="swiper-slide swiper-slide-visible swiper-slide-active">
+				<a href="javascript:void(0);"><img src="{$_W['attachurl']}{$system['banner1']}"></a>
+			</div>
+			<div class="swiper-slide swiper-slide-visible">
+				<a href="javascript:void(0);"><img src="{$_W['attachurl']}{$system['banner2']}"></a>
+			</div>
+			<div class="swiper-slide swiper-slide-visible">
+				<a href="javascript:void(0);"><img src="{$_W['attachurl']}{$system['banner3']}"></a>
+			</div>
+		</div>
+		<div class="banner-pagination">
+			<span class="swiper-pagination-switch swiper-visible-switch swiper-active-switch"></span>
+			<span class="swiper-pagination-switch"></span>
+			<span class="swiper-pagination-switch"></span>		
+		</div>
+	</div>
+</div>
+<div class="content-main bottom">
+<style>
+.mod-project-card_header__user button {
+    background: #fff;
+	position:inherit;
+    border: 1px solid #2eb676;
+    color: #2eb676;
+    font-size: 12px;
+    line-height: 26px;
+    border-radius: 4px;
+	margin-top: 30%;
+}
+</style>	
+{loop $list $item}
+<div class="mod-project-card funding" style="margin-bottom: 2px;">
+	<div class="mod-project-card_header clearfix" style="margin-bottom: 1px;">
+		<a href="{php echo $this->createMobileUrl('servicehome',array('serviceid'=>$item['id'],type=>$type))}">
+		<div class="mod-project-card_header__avatar">
+			<img class="lazy-load"
+				src="../addons/water_o2o/template/img/grey.png" data-original="{$_W['attachurl']}{$item['shlogo']}"
+				style="display: inline;width: 80;height: 80;">
+		</div>
+		<div class="mod-project-card_header__user">
+			<span style="font-weight: bold;display:block;padding-top: 2%;">{$item['shname']}</span>
+				<p class="mod-project-card_header__time" style="font-size: 12px;padding-top: 5%;">有
+				<span style="font-size: 14px;color: green;">8</span> 家店铺提供服务</p>
+				<p style="margin: 0;padding-top: 5%;font-size: 12px;color: gray;">{$item['shdesc']}</p>
+		</div>
+		</a>
+		<div class="mod-project-card_header__user" style="float: right;width: 22%; text-align: right;">
+		    <a href="{php echo $this->createMobileUrl('selectshop',array('serviceid'=>$item['id']))}">
+		    <button>预约</button></a>
+		    <span style="display:block; font-size: 10px;padding-top: 10%;">{$item['ssum']}人选择</span>
+		</div>
+	</div>
+</div>
+{/loop}
+		
+		<ul class="pager">
+			<li class="previous disabled"><a href="{if $left == 0}javascript:void(0);{else}{php echo $this->createMobileUrl('homesvs',array('page'=>$left))}{/if}">←
+					上一页</a></li>
+			<li class="active"><select name="pager"
+				onchange="document.location.href=this.options[this.selectedIndex].getAttribute('rel')">
+				{loop $pagearray $item}
+				
+				<option value="{$item}" {if $item == $pageNumber}selected="selected"{/if} rel="{php echo $this->createMobileUrl('homesvs',array('page'=>$item))}">第 {$item} 页</option>
+				{/loop}
+			</select></li>
+			<li class="next"><a href="{if $right == 0}javascript:void(0);{else}{php echo $this->createMobileUrl('homesvs',array('page'=>$right))}{/if}">下一页 →</a></li>
+		</ul>
+	</div>
+	{template 'footer'}
+<script type="text/javascript" src="../addons/water_o2o/template/js/index.min.js"></script>
+</body></html>

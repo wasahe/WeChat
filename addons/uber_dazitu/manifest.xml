@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com" versionCode="0.6">
+	<application setting="true">
+		<name><![CDATA[大字图]]></name>
+		<identifie><![CDATA[uber_dazitu]]></identifie>
+		<version><![CDATA[1.5.2.1]]></version>
+		<type><![CDATA[other]]></type>
+		<ability><![CDATA[用大字图的方式发朋友圈，在朋友圈的平均点赞数和评论数可以提高325%（其他的状态都是辣鸡）]]></ability>
+		<description><![CDATA[用大字图的方式发朋友圈，在朋友圈的平均点赞数和评论数可以提高325%（其他的状态都是辣鸡）]]></description>
+		<author><![CDATA[悟空源码网]]></author>
+		<url><![CDATA[http://www.012wz.com]]></url>
+
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="活动管理" do="manage" state="" direct="false" />
+		</menu>
+	</bindings>
+	<install><![CDATA[
+DROP TABLE IF EXISTS `ims_uber_dazitu_fans`;
+CREATE TABLE `ims_uber_dazitu_fans` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned DEFAULT NULL,
+  `rid` int(10) unsigned DEFAULT NULL,
+  `mchid` int(10) unsigned NOT NULL,
+  `openid` varchar(100) DEFAULT NULL,
+  `oauthopenid` varchar(100) DEFAULT NULL,
+  `uid` int(10) unsigned DEFAULT NULL,
+  `nickname` varchar(100) DEFAULT NULL,
+  `avatar` varchar(250) DEFAULT NULL,
+  `realname` varchar(100) DEFAULT NULL,
+  `mobile` varchar(30) DEFAULT NULL,
+  `address` varchar(250) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `qq` varchar(20) NOT NULL,
+  `credit` decimal(10,2) DEFAULT NULL,
+  `totalcredit` decimal(10,2) DEFAULT NULL,
+  `totalnum` int(11) DEFAULT NULL,
+  `todaynum` int(11) DEFAULT NULL,
+  `createtime` int(10) unsigned DEFAULT NULL,
+  `sharenum` int(11) DEFAULT NULL,
+  `shareawardnum` int(11) DEFAULT NULL,
+  `todaysharenum` int(11) DEFAULT NULL,
+  `lastsharetime` int(10) DEFAULT NULL,
+  `pubdate` int(10) unsigned DEFAULT NULL,
+  `redeemcode` varchar(20) NOT NULL,
+  `ip` varchar(16) NOT NULL,
+  `status` tinyint(1) unsigned NOT NULL,
+  `exchange` tinyint(1) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `rid` (`rid`),
+  KEY `mchid` (`mchid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `ims_uber_dazitu_reply`;
+CREATE TABLE `ims_uber_dazitu_reply` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL,
+  `uniacid` int(10) unsigned NOT NULL,
+  `title` varchar(100) NOT NULL,
+  `starttime` int(10) DEFAULT NULL,
+  `endtime` int(10) DEFAULT NULL,
+  `ruletext` text,
+  `playtimes` smallint(6) unsigned DEFAULT NULL,
+  `everydaytimes` smallint(6) unsigned NOT NULL,
+  `isfollow` tinyint(1) unsigned DEFAULT NULL,
+  `awardtext` text,
+  `followurl` varchar(200) DEFAULT NULL,
+  `copyright` varchar(250) NOT NULL,
+  `shownum` tinyint(1) unsigned DEFAULT NULL,
+  `viewnum` int(10) unsigned NOT NULL,
+  `isprofile` tinyint(1) DEFAULT NULL,
+  `profile` varchar(250) DEFAULT NULL,
+  `exchange` tinyint(1) unsigned DEFAULT NULL,
+  `share_title` varchar(200) DEFAULT NULL,
+  `share_image` varchar(100) DEFAULT NULL,
+  `share_url` varchar(100) NOT NULL,
+  `share_desc` varchar(250) DEFAULT NULL,
+  `createtime` int(10) DEFAULT NULL,
+  `adimgurl` varchar(100) NOT NULL,
+  `adurl` varchar(100) NOT NULL,
+  `bgurl` varchar(100) DEFAULT NULL,
+  `coverurl` varchar(100) DEFAULT NULL,
+  `prize` text NOT NULL,
+  `status` tinyint(1) unsigned NOT NULL,
+  `daysharenum` int(10) unsigned NOT NULL,
+  `shareawardnum` int(10) unsigned NOT NULL,
+  `gametime` int(10) unsigned NOT NULL,
+  `gamelevel` int(10) unsigned NOT NULL,
+  `mode` tinyint(1) unsigned NOT NULL,
+  `showusernum` int(10) unsigned NOT NULL,
+  `qrcode` varchar(100) NOT NULL,
+  `qrcodetext` varchar(100) DEFAULT NULL,
+  `bgmusic` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `rid` (`rid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `ims_uber_dazitu_share`;
+CREATE TABLE `ims_uber_dazitu_share` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL,
+  `rid` int(10) unsigned NOT NULL,
+  `share_openid` varchar(100) NOT NULL,
+  `share_time` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `rid` (`rid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+]]></install>
+	<uninstall><![CDATA[uninstall.php]]></uninstall>
+	<upgrade><![CDATA[upgrade.php]]></upgrade>
+</manifest>

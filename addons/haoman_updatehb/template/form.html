@@ -1,0 +1,1014 @@
+
+<style type="text/css">
+	#tag{width:750px; height:auto; text-align:left; padding:10px; border:1px #E0E0E0 solid ; line-height:25px;    border-radius: 5px;}
+	/*input post tab*/
+	div.radius_shadow{border:1px solid #DBDBDB;-moz-border-radius:5px;-khtml-border-radius:5px;-webkit-border-radius:5px;border-radius: 5px;padding:5px;-webkit-box-shadow:0 0 10px #414141;-moz-box-shadow:0 0 10px #414141;box-shadow:0 0 10px #414141;font-size:12px;background:#fff;}
+	span#radius{display:inline-block;float:none;font-size:12px;padding:2px 5px;margin:-2px 5px 15px;border:1px solid #E0E0E0; background-color:#F0F0F0;-moz-border-radius:5px;-khtml-border-radius:5px;-webkit-border-radius:5px;border-radius: 5px;color:#000;}
+	.tabinput{margin-left:5px;border:0;}
+	a#deltab{cursor:pointer;display:inline-block;color:#808080;margin-left:5px;font-weight:bold;}
+	a#deltab:hover{color:#D2D2D2;text-decoration:none;}
+	#getTab{ margin-top:10px;border:1px solid #E0E0E0; background-color:#F0F0F0; padding:10px; cursor:pointer;}
+</style>
+<script type="text/javascript" src="./resource/js/lib/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="../addons/haoman_updatehb/images/tabControl.js"></script>
+
+<input type="hidden" name="reply_id" value="{$reply['rid']}" />
+<input type="hidden" name="id" value="{$reply['id']}" />
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        活动设置
+    </div>
+    <div class="panel-body">
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">直接调用链接</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" id="link" class="form-control" placeholder="" name="link" disabled="disabled" value="{$_W['siteroot']}app/index.php?i={$_W['uniacid']}&c=entry&m=haoman_updatehb&do=index&id={$rid}">
+				<div class="help-block"><b style="color: #FC110D">第一次建立规则，必须保存后再调用这个链接</b>，需要拥有高级接口权限的！</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">二维码图片调用</label>
+			<div class="col-sm-9 col-xs-12">
+				<img src="{$imgUrl}">
+				<div class="help-block"><b style="color: #FC110D">第一次建立规则，必须保存后再使用这个二维码图片</b>，需要拥有高级接口权限的！</div>
+			</div>
+		</div>
+		<div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">活动名称</label>
+            <div class="col-sm-9 col-xs-12">
+               	<input type="text" name="title" class="form-control" value="{$reply['title']}">
+				<div class="help-block">显示在网页标题中</div>
+            </div>
+		</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">活动图片</label>
+				<div class="col-sm-9 col-xs-12">
+					{php echo tpl_form_field_image('picture', $reply['picture']);}
+					<div class="help-block">用于回复关键字后返回图片 700*300</div>
+				</div>
+			</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 活动说明</label>
+			<div class="col-sm-9 col-xs-12">
+				<textarea style="height:60px;" id='description' name="description" class="form-control" cols="60">{$reply['description']}</textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 活动时间</label>
+			<div class="col-sm-9 col-xs-12">
+				{php echo tpl_form_field_daterange('datelimit', array('start'=>date('Y-m-d H:i',$reply['starttime']),'end'=>date('Y-m-d H:i',$reply['endtime'])), true)}
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 活动规则</label>
+			<div class="col-sm-9 col-xs-12">
+				{php echo tpl_ueditor('rules', $reply['rules']);}
+			</div>
+		</div>
+
+	<div class="form-group" style="display: block;">
+		<label class="col-xs-12 col-sm-3 col-md-2 control-label">管理员Openid</label>
+		<div class="col-sm-9 col-xs-12">
+			<input type="text" id="gl_openid" class="form-control" placeholder="" name="gl_openid" value="{$reply['gl_openid']}">
+			<div class="help-block">用来回传粉丝领红包错误原因,请正确填写！！可不填写(只支持订阅号)</div>
+		</div>
+	</div>
+
+	<div class="form-group" style="display: block;">
+		<label class="col-xs-12 col-sm-3 col-md-2 control-label">红包基金虚拟数量</label>
+		<div class="col-sm-9 col-xs-12">
+			<input type="text" id="timenum" class="form-control" placeholder="" name="timenum" value="{$reply['timenum']}">
+			<div class="help-block">设置红包页面虚拟领取数量，总数为虚拟数据加真实数量</div>
+		</div>
+	</div>
+
+
+    </div>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		开篇场景设置
+	</div>
+	<div class="panel-body">
+
+		
+
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">场景模式</label>
+			<div class="col-sm-9">
+				<label class="radio-inline">
+					<input onclick="$('#outlinkUrl').hide();$('#inlineUrl').show()" type="radio" name="scene" id="scene" value="0" {if $reply['scene']==0} checked="checked"{/if}/>自带场景
+				</label>
+				<label class="radio-inline">
+					<input onclick="$('#inlineUrl').hide();$('#outlinkUrl').show()" type="radio" name="scene" id="scene2" value="1" {if $reply['scene']==1} checked="checked"{/if}/>外部场景
+				</label>
+				<label class="radio-inline">
+					<input onclick="$('#inlineUrl').hide();$('#outlinkUrl').hide()" type="radio" name="scene" id="scene2" value="2" {if $reply['scene']==2} checked="checked"{/if}/>不使用场景
+				</label>
+				<div class="help-block">
+					自带场景:为模块自带的场景设置，只能设置3页，动画效果固定的。<br>
+					外部场景:可以设置外部场景的链接，请一定要在外部场景的最后一页留一个链接或是二维码，指向该活动。<br>
+					外部场景的链接和二维码请直接先保存本规则后，在调用规则最上面的直接调用链接和二维码。
+				</div>
+			</div>
+
+		</div>
+
+		<div class="form-group" id="outlinkUrl" {if $reply['scene'] !=1}style="display: none"{/if}>
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label"> 外部场景链接:</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" class="form-control" placeholder="" name="out_scene_url" value="{$reply['out_scene_url']}">
+				<div class="help-block">请直接输入外部场景的URL,任何可以通过URL访问的外部场景都行，http://开头</div>
+			</div>
+		</div>
+		<div class="form-group" id="inlineUrl" {if $reply['scene'] !=0}style="display: none"{/if}>
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label"> 自带场景设置</label>
+			<div class="col-sm-9 col-xs-12">
+			<!-- Nav tabs -->
+				<ul class="nav nav-tabs" role="tablist">
+				  <li role="presentation" class="active"><a href="#home" role="tab" data-toggle="tab">第一页场景设置</a></li>
+				  <li role="presentation" ><a href="#profile" role="tab" data-toggle="tab">第二页场景设置</a></li>
+				  <li role="presentation" ><a href="#messages" role="tab" data-toggle="tab">第三页场景设置</a></li>
+				</ul>
+
+				<!-- Tab panes -->
+				<div class="tab-content">
+				  <div role="tabpanel" class="tab-pane active" id="home">
+						<div class="form-group">
+							<div class="col-sm-12 col-xs-12">
+								{php echo tpl_form_field_image('p1_bg', $reply['p1_bg']);}
+								<div class="help-block">场景一背景图,不上传用默认的 750*1206 </div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-12 col-xs-12">
+								{php echo tpl_form_field_image('p1_top', $reply['p1_top']);}
+								<div class="help-block">场景一头部图片 654*193</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-12 col-xs-12">
+								{php echo tpl_form_field_image('p1_bottom', $reply['p1_bottom']);}
+								<div class="help-block">场景一底部图片 654*193</div>
+							</div>
+						</div>
+				  </div>
+				  <div role="tabpanel" class="tab-pane" id="profile">
+						<div class="form-group">
+							<div class="col-sm-12 col-xs-12">
+								{php echo tpl_form_field_image('p2_bg', $reply['p2_bg']);}
+								<div class="help-block">场景二背景图,不上传用默认的 750*1206 </div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-12 col-xs-12">
+								{php echo tpl_form_field_image('p2_top', $reply['p2_top']);}
+								<div class="help-block">场景二头部图片 654*193</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-12 col-xs-12">
+								{php echo tpl_form_field_image('p2_bottom', $reply['p2_bottom']);}
+								<div class="help-block">场景二底部图片 654*193</div>
+							</div>
+						</div>
+				  </div>
+				  <div role="tabpanel" class="tab-pane" id="messages">
+						<div class="form-group">
+							<div class="col-sm-12 col-xs-12">
+								{php echo tpl_form_field_image('p3_bg', $reply['p3_bg']);}
+								<div class="help-block">场景三背景图,不上传用默认的 750*1206 </div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-12 col-xs-12">
+								{php echo tpl_form_field_image('p3_top', $reply['p3_top']);}
+								<div class="help-block">场景三头部图片 654*193</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-12 col-xs-12">
+								<label class="radio-inline">
+									<input onclick="$('#bohao').hide();" type="radio" name="p3_isphone" value="0" {if $reply['p3_isphone']==0} checked="checked"{/if}/>不开启
+								</label>
+								<label class="radio-inline">
+									<input onclick="$('#bohao').show();" type="radio" name="p3_isphone" value="1" {if $reply['p3_isphone']==1} checked="checked"{/if}/>只开启一键拨号
+								</label>
+								<label class="radio-inline">
+									<input onclick="$('#bohao').hide();" type="radio" name="p3_isphone" value="2" {if $reply['p3_isphone']==2} checked="checked"{/if}/>只开启在线报名(不含地址)
+								</label>
+								<label class="radio-inline">
+									<input onclick="$('#bohao').show();" type="radio" name="p3_isphone" value="3" {if $reply['p3_isphone']==3} checked="checked"{/if}/>同时开启一键拨号和在线报名(不含地址)
+								</label>
+								<label class="radio-inline">
+									<input onclick="$('#bohao').hide();" type="radio" name="p3_isphone" value="4" {if $reply['p3_isphone']==4} checked="checked"{/if}/>只开启在线报名(含地址)
+								</label>
+								<label class="radio-inline">
+									<input onclick="$('#bohao').show();" type="radio" name="p3_isphone" value="5" {if $reply['p3_isphone']==5} checked="checked"{/if}/>同时开启一键拨号和在线报名(含地址)
+								</label>
+								<div class="help-block">设置第一页面是否开启填写信息和拨号功能。默认不开启，如果开启一键拨号功能，请填写拨打的号码。</div>
+							</div>
+
+						</div>
+
+						<div class="form-group" id="bohao" {if $reply['p3_isphone']!=1 && $reply['p3_isphone']!=3 && $reply['p3_isphone']!=5}style="display: none"{/if}>
+							<div class="col-sm-12 col-xs-12">
+								<input type="text" name="p3_phone" class="form-control" placeholder="请输入一键拨号的号码" value="{$reply['p3_phone']}">
+							</div>
+						</div>
+						
+				  </div>
+				</div>
+			</div>
+		</div>
+
+	<!-- 	<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">是否重复观看</label>
+			<div class="col-sm-9">
+				<label class="radio-inline">
+					<input type="radio" name="isonce" value="0" {if $reply['isonce']==0} checked="checked"{/if}/>不开启
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="isonce" value="1" {if $reply['isonce']==1} checked="checked"{/if}/>开启
+				</label>
+				<div class="help-block">默认不开启，开启后，用户每次进入都将先看下场景广告。</div>
+			</div>
+
+		</div> -->
+		
+	</div>
+
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		开始页面设置(场景结束后的第一个页面)
+	</div>
+	<div class="panel-body">
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">背景图片</label>
+			<div class="col-sm-9 col-xs-12">
+				{php echo tpl_form_field_image('start_bg', $reply['start_bg']);}
+				<div class="help-block">开场背景图,不上传用默认的 750*1206 </div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">头部图片</label>
+			<div class="col-sm-9 col-xs-12">
+				{php echo tpl_form_field_image('start_top', $reply['start_top']);}
+				<div class="help-block">头部标题图片 654*193</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">底部文字</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" name="start_dec" class="form-control" value="{$reply['start_dec']}">
+				<div class="help-block">底部文字设置，不超过60个字符，30个汉字</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">背景音乐<br>mp3格式</label>
+			<div class="col-sm-9 col-xs-12">
+				{php echo tpl_form_field_audio('start_music',$reply['start_music']);}
+				<div class="help-block">背景音乐，不上传则不使用背景音乐。</div>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        红包刷新规则
+    </div>
+    <div class="panel-body">
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">红包上限</label>
+			<div class="col-sm-9 col-xs-6">
+				<div class="input-group">
+					<input type="number" class="form-control" placeholder="" name="hbtotal_top" value="{php echo $reply['hbtotal_top']/100}">
+					<span class="input-group-addon">元</span>
+				</div>
+				<div class="help-block">每个参与者的红包上限<span style="color: red">达到这个上限后，不管是刷新红包、还是口令或是转发朋友圈的都不会再增加金额了，线下扫码领红包不受此限制</span>,0为不限制 。</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">超过提示话术</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" name="hbtotal_top_dec" class="form-control" value="{$reply['hbtotal_top_dec']}">
+				<div class="help-block">红包超过上限的提示话术，不填使用默认的。</div>
+			</div>
+		</div>
+
+    	<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">开启刷新提示广告</label>
+			<div class="col-sm-9">
+				<label class="radio-inline">
+					<input type="radio" name="is_hbad" id="is_hbad" value="0" {if $reply['is_hbad']==0} checked="checked"{/if}/>不开启
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="is_hbad" id="is_hbad2" value="1" {if $reply['is_hbad']==1} checked="checked"{/if}/>开启
+				</label>
+				<div class="help-block">
+				默认不开启，开启后，参与者刷新红包的时候，会弹出提示框，上面有设置的广告，请先在左侧广告设置添加广告。
+				</div>
+			</div>
+
+		</div>
+
+    	<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">红包刷新周期</label>
+			<div class="col-sm-9 col-xs-6">
+				<div class="input-group">
+					<input type="text" class="form-control" name="hb_time" value="{$reply['hb_time']}"/>
+					<span class="input-group-addon">分钟</span>
+				</div>
+				<div class="help-block"> 至少要大于0，按分钟换算，一个小时60分钟，一天1440分钟!</div>
+			</div>
+		</div>
+
+
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">默认增长区间</label>
+			<div class="col-sm-9">
+
+	                <div class="input-group">
+	                    <input type="text" class="form-control" name="hb_credit1" value="{php echo $reply['hb_credit1']/100}" />
+	                    <span class="input-group-addon" style="border-left: none;border-right: none;">-</span>
+	                    <input type="text" class="form-control" name="hb_credit2" value="{php echo $reply['hb_credit2']/100}" />
+	                    <span class="input-group-addon" style="border-left: none;">元</span>
+	                </div>
+				
+				<div class="help-block">不在下面设置的区间范围内，将使用这个红包增长区间！</div>
+			</div>
+		</div>
+
+		<div style="border-bottom: 1px #eee solid;margin-bottom: 30px;"></div>
+ 
+		{php $flag_id=1;}
+		{if $prize}
+			{loop $prize $item}
+		<div>
+		<input type="hidden" name="flagtype[]" value="{$item['id']}" />
+        <div class="form-group">
+            <span>
+	            <label class="col-xs-12 col-sm-3 col-md-2 control-label" >当前所在范围</label>
+	            <div class="col-sm-3 col-md-3" >
+
+	                <div class="input-group">
+	                    <input type="text" class="form-control" name="line1{$item['id']}" value="{php echo $item['line1']/100}" />
+	                    <span class="input-group-addon" style="border-left: none;border-right: none;">-</span>
+	                    <input type="text" class="form-control" name="line2{$item['id']}" value="{php echo $item['line2']/100}" />
+	                    <span class="input-group-addon" style="border-left: none;">元</span>
+	                </div>
+	            </div>
+            </span>
+
+            <span>
+	            <label class="col-xs-12 col-sm-3 col-md-2 control-label" >相应增长区间</label>
+	            <div class="col-sm-3 col-md-3" >
+
+	                <div class="input-group">
+	                    <input type="text" class="form-control" name="creditt{$item['id']}" value="{php echo $item['credit']/100}" />
+	                    <span class="input-group-addon" style="border-left: none;border-right: none;">-</span>
+	                    <input type="text" class="form-control" name="creditt2{$item['id']}" value="{php echo $item['credit2']/100}" />
+	                    <span class="input-group-addon" style="border-left: none;">元</span>
+	                </div>
+	            </div>
+            </span>
+            <span>
+            	<button type="button" class="btn btn-danger btn_del_award">删除</button>
+            </span>
+
+        </div>
+        <div style="border-bottom: 1px #eee dashed;margin-bottom: 15px;"></div>
+		</div>
+		{php $flag_id = $item['id']+1;}
+			{/loop}		
+		{/if}
+
+
+        <span id="award_insert_flag" style="display: none"></span>
+		<div class="form-group">
+		    <div class="col-sm-5"></div>
+			<div class="col-sm-7">
+				<button id="btn_add_award" type="button" class="btn btn-warning">
+					<span class="glyphicon glyphicon-plus"></span> 添加新的区间
+				</button>
+			</div>
+		</div>
+
+  
+    </div>
+</div>
+
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		口令红包设置
+	</div>
+	<div class="panel-body">
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">开启口令红包模式</label>
+			<div class="col-sm-9">
+				<label class="radio-inline">
+					<input type="radio" name="is_openbbm" id="openbbm" value="0" {if $reply['is_openbbm']==0} checked="checked"{/if}/>不开启
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="is_openbbm" id="openbbm2" value="1" {if $reply['is_openbbm']==1} checked="checked"{/if}/>开启
+				</label>
+				
+				<div class="help-block">
+				默认不开启，开启后，输入口令可以增加红包金额，一个口令增加一次，增加金额规则根据上面红包刷新规则一样。
+				
+				</div>
+			</div>
+
+		</div>
+		<div class="form-group" >
+		<label class="col-xs-12 col-sm-3 col-md-2 control-label">每人可使用口令的数量</label>
+		<div class="col-sm-9 col-xs-6">
+			<div class="input-group">
+				<input type="text" class="form-control" name="bbm_use_times" value="{$reply['bbm_use_times']}"/>
+				<span class="input-group-addon">次</span>
+			</div>
+			<div class="help-block"> 0为不限制!默认为0,请先开启口令红包模式。</div>
+		</div>
+	</div>
+	</div>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		线下扫红包设置
+	</div>
+	<div class="panel-body">
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">开启线下扫红包模式</label>
+			<div class="col-sm-9">
+				<label class="radio-inline">
+					<input type="radio" name="hb_local" value="0" {if $reply['hb_local']==0} checked="checked"{/if}/>不开启
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="hb_local" value="1" {if $reply['hb_local']==1} checked="checked"{/if}/>开启线上模式
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="hb_local"  value="2" {if $reply['hb_local']==2} checked="checked"{/if}/>开启线下模式
+				</label>
+				<div class="help-block">
+				默认不开启，开启后，参与者到线下扫描下面的二维码，就可以额外获得红包，每人只能一次。<br>
+				线上模式：只要红包提现时间一到，就可以提现，不受是否有扫码过的影响；<br>
+				线下模式：只有到线下扫码领过红包后，提现时间到了才能申请提现。
+				</div>
+			</div>
+
+		</div>
+
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">线下专用二维码图片</label>
+			<div class="col-sm-9 col-xs-12">
+				<img src="{$imgUrl2}">
+				<div class="help-block"><b style="color: #FC110D">第一次建立规则，必须保存后再使用这个二维码图片</b>，需要拥有高级接口权限的！</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">红包区间</label>
+			<div class="col-sm-9">
+
+	                <div class="input-group">
+	                    <input type="text" class="form-control" name="hb_localcredit1" value="{php echo $reply['hb_localcredit1']/100}" />
+	                    <span class="input-group-addon" style="border-left: none;border-right: none;">-</span>
+	                    <input type="text" class="form-control" name="hb_localcredit2" value="{php echo $reply['hb_localcredit2']/100}" />
+	                    <span class="input-group-addon" style="border-left: none;">元</span>
+	                </div>
+				
+				<div class="help-block">通过扫描线下二维码的，将使用这个红包区间，获得红包自动入账到参与者红包账号，时间到了可以一起提现！</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		红包提现设置
+	</div>
+	<div class="panel-body table-responsive">
+    	<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">红包类型</label>
+			<div class="col-sm-9">
+				<label class="radio-inline">
+					<input type="radio" name="hbtype" value="0" {if $reply['hbtype']==0} checked="checked"{/if}/>现金红包
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="hbtype" value="1" {if $reply['hbtype']==1} checked="checked"{/if}/>微赞积分
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="hbtype" value="2" {if $reply['hbtype']==2} checked="checked"{/if}/>微赞余额
+				</label>
+				<div class="help-block">
+					1、控制红包的类型，活动开始后不能随便改动，防止数据混乱，请谨慎选择！<br>
+					2、如果选择现金红包，提现申请后将直接通过公众号发送红包到粉丝微信上，最低支持1元，最高200元。<br>
+					<span style="color: #FF0B1B">3、红包类型仅再用户提现的时候有用，他直接关系到用户的金额是提现到哪里，请谨慎设置。</span>
+					
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">可提现时间</label>
+			<div class="col-sm-9 col-xs-6">
+				<div class="input-group">
+					{php echo tpl_form_field_date('hbtx_time',$reply['hbtx_time'], true);}
+				</div>
+				<div class="help-block">可以申请提现的时间，只有达到或超过这个时间才能申请提现。</div>
+			</div>
+		</div>
+		
+
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">提现最低额度</label>
+			<div class="col-sm-9 col-xs-6">
+				<div class="input-group">
+					<input type="number" id="share_acid" class="form-control" placeholder="" name="share_acid" value="{php echo $reply['share_acid']/100}">
+					<span class="input-group-addon">元</span>
+				</div>
+				<div class="help-block">用户提现最低额度<span style="color: red">如果是现金红包必须大于1元小于200元</span> 。</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">提现超额强制审核</label>
+			<div class="col-sm-9 col-xs-6">
+				<div class="input-group">
+					<input type="number" id="tx_most" class="form-control" placeholder="" name="tx_most" value="{php echo $reply['tx_most']/100}">
+					<span class="input-group-addon">元</span>
+				</div>
+				<div class="help-block">当用户提现超过这个额度的时候强制后台审核，不管开启了什么提现条件，<span style="color: red">仅对现金红包有效，最小值不得小于5元。</span> 。</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">提现申请后下发条件</label>
+			<div class="col-sm-9">
+				<label class="radio-inline">
+					<input type="radio" name="xf_condition" value="0" {if $reply['xf_condition']==0} checked="checked"{/if}/>后台审核
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="xf_condition" onclick="alert('直接下发有被刷的风险，请谨慎')" value="1" {if $reply['xf_condition']==1} checked="checked"{/if}/>直接下发
+				</label>
+				<div class="help-block">控制前台用户提现申请，后红包下发的条件,<span style="color: red">如果是现金红包，直接发用户微信号上，如果是积分和余额直接打用户账号上！</span></div>
+			</div>
+		</div>
+		<!-- <div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">每日最多申请提现次数</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" id="number_times" class="form-control" placeholder="" name="number_times" value="{$reply['number_times']}">
+				<div class="help-block">粉丝每天最多的提现申请次数，0表示不限制</div>
+			</div>
+		</div> -->
+	</div>
+</div>
+
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		分享设置
+	</div>
+	<div class="panel-body table-responsive">
+	<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">关注二维码</label>
+			<div class="col-sm-9 col-xs-12">
+				{php echo tpl_form_field_image('up_qrcode', $reply['up_qrcode']);}
+				<div class="help-block">
+				用来在非微信页面打开或是未关注的时候，给用户扫码关注的 200*200<br>
+				<span style="color: #FF0B1B">特别说明：由于微信限制和微赞机制问题，非认证的服务号会出现明明关注过又要关注的情况，这种情形必须通过进入公众号，回复关键词参与活动才能解决，请在下面的关注引导话术上，提示下粉丝。</span>
+				</div>
+			</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-xs-12 col-sm-3 col-md-2 control-label">关注提示话术</label>
+		<div class="col-sm-9 col-xs-12">
+			<input type="text" class="form-control" name="share_gz" value="{if empty($reply['share_gz'])}请长按上面二维码关注或是进入公众号后，发送红包参与活动{else}{$reply['share_gz']}{/if}">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-xs-12 col-sm-3 col-md-2 control-label">开启强制关注</label>
+		<div class="col-sm-9 col-xs-12">
+			<label class="radio-inline">
+				<input type="radio" name="share_url" value="0" {if $reply['share_url']==0} checked="checked"{/if}/>未开启
+			</label>
+			<label class="radio-inline">
+				<input type="radio" name="share_url" value="1" {if $reply['share_url']==1} checked="checked"{/if}/>开启
+			</label>
+			<div class="help-block">开启是否强制关注功能</div>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-xs-12 col-sm-3 col-md-2 control-label">分享模式</label>
+		<div class="col-sm-9">
+			<label class="radio-inline">
+				<input type="radio" name="share_type" value="0" {if $reply['share_type']==0} checked="checked"{/if}/>默认模式
+			</label>
+			<label class="radio-inline">
+				<input type="radio" name="share_type" value="1" {if $reply['share_type']==1} checked="checked"{/if}/>分享得一次红包模式
+			</label>
+			<label class="radio-inline">
+				<input type="radio" name="share_type" value="2" {if $reply['share_type']==2} checked="checked"{/if}/>每天分享得红包模式
+			</label>
+			<label class="radio-inline">
+				<input type="radio" name="share_type" value="3" {if $reply['share_type']==3} checked="checked"{/if}/>禁止分享模式
+			</label>
+			<div class="help-block">
+				<span>默认模式：正常使用分享朋友圈的功能，分享后不增加红包。</span><br>
+				<span>分享得一次红包模式：分享一次到朋友圈可以得一次红包，红包增加数量根据上面设置的刷新规则。</span><br>
+				<span>每天分享得红包模式：每天分享到朋友圈可以领一次红包，红包增加数量根据上面设置的刷新规则。</span><br>
+				<span>禁止分享模式：禁止分享到朋友和朋友圈等功能。</span><br>
+				<span style="color: #FF0B1B">特别说明：以上只针对自带场景有效，非自带场景的，只对分享红包刷新页面才有效果。</span>
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group" >
+		<label class="col-xs-12 col-sm-3 col-md-2 control-label">页面是否体现分享字样</label>
+		<div class="col-sm-9">
+			<label class="radio-inline">
+				<input type="radio" name="is_sharetype" value="0" {if $reply['is_sharetype']==0} checked="checked"{/if}/>不体现
+			</label>
+			<label class="radio-inline">
+				<input type="radio" name="is_sharetype" value="1" {if $reply['is_sharetype']==1} checked="checked"{/if}/>体现
+			</label>
+			<div class="help-block">控制是否在页面体现分享字样，防止被封杀</div>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-xs-12 col-sm-3 col-md-2 control-label">分享标题</label>
+		<div class="col-sm-9 col-xs-12">
+			<input type="text" class="form-control" name="share_title" value="{$reply['share_title']}">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-12 col-sm-3 col-md-2 control-label">分享描述</label>
+		<div class="col-sm-9 col-xs-12">
+			<textarea style="height:60px;" name="share_desc" class="form-control" cols="60">{$reply['share_desc']}</textarea>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-xs-12 col-sm-3 col-md-2 control-label">转发图</label>
+		<div class="col-sm-9 col-xs-12">
+			{php echo tpl_form_field_image('share_imgurl',$reply['share_imgurl']);}
+		</div>
+	</div>
+
+	<!-- </div> -->
+</div>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		黑白名单设置
+	</div>
+	<div class="panel-body">
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">开关设置</label>
+			<div class="col-sm-9">
+				<label class="radio-inline">
+					<input type="radio" name="getip" value="0" {if $reply['getip']==0} checked="checked"{/if}"/>关闭限制
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="getip" value="1" {if $reply['getip']==1} checked="checked"{/if}"/>允许以下地区粉丝参与
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="getip" value="2" {if $reply['getip']==2} checked="checked"{/if}"/>禁止以下地区粉丝参与
+				</label>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">活动地区</label>
+			<div class="col-sm-9 col-xs-6">
+				<input type="hidden" name="getip_addr" id="getaddr" value="">
+				<div id="tag"></div>
+				<div class="help-block">仅支持市级城市，请直接填入市级名称(<span style="color: #ff3807">不需要后面的“市”和前面的省级名称</span>),每输入一个地区请按一次回车，不能有空格，最多输入40个城市！</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">禁止后跳转链接</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" name="noip_url" class="form-control" value="{$reply['noip_url']}">
+				<div class="help-block">限制后跳转IP，没填默认关闭效果，必要http://开头 (网址太长,可能导致转发无效,请先生成短网址,下同) <a href='http://www.waqiang.com/index.php/url/shorten'>短网址生成页</a></div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		地理位置信息设置
+	</div>
+	<div class="panel-body">
+		<div class="form-group" style="display: none">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">开关设置</label>
+			<div class="col-sm-9">
+				<label class="radio-inline">
+					<input type="radio" name="isappkey" value="0" {if $reply['isappkey']==0} checked="checked"{/if}"/>关闭限制
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="isappkey" value="1" {if $reply['isappkey']==1} checked="checked"{/if}"/>启用限制
+				</label>
+
+			</div>
+		</div>
+
+		<div class="form-group" style="display: none">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">百度地图APP KEY</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" name="bd_key" class="form-control" value="{$reply['bd_key']}"/>
+				<span class="help-block">如果没有可以默认设置这个:DgQW1GOkBGnWMNWoGvPSGcxVhcgIApAq</span>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">允许省份：</label>
+			<div class="col-sm-9 col-xs-12">
+				<textarea name="address_sf"  cols="30" rows="3" class="form-control">{$reply['address_sf']}</textarea>
+				用英文逗号隔开,如:浙江省,福建省,如只需要市区省份可不填
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">允许市区：</label>
+			<div class="col-sm-9 col-xs-12">
+				<textarea name="address_sq"  cols="30" rows="3" class="form-control">{$reply['address_sq']}</textarea>
+				用英文逗号隔开,如：厦门市,漳州市，如只需要省份，市区可不填
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">允许区/县：</label>
+			<div class="col-sm-9 col-xs-12">
+				<textarea name="address_qx"  cols="30" rows="3" class="form-control">{$reply['address_qx']}</textarea>
+				用英文逗号隔开,如：------可不填
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">阿里大鱼短信验证参数</div>
+	<div class="panel-body">
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">参加活动短信验证</label>
+			<div class="col-sm-9 col-xs-12">
+				<label><input type="radio" name='switch' value="0" {if $reply['switch']==0}checked{/if}>关闭</label>
+				<label style="margin-left: 20px;"><input type="radio" name='switch' {if $reply['switch']==1}checked{/if} value="1">开启</label>
+				<div class="help-block">该功能开启后，将在积分兑换或者提现的时候，首次兑换或提现需要输入短信验证码</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">提现是否短信验证</label>
+			<div class="col-sm-9 col-xs-12">
+				<label><input type="radio" name='tx_code' value="0" {if $reply['tx_code']==0}checked{/if}>关闭</label>
+				<label style="margin-left: 20px;"><input type="radio" name='tx_code' {if $reply['tx_code']==1}checked{/if} value="1">开启</label>
+				<div class="help-block">该功能开启后，将在积分兑换或者提现的时候，首次兑换或提现需要输入短信验证码</div>
+			</div>
+		</div>
+		<div class="form-group" style="display: none">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">同号码单日最多发送次数：</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="number" min="0" class="form-control" name="tellimit" value="{$reply['tellimit']}">
+				<div class="help-block">0代表无限</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">App key：</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" class="form-control" name="appkey" value="{$reply['appkey']}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">App Secret：</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" class="form-control" name="secretKey" value="{$reply['secretKey']}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">短信签名：</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" class="form-control" name="sign" value="{$reply['sign']}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">短信模板ID：</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" class="form-control" name="sms_id" value="{$reply['sms_id']}">
+				<div class="help-block">模板例如：验证码${code}，您正在参加XXX活动活动，请确认系本人申请。</div>
+				<div class="help-block">${code}该字段必须出现在短信模板中，其他随意自定义；验证码有效时间5分钟</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">验证手机归属地</label>
+			<div class="col-sm-9 col-xs-12">
+				<label><input type="radio" name='teladdr' value="0" {if $reply['teladdr']==0}checked{/if}>关闭</label>
+				<label style="margin-left: 20px;"><input type="radio" {if $reply['teladdr']==1}checked{/if} name='teladdr' value="1">开启</label>
+				<div class="help-block">该功能开启后，验证短信验证码时会验证手机归属地，判断是否符合已预设活动地区符合；填写百度接口地区限制后才有效(不用开启百度接口)</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">不符手机归属地提示语</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" class="form-control" name="outtips" value="{$reply['outtips']}">
+				<div class="help-block">开启验证手机归属地时，若不符合活动地区时的提示语</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+ <div class="panel panel-default">
+	<div class="panel-heading">
+		微信LBS限制
+	</div>
+	<div class="panel-body">
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">开关设置</label>
+			<div class="col-sm-9">
+				<label class="radio-inline">
+					<input type="radio" name="isallowip" value="0" {if $reply['isallowip']==0} checked="checked"{/if}"/>关闭LBS限制
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="isallowip" value="1" {if $reply['isallowip']==1} checked="checked"{/if}"/>启用LBS限制
+				</label>
+
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">活动地区</label>
+			<div class="col-sm-9 col-xs-6">
+				<div class="input-group">
+					<textarea style="height:60px;width: 800px" id="allowip" name="allowip" class="form-control" cols="60">{$allowip}</textarea>
+				</div>
+				<div class="help-block" id="isallowlbs">您可以通过<span style="color: #ff3807" id="mapxz">【点击选择活动位置】</span>，也可以直接输入经纬度和地址，中间用“|”隔开，<span style="color: #ff3807">格式：纬度|经度|地址</span>，例如：118.54376|35.764328|北京市丰台区东管头街<span style="color: #ff3807">,由于部分安卓手机通过GPS获取位置速度较慢，会导致第一次进入页面加载比较慢</span></div>
+			</div>
+		</div>
+
+		<div class="form-group" id="showlbs">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">活动范围</label>
+			<div class="col-sm-5 col-xs-12">
+				<div class="input-group">
+					<input name="allowip2" type="text" class="form-control" value="{$allowip2}"/>
+					<span class="input-group-addon" style="color: #333;">米</span>
+				</div>
+				<div class="help-block">通过微信LBS定位，会存在一定误差，范围请设成500米以上，推荐1000米以上！<span style="color: #ff3807">认证的服务号可以在微信公众号后台》》最下面的“接口权限”》》获取用户地理位置，开启这个功能，可以加快获取用户GPS位置的速度。</span></div>
+			</div>
+		</div>
+
+
+	</div>
+</div>
+
+<script>
+	require(['jquery','util'], function($, util){
+		$(function(){
+			$('#mapxz').click(function(){
+				util.map({lng: 116.34176,lat: 42.863358}, function(location){
+					$('#allowip').val(location.lat +"|"+location.lng+"|"+location.label);
+				});
+			});
+		});
+	});
+</script>
+
+<script type="text/javascript">
+	$(function(){
+		$("#tag").tabControl({maxTabCount:40,tabW:80},"{$reply['getip_addr']}");
+		$("input[name='submit']").click(function(){
+			var v = $("#tag").getTabVals();
+			$("#getaddr").val(v);
+		});
+	});
+
+</script>
+
+<script language='javascript'>
+
+
+	function doDeleteItemImage(obj,id) {
+
+		var filename = $('input#' + id+"-value").val();
+
+		$('.' + id +"_preview").html("");
+
+		$(obj).html("正在删除...").attr("disabled",true);
+
+		ajaxopen('./index.php?act=attachment&do=delete&filename=' + filename, function(){
+
+			$(obj).html("<i class='icon-upload-alt'></i> 删除").hide().removeAttr("disabled");
+
+		});
+
+	}
+
+	function doDeletebtn_del_award(obj) {
+
+		var obj = $(this).parent().parent().parent();
+
+		obj.slideUp(300, function() {
+
+			obj.remove();
+
+		});
+
+	}
+
+
+
+</script>
+
+
+
+<style>
+.ruoling {
+	width: 35%;
+    margin-left: inherit;
+}
+
+</style>
+
+<script type="text/javascript">
+<!--
+    var flag = 1;
+	var gnamevar='';
+	flag=<?php echo $flag_id?>;
+	$('#btn_add_award').bind('click', function(){
+		var content = '<div>';
+		
+		content +='<input type="hidden" name="flagtype_new[]" value="'+flag+'" />';
+
+        content +='<div class="form-group">';
+        content +='<span>';
+        content +='<label class="col-xs-12 col-sm-3 col-md-2 control-label" >当前所在范围</label>';
+        content +='<div class="col-sm-3" >';
+        content +='<div class="input-group" >';
+        content +='<input type="text" class="form-control" name="line1_new'+flag+'" value="" />';
+        content +='<span class="input-group-addon" style="border-left: none;border-right: none;">-</span>';
+        content +='<input type="text" class="form-control" name="line2_new'+flag+'" value="" />';
+        content +=' <span class="input-group-addon" style="border-left: none;">元</span>';
+        content +='</div>';
+        content +='</div>';
+        content +='</span>';
+
+        content +='<span>';
+        content +='<label class="col-xs-12 col-sm-3 col-md-2 control-label" >相应增长区间</label>';
+        content +='<div class="col-sm-3" >';
+        content +='<div class="input-group" >';
+        content +='<input type="text" class="form-control" name="credit_new'+flag+'" value="" />';
+        content +='<span class="input-group-addon" style="border-left: none;border-right: none;">-</span>';
+        content +='<input type="text" class="form-control" name="credit2_new'+flag+'" value="" />';
+        content +=' <span class="input-group-addon" style="border-left: none;">元</span>';
+        content +='</div>';
+        content +='</div>';
+        content +='</span>';
+
+    	content += '<span>';
+		content += '<button type="button" class="btn btn-danger btn_del_award">删除</button>';
+		content += '</span>';
+
+        content +='</div>';
+        content +='<div style="border-bottom: 1px #eee dashed;margin-bottom: 15px;"></div>';
+		content += '</div>';
+
+		flag+=1;
+		$('#award_insert_flag').before(content);
+		$('.btn_del_award').bind('click',function(){
+			var obj = $(this).parent().parent().parent();
+			obj.slideUp(300, function() {
+				obj.remove();
+			});
+		});
+	});
+    
+	$('.btn_del_award').unbind('click');  
+	$('.btn_del_award').bind('click',function(){
+	var obj = $(this).parent().parent().parent();
+	obj.slideUp(300, function() {
+	obj.remove();
+		});
+	});
+
+//-->
+</script>
+
+
+	
+	
+	
+	
+
+

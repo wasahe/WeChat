@@ -1,0 +1,122 @@
+{template 'common/header'}
+<link rel="stylesheet" type="text/css" href="../addons/qwx_shangmen/template/resource/css/animate.min.css">
+<link rel="stylesheet" type="text/css" href="../addons/qwx_shangmen/template/resource/css/style.css">
+<link rel="stylesheet" type="text/css" href="../addons/qwx_shangmen/template/resource/css/myorder_detail.css">
+
+<body>
+    <!-- 头部导航栏 -->
+    {template 'header'}
+    <section>
+
+        {if $address}
+            <div class="userinfo editAdr">
+                <p>{$address[name]} {$address[phone]}</p>
+                <p>地址：{$address['province']},{$address['city']},{$address['district']} {$address['address']}</p>
+            </div>
+        {/if}
+
+
+    
+    <div class="iteminfo">
+        <div class="item_tit">已购买项目
+            <span class="grey"></span>
+        </div>
+        {loop $goods $key $good}
+         <dl class="item" >
+            <dt>
+                <a href="{php echo $this->createMobileUrl('goods',array('id'=>$good[goods_id])); }">
+                    <img src="{$_W['attachurl']}{$good[photo]}" alt="{$good[title]}">
+                </a>
+            </dt>
+            <dd>
+                <h3>{$good[title]}</h3>
+                <p>
+                    <i></i>{$good[shijian]}分钟
+                    &nbsp;{if $good[daojia] == 1}上门服务{else}到店服务{/if}
+                </p>
+                <p>
+                    ￥{$good[price_total_real]}
+                    <span>{$good[price]}×{$good[buy_num]}
+                    {if $good['discount']>0},折扣{$good['discount']}{/if}</span>
+                </p>
+                
+            </dd>
+            <dd></dd>
+        </dl> 
+        {/loop}    
+
+        </div>
+
+
+        <div class="otherinfo">
+            <p>{php echo $this->getFieldsLabel('staff_name');}
+                {if $staff}
+                ：{$staff['staff_name']}(工号:{$staff['staff_work_no']})
+                {/if}
+            </p>
+            <p>预约时间：
+                {$order['yuyue_time']}
+            </p>
+            <p>
+                合计：<i>￥{php echo $order['price'] + $order['daojia_fee'];}<code></code></i>
+                <span><b></b>{$sum_time}分钟</span>
+            </p>
+            <p>
+                实付金额：<i></i><span id="realPrice" style="font-size: 15px; color: #fe6771;">
+                ￥{php echo $order['buy_price'] + $order['daojia_fee'];}</span>
+            </p>
+            <p>
+                备注：{$order['memo']}
+            </p>
+
+            <p>
+                订单编号：{$order['order_sn']}
+            </p>
+            <p>
+                订单创建时间：{$order['create_time']}
+            </p>
+            <p>
+                订单状态：{php echo get_order_status($order['status']);},{php echo get_payment_status($order['payment_status']);},{php echo get_service_status($order['service_status']);}
+            </p>
+            
+            
+        </div>
+        {if ($order['status']==0 && $order['payment_status'] == 0) }
+        <a id="delAdrBtn" href="javascript:void(0);" class="delAdr">取消订单</a>
+
+        <script>
+            $('#delAdrBtn').click(function(){
+                if (confirm('确定要取消本订单？')==true){
+                    var url = '{php echo $this->createMobileUrl('myorderdetail',array('op'=>'cancel_order','id'=>$order_id))}';
+                    window.location.href=url;
+                }
+                return false;
+            })
+        </script>
+        {/if}
+                 
+</section>
+{if ($order['status']==0 && $order['payment_status'] == 0) }
+<aside>
+    <input type="hidden" id="is_submit" value="0" />
+    <a class="book" id="bookBtn" href="javascript:void(0);">立即付款</a>
+
+</aside>
+
+<script>
+$('#bookBtn').click(function(){
+    //跳转到付款页：
+    var url = '{php echo $this->createMobileUrl('pay',array('order_sn'=>$order['order_sn']))}';//@test;
+    window.location.href=url;
+    
+})
+</script>
+{/if}
+
+
+<script src="../addons/qwx_shangmen/template/resource/js/zepto.min.js"></script>
+
+</body>
+</html>
+
+

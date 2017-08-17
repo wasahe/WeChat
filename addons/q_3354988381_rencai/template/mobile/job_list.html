@@ -1,0 +1,293 @@
+{template 'common_header'}
+    <div class="am-g" style="margin-top:5px">
+    	<!-- 搜索框 -->
+    	<div class="am-u-sm-12" style="padding-left:10px;background-color: #FFF;padding-top:5px;height: 45px">
+		    <form  action="" class="am-form" method="POST">
+		    	<div class="am-u-sm-10" style="padding-left: 0;padding-right: 0; width:78%">
+		    		<input type="text" value="{$keyword}" name="keyword" class="am-input-sm" placeholder="输入职位名称">
+		    	</div>
+		    	<div class="am-u-sm-2" style="margin-right:10px;" >
+		    		<input type="submit" class="am-btn am-btn-success am-btn-sm" value="搜索" required />
+		    	</div>
+			</form>
+		</div>
+
+                                                		
+		<!-- 显示检索条件 -->
+		<div class="am-u-sm-12" style="margin-top:5px;height:50px; display:none">
+			<div class="am-alert">
+			条件：
+            	{if $cname}
+                <span class="am-badge am-badge-success">
+                {$cname}
+                </span>
+                {/if}                
+                
+                {if $query_payroll}
+                <span class="am-badge am-badge-success">
+                {$config['payroll'][$query_payroll]}
+                </span>
+                {/if}
+
+                {if $query_positiontype}
+                <span class="am-badge am-badge-success">
+                {$config['positiontype'][$query_positiontype]}
+                </span>
+                {/if}
+                                
+                {if $keyword}
+                <span class="am-badge am-badge-success">
+                "{$keyword}"
+                </span>
+                {/if}  
+                          
+                
+            </div>
+		</div>        
+
+        
+        <!-- 下拉框搜索 -->
+		<div class="am-u-sm-12" style="margin-top:10px;">
+			<div class="am-avg-sm-3">
+                <div class="am-dropdown" data-am-dropdown style="width:32%">
+
+                    <button class="am-btn am-btn-block am-btn-primary am-dropdown-toggle" data-am-dropdown-toggle>
+                    {if $cname}
+                        <span class="am-badge am-badge-success">
+                        {$cname}
+                        </span>
+                    {else}职位{/if}                     
+                     <span class="am-icon-caret-down"></span>
+                     </button>                
+                
+                    <ul class="am-dropdown-content" id="JobCategory">
+                        <li><a href="{php echo $this->createMobileUrl('JobList', array('cid' => $parent_id, 'positiontype' => $query_positiontype, 'payroll' => $query_payroll));}">不限</a></li>
+                        {loop $offices $vo}
+                            <li>
+                                <a href="{php echo $this->createMobileUrl('JobList', array('cid' => $vo['id'], 'positiontype' => $query_positiontype, 'payroll' => $query_payroll));}">{$vo['name']}</a>
+                            <ul style="margin-top: 0;margin-bottom: 0;list-style:none">
+                            {loop $vo['sub'] $v}
+                                <li style=""><a href="{php echo $this->createMobileUrl('JobList', array('cid' => $v['id'], 'positiontype' => $query_positiontype, 'payroll' => $query_payroll));}">|-{$v['name']}</a></li>
+                            {/loop}
+                            </ul>
+                            </li>
+                        {/loop}
+                    </ul>
+                </div>
+
+                <div class="am-dropdown" data-am-dropdown style="width:32%">
+                    <button class="am-btn am-btn-block am-btn-primary am-dropdown-toggle" data-am-dropdown-toggle>
+                    {if $query_payroll}
+                        <span class="am-badge am-badge-success">
+                        {$config['payroll'][$query_payroll]}
+                        </span>
+                    {else}薪资{/if}  
+                    <span class="am-icon-caret-down"></span>
+                    </button>
+                    <!--<a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">菜单 <span class="am-icon-caret-down"></span>-->
+                    <ul class="am-dropdown-content" id="Payroll">
+                    <li><a href="{php echo $this->createMobileUrl('JobList', array('cid' => $cid, 'positiontype' => $query_positiontype));}">不限</a></li>
+                    {loop $config['payroll'] $k $payroll}
+                    <li><a href="{php echo $this->createMobileUrl('JobList', array('cid' => $cid, 'payroll' => $k, 'positiontype' => $query_positiontype));}">{$payroll}</a></li>
+                    {/loop}
+                    </ul>
+                </div>
+				{if false}
+                <div class="am-dropdown" data-am-dropdown style="width:32%">
+                    <button class="am-btn am-btn-block am-btn-primary am-dropdown-toggle" data-am-dropdown-toggle>
+                    {if $query_positiontype}
+                        <span class="am-badge am-badge-success">
+                        {$config['positiontype'][$query_positiontype]}
+                        </span>
+                    {else}类型{/if}
+                    <span class="am-icon-caret-down"></span>
+                    </button>
+                    <ul class="am-dropdown-content" id="Positiontype">
+                    <li><a href="{php echo $this->createMobileUrl('JobList', array('cid' => $cid, 'payroll' => $query_payroll));}">不限</a></li>
+                    {loop $config['positiontype'] $k $positiontype}
+                    <li><a href="{php echo $this->createMobileUrl('JobList', array('cid' => $cid, 'positiontype' => $k, 'payroll' => $query_payroll));}">{$positiontype}</a></li>
+                    {/loop}
+                    </ul>
+                </div>
+				{/if}
+                
+                <div class="am-dropdown" data-am-dropdown style="width:32%">
+                    <button id="sh_city" class="am-btn am-btn-block am-btn-primary am-dropdown-toggle" data-am-dropdown-toggle>
+                    {if $sh_city_name}
+                        <span class="am-badge am-badge-success">
+                        {$sh_city_name}
+                        </span>
+                    {else}城市{/if}
+                    <span class="am-icon-caret-down"></span>
+                    </button>
+                </div>                
+                
+			</div>
+        </div>
+    </div>
+<script src="./resource/js/app/util.js"></script>
+<script src="./resource/js/require.js"></script>
+<script src="./resource/js/app/config.js"></script>
+<link rel="stylesheet" href="{CURR_UI_DIR}weui/style/weui.css"/>
+<style>
+.weui_dialog_bd {
+    padding: 20px 20px;
+    font-size: 15px;
+    color: #888;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+</style>
+<div class="weui_dialog_confirm" id="div_sh_city" style="display:none;">
+    <div class="weui_mask">&nbsp;</div>
+    <div class="weui_dialog">
+        <div class="weui_dialog_bd">
+            <select id="p" name="sh_province"  class="am-input-sm weui_select" style="display:block; width:100%; margin-bottom:5px; border:#d9dcda 1px solid"></select>
+            <select id="c" name="sh_city"  class="am-input-sm weui_select"  style="display:block; width:100%;margin-bottom:5px; border:#d9dcda 1px solid"></select>  
+            <select id="d" name="sh_district"   class="am-input-sm weui_select" style="display:block; width:100%;margin-bottom:5px; border:#d9dcda 1px solid"></select>            
+        </div>        
+        <div class="weui_dialog_ft">
+            <a href="javascript:;" id="sh_city_bt_cancel" class="weui_btn_dialog default">取消</a>
+            <a href="javascript:;" id="sh_city_bt_confirm" class="weui_btn_dialog primary">确定</a>
+        </div>
+    </div>
+</div>  
+<script type="text/javascript">
+
+	$("#sh_city").click(function(){ 
+		$("#div_sh_city").show();
+	});						   
+	$("#sh_city_bt_cancel").click(function(){ 
+		$("#div_sh_city").hide();
+	});
+	$("#sh_city_bt_confirm").click(function(){ 
+		$("#div_sh_city").hide();
+		var p_c_d = $("#p").val() + '_' + $("#c").val() + '_' + $("#d").val();
+		location.href = '{php echo $this->createMobileUrl('JobList', array('cid' => $cid, 'payroll' => $query_payroll));}&positiontype='+p_c_d;
+	});	
+/*	
+$(document).ready(function(){	
+});*/
+require(['jquery', 'district'], function($, d){
+	$(function(){
+		d.render(
+			{province: $('#p')[0], city: $('#c')[0], district: $('#d')[0]},
+			{province: '{$sh_p}', city: '{$sh_c}', district: '{$sh_d}'},
+			{withTitle: true}
+		);
+	});
+});
+</script>
+<div data-am-widget="list_news" class="am-list-news am-list-news-default" style="margin: 0">
+    <ul class="am-list" id="continue_jobs">
+        {loop $job_lists $job}
+        <li class="am-g am-list-item-desced" style="padding-left: 1rem">
+            <a href="{php echo $this->createMobileUrl('JobShow', array('job_id' => $job['id']));}" class="am-list-item-hd ">
+                {$job['title']}&nbsp;<font color="red">{$config['payroll'][$job['payroll']]}</font>
+            </a>
+            <div class="am-list-item-text" style="font-size: 1.4rem">
+                {$companys[$job['mid']]['name']}
+                {if $companys[$job['mid']]['isauth'] == 0}
+                <span class="am-badge am-badge-default">未认证</span>
+                {else}
+                <span class="am-badge am-badge-success">已认证</span>
+                {/if}
+            </div>
+            {if $job['welfare']}
+            <div class="am-list-item-text" style="max-height: 8.4rem;padding-bottom:0.2rem">
+                {loop $job['welfare'] $key $welfare}
+                <span type="button" class="am-btn am-btn-default am-btn-xs am-radius" style="background-color: #FFF;padding: 0.4rem;margin: 2px">{$config['welfare'][$welfare]}</span>
+                {/loop}
+            </div>
+            {/if}
+            <div class="am-list-item-text" style="font-size: 1rem">
+                &nbsp;&nbsp;最后更新：{php echo date('Y-m-d H:i', $job['updatetime']=='0000-00-00 00:00:00'?$job['dateline']:strtotime($job['updatetime']));}
+                &nbsp;&nbsp;<span style="color:#ff0000;">{$job['views']}</span>人浏览
+            </div>            
+            
+        </li>
+        {/loop}
+        
+              
+    </ul>
+    <ul class="am-list" id="continue_jobs_more">
+        <li class="am-g am-list-item-desced" style="padding-left: 1rem">
+            <div style="text-align: center;padding: 10px; display:none">
+                <a id="loading" style="color: #9fa0a0;display: block; text-align: center; font-size: 13px !important;">加载中，请稍后...</a>
+            </div>  
+            <div class="loading-more" id="more" style="display:none">
+              <a href="" class="pro-more">查看更多</a>
+            </div>         
+        </li>
+    </ul>    
+</div>
+
+
+    <script>
+        wx.ready(function () {
+            sharedata = {
+                title: "{$_W['mobile']['share']['zhao_title']}",
+                desc: "{$_W['mobile']['share']['zhao_desc']}",
+                link: "{$_W['siteroot']}app/{php echo $this->createMobileUrl('JobList').$this->get_share_whoid();}",
+                imgUrl: "{php echo $this->get_rencai_pic($_W['mobile']['share']['zhao_pic']);}",
+                success: function(){
+	{if $_W['mobile']['share']['share_index_award_score'] > 0}				
+		$.post('{php echo $this->createMobileUrl('Shareaward', array());}', {share_item:'zhao'}, function(data) {
+				if (data.success == true) {
+					alert(data.msg);
+				} else {
+					alert(data.msg);
+				}
+			},"json")   
+	{/if} 					
+                },
+                cancel: function(){
+                }
+            };
+            wx.onMenuShareAppMessage(sharedata);
+            wx.onMenuShareTimeline(sharedata);
+        });
+    </script>
+{if 1}
+<script type="text/javascript">
+    $(function(){
+        var page = 2;
+
+        var bottomOffset = 0;
+        var lock = false;
+        $(window).scroll(function(){
+            if(page > 100) {
+                $("#loading").hide();
+				$("#continue_jobs_more").hide();
+                $("#more").hide();
+                return;
+            }
+            var $currentWindow = $(window);
+            var windowHeight   = $currentWindow.height()+700;
+            var scrollTop      = $currentWindow.scrollTop();
+            var docHeight      = $(document).height();
+            if ((bottomOffset + scrollTop) >= docHeight - windowHeight) {
+
+                if(lock) return;
+                lock = true;
+                $.ajax({
+                    url:"<?php echo $this->createMobileUrl('joblist');?>&page="+page,
+                    type:"get",
+                    success:function(data){
+						if (data == 'norec') {
+							page = 200;
+							lock = true;
+						} else {
+							$('#continue_jobs').append(data);
+							page++;
+							lock = false;						
+						}
+
+                    }
+                });
+            }
+        });
+    });
+</script>  
+{/if}  
+{template 'common_footer'}

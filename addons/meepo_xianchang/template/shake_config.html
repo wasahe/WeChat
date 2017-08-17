@@ -1,0 +1,98 @@
+{template 'common/header'}
+{template 'nav'}
+
+<form action="" method="post" class="form-horizontal" role="form">
+<input type="hidden" value="{$shake['id']}" class="form-control" name="shake_config_id">
+<div class="panel panel-default">
+	<div class="panel-heading">摇一摇设置</div>	
+	<div class="panel-body">
+	<div class="tab-content">
+	<div class="tab-pane  active" id="tab_basic">
+		<div class="panel panel-default">
+			<div class="panel-heading"></div>					
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style="color:red">*</span><span class="label label-success">网页标题</span></label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" id='title' name="title" class="form-control" value="{$shake['title']}" placeholder="网页标题"/>
+						<span class="help-block">网页标题</span>
+					</div>
+				</div>
+			   
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">跑道背景色</label>
+					<div class="col-sm-9">
+						{php echo tpl_form_field_color('paodao_color',$shake['paodao_color']);}
+						<span class="help-block">跑道背景色</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">品牌透明图:</label>
+					<div class="col-sm-9">
+						{php echo tpl_form_field_image('pp_img', $shake['pp_img']);}
+						<span class="help-block">品牌透明图 规格大小为400x400</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">微信背景图</label>
+					<div class="col-sm-9">
+						{php echo tpl_form_field_image('app_bg', $shake['app_bg']);}
+						<span class="help-block">品牌透明图 规格大小为400x400</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2  control-label">是否准许重复中奖</label>
+					<div class="col-sm-9 ">
+						<label class="radio-inline">
+							<input type="radio" name="award_again" value="1" id="show_time_0" {if $shake['award_again'] == '1'}checked="true"{/if} > 准许
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="award_again" value="2" id="show_time_1"  {if $shake['award_again'] == '2'}checked="true"{/if} >不准许
+						</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"> 摇一摇音效</label>
+					<div class="col-sm-9">
+						{php echo tpl_form_field_audio('shake_music', $shake['shake_music']);}
+						<span class="help-block"> 摇一摇音效 最好用外链 格式mp3</span>
+					</div>
+				</div>
+				<div class="form-group">
+									<label class="col-xs-12 col-sm-3 col-md-2  control-label">预备时间:</label>
+									<div class="col-sm-9 ">
+										<div class="input-group">
+											<input type="text" name="ready_time"  class="form-control" value="{$shake['ready_time']}">
+											<span class="input-group-addon">秒</span>
+										</div>
+									</div>
+				</div>
+				<div class="form-group">
+									<label class="col-xs-12 col-sm-3 col-md-2  control-label">结束点数</label>
+									<div class="col-sm-9 ">
+										<div class="input-group">
+											<input type="text" name="point"  class="form-control" value="{$shake['point']}">
+											<span class="input-group-addon">点</span>
+										</div>
+									</div>
+				</div>
+				<div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">加油口号</label>
+					<div class="col-sm-9 ">
+					<textarea style="height:200px;" class="form-control" name="slogan" id="slogan" cols="70">{$shake['slogan']}</textarea>
+                    <span class="help-block">加油口号隔开 每条口号请以#号</span>
+					</div>
+                </div>
+		<div class="form-group col-sm-12">
+			<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+			<input type="hidden" name="token" value="{$_W['token']}" />
+		</div>
+
+	</div>
+	</div>
+	</div>
+	</div>
+
+	</form>
+
+{template 'common/footer'}

@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com" versionCode="0.6">
+	<application setting="true">
+		<name><![CDATA[新版会员中心]]></name>
+		<identifie><![CDATA[sea_centerall]]></identifie>
+		<version><![CDATA[1.0.1]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[新版会员中心]]></ability>
+		<description><![CDATA[新版会员中心]]></description>
+		<author><![CDATA[微赞]]></author>
+		<url><![CDATA[http://www.012wz.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+			<message type="text" />
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+		<card embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="会员中心入口" do="index" state="" direct="false" />
+		</cover>
+		<menu>
+			<entry title="会员中心管理" do="manage" state="" direct="false" />
+			<entry title="幻灯片管理" do="adv" state="" direct="false" />
+		</menu>
+	</bindings>
+	<install><![CDATA[CREATE TABLE IF NOT EXISTS `ims_sea_centerall_adv` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `thumb` varchar(255) NOT NULL,
+  `link` varchar(255) NOT NULL DEFAULT '',
+  `enabled` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `displayorder` int(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_sea_centerall_manus` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `thumb` varchar(255) NOT NULL,
+  `link` varchar(255) NOT NULL DEFAULT '',
+  `enabled` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `displayorder` int(10) NOT NULL DEFAULT '0',
+  `fontsize` int(10) NOT NULL DEFAULT '18',
+  `color` varchar(20) NOT NULL DEFAULT '#333333',
+  `imgwidth` int(10) NOT NULL DEFAULT '40',
+  `imgheight` int(10) NOT NULL DEFAULT '40',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+]]></install>
+	<uninstall><![CDATA[DROP TABLE IF EXISTS `ims_sea_centerall_adv`;
+DROP TABLE IF EXISTS `ims_sea_centerall_manus`;
+]]></uninstall>
+	<upgrade><![CDATA[upgrade.php]]></upgrade>
+</manifest>

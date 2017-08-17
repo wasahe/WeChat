@@ -1,0 +1,158 @@
+{template 'header'}
+<body ontouchstart="" class="platform_mobile">
+<div class="qsc-alert" style="display: none;">
+<i class="info-base64"></i><span></span>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-white icon-loading-base64"><i class="icon-white icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading-new">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-loading-base64"><i class="icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<div class="content top bottom">
+<div class="qsc-list-group ajax-loading" data-target="J_page_list_tpl">
+<a href="/page/detail/Three days" class="list-item first">
+<span>何为三个工作日？</span>
+<label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+<a href="{php echo $this->createMobileUrl('centerhp',array('id'=>'1'))}" class="list-item">
+<span>收不到验证码怎么办</span>
+<label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+<a href="/page/detail/what-is-zhongchou" class="list-item">
+<span>什么是众筹？</span>
+<label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+<a href="/page/detail/xuanzemoban－faq" class="list-item">
+<span>我的筹款适合哪种类型</span>
+<label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+<a href="/page/detail/what-is-qingsongchou" class="list-item">
+<span>轻松筹是什么？</span>
+<label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+<a href="/page/detail/faqi－faq" class="list-item">
+<span>如何在电脑上发起众筹项目？</span>
+<label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+<a href="/page/detail/publish-project" class="list-item">
+<span>如何在微信公众号发起众筹项目？</span>
+<label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+<a href="/page/detail/question-fee" class="list-item">
+<span>项目成功后，会收取费用吗</span>
+<label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+<a href="/page/detail/question-project-manage" class="list-item">
+<span>项目发起后还能够修改吗</span>
+<label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+<a href="/page/detail/friend-support" class="list-item">
+<span>如何让好友来支持我发起的项目？</span>
+<label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+<a href="/page/detail/Refund" class="list-item">
+<span>项目失败后，多长时间退款？</span>
+<label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+<a href="/page/detail/browse" class="list-item">
+<span>为什么我的项目别人看不到</span>
+<label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+<a href="/page/detail/Upper limit" class="list-item">
+<span>目标金额达到，是否可以继续支持？</span>
+<label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+<a href="/page/detail/Withdraw cash" class="list-item">
+<span>项目已成功，但未到时间，能否提前提现？</span>
+<label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+<a href="/page/detail/Change" class="list-item">
+<span>注册的手机号能否变更？</span>
+<label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+<a href="/page/detail/project-success-failure" class="list-item">
+<span>什么叫项目成功和项目失败？</span>
+<label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+<a href="/page/detail/xianxiafukuan－faq" class="list-item">
+<span>线下支付是什么意思</span>
+<label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+<a href="/page/detail/edit-project" class="list-item">
+<span>项目发布后，是否还能修改编辑？</span>
+<label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+<a href="/page/detail/delete-project" class="list-item">
+<span>如何删除我的项目？</span>
+<label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+<a href="/page/detail/yue－faq" class="list-item">
+<span>金额达到了为何钱包余额为0</span>
+<label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+<div class="mod-project-support">
+     <a href="/page/detail/zhifu－faq" class="list-item">         <span>支付成功后筹款金额没有增长</span>         <label>             <i class="icon icon-arrow-right"></i>         </label>     </a>      <a href="/page/detail/support-project" class="list-item">         <span>如果我看好一个项目，怎么支持？</span>         <label>             <i class="icon icon-arrow-right"></i>         </label>     </a>      <a href="/page/detail/Payment" class="list-item">         <span>为什么会提示支付失败</span>         <label>             <i class="icon icon-arrow-right"></i>         </label>     </a>      <a href="/page/detail/cancel-support" class="list-item">         <span>支持过后，可以取消支持吗？</span>         <label>             <i class="icon icon-arrow-right"></i>         </label>     </a>      <a href="/page/detail/question-withdraw" class="list-item">         <span>众筹成功后钱存在哪里</span>         <label>             <i class="icon icon-arrow-right"></i>         </label>     </a>      <a href="/page/detail/withdraw-application" class="list-item">         <span>项目成功后款项怎么提取？</span>         <label>             <i class="icon icon-arrow-right"></i>         </label>     </a>      <a href="/page/detail/procedure-fee" class="list-item">         <span>关于2%的手续费</span>         <label>             <i class="icon icon-arrow-right"></i>         </label>     </a>      <a href="/page/detail/question-project-refund" class="list-item">         <span>项目众筹失败后资金去了哪里</span>         <label>             <i class="icon icon-arrow-right"></i>         </label>     </a>      <a href="/page/detail/project-failure" class="list-item">         <span>项目失败，支持的款项怎么处理？</span>         <label>             <i class="icon icon-arrow-right"></i>         </label>     </a>      <a href="/page/detail/withdraw-time" class="list-item">         <span>申请提现多要多久？</span>         <label>             <i class="icon icon-arrow-right"></i>         </label>     </a>      <a href="/page/detail/yuanlutuihui－faq" class="list-item">         <span>什么叫原路退回</span>         <label>             <i class="icon icon-arrow-right"></i>         </label>     </a>      <a href="/page/detail/shaoqianle－faq" class="list-item">         <span>提款金额为何少于众筹总金额</span>         <label>             <i class="icon icon-arrow-right"></i>         </label>     </a>      <a href="/page/detail/message" class="list-item">         <span>项目的状态变更有消息提醒吗？</span>         <label>             <i class="icon icon-arrow-right"></i>         </label>     </a>      <a href="/page/detail/tixia-faq" class="list-item">         <span>如何提取众筹来的钱</span>         <label>             <i class="icon icon-arrow-right"></i>         </label>     </a>      <a href="/page/detail/add-friend" class="list-item">         <span>如何添加好友</span>         <label>             <i class="icon icon-arrow-right"></i>         </label>     </a>      <a href="/page/detail/why-not-project-in-home" class="list-item">         <span>项目推荐机制</span>         <label>             <i class="icon icon-arrow-right"></i>         </label>     </a>      <a href="/page/detail/project-specification" class="list-item">         <span>项目规范</span>         <label>             <i class="icon icon-arrow-right"></i>         </label>     </a> <div class="loading" id="loading"><a href="http://m.qschou.com/page/index/3" data-remote="true" onclick="return false;"><i></i>加载更多</a></div>
+</div>
+</div>
+</div>
+<script type="text/template" id="J_page_list_tpl">
+    <a href="/page/detail/${urlAlias}" class="list-item">
+        <span>${title}</span>
+        <label>
+            <i class="icon icon-arrow-right"></i>
+        </label>
+    </a>
+</script> 
+{template 'footer'}
+<script type="text/javascript" src="../addons/water_o2o/template/js/main.min.js"></script>
+
+</body></html>

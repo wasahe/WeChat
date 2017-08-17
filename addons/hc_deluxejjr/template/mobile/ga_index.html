@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+<head>
+<title>销售列表</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../addons/hc_deluxejjr/style/css/style.css?r={php echo time()}"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" />
+<meta name="format-detection" content="telephone=no,address=no,email=no" />
+<meta name="mobileOptimized" content="width" />
+<meta name="handheldFriendly" content="true" />
+<meta http-equiv="Cache-Control" content="max-age=0" />
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+</head>
+<style>
+.pagination li{
+	margin-left:10px;
+	background-color: #fa614b;
+	display: inline-block;
+	padding: 0 5px;
+	border-radius: 5px;
+	width:14%;
+}
+.pagination li .pager-nav{
+color: #fff;
+
+}
+.my-client-list ul li:first-child{
+	width:15%;
+}
+.my-client-list ul li{
+	width:20%;
+}
+.my-client-list ul li:nth-child(3){
+	width:20%;
+}
+.my-client-list ul li:last-child{
+	width:15%;
+}
+</style>
+<body>
+
+
+<section class="main animated fadeInDown">
+	<div class="main-box">
+		<div class="client my-client-title">
+			<ul class="rb-row fn-clear">
+				
+				<li style="width:32%;">姓名</li>
+				<li style="width:33%;">电话</li>
+				<li style="width:30%;">注册时间</li>
+			</ul>
+		</div>
+		<div class="client my-client-list">
+			{loop $customer $row}
+				<a class="rb-row my-client">
+					<ul class="fn-clear">
+						<li style="{if !empty($selected)}text-align:left;{/if} width:32%;">
+							{if !empty($selected)}
+								<input type="radio" name="allot" value="{$row['id']}"/>
+							{/if}{$row['realname']}
+						</li>
+						<li style="width:33%;">{$row['mobile']}</li>
+						<li style="width:30%;">
+							{php echo date('Y-m-d',$row['createtime'])}
+						</li>
+					</ul>
+				</a>
+			{/loop}
+			{if !empty($selected)}
+			<input type="submit" onclick="allot();" value="分配" class="btn btn-primary"/>
+			{else}
+				<input type="submit" onclick="history.go(-1);" value="返回" class="btn btn-primary"/>
+			{/if}
+			<ul class="fn-clear">
+				{$pager}
+			</ul>
+		</div>
+		
+	</div>
+</section>
+
+<footer class="foot"><a>&copy; {$_W['account']['name']}</a></footer>
+
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+<script src="../addons/hc_deluxejjr/style/js/com.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+{php $signPackage=$_W['account']['jssdkconfig'];}	
+<script>
+wx.config({
+	debug: false,   
+	appId: '<?php echo $signPackage["appId"];?>',
+	timestamp: '<?php echo $signPackage["timestamp"];?>',
+	nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+	signature: '<?php echo $signPackage["signature"];?>',
+	jsApiList: ['checkJsApi','onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo',]
+});
+
+wx.ready(function () {
+	var shareData = {
+		title: "经纪人中心—全民经纪人豪华版2.0",
+		desc: "调动你的社交关系，推荐客源，获丰厚佣金！",
+		link: "{php echo $_W['siteroot'].'app/'.$this->createMobileUrl('index',array('id'=>$id))}",
+		imgUrl: "{$_W['siteroot']}addons/hc_deluxejjr/icon.jpg",
+		trigger: function (res) {},
+		complete: function (res) {},
+		success: function (res) {
+             TopBox.alert("分享后成功,等着收佣金吧!");
+			},
+		cancel: function (res) {
+             
+		},
+		fail: function (res) {}
+	};
+	wx.onMenuShareAppMessage(shareData);
+	wx.onMenuShareQQ(shareData);
+	wx.onMenuShareWeibo(shareData);
+	wx.onMenuShareTimeline(shareData);
+});
+</script>
+<script type="text/javascript">
+	function allot(){
+		var id = document.getElementsByName('allot');
+		var flag = false;
+		for (var i=0; i<id.length; i++){
+			if(id[i].checked == true){
+				id = id[i].value;
+				flag = true;
+				break;
+			}
+		}
+		if(flag){
+			
+		}else{
+			alert('您还未选择分配给谁！');
+			return;
+		}
+		if(confirm('确定分配给TA？')){
+			window.location.href = "{php echo $this->createMobileUrl('acmanager',array('op'=>'allot', 'selected'=>$selected), true)}&id="+id+";";
+		}
+	}
+	
+</script>
+</body>
+</html>

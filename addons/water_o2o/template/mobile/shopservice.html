@@ -1,0 +1,82 @@
+{template 'header'}
+<body ontouchstart="" class="platform_mobile">
+	<div class="qsc-alert" style="display: none;">
+		<i class="info-base64"></i><span></span>
+	</div>
+<div class="content-fixed top-inline" style="margin-top: 0px;">
+	<div class="lib-banner swiper-container">
+		<div class="swiper-wrapper">
+			<div class="swiper-slide swiper-slide-visible swiper-slide-active">
+				<a href="" title="0"><img src="{$_W['attachurl']}{$system['banner1']}"></a>
+			</div>
+			<div class="swiper-slide swiper-slide-visible">
+				<a href="" title="1"><img src="{$_W['attachurl']}{$system['banner2']}"></a>
+			</div>
+			<div class="swiper-slide swiper-slide-visible">
+				<a href="" title="2"><img src="{$_W['attachurl']}{$system['banner3']}"></a>
+			</div>
+		</div>
+		<div class="banner-pagination">
+			<span class="swiper-pagination-switch swiper-visible-switch swiper-active-switch"></span>
+			<span class="swiper-pagination-switch"></span>
+			<span class="swiper-pagination-switch"></span>		
+		</div>
+	</div>
+</div>	
+	<div class="content-main mod-project-detail top bottom" style="margin-top: 2px;">
+		<div class="mod-project-card funding">
+			<div class="mod-project-card_header clearfix">
+				<div class="mod-project-card_header__user">
+					<h2>{$service['sname']}</h2>
+				</div>
+				<div class="mod-project-card_content__status">
+					<span>金额<strong>¥{$service['sprice']}</strong></span> <span>服务时长<strong>{$service['sminute']}</strong>分钟</span>
+					<span>服务次数<strong>56</strong>次
+					</span>
+				</div>
+			</div>
+			<div class="mod-project-card_content">
+				<div class="mod-project-card_content__detail view-body">
+					<h5>服务简介:</h5>
+					{$service['sdesc']}
+				</div>
+				<div class="mod-project-card_content__detail view-body">
+					<h5>服务内容:</h5>
+					{$service['scontent']}
+				</div>
+				<div class="mod-project-card_content__img clearfix">
+				<?php $simgs = unserialize($service['simgs']);?>
+					{loop $simgs $img}
+					<a href="javascript:void(0);" class="fancybox">
+						<img class="lazy-load" data-original="{$_W['attachurl']}{$img}"
+						src="$_W['attachurl']}{$img}"
+						width="31%" style="display: inline;">
+					</a>
+					{/loop}
+				</div>
+				<div class="mod-project-card_content__detail view-body">
+					<h5>预约须知:</h5>
+					{$service['syynotice']}
+				</div>
+				<div class="mod-project-card_content__detail view-body">
+					<h5>温馨提示:</h5>
+					{$service['sreminder']}
+				</div>							
+			</div>
+		</div>
+	</div>
+	<footer
+		class="qsc-bar bar-fixed bar-tab bar-support bar-173b952e-9720-4258-a660-2713dec5ecf9">
+		<span class="tab-item" id="btn-follow" data-url="">
+		 </span> <a href="{php echo $this->createMobileUrl('shopitem')}"
+			class="tab-item btn-support"><span>返回列表</span></a> <span
+			class="tab-item project-bar-share"></span>
+	</footer>
+
+	<div class="project-manage-modal"></div>
+	<form action="" method="post"></form>
+	<script type="text/javascript" src="../addons/water_o2o/template/js/project.min.js"></script>
+	<script type="text/javascript" src="../addons/water_o2o/template/js/index.min.js"></script>
+
+</body>
+</html>

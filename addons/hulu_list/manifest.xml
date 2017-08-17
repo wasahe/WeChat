@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com" versionCode="0.6">
+	<application setting="true">
+		<name><![CDATA[葫芦同城信息]]></name>
+		<identifie><![CDATA[hulu_list]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[葫芦同城信息]]></ability>
+		<description><![CDATA[葫芦同城信息]]></description>
+		<author><![CDATA[悟空源码论坛]]></author>
+		<url><![CDATA[http://www.012wz.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="封面" do="fengmian" />
+		</cover>
+		<rule>
+			<entry title="规则" do="guize" />
+		</rule>
+		<menu>
+			<entry title="所有信息" do="all" />
+			<entry title="招聘求职" do="job" />
+			<entry title="房屋租售" do="house" />
+			<entry title="二手交易" do="old" />
+			<entry title="车找人" do="chea" />
+			<entry title="人找车" do="chab" />
+			<entry title="临时工" do="work" />
+			<entry title="轮播设置" do="lunbo" />
+			<entry title="推广设置" do="tui" />
+			<entry title="页面设置" do="page" />
+		</menu>
+		<home><entry title="首页" do="shouye" /></home>
+		<profile><entry title="个人" do="geren" /></profile>
+		<shortcut><entry title="快捷" do="kuaijie" /></shortcut>
+		<function><entry title="独立" do="duli" /></function>
+	</bindings>
+	<install><![CDATA[DROP TABLE IF EXISTS `ims_hulu_list_code`;
+CREATE TABLE `ims_hulu_list_code` (
+  `cid` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) NOT NULL,
+  `codestart` int(10) NOT NULL,
+  `codeday` int(10) NOT NULL,
+  `codeonce` int(10) NOT NULL,
+  `imgone` text NOT NULL,
+  `imgtwo` text NOT NULL,
+  `imgthree` text NOT NULL,
+  `imgfour` text NOT NULL,
+  `imgfive` text NOT NULL,
+  `imgsix` text NOT NULL,
+  `codetime` varchar(100) NOT NULL,
+  `webtitle` text NOT NULL,
+  `follow` text NOT NULL,
+  `open` text NOT NULL,
+  PRIMARY KEY (`cid`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+DROP TABLE IF EXISTS `ims_hulu_list_info`;
+CREATE TABLE `ims_hulu_list_info` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) NOT NULL,
+  `openid` varchar(100) NOT NULL,
+  `nickname` varchar(100) NOT NULL,
+  `pid` int(10) unsigned NOT NULL DEFAULT '1',
+  `list` int(10) NOT NULL,
+  `jobfactory` text NOT NULL,
+  `jobname` varchar(100) NOT NULL,
+  `jobsalary` varchar(100) NOT NULL,
+  `jobaddress` text NOT NULL,
+  `jobcontent` text NOT NULL,
+  `housetype` varchar(100) NOT NULL,
+  `housename` varchar(100) NOT NULL,
+  `houseprice` varchar(100) NOT NULL,
+  `houseaddress` text NOT NULL,
+  `ershouname` varchar(100) NOT NULL,
+  `ershoupinpai` varchar(100) NOT NULL,
+  `ershounewor` varchar(100) NOT NULL,
+  `ershouprice` varchar(100) NOT NULL,
+  `chelist` int(10) NOT NULL,
+  `chestart` varchar(100) NOT NULL,
+  `cheend` varchar(100) NOT NULL,
+  `cheperson` int(10) NOT NULL,
+  `chechepai` varchar(100) NOT NULL,
+  `linshiname` varchar(100) NOT NULL,
+  `linshispecial` text NOT NULL,
+  `tel` varchar(100) NOT NULL,
+  `validity` varchar(100) NOT NULL,
+  `time` varchar(100) NOT NULL,
+  `ip` varchar(100) NOT NULL,
+  `view` int(10) unsigned NOT NULL DEFAULT '0',
+  `container` varchar(100) NOT NULL,
+  `os` varchar(100) NOT NULL,
+  `zid` int(10) NOT NULL,
+  `zendtime` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+DROP TABLE IF EXISTS `ims_hulu_list_ip`;
+CREATE TABLE `ims_hulu_list_ip` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `vid` int(10) NOT NULL,
+  `list` int(10) NOT NULL,
+  `aopenid` varchar(100) NOT NULL,
+  `anickname` varchar(100) NOT NULL,
+  `bopenid` varchar(100) NOT NULL,
+  `bnickname` varchar(100) NOT NULL,
+  `ip` varchar(100) NOT NULL,
+  `time` varchar(100) NOT NULL,
+  `container` varchar(100) NOT NULL,
+  `os` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+DROP TABLE IF EXISTS `ims_hulu_list_lunbo`;
+CREATE TABLE `ims_hulu_list_lunbo` (
+  `lid` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) NOT NULL,
+  `linkurl` text NOT NULL,
+  `linkimg` text NOT NULL,
+  `linkalt` text NOT NULL,
+  `linktime` varchar(100) NOT NULL,
+  PRIMARY KEY (`lid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

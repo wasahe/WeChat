@@ -1,0 +1,149 @@
+html, body {
+	overflow-x:hidden;
+}
+html {
+	-webkit-text-size-adjust:none;
+}
+body,p,h1{ margin:0px; padding:0px;}
+body {
+	color: #FFF;
+	font: 22px/1.6em "微软雅黑", "Lucida Grande", "Lucida Sans", Helvetica, Arial, Sans;
+	text-align:center;
+	background-color: #000;
+}
+.clear{ clear:both;}
+img{border:0;}
+a{
+	text-decoration: none;
+}
+
+h1{
+	font-size: 36px;
+	text-align: center;
+	font-weight: normal;
+}
+
+.fw700{ font-weight:700;}
+
+/*字体颜色*/
+.white{ color:#FFF}
+.purple{ color:#F0F}
+
+.cyan{ color:#0FF}
+.blue{ color:#00F;}
+.green{ color:#0F0;}
+.yellow{ color:#FF0;}
+.pink{ color:#F0F;}
+.qingse{ color:#3FF;}
+.red{ color:#F00;}
+.orange{color:#F90}
+
+.col_meih{ color:#FF0054;}
+.col_green{ color:#00F80C;}
+.col_green2{ color:#00FFB4;}
+.col_green3{ color:#00FC5F;}
+.col_green4{ color:#94FC00;}
+.col_red{ color:#FC0000;}
+.col_red2{ color:#B50000;}
+.col_red3{ color:#FF3600;}
+.col_red4{ color:#FF8A00;}
+.col_huang{ color:#EAFF00;}
+.col_huang2{color:#FFAE00;}
+.col_whi{color:#fff;}
+.col_whi2{color:#A9A9A9;}
+.col_ka{color:#DD895C;}
+.col_lan{color:#000CFF;}
+.col_lan2{color:#00FFFC;}
+.col_zi{color:#BF81EA;}
+
+.green{color:#00F80C;}
+.green2{color:#A2FF00;}
+.green3{color:#00FF96;}
+.red{color:#FF0000;}
+.red1{color:#FF004E;}
+.red2{color:#FF4E00;}
+.red3{color:#FF5400;}
+.red4{color:#FF7E00;}
+.blue{color:#0054FF;}
+.blue2{color:#005AAA;}
+.blue3{color:#007DC5;}
+.blue4{color:#00A0E3;}
+.blue5{color:#00C2FE;}
+.blue6{color:#00EAFF;}
+.grey{color:#AFAFAF;}
+.yellow{color:#FFF600;}
+.yellow1{color:#FFFD67;}
+.yellow2{color:#FFA800;}
+.yellow3{color:#FFC05E;}
+.yellow4{color:#FFE381;}
+.pink{color:#FF0066;}
+.pink2{color:#FF3988;}
+.pink3{color:#FF8CCA;}
+.pink4{color:#FFC9F0;}
+.pink5{color:#FFDDEF;}
+.Purple{color:#8400FF;}
+.Purple2{color:#B267FF;}
+.Purple3{color:#C52EFD;}
+.brown{color:#DD895C;}
+
+/*字体大小*/
+.fz03em{font-size: 0.3em;}
+.fz04em{font-size: 0.4em;}
+.fz05em{font-size: 0.5em;}
+.fz65em{font-size: 0.65em;}
+.fz75em{font-size: 0.75em;}
+.fz80em{font-size: 0.8em;}
+.fz85em{font-size: 0.85em;}
+.fz90em{font-size: 0.9em;}
+.fz95em{font-size: 0.95em;}
+.fz1em{font-size: 1em;}
+.fz12em{font-size: 1.2em;}
+.fz13em{font-size: 1.3em;}
+.fz15em{font-size: 1.5em;}
+.fz2em{font-size: 2em;}
+.fz25em{font-size: 2.5em;}
+.fz3em{font-size: 3em;}
+
+/*顶部间距*/
+.pt10{ padding-top:10px;}
+.pt20{ padding-top:20px;}
+.pt30{padding-top:30px;}
+
+/*行高*/
+.lh12em{ line-height:1.2em;}
+.lh15em{ line-height:1.5em;}
+.lh18em{ line-height:1.8em;}
+.lh2em{ line-height:2em;}
+
+/*文字对齐*/
+.tl{ text-align:left;}
+.tc{text-align: center;}
+.tr{text-align: right;padding-right:10px;}
+
+/*字体类型*/
+.font-kaiti{
+	font-family: "楷体";
+}
+.font-heiti{
+	font-family: "黑体";
+}
+.font-songti{
+	font-family: "宋体";
+}
+.font-yahei{
+	font-family: "微软雅黑";
+}
+
+.btnPink {
+    background: none repeat scroll 0 0 rgba(51, 255, 0, 0.63);
+    border-radius: 0.9em;
+    color: #FFFFFF !important;
+    display: inline-block;
+    font-size: 1.1em;
+    line-height: 1.5em;
+    margin: 0 3%;
+    text-align: center;
+    text-decoration: none;
+    width: 51%;
+}
+

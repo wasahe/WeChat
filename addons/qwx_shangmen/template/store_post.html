@@ -1,0 +1,137 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li {if $op == 'display'}class="active"{/if}><a href="{php echo $this->createWebUrl('store', array('op' => 'display'))}">门店管理</a></li>
+	<li {if $op == 'post'}class="active"{/if}><a href="{php echo $this->createWebUrl('store', array('op' => 'post'))}">创建门店</a></li>
+</ul>
+
+<!-- 添加回复内容 -->
+<div class="main">
+	<form class="form-horizontal form" id="form2" action="" method="post">
+		<div class="panel panel-success">
+			<div class="panel-heading">
+				编辑门店：
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">门店名称</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="jform[title]" id="title" class="form-control " value="{$item['title']}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">门店缩略图</label>
+					<div class="col-sm-9 col-xs-12">
+						{php echo tpl_form_field_image('jform[photo]',$item['photo']);}
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">所在区域</label>
+					<div class="col-sm-9 col-xs-12">
+						{php echo tpl_form_field_district('area_input', array('province' => $item['province'], 'city' => $item['city'], 'district' => $item['district'] ));}
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">详细地址</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="jform[address]" id="address" class="form-control " value="{$item['address']}" />
+					</div>
+				</div>
+                
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">地理坐标</label>
+					<div class="col-sm-9 col-xs-12">
+						{php echo tpl_form_field_coordinate('baidumap', $item)}
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">客服电话</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="jform[tel]" id="tel" class="form-control " value="{$item['tel']}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">联系人</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="jform[contact_name]" id="contact_name" class="form-control " value="{$item['contact_name']}" />
+					</div>
+				</div>
+
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">上门费用设置</label>
+					<div class="col-sm-3">
+                        <div class="input-group">
+                        	<span class="input-group-addon" style="display:none"></span>
+                            <input type="text" name="jform[post_daojia_fee]" placeholder="" value="{$item['post_daojia_fee']}" class="form-control"/>
+                            <span class="input-group-addon">元</span>
+                        </div>
+					</div>
+					<div class="col-sm-5">
+                        <div class="input-group">
+                            <span class="input-group-addon">订单总额达到</span>
+                            <input type="text" name="jform[free_daojia_fee_reach]" placeholder="" value="{$item['free_daojia_fee_reach']}" class="form-control"/>
+                            <span class="input-group-addon">元时免上门费</span>   
+                        </div>
+					</div>                    
+				</div>
+                
+             
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">预约时间设置</label>
+					<div class="col-sm-3">
+                        <div class="input-group">
+                        	<span class="input-group-addon" style="display:">当前时间</span>
+                            <input title="选择{php echo $this->getFieldsLabel('staff_name');}时加多少分钟后才可预约" type="text" name="jform[yuyue_after_minutes]" placeholder="" value="{$item['yuyue_after_minutes']}" class="form-control"/>
+                            <span class="input-group-addon">分钟后</span>
+                        </div>
+					</div>
+					<div class="col-sm-5">
+                        <div class="input-group">
+                            <span class="input-group-addon" title="选择{php echo $this->getFieldsLabel('staff_name');}时的起始和结束时间">预约有效时段 从</span>
+                            <select class="form-control" name="jform[begin_hour]" style="width:150px">
+                            <option value="0">请选择</option>
+                            {loop range(0,23) $hour}
+                                <option value="{$hour}" {if $item['begin_hour']==$hour}selected="selected"{/if}>{$hour}</option>
+                            {/loop}
+                            </select>
+                            <span class="input-group-addon">点 到</span>
+                            <select class="form-control" name="jform[end_hour]" style="width:150px">
+                            <option value="0">请选择</option>
+                            {loop range(0,23) $hour}
+                                <option value="{$hour}" {if $item['end_hour']==$hour}selected="selected"{/if}>{$hour}</option>
+                            {/loop}
+                            </select>
+							<span class="input-group-addon">点</span>
+                        </div>
+					</div>                    
+				</div>
+            
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">是否上架</label>
+					<div class="col-sm-9 col-xs-12">
+						<label for="isshow1" class="radio-inline"><input type="radio" name="jform[status]" value="1" id="isshow1" {if $item['status'] == 1}checked="true"{/if} /> 是</label>
+						&nbsp;&nbsp;&nbsp;
+						<label for="isshow2" class="radio-inline"><input type="radio" name="jform[status]" value="0" id="isshow2"  {if $item['status'] == 0}checked="true"{/if} /> 否</label>
+					</div>
+				</div>
+				<input type="hidden" name="id" value="{$item['id']}" />
+			</div>
+
+
+		</div>
+
+		<div class="form-group col-sm-12">
+			<input name="token" type="hidden" value="{$_W['token']}" />
+			<input type="submit" class="btn btn-primary col-lg-1" name="submit" value="提交" />
+		</div>
+	</form>
+</div>
+<script>
+    require(['util','jquery'], function(u,$){
+    	// u.editor($('#jifa')[0]);
+    });
+</script>

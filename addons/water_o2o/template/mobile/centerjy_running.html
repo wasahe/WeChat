@@ -1,0 +1,66 @@
+{template 'header'}
+<body ontouchstart="" class="platform_mobile">
+<div class="qsc-alert" style="display: none;">
+<i class="info-base64"></i><span></span>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-white icon-loading-base64"><i class="icon-white icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading-new">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-loading-base64"><i class="icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<header class="qsc-tab bar-fixed wallet-tab">
+<ul class="tab-item nav-tabs-green" role="tablist">
+<li role="presentation" >
+<a href="{php echo $this->createMobileUrl('centerjy',array('type'=>'all'))}">全部</a>
+</li>
+<li role="presentation" class="active">
+<a href="{php echo $this->createMobileUrl('centerjy',array('type'=>'running'))}">进行中</a>
+</li>
+<li role="presentation" class="tabs-more">
+<a href="javascript:void(0);">分类<i class="icon"></i></a>
+</li>
+</ul>
+</header>
+<div class="modal qsc-modal tab-subtab" id="modal-tab-subtab" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog top">
+<ul class="tab-item clearfix" role="tablist">
+<li role="presentation">
+<a href="{php echo $this->createMobileUrl('centerjy',array('type'=>'all'))}" role="tab">筹款收支</a>
+</li>
+<li role="presentation">
+<a href="{php echo $this->createMobileUrl('centerjy',array('type'=>'all'))}" role="tab">线下收支</a>
+</li>
+<li role="presentation">
+<a href="{php echo $this->createMobileUrl('centerjy',array('type'=>'all'))}" role="tab">提现</a>
+</li>
+<li role="presentation">
+<a href="{php echo $this->createMobileUrl('centerjy',array('type'=>'all'))}" role="tab">活动奖励</a>
+</li>
+<li role="presentation">
+<a href="{php echo $this->createMobileUrl('centerjy',array('type'=>'all'))}" role="tab">余额消费</a>
+</li>
+<li role="presentation">
+<a href="{php echo $this->createMobileUrl('centerjy',array('type'=>'all'))}" role="tab">其他</a>
+</li>
+</ul>
+</div>
+</div>
+<div class="content bottom mod-user-wallet tab-content">
+<div role="tabpanel" class="tab-pane fade in active">
+<div class="mod-user-wallet_list">
+</div>
+</div>
+</div>
+{template 'footer'}
+<script type="text/javascript" src="../addons/water_o2o/template/js/user.min.js"></script>
+
+</body></html>

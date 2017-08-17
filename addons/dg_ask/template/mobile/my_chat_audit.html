@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="{TEMPLATE_PATH}/images/ux/iconfont.css" />
+		<link rel="stylesheet" href="{TEMPLATE_PATH}/css/animate.css" />
+		<link rel="stylesheet" href="{TEMPLATE_PATH}/css/style.css" />
+		<script type="text/javascript" src="{TEMPLATE_PATH}/js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="{TEMPLATE_PATH}/js/script.js" ></script>
+		<title>我的</title>
+		{php echo register_jssdk();}
+	</head>
+	<body>
+	<div class="main">
+       <div class="edit">
+       	  <div class="top tc">
+	      	 <div class="avatar"><img src="{$headimg}" width="60" height="60"></div>
+	      	 <p class="mt5">{$nickname}</p>
+       	  </div>
+       	  <div class="editItem">
+       	  	<ul class="reg">
+       	  		<li>
+       	  			{if $count==0 || $status==2}
+       	  			<h3><span class="fr f12 gray">名片正面照，字迹要清晰，小于2M</span>请上传名片</h3>
+       	  			{/if}
+       	  			<div class="box" style="padding: 20px;">
+       	  				{if $count==0}
+       	  				<div class="card">
+       	  					<span class="mid f18 gray" onclick="chooseImg()"><i class="iconfont">&#xe624;</i>上传照片</span>
+       	  				</div>
+       	  				{else}
+	       	  				{if $status==2}
+	       	  				<img id="imgurl" alt="" src="{$list[0]['imgurl']}" width="100%">
+	       	  				<div class="card">
+	       	  					<span class="mid f18 gray" onclick="chooseImg()"><i class="iconfont">&#xe624;</i>上传照片</span>
+	       	  				</div>
+	       	  				{else}
+	       	  				<img alt="" src="{$list[0]['imgurl']}" width="100%">
+	       	  				{/if}
+       	  				{/if}
+       	  			</div>
+       	  		</li>
+       	  		<li class="f">
+       	  			<div class="name">手机号</div>
+       	  			<div class="txt"><input style="inputStyle" placeholder="请输入11位手机号" id="phone" name="phone" value="{$list[0]['phone']}"></div>
+       	  		</li>
+       	  	</ul>
+       	  </div>
+       	  <div class="btn p15">
+       	  	{if $count>0}
+	       	  	{if $status==0}
+	       	  	<button>正在审核中...</button>
+	       	  	{else if $status==1}
+	       	  	<button>已认证</button>
+	       	  	{else}
+	       	  	<button id="cx" onclick="audit()">认证未通过,重新提交</button>
+	       	  	{/if}
+       	  	{else}
+       	  	<button onclick="audit()" id="audit">申请认证</button>
+       	  	{/if}
+       	  	<button id="wait" style="display:none;">正在审核中...</button>
+       	  </div>
+       </div>
+	</div>
+	<!--底部菜单 start-->
+	{template footer}
+	<!--底部菜单 start-->
+	</body>
+	<script>
+		//选择照片
+		function chooseImg() {
+			var images = {localIds:[],serverId:[]};
+			wx.chooseImage({
+			    count: 1, // 默认9
+			    sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+			    sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+			    success: function (res) {
+			       images.localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+			       var i = 0; var length = images.localIds.length;
+			       var upload = function() {
+				       wx.uploadImage({
+				    	    localId: images.localIds[i], // 需要上传的图片的本地ID，由chooseImage接口获得
+				    	    isShowProgressTips: 1, // 默认为1，显示进度提示
+				    	    success: function (res) {
+				    	    	images.serverId.push(res.serverId); // 返回图片的服务器端ID
+				    	    	var serverIds=images.serverId.join(',');
+				    	    	//如果还有照片，继续上传
+	                            i++;
+	                            if (i < length) {
+	                                upload();
+	                            }else{
+	                            	postimg(serverIds);
+	                            }
+				    	    }
+				    	});
+			       }
+			       upload();
+			    }
+			});
+		}
+		//保存照片
+		var imgurl="";
+		function postimg(serverIds){
+			var posturl = "{php echo $this->createMobileUrl('treg')}";
+	        $.getJSON(posturl,{"mediaids":serverIds}, function(result){
+	        	if(result.success==1){
+	        		$("#imgurl").hide();
+	        		$(".card").hide();
+					imgurl=result.imgurl.substring(0,result.imgurl.length-1);
+					$(".box").append("<img src='"+imgurl+"' width='100%'/>");
+	        	}else if(result.success==-2){
+	        		$(".result").show();
+	        	}
+	         });
+		}
+		//申请认证
+		function audit(){
+			var phone=$("#phone").val();
+			if(imgurl==""){alert("请上传照片！");return;}
+			else if(phone==""){alert("请输入手机号！");$("#phone").focus();return;}
+			else{
+				var posturl = location.href+"&submit=1";
+		        $.getJSON(posturl,{"imgurl":imgurl,"phone":phone}, function(result){
+		        	if(result.success==1){
+		        		$("#cx").hide();
+		        		$("#audit").hide();
+		        		$("#wait").show();
+		        	}else if(result.success==-1){
+		        		alert("提交失败！");
+		        	}
+		        });
+			}
+		}
+		</script>
+</html>

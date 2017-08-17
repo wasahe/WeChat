@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta content="telephone=no,email=no" name="format-detection" />
+    
+	<link href="../addons/hc_deluxejjr/style/css/Common21.css?rand=1" rel="stylesheet" type="text/css" />
+    <link href="../addons/hc_deluxejjr/style/css/Common1.css?rand=1" rel="stylesheet" type="text/css" />
+	<script src="../addons/hc_deluxejjr/style/js/jquery-1.4.4.min.js" type="text/javascript"></script>
+    <style type="text/css">
+        input
+        {
+            background: no-repeat 0 0 scroll ＃EEEEEE;
+            border: none;
+            outline: medium;
+        }
+    </style>
+    
+    <title>我的认证</title>
+    <style type="text/css">
+        body
+        {
+            max-width: 640px;
+            margin: 0px auto;
+            min-height: 100%;
+            background: #EEE;
+          
+        }
+        #content
+        {
+           
+        }
+        /*已验证*/
+        .authentication
+        {
+            background: #ffffff;
+            margin-bottom: 30px;
+            box-shadow: 1px 1px 2px #CCC;
+            width: 100%;
+            padding-top:47px;
+            margin-top:20px;
+             position:relative;
+        }
+        
+        .top_l
+        {
+            width: 200px;
+            margin: 0px auto;
+        }
+        
+        .top_l img
+        {
+            padding: 0px;
+            margin: 0 auto;
+            border-style: none;
+            width:200px;
+        }
+        .top_r
+        {
+            float: right;
+            margin: 5px;
+        }
+        .top_r div
+        {
+            font-size: 12px;
+            color: #747474;
+        }
+        .bottom_div
+        {
+            height: 40px;
+            clear: both;
+            width: 100%;
+            padding-bottom: 10px;
+            line-height: 40px;
+        }
+        .bottom_l
+        {
+            float: left;
+            margin-left: 15px;
+        }
+        .state
+        {
+            color: #156f49;
+            font-size: 14px;
+            margin-left: 5px;
+        }
+        /*已上传颜色*/
+        .status
+        {
+            font-size: .8em;
+            color: #e84236;
+            margin-left: 5px;
+        }
+        /*未上传颜色*/
+        .idcard
+        {
+            font-size: 14px;
+            margin-bottom: 3px;
+            color: #747474;
+        }
+        .cardcode
+        {
+            color: #666;
+            font-size: .8em;
+        }
+        .cardcode label
+        {
+            color: #999;
+        }
+        .bottom_r
+        {
+            float: right;
+            margin-right: 3px;
+            margin-top:6px;
+        }
+        .bottom_r img
+        {
+            width: 50px;
+            height: 30px;
+            margin: 0 auto;
+        }
+        
+        /*未验证*/
+        .company
+        {
+            background: #fff;
+            margin-bottom: 5px;
+            box-shadow: 1px 1px 2px #CCC;
+            width: 100%;
+            padding-top:47px;
+            position:relative;
+
+        }
+        .top_p
+        {
+            width: 180px;
+            margin: 0px auto;
+        }
+        .icon
+        {
+            width: 20px;
+            height: 20px;
+            float: right;
+            background: url("../addons/hc_deluxejjr/style/images/jt.png") no-repeat;
+            background-position: 1px 5px;
+        }
+        
+       
+        .fileup{
+            background-image: url(../addons/hc_deluxejjr/style/images/xico_043.png);
+            width:36%;
+            padding:8px 5px 15px 0px; 
+            background-size:100% 100%; 
+            background-repeat: no-repeat;
+            font-family: '微软雅黑'; 
+            color: #fff; 
+            text-align: center;
+            position:absolute;
+            top:-12px;
+        }
+    </style>
+
+</head>
+<body>
+    
+<div id="content">
+    <div class="authentication linkto link" hidevalue="身份证">
+        <div class="fileup">
+            身份证正面
+            <label class="flagcode" style="color: #fff;">
+            </label>
+        </div>
+        <div class="top_l">
+            <img src="{$profile['identity_cardurl']}" id="code" hidevalue="{if !empty($profile['identity_cardurl'])}2{/if}">
+        </div>
+        <div class="bottom_div">
+            <div class="bottom_l">
+                
+                <div class="cardcode">
+                    提交时间:<label>{if !empty($profile['cardurltime'])}{php echo date('Y-m-d H:i:s', $profile['cardurltime'])}{/if}
+                    </label>
+                </div>
+            </div>
+            <div class="bottom_r">
+                <img src="" id="linkid" /><span class="icon"></span>
+            </div>
+        </div>
+    </div>
+    <div class="company pincture link" hidevalue="头像">
+        <div class="fileup" style="">
+            身份证背面
+            <label class="flagcode" style="color: #fff;">
+            </label>
+        </div>
+        <div class="top_p">
+            <img src="{$profile['identity_headurl']}" id="pic" hidevalue="{if !empty($profile['identity_headurl'])}2{/if}" />
+        </div>
+        <div class="bottom_div">
+            <div class="bottom_l">
+                
+                <div class="cardcode">
+                    提交时间:<label>{if !empty($profile['headurltime'])}{php echo date('Y-m-d H:i:s', $profile['headurltime'])}{/if}
+                    </label>
+                </div>
+            </div>
+            <div class="bottom_r">
+                <img src="" id="linkp" /><span class="icon"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="clear: both; height: 60px;">
+</div>
+<div class="nav_btm">
+    <a id="home_rtn" href="{php echo $this->createMobileUrl('my')}" data-ajax="false">
+        <div class="nav_div1">
+            <img src="../addons/hc_deluxejjr/style/images/fanhui_xico_054.png" width="20" height="22" /></div>
+        <div class="nav_div2">
+            返回</div>
+    </a>
+</div>
+<style>
+.pop_tips{position:fixed;z-index:300;left:50%;top:20%;width:255px;overflow:hidden;margin-left:-122px;background-color:#fbfbfb;font-size:14px;text-align:center;-webkit-box-shadow:0 1px 2px rgba(0,0,0,0.3);}
+.pop_show h4{height:34px;font-size:16px;border-bottom:1px solid #ededed;line-height:34px;color:#252e32;}
+.pop_show .pop_info{font-size:16px;padding:20px 0;background-color:#fff;}
+.pop_show .pop_btns{text-align:center;display:-webkit-box;}
+.pop_show .pop_btns a{color:black;-webkit-box-flex:1;display:block;font-weight:700;height:40px;line-height:40px;border-top:1px solid #e2e1e0;-webkit-box-shadow:0 1px 1px #fff inset;}
+.pop_show .pop_btns a:last-child{border-left:1px solid #e2e1e0;-webkit-box-shadow:1px 0 1px #fff inset;}
+</style>
+
+<script src="../addons/hc_deluxejjr/style/js/com.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var exist = $("#code").attr("src"); //身份证路径
+        if (exist) {
+            //不是默认图片,则改变规格,控制图片大小
+            $(".top_l").css("width", "300px");
+            $("#code").css("width", "300px");
+            $("#linkid").attr("src", "../addons/hc_deluxejjr/style/images/icon_id_1.png"); //已上传下角图片
+            //            $(".flagcode").html("已上传").addClass("state");
+        } else {
+            $("#code").attr("src", "../addons/hc_deluxejjr/style/images/xico_044.png"); //未上传默认图片
+            //            $(".flagcode").html("未上传").addClass("status");
+            $("#linkid").attr("src", "../addons/hc_deluxejjr/style/images/icon_id_2.png");
+        }
+        var existpic = $("#pic").attr("src"); //照片路径
+        if (existpic) {
+            $(".top_p").css("width", "300px");
+            $("#pic").css("width", "300px");
+            $("#linkp").attr("src", "../addons/hc_deluxejjr/style/images/icon_company_1.png"); //已上传下角图片
+            //            $(".flagpic").html("已上传").addClass("state");
+        }
+        else {
+            $("#pic").attr("src", "../addons/hc_deluxejjr/style/images/xico_034.png"); //未上传默认图片
+            //            $(".flagpic").html("未上传").addClass("status")
+            $("#linkp").attr("src", "../addons/hc_deluxejjr/style/images/icon_company_2.png");
+        }
+
+
+        var path = "../addons/hc_deluxejjr/style/images/pic.jpg"
+        //身份证
+        $(".linkto").click(function () {
+            if ($("#code").attr("hidevalue") == 2) {
+                TopBox.alert("身份证正面审核已通过，无须再上传!")
+                return false;
+            }
+            else {
+                window.location.href = "{php echo $this->createMobileUrl('my', array('op'=>'identity', 'opp'=>'card'))}";
+            }
+        });
+        //头像
+        $(".pincture").click(function () {
+            if ($("#pic").attr("hidevalue") == 2) {
+                TopBox.alert("身份证背面审核已通过，无须再上传!")
+                return false;
+            } else {
+                window.location.href = "{php echo $this->createMobileUrl('my', array('op'=>'identity', 'opp'=>'head'))}";
+            }
+        });
+    });
+</script>
+</body>
+</html>

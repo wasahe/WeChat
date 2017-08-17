@@ -1,0 +1,58 @@
+{php $g_title='关注我的'}
+{php $menu='4'}
+{template 'common/header1'}
+{template 'common/menu'}
+		<div id="content" class="snap-content">
+			<div class="content half-bottom half-top">
+				<div class="home-tabs">
+					<a style="width:50%;" class="activate-tab-1 active-home-tab" href="{php echo $this->createMobileUrl('focus')}">关注我的</a>
+					<a style="width:50%;" class="activate-tab-2" href="{php echo $this->createMobileUrl('refeed')}">最近提问</a>
+					<div class="clear"></div>
+				</div>
+			</div>
+			<div class="content">
+				<div class="portfolio-filter">
+					<div id="append" class="portfolio-filter-wrapper" style="margin-left:5px;">
+						{if !empty($follows['list'])}
+						{loop $follows['list'] $follow}
+						{php $member = M('member')->getInfo($follow['openid'])}
+						{if empty($member)}
+							{php M('follow')->delete($follow['id'])}
+						{/if}
+						<div class="cat{$member['category_id']} all-cat gallery-filter-item" style="display: block;width:100%;">
+								<p class="user-list-follow">
+									<t onclick="window.location.href='{php echo $this->createMobileUrl('tutor',array('openid'=>$member['openid']))}'">
+										<img style='margin-top:3px;border-radius:42px;width:42px;height:42px;' src="{php echo $member['avatar']}" alt="img">
+										{if $member['isrecommend']=='1'}<i class="icon icon_vip" style='bottom:-20px;left:21px;'></i>{/if}
+										<strong style='font-size:14px;font-weight:700;color:#333;'>{$member['realname']}
+											<em style='font-size:12px;' class="split-title">{php echo M('question')->getTotal($member['openid'])}个提问，关注了{php echo M('follow')->getTotal($member['openid'])}个{php echo $this->template['authname']}</em>
+										</strong>
+									</t> 
+									{php $credit = intval($member['credit'])}
+									<a onclick="window.location.href = '{php echo $this->createMobileUrl('making',array('openid'=>$member['openid']))}'" class="follow button-green">{if $credit>0}{$credit}元{/if}提问</a>
+								</p>
+						</div>
+						<div style="margin-bottom:5px;margin-top:10px;" class="decoration"></div>	
+						{/loop}
+						{else}
+						<div class="content" style="margin-top:150px;">
+							<div class="show-no-detection device-detected">
+								<h5>暂时还没有{php echo $this->template['userName']}关注您哦</h5>
+								<a href="{php echo $this->createMobileUrl('find')}" class="button-small button-orange button-center" style="margin-top:20px;">现在就去宣传</a>
+							</div>
+						</div>
+						{/if}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="{MODULE_URL}public/js/loadmore.js"></script>
+	<script>
+	function callback(html){
+		$('#append').append(html);
+	}
+	initload("{php echo $this->createMobileUrl('focus',array('cid'=>$cid))}",callback);
+	loadmore("{php echo $this->createMobileUrl('focus',array('cid'=>$cid))}",callback);
+	</script>
+</body>

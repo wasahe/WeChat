@@ -1,0 +1,892 @@
+{template 'header'}
+{php //print_r($settings);}
+<style>
+.thumbadimg{border:1px;}
+.nav_1,.nav_2,.nav_3,.nav_4{display:none}
+.thumbnail>img{width:120px;height:120px;}
+    .context-menu-list {
+        color: #000;
+    }
+
+    .btn-warning .fa-remove {
+        margin-right: 0;
+    }
+	.nav_8{display:none}
+	.tanchuad img,.adimgbox img{background: url(../attachment/images/global/nopic.jpg);
+    background-size: 100% 100%;}
+</style>
+<style>
+.settings{
+	display: none;
+}
+</style>
+<script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<script src="../addons/bsht_tbk/res/js/MagicZoom.js"></script>
+<script src="../addons/bsht_tbk/res/js/main.js"></script>
+<script>
+$(function(){
+lazy_img();	
+});
+</script>
+
+
+<ul class="nav nav-tabs" id="snav">
+	<li class="active"><a>晒单审核</a></li>
+	<li><a>关注提醒</a></li>
+	<li><a>海报限制</a></li>
+	<li><a>兑吧商城</a></li>
+	<li><a>远程附件</a></li>
+	<li><a>积分签到</a></li>
+</ul>
+<script>
+$('#snav li').click(function(){
+	$('#snav li').removeClass('active');
+	$(this).addClass('active');
+	$('.settings').hide();
+	$('.settings').eq($(this).index()).show();
+});
+</script>
+{php load()->func('tpl')}
+
+
+
+
+<form id="reply-form" class="form-horizontal form"  method="post" enctype="multipart/form-data">
+
+
+<!--tab模板-->
+<div class="panel panel-default settings" style="display: block;">
+	<div class="panel-heading">晒单审核模板消息配置</div>
+	<div class="panel-body">
+
+<!--内容-->
+<div class="form-group">
+         <label class="col-xs-12 col-sm-3 col-md-2 control-label">消息名称</label>
+           <div class="col-sm-9 col-xs-12">
+            <input type="text" class="form-control" placeholder="" name="sd_msname" value="{$settings['sd_msname']}">
+            <div class="help-block">如：晒单审核</div>
+           </div>
+       </div>
+	   <div class="form-group">
+         <label class="col-xs-12 col-sm-3 col-md-2 control-label">消息头</label>
+           <div class="col-sm-9 col-xs-12">
+            <input type="text" class="form-control" placeholder="" name="sd_mshead" value="{$settings['sd_mshead']}">
+            <div class="help-block">如：您的晒单已被管理员审核通过</div>
+           </div>
+       </div>
+	   <div class="form-group">
+         <label class="col-xs-12 col-sm-3 col-md-2 control-label">消息尾</label>
+           <div class="col-sm-9 col-xs-12">
+            <input type="text" class="form-control" placeholder="" name="sd_msfoot" value="{$settings['sd_msfoot']}">
+            <div class="help-block">如：更多功能请点击底部菜单</div>
+           </div>
+       </div>
+	   <div class="form-group">
+         <label class="col-xs-12 col-sm-3 col-md-2 control-label">消息详情</label>
+           <div class="col-sm-9 col-xs-12">
+            <input type="text" class="form-control" placeholder="" name="sd_msmain" value="{$settings['sd_msmain']}">
+            <div class="help-block">如：晒单得奖励，更多奖品等你来拿！</div>
+           </div>
+       </div>
+	   <div class="form-group">
+         <label class="col-xs-12 col-sm-3 col-md-2 control-label">跳转动作</label>
+           <div class="col-sm-9 col-xs-12">
+            <input type="text" class="form-control" placeholder="" name="sd_msdo" value="{$settings['sd_msdo']}">
+            <div class="help-block">如：”index“</div>
+           </div>
+       </div>
+<!--内容-->
+
+
+     </div>
+     
+	
+</div>
+<!--tab模板-->
+
+
+
+
+<!--tab模板2-->
+<div class="panel panel-default settings">
+	<div class="panel-heading">关注提醒设置</div>
+	<div class="panel-body">
+
+<!--内容-->
+<div class="form-group">
+                                                                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">自定义粉丝基数</label>
+                                                                    <div class="col-sm-9 col-xs-12">
+                                                                            <input min="0" type="number" class="form-control" placeholder="" name="bsht_tbk_fansnum" value="{$settings['bsht_tbk_fansnum']}">
+                                                                            <div class="help-block">自定义粉丝基数+现有的微信粉丝数量的总和</div>
+                                                                    </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-xs-12 col-sm-3 col-md-2 control-label">关注提示信息</label>
+                                                            <div class="col-sm-9 col-xs-12">
+                                                                <textarea style="height:150px;" name="bsht_tbk_usr" class="form-control" cols="60">{$settings['bsht_tbk_usr']}</textarea>
+                                                                
+                                                                <div class="help-block" style="line-height:30px;">
+                                                                <b>参数设置：</b>
+                                                                <br>您的昵称：#昵称#
+                                                                <br>您的姓别：#性别#
+                                                                <br>您的积分：#积分#
+                                                                <br>粉丝余额：#余额#
+                                                                <br>公众号名称：#公众号名称#
+                                                                <br>当前总粉丝：#总粉丝数#
+                                                                <br>国家：#国家#
+                                                                <br>省份：#省#
+                                                                <br>市/县：#市#
+                                                                <br>链接:<code>&lt;a href='http://www.qq.com'&gt;点击进入&lt;/a&gt;</code></div>
+                                                            </div>
+                                                        </div>
+<!--内容-->
+
+
+     </div>
+     
+	
+</div>
+<!--tab模板2-->
+
+
+
+
+<!--tab模板3-->
+<div class="panel panel-default settings">
+	<div class="panel-heading">海报限制</div>
+	<div class="panel-body">
+
+<!--内容-->
+<div class="form-group" style="display:none">
+               <label class="col-xs-12 col-sm-3 col-md-2 control-label">生成前延时时间：</label>
+                  <div class="col-sm-9 col-xs-12">
+                    <input min="0" type="text" class="form-control" placeholder="" name="hbyanshi" value="{if $settings['hbyanshi']}{$settings['hbyanshi']}{else}5{/if}">
+                    <div class="help-block">默认5秒</div>
+                  </div>
+                </div>
+			
+               <div class="form-group">
+               <label class="col-xs-12 col-sm-3 col-md-2 control-label">生成海报限制时间：</label>
+                  <div class="col-sm-9 col-xs-12">
+                    <input min="0" type="text" class="form-control" placeholder="" name="hbsctime" value="{if $settings['hbsctime']}{$settings['hbsctime']}{else}60{/if}">
+                    <div class="help-block">几分钟生成1次海报，默认60秒</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 control-label">不能生成海报提示：</label>
+                <div class="col-sm-9 col-xs-12">
+                   <input min="0" type="text" class="form-control" placeholder="" name="hbcsmsg" value="{$settings['hbcsmsg']}">
+                   <div class="help-block">如：尊敬的用户：\n1分钟之内只能生成1次海报\n请稍后在试，感谢您的参与！</div>
+                </div>
+               </div>
+<!--内容-->
+
+
+     </div>
+     
+	
+</div>
+<!--tab模板3-->
+
+
+
+<!--tab模板4-->
+<div class="panel panel-default settings">
+	<div class="panel-heading">兑吧参数设置 调用地址：{$_W['siteroot']}app/index.php?i={$_W['uniacid']}&c=entry&do=duiba&m=bsht_tbk</div>
+	<div class="panel-body">
+
+<!--内容-->
+<div class="form-group">
+				  <label class="col-xs-12 col-sm-3 col-md-2 control-label">App Key</label>
+				  <div class="col-sm-9">
+					<input class="form-control" type="text" value="{$settings['appkey']}" class="span2" name="appkey">
+					<div class="help-block">注册兑吧账号获取”【<a href="http://duiba.com.cn" target="_blank" >点击注册兑吧</a>】，获取步骤：
+					
+					“兑吧” -- “我的应用” -- “应用” -- “基础配置” -- “应用信息” -- “App Key” -- 复制</a></div>
+				  </div>
+				</div>	
+        <div class="form-group">
+				  <label class="col-xs-12 col-sm-3 col-md-2 control-label">App Secret</label>
+				  <div class="col-sm-9">
+					<input class="form-control" type="text" value="{$settings['appsecret']}" class="span2" name="appsecret">
+					<div class="help-block">注册步骤请参考上一步，获取步骤：
+					
+					“兑吧” -- “我的应用” -- “应用” -- “基础配置” -- “应用信息” -- “App Secret” -- “点击获取” -- 兑吧系统会把App Secret发送至注册邮箱，请登录邮箱复制。</a></div>
+				  </div>
+		</div>	
+
+		<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">接口步骤</label>
+					<div class="col-sm-9 col-xs-12">
+						<div class="alert alert-warning">
+							“兑吧” -- “我的应用” -- “应用” -- “基础配置” -- “接口配置” -- 根据以下接口地址，填写至对应输入框，保存。
+						</div>
+						<label class="radio-inline">
+							<input type="radio" name="switch" value="1" {if $settings['switch']==1}checked="true"{/if} class="ng-pristine ng-untouched ng-valid">
+							开启
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="switch" value="0" {if $settings['switch']==0}checked="true"{/if} class="ng-pristine ng-untouched ng-valid">
+							关闭
+						</label>
+						<span class="help-block">是否开启积分接口</span>
+					</div>
+		</div>
+		<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">接口地址</label>
+					<div class="col-sm-9 col-xs-12">
+						<div class="alert alert-warning apiurl">
+							<h4>积分消费</h4>
+							<p><a href="javascript:;"title="点击复制"  style="color:#66667C; ">{php echo $_W['siteroot']."app/".$this->createMobileUrl('consume_credits')}</a></p>
+							<p><br/></p>
+                            <h4>结果通知</h4>
+							<p><a href="javascript:;"title="点击复制"  style="color:#66667C;">{php echo $_W['siteroot']."app/".$this->createMobileUrl('credit_notify')}</a></p>
+							
+							<p><br/></p>
+                            <h4>直达页面接口</h4>
+							<p><a href="javascript:;"title="点击复制"  style="color:#66667C;">{php echo $_W['siteroot']."app/".$this->createMobileUrl('duiba')}</a></p>
+							
+						</div>
+						<span class="help-block">点击以上链接复制<br>对应参考配置图，点击放大！<a  href="../addons/bsht_tbk/res/images/duiba.jpg"" class="MagicThumb"><img class="lazy-bk" src="../addons/bsht_tbk/res/images/load.gif" data-bk="../addons/bsht_tbk/res/images/duiba.jpg" style="width：50px;height:50px"></a></span>
+					</div>
+					<script>
+						$('.apiurl p a').each(function(){
+							util.clip(this, $(this).text());
+						});
+					</script>
+
+		</div>
+		<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">条件</label>
+					<div class="col-sm-9 col-xs-12">
+						<div class="alert alert-warning">
+							需要把“会员注册设置”设置为“系统自动注册”，<a href="{php echo $_W['siteroot']}/web/index.php?c=mc&a=passport&do=passport" target="_blank" >点击设置</a>。
+						</div>
+						
+					</div>
+		</div>
+<!--内容-->
+
+
+     </div>
+     
+	
+</div>
+<!--tab模板4-->
+
+
+
+<!--tab模板5-->
+<div class="panel panel-default settings">
+	<div class="panel-heading">远程附件参数设置（按需开启即可） </div>
+	<div class="panel-body">
+
+<!--内容-->
+<div class="form-group">
+		<label class="col-xs-12 col-sm-3 col-md-2 control-label">附件服务器类型</label>
+		<div class="col-sm-9 col-xs-12">
+			<label class="radio-inline">
+				<input type="radio" name="type" value="0" onclick="$('.remote-qiniu').hide();$('.remote-alioss').hide();$('.remote-ftp').hide();$('.remote-close').show();$('.remote-cos').hide();" {if empty($remote['type']) || $remote['type'] == '0'} checked="checked" {/if}> 关闭
+			</label>
+			<label class="radio-inline">
+				<input type="radio" name="type" value="1" onclick="$('.remote-qiniu').hide();$('.remote-ftp').show();$('.remote-alioss').hide();$('.remote-close').hide();$('.remote-cos').hide();" {if !empty($remote['type']) && $remote['type'] == '1'} checked="checked" {/if}> FTP服务器
+			</label>
+			<label class="radio-inline">
+				<input type="radio" name="type" value="2" onclick="$('.remote-qiniu').hide();$('.remote-alioss').show();$('.remote-ftp').hide();$('.remote-close').hide();$('.remote-cos').hide();" {if !empty($remote['type']) && $remote['type'] == '2'} checked="checked" {/if}> 阿里云OSS <span class="label label-success">推荐，快速稳定</span>
+			</label>
+			<label class="radio-inline">
+				<input type="radio" name="type" value="3" onclick="$('.remote-qiniu').show();$('.remote-alioss').hide();$('.remote-ftp').hide();$('.remote-close').hide();$('.remote-cos').hide();" {if !empty($remote['type']) && $remote['type'] == '3'} checked="checked" {/if}> 七牛云存储 <span class="label label-success">推荐，快速稳定</span>
+			</label>
+			<label class="radio-inline">
+				<input type="radio" name="type" value="4" onclick="$('.remote-qiniu').hide();$('.remote-alioss').hide();$('.remote-ftp').hide();$('.remote-close').hide();$('.remote-cos').show();" {if !empty($remote['type']) && $remote['type'] == '4'} checked="checked" {/if}> 腾讯云存储 <span class="label label-success">推荐，快速稳定</span>
+			</label>
+			<span class="help-block"></span>
+		</div>
+	</div>
+
+	<div class="remote-ftp" {if empty($remote['type']) || $remote['type'] != '1'} style="display:none;" {/if}>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">启用SSL连接</label>
+			<div class="col-sm-9 col-xs-12">
+				<label class="radio-inline">
+					<input type="radio" name="ftp[ssl]" value="1" {if !empty($remote['ftp']['ssl'])} checked="checked" {/if}> 是
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="ftp[ssl]" value="0" {if empty($remote['ftp']['ssl'])} checked="checked" {/if}> 否
+				</label>
+				<span class="help-block">注意：选择是后，FTP 服务器必须开启了 SSL，一般情况选择否即可</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">FTP服务器地址</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" name="ftp[host]" class="form-control" value="{$remote['ftp']['host']}" />
+				<span class="help-block">可以是 FTP 服务器的 IP 地址或域名</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">FTP服务器端口</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" name="ftp[port]" class="form-control" value="{if empty($remote['ftp']['port'])}21{else}{$remote['ftp']['port']}{/if}" />
+				<span class="help-block">默认为21</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">FTP帐号</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" name="ftp[username]" class="form-control" value="{$remote['ftp']['username']}" />
+				<span class="help-block">该帐号必须具有以下权限：读取文件、写入文件、删除文件、创建目录、子目录继承</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">FTP密码</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" name="ftp[password]" class="form-control" value="{$remote['ftp']['password']}" />
+				<span class="help-block">基于安全考虑将只显示 FTP 密码的第一位和最后一位，中间显示八个 * 号</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">被动模式(pasv)连接：</label>
+			<div class="col-sm-9 col-xs-12">
+				<label class="radio-inline">
+					<input type="radio" name="ftp[pasv]" value="1" {if !empty($remote['ftp']['pasv'])} checked="checked" {/if}> 是
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="ftp[pasv]" value="0" {if empty($remote['ftp']['pasv'])} checked="checked" {/if}> 否
+				</label>
+				<span class="help-block">一般情况下非被动模式即可，如果存在上传失败问题，可尝试打开此设置</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">远程附件目录</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" name="ftp[dir]" class="form-control" value="{$remote['ftp']['dir']}" />
+				<span class="help-block">远程附件目录的绝对路径或相对于 FTP 主目录的相对路径，结尾不要加斜杠 "/" , 例如：/attachment</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">远程访问URL</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" name="ftp[url]" class="form-control" value="{$remote['ftp']['url']}" />
+				<span class="help-block">支持 HTTP 和 FTP 协议，结尾不要加斜杠 "/" ; 例如：http://mydomin.com/attachment 如果使用 FTP 协议，FTP 服务器必须支持 PASV 模式，为了安全起见，
+				使用 FTP 连接的帐号不要设置可写权限和列表权限</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">FTP传输超时时间</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" name="ftp[overtime]" class="form-control" value="{if empty($remote['ftp']['overtime'])}0{else}{$remote['ftp']['overtime']}{/if}" />
+				<span class="help-block">单位：秒，0为服务器默认</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+			<div class="col-sm-9 col-xs-12">
+				<button name="button" type="button" class="btn btn-info js-checkremoteftp" value="check">测试配置（无需保存）</button>
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</div>
+		</div>
+	</div>
+	
+	<div class="remote-alioss" {if empty($remote['type']) || $remote['type'] != '2'} style="display:none;" {/if}>
+		<div class="alert alert-info">
+			启用阿里oss后，请把/attachment目录（不包括此目录）下的子文件及子目录上传至阿里云oss, 相关工具：<br>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+			<div class="col-sm-9 col-xs-12">
+				<span class="text-danger" id="mistake" style="display: none;">
+					填写的Access Key ID 或 Access Key Secret 错误，请重新填写。
+				</span>
+				<span class="text-danger" id="warning" style="display: none;">
+					请填写完整Access Key ID  Access Key Secret。
+				</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">Access Key ID</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" name="alioss[key]" class="form-control" value="{$remote['alioss']['key']}" placeholder="" />
+				<span class="help-block">
+					Access Key ID是您访问阿里云API的密钥，具有该账户完全的权限，请您妥善保管。
+				</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">Access Key Secret</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" name="alioss[secret]" class="form-control" value="{$remote['alioss']['secret']}" placeholder="" />
+				<span class="help-block">
+					Access Key Secret是您访问阿里云API的密钥，具有该账户完全的权限，请您妥善保管。(填写完Access Key ID 和 Access Key Secret 后请选择bucket)
+				</span>
+			</div>
+		</div>
+		<div class="form-group" id="bucket" {if empty($remote['alioss']['key'])}style="display: none;{/if}">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">Bucket选择</label>
+			<div class="col-sm-9 col-xs-12">
+				<select name="alioss[bucket]" class="form-control">
+					{loop $buckets $value}
+					<option value="{$value['name']}@@{$value['location']}" {if $value['name'] == $remote['alioss']['bucket'] || $remote['alioss']['bucket'] == $value['name'].'@@'.$value['location']} selected{/if}>{$value['name']}@@{$bucket_datacenter[$value['location']]}</option>
+					{/loop}
+				</select>
+				<span class="help-block">
+					完善Access Key ID和Access Key Secret资料后可以选择存在的Bucket(请保证bucket为可公共读取的)，否则请手动输入。
+				</span>
+			</div>
+		</div>
+		<div class="form-group">
+		 <label class="col-xs-12 col-sm-3 col-md-2 control-label">自定义URL</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" name="custom[url]" class="form-control" {if !strexists($remote['alioss']['url'],'aliyuncs.com') && $_W['setting']['remote']['type'] == 2}value="{$remote['alioss']['url']}"{/if} placeholder="默认URL不需要填写"/>
+					<span class="help-block">
+						阿里云oss支持用户自定义访问域名，如果自定义了URL则用自定义的URL，如果未自定义，则用系统生成出来的URL。注：自定义url开头加http://或https://结尾不加 ‘/’例：http://abc.com
+					</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+			<div class="col-sm-9 col-xs-12">
+				<button name="button" type="button" class="btn btn-info js-checkremoteoss" value="check">测试配置（无需保存）</button>
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</div>
+		</div>
+	</div>
+	<div class="remote-qiniu" {if empty($remote['type']) || $remote['type'] != '3'} style="display:none;" {/if}>
+	<div class="alert alert-info">
+		启用七牛云存储后，请把/attachment目录（不包括此目录）下的子文件及子目录上传至七牛云存储, 相关工具：<br>
+		<ul class="link-list">
+			<li><a target="_blank" href="https://portal.qiniu.com/signin" class="product-grey-font" >七牛云存储</a></li>
+		</ul>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-12 col-sm-3 col-md-2 control-label">Accesskey</label>
+		<div class="col-sm-9 col-xs-12">
+			<input type="text" name="qiniu[accesskey]" class="form-control" value="{$remote['qiniu']['accesskey']}" placeholder="" />
+			<span class="help-block">用于签名的公钥</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-12 col-sm-3 col-md-2 control-label">Secretkey</label>
+		<div class="col-sm-9 col-xs-12">
+			<input type="text" name="qiniu[secretkey]" class="form-control" value="{$remote['qiniu']['secretkey']}" placeholder="" />
+			<span class="help-block">用于签名的私钥</span>
+		</div>
+	</div>
+	<div class="form-group" id="qiniubucket">
+		<label class="col-xs-12 col-sm-3 col-md-2 control-label">Bucket</label>
+		<div class="col-sm-9 col-xs-12">
+			<input type="text" name="qiniu[bucket]" class="form-control" value="{$remote['qiniu']['bucket']}" placeholder="" />
+			<span class="help-block">请保证bucket为可公共读取的</span>
+		</div>
+	</div>
+	<div class="form-group" >
+		<label class="col-xs-12 col-sm-3 col-md-2 control-label">存储区域</label>
+		<div class="col-sm-9 col-xs-12">
+			<select class="form-control" name="qiniu[district]">
+				<option value="1" {if $remote['qiniu']['district'] == 1}selected{/if}>华东</option>
+				<option value="2" {if $remote['qiniu']['district'] == 2}selected{/if}>华北</option>
+			</select>
+			<span class="help-block">请查看bucket空间设置，并选择相应的存储区域。</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-12 col-sm-3 col-md-2 control-label">Url</label>
+		<div class="col-sm-9 col-xs-12">
+			<input type="text" name="qiniu[url]" class="form-control" value="{$remote['qiniu']['url']}" placeholder="" />
+			<span class="help-block">七牛支持用户自定义访问域名。注：url开头加http://或https://结尾不加 ‘/’例：http://abc.com</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+		<div class="col-sm-9 col-xs-12">
+			<button name="button" type="button" class="btn btn-info js-checkremoteqiniu" value="check">测试配置（无需保存）</button>
+			<input type="hidden" name="token" value="{$_W['token']}" />
+		</div>
+	</div>
+	</div>
+	<div class="remote-cos" {if empty($remote['type']) || $remote['type'] != '4'} style="display:none;" {/if}>
+	<div class="alert alert-info">
+		启用腾讯云cos对象存储后，请把/attachment目录（不包括此目录）下的子文件及子目录上传至腾讯云存储, 相关工具：<br>
+		<ul class="link-list">
+			<li><a target="_blank" href="https://console.qcloud.com/cos/bucket" class="product-grey-font" >腾讯云存储</a></li>
+		</ul>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-12 col-sm-3 col-md-2 control-label">APPID</label>
+		<div class="col-sm-9 col-xs-12">
+			<input type="text" name="cos[appid]" class="form-control" value="{$remote['cos']['appid']}" placeholder="" />
+			<span class="help-block">APPID 是您项目的唯一ID</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-12 col-sm-3 col-md-2 control-label">SecretID</label>
+		<div class="col-sm-9 col-xs-12">
+			<input type="text" name="cos[secretid]" class="form-control" value="{$remote['cos']['secretid']}" placeholder="" />
+			<span class="help-block">SecretID 是您项目的安全秘钥，具有该账户完全的权限，请妥善保管</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-12 col-sm-3 col-md-2 control-label">SecretKEY</label>
+		<div class="col-sm-9 col-xs-12">
+			<input type="text" name="cos[secretkey]" class="form-control" value="{$remote['cos']['secretkey']}" placeholder="" />
+			<span class="help-block">SecretKEY 是您项目的安全秘钥，具有该账户完全的权限，请妥善保管</span>
+		</div>
+	</div>
+	<div class="form-group" id="cosbucket">
+		<label class="col-xs-12 col-sm-3 col-md-2 control-label">Bucket</label>
+		<div class="col-sm-9 col-xs-12">
+			<input type="text" name="cos[bucket]" class="form-control" value="{$remote['cos']['bucket']}" placeholder="" />
+			<span class="help-block">请保证bucket为可公共读取的</span>
+		</div>
+	</div>
+	<div class="form-group" >
+		<label class="col-xs-12 col-sm-3 col-md-2 control-label">Url</label>
+		<div class="col-sm-9 col-xs-12">
+			<input type="text" name="cos[url]" class="form-control" value="{$remote['cos']['url']}" placeholder="" />
+			<span class="help-block">腾讯云支持用户自定义访问域名。注：url开头加http://或https://结尾不加 ‘/’例：http://abc.com</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+		<div class="col-sm-9 col-xs-12">
+			<button name="button" type="button" class="btn btn-info js-checkremotecos" value="check">测试配置（无需保存）</button>
+			<input type="hidden" name="token" value="{$_W['token']}" />
+		</div>
+	</div>
+<!--内容-->
+
+
+     </div>
+     
+	
+</div></div>
+<!--tab模板5-->
+
+
+
+<!--tab模板6-->
+<div class="panel panel-default settings">
+	<div class="panel-heading">积分签到设置（关键字：牛贝签到）</div>
+	<div class="panel-body">
+
+<!--内容-->
+<div class="form-group clearfix">
+			<label class="control-label col-md-2">积分设置</label>
+			<div class="col-sm-10 col-xs-12">
+				<div class="input-group form-group">
+					<span class="input-group-addon">首次签到赠送</span>
+					<input type="text" name="everyday"  class="form-control" value="{$settings['everyday']}" placeholder="默认赠送1积分"  maxlength="4" onkeyup="value=value.replace(/[^1234567890]+/g,'');"/>
+					<span class="input-group-addon">分；续签递增</span>
+					<input type="text" name="continuity"  class="form-control" value="{$settings['continuity']}" placeholder="默认为0,即不递增"  maxlength="4" onkeyup="value=value.replace(/[^1234567890]+/g,'');"/>
+					<span class="input-group-addon">分；递增上限</span>
+					<input type="text" name="intup"  class="form-control" value="{$settings['intup']}" placeholder="默认为0,即无上限"  maxlength="6" onkeyup="value=value.replace(/[^1234567890]+/g,'');"/>
+					<span class="input-group-addon">分</span>
+				</div>
+			</div>
+        </div>
+        <div class="form-group clearfix">
+			<label class="control-label col-md-2">时段设置</label>
+			<div class="col-sm-10 col-xs-12">
+				<div class="input-group form-group">
+					<span class="input-group-addon">
+					<input type="radio" value="0" name="time[is]"  {if (int)$settings['time']['is']=='0'}checked{/if}/> 不限 			
+					<input type="radio" value="1" name="time[is]"  {if (int)$settings['time']['is']=='1'}checked{/if}/> 限制；开始时间：
+					</span>
+					<input type="text" name="time[a]"  class="form-control" value="{$settings['time']['a']}" placeholder="如8时30分就写 830"  maxlength="4" onkeyup="value=value.replace(/[^1234567890]+/g,'');" size='6'/>
+					<span class="input-group-addon">；结束时间：</span>
+					<input type="text" name="time[e]"  class="form-control" value="{$settings['time']['e']}" placeholder="如20时00分就写 2000"  maxlength="4" onkeyup="value=value.replace(/[^1234567890]+/g,'');" size='6'/>
+					<span class="input-group-addon">；非时段提示语：</span>
+					<input type="text" name="time[t]"  class="form-control" value="{$settings['time']['t']}" placeholder="请在每天8时到20时来签到" />
+				</div>
+			</div>
+        </div>
+        
+		
+        <div class="form-group clearfix">
+          <label class="control-label col-md-2">提示栏默认</label>
+          <div class="col-md-4">
+            <input type="text" class="form-control" name="welcome" placeholder="默认：亲爱的粉丝，欢迎您签到" value="{$settings['welcome']}">
+          </div>
+        </div>
+        <div class="form-group clearfix">
+          <label class="control-label col-md-2">签到积分排行板</label>
+          <div class="col-md-3">
+				<select class="form-control input-medium" name="ispaihang">
+                    <option value="0" {if $settings['ispaihang']==0}selected{/if}>关闭排行板</option>
+                    <option value="1" {if $settings['ispaihang']==1}selected{/if}>当天排行板</option>
+                    <option value="2" {if $settings['ispaihang']==2}selected{/if}>7天排行板</option>
+                    <option value="3" {if $settings['ispaihang']==3}selected{/if}>30天排行板</option>
+                    <option value="5" {if $settings['ispaihang']==5}selected{/if}>本月排行板</option>
+                    <option value="4" {if $settings['ispaihang']==4}selected{/if}>历史排行板</option>
+				</select>
+          </div>
+          <div class="col-md-3">
+				<select class="form-control input-medium" name="paihangt">
+                    <option value="0" {if $settings['paihangt']==0}selected{/if}>单次(时间段内单次最高得分)</option>
+                    <option value="1" {if $settings['paihangt']==1}selected{/if}>总分(时间段内得分总和)</option>
+                    <option value="2" {if $settings['paihangt']==2}selected{/if}>次数(时间段内签到的次数)</option>
+				</select>
+          </div>
+          <div class="col-md-2">
+				<select class="form-control input-medium" name="px">
+					<optgroup label="相同积分排序" />
+                    <option value="1" {if $settings['px']==1}selected{/if}>后来居上</option>
+                    <option value="2" {if $settings['px']==2}selected{/if}>先来后到</option>
+				</select>
+          </div> 
+          <div class="col-md-2">
+				<select class="form-control input-medium" name="paihangs">
+					<optgroup label="显示条数,默认为前三名" />
+                    <option value="3" {if $settings['paihangs']==3}selected{/if}>前三名</option>
+                    <option value="5" {if $settings['paihangs']==5}selected{/if}>前五名</option>
+                    <option value="8" {if $settings['paihangs']==8}selected{/if}>前八名</option>
+                    <option value="10" {if $settings['paihangs']==10}selected{/if}>前十名</option>
+				</select>
+          </div>
+
+        </div>
+
+        <div class="form-group clearfix">
+          <label class="control-label col-md-2">签到成功提示语</label>
+          <div class="col-md-4">
+            <textarea class="form-control" name="success_msg" placeholder="" rows="8">{$settings['success_msg']}</textarea>
+            <div class="help-block">例如：签到成功啦！你已获得[签到积分]积分。</div>
+          </div>
+          <div class="col-md-3">
+            <div class="help-block">变量说明<br>[昵称]：用户昵称<br>
+[总积分]：用户目前拥有的总积分<br>
+[签到总积分]：签到所得的积分总和<br>
+[签到积分]：当次签到所赠送的积分<br>
+[今天得分]：今天签到所赠送的积分<br>
+[首次积分]：首次签到所赠送的积分<br>
+[续签积分]：连续签到所递增积分值
+			</div>
+          </div>
+          <div class="col-md-3">
+            <div class="help-block">
+<br>
+[下期积分]：下期签到将赠送的积分<br>
+[积分上限]：积分递增上限<br>
+[当天签到量]：当天第几位签到者<br>
+[模块首页]：点击访问首页，显示为："点击这里"<br>
+链接:<code>&lt;a href='http://www.qq.com'&gt;点击进入&lt;/a&gt;</code>
+			</div>
+          </div>
+        </div>
+        <div class="form-group clearfix">
+          <label class="control-label col-md-2">签到失败提示语</label>
+          <div class="col-md-4">
+            <textarea class="form-control" name="continuity_msg" placeholder="" rows="6">{$settings['continuity_msg']}</textarea>
+            <div class="help-block">例如：您今天已经签到过了！明天再来吧！</div>
+          </div>
+        </div>
+
+        <div class="form-group clearfix">
+          <label class="control-label col-md-2">自定义签到尾巴</label>
+          <div class="col-md-4">
+            <textarea class="form-control" name="nbqd_diy" placeholder="" rows="6">{$settings['nbqd_diy']}</textarea>
+            <div class="help-block">例如：更多优惠：[模块首页]</div>
+          </div>
+        </div>
+
+{$infotip}
+<!--内容-->
+
+
+     </div>
+     
+	
+</div>
+
+<!--tab模板6-->
+
+
+</div>
+<script type="text/javascript">
+	$(function() {
+		$('.encrypt').val(function() {
+			return util.encrypt($(this).val());
+		});
+	});
+	$('.js-checkremoteftp').on('click', function(){
+		var ssl =  parseInt($(':radio[name="ftp[ssl]"]:checked').val());
+		var pasv = parseInt($(':radio[name="ftp[pasv]"]:checked').val());
+		var param = {
+			'ssl' : ssl,
+			'host' : $.trim($(':text[name="ftp[host]"]').val()),
+			'username'  : $.trim($(':text[name="ftp[username]"]').val()),
+			'password' : $.trim($(':text[name="ftp[password]"]').val()),
+			'pasv' : pasv,
+			'dir': $.trim($(':text[name="ftp[dir]"]').val()),
+			'url': $.trim($(':text[name="ftp[url]"]').val()),
+			'port' : parseInt($(':text[name="ftp[port]"]').val()),
+			'overtime' : parseInt($(':text[name="ftp[overtime]"]').val())
+		};
+		$.post("{php echo url('utility/checkattach/ftp')}", param, function(data){
+			var data = $.parseJSON(data);
+			if(data.message.errno == 0) {
+				util.message(data.message.message);
+				return false;
+			}
+			if(data.message.errno < 0) {
+				util.message(data.message.message);
+				return false;
+			}
+		});
+	});
+	$('.js-checkremoteoss').on('click', function(){
+		var bucket = $.trim($('select[name="alioss[bucket]"]').val());
+		if (bucket == '') {
+			bucket = $.trim($(':text[name="alioss[bucket]"]').val());
+		}
+		var param = {
+			'key' : $.trim($(':text[name="alioss[key]"]').val()),
+			'secret' : $.trim($(':text[name="alioss[secret]"]').val()),
+			'url'  : $.trim($(':text[name="custom[url]"]').val()),
+			'bucket' : bucket
+		};
+		$.post("{php echo url('utility/checkattach/oss')}",param, function(data) {
+			var data = $.parseJSON(data);
+			if(data.message.errno == 0) {
+				util.message('配置成功');
+				return false;
+			}
+			if(data.message.errno < 0) {
+				util.message(data.message.message);
+				return false;
+			}
+		});
+	});
+	$('.js-checkremoteqiniu').on('click', function(){
+		var key = $.trim($(':text[name="qiniu[accesskey]"]').val());
+		if (key == '') {
+			util.message('请填写Accesskey');
+			return false;
+		}
+		var secret = $.trim($(':text[name="qiniu[secretkey]"]').val());
+		if (secret == '') {
+			util.message('请填写Secretkey');
+			return false;
+		}
+		var param = {
+			'accesskey' : $.trim($(':text[name="qiniu[accesskey]"]').val()),
+			'secretkey' : $.trim($(':text[name="qiniu[secretkey]"]').val()),
+			'url'  : $.trim($(':text[name="qiniu[url]"]').val()),
+			'bucket' :  $.trim($(':text[name="qiniu[bucket]"]').val()),
+			'district' :  $.trim($('[name="qiniu[district]"]').val())
+		};
+		$.post("{php echo url('utility/checkattach/qiniu')}",param, function(data) {
+			var data = $.parseJSON(data);
+			if(data.message.errno == 0) {
+				util.message('配置成功');
+				return false;
+			}
+			if(data.message.errno < 0) {
+				util.message(data.message.message);
+				return false;
+			}
+		});
+	});
+	$('.js-checkremotecos').on('click', function(){
+		var appid = $.trim($(':text[name="cos[appid]"]').val());
+		if (appid == '') {
+			util.message('请填写APPID');
+			return false;
+		}
+		var secretid = $.trim($(':text[name="cos[secretid]"]').val());
+		if (secretid == '') {
+			util.message('请填写secretid');
+			return false;
+		}
+		var secretkey = $.trim($(':text[name="cos[secretkey]"]').val());
+		if (secretkey == '') {
+			util.message('请填写Secretkey');
+			return false;
+		}
+		var bucket = $.trim($(':text[name="cos[bucket]"]').val());
+		if (bucket == '') {
+			util.message('请填写bucket');
+			return false;
+		}
+		var url = $.trim($(':text[name="cos[url]"]').val());
+		var param = {
+			'appid' : appid,
+			'secretid' : secretid,
+			'secretkey'  : secretkey,
+			'bucket' :  bucket,
+			'url' : url
+		};
+		$.post("{php echo url('utility/checkattach/cos')}",param, function(data) {
+			var data = $.parseJSON(data);
+			if(data.message.errno == 0) {
+				util.message('配置成功');
+				return false;
+			}
+			if(data.message.errno < 0) {
+				util.message(data.message.message);
+				return false;
+			}
+		});
+	});
+	var buck =  function() {
+		var key = $(':text[name="alioss[key]"]').val();
+		var secret = $(':text[name="alioss[secret]"]').val();
+		if (secret.indexOf('*') > 0) {
+			secret = '{$_W['setting']['remote']['alioss']['secret']}';
+		}
+		if (key == '' || secret == '') {
+			$('#warning').show();
+			$('#mistake').hide();
+			$('[name="submit"]').prop('disabled', true);
+			return false;
+		}
+		$.post("{php echo url('system/attachment/buckets')}", {'key' : key, 'secret' : secret}, function(data) {
+			var data = $.parseJSON(data);
+			if (data.message.errno < 0 ) {
+				$('#warning').hide();
+				$('#mistake').show();
+				$('[name="submit"]').prop('disabled', true);
+				return false;
+			} else {
+				$('#bucket').show();
+				$('#warning').hide();
+				$('#mistake').hide();
+				$('[name="submit"]').prop('disabled', false);
+				var bucket = $('select[name="alioss[bucket]"]');
+				bucket.empty();
+				var buckets = eval(data.message.message);
+				for (var i in buckets) {
+					bucket.append('<option value='+buckets[i]['name']+'@@'+buckets[i]['location']+'>'+buckets[i]['loca_name']+'</option>');
+				}
+			}
+		});
+		var mistake_dis = $('#mistake').css('display');
+		var warning_dis = $('#warning').css('display');
+		if (mistake_dis == 'inline' || warning_dis == 'inline') {
+			$(':text[name="alioss[key]"]').blur(buck);
+		}
+	};
+	$(':text[name="alioss[secret]"]').blur(buck);
+</script>
+<div class="form-group">		
+<label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>			
+<div class="col-sm-4"><input name="submit" type="submit" value="保存" class="btn btn-success btn-block" />				<input type="hidden" name="token" value="{$_W['token']}" />			
+</div>		
+</div>	
+</div></form>
+
+
+<script type="text/javascript">
+function tokenGen() {
+		var letters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+		var token = '';
+		for(var i = 0; i < 32; i++) {
+			var j = parseInt(Math.random() * (31 + 1));
+			token += letters[j];
+		}
+		$(':text[name="certkey"]').val(token);
+	}
+</script>
+{template 'footer'}

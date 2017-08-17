@@ -1,0 +1,159 @@
+{template 'common/header'}
+<div class="main">
+	<ul class="nav nav-tabs">
+		<li{if $_GPC['do'] == 'import_manage'} class="active"{/if}><a href="{php echo $this->createWebUrl('import_manage');}">查询信息管理</a></li>
+		<li{if $_GPC['do'] == 'import_table' || $_GPC['do'] == '' } class="active"{/if}><a href="{php echo $this->createWebUrl('import_table');}">初始化表设置</a></li>
+	</ul>
+
+	<!-- Modal -->
+	
+
+	<div class="panel panel-default">
+		<div class="panel-body">
+		<form action="" method="post" class="form" enctype="multipart/form-data">
+		<input type="hidden" value="{$list['id']}" name="listid">
+			<div class="form-group col-sm-12">
+				<div class="col-sm-2" >
+					<label class="control-label">中文列名</label>
+				</div>
+				<div class="col-sm-2" >
+					<label class="control-label">字段类型</label>
+				</div>
+				<div class="col-sm-1" >
+					<label class="control-label">是否导入</label>
+				</div>
+				<div class="col-sm-1" >
+					<label class="control-label">是否检索</label>
+				</div>
+			</div>
+			{php $flag_id=1;}
+			{if $fieldlist}
+			{loop $fieldlist $item}
+			<div class="form-group col-sm-12">
+			<input type="hidden" name="flagtype[]" value="{$item['id']}" />
+				<div class="col-sm-2" >
+					<input type="text" class="form-control" id="cnname{$item['id']}" name="cnname{$item['id']}" value="{$item['cnname']}" />
+				</div>
+				<div class="col-sm-2" >
+					<select id="typename{$item['id']}" name="typename{$item['id']}" class="form-control">
+						{loop $typelist $row}
+						<option class="form-control" value="{$row[typename]},{$row[typelen]}" {if $item['typename']==$row['typename']}selected = "selected"{/if}>{$row[typecn]}</option>
+						{/loop}
+					</select>
+				</div>
+				<div class="col-sm-1" >
+					<input type="checkbox" class="form-control" id="is_import{$item['id']}" name="is_import{$item['id']}" {if $item['is_import']==1}checked{/if} value="1" />
+				</div>
+				<div class="col-sm-1" >
+					<input type="checkbox" class="form-control" id="is_search{$item['id']}" name="is_search{$item['id']}" {if $item['is_search']==1}checked{/if} value="1"/>
+				</div>
+				<div class="col-sm-3 col-md-2 col-lg-1" >
+					<input name="addnew" type="button" value="删除字段" class="btn btn-danger btn-block btn_del_field" />
+				</div>
+			</div>
+			{php $flag_id = $item['id']+1;}
+			{/loop}
+			{/if}
+
+			<!--无限添加产品-->
+			<div id="jiangpin" style="display: none">
+				{loop $typelist $row}
+						<option class="form-control" value="{$row[typename]},{$row[typelen]}">{$row[typecn]}</option>
+				{/loop}
+			</div>
+			<!--无限添加结束-->
+			
+			 <!--新字段-->
+			{if empty($fieldlist)}
+			<div class="form-group col-sm-12">
+			<input type="hidden" name="flagtype_new[]" value="{$flag_id}" />
+				<div class="col-sm-2" >
+					<input type="text" class="form-control" id="cnname{$flag_id}" name="cnname{$flag_id}" value="" />
+				</div>
+				<div class="col-sm-2" >
+					<select id="typename{$flag_id}" name="typename{$flag_id}" class="form-control">
+						{loop $typelist $row}
+						<option class="form-control" value="{$row[typename]},{$row[typelen]}">{$row[typecn]}</option>
+						{/loop}
+					</select>
+				</div>
+				<div class="col-sm-1" >
+					<input type="checkbox" class="form-control" id="is_import{$flag_id}" name="is_import{$flag_id}" value="1" />
+				</div>
+				<div class="col-sm-1" >
+					<input type="checkbox" class="form-control" id="is_search{$flag_id}" name="is_search{$flag_id}" value="1" />
+				</div>
+				<div class="col-sm-3 col-md-2 col-lg-1" >
+					<input name="addnew" type="button" value="删除字段" class="btn btn-danger btn-block btn_del_field" />
+				</div>
+			</div>
+			{php $flag_id+=1;}
+			{/if}<!--新字段结束-->
+			<span id="award_insert_flag" style="display: none"></span>
+			<div class="form-group col-sm-12">
+				<div class="col-sm-3 col-md-2 col-lg-1">
+					<input name="btn_add_field" id="btn_add_field" type="button" value="新增字段" class="btn btn-success btn-block" />
+				</div>
+				<div class="col-sm-3 col-md-2 col-lg-1">
+					<input name="submit" type="submit" value="保存" class="btn btn-primary btn-block" />
+				</div>
+				<div class="col-sm-3 col-md-2 col-lg-1">
+					<input name="back" type="button" value="返回" onclick="javascript:history.back(-1);" class="btn btn-primary btn-block" />
+				</div>
+				<input type="hidden" name="op" value="updata" />
+        	</div>
+		</div>
+	</div>
+	</form>
+
+</div>
+<script language='javascript'>
+
+	var flag = 1;
+	var gnamevar='';
+	flag=<?php echo $flag_id?>;
+	$('#btn_add_field').bind('click', function(){
+		var content = '';
+		
+		content +='<div class="form-group col-sm-12">';
+		content +='<input type="hidden" name="flagtype_new[]" value="'+flag+'" />';
+		content +='<div class="col-sm-2" >';
+		content +='<input type="text" class="form-control" id="cnname'+flag+'" name="cnname'+flag+'" value="" />';
+		content +='</div>';
+		content +='<div class="col-sm-2" >';
+		content +='<select id="typename'+flag+'" name="typename'+flag+'" class="form-control">';
+		content +=$("#jiangpin").html();
+		content +='</select>';
+		content +='</div>';
+		content +='<div class="col-sm-1" >';
+		content +='<input type="checkbox" class="form-control" id="is_import'+flag+'" name="is_import'+flag+'" value="1" />';
+		content +='</div>';
+		content +='<div class="col-sm-1" >';
+		content +='<input type="checkbox" class="form-control" id="is_search'+flag+'" name="is_search'+flag+'" value="1" />';
+		content +='</div>';
+		content +='<div class="col-sm-3 col-md-2 col-lg-1" >';
+		content +='<input name="addnew" type="button" value="删除字段" class="btn btn-danger btn-block btn_del_field" />';
+		content +='</div>';
+        content +='</div>';
+
+		flag+=1;
+		$('#award_insert_flag').before(content);
+		$('.btn_del_field').bind('click',function(){
+			var obj = $(this).parent().parent();
+			obj.slideUp(300, function() {
+				obj.remove();
+			});
+		});
+
+	});
+
+	$('.btn_del_field').unbind('click');  
+	$('.btn_del_field').bind('click',function(){
+	var obj = $(this).parent().parent();
+	obj.slideUp(300, function() {
+	obj.remove();
+		});
+	});
+
+</script>
+{template 'common/footer'}

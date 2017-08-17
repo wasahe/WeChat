@@ -1,0 +1,101 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li ><a href="{php echo $this->createWebUrl('counselors', array())}">销售员管理</a></li>
+	<li class="active"><a href="{php echo $this->createWebUrl('counselor',array('op'=>'post'));}">添加邀请码</a></li>
+	<li><a href="{php echo $this->createWebUrl('counselor',array('op'=>'list'));}">邀请码管理</a></li>
+</ul>
+<style>
+.panel-body {
+padding: 10px;
+}
+</style>
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" onsubmit="return validate(this);">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				修改销售员设置
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">排序</label>
+					<div class="col-sm-5">
+						<input type="text" name="listorder" class="form-control" value="{$theone['listorder']}" />
+					</div>
+				</div>
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">邀请码</label>
+					<div class="col-sm-5">
+						<input type="text" name="code" class="form-control" placeholder="邀请码为销售员认证凭据，请认真填写！" value="{$theone['code']}" {if $theone['status']==0}readonly="true"{/if} />
+						<input type="hidden" name="code1" value="{$theone['code']}"/>
+						<input type="button" class="btn" onclick="randomCode();" value='随机生成' {if $theone['status']==0}disabled="true"{/if}/>
+						<input type="text" style="border:1px solid #ccc;border-radius:4px;width: 40%;height: 34px;padding: 6px 12px;font-size: 14px;line-height: 1.42857143;color: #555;" name="num" placeholder="邀请码位数：默认9位"/>
+					</div>
+				</div>
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">所属楼盘</label>
+					<div class="col-sm-5">
+						<select name="lid" class="form-control" id="lid">
+							<option value="0">选择所属楼盘..</option>
+						{loop $loupans $l}
+							<option value="{$l['id']}" {if $theone['lid']==$l['id']}selected{/if}>{$l['title']}</option>
+						{/loop}
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">说明</label>
+					<div class="col-sm-5">
+						<input type="text" name="content" class="form-control" value="{$theone['content']}"/>
+					</div>
+				</div>
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">状态</label>
+					<div class="col-sm-5">
+						<label class="radio-inline">
+							<input type="radio" name="status" value="1" {if $theone['status'] == '1'}checked="true"{/if}> 可用
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="status" value="0" {if $theone['status'] == '0'}checked="true"{/if}>已用
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group col-sm-12">
+				<input type="hidden" name="token" value="{$_W['token']}" />
+				<input type="hidden" name="id" value="{$theone['id']}" />
+				<input type="submit" class="btn btn-primary col-lg-1" name="submit" value="提交" />
+			</div>
+		</div>
+	</form>
+</div>
+<script text="text/javascript">
+	function validate() {
+		if($.trim($(':text[name="code"]').val()) == '') {
+			message('必须填写邀请码.', '', 'error');
+			return false;
+		}
+		if($.trim($(':text[name="lid"]').val()) == 0){
+			message('请选择所属楼盘.', '', 'error');
+			return false;
+		}
+		return true;
+	}
+	
+	function randomCode(){
+		var num = $.trim($(':text[name="num"]').val());
+		$.getJSON("{php echo $this->createWebUrl('counselor', array('op'=>'randomcode'), true)}&num="+num+"&r="+new Date().getTime(),function(res){
+			$(':text[name="code"]').val(res['message']);
+		});
+		
+	}
+	
+</script>
+{template 'common/footer'}

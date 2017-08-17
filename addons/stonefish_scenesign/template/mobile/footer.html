@@ -1,0 +1,36 @@
+<h2 class="top_title"><span>版权所有 ＠ {$reply['copyright']}</span></h2>
+{if !empty($reply['bottompic'])}
+<div class="adpic">
+	{if !empty($reply['bottompicurl'])}<a href="{$reply['bottompicurl']}">{/if}<img src="{php echo toimage($reply['bottompic'])}" width="100%" border="0">{if !empty($reply['bottompicurl'])}</a>{/if}
+</div>
+{/if}
+{if !empty($prize)}
+<!--底部菜单-->
+<div style="height:50px;width: 100%;"></div>
+<link href="./resource/css/font-awesome.min.css" rel="stylesheet">
+<style>
+.js-quickmenu{position:fixed; bottom:0; left:0;border-top:1px solid #e3e3e3;}
+.nav-menu-cart{width:100%; padding:0px; height:50px; text-align:center;background-color:{$template['navcolor']};font-size:12px;}
+.nav-menu-cart.has-nav-2 .nav-group-item,.nav-menu-cart.has-nav-1 .nav-group-item,.nav-menu-cart.has-nav-0 .nav-group-item{width:34%; height:50px;}
+.nav-menu-cart.has-nav-2 .nav-home,.nav-menu-cart.has-nav-1 .nav-home,.nav-menu-cart.has-nav-0 .nav-home{width:32%;}
+.nav-menu-cart.has-nav-4 .nav-group-item,.nav-menu-cart.has-nav-3 .nav-group-item{width:18%;}
+.nav-menu-cart.has-nav-4 .nav-group-item.nav-home,.nav-menu-cart.has-nav-3 .nav-group-item.nav-home{width:28%;}
+.nav-menu-cart .nav-group-item{padding-top:5px; float:left;display:block;}
+.nav-menu-cart .nav-group-item a{display:block; color:{$template['navtextcolor']};width:100%; text-align:center; background-size:contain; background-position:center center; background-repeat:no-repeat;}
+.nav-menu-cart .nav-group-item a i{display:block; width:100%; text-align:center; line-height:25px; font-size:20px;}
+.nav-menu-cart .nav-home a{background-color:{$template['navactioncolor']};height:55px;width:55px;margin:0 auto;margin-top:-10px;border-radius:100%;padding:0px;}
+.nav-menu-cart .nav-home a img{border-radius: 50%;width:55px;margin:0;padding:0;}
+.active a span,.active a i{color:{$template['navactioncolor']};}
+</style>
+<ul class="js-quickmenu nav-menu-cart has-nav-4" style="z-index:10;">
+	<li class="nav-group-item{if $_GPC['do'] == 'index'} active{/if}"><a href="{php echo $this->createMobileUrl('index', array('rid' => $rid))}"><i class="fa fa-calendar-o"></i> <span>签到墙</span></a></li>
+	<li class="nav-group-item{if $_GPC['do'] == 'myaward'} active{/if}"><a href="{php echo $this->createMobileUrl('myaward', array('rid' => $rid))}"><i class="fa fa-gift"></i> <span>宝箱</span></a></li>
+	<li class="nav-home nav-group-item"><a id="{if !empty($fans)}achievementnavshow{else}joinshow{/if}"><img src="{MODULE_URL}template/images/{if !empty($fans)}{if $_GPC['do'] == 'shareview'}my{else}achievement{if $reply['gametype'] && $reply['award_type']}chou{/if}{/if}{else}join{/if}.png"></a></li>
+	<li class="nav-group-item{if $_GPC['do'] == 'rule'} active{/if}"><a href="{php echo $this->createMobileUrl('rule', array('rid' => $rid))}"><i class="fa fa-volume-up"></i> <span>规则</span></a></li>
+	<li class="nav-group-item{if $_GPC['do'] == 'gift'} active{/if}"><a href="{php echo $this->createMobileUrl('gift', array('rid' => $rid))}"><i class="fa fa-trophy"></i> <span>中奖榜</span></a></li>
+</ul>
+<!--底部菜单-->
+{else}
+    {if empty($fans) && $exchange['before']==2}<div style="position:fixed; top:50%; left:50%;margin-left:-50px;width:100px;height:100px;background:{$template['navactioncolor']};border-radius: 50%;line-height:30px;font-size:20px;text-align:center;color:{$template['navcolor']};" id="joinshow"><img src="{MODULE_URL}template/images/join.png"></div>{/if}
+{/if}
+{template 'achievement'}

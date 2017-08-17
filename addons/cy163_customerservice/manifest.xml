@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com" versionCode="0.6">
+	<application setting="false">
+		<name><![CDATA[万能客服]]></name>
+		<identifie><![CDATA[cy163_customerservice]]></identifie>
+		<version><![CDATA[0.1]]></version>
+		<type><![CDATA[biz]]></type>
+		<ability><![CDATA[仿微信聊天，适应于所有场景]]></ability>
+		<description><![CDATA[仿微信聊天，适应于所有场景]]></description>
+		<author><![CDATA[折翼天使资源社区]]></author>
+		<url><![CDATA[http://www.012wz.com/]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+		</handles>
+		<rule embed="false" />
+		<card embed="false" />
+	</platform>
+	<bindings>		
+        <cover>
+			<entry title="客服中心入口" do="chosekefu" state="" direct="false" />
+		</cover>	
+		<menu>
+			<entry title="模板消息管理" do="tpllist" state="" direct="false" />
+			<entry title="客服管理" do="cservice" state="" direct="false" />
+		    <entry title="基本设置" do="setting" state="" direct="false" />
+		</menu>		
+	</bindings>
+	<permissions>
+	</permissions>
+	<install><![CDATA[install.php]]></install>
+	<uninstall><![CDATA[
+DROP TABLE IF EXISTS `ims_bsht_tbk_volist`;
+DROP TABLE IF EXISTS `ims_messikefu_chat`;
+DROP TABLE IF EXISTS`ims_messikefu_cservice`;
+DROP TABLE IF EXISTS`ims_messikefu_set`;
+DROP TABLE IF EXISTS`ims_messikefu_tplmessage_sendlog`;
+DROP TABLE IF EXISTS`ims_messikefu_tplmessage_tpllist`;
+	]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

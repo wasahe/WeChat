@@ -1,0 +1,233 @@
+<head>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+
+	<meta name="apple-mobile-web-app-capable" content="yes">
+
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+	<meta name="format-detection" content="telephone=no">
+
+	<title>钱包</title>
+
+	<link href="{MODULE_URL}assets/styles/font-awesome.css" rel="stylesheet" type="text/css">
+
+	<script type="text/javascript" src="{MODULE_URL}assets/scripts/jquery.js"></script>
+
+	<script type="text/javascript" src="{MODULE_URL}assets/scripts/elink-framework.js"></script>
+
+	<script type="text/javascript" src="{MODULE_URL}assets/scripts/noty/packaged/jquery.noty.packaged.js"></script>
+
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+
+	<style type="text/css">*{font-family:"Microsoft YaHei",Arial,Helvetica,sans-serif,"宋体";}</style>
+
+	<link href="{MODULE_URL}assets/styles/weui.css" rel="stylesheet" type="text/css">
+
+
+
+    <script>
+
+        var jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || {};
+
+        // 是否启用调试
+
+        jssdkconfig.debug = false;
+
+
+
+        jssdkconfig.jsApiList = [
+
+            'checkJsApi',
+
+            'onMenuShareTimeline',
+
+            'onMenuShareAppMessage',
+
+            'onMenuShareQQ',
+
+            'onMenuShareWeibo',
+
+            'hideMenuItems',
+
+            'showMenuItems',
+
+            'hideAllNonBaseMenuItem',
+
+            'showAllNonBaseMenuItem',
+
+            'translateVoice',
+
+            'startRecord',
+
+            'stopRecord',
+
+            'onRecordEnd',
+
+            'playVoice',
+
+            'pauseVoice',
+
+            'stopVoice',
+
+            'uploadVoice',
+
+            'downloadVoice',
+
+            'chooseImage',
+
+            'previewImage',
+
+            'uploadImage',
+
+            'downloadImage',
+
+            'getNetworkType',
+
+            'openLocation',
+
+            'getLocation',
+
+            'hideOptionMenu',
+
+            'showOptionMenu',
+
+            'closeWindow',
+
+            'scanQRCode',
+
+            'chooseWXPay',
+
+            'openProductSpecificView',
+
+            'addCard',
+
+            'chooseCard',
+
+            'openCard',
+
+			'translateVoice',
+
+            'openAddress'
+
+        ];
+
+        wx.config(jssdkconfig);
+
+        var _TUTOR_URL = "{php echo $this->createMobileUrl('tutor')}";
+
+        var _follow = "{php echo intval($_W['fans']['follow'])}";
+
+        var _openid = "{php echo $_W['openid']}";
+
+        var _qrcode = "{php echo $_W['account']['qrcode']}";
+
+    </script>
+
+</head> 
+
+
+<body bgcolor="#ebebeb">
+	<div align=center style="background:#686f77;width:100%;height:105px;padding-top:30px;">
+		<div style="width:33.3%;float:left">
+			<img src="{MODULE_URL}assets/images/zong.jpg" style="width:40px" >
+			<p style="font-size:16px;margin-top:15px;color:#FFF">总收入</p>
+			<p style="font-size:14px;color:#BDBDBD;margin-top:-5px">￥{$credit[0]}</p>
+		</div>
+		<div style="width:33.3%;float:left">
+			<img src="{MODULE_URL}assets/images/zong2.jpg" style="width:40px" >
+			<p style="font-size:16px;margin-top:15px;color:#FFF">余额</p>
+			<p style="font-size:14px;color:#BDBDBD;margin-top:-5px">￥{$credit[2]}</p>
+		</div>
+		<div id="tixian" style="width:33.3%;float:left">
+			<img src="{MODULE_URL}assets/images/zong3.jpg" style="width:40px;">
+			<p style="font-size:16px;margin-top:15px;color:#FFF">提现</p>
+			<p style="font-size:14px;color:#FFF">
+			</p>
+		</div>
+	 </div>
+	 
+	 
+	 <div style="background:#f0eff4;width:100%;height:40px">
+		<a style="color:#626167;line-height:40px;margin-left:20px;">收入记录</a>
+	 </div>
+	
+		<div align="center">
+			{if empty($res['list'])}
+			<div class="content" style="margin-bottom:41;">
+				<div class="portfolio-filter">
+					<div class="content" style="margin-top:150px;">
+						<div class="show-no-detection device-detected">
+							<a class="button-small button-orange button-center" style="margin-top:20px;">暂时没有记录</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			{/if}
+			{if !empty($res['list'])}
+				<table cellspacing="0" class="weui-table weui-border-tb">
+					<tbody>
+					<tr>
+						<th>日期</th>
+						<th>金额</th>
+						<th>状态</th>
+						<th>来源</th>
+					</tr>
+					{loop $res['list'] $item}
+					<tr style="color:#6E6E6E">
+						<td>{php echo date('Y-m-d',$item['create_time'])}</td>
+						<td>{php echo $item['credit']}</td>
+						<td>{if $item['status']==1}<a style='color:red'>未提现</a>
+						{else if $item['status']==2}<a style='color:green'>已提现</a>
+						{else}未知{/if}</td>
+						<td><a href="{if $item['type']==5}{php echo $this->createMobileUrl('task_answer',array('id'=>$item['question_id']))}{else}{php echo $this->createMobileUrl('question',array('id'=>$item['question_id']))}{/if}"><i class="fa fa-link" aria-hidden="true"></i> {if $item['type']==1}回答
+						{else if $item['type']==2}提问偷听
+						{else if $item['type']==3}回答偷听
+						{else if $item['type']==4}打赏
+						{else if $item['type']==5}悬赏回答
+						{else if $item['type']==6}小讲讲票 
+						{else}未知{/if}</a></td>
+					</tr>
+					{/loop}
+					</tbody>
+				</table>
+			{/if}
+		</div>
+			
+{php $min = $this->pro['withdraw_minamount']}
+<script>
+	$("#tixian").click(function(){
+		{if !empty($min) && intval($credit['ktx'])<intval($min)}
+			swal('满{php echo $this->pro['withdraw_minamount']}元才可以提现哦！');
+			return;
+		{else}
+			var question_id = $(this).data("qid");
+			swal({
+			  title: "确定全额提现吗？",
+			  text: "确定后收益将全额打款至您的微信钱包",
+			  showCancelButton: true,
+			  confirmButtonColor: "#DD6B55",
+			  confirmButtonText: "确定提现",
+			  cancelButtonText: '再想想',
+			  closeOnConfirm: false
+			},function(){ 
+				$('.confirm').attr('disabled',"true");
+				$.post("{php echo $this->createMobileUrl('income')}",{act:'payMe'},function(d){
+					$('.confirm').removeAttr('disabled',"true");
+					swal({ 
+					  title: d.message,
+					  type: d.type,
+					  html: true,
+					},function(){
+						window.location.reload();
+					});
+				},'json');});
+		{/if}
+	});
+	</script>
+	{template 'common/remind'}
+	
+</body>
+</html>

@@ -1,0 +1,170 @@
+{template 'common/header'}
+<div class="main"> 
+<form action="" method="post" class="form-horizontal form"> 
+<div class="panel panel-default"> 
+<div class="panel-heading">网站基本设置</div> 
+<div class="panel-body"> 
+<div class="form-group">
+<label class="col-xs-12 col-sm-3 col-md-2 control-label">仅限微信打开</label>
+<div class="col-sm-9">
+<label class="radio-inline">
+<input type="radio" name="open" value="0" {if $set['open']== 0} checked="checked"{/if}/>是</label>
+<label class="radio-inline">
+<input type="radio" name="open" value="1" {if $set['open'] == 1} checked="checked"{/if}/>否</label>
+</div>
+</div>
+<div class="form-group">
+<label class="col-xs-12 col-sm-3 col-md-2 control-label">封面图片风格</label>
+<div class="col-sm-9">
+<label class="radio-inline">
+<input type="radio" name="fengge" value="0" {if $set['fengge']== 0} checked="checked"{/if}/>竖版</label>
+<label class="radio-inline">
+<input type="radio" name="fengge" value="1" {if $set['fengge'] == 1} checked="checked"{/if}/>横版</label>
+</div>
+</div>
+<div class="form-group"> 
+<label class="col-xs-12 col-sm-2 col-md-2 control-label">Video++ APPKey:</label> 
+<div class="col-sm-6 col-md-5 col-xs-12"> 
+<input type="text" class="form-control" name="video_key" value="{$set['video_key']}" />
+<span class="help-block"><a style="color:red;" href="http://videojj.com" target="_blank">点击注册Video++</a>登录Video++后台，应用管理——添加应用——复制APPKey，最后有一个中划线“-”一起复制。</span>
+</div> 
+</div>
+<div class="form-group"> 
+<label class="col-xs-12 col-sm-2 col-md-2 control-label">网站名称</label> 
+<div class="col-sm-6 col-md-8 col-xs-12"> 
+<input type="text" class="form-control" name="name" value="{$set['name']}" /><span class="help-block">全站通用</span> 
+</div> 
+</div>
+<div class="form-group"> 
+<label class="col-xs-12 col-sm-2 col-md-2 control-label">网站广告词/分享标题</label> 
+<div class="col-sm-6 col-md-8 col-xs-12">
+<input type="text" class="form-control" name="ad" value="{$set['ad']}" /><span class="help-block">全站通用，不能超过10个中文，主要用于分享和底部引导关注！</span> 
+</div> 
+</div>
+<div class="form-group"> 
+<label class="col-xs-12 col-sm-2 col-md-2 control-label">全站分享链接</label> 
+<div class="col-sm-6 col-md-8 col-xs-12">
+<input type="text" class="form-control" name="share_url" value="{$set['share_url']}" /><span class="help-block" style="color:red;">开启后，全站所有页面分享均为同一个链接，不填则不开启！</span> 
+</div> 
+</div>
+<div class="form-group">
+<label class="col-xs-12 col-sm-3 col-md-2 control-label">网站LOGO/分享LOGO</label>
+<div class="col-sm-5 col-xs-12">
+{php echo tpl_form_field_image('logo', $set['logo'])}
+<span class="help-block">大小200*200 格式为jpg </span>
+</div>
+</div> 
+<div class="form-group">
+<label class="col-xs-12 col-sm-3 col-md-2 control-label">网站二维码</label>
+<div class="col-sm-5 col-xs-12">
+{php echo tpl_form_field_image('qr', $set['qr'])}
+<span class="help-block">大小200*200 格式为jpg，登陆公众号后台下载第一个即可！ </span>
+</div>
+</div>
+<div class="form-group">
+<label class="col-xs-12 col-sm-3 col-md-2 control-label">网站顶部LOGO</label>
+<div class="col-sm-5 col-xs-12">
+{php echo tpl_form_field_image('top_logo', $set['top_logo'])}
+<span class="help-block">图片比例：宽为25的倍数，建议不要超过150px</span>
+</div>
+</div> 
+<div class="form-group">
+<label class="col-xs-12 col-sm-3 col-md-2 control-label">全站主题色</label>
+<div class="col-sm-5 col-xs-12">
+{php echo tpl_form_field_color('color', $set['color'])}
+<div class="help-block">主要用于全站顶部、底部、文字及按钮颜色，推荐颜色代码：#f86400</div>
+</div>
+</div>
+<div class="form-group">
+<label class="col-xs-12 col-sm-3 col-md-2 control-label">底部广告消失</label>
+<div class="col-sm-9 col-xs-12">
+<div class="row row-fix">
+<div class="col-sm-2 col-xs-2">
+<div class="input-group">
+<input type="text" name="time" class="form-control" value="{$set['time']}">
+<span class="input-group-addon">毫秒</span></div>
+<div class="help-block">默认5000</div>
+</div>
+</div>
+</div>
+</div>
+<div class="form-group"> 
+<label class="col-xs-12 col-sm-2 col-md-2 control-label">底部广告名称</label> 
+<div class="col-sm-6 col-md-8 col-xs-12"> 
+<input type="text" class="form-control" name="bottom_name" value="{$set['bottom_name']}" /><span class="help-block">全站通用</span> 
+</div> 
+</div>
+<div class="form-group"> 
+<label class="col-xs-12 col-sm-2 col-md-2 control-label">底部广告词</label> 
+<div class="col-sm-6 col-md-8 col-xs-12"> 
+<input type="text" class="form-control" name="bottom_ad" value="{$set['bottom_ad']}" /><span class="help-block">全站通用，不能超过10个中文，主要用于分享和底部引导关注！</span> 
+</div> 
+</div>
+<div class="form-group">
+<label class="col-xs-12 col-sm-3 col-md-2 control-label">网站顶部LOGO</label>
+<div class="col-sm-5 col-xs-12">
+{php echo tpl_form_field_image('bottom_logo', $set['bottom_logo'])}
+<span class="help-block">图片大小：200*200 png格式</span>
+</div>
+</div> 
+<div class="form-group">
+<label class="col-xs-12 col-sm-3 col-md-2 control-label">底部广告二维码</label>
+<div class="col-sm-5 col-xs-12">
+{php echo tpl_form_field_image('bottom_qr', $set['bottom_qr'])}
+<span class="help-block">大小200*200 格式为jpg，登陆公众号后台下载第一个即可！ </span>
+</div>
+</div>
+<div class="form-group">
+<label class="col-xs-12 col-sm-3 col-md-2 control-label">整站网站广告条</label>
+<div class="col-sm-5 col-xs-12">
+{php echo tpl_form_field_image('ad_pic', $set['ad_pic'])}
+<span class="help-block">大小640*120 格式为jpg </span>
+</div>
+</div>
+<div class="form-group"> 
+<label class="col-xs-12 col-sm-2 col-md-2 control-label">整站广告链接</label> 
+<div class="col-sm-6 col-md-8 col-xs-12"> 
+<input type="text" class="form-control" name="ad_url" value="{$set['ad_url']}" />
+</div> 
+</div>
+<div class="form-group">
+<label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">观影提示</label>
+<div class="col-xs-12 col-sm-8">
+<textarea rows="5" class="form-control" name="tishi">{$set['tishi']}</textarea>
+<div class="help-block"></div>
+</div></div>
+</div>
+<div class="panel-heading">模板消息</div>
+<div class="panel-body">
+<div class="form-group">
+<label class="col-xs-12 col-sm-2 col-md-2 control-label">管理员openid</label>
+<div class="col-sm-6 col-md-8 col-xs-12">
+<input type="text" class="form-control" name="openid" value="{$set['openid']}" />
+</div>
+</div>
+<div class="form-group">
+<label class="col-xs-12 col-sm-2 col-md-2 control-label">视频报错模板消息ID</label>
+<div class="col-sm-6 col-md-8 col-xs-12">
+<input type="text" title="请到公众号后台选择模板消息，此处填写模板ID" class="form-control" name="bug_xiaoxi" value="{$set['bug_xiaoxi']}" />
+<span class="help-block">登录公众号后台，搜索【设置失效提醒
+】，行业：IT科技 - 互联网|电子商务 模板编号：OPENTM206544967</span>
+</div>
+</div>
+<div class="form-group">
+<label class="col-xs-12 col-sm-2 col-md-2 control-label">求片/修复通知模板消息ID</label>
+<div class="col-sm-6 col-md-8 col-xs-12">
+<input type="text" title="请到公众号后台选择模板消息，此处填写模板ID" class="form-control" name="vod_xiaoxi" value="{$set['vod_xiaoxi']}" />
+<span class="help-block">登录公众号后台，搜索【需求反馈通知
+】，行业：IT科技 - 互联网|电子商务 模板编号：OPENTM208028950</span>
+</div>
+</div>
+<div class="form-group"> 
+<label class="col-xs-12 col-sm-3 col-md-2 control-label"></label> 
+<div class="col-sm-9 col-xs-12"> 
+<p><input name="submit" type="submit" value="提交" class="btn btn-primary span3" /> <input type="hidden" name="token" value="{$_W['token']}" /> </p>
+</div> 
+</div> 
+</div> 
+</form>
+</div>
+{template 'common/footer'}

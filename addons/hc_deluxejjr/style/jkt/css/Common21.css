@@ -1,0 +1,493 @@
+
+html, body, ul, li, ol, dl, dd, dt, p, h1, h2, h3, h4, h5, h6, form, fieldset, legend, img
+{
+    margin: 0;
+    padding: 0;
+    font-family: @微软雅黑;
+}
+body
+{
+    max-width: 640px;
+    margin: 0 auto;
+    background: #f2f1ef;
+}
+
+
+input[type="text"]
+{
+    -webkit-appearance: none;
+}
+input[type="submit"], input[type="reset"], input[type="button"], button
+{
+    -webkit-appearance: none; /*去除input默认样式*/
+    -webkit-tap-highlight-color: rgba(255,255,255,0);
+}
+ul li
+{
+    list-style-type: none;
+    position: relative;
+}
+
+.dropdown
+{
+    display: none;
+}
+
+
+a:link
+{
+    text-decoration: none;
+    outline: none;
+    -webkit-tap-highlight-color: rgba(255,255,255,0);
+}
+a:visited
+{
+    text-decoration: none;
+}
+a:hover
+{
+    text-decoration: none;
+}
+a:active
+{
+    background-color: #f8d5ac;
+    text-decoration: none;
+    -webkit-tap-highlight-color: rgba(255,255,255,0);
+}
+
+
+.btn
+{
+    margin: 10px 2.5% auto 2.5%;
+    width: 95%;
+    height: 40px;
+    line-height: 35px;
+    vertical-align: middle;
+    padding-top: 4px;
+    background-color: #d24a58;
+    cursor: pointer;
+    letter-spacing: 5px;
+    color: #fff;
+    font-family: "微软雅黑";
+    font-size: 1em;
+    -webkit-transition: all 0.2s linear;
+    -webkit-appearance: none;
+    transition: all 0.2s linear; /*解决iphone圆角兼容问题*/
+    -webkit-appearance: none;
+    border-radius: 5px;
+    display: block;
+    text-align: center;
+    -webkit-tap-highlight-color: rgba(255,255,255,0);
+}
+
+.input
+{
+    width: 96%;
+    border: 0;
+    height: 45px;
+    border-bottom: 1px solid #ebe9e6;
+    font-size: 1em;
+    padding-left: 5px;
+    color: #666; /*  border:1px solid #ebe7e7;  解决iphone圆角兼容问题*/
+    -webkit-appearance: none;
+}
+
+
+.outer
+{
+    width: 100%;
+    height: 45px;
+    position: absolute;
+    left: 0;
+    bottom: 0px;
+    background: rgba(0,0,0,.5);
+}
+
+
+.back_btn, .back_btn2
+{
+    height: 35px;
+    width: 44px;
+    border-right: 1px solid rgba(255,255,255,.6);
+    background-image: url(../../../Content/PhoneImg/back.png);
+    left: 5px;
+    display: inline-block;
+    background-size: 55%;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
+}
+.outer h1
+{
+    line-height: 35px;
+    font-size: 1em;
+    color: #fff;
+    text-align: left;
+    font-weight: normal;
+    width: 65%;
+    margin-left: 80px;
+}
+
+/* footer导航*/
+
+#footer
+{
+    max-width: 640px;
+    margin: 0 auto;
+    clear: both;
+    position: fixed;
+    bottom: 0px;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    background: #f2f1ef;
+}
+.navigation
+{
+    width: 100%;
+    margin: 0 auto;
+    padding: 0px;
+    background: #f9f9f9;
+    box-shadow: #a9a8a6 0px 1px 1px inset;
+}
+#footer .navigation ul
+{
+    display: inline-block;
+    width: 100%;
+}
+#footer li
+{
+    height: 100%;
+    width: 25%;
+    float: left;
+    position: relative;
+    margin: 0 auto;
+    padding: 0;
+    text-angin: cemter;
+}
+#footer .navigation a
+{
+    height: 100%;
+    width: 100%;
+    line-height: 15px;
+    bottom: 0px;
+    display: block;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+}
+#footer .navigation .icon-nav
+{
+    position: relative;
+    padding: 8px 0 3px 0;
+    width: 30px;
+    margin: 0 auto;
+    text-align: center;
+}
+#footer .txt
+{
+    overflow: hidden;
+    margin: 0 auto;
+    font-size: 0.8em;
+    top: 0;
+}
+.txt
+{
+    padding-bottom: 20px;
+    margin-top: 8px;
+}
+#footer a
+{
+    color: #929292;
+}
+/* 2015-5.11  样式重建 */
+/*  底部返回 */
+.nav_btm
+{
+    max-width: 640px;
+    margin: auto;
+    background: #fbfbfb;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 2.8em;
+    border-top: 1px solid #ccc;
+}
+.nav_btm a
+{
+    text-decoration: none;
+}
+.nav_div2
+{
+    padding-left: 4px;
+    float: left;
+    color: #666666;
+    line-height: 2.8em;
+    font-weight: normal;
+    font-size: 1em;
+}
+.nav_div1
+{
+    padding-left: 15px;
+    float: left;
+    padding-top: 11px;
+}
+.adressli
+{
+    background: url(/Content/PhoneImg/location.jpg) 0 15px no-repeat;
+    background-size: 23px;
+    padding-left: 23px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.sy_middle
+{
+    width: 100%;
+}
+
+.sy_search
+{
+    width: 94%;
+    height: 51px;
+    background-color: #ffffff;
+    color: #888888;
+    border-bottom: 1px solid #e6e6e6;
+    padding: 0 3%;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+.sy_search ul
+{
+    width: 100%;
+    clear: both;
+}
+.sy_search ul li
+{
+    height: 51px;
+    line-height: 51px;
+    float: left;
+    width: 33%;
+}
+.backtxt
+{
+    display: inline-block;
+    height: 50px;
+    line-height: 36px;
+    vertical-align: middle;
+}
+.search_txt
+{
+    width: 65%;
+    height: 50px;
+}
+.search_txt input
+{
+    width: 95%;
+    background-color: #f2f2f2;
+    outline: none;
+    border-radius: 5px;
+    height: 36px;
+    line-height: 36px;
+    margin: 8px 0;
+}
+
+.searboximg
+{
+    background: url(/Content/PhoneImg/kehu_ico01.png) 0px 16px no-repeat;
+    background-size: 36px;
+    width: 28px;
+    height: 50px;
+    display: inline-block;
+}
+
+
+
+.sy_list
+{
+    margin: 0%;
+    width: 100%;
+    height: 100%;
+    margin-top:30px;
+}
+.sy_list ul
+{
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    border: 1px solid #dbdbdb;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    padding: 0%;
+}
+.potion
+{
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 12px;
+}
+
+/* 右边部分样式 */
+.font_txt
+{
+    color: #333333;
+    display: inline-block;
+    float: left;
+    font-size: 1.2em;
+    width: 45%;
+    overflow: hidden;
+    text-overflow: ellipsis; /*文字隐藏后添加省略号*/
+    white-space: nowrap;
+    margin-top: 2px;
+}
+.font_txt1
+{
+    color: #db5353;
+    font-size: 16px;
+    text-align: right;
+    float: right;
+    width: 55%;
+}
+.font_txt1 span
+{
+    font-size: 14px;
+    display: inline-block;
+    vertical-align: bottom;
+    height: 21px;
+    color: #db5353;
+    padding-left:2px;
+}
+.font_txt2
+{
+    display: inline-block;
+    color: #bebebe;
+    background-color: #f2f2f2;
+    width: 28%;
+    height: 22px;
+    line-height: 22px;
+    font-size: .9em;
+    overflow: hidden;
+    text-overflow: ellipsis; /*文字隐藏后添加省略号*/
+    white-space: nowrap;
+    margin-right: 5px;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.font_txt3
+{
+    color: #666666;
+    font-size: 14px;
+}
+.cot
+{
+    width: 28%;
+    position: relative;
+    display: table-cell;
+    height: 94%;
+    width: 108px;
+    text-align: center;
+    vertical-align: middle;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.cot1
+{
+    margin-left: 124px;
+    font-size: 13px;
+}
+.cot1 > div
+{
+    height: 24px;
+    line-height: 24px;
+    color: #666666;
+}
+.font_txt > a
+{
+    background-color: #db5353;
+    color: #ffffff;
+    border-radius: 4px;
+    display: inline-block;
+    width: 100%;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    font-size: 14px;
+}
+
+
+
+/* 项目列表详情 页面*/
+.sy_titile
+{
+    background: #ffffff;
+}
+.sy_titile ul
+{
+    padding: 10px 1%;
+    border-bottom: 1px solid #e6e6e6;
+}
+.sy_titile ul li
+{
+    float: left;
+    border: 1px solid #c6c6c6;
+    width: 26%;
+    margin: 1% 1% 1% 0;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 4px;
+    font-size: .95em;
+    color: #41444e;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-family: 微软雅黑;
+}
+.sy_titile ul li img
+{
+    vertical-align: middle;
+}
+.ifromCot
+{
+    padding: 20px 10px;
+    border-bottom: 1px solid #dbdbdb;
+    background: #ffffff;
+}
+.font_txt_01
+{
+    display: inline-block;
+    color: #bebebe;
+    background-color: #f2f2f2;
+    width: 18%;
+    height: 28px;
+    line-height: 28px;
+    font-size: 0.8em;
+    overflow: hidden;
+    text-overflow: ellipsis; /*文字隐藏后添加省略号*/
+    white-space: nowrap;
+    margin-right: 5px;
+    border-radius: 4px;
+    text-align: center;
+}
+.headdiv
+{
+    width: 96%;
+    height: 35px;
+    line-height: 35px;
+    color: #b2b2b2;
+    padding: 0 2%;
+    font-size: .95em;
+    background-image: url(/Content/PhoneImg/arr_drow.png);
+    background-repeat: no-repeat;
+    background-position: right 14px;
+    background-size: 16px;
+}
+.title_div
+{
+    padding-right: 10px;
+    border-bottom: 1px solid #dbdbdb;
+}

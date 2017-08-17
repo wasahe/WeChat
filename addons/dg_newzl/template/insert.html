@@ -1,0 +1,42 @@
+{template 'common/header'}
+<div class="main">
+	<ul class="nav nav-tabs">
+		<li{if $_GPC['do'] == 'record' } class="active"{/if}><a href="{php echo $this->createWebUrl('record',array('rid'=>$rid));}">参与记录</a></li>
+		<li{if $_GPC['do'] == 'insert' || $_GPC['do'] == '' } class="active"{/if}><a href="{php echo $this->createWebUrl('insert',array('id'=>$user['id'],'rid'=>$user['rid']));}">增加票数</a></li>
+	</ul>
+	<form class="form-horizontal form" id="form2" action="{php echo url('site/entry/insertuser',array(m=>'dg_newzl'))}" method="post">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				成员信息
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">成员姓名</label>
+					<div class="col-sm-8 col-xs-12">
+						<input type="text" class="form-control" name="username" id="username" value="{$user['username']}" />
+						<input type="hidden" class="form-control" name="rid" id="rid" value="{$user['rid']}" />
+						<input type="hidden" class="form-control" name="openid" id="openid" value="{$user['openid']}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">增加票数</label>
+					<div class="col-sm-8 col-xs-12">
+						<input type="text" class="form-control" name="count" id="count" value="{$user['count']}" />
+						<div class="help-block">此项设置增加用户的票数</div>
+						<div class="help-block"><strong class="text-danger">默认显示的是用户拥有的票数</strong></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-group col-sm-12">
+			<input type="submit" class="btn btn-primary col-lg-1" name="submit" value="提交" />
+			<input type="button" class="pull-right btn btn-primary" id="fanhui" name="fanhui" value="返回" />
+		</div>
+	</form>
+</div>
+<script>
+$("#fanhui").click(function(){
+			window.location.href="{php echo $this->createWebUrl('record',array('rid'=>$rid));}";
+})
+</script>
+{template 'common/footer'}

@@ -1,0 +1,90 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li {if $op == 'display'}class="active"{/if}><a href="{php echo $this->createWebUrl('staff', array('op' => 'display'))}">{php echo $this->getFieldsLabel('staff_name');}管理</a></li>
+
+	<li {if $op == 'post'}class="active"{/if}><a href="{php echo $this->createWebUrl('staff', array('op' => 'post','uid'=>$uid))}">{php echo $this->getFieldsLabel('staff_name');}资料修改</a></li>
+</ul>
+
+<!-- 添加回复内容 -->
+<div class="main">
+	<form class="form-horizontal form" id="form2" action="" method="post">
+		<div class="panel panel-defau{php echo $this->getFieldsLabel('staff_name');}>
+			<div class="panel-heading">
+				编辑{php echo $this->getFieldsLabel('staff_name');}资料：
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">姓名</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="jform[staff_name]" id="name" class="form-control " value="{$item['staff_name']}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">所在门店</label>
+					<div class="col-sm-9 col-xs-12">
+						<select name="jform[staff_store_id]" class="form-control ">
+							<option>请选择门店</option>
+							{loop $stores $key=>$store}
+							<option value="{$store[id]}" {if $store['id'] == $item['staff_store_id']}selected{/if}>{$store[title]}</option>
+							{/loop}
+						</select>
+						
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">工号</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="jform[staff_work_no]" id="work_no" class="form-control " value="{$item['staff_work_no']}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">照片</label>
+					<div class="col-sm-9 col-xs-12">
+						{php echo tpl_form_field_image('jform[staff_photo]',$item['staff_photo']);}
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">联系电话</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="jform[staff_phone]" id="phone" class="form-control " value="{$item['staff_phone']}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">自我介绍</label>
+					<div class="col-sm-9 col-xs-12">
+						<textarea name="jform[staff_desc]" id="desc" class="form-control ">{$item['staff_desc']}</textarea>
+					</div>
+				</div>
+
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">是否上线</label>
+					<div class="col-sm-9 col-xs-12">
+						<label for="isshow1" class="radio-inline"><input type="radio" name="online" value="1" id="isshow1" {if $item['online'] == 1}checked="true"{/if} /> 是</label>
+						&nbsp;&nbsp;&nbsp;
+						<label for="isshow2" class="radio-inline"><input type="radio" name="online" value="0" id="isshow2"  {if $item['online'] == 0}checked="true"{/if} /> 否</label>
+					</div>
+				</div>
+				<input type="hidden" name="uid" value="{$item['member_id']}" />
+				<input type="hidden" name="id" value="{$item['id']}" />
+			</div>
+
+
+		</div>
+
+		<div class="form-group col-sm-12">
+			<input name="token" type="hidden" value="{$_W['token']}" />
+			<input type="submit" class="btn btn-primary col-lg-1" name="submit" value="提交" />
+		</div>
+	</form>
+</div>
+<script>
+    require(['util','jquery'], function(u,$){
+    	// u.editor($('#jifa')[0]);
+    });
+</script>

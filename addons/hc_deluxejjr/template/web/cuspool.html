@@ -1,0 +1,99 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li class="active"><a href="">客户池</a></li>
+</ul>
+<style>	
+.label-important {
+	background-color: #747474;
+}
+</style>
+<div class="main">
+	<div class="stat">
+		<form action="" method="post">
+			<input type="hidden" name="op" value="sort" />
+			<table class="table sub-search">
+				<tbody>
+					<tr>
+						<th style="width:100px;">真实姓名</th>
+						<td>
+							<input name="realname" class="form-control" style="width:150px;" type="text" value="{$sort['realname']}" />
+						</td>
+					</tr>
+					<tr>
+						<th style="width:100px;">手机号码</th>
+						<td>
+							<input name="mobile" class="form-control" style="width:150px;" type="text" value="{$sort['mobile']}" />
+						</td>
+					</tr>
+					<tr>
+						<th style="width:100px;">名称</th>
+						<td>
+							{loop $loupans $key $l}
+								{php $key++}
+								<input type="submit" name="loupan" value="{$l['title']}">{if $key%7==0 }<br/>{/if}
+							{/loop}
+						</td>
+					</tr>
+					<tr>
+						<th></th>
+						<td>
+							<input type="submit" name="" value="搜索" class="btn btn-primary">
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
+		<div class="stat-div">
+			<div class="sub-item" id="table-list">
+				<h4 class="sub-title" style="float:right;color:red;">总数：<?php echo $total;?>&nbsp;&nbsp;&nbsp;<a href="">刷新</a></h4>
+				<h4 class="sub-title">客户名单</h4>
+				<form action="" method="post" onsubmit="">
+					<div class="sub-content">
+						<table class="table table-hover">
+							<thead class="navbar-inner">
+								<tr>
+									<th class="row-hover">真实姓名</th>
+									<th class="row-hover">手机号码</th>
+									<th class="row-hover">推荐产品</th>
+									<th class="row-hover">领取身份</th>
+									<th class="row-hover">沉淀状态</th>
+									<th class="row-hover">沉淀时间</th>
+									<th class="row-hover">操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								{loop $cuspool $v}
+								<tr>
+									<td>
+										{$v['realname']}
+									</td>
+									<td>
+										{$v['mobile']}
+									</td>
+									<td>
+										{$loupan[$v['loupan']]}
+									</td>
+									<td>
+										{$identity[$idpri[$v['cuspri']]]}
+									</td>
+									<td>
+										{$status[$v['status']]}
+									</td>
+									<td>
+										{php echo date('Y-m-d H:i:s',$v['createtime'])}
+									</td>
+									<td>
+										<a href="{php echo $this->createWebUrl('cuspool', array('op'=>'del','id' => $v['id']));}" onclick="return confirm('确定要删除该客户吗？');">删除</a>
+									</td>
+								</tr>
+								{/loop}
+							</tbody>
+						</table>
+					</div>
+				</form>
+				{$pager}
+			</div>
+		</div>
+	</div>
+</div>
+{template 'common/footer'}

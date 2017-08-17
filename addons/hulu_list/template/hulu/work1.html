@@ -1,0 +1,48 @@
+<div class="panel panel-default">
+<div class="panel-heading">
+<div class="panel-title">
+<h3>临时工</h3>
+</div>
+</div>
+<div class="panel-body table-responsive">
+<table class="table">
+<thead>
+<tr>
+<th>信息编号</th>
+<th>姓名</th>
+<th>特长</th>
+
+<th>电话</th>
+<th>有效期</th>
+<th>发布时间</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+{loop $linshia $key $linshia}
+<tr>
+<td>
+<a href="{php echo $this->createMobileUrl('job',array('vid'=>$linshia['id']));}" target="_blank">{$linshia['id']}</a> | 
+{if $linshia['pid'] == 1}未审核
+{elseif $linshia['pid'] == 2}真实
+{elseif $linshia['pid'] == 3}假
+{elseif $linshia['pid'] == 4}已删除
+{else}
+{/if}
+</td>
+<td>{$linshia['linshiname']}</td>
+<td>{$linshia['linshispecial']}</td>
+<td>{$linshia['tel']}</td>
+<td>{php echo date("Y-m-d H:i:s",strtotime($linshia['validity']));}</td>
+<td>{php echo date('Y-m-d H:i:s',$linshia['time'])}</td>
+<td><a href="{php echo $this->createWebUrl('infoedit',array('vid'=>$linshia['id'],'pid'=>'2'));}">真</a> | 
+<a href="{php echo $this->createWebUrl('infoedit',array('vid'=>$linshia['id'],'pid'=>'3'));}">假</a> | 
+<a href="{php echo $this->createWebUrl('infoedit',array('vid'=>$linshia['id'],'pid'=>'4'));}">删除</a> | 
+<a href="{php echo $this->createWebUrl('update',array('vid'=>$linshia['id']));}">编辑</a></td>
+</tr>
+{/loop}
+</tbody>
+</table>
+</div>
+</div>
+

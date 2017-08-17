@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    
+    <head>
+        <title>粉丝福利团</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+        <link href="{$res}css/show_card_ret.css" rel="stylesheet" type="text/css" />
+		<link href="{$res}css/show_card.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" type="text/css" href="{$plus}dan/amazeui/css/amazeui-mini.css">
+        <script type="text/javascript" src="{$res}js/jquery.min.js"></script>
+		<script type="text/javascript" src="{$plus}dan/amazeui/js/amazeui.min.js"></script>
+		<script type="text/javascript" src="{$res}js/fastclick.min.js"></script>
+        <script>$(function() {FastClick.attach(document.body);});</script>
+        <script type="text/javascript">
+            $(function($) {
+                document.addEventListener("selectionchange",
+                function(e) {
+                    if (window.getSelection().anchorNode.parentNode.id == 'copy_key' && document.getElementById('copy_key').innerText != window.getSelection()) {
+                        var key = document.getElementById('copy_key');
+                        window.getSelection().selectAllChildren(key);
+                    }
+                },
+                false);
+            });
+        </script>
+        <script type="text/javascript">
+            $(function($) {
+                setRootFontSize();
+            });
+            window.onresize = function() {
+                setRootFontSize();
+            }
+            function setRootFontSize() {
+                $('html').css('font-size', document.body.clientWidth / 15 + 'px');
+            }
+        </script>
+		<script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+<script type="text/javascript">
+	if(navigator.appName == 'Microsoft Internet Explorer'){
+		if(navigator.userAgent.indexOf("MSIE 5.0")>0 || navigator.userAgent.indexOf("MSIE 6.0")>0 || navigator.userAgent.indexOf("MSIE 7.0")>0) {
+			alert('您使用的 IE 浏览器版本过低, 推荐使用 Chrome 浏览器或 IE8 及以上版本浏览器.');
+		}
+	}
+	window.sysinfo = {
+		{if !empty($_W['uniacid'])}'uniacid': '{$_W['uniacid']}',{/if}
+		{if !empty($_W['acid'])}'acid': '{$_W['acid']}',{/if}{if !empty($_W['openid'])}'openid': '{$_W['openid']}',{/if}
+		{if !empty($_W['uid'])}'uid': '{$_W['uid']}',{/if}
+		'siteroot': '{$_W['siteroot']}',
+		'siteurl': '{$_W['siteurl']}',
+		'attachurl': '{$_W['attachurl']}',
+		'attachurl_local': '{$_W['attachurl_local']}',
+		'attachurl_remote': '{$_W['attachurl_remote']}',
+		{if defined('MODULE_URL')}'MODULE_URL': '{MODULE_URL}',{/if}
+		'cookie' : {'pre': '{$_W['config']['cookie']['pre']}'}
+	};
+	// jssdk config 对象
+	jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || {};
+	// 是否启用调试
+	jssdkconfig.debug = false;
+	jssdkconfig.jsApiList = [
+		'checkJsApi',
+		'onMenuShareTimeline',
+		'onMenuShareAppMessage',
+		'onMenuShareQQ',
+		'onMenuShareWeibo',
+		'hideMenuItems',
+		'showMenuItems',
+		'hideAllNonBaseMenuItem',
+		'showAllNonBaseMenuItem',
+		'translateVoice',
+		'startRecord',
+		'stopRecord',
+		'onRecordEnd',
+		'playVoice',
+		'pauseVoice',
+		'stopVoice',
+		'uploadVoice',
+		'downloadVoice',
+		'chooseImage',
+		'previewImage',
+		'uploadImage',
+		'downloadImage',
+		'getNetworkType',
+		'openLocation',
+		'getLocation',
+		'hideOptionMenu',
+		'showOptionMenu',
+		'closeWindow',
+		'scanQRCode',
+		'chooseWXPay',
+		'openProductSpecificView',
+		'addCard',
+		'chooseCard',
+		'openCard',
+		'openAddress'
+	];
+	</script>
+    </head>
+    
+    <body>
+        <div class="body-wrap">
+
+
+
+<div id="noyjq_main" style="z-index: 1000;display:{if $show}none{else}block{/if}" {if $show}onclick="$('#noyjq_main').hide();"{/if}>
+<div class="atom-dialog-wrap atom-dialog-show" id="noyjq_tip" style="z-index: 999">
+    <div class="atom-dialog " style="width:80%;height:auto">
+        <div id="dialog_subview_of_atomdlg_10" class="atom-dialog-content">
+            <div class="nolottery-wrap">
+                <div class="nolottery-logo">
+                    <img src="{$res}images/noyhq.png">
+                </div>
+                <div class="nolottery-tips">
+                    优惠券已被领完或失效
+                </div>
+                <div class="nolottery-subTip">
+                    直接购买点顶部 <img src="{$res}images/wxtip.png" style="height:.5rem;padding-top:.15rem;"> 选择浏览器打开
+                </div>
+                {if $show}
+				<a href="javascrpit:" class="nolottery-btn" onclick="$('#noyjq_main').hide();">
+                    <img src="{$res}images/btnbak.png">
+                </a>
+				{else}
+				<a href="javascrpit:" class="nolottery-btn" onclick="showmore();">
+                    <img src="{$res}images/btnbak2.png">
+                </a>
+				{/if}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="atom-mask atom-mask-show" id="noyjq_mask" style="z-index: 998"></div>
+</div>
+
+
+
+            <div class="kouling-back">
+                <img src="{$res}images/back_card.png"
+                onclick="javascript:window.history.go(-1);" />
+            </div>
+			<div class="kouling-share">
+                <img src="{$res}images/share_card.png"
+                onclick="javascript:showfxtip();" />
+            </div>
+            <div class="shop-info">
+                <span class="shop-title">
+                    {if $show['istmall']==1}天猫{else}淘宝{/if}
+                </span>
+                <span class="shop-logo">
+                    <img src="{$res}images/shoplogo_card.png"
+                    />
+                </span>
+                
+				
+				<div class="yhq" onclick="javascript:showthistkl(1);">
+                    <span class="coupons-price"><strong>¥</strong>{php echo $q_jiage}</span>
+					<span class="coupons-info">券有效期</span>
+                    <span class="coupons-data">{php echo date('Y-m-d',strtotime($show['itemyhj_etime']));}</span>
+                    <span class="coupons-btn">
+                        立即领券
+                    </span>
+                </div>
+
+
+            </div>
+
+<div class="item-detail-view">
+<div class="item-wrap">
+    <a href="javascript:" class="item-detail" >
+        <div class="pic">
+            <div class="img_show am-inline-block am-gallery am-gallery-default fq-background-white" data-am-widget="gallery" data-am-gallery="{ pureview: true }">
+            <img src="{php echo tomedia($show['itempic'])}">
+			</div>
+        </div>
+        <div class="item-content">
+            <div class="title">
+                <span>{if $show['wenan']}推荐理由：{$show['wenan']}{else}{$show['title']}{/if}</span>
+            </div>
+            <div class="tags">
+                <!--span class="tmallTag tag">
+                    <img src="{$res}images/istm.png" style="height: auto;max-width: 100%;">
+                </span-->
+                <span class="byTag tag">券后包邮</span>
+                <span class="dealNum" style="font-size:0.5rem">剩余<span id="quan_num"></span>张</span>
+            </div>
+            <div class="price-origin">
+                <span class="origin"><img src="{$res}images/{if $show['istmall']==1}istm{else}istaobao{/if}.png" style="height: auto;max-width: 16px;padding-bottom:3px;"> 现价：¥{$show['itemfee']}</span>
+            </div>
+            <div class="discount">
+                <img class="img-tag" src="{$res}images/qhfee.png">
+                <span class="sale">
+                    <em>
+                        ¥
+                    </em>
+                    {php echo $jiagenew;}
+                </span>
+            </div>
+        </div>
+    </a>
+    <!--a href="" class="link">查看详情</a-->
+</div>
+</div>
+
+<!--商品图文详情-->
+        <div class="am-panel-group am-margin-vertical-sm" id="accordion" style="font-size:14px;margin-top:-60px">
+            <div class="am-panel am-padding-horizontal-sm">
+                <div class="am-panel-hd am-padding-left-0 am-padding-right-0">
+                    <h4 class="am-panel-title" data-am-collapse="{parent: '#accordion', target: '#product-details'}" data-itemid="{$show['itemid']}">
+                        商品图文详情<span class="am-text-primary am-text-xs" style="font-size:14px">（点击展开）</span>
+                        <i class="am-icon-angle-right am-fr am-icon-sm" id="change_icon"></i>
+                    </h4>
+
+                </div>
+                <div id="product-details" class="am-panel-collapse am-collapse">
+                    <div class="am-panel-bd am-padding-0" style="border-top: 0">
+                        <div class="am-tab-panel am-fade am-in am-active" id="tab1">
+                                                            <div class="am-padding-top-sm" style="width:100%;overflow:auto;"></div>                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!--商品图文详情-->
+
+
+            <!--div class="line"></div-->
+            <div class="ant" style="font-size:14px;margin-top:-30px">
+                <img src="{$res}images/return.gif" onclick="showmore();"
+                />
+            </div>
+            <div class="titleall" style="line-height:26px;padding:3% 0px;">
+                <span class="title">
+                    长按下方二维码关注我们
+                </span>
+                <br />
+                <span class="title" style="color:Red;">
+                    获取更多优惠券
+                </span>
+            </div>
+            <div class="s11img">
+                <img src="{$_W['account']['qrcode']}"
+                style="width:70%" />
+            </div>
+            <div class="titleall">
+                <span class="line" style="padding-bottom:5px">
+                </span>
+                <span class="title">
+                    活动说明
+                </span>
+            </div>
+            <div class="mes">
+                <p>
+                    1. 点击“复制淘口令”按钮，拷贝淘口令 &gt;打开手淘 &gt; 粘贴淘口令 &gt; 成功领取优惠券后，购买商品时使用，即可享受优惠。
+                <br><br>
+                    2. 在手机淘宝-我的淘宝-卡券包-网店优惠券，可查询已发放到账户的优惠券。
+                <br><br>
+                    3. 因商品参与其它活动等原因，付款时优惠券可能无法使用，此时商品最终成交价以您实际付款时提示金额为准。
+                <br><br>
+                    4. 获取、使用优惠券时如存在违规行为（作弊领取、恶意套现、刷取信誉、虚假交易等），淘宝将取消用户领取资格、撤销违规交易且收回全部优惠券（含已使用及未使用的），必要时追究法律责任。
+                </p>
+            </div>
+            <div class="titleall">
+                <span class="line"></span>
+                <span class="title">
+                    规则声明
+                </span>
+            </div>
+            <div class="mes">
+                <p>
+                    上传至该页面的商品与优惠券信息，会被阿里集团官方收录并给其他用户使用。上传者上传此类信息的，表明上传者已与商家达成一致，即商家同意官方收录且给其他用户使用。如商家不同意，请上传者不要上传，如否导致的纠纷由上传者解决并承担责任。
+                </p>
+            </div>
+            <div class="yhq_nb" style="display:none" id="taokouling">
+                <div class="yhq_nb_title">
+                    长按框内 > 全选 > 复制
+                </div>
+                <div class="yhq_nb_mes">
+                    <!--span id="copy_key">
+                        【{if $show['wenan']}推荐理由：{$show['wenan']}{else}{$show['title']}{/if}】，复制框内整段文字，打开「手机淘宝」即可「领取优惠券」并购买{$show['itemyhj_tkl']}
+                    </span-->
+					<span id="copy_key_ios" style="color:#f40">复制框内整段文字，打开「手机淘宝」即可「领取优惠券」并购买{$show['itemyhj_tkl']}</span>
+					<textarea rows=4 style="font-size:15px;color:#f40;display: none;ime-mode: disabled;overflow-y:visible;height:100%;" id="copy_key_android" type="text" class="am-form-field am-text-center am-text-mss pt10" oninput="regain();">复制框内整段文字，打开「手机淘宝」即可「领取优惠券」并购买{$show['itemyhj_tkl']}</textarea>
+                </div>
+                <div class="yhq_nb_mes_bo">复制后请记得打开手机淘宝哦</div>
+                <div class="yhq_nb_ant">
+                    <img src="{$res}images/okbtn.gif" onclick="javascript:hidethistkl()" />
+                </div>
+            </div>
+
+
+        </div>
+        <div class="fc_share">
+            <img src="{$res}images/share_tip.png" style="width:80%" />
+        </div>
+        <div class="fc_share_bg">
+        </div>
+
+
+<div id="back_top" class="slide-box" style="position:fixed;bottom:50px;right:20px;z-index:100019;display:block">
+<a href="javascript:scroll(0,0)" title="返回顶部" style="width:44px;"><img src="{$res}static/jwap/images/back-top.png" style="width:44px;"/></a>
+</div>
+
+
+<script type="text/javascript">
+document.getElementById("back_top").style.display = "none";
+window.onscroll = function () {
+    
+	var allheight = window.screen.height;
+	
+
+    if (document.documentElement.scrollTop + document.body.scrollTop > 300) {
+        document.getElementById("back_top").style.display = "block";
+    }
+    else {
+        document.getElementById("back_top").style.display = "none";
+    }
+
+	
+}
+</script>
+
+
+<script>
+    $(function() {
+          //事件监听
+          //------------------------------------------	
+          document.addEventListener("selectionchange",
+          function(e) {
+            if (window.getSelection().anchorNode.parentNode.id == 'copy_key_ios' && document.getElementById('copy_key_ios').innerText != window.getSelection()) {
+              var key = document.getElementById('copy_key_ios');
+              window.getSelection().selectAllChildren(key);
+            }
+          },
+          false);
+
+    });
+
+    var ua = navigator.userAgent.toLowerCase();
+    if (ua.match(/iphone/i) == "iphone" || ua.match(/ipad/i) == "ipad") {
+
+        $('.yhq_nb_title').html("长按框内 > 拷贝");
+
+    } else {
+        $("#copy_key_ios").hide();
+        $("#copy_key_android").show();
+    }
+
+    var taokouling_value = document.getElementById("copy_key_android").value;
+    function regain() {
+        document.getElementById('copy_key_android').value = taokouling_value;
+    }
+    
+</script>
+
+<script type="text/javascript">
+
+            function showmore() {
+                //if (window.history.length > 2) {
+                   // window.history.go(-1);
+                //} else {
+                    window.location.href = '{php echo $this->createMobileUrl('index');}';
+                //}
+            }
+            $(function($) {
+                $('.fc_share_bg').click(function() {
+                    $('.fc_share').hide();
+                    $('.fc_share_bg').hide();
+                    $('.yhq_nb').hide();
+                });
+                $('.fc_share').click(function() {
+                    $('.fc_share').hide();
+                    $('.fc_share_bg').hide();
+                });
+            });
+            function showfxtip() {
+                $('.fc_share').show();
+                $('.fc_share_bg').show();
+            }
+            function showthistkl(_flag) {
+                if (_flag == 0) {
+                   // $('.yhq_nb_mes_bo').html('');
+                } else {
+                    //$('.yhq_nb_mes_bo').html('');
+                }
+                $('.yhq_nb').show();
+                $('.fc_share_bg').show();
+            }
+            function hidethistkl() {
+                $('.yhq_nb').hide();
+                $('.fc_share_bg').hide();
+            }
+        </script>
+
+		<script>
+         //获取pics
+    $('.am-panel-title').click(function () {
+        //详情显影
+        if ($("#product-details").is(":hidden")) {
+            $("#change_icon").removeClass('am-icon-angle-right').addClass('am-icon-angle-down');
+            $('.am-tab-panel').html('<span class="am-center am-text-center am-margin-vertical-xs">图片努力加载中<i class="am-icon-spinner am-icon-pulse am-margin-left-xs"></i></span>');
+        } else {
+            $("#change_icon").removeClass('am-icon-angle-down').addClass('am-icon-angle-right');
+        }
+        var itemid = $(this).attr('data-itemid');
+        getiteminfo(itemid);
+    });
+
+    //采集pics
+    function getiteminfo(itemid) {
+        $.ajax({
+            url: "https://hws.m.taobao.com/cache/mtop.wdetail.getItemDescx/4.1/?data=%7Bitem_num_id%3A" + itemid + "%7D&type=jsonp&dataType=jsonp",
+            dataType: 'jsonp',
+            jsonp: 'callback',
+            success: function (result) {
+                if (result.ret[0] == "SUCCESS::接口调用成功") {
+                    var len = result.data.images.length;
+                    var image = new Array();
+                    for (var i = 0; i < len; i++) {
+                        image[i] = '<img src="' + result.data.images[i] + '">';
+                    }
+                    $('.am-tab-panel').html(image);
+                } else {
+                    $("#qf_alert_info").html("宝贝数据调用失败，原因：" + result.ret[0]);
+                    $('#qf_alert').modal();
+                }
+            }
+        });
+    }
+		</script>
+
+    <script type="text/javascript">
+	$(function(){
+
+
+{if $_GPC['do']=='show_all' || $_GPC['do']=='show_card'}
+
+var url = "{php echo $this->createMobileUrl('hit_ajax',array('id'=>$_GPC['id'],'act'=>'itemall'));}";		
+$.post(url, function(dat){
+dat = eval('('+dat+')');
+});
+
+//判断
+var url2 = "{php echo $this->createMobileUrl('yhj_all_ajax',array('quan_link'=>$show['quan_link'],'id'=>$show['id']));}";		
+$.post(url2, function(dat){
+dat = eval('('+dat+')');
+
+if(dat.status==1){
+$('#noyjq_main').show();
+//$('#copy_key').html("来晚了，优惠券已被抢空！喜欢本商品可点击右上角使用其他浏览器直接购买！");
+$('#copy_key_ios').html("来晚了，优惠券已被抢空！喜欢本商品可点击右上角使用其他浏览器直接购买！");
+$('#copy_key_android').val("来晚了，优惠券已被抢空！喜欢本商品可点击右上角使用其他浏览器直接购买！");
+$('.yhq_nb_title').html("友情提示");
+}
+
+});
+//判断
+
+
+
+//更新
+var url3 = "{php echo $this->createMobileUrl('yhj_num_ajax',array('quan_link'=>$show['quan_link'],'id'=>$show['id']));}";		
+$.post(url3, function(dat){
+dat = eval('('+dat+')');
+
+if(dat.status==1){
+$('#quan_num').html(dat.quan_num);
+}
+
+});
+//更新
+
+//加写
+var url4 = "{php echo $this->createMobileUrl('yhj_tkl_all_ajax',array('id'=>$show['id']));}";		
+$.post(url4, function(dat){
+dat = eval('('+dat+')');
+
+if(dat.status==1 && dat.tkl!='error'){
+//$('#copy_key').html("复制框内整段文字，打开「手机淘宝」即可「领取优惠券」并购买"+dat.tkl);
+$('#copy_key_ios').html("复制框内整段文字，打开「手机淘宝」即可「领取优惠券」并购买"+dat.tkl);
+$('#copy_key_android').val("复制框内整段文字，打开「手机淘宝」即可「领取优惠券」并购买"+dat.tkl);
+
+}else if(dat.tkl=='error'){
+
+$('#noyjq_main').show();
+
+}
+
+});
+//加写
+
+
+{/if}
+
+
+
+    wx.config(jssdkconfig);
+	var $_share = {php echo json_encode($_share);};
+	if(typeof sharedata == 'undefined'){
+		sharedata = $_share;
+	} else {
+		sharedata['title'] = sharedata['title'] || $_share['title'];
+		sharedata['desc'] = sharedata['desc'] || $_share['desc'];
+		sharedata['link'] = sharedata['link'] || $_share['link'];
+		sharedata['imgUrl'] = sharedata['imgUrl'] || $_share['imgUrl'];
+	}
+	if(sharedata.imgUrl == ''){
+		var _share_img = $('body img:eq(0)').attr("src");
+		if(_share_img == ""){
+			sharedata['imgUrl'] = window.sysinfo.attachurl + 'images/global/wechat_share.png';
+		} else {
+			sharedata['imgUrl'] = util.tomedia(_share_img);
+		}
+	}
+	if(sharedata.desc == ''){
+		var _share_content = util.removeHTMLTag($('body').html());
+		if(typeof _share_content == 'string'){
+			sharedata.desc = _share_content.replace($_share['title'], '')
+		}
+	}
+	wx.ready(function () {
+
+		wx.onMenuShareAppMessage(sharedata);
+		wx.onMenuShareTimeline(sharedata);
+		wx.onMenuShareQQ(sharedata);
+		wx.onMenuShareWeibo(sharedata);
+
+        sharedata.success = function(){
+
+{if $_GPC['do']=='show_all'}
+var url = "{php echo $this->createMobileUrl('share_ajax',array('id'=>$_GPC['id'],'act'=>'itemall'));}";		
+$.post(url, function(dat){
+dat = eval('('+dat+')');
+});
+{/if}
+
+	    }
+
+
+	});
+
+	});
+</script>
+
+
+
+
+
+</body>
+</html>

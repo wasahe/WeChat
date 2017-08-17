@@ -1,0 +1,35 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li class="active"><a href="">跟进日志详情</a></li>
+</ul>
+<style type="text/css">
+table li{padding:5px 0;}
+small a{color:#999;}
+</style>
+<div class="main">
+	<form action="" class="form-horizontal form" method="post">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				{$status[$content['status']]}
+			</div>
+			<div class="form-group" style="padding-top:10px;">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label" style="text-align:left;padding-left:3%;">{php echo date('Y-m-d H:i:s', $content['createtime'])}</label>
+				<div class="col-sm-7">
+					{$content['content']}
+				</div>
+			</div>
+			{loop $creditlogs $c}
+			<div class="form-group" style="padding-top:10px;">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label" style="text-align:left;padding-left:3%;">{php echo date('Y-m-d H:i:s', $c['createtime'])}</label>
+				<div class="col-sm-7">
+					{$c['content']}
+				</div>
+			</div>
+			{/loop}
+			<div class="form-group col-sm-12">
+				<input type="button" class="btn btn-primary span3" name="submit" onclick="history.go(-1)" value="返回" />
+			</div>
+		</div>
+	</form>
+</div>
+{template 'common/footer'}

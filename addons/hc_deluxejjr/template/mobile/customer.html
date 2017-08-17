@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>我的客户</title>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta content="telephone=no,email=no" name="format-detection" />
+    <link href="../addons/hc_deluxejjr/style/jkt/css/Common1.css?rand=1" rel="stylesheet" type="text/css" />
+    <script src="../addons/hc_deluxejjr/style/jkt/js/jquery-1.4.4.min.js" type="text/javascript"></script>
+	<style>
+		.pagination li{
+			margin-left:20px;
+			background-color: #fa614b;
+			display: inline-block;
+			padding: 0 5px;
+			border-radius: 5px;
+			
+		}
+		.pagination li .pager-nav{
+			color: #fff;
+		}
+	</style>
+</head>
+<body>
+<div>
+    <div>
+        <div style="width: 100%; background: #db5353; color: #ffffff;" class="customer_gaili">
+            <ul id="topsouid">
+                <li style="border-right: 1px solid #d04e4e; border-bottom: 1px solid #d04e4e;
+                    padding: 8px 0 10px 0; float: left; text-align: center;">
+                    <p style="font-size: 26px;">{$total}</p>
+                    <p style="font-size: 12px;">累计推荐</p>
+                </li>
+                <li  style="padding: 8px 0 10px 0; border-bottom: 1px solid #d04e4e; float: left;
+                    text-align: center;">
+                    <p style="font-size: 26px;">{$s1}</p>
+                    <p style="font-size: 12px;">{$status[1]}</p>
+                </li>
+                <li  style="border-right: 1px solid #d04e4e; padding: 8px 0 10px 0; float: left;
+                    text-align: center;">
+                    <p style="font-size: 26px;">{$s2}</p>
+                    <p style="font-size: 12px;">{$status[2]}</p>
+                </li>
+                <li style="padding: 8px 0 10px 0; float: left; text-align: center;">
+                    <p style="font-size: 26px;">{$s3}</p>
+                    <p style="font-size: 12px;">{$status[3]}</p>
+                </li>
+                <div style="clear: both;">
+                </div>
+            </ul>
+        </div>
+        <!-----////------->
+        <div class="customer_fiox" style="position: inherit;">
+			<div class="customer_content">
+				<div class="customer_inp">
+					<input type="text" name="keyword" id="key" placeholder="请输入姓名或手机号码" value="{$keyword}" />
+					<div id="icosou" class="customer_inp_ico1">
+					</div>
+				</div>
+				<a href="javascript:void(0)" onclick="sort($('#customer'))">高级搜索</a>
+			</div>
+        </div>
+        <!-----////------->
+        <div class="customer_boundary">
+            <p style="color: #333333;">客户列表</p>
+            <a href="{php echo $this->createMobileurl('recommend')}" style="position: absolute; right: 12px;top: 0px; font-size: 0.9em; color: #999999;">我要推荐
+				<img src="../addons/hc_deluxejjr/style/jkt/images/arr_right.png" width="12" height="16" style="margin-bottom: -2px; margin-left: 5px;" /><!--<div class="customer_inp_ico2">
+            </div>-->
+            </a>
+        </div>
+    </div>
+    <!-----////------->
+    <div id="customer">
+		{loop $customer $c}
+			<div class="customer_main customer_main1" {if $c['isvalid']==0}style="background-color:#E7E7E7;"{/if}>
+				<div class="customer_main_wap">
+					<div class="customer_detailed" style="margin-right: 135px; border-right: none;">
+						<p class="font_black" onclick="location.href = '{php echo $this->createMobileurl('customer', array('op'=>'detail','cid'=>$c['id']))}'">{$c['realname']}</p>
+						<p class="top font_min">{if $c['isvalid']==0}{php echo hoho($c['mobile'])}{else}{$c['mobile']}{/if}</p>
+					</div>
+					<div class="customer_ico" style="width: 140px;">
+						<a href="tel:{if $c['isvalid']==0}{else}{$c['mobile']}{/if}"><div class="customer_inp_ico3" style="margin-left:22px; height:30px;" ></div></a>
+						<a href="sms:{if $c['isvalid']==0}{else}{$c['mobile']}{/if}"><div class="customer_inp_ico4" style="margin-left:6px; width:30px; height:30px; margin-top:2px;" ></div></a>
+						<a href="{php echo $this->createMobileurl('recommend',array('lid'=>$c['loupan']))}"><div class="customer_inp_ico5" style="margin-left:6px; height:30px;" ></div></a>
+					</div>
+				</div>
+				<div class="line_ph">
+					<div class="customer_font customer_font1 customer_no">
+						<div class="customer_no2">
+							<span>[{$location_c[$c['loupan']]}]
+								<font>{$location_a[$c['loupan']]}</font><font></font><font></font>
+							</span>
+						</div>
+						<div style="font-size:.8em; padding-right:25%; text-align:right; position:absolute; right:0; top:0; color:#999999;">{if $c['isvalid']==0}已过期{else}{php echo haha($indate[$c['status']], $c['indatetime'])}{/if}</div>
+						<div class="customer_flow"><a href="{php echo $this->createMobileurl('customer', array('op'=>'detail','cid'=>$c['id']))}" style="color:RGB(178,178,178)">{$status[$c['status']]}</a></div>
+					</div>
+				</div>
+			</div>
+		{/loop}
+		{$pager}
+    </div>
+	<div class="customer_boundary" style="background-color:#ffffff;">
+		<p style="color: #333333;">客户池</p>
+		<a href="{php echo $this->createMobileurl('cuspool')}" style="position: absolute; right: 12px;top: 0px; font-size: 0.9em; color: #999999;">更多客户
+			<img src="../addons/hc_deluxejjr/style/jkt/images/arr_right.png" width="12" height="16" style="margin-bottom: -2px; margin-left: 5px;" /><!--<div class="customer_inp_ico2">
+		</div>-->
+		</a>
+	</div>
+	{if sizeof($customer)>=3}
+	<div style="filter:alpha(opacity=0); opacity:0;" class="customer_main customer_main1" style="height:30px;"><br/><br/>
+	</div>
+	{/if}
+</div>
+<link rel="stylesheet" href="../addons/hc_deluxejjr/style/css/style.css?r=5"/>
+<nav class="nav fn-clear">
+	<a href="{php echo $this->createMobileUrl('index')}"><i class="icon-angle-left"></i>首页</a>
+	<a href="{php echo $this->createMobileUrl('customer')}" class="active"><i class="icon-users"></i>我的客户</a>
+	<a href="{php echo $this->createMobileUrl('my')}" ><i class="icon-adult"></i>个人中心</a>
+</nav>
+<script type="text/javascript">
+$(function () {
+	var Weight = $(window).width();
+	$(".customer_gaili ul li").width(Weight / 2 - 1);
+});
+
+function sort(customer){
+	if($('#key').val()==''){
+		return;
+	}
+	var keyword = $('#key').val();
+	$.post("{php echo $this->createMobileUrl('customer', array('op'=>'sort'))}"
+		,{keyword:keyword}
+		,function(d){
+			if(d==0){
+				customer.html('');
+			} else {
+				var html = '';
+				for(i in d){
+					html = html + '<div class="customer_main customer_main1"><div class="customer_main_wap"><div class="customer_detailed" style="margin-right: 135px; border-right: none;"><p class="font_black">'+d[i]['realname']+'</p><p class="top font_min">'+d[i]['mobile']+'</p></div><div class="customer_ico" style="width: 140px;"><a href="tel:'+d[i]['mobile']+'"><div class="customer_inp_ico3" style="margin-left:22px; height:30px;" ></div></a><a href="sms:'+d[i]['mobile']+'"><div class="customer_inp_ico4" style="margin-left:6px; width:30px; height:30px; margin-top:2px;" ></div></a><a href="'+d[i]['tjurl']+'"><div class="customer_inp_ico5" style="margin-left:6px; height:30px;" ></div></a></div></div><div class="line_ph"><div class="customer_font customer_font1 customer_no"><div class="customer_no2"><span>['+d[i]['location_c']+']<font> '+d[i]['location_a']+'</font><font></font><font></font></span></div><div style="font-size:.8em; padding-right:25%; text-align:right; position:absolute; right:0; top:0; color:#999999;">'+d[i]['indate']+'</div><div class="customer_flow"><a style="color:RGB(178,178,178)" href="'+d[i]['url']+'" >'+d[i]['status']+'</a></div></div></div></div>';
+				}
+				customer.html(html);
+			}
+		}
+		,"json"
+	);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+{template 'common/header'}
+<div class="main">
+    <form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" onsubmit='return formcheck()'>
+        <input type="hidden" name="id" value="{$id}" />
+        <input type="hidden" name="referer" value="{php echo referer()}" />
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                修改数据
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">标题</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input readonly type="text" name="" class="form-control" value="{$rescource['title']}" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">价格</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input readonly type="text" name="" class="form-control" value="{$rescource['price']}" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">打赏数</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="number" name="show_times" class="form-control" value="{$rescource['show_times']}" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">觉得值</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="number" name="up" class="form-control" value="{$rescource['up']}" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">觉得坑</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="number" name="down" class="form-control" value="{$rescource['down']}" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-sm-12">
+            <input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+            <input type="hidden" name="token" value="{$_W['token']}" />
+        </div>
+    </form>
+</div>
+{template 'common/footer'}
+<!---bbs_heirui_cn-->

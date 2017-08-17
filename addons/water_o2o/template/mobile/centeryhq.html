@@ -1,0 +1,102 @@
+{template 'header'}
+<body ontouchstart="" class="platform_mobile">
+<div class="qsc-alert" style="display: none;">
+<i class="info-base64"></i><span></span>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-white icon-loading-base64"><i class="icon-white icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading-new">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-loading-base64"><i class="icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<header class="qsc-tab bar-fixed wallet-tab">
+<ul class="tab-item nav-tabs-green" role="tablist">
+<li role="presentation" {if $type == "undh"}class="active"{/if}" >
+<a href="{php echo $this->createMobileUrl('centeryhq',array('type'=>'undh'))}">未领取</a>
+</li>
+<li role="presentation" {if $type == "hasdh"}class="active"{/if}>
+<a href="{php echo $this->createMobileUrl('centeryhq',array('type'=>'hasdh'))}">已领取</a>
+</li>
+</ul>
+</header>
+<div class="content bottom mod-user-wallet tab-content">
+<div role="tabpanel" class="tab-pane fade in active">
+<div class="mod-user-wallet_list">
+{if $type == "undh"}
+
+	{loop $list1 $item}
+	<a href="{php echo $this->createMobileUrl('takeyhq', array('item' => $item,'type'=>"1"))}">
+	<div class="mod-user-wallet_list__item clearfix">
+	<header>
+	<i class="icon"><img src="../addons/water_o2o/template/img/grey.png" data-original="" width="40" height="40" class="lazy-load" style="display: inline;"></i>
+	<h6>满{$item['condition']}可用</h6>
+	<small>{php echo $item['discount']*10 }折</small>
+	</header>
+	<footer>
+	{php echo date("Y-m-d",$item['starttime'])}到{php echo date("Y-m-d",$item['endtime'])}<span>点击领取</span>
+	</footer>
+	</div>
+	</a>
+	{/loop}
+	
+	{loop $list2 $item}
+	<a href="{php echo $this->createMobileUrl('takeyhq', array('item' => $item,'type'=>"2"))}">
+	<div class="mod-user-wallet_list__item clearfix">
+	<header>
+	<i class="icon"><img src="../addons/water_o2o/template/img/grey.png" data-original="" width="40" height="40" class="lazy-load" style="display: inline;"></i>
+	<h6>满{$item['condition']}可用</h6>
+	<small>-{$item['discount']}￥</small>
+	</header>
+	<footer>
+	{php echo date("Y-m-d",$item['starttime'])}到{php echo date("Y-m-d",$item['endtime'])} <span>点击领取</span>
+	</footer>
+	</div>
+	</a>
+	{/loop}      
+
+{else}
+	{loop $list3 $item}
+	<a href="javascript:void(0);">
+	<div class="mod-user-wallet_list__item clearfix">
+	<header>
+	<i class="icon"><img src="../addons/water_o2o/template/img/grey.png" data-original="" width="40" height="40" class="lazy-load" style="display: inline;"></i>
+	<h6>满{$item['condition']}可用</h6>
+	<small>{php echo $item['discount']*10 }折</small>
+	</header>
+	<footer>
+	{php echo date("Y-m-d",$item['starttime'])}到{php echo date("Y-m-d",$item['endtime'])}
+	</footer>
+	</div>
+	</a>	
+	{/loop}
+	{loop $list4 $item}
+	<a href="javascript:void(0);">
+	<div class="mod-user-wallet_list__item clearfix">
+	<header>
+	<i class="icon"><img src="../addons/water_o2o/template/img/grey.png" data-original="" width="40" height="40" class="lazy-load" style="display: inline;"></i>
+	<h6>满{$item['condition']}可用</h6>
+	<small>-{$item['discount']}￥</small>
+	</header>
+	<footer>
+	{php echo date("Y-m-d",$item['starttime'])}到{php echo date("Y-m-d",$item['endtime'])}
+	</footer>
+	</div>
+	</a>	
+	{/loop}     
+{/if}
+
+</div>
+</div>
+</div>
+{template 'footer'}
+<script type="text/javascript" src="../addons/water_o2o/template/js/user.min.js"></script>
+
+</body></html>

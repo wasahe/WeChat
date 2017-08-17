@@ -1,0 +1,306 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li class="active"><a href="">{$customer['realname']}画像素材</a></li>
+</ul>
+<div class="main">
+	<form action="" class="form-horizontal form" method="post">
+		<div class="panel panel-default">
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label" style="text-align:left;padding-left:3%;margin-top:15px;">年龄</label>
+				<div class="col-sm-2">
+					<select class="form-control" name="age" style="margin-top:15px;">
+						<option value="0">
+							--请选择一个选项--
+						</option>
+						<option value="1" {if $cusmatlog['age']==1}selected{/if}>
+							20岁以下
+						</option>
+						<option value="2" {if $cusmatlog['age']==2}selected{/if}>
+							21-30岁
+						</option>
+						<option value="3" {if $cusmatlog['age']==3}selected{/if}>
+							31-40岁
+						</option>
+						<option value="4" {if $cusmatlog['age']==4}selected{/if}>
+							41-50岁
+						</option>
+						<option value="5" {if $cusmatlog['age']==5}selected{/if}>
+							51-60岁
+						</option>
+						<option value="6" {if $cusmatlog['age']==6}selected{/if}>
+							61岁以上
+						</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label" style="text-align:left;padding-left:3%;">性别</label>
+				<div class="col-sm-2">
+					<select class="form-control" name="sex">
+						<option value="0">
+							--请选择一个选项--
+						</option>
+						<option value="1" {if $cusmatlog['sex']==1}selected{/if}>
+							男
+						</option>
+						<option value="2" {if $cusmatlog['sex']==2}selected{/if}>
+							女
+						</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label" style="text-align:left;padding-left:3%;">意向区域</label>
+				<div class="col-sm-2" style="width:13.6666%">
+					<select name="area_location_p" style="width:150px;" class="location span2 form-control"></select>
+				</div>
+				<div class="col-sm-2" style="width:13.6666%">
+					<select name="area_location_c" style="width:150px;" class="location span2 form-control"></select>
+				</div>
+				<div class="col-sm-2" style="width:13.6666%">
+					<select name="area_location_a" style="width:150px;" class="location span2 form-control"></select>
+				</div>
+				<script type="text/javascript" src="../addons/hc_deluxejjr/style/js/region_select.js"></script>
+				<script type="text/javascript">
+					var area_location_p = "{if !empty($cusmatlog['area_location_p'])}{$cusmatlog['area_location_p']}{else}福建省{/if}";
+					var area_location_c = "{if !empty($cusmatlog['area_location_c'])}{$cusmatlog['area_location_c']}{else}{/if}";
+					var area_location_a = "{if !empty($cusmatlog['area_location_a'])}{$cusmatlog['area_location_a']}{else}{/if}";
+					new PCAS("area_location_p", "area_location_c", "area_location_a", area_location_p, area_location_c, area_location_a);
+				</script>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label" style="text-align:left;padding-left:3%;">意向户型</label>
+				<div class="col-sm-7">
+					<label class="radio-inline" style="padding-left:0px;">
+						一房<input type="checkbox" class="form-control" name="type[]" value="1" {if in_array(1, $type)}checked{/if}>
+					</label>
+					<label class="radio-inline">
+						二房<input type="checkbox" class="form-control" name="type[]" value="2" {if in_array(2, $type)}checked{/if}>
+					</label>
+					<label class="radio-inline">
+						三房<input type="checkbox" class="form-control" name="type[]" value="3" {if in_array(3, $type)}checked{/if}>
+					</label>
+					<label class="radio-inline">
+						复式<input type="checkbox" class="form-control" name="type[]" value="4" {if in_array(4, $type)}checked{/if}>
+					</label>
+					<label class="radio-inline">
+						公遇<input type="checkbox" class="form-control" name="type[]" value="5" {if in_array(5, $type)}checked{/if}>
+					</label>
+					<label class="radio-inline">
+						别墅<input type="checkbox" class="form-control" name="type[]" value="6" {if in_array(6, $type)}checked{/if}>
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label" style="text-align:left;padding-left:3%;">心理单价（元/㎡）</label>
+				<div class="col-sm-5">
+					<input type="text" class="form-control" name="wantprice" value="{$cusmatlog['wantprice']}" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label" style="text-align:left;padding-left:3%;">总价预算（万元）</label>
+				<div class="col-sm-5">
+					<input type="text" class="form-control" name="allprice" value="{$cusmatlog['allprice']}" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label" style="text-align:left;padding-left:3%;">公积金情况</label>
+				<div class="col-sm-2">
+					<select class="form-control" name="cpf">
+						<option value="0">
+							--请选择一个选项--
+						</option>
+						<option value="1" {if $cusmatlog['cpf']==1}selected{/if}>
+							有
+						</option>
+						<option value="2" {if $cusmatlog['cpf']==2}selected{/if}>
+							无
+						</option>
+						<option value="3" {if $cusmatlog['cpf']==3}selected{/if}>
+							不详
+						</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label" style="text-align:left;padding-left:3%;">生活区域</label>
+				<div class="col-sm-2" style="width:13.6666%">
+					<select name="live_location_p" style="width:150px;" class="location span2 form-control"></select>
+				</div>
+				<div class="col-sm-2" style="width:13.6666%">
+					<select name="live_location_c" style="width:150px;" class="location span2 form-control"></select>
+				</div>
+				<div class="col-sm-2" style="width:13.6666%">
+					<select name="live_location_a" style="width:150px;" class="location span2 form-control"></select>
+				</div>
+				<script type="text/javascript" src="../addons/hc_deluxejjr/style/js/region_select.js"></script>
+				<script type="text/javascript">
+					var live_location_p = "{if !empty($cusmatlog['live_location_p'])}{$cusmatlog['live_location_p']}{else}福建省{/if}";
+					var live_location_c = "{if !empty($cusmatlog['live_location_c'])}{$cusmatlog['live_location_c']}{else}{/if}";
+					var live_location_a = "{if !empty($cusmatlog['live_location_a'])}{$cusmatlog['live_location_a']}{else}{/if}";
+					new PCAS("live_location_p", "live_location_c", "live_location_a", live_location_p, live_location_c, live_location_a);
+				</script>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label" style="text-align:left;padding-left:3%;">工作区域</label>
+				<div class="col-sm-2" style="width:13.6666%">
+					<select name="work_location_p" style="width:150px;" class="location span2 form-control"></select>
+				</div>
+				<div class="col-sm-2" style="width:13.6666%">
+					<select name="work_location_c" style="width:150px;" class="location span2 form-control"></select>
+				</div>
+				<div class="col-sm-2" style="width:13.6666%">
+					<select name="work_location_a" style="width:150px;" class="location span2 form-control"></select>
+				</div>
+				<script type="text/javascript" src="../addons/hc_deluxejjr/style/js/region_select.js"></script>
+				<script type="text/javascript">
+					var work_location_p = "{if !empty($cusmatlog['work_location_p'])}{$cusmatlog['work_location_p']}{else}福建省{/if}";
+					var work_location_c = "{if !empty($cusmatlog['work_location_c'])}{$cusmatlog['work_location_c']}{else}{/if}";
+					var work_location_a = "{if !empty($cusmatlog['work_location_a'])}{$cusmatlog['work_location_a']}{else}{/if}";
+					new PCAS("work_location_p", "work_location_c", "work_location_a", work_location_p, work_location_c, work_location_a);
+				</script>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label" style="text-align:left;padding-left:3%;">购房原因</label>
+				<div class="col-sm-7">
+					<label class="radio-inline" style="padding-left:0px;" style="">
+						<input type="checkbox" class="" name="buyreason[]" value="1" {if in_array(1, $buyreason)}checked{/if}>自住，不想再租房了
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label" style="text-align:left;padding-left:3%;"></label>
+				<div class="col-sm-7">
+					<label class="radio-inline" style="padding-left:0px;">
+						<input type="checkbox" class="" name="buyreason[]" value="2" {if in_array(2, $buyreason)}checked{/if}>改善，卖小买大，提高生活品质
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label" style="text-align:left;padding-left:3%;"></label>
+				<div class="col-sm-7">
+					<label class="radio-inline" style="padding-left:0px;">
+						<input type="checkbox" class="" name="buyreason[]" value="3" {if in_array(3, $buyreason)}checked{/if}>投资，看准房价会涨，手里闲钱多
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label" style="text-align:left;padding-left:3%;"></label>
+				<div class="col-sm-7">
+					<label class="radio-inline" style="padding-left:0px;">
+						<input type="checkbox" class="" name="buyreason[]" value="4" {if in_array(4, $buyreason)}checked{/if}>养老，响应政府提倡
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label" style="text-align:left;padding-left:3%;"></label>
+				<div class="col-sm-7">
+					<label class="radio-inline" style="padding-left:0px;">
+						<input type="checkbox" class="" name="buyreason[]" value="5" {if in_array(5, $buyreason)}checked{/if}>结婚，需要房子
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label" style="text-align:left;padding-left:3%;"></label>
+				<div class="col-sm-7">
+					<label class="radio-inline" style="padding-left:0px;">
+						<input type="checkbox" class="" name="buyreason[]" value="6" {if in_array(6, $buyreason)}checked{/if}>读书，为了小孩读书，落实学区
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label" style="text-align:left;padding-left:3%;">现居住情况</label>
+				<div class="col-sm-2">
+					<select class="form-control" name="livecondition">
+						<option value="0">
+							--请选择一个选项--
+						</option>
+						<option value="1" {if $cusmatlog['livecondition']==1}selected{/if}>
+							商品房
+						</option>
+						<option value="2" {if $cusmatlog['livecondition']==2}selected{/if}>
+							经济适用房
+						</option>
+						<option value="3" {if $cusmatlog['livecondition']==3}selected{/if}>
+							二手房
+						</option>
+						<option value="4" {if $cusmatlog['livecondition']==4}selected{/if}>
+							自建私有房
+						</option>
+						<option value="5" {if $cusmatlog['livecondition']==5}selected{/if}>
+							租赁房
+						</option>
+						<option value="6" {if $cusmatlog['livecondition']==6}selected{/if}>
+							单位福利分房
+						</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label" style="text-align:left;padding-left:3%;">家庭结构</label>
+				<div class="col-sm-2">
+					<select class="form-control" name="homeformation">
+						<option value="0">
+							--请选择一个选项--
+						</option>
+						<option value="1" {if $cusmatlog['homeformation']==1}selected{/if}>
+							单身贵族
+						</option>
+						<option value="2" {if $cusmatlog['homeformation']==2}selected{/if}>
+							三口之家
+						</option>
+						<option value="3" {if $cusmatlog['homeformation']==3}selected{/if}>
+							三世同堂
+						</option>
+						<option value="4" {if $cusmatlog['homeformation']==4}selected{/if}>
+							四世同堂
+						</option>
+						<option value="5" {if $cusmatlog['homeformation']==5}selected{/if}>
+							单亲家庭
+						</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label" style="text-align:left;padding-left:3%;">工作单位性质</label>
+				<div class="col-sm-2">
+					<select class="form-control" name="worknature">
+						<option value="0">
+							--请选择一个选项--
+						</option>
+						<option value="1" {if $cusmatlog['worknature']==1}selected{/if}>
+							行政/事业单位
+						</option>
+						<option value="2" {if $cusmatlog['worknature']==2}selected{/if}>
+							合资（包括外商独资）
+						</option>
+						<option value="3" {if $cusmatlog['worknature']==3}selected{/if}>
+							国营（包括集体）
+						</option>
+						<option value="4" {if $cusmatlog['worknature']==4}selected{/if}>
+							私营
+						</option>
+						<option value="5" {if $cusmatlog['worknature']==5}selected{/if}>
+							境内上市股份公司
+						</option>
+						<option value="6" {if $cusmatlog['worknature']==6}selected{/if}>
+							其他
+						</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label" style="text-align:left;padding-left:3%;">职务级别</label>
+				<div class="col-sm-5">
+					<input type="text" class="form-control" name="worklevel" value="{$cusmatlog['worklevel']}" />
+				</div>
+			</div>
+			<div class="form-group col-sm-12">
+				<input type="button" class="btn btn-primary span3" name="submit" onclick="history.go(-1)" value="返回" />
+				<input type="submit" class="btn btn-primary span3" name="submit" value="提交" />
+				<input type="hidden" name="token" value="{$_W['token']}">
+			</div>
+		</div>
+	</form>
+</div>
+{template 'common/footer'}

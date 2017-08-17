@@ -1,0 +1,83 @@
+{template 'common/header'}
+<link rel="stylesheet" type="text/css" href="../addons/qwx_shangmen/template/resource/css/animate.min.css">
+<link rel="stylesheet" type="text/css" href="../addons/qwx_shangmen/template/resource/css/style.css">
+<link rel="stylesheet" type="text/css" href="../addons/qwx_shangmen/template/resource/css/myaddress_post.css">
+<style>
+.info dd {
+    padding: 11px 0 0px;
+}
+</style>
+<body>
+    <!-- 头部导航栏 -->
+    {template 'header'}
+    <section>
+            <div class="info">
+                <form id="theForm" method="POST" action="">
+                    <dl>
+                        <dt style="margin-top:10px;">联系人</dt>
+                        <dd>
+                            <input type="text" id="name" name="jform[name]" value="{$item[name]}" placeholder="请输入联系人的姓名" />
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt style="margin-top:10px;">手机号码</dt>
+                        <dd>
+                            <input type="tel" id="phone" name="jform[phone]" value="{$item[phone]}" placeholder="请输入联系人的手机号码" />
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt style="margin-top:10px;">地区</dt>
+                        <dd id="select_area">
+                            {php echo tpl_form_field_district('area_input', array('province' => $item['province'], 'city' => $item['city'], 'district' => $item['district'] ));}
+                        </dd>
+
+                    </dl>
+                    <dl>
+                        <dt>服务地址</dt>
+                        <dd>
+                            <textarea name="jform[address]" id="address" placeholder="请输入上门服务地址">{$item[address]}</textarea>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>设为默认地址</dt>
+                        <dd>
+                            <a id="setDefaultBtn" href="javascript:void(0);" class="setDefault {if !$item['is_default']}locked{/if} "><i></i></a>
+                            <input type="hidden" id="setDefault" name="jform[is_default]" value="{$item[is_default]}" />
+                            <input type="hidden" id="address_id" name="jform[id]" value="{$item[id]}" />
+                        </dd>
+                    </dl>
+                    <input type="hidden" id="source" name="source" value="{$source}" />
+                </form>
+            </div>
+
+
+            {if $id}
+            <a id="delAdrBtn" href="javascript:void(0);" class="delAdr">删除地址</a>
+            <script>
+                $('#delAdrBtn').click(function(){
+                    if (confirm('确定要删除本地址信息？')==true){
+                        var url = '{php echo $this->createMobileUrl('myaddresspost',array('op'=>'delete','id'=>$id))}';
+                        window.location.href=url;
+                    }
+                    return false;
+                })
+            </script>
+            {/if}
+
+    </section>
+
+    <aside>
+        <a class="book" id="save_button" href="javascript:void(0);">保存</a> 
+    </aside>
+
+    <script>
+	$('#save_button').click(function(){
+		//检查表单是否完整：
+		$('#theForm').submit();
+	});
+    </script>
+
+    <script src="../addons/qwx_shangmen/template/resource/js/zepto.min.js"></script>
+    <script src="../addons/qwx_shangmen/template/resource/js/address.min16.js"></script>
+</body>
+</html>

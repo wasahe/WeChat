@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com" versionCode="0.6">
+	<application setting="true">
+		<name><![CDATA[粉丝宝]]></name>
+		<identifie><![CDATA[n1ce_mission]]></identifie>
+		<version><![CDATA[2.8]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[发布任务，粉丝来完成任务领取奖励！]]></ability>
+		<description><![CDATA[发布任务，粉丝来完成任务领取奖励！]]></description>
+		<author><![CDATA[新田源码]]></author>
+		<url><![CDATA[http://bbs.xtec.cc/]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="subscribe" />
+			<message type="qr" />
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+		<card embed="false" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="活动管理" do="manage" state="" direct="false" />
+		</menu>
+	</bindings>
+	<install><![CDATA[CREATE TABLE IF NOT EXISTS `ims_n1ce_mission_fans` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT '0',
+  `rid` int(10) unsigned DEFAULT '0',
+  `from_user` varchar(100) NOT NULL,
+  `bropenid` varchar(100) NOT NULL,
+  `upopenid` varchar(100) NOT NULL,
+  `nickname` varchar(50) DEFAULT '0',
+  `headimgurl` varchar(500) DEFAULT '',
+  `sceneid` int(11) DEFAULT '0',
+  `ticketid` varchar(200) DEFAULT NULL,
+  `url` varchar(200) DEFAULT NULL,
+  `parentid` int(11) DEFAULT '0',
+  `helpid` int(11) DEFAULT '0',
+  `follow` tinyint(1) NOT NULL DEFAULT '0',
+  `status` int(1) DEFAULT '0',
+  `hasdel` int(1) DEFAULT '0',
+  `miss_num` int(10) DEFAULT '0',
+  `money` varchar(50) DEFAULT '0',
+  `createtime` varchar(50) DEFAULT NULL,
+  `updatetime` varchar(50) DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `from_user` (`from_user`),
+  KEY `rid` (`rid`),
+  KEY `uniacid` (`uniacid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_n1ce_mission_prize` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) DEFAULT '0',
+  `rid` int(10) NOT NULL DEFAULT '0',
+  `prizesum` int(10) unsigned NOT NULL DEFAULT '0',
+  `miss_num` int(10) DEFAULT '0',
+  `prize_name` varchar(50) DEFAULT '0',
+  `type` tinyint(4) NOT NULL DEFAULT '0',
+  `min_money` varchar(16) DEFAULT '',
+  `max_money` varchar(16) DEFAULT '',
+  `cardid` varchar(100) DEFAULT '',
+  `lable` varchar(100) DEFAULT '',
+  `total_num` int(10) unsigned NOT NULL DEFAULT '0',
+  `url` varchar(255) DEFAULT '',
+  `txt` varchar(255) DEFAULT '',
+  `credit` int(10) NOT NULL DEFAULT '0',
+  `time` varchar(32) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `rid` (`rid`),
+  KEY `uniacid` (`uniacid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_n1ce_mission_reply` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned DEFAULT '0',
+  `uniacid` int(11) DEFAULT '0',
+  `title` varchar(50) DEFAULT '',
+  `data` text,
+  `bg` varchar(500) DEFAULT '',
+  `miss_font` varchar(50) DEFAULT NULL,
+  `first_info` varchar(200) DEFAULT NULL,
+  `miss_wait` varchar(200) DEFAULT NULL,
+  `starttime` int(10) DEFAULT '0',
+  `endtime` int(10) DEFAULT '0',
+  `miss_start` varchar(200) DEFAULT NULL,
+  `miss_end` varchar(200) DEFAULT NULL,
+  `miss_sub` varchar(200) DEFAULT NULL,
+  `miss_temp` varchar(200) DEFAULT NULL,
+  `miss_back` varchar(200) DEFAULT NULL,
+  `stitle` text,
+  `sthumb` text,
+  `sdesc` text,
+  `surl` text,
+  `miss_name` varchar(50) DEFAULT '',
+  `xzlx` int(1) NOT NULL DEFAULT '0',
+  `area` text NOT NULL,
+  `sex` int(1) NOT NULL DEFAULT '0',
+  `iptype` int(1) NOT NULL DEFAULT '0',
+  `posttype` int(1) NOT NULL DEFAULT '0',
+  `miss_num` int(10) DEFAULT '0',
+  `createtime` varchar(16) NOT NULL DEFAULT '1',
+  `fans_limit` int(1) NOT NULL DEFAULT '0',
+  `miss_resub` varchar(200) DEFAULT NULL,
+  `miss_finish` varchar(200) DEFAULT NULL,
+  `miss_youzan` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `rid` (`rid`),
+  KEY `uniacid` (`uniacid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_n1ce_mission_user` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) NOT NULL DEFAULT '0',
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '1',
+  `openid` varchar(64) NOT NULL DEFAULT '1',
+  `bopenid` varchar(64) NOT NULL DEFAULT '1',
+  `miss_num` int(10) DEFAULT '0',
+  `nickname` varchar(64) NOT NULL DEFAULT '1',
+  `money` varchar(16) NOT NULL DEFAULT '0',
+  `headimgurl` varchar(500) DEFAULT '',
+  `time` varchar(16) NOT NULL DEFAULT '1',
+  `type` tinyint(4) NOT NULL DEFAULT '0',
+  `status` tinyint(4) NOT NULL DEFAULT '0',
+  `salt` varchar(32) DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `rid` (`rid`),
+  KEY `uniacid` (`uniacid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+]]></install>
+	<uninstall><![CDATA[DROP TABLE IF EXISTS `ims_n1ce_mission_fans`;
+DROP TABLE IF EXISTS `ims_n1ce_mission_prize`;
+DROP TABLE IF EXISTS `ims_n1ce_mission_reply`;
+DROP TABLE IF EXISTS `ims_n1ce_mission_user`;
+]]></uninstall>
+	<upgrade><![CDATA[upgrade.php]]></upgrade>
+</manifest>

@@ -1,0 +1,72 @@
+{template 'common/header'}
+<link rel="stylesheet" type="text/css" href="../addons/qwx_shangmen/template/resource/css/animate.min.css">
+<link rel="stylesheet" type="text/css" href="../addons/qwx_shangmen/template/resource/css/style.css">
+<link rel="stylesheet" type="text/css" href="../addons/qwx_shangmen/template/resource/css/myorder.css">
+<script src="../addons/qwx_shangmen/template/resource/js/jquery.esn.autobrowse.js"></script>
+
+<body>
+	<!-- 头部导航栏 -->
+    {template 'header'}
+    <nav>
+        <ul>
+            <li class="{if $status == 1}cur{/if}" onclick="location.href='{php echo $this->createMobileUrl('myorder',array('status'=>1)); }';">进行中</li>
+            <li class="{if $status == 2}cur{/if}" onclick="location.href='{php echo $this->createMobileUrl('myorder',array('status'=>2)); }';">已完成</li>
+            <li class="{if $status == 5}cur{/if}" onclick="location.href='{php echo $this->createMobileUrl('myorder',array('status'=>5)); }';">已取消</li>
+        </ul>
+    </nav>
+    <section class="orderWrap" >
+                
+        
+        {if !$list}
+        <div class="orderlist">
+            <div class="noorder">
+                    <i></i>
+                    <span>还没有订单</span>
+                    <a class="goto" href="{php echo $this->createMobileUrl('index'); }">立即预约</a>
+            </div>
+        </div>
+        {else}
+        <div class="adrList" id="container">
+
+        </div>
+        <script>  
+             $(function(){ 
+                $("#container").autobrowse(
+                    {
+                        url: function (offset)
+                        {
+                            return "{php echo $this->createMobileUrl('myorder',array('page'=>'OFFSET','is_ajax'=>1,'status'=>$status))}".replace(/OFFSET/, offset+1);
+                        },
+                        template: function (response)
+                        {
+                            var markup=response.item;
+                            // markup = '<div class="adrList" >'+response.item+'</div>';
+                            // markup = response.item;
+                            return markup;
+                        },
+                        itemsReturned: function (response) { 
+                            // alert(response.total);
+                            if (response.page == 0 && response.total == 0){
+                                $('#container').html('<div class="noorder"> <i></i> <span>还没有订单</span> <a class="goto" href="{php echo $this->createMobileUrl('index'); }">立即预约</a> </div>');
+
+                            }
+                            return response.page; 
+                        },
+                        offset: 0,
+                        max: 100,
+                        loader: '<div class="loading" style="display:block"> <i></i>努力加载中... </div>',
+                        useCache: false,
+                        expiration: 0
+                    }
+                );
+             });   
+            </script>
+
+        {/if}
+        
+    </section>
+    {template 'footer'}
+</body>
+</html>
+
+

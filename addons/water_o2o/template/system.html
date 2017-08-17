@@ -1,0 +1,348 @@
+{template 'common/header'}
+<div class="main">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{php echo $this->createWebUrl('system');}">系统设置</a></li>
+    </ul>
+</div>
+<div class="clearfix">
+    <form id="theform" class="form form-horizontal" action="" enctype ="multipart/form-data" method="post">
+        <div class="panel panel-default">
+            <div class="panel-heading">基本设置</div>
+            <div class="panel-body">
+              <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">系统名称</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="sysname" value="{$system['sysname']}" class="form-control">
+                        <span class="help-block">系统名称</span>
+                    </div>
+                </div>            
+               <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">客服电话</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="kfdh" value="{$system['kfdh']}" class="form-control">
+                        <span class="help-block">客服电话</span>
+                    </div>
+                </div>
+               <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">分享标题</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="sharetitle" value="{$system['sharetitle']}" class="form-control">
+                        <span class="help-block">分享标题</span>
+                    </div>
+                </div> 
+               <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">分享描述</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="sharedesc" value="{$system['sharedesc']}" class="form-control">
+                        <span class="help-block">分享描述</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">分享图片</label>
+                    <div class="col-sm-9 col-xs-12">
+                      {php echo tpl_form_field_image('sharepic',$system['sharepic']);}
+                    </div>
+               </div>
+               <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+                    <div class="col-sm-9 col-xs-12">
+                        <div class="help-block">注意：尺寸：100*100;</div>
+                    </div>
+               </div>                              
+               <div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class="text-danger">*</span> 营业时间</label>
+					<div class="col-sm-9 col-xs-4 col-md-3">
+						<div class="input-group">
+							<input class="form-control" placeholder="" name="wktmbegin" value="{$system['wktmbegin']}" type="text">
+							<span class="input-group-addon" id="basic-addon2">-</span>
+							<input class="form-control" placeholder="" name="wktmend" value="{$system['wktmend']}" type="text">
+						</div>
+						<span class="help-block">营业时间，24小时制表示，如 8:00-20:00</span>
+					</div>
+			   </div>
+               <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">工时区间段</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" placeholder="" name="wktmrange" value="{$system['wktmrange']}" class="form-control">
+                        <span class="help-block">单位：分钟，例如30分钟作为一个工时区间</span>
+                    </div>
+                </div>
+                <div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class="text-danger">*</span> 上门服务休息</label>
+					<div class="col-sm-9 col-xs-4 col-md-3">
+						<div class="input-group">
+							<input class="form-control" placeholder="例如:30" name="wkxxrangemin" value="{$system['wkxxrangemin']}" type="text">
+							<span class="input-group-addon" id="basic-addon2">-</span>
+							<input class="form-control" placeholder="例如:90" name="wkxxrangemax" value="{$system['wkxxrangemax']}" type="text">
+						</div>
+						<span class="help-block">独立上门技师的休息区间范围，员工只可选择范围内时间，单位:分钟</span>
+					</div>
+			   </div>               
+               <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">预约天数</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" placeholder="" name="wktmyy" value="{$system['wktmyy']}" class="form-control">
+                        <span class="help-block">单位：天，例如7天</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">高德开发者KEY</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="gaodekey" value="{$system['gaodekey']}" class="form-control">
+                        <span class="help-block">高德地图API开发者的key，可免费申请</span>
+                    </div>
+                </div>                                				                  
+<!--                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">上门服务费用</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="smfw" value="{if empty($system['smfw'])}0{else}{$system['smfw']}{/if}" class="form-control">
+                        <span class="help-block">上门服务需要多加费用(填写整数)，不填则认为0元</span>
+                    </div>
+                </div> -->
+             </div>
+          <div class="panel-heading">首页设置</div>
+            <div class="panel-body">
+               <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">首页轮播图1</label>
+                    <div class="col-sm-9 col-xs-12">
+                      {php echo tpl_form_field_image('banner1',$system['banner1']);}
+                    </div>
+               </div>
+               <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+                    <div class="col-sm-9 col-xs-12">
+                        <div class="help-block">注意：尺寸：768*220;</div>
+                    </div>
+               </div>
+               <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">首页轮播图2</label>
+                    <div class="col-sm-9 col-xs-12">
+                      {php echo tpl_form_field_image('banner2',$system['banner2']);}
+                    </div>
+               </div>
+               <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+                    <div class="col-sm-9 col-xs-12">
+                        <div class="help-block">注意：尺寸：768*220;</div>
+                    </div>
+               </div>
+               <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">首页轮播图3</label>
+                    <div class="col-sm-9 col-xs-12">
+                      {php echo tpl_form_field_image('banner3',$system['banner3']);}
+                    </div>
+               </div>
+               <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+                    <div class="col-sm-9 col-xs-12">
+                        <div class="help-block">注意：尺寸：768*220;</div>
+                    </div>
+               </div>                                                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">管理员微信昵称</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="wknickname" value="{$system['wknickname']}" class="form-control">
+                        <span class="help-block">微信需要进入一次系统</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">管理员微信ID</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="workid" value="{$system['workid']}" class="form-control">
+                        <span class="help-block">或者填写微信的openid</span>
+                    </div>
+                </div>                
+              </div>
+
+          	<div class="panel-heading">注册提示设置</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-xs-12 col-md-3 col-lg-2 control-label">提示标题</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" class="form-control" placeholder="恭喜！注册信息已经提交" name="zhucetitle" value="{$system['zhucetitle']}">
+                    	<span class="help-block">例如：恭喜！注册信息已经提交</span>
+                    </div>
+                </div>
+               <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">广告图片</label>
+                    <div class="col-sm-9 col-xs-12">
+                      {php echo tpl_form_field_image('zhuceimg',$system['zhuceimg']);}
+                    </div>
+               </div>
+               <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+                    <div class="col-sm-9 col-xs-12">
+                        <div class="help-block">注意：尺寸：宽710</div>
+                    </div>
+               </div>                
+			   <div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">提示内容</label>
+					<div class="col-sm-9 col-xs-12">
+						<textarea style="height:100px; width:90%;" class="form-control span7 richtext" name="zhucecontent" cols="70">{$system['zhucecontent']}</textarea>
+						<span class="help-block">提示内容,例如:我们将在2个工作日...</span>
+					</div>
+				</div>                                                                           
+            </div>
+
+            <div class="panel-heading">选择短信服务平台</div>
+            <div class="panel-body">
+             <div class="form-group">
+                	<label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">使用阿里大鱼</label>
+                	<div class="col-sm-8 col-xs-12">
+                    <label class="checkbox">
+					  <input type="checkbox" name="usefish" value="1" {if $system['usefish'] == 1}checked="checked"{/if}>勾选则表示启用阿里大鱼，不勾选默认使用SMS短信
+					</label>
+					</div>
+             </div>
+            </div>
+          	
+            <div class="panel-heading">阿里大鱼短信设置</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-xs-12 col-md-3 col-lg-2 control-label">App Key</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" class="form-control" placeholder="" name="fishappkey" value="{$system['fishappkey']}">
+                    	<span class="help-block">APP证书的Key</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-md-3 col-lg-2 control-label">App Secret</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" class="form-control" placeholder="" name="fishsecret" value="{$system['fishsecret']}">
+                    	<span class="help-block">APP证书的Secret</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-md-3 col-lg-2 control-label">短信签名</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" class="form-control" placeholder="" name="fishsign" value="{$system['fishsign']}">
+                    	<span class="help-block">阿里大鱼“管理中心-短信签名管理”中的可用签名。</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-md-3 col-lg-2 control-label">验证码模板</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" class="form-control" placeholder="" name="fishyzmb" value="{$system['fishyzmb']}">
+                    	<span class="help-block">短信模板ID，传入的模板必须是在阿里大鱼“管理中心-短信模板管理”中的可用模板。折G翼G天G使G资G源G社G区G提G供</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-md-3 col-lg-2 control-label">验证码变量</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" class="form-control" placeholder="" name="fishyzmparam" value="{$system['fishyzmparam']}">
+                    	<span class="help-block">注意：在大鱼管理中心申请模板时，需要加入变量(如: ${code})代表随机的验证码，此处只填变量名称(如:code)</span>
+                    </div>
+                </div>                                                            
+            </div>
+			<div class="panel-heading">SMS短信设置</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-xs-12 col-md-3 col-lg-2 control-label">账户名称</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" class="form-control" placeholder="" name="smsuid" value="{$system['smsuid']}">
+                    	<span class="help-block">http://www.sms.cn注册账户</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-md-3 col-lg-2 control-label">账户密码</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" class="form-control" placeholder="" name="smspwd" value="{$system['smspwd']}">
+                    	<span class="help-block">http://www.sms.cn账户密码</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-md-3 col-lg-2 control-label">验证码模板</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" class="form-control" placeholder="您的短信验证码为#,请及时验证。" name="smsyzmb" value="{$system['smsyzmb']}">
+                    	<span class="help-block">模板范例:您的短信验证码为#,请及时验证。('#'为实际四位数字验证码，必须包含)</span>
+                    </div>
+                </div>                                                            
+            </div> 		
+           	<div class="panel-heading">消息模板设置</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-xs-12 col-md-3 col-lg-2 control-label">用户:预约支付</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" class="form-control" placeholder="" name="user_yyzf" value="{$system['user_yyzf']}">
+                    	<span class="help-block">所属行业：IT科技 - 互联网|电子商务；模板编号：OPENTM206241496；标题：订单提交成功通知</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-md-3 col-lg-2 control-label">员工:订单提醒</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" class="form-control" placeholder="" name="worker_ddtx" value="{$system['worker_ddtx']}">
+                    	<span class="help-block">所属行业：IT科技 - 互联网|电子商务；模板编号：OPENTM201785396；标题：新订单通知</span>
+                    </div>
+                </div>                                                          
+              </div>             
+ 			<div class="panel-heading">费用设置</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-xs-12 col-md-3 col-lg-2 control-label">商家店主提现</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" class="form-control" placeholder="" name="shopcost" value="{$system['shopcost']}">
+                    	<span class="help-block">百分比值，假如商家提现100元，系统收费1块钱，则填写1，不收费就填0</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-md-3 col-lg-2 control-label">独立员工提现</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" class="form-control" placeholder="" name="workercost" value="{$system['workercost']}">
+                    	<span class="help-block">百分比值，假如商家提现100元，系统收费1块钱，则填写1，不收费就填0</span>
+                    </div>
+                </div>                                                          
+              </div>              
+            <div class="panel-heading">企业支付</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+                    <div class="col-sm-9 col-xs-12">
+                        <div class="alert alert-info">企业支付 的需要使用 <br>
+                            <span class="label label-info">认证服务号并开通微信支付</span> <br>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">服务器IP</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="ip" value="{$system['ip']}" class="form-control">
+                        <span class="help-block">需要服务器IP. 程序将自动获取你的服务器IP, 如果获取失败, 请手动指定</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">商户支付证书</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input name="apiclient_cert" type="hidden"  class="form-control" value="{$system['apiclient_cert']}"/> 
+                        <input name="apiclient_cert_file" type="file"  class="form-control" value=""/> 
+                        <span class="help-block">从商户平台上下载支付证书, 解压并取得其中的 <mark>apiclient_cert.pem</mark>上传此文件</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">支付证书私钥</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input name="apiclient_key" type="hidden"  class="form-control" value="{$system['apiclient_key']}"/> 
+                        <input name="apiclient_key_file" type="file"   class="form-control" value=""/> 
+                        <span class="help-block">从商户平台上下载支付证书, 解压并取得其中的 <mark>apiclient_key.pem</mark>上传此文件</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">支付根证书</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input name="rootca" type="hidden"  class="form-control" value="{$system['rootca']}"/> 
+                        <input name="rootca_file" type="file"  class="form-control" value=""/> 
+                        <span class="help-block">从商户平台上下载支付证书, 解压并取得其中的 <mark>rootca.pem</mark>上传此文件</span>
+                    </div>
+                </div>
+                
+              </div>                           
+          </div>  
+		</div>
+             <div class="form-group">
+        <div class="col-sm-12">
+            <input name="submit" type="submit" value="提交" class="btn btn-primary col-lg-1">
+            <input type="hidden" name="token" value="{$_W['token']}" />
+        </div>
+    </div>   
+    </form>
+</div>
+{template 'common/footer'}

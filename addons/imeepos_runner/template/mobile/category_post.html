@@ -1,0 +1,207 @@
+{template 'common/header'}
+<style>
+    .container-fill{
+        background-color: #e0e0e0;
+    }
+</style>
+<link rel="stylesheet" href="{MODULE_URL}public/libs/ionic/css/ionic.css"/>
+<link rel="stylesheet" href="{MODULE_URL}public/libs/weui/weui.css"/>
+<link rel="stylesheet" href="{MODULE_URL}public/libs/jquery_weui/jquery-weui.css"/>
+<div class="hd" id="container" style="background-color: #e0e0e0;">
+    {template 'default/common/footerbar'}
+    <div class="home">
+        <div id="mapPage" style="display:none;position:absolute;top:0px;bottom:0px;left:0px;right:0px;" >
+            <iframe width="100%" height="100%" frameborder='0' src="http://apis.map.qq.com/tools/locpicker?search=1&type=1&key=4MHBZ-JVL35-WLMII-Q3NME-3Z2G2-PKBJJ&referer=myapp"></iframe>
+        </div>
+        <div class="bd" id="main" >
+            {loop $fileds $field}
+                {if $field['type'] == 'input'}
+                <div class="weui_cells weui_cells_form">
+                    <div class="weui_cell">
+                        <div class="weui_cell_hd"><label class="weui_label" style="width:auto;">{$field['title']}</label></div>
+                        <div class="weui_cell_bd weui_cell_primary">
+                            <input class="weui_input" data-id="{$field['id']}" type="text" style="text-align: right;" placeholder="{php echo $field['placeholder']}">
+                        </div>
+                    </div>
+                </div>
+                {else if $field['type'] == 'textarea'}
+                <div class="weui_cells_title">{$field['title']}</div>
+                <div class="weui_cells weui_cells_form">
+                    <div class="weui_cell">
+                        <div class="weui_cell_bd weui_cell_primary">
+                            <textarea class="weui_textarea" data-id="{$field['id']}" placeholder="{php echo $field['placeholder']}" rows="3"></textarea>
+                            <div class="weui_textarea_counter"></div>
+                        </div>
+                    </div>
+                </div>
+                {else if $field['type'] == 'image'}
+                <div class="weui_cells_title">{$field['title']}</div>
+                <div class="weui_cells weui_cells_form">
+                    <div class="weui_cell">
+                        <div class="weui_cell_bd weui_cell_primary">
+                            <div class="weui_uploader">
+                                <div class="weui_uploader_hd weui_cell">
+                                    <div class="weui_cell_bd weui_cell_primary">{php echo $field['placeholder']}</div>
+                                </div>
+                                <div class="weui_uploader_bd">
+                                    <ul class="weui_uploader_files">
+                                        <!--<li class="weui_uploader_file" style="background-image:url(http://shp.qpic.cn/weixinsrc_pic/pScBR7sbqjOBJomcuvVJ6iacVrbMJaoJZkFUIq4nzQZUIqzTKziam7ibg/)"></li>
+-->
+                                    </ul>
+                                    <div class="weui_uploader_input_wrp">
+                                        <input class="weui_uploader_input" data-id="{$field['id']}" type="file" id="fileUpload" accept="image/jpg,image/jpeg,image/png,image/gif" multiple="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {else if $field['type'] == 'fee'}
+                <div class="weui_cells weui_cells_form">
+                    <div class="weui_cell">
+                        <div class="weui_cell_hd"><label class="weui_label" style="width:auto;">{$field['title']}</label></div>
+                        <div class="weui_cell_bd weui_cell_primary">
+                            <input class="weui_input" data-id="{$field['id']}" type="number" style="text-align: right;" placeholder="{php echo $field['placeholder']}">
+                        </div>
+                    </div>
+                </div>
+                {else if $field['type'] == 'level'}
+                <div class="weui_cells weui_cells_form">
+                    <div class="weui_cell">
+                        <div class="weui_cell_hd"><label class="weui_label" style="width:auto;">{$field['title']}</label></div>
+                        <div class="weui_cell_bd weui_cell_primary">
+                            <input class="weui_input" data-id="{$field['id']}" id="picker" data-placeholder="{php echo $field['placeholder']}" type="text" placeholder="{php echo $field['placeholder']}">
+                        </div>
+                    </div>
+                </div>
+                {else if $field['type'] == 'voice'}
+                <div class="weui_cells weui_cells_form">
+                    <div class="weui_cell weui_vcode">
+                        <div class="weui_cell_hd"><label class="weui_label" style="width:auto;" >{$field['title']}</label></div>
+                        <div class="weui_cell_bd weui_cell_primary start_voicing">
+                            <input class="weui_input" data-id="{$field['id']}" type="text" readonly placeholder="{$field['placeholder']}">
+                        </div>
+                        <div class="weui_cell_ft start_voicing">
+                            <img src="{MODULE_URL}public/images/voice.png">
+                        </div>
+                    </div>
+                </div>
+                {else}
+                <div class="weui_cells">
+                    <div class="weui_cell">
+                        <div class="weui_cell_bd weui_cell_primary">
+                            <p>{$field['title']}</p>
+                        </div>
+                        <div class="weui_cell_ft open_map" data-id="{php echo $field['id']}">{$field['placeholder']}</div>
+                    </div>
+                </div>
+                {/if}
+            {/loop}
+            <div class="weui_btn_area">
+                <a class="weui_btn weui_btn_primary postData" href="javascript:">确定</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+{php $levels = M('runner_level')->getall()}
+<script>
+    require([
+        "{MODULE_URL}public/libs/jquery_weui/jquery-weui.js",
+            "{MODULE_URL}public/libs/upload_file/base64upload.js"
+    ],function(){
+        var post = {};
+        $("#picker").picker({
+            title: $('#picker').data('placeholder'),
+            cols: [
+                {
+                    textAlign: 'center',
+                    values: [
+                        {loop $levels $level}
+                        '{$level['title']}',
+                        {/loop}
+                    ]
+                }
+            ]
+        });
+
+        $('input').on('chanage keyup',function(){
+            var id = $(this).data('id');
+            post[id] = $(this).val();
+        });
+
+        $('textarea').on('chanage keyup',function(){
+            var id = $(this).data('id');
+            post[id] = $(this).val();
+        });
+        var fileid = null;
+        $('#fileUpload').click(function(){
+            fileid = $(this).data('id');
+        });
+
+        $('#fileUpload').localResizeIMG({
+            width: 120,
+            quality: 0.8,
+            success: function (result) {
+                var src = result.base64;
+                post[fileid] = post[fileid]?post[fileid].concat(src):[src];
+                console.log(post);
+                var html = '<li class="weui_uploader_file" style="background-image:url('+src+')"></li>';
+                $('.weui_uploader_files').append(html);
+            }
+        });
+        var addressid = null;
+        var that = null;
+        $('.open_map').click(function(){
+            $('#mapPage').show();
+            $('#main').hide();
+            addressid = $(this).data('id');
+            that = $(this);
+        });
+
+        window.addEventListener('message', function(event) {
+            var loc = event.data;
+            if (loc && loc.module == 'locationPicker') {
+                post[addressid] = loc;
+                that.html(loc.poiaddress);
+                $('#mapPage').hide();
+                $('#main').show();
+            }
+        }, false);
+        var starting = false;
+        $('.start_voicing').click(function(){
+            if(!starting){
+                wx.ready(function(){
+                    wx.startRecord();
+                });
+            }else{
+                wx.stopRecord({
+                    success: function (res) {
+                        wx.uploadVoice({
+                            localId: res.localId,
+                            isShowProgressTips: 1,
+                            success: function (res) {
+                                post.serverId = res.serverId;
+                            }
+                        });
+                    }
+                });
+            }
+        });
+        $('.postData').click(function(){
+            console.log(post);
+            $.post("",post,function(data){
+                if(data.status == 1){
+                    $.toast(data.message,2000,function(){
+                        window.location.href = "{php echo $this->createMobileUrl('category_confirm')}&task_id="+data.task_id;
+                    });
+                }else{
+                    $.toast(data.message,2000);
+                }
+
+            },'json');
+        });
+
+    });
+</script>
+{template 'common/footer'}

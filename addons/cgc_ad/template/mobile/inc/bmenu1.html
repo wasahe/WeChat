@@ -1,0 +1,147 @@
+			<div class="app-botbar" >
+
+				<div class="app-bot">
+
+					<ul class="hmenu col">
+
+						<li class="active">
+
+							<a id="" href="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('index',array('quan_id'=>$adv['id'])), 2)}">
+
+								<div class="app-button2">
+
+									<span class="icon_m index"></span>抢钱
+
+								</div>
+
+							</a>
+
+						</li>
+
+						<li class="middle">
+
+							<a id="btn_adv_add" >
+
+								<div class="app-button2">
+
+									<span class="icon_m add"></span>发布广告
+
+								</div>
+
+							</a>
+
+						</li>
+
+						<li>
+
+							<a href="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('rank',array('quan_id'=>$adv['id'])), 2)}">
+
+								<div class="app-button2">
+
+									<span class="icon_m rank"></span>排行榜
+
+								</div>
+
+							</a>
+
+						</li>
+
+						<li>
+
+							<a href="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('geren',array('quan_id'=>$adv['id'])), 2)}">
+
+								<div class="app-button2">
+
+									<span class="icon_m mine"></span>我的
+
+								</div>
+
+							</a>
+
+						</li>
+
+					</ul>
+
+				</div>
+
+			</div>
+
+	    </div> <!-- END 首页 -->
+
+
+
+
+<div class="app-botbar" style="z-index:4999">
+				<div class="app-bot">
+					<ul class="hmenu col">
+						<li class=" {if $bmenu=='index'}active{/if}"><a id="btn_money" url="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('index',array('quan_id'=>$quan_id)), 2)}"><div class="app-button"><span class="icon_m index"></span>抢钱</div></a></li>
+						<li class="middle">
+						<a id="btn_adv_add"><div class="app-button"><span class="icon_m add"></span>发布广告</div></a></li>
+						<li class="{if $bmenu=='rank'}active{/if}"><a id="btn_rank" url="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('rank',array('quan_id'=>$quan_id)), 2)}"><div class="app-button"><span class="icon_m rank"></span>排行榜</div></a></li>
+						<li class="btn_geren {if $bmenu=='geren'}active{/if}"><a id="btn_geren"  class="btn_geren" data-url=""><div class="app-button"><span class="icon_m mine"></span>我的</div></a></li>
+					</ul>
+				</div>
+	</div>	
+<script type="text/javascript">
+	function initBottomMenu(page){
+       $(page).find('.btn_geren').on('click',function(){
+	     window.location.href="{php echo $_W['siteroot'] . 'app/' . substr($this->createMobileUrl('geren',array('quan_id'=>$quan_id)), 2)}";						
+     	});
+		
+		
+		$(page).find('#btn_money').on('click',function(){
+			window.location.href=$(this).attr('url');
+		});
+		
+	   $(page).find('#btn_rank').on('click',function(){
+		   window.location.href=$(this).attr('url');
+		});
+		
+		
+		
+		// 抢钱按钮点击
+		$(page).find('#btn_adv_add').on('click',function(){
+			{if count($quan['piece_model'])<=1}
+				{if in_array('1',$quan['piece_model'])}
+				  location.href="{php echo $this->createMobileUrl('fabu',array('quan_id'=>$quan['id']))}";
+				{/if}
+				{if in_array('2',$quan['piece_model'])}
+				  location.href="{php echo $this->createMobileUrl('group_fabu',array('quan_id'=>$quan['id']))}";
+				{/if}
+				{if in_array('3',$quan['piece_model'])}
+				  location.href="{php echo $this->createMobileUrl('free_fabu',array('quan_id'=>$quan['id']))}";
+				{/if}
+				
+			{else}
+				App.dialog({
+				  title        : "",
+				  {if in_array('1',$quan['piece_model'])}
+				  model1Button : "普通模式",
+				  {/if}
+				
+				  {if in_array('2',$quan['piece_model'])}
+				  model2Button : "组团模式",
+				  {/if}
+				  
+				  {if in_array('3',$quan['piece_model'])}
+				  model3Button : "免费模式",
+				  {/if}
+				  cancelButton : "取消"
+				}, function (choice) {
+				  switch (choice) {
+					case 'model1':
+					  location.href="{php echo $this->createMobileUrl('fabu',array('quan_id'=>$quan['id']))}";
+					  break;
+					case 'model2':
+					  location.href="{php echo $this->createMobileUrl('group_fabu',array('quan_id'=>$quan['id']))}";
+					  break;
+					case 'model3':
+					  location.href="{php echo $this->createMobileUrl('free_fabu',array('quan_id'=>$quan['id']))}";
+					  break;
+					
+				  }
+				});
+			{/if}
+		});
+	}
+</script>

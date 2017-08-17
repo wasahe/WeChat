@@ -1,0 +1,297 @@
+{template 'header'}
+
+<style>
+.loadaaa{
+    background: url(images/zp_loading_new.png) center top no-repeat;
+    background-size: 100%;
+    -webkit-animation: loading 3s linear infinite;
+    animation: loading 3s linear infinite;
+}
+@-webkit-keyframes loading{0%{-webkit-transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg)}}
+@keyframes loading{0%{-webkit-transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg)}}
+.loginmask33 {
+	width: 100%;
+	min-height: 100%;
+	z-index: 9999;
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: none;  
+}
+.hnav > div:nth-child(1n+1) .iconn{
+	background-color:#8e5cd4;
+}
+.hnav > div:nth-child(2n+1) .iconn{
+	background-color: #FF7C06;
+}
+.hnav > div:nth-child(3n+1) .iconn{
+	background-color: #CC99CC;
+}
+.hnav > div:nth-child(4n+1) .iconn{
+	background-color: #99CC33;
+}
+.hnav > div:nth-child(5n+1) .iconn{
+	background-color: #F8976D;
+}
+.hnav > div .iconn img{
+	opacity: .8;
+}
+.hnav > div{
+	width:25%;
+}
+</style>
+</head>
+<body>
+
+<div id="page0" class="ub ub-ver bga">
+    <div class="c-wh ub" >
+    	<div class="c-bla30 ub ub-ac ub-pc" style="height:3rem; width:3rem" onClick="getAdr()"><i class="iconfont icon-dingweiicon01 ulev2 t-wh"></i></div>
+        <div class="ub-f1 ulev-4 t-wh uinn c-bla50 ub ub-ac">
+        	<div class="" id="adr">位置获取中...</div>
+        </div>
+    	<div class="c-bla30 ub ub-ac ub-pc" onClick="openPe()" style="height:3rem; width:3rem"><i class="iconfont icon-gengduo2 ulev2 t-wh"></i></div>
+    </div>
+    <ul id="show" class="ub-f1 c-wh" style="padding:0 0.5rem">
+        <div>
+        	<ul style="padding:60px 30px 50px 30px">
+            	<li style="text-align:center">
+                	<div class="wks ub-img1"></div>
+                </li>
+                <li class="t-gra" style="text-align:center; margin-top:30px">数据加载中...</li>
+            </ul>
+        </div>
+    </ul>
+    
+    <div id="more" style="display:none;">
+    	<div class="ub ub-pc uc-a1 ub-f1 btnn" onClick="getMore()" style="margin-bottom:0.5em; height:2em; line-height:2em;" type="submit"><span class="ulev0 t-wh tx-c">点击加载更多</span>
+        </div>
+    </div>
+    
+    <div class="" style="height:3.125rem"></div>
+    
+    {template 'footer'}
+    
+    <div class="foot2">
+    	<div class="foot-con">
+        	版权信息
+        </div>
+    </div>
+    <div class="top-head">
+        <div class="pc header">
+            <div class="logo">
+       	    	<img src="images/logo.png" style="height:100%" alt="幸福家政" /> 
+            </div>
+            <div class="menu">
+            	<div class="xm">
+                    <a href="#" class="active">首页</a>
+                    <a href="#">服务项目</a>
+                    <!--<a href="#">常见问题</a>
+                    <a href="#">服务说明</a>-->
+                    <a href="#">会员中心</a>
+                    <div class="clear"></div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    
+    <div class="loginmask33 c-bla80">
+        <div class="ub ub-ac ub-pc mban" style="width:100%; min-eight:100%;top:-800px">
+            <div class="c-wh uc-a15 ub ub-ver" style="height:; width:90%;">
+                <div class="ub bga uc-t15 uinn ub-ac">
+                    <div style="width:2rem"></div>
+                    <div class="tx-c font-b ub-f1">全部项目</div>
+                    <div class="closealert"  style="padding:0.3rem 0.5rem"><i class="iconfont icon-guanbi ulev2 t-gra"></i></div>
+                </div>
+                <div class="hnav" style="padding:0.75rem 0.5rem">
+                    {loop $list1 $vo1}
+                    <div class="ufl">
+                        <div onClick="check({$vo1[id]})" class="ub ub-ver ub-ac block"  style="padding:0.5rem 0.5rem 0.3rem 0.5rem">
+                            <div class="uc-a1 c-blu ub ub-ac ub-pc iconn">
+                            	{if $vo1['icon'] == ''}
+                                <img src="{MODULE_URL}/template/mobile/images/icon-nv.png" style="width:2rem"> 
+                                {else}
+                                <img src="{$_W['attachurl']}{$vo1['icon']}" style="width:2rem"> 
+                                {/if}
+                            </div>
+                            <div class="ulev-4 t-gra" style="padding-top:0.2rem">{$vo1[type_name]}</div>
+                        </div>
+                    </div>
+                    {/loop}
+                    
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+<iframe id="geoPage" width=0 height=0 frameborder=0  style="display:none;" scrolling="no" src="http://apis.map.qq.com/tools/geolocation?key=DEZBZ-EQKKJ-CBFFB-K2SOD-GGNA3-N7BKM&referer=o2o">
+</iframe>
+
+<script type="text/javascript" src="{MODULE_URL}/template/mobile/js/jquery_min.js"></script>
+<script type="text/javascript" src="{MODULE_URL}template/mobile/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="{MODULE_URL}template/mobile/js/main.js"></script>
+<script type="text/javascript" src="{MODULE_URL}template/mobile/js/baidutmp.js"></script>
+
+<script id='near' type="text/template">
+    <!-- 模板部分 -->
+        <%if(json != 0){%>
+            <%for(var i=0;i<json.length;i++){%>
+                <li class="uinn14 ub ubb b-bla01">
+					<a href="" class="block">
+						 <div class="ub-img1 ub ub-ver" style="height:4rem; width:4rem; background-image:url(<%=json[i].avatar%>)">
+							<div class="ub-f1"></div>
+							<div class="tx-c ulev-4 c-bla50 t-wh" style="padding:3px">资料</div>
+						</div>
+					</a>
+					<a href="<%=json[i].url%>" class="ub-f1 ub block">
+						<div class="ub-f1 uinn1 ub ub-ver">
+							<div class="ub-f1 ub">
+								<div class="ub-f1 t-gre1"><%=json[i].pro%></div>
+								<div class="ulev-2 t-gra"><%=json[i].juli%>米</div>
+							</div>
+							<div class="ub-f1 ub">
+								<div class="ub-f1 t-bla"><%=json[i].staff_name%></div>
+								<div class="ulev-2 t-gra"><%=json[i].company_name%></div>
+							</div>
+							<div class="ulev-4 t-gra ub">
+								<div class="umar-r uba b-gra t-line10 uc-a15" style="padding:3px">接单<%=json[i].get_order%></div>
+								<div class="umar-r uba b-gra t-line10 uc-a15" style="padding:3px">好评<%=json[i].good%></div>
+							</div>
+						</div>
+						<div class="ub ub-ac ub-pc"><i class="iconfont icon-xiangyou t-gra ulev1"></i></div>
+					</a>
+				</li>
+            <%}%>    
+        <%}else{%>
+            <li class="ubb b-bla01 uinn5 ub ub-ac tx-c">暂无数据</li>
+        <%}%>    
+    <!-- 模板结束 -->
+    </script>
+    
+<script type="text/JavaScript">
+	var loc;
+	var isMapInit = false;
+	//监听定位组件的message事件
+	window.addEventListener('message', function(event) { 
+		loc = event.data; // 接收位置信息
+		console.log('location', loc);
+   
+		if(loc) { //定位成功
+			localStorage['lat'] = loc.lat;
+			localStorage['lng'] = loc.lng;
+			localStorage['fadr'] = loc.province + loc.city + loc.addr;
+			document.getElementById("adr").innerHTML = localStorage['fadr'];  
+		} else { //定位组件在定位失败后，也会触发message, event.data为null
+			alert('地理位置获取失败'); 
+		}
+	}, false);
+	//为防止定位组件在message事件监听前已经触发定位成功事件，在此处显示请求一次位置信息
+	document.getElementById("geoPage").contentWindow.postMessage('getLocation', '*');
+	 
+	//设置6s超时，防止定位组件长时间获取位置信息未响应
+	setTimeout(function() {
+		if(!loc) {
+			//主动与前端定位组件通信（可选），获取粗糙的IP定位结果
+		document.getElementById("geoPage")
+			.contentWindow.postMessage('getLocation.robust', '*');
+		}
+	}, 6000); //6s为推荐值，业务调用方可根据自己的需求设置改时间，不建议太短
+</script> 
+
+<script type="text/javascript">
+$(document).ready(function(){  
+	getInit();
+});  
+
+var forumPage = 1;
+function getInit(){
+	forumPage = 1;
+    
+	var lat = localStorage['lat'];
+	var lng = localStorage['lng'];
+	//alert(lat);
+	//alert(lng);
+	var data = {};
+    data['forumPage'] = forumPage;
+	data['lng'] = localStorage['lng'];
+    data['lat'] = localStorage['lat'];
+	var type_id = localStorage['type_id'];		
+	if(type_id != '' || type_id != 'undefined' || type_id != null){
+		data['type_id'] = type_id;
+	}
+	
+	$.ajax({
+		url: "{php echo $this->createMobileUrl('GetInfo', array());}",
+		type:"POST",
+		data: data,
+		dataType:"json",
+		success: function(res){
+			if(res == "0"){
+				document.getElementById('show').innerHTML = '暂无数据';
+			}else{
+				var json = eval(res);
+                var near = baidu.template("near",{json:json});
+                document.getElementById('show').innerHTML = near; 
+				if(json.length == 5){
+					document.getElementById('more').style.display = "block";  
+				}
+			}
+		}
+	});
+}
+
+function getMore(){
+	forumPage = forumPage + 1;
+    
+	var lat = localStorage['lat'];
+	var lng = localStorage['lng'];
+	var data = {};
+    data['forumPage'] = forumPage;
+	data['lng'] = localStorage['lng'];
+    data['lat'] = localStorage['lat'];
+	var type_id = localStorage['type_id'];		
+	if(type_id != '' || type_id != 'undefined' || type_id != null){
+		data['type_id'] = type_id;
+	}
+	
+	$.ajax({
+		url: "{php echo $this->createMobileUrl('GetInfo', array());}",
+		type:"POST",
+		data: data,
+		dataType:"json",
+		success: function(res){
+			if(res == "0"){
+				document.getElementById('more').innerHTML = '已无数据';
+			}else{
+				var json = eval(res);
+				var near = baidu.template("near",{json:json});
+                $("#show").append(near); 
+				if(json.length<5){
+					document.getElementById('more').innerHTML = "<div class='tx-c'>已无数据</div>";  
+				}else{
+					document.getElementById('more').style.display = "block";  
+				}
+			}
+		}
+	});
+}
+
+function check(id){
+	localStorage['type_id'] = id;
+	location.reload();
+}
+
+$(".closealert").click(function() {
+	 $(".mban").animate({top:'-800px'})
+	 $(".loginmask33").fadeOut(500);
+});
+function openPe(){
+	$(".loginmask33").fadeIn(500), $(".mban").animate({top:'50px'})
+}
+</script>
+
+</body>
+</html>

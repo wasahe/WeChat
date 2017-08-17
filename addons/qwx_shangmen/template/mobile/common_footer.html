@@ -1,0 +1,94 @@
+<footer>
+<?php
+$index_url = $_W['siteroot'] . 'app' . substr($this->createMobileUrl('index', array(), true), 1);
+$user_order_url = $_W['siteroot'] . 'app' . substr($this->createMobileUrl('user_order', array(), true), 1);
+$user_url = $_W['siteroot'] . 'app' . substr($this->createMobileUrl('user', array(), true), 1);       
+?>
+    <a href="{$index_url}" class="cur"><i></i><span>首页</span></a>
+	<a href="{$user_order_url}" class="remind"><i></i><span>我的订单</span></a>
+    <a href="{$user_url}"><i></i><span>个人中心</span></a>
+</footer>    
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>	
+<script language='javascript'>
+var shareurl = "{$_share['link']}";
+var imgUrl = "{$_share['imgUrl']}"; 
+var title = "{$_share['title']}";
+var content = "{$_share['content']}";   
+	jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || {};
+	// 是否启用调试
+	jssdkconfig.debug = false;
+	jssdkconfig.jsApiList = [
+		'checkJsApi',
+		'onMenuShareTimeline',
+		'onMenuShareAppMessage',
+		'onMenuShareQQ',
+		'onMenuShareWeibo',
+		'showOptionMenu',
+		'closeWindow'
+	];
+	wx.config(jssdkconfig);
+	var shareMeta = {
+		imgUrl: imgUrl,
+		link : shareurl,
+		desc : content,
+		title : title
+    };
+
+	wx.ready(function () {
+		wx.showOptionMenu();
+		//wx.onMenuShareAppMessage(shareMeta);
+                wx.onMenuShareAppMessage({                    
+                    title: title,
+                    desc: content,
+                    link: shareurl,
+                    imgUrl: imgUrl,
+                    success: function (res) {
+                        shareCallback('appmsg');
+                    }
+                });                 
+                
+		//wx.onMenuShareTimeline(shareMeta);
+                wx.onMenuShareTimeline({
+                    title: title,
+                    link: shareurl,
+                    imgUrl: imgUrl,
+                    trigger: function (res) {},
+                    success: function (res) {
+                        shareCallback('timeline');
+                    },
+                    cancel: function (res) {},
+                    fail: function (res) {}
+                });  
+                
+		//wx.onMenuShareQQ(shareMeta);
+                wx.onMenuShareQQ({
+                    title: title, // 分享标题
+                    desc: content, // 分享描述
+                    link: shareurl, // 分享链接
+                    imgUrl: imgUrl, // 分享图标
+                    success: function (res) {
+                        shareCallback('qq');
+                    },
+                    cancel: function (res) {},
+                    fail: function (res) {}
+                });                
+                
+		//wx.onMenuShareWeibo(shareMeta);
+                wx.onMenuShareWeibo({
+                    title: title,
+                    link: shareurl,
+                    imgUrl: imgUrl,
+                    trigger: function (res) {},
+                    success: function (res) {
+                        shareCallback('weibo');
+                    },
+                    cancel: function (res) {},
+                    fail: function (res) {}
+                });                
+	});
+function shareCallback(type) {
+	 
+}        
+</script>     
+</body>
+</html>

@@ -1,0 +1,70 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+	    游戏设置
+	</div>
+	<div class="panel-body">
+	    <div class="form-group">
+	        <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 游戏名称</label>
+	        <div class="col-sm-9 col-xs-12">
+	            <input type="text" id="title" class="form-control" placeholder="" name="title" value="{$reply['title']}">
+	        </div>
+	    </div>
+	    <div class="form-group">
+	        <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 图文图片</label>
+	        <div class="col-sm-9 col-xs-12">
+	            {php echo tpl_form_field_image('thumb',$reply['thumb']);}
+	        </div>
+	    </div>
+	    <div class="form-group">
+	        <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 游戏说明</label>
+	        <div class="col-sm-9 col-xs-12">
+	            <textarea style="height:60px;" id='description' name="description" class="form-control" cols="60">{$reply['description']}</textarea>
+	            <span class="help-block">用于户图文显示</span>
+	        </div>
+	    </div>
+	    <div class="form-group">
+	        <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 背景图片</label>
+	        <div class="col-sm-9 col-xs-12">
+	            {php echo tpl_form_field_image('bgpic',$reply['bgpic']);}
+	            <span class="help-block">可以自定义游戏背景图</span>
+	        </div>
+	    </div>
+	    <div class="form-group">
+	        <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 版权信息</label>
+	        <div class="col-sm-9 col-xs-12">
+	            <input type="text" class="form-control" name="copyright" value="{$reply['copyright']}" />
+	        </div>
+	    </div>
+	    <div class="form-group">
+	        <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 版权链接</label>
+	        <div class="col-sm-9 col-xs-12">
+	            <input type="text" class="form-control" name="copyrighturl" value="{$reply['copyrighturl']}" />
+	        </div>
+	    </div>
+	</div>
+	<div class="panel-heading">
+	    引导关注
+	</div>
+	<div class="panel-body">
+		<div class="form-group">
+	        <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 二维码</label>
+	        <div class="col-sm-9 col-xs-12">
+	            {php echo tpl_form_field_image('qrcode',$reply['qrcode']);}
+	            <span class="help-block">图片建议大小为100px * 100px</span>
+	        </div>
+	    </div>
+	    <div class="form-group">
+	        <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 文字提示</label>
+	        <div class="col-sm-9 col-xs-12">
+	            <input type="text" class="form-control" name="instruction" value="{$reply['instruction']}" />
+	            <span class="help-block">用于配对结果动态图跳转链接</span>
+	        </div>
+	    </div>
+	    <div class="form-group">
+	        <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 分享跳转</label>
+	        <div class="col-sm-9 col-xs-12">
+	            <input type="text" class="form-control" name="success_url" value="{$reply['success_url']}" />
+	        </div>
+	    </div>
+	</div>
+</div>

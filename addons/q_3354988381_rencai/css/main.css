@@ -1,0 +1,205 @@
+	/*导航*/
+	.main-header{
+		margin-bottom: 40px		
+	}
+	.pointcheck{
+		line-height: 2.5;
+	}
+	.pointform{
+		margin-top:20px;
+	}
+	.error{
+		color:red;
+	}
+	.prev , .num , .next{
+		background: #ddd;
+		padding: 3px;
+		color: black;
+		margin-left:5px;
+		border: 1px solid #ddd;
+	}
+	.current{
+		border:1px solid #ddd;
+		padding: 3px;
+		color: black;	
+		margin-left:5px;		
+	}
+	.current , .num{
+		padding-left:10px;
+		padding-right:10px;
+	}
+	
+	.prev:hover ,  .next:hover , a.num:hover {
+		background: #00acd6;
+		color: #fff;
+	}
+	.pagediv{
+		padding-bottom: 20px;
+		padding-right: 10px;
+	}
+	.priceorder{
+	cursor: pointer;
+	margin-left:5px!important;
+}
+	.pop{ position: fixed;	top:0;	left:0;	width:100%;	height:100%;background:rgba(0, 0, 0, 0.7);z-index:1000; padding-top:15%;}
+	.promptbox{border-radius:10px; padding:10%;font-size:100px; margin:0 auto; position: fixed; z-index:20001;left: 10%;
+	right: 10%;
+	top: 10%;}
+	.promptbox .box{color:#fff;text-align:center;border:0;}
+	.fa-spin{
+		color:#fff!important;
+		font-size:60px!important;
+	}
+	.modal .form-group{
+		margin-top:10px;
+		height:30px;
+	}
+	.madolradio{
+		line-height: 2.7;
+	}
+	.error{
+		color:red;
+	}
+
+	/*支付二维码*/
+	#code{
+		text-align: center;
+		padding: 20px 20px 0 20px;		
+	}
+
+	.closerpay{
+		position: absolute;
+		top: -1px;
+		right: -1px;
+		width: 30px;
+		height: 30px;
+		background: #ddd;
+		overflow: hidden;
+		border-radius: 50%;
+		border: 1px solid #ddd;
+		font-size: 20px;
+		color: #09B1BE;		
+	}
+	.paysuccess{
+		position: absolute;
+		width: 120px;
+		left: 50%;
+		margin-left: -60px;		
+	}
+	@media screen and (min-width: 600px) { 
+		.alertmsg{
+			position: fixed;
+			width: 400px;
+			top: 10%;
+			left: 50%;
+			margin-left: -200px;
+			text-align: center;
+			z-index: 1111;	
+			padding-bottom: 40px;
+			background: #E9EDF2;
+		}
+	}
+	@media screen and (max-width: 600px) { 
+		.alertmsg{
+			position: fixed;
+			top: 10%;
+			width:100%;
+			text-align: center;
+			z-index: 1111;
+			padding-bottom: 40px;
+			background: #E9EDF2;		
+		}		
+	}	
+
+	
+	/*发布文章*/
+	.articledanger{
+		position: absolute;
+		top: 73px;
+		right: 50px;
+		width: 300px;		
+	}
+	.point{
+		cursor: pointer;
+	}
+	span.countmoney{
+		padding: 6px 20px;
+		background: #F2EFEF;
+		border-radius: 5px;
+		font-size: 14px;
+		margin-top:2px;		
+	}
+	#realmoney{
+		color:red;
+		font-size:16px;
+	}
+	/*时间线*/
+	.timeline-body{
+		min-height: 100px;
+		text-indent: 2em;		
+	}
+	.timeline-item .box{
+		border-radius: 3px 3px 0 0;
+	}
+	/*注册页面*/
+	.smallfont{
+		font-size: 10px;
+	}
+	.regbtn{
+		padding: 2px 10px;
+		width: 75px;
+		line-height: 24px;		
+	}
+	.tologin{
+		line-height: 24px;
+	}
+	/*模态框*/
+	@media screen and (min-width: 600px) { 
+		.modalcontent{
+			width: 600px;
+			position: fixed;
+			top: 22%;
+			left: 50%;
+			margin-left: -300px;
+			z-index: 1111;		
+		}
+	}
+	@media screen and (max-width: 600px) { 
+		.modalcontent{
+			width: 100%;
+			position: fixed;
+			top: 22%;
+
+			z-index: 1111;		
+		}
+	}	
+	.coverback{
+		width: 100%;
+		height: 100%;
+		position: fixed;
+		top: 0;
+		left: 0;
+		background: rgba(19, 17, 17, 0.47);
+		z-index: 2;	
+	}
+	.modal-body{
+		overflow: hidden;
+	}
+	.inputleft{
+		line-height: 28px;
+	}
+	.madelinput{
+		overflow: hidden;
+		margin: 5px 0;
+	}
+	/*续费*/
+	.extendrealmoney{
+		line-height: 31px;
+		background: #F5EFEF;
+		padding: 7px 15px;
+		margin: 10px 20px;		
+	}
+	#extendrealmoney{
+		font-size:18px;
+		color:red;
+	}

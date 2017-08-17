@@ -1,0 +1,428 @@
+<html lang="en" class="ui-pixel-ratio-1"><head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta id="wxKeywords" name="Keywords" content="<keywords />">
+    <meta id="wxDescription" name="Description" content="<description />">
+    <meta name="apple-touch-fullscreen" content="YES">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta http-equiv="Expires" content="-1">
+    <meta http-equiv="pragram" content="no-cache">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+ 
+   
+    <link rel="stylesheet" href="{MODULE_URL}assets/styles/user/cell.css">
+    <link rel="stylesheet" href="{MODULE_URL}assets/styles/user/text.css">
+    
+    <link rel="stylesheet" href="{MODULE_URL}assets/styles/user/index.css">
+	<style type="text/css">*{font-family:"Microsoft YaHei",Arial,Helvetica,sans-serif,"宋体";}</style>
+	
+	<link href="{MODULE_URL}assets/styles/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
+	
+    <script type="text/javascript" src="{MODULE_URL}public/libs/jquery_weui/lib/jquery-2.1.4.js"></script>
+	<script type="text/javascript" src="{MODULE_URL}assets/scripts/elink-framework.js"></script>
+	<script type="text/javascript" src="{MODULE_URL}assets/scripts/noty/packaged/jquery.noty.packaged.js"></script>
+    <script type="text/javascript" src="{MODULE_URL}public/libs/jquery_weui/jquery-weui.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+   <script>
+        var jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || {};
+        // 是否启用调试
+        jssdkconfig.debug = false;
+        jssdkconfig.jsApiList = [
+            'checkJsApi',
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage',
+            'onMenuShareQQ',
+            'onMenuShareWeibo',
+            'hideMenuItems',
+            'showMenuItems',
+            'hideAllNonBaseMenuItem',
+            'showAllNonBaseMenuItem',
+            'translateVoice',
+            'startRecord',
+            'stopRecord',
+            'onRecordEnd',
+            'playVoice',
+            'pauseVoice',
+            'stopVoice',
+            'uploadVoice',
+            'downloadVoice',
+            'chooseImage',
+            'previewImage',
+            'uploadImage',
+            'downloadImage',
+            'getNetworkType',
+            'openLocation',
+            'getLocation',
+            'hideOptionMenu',
+            'showOptionMenu',
+            'closeWindow',
+            'scanQRCode',
+            'chooseWXPay',
+            'openProductSpecificView',
+            'addCard',
+            'chooseCard',
+            'openCard',
+			'translateVoice',
+            'openAddress'
+        ];
+        wx.config(jssdkconfig);
+        var _TUTOR_URL = "{php echo $this->createMobileUrl('tutor')}";
+        var _follow = "{php echo intval($_W['fans']['follow'])}";
+        var _openid = "{php echo $_W['openid']}";
+        var _qrcode = "{php echo $_W['account']['qrcode']}";
+    </script>
+	<script type="text/javascript" src="{MODULE_URL}assets/scripts/raty/jquery.raty.js"></script>
+	<link href="{MODULE_URL}assets/styles/weui.css" rel="stylesheet" type="text/css">
+</head>
+<body height="100%">
+	<!--{php $footerbars = M('quickmenu')->getall();}-->
+	
+<!--菜单栏-->
+	{php $menu='ask'}
+	{template '/wx/menu'}
+        
+		
+		
+		
+	   
+		<!--下拉-->
+		<div id="popup" align=center style="display:none;background-color:#FFF;position:fixed;top:45;z-index:1000;">
+		
+					{php $category = M('category')->getall()}
+					<a class="weui-grid" style="padding:15px;width:20%;height:50px;" href="http://www.cnkr.cc/app/index.php?i=2&c=entry&do=find&m=yukiho_zvoice">
+					<p  style="display: block;text-align: center;color: #000000;font-size: 14px;" >全部</p>
+					</a>
+					{loop $category $c}
+					<a class="weui-grid" style="padding:15px;height:50px;width:20%;" href="{php echo $this->createMobileUrl('find',array('cid'=>$c['id'],'act'=>'cate'))}">
+					<p style="display: block;text-align: center;color: #000000;font-size: 14px;" >{$c['title']}</p>
+					</a>
+					{/loop}
+					
+		</div>
+		<style type="text/css">
+			#embedding{
+			  position: absolute; background-color:#E0E0E0; bottom:0px;height:40px; width:100%;line-height:40px;text-align:center;
+			}
+			.icon_vip{
+				position:absolute;
+				bottom:0px;
+				left:50px;
+				background-size:80px 320px;
+				width:26px;
+				height:26px;
+				background-position:0px 0;
+				background-image:url({MODULE_URL}assets/images/icon.png?t=234143);
+				
+			}
+			</style> 
+	
+		<div id="loadingDiv" style="position:fixed;display:none;z-index:500;top:45px;margin:0 0 50px 0;left:0px;width:100%;height:100%;background-color:rgba(0,0,0,0.3)"></div>
+		<div class="page" >
+            <div style="height:30px" align="center" >
+						<div class="weui-search-bar" id="searchBar">
+							<button id="btn1" style="font-size:14px;width:15%;color:#808080; margin:0 10px 0 0;border:1px solid #808080;padding:3px 3px 3px 3px " class="weui-media-box__info__meta">{$cate['title']}</button>
+			
+							
+							<form class="weui-search-bar__form" style="vertical-align:middle">
+								<div class="weui-search-bar__box">
+									<i class="weui-icon-search"></i>
+									<input type="search" style="height:20px" class="weui-search-bar__input" id="searchInput" placeholder="搜索" required/>
+									<a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
+								</div>
+								<label class="weui-search-bar__label" id="searchText">
+									<i class="weui-icon-search"></i>
+									<span>搜索</span>
+								</label>
+							</form>
+							<a id="btn2"  style="width:15%;font-size:14px;color:#808080; margin:0 0px 0 10px;border:1px solid #808080;padding:3px 3px 3px 3px " >排序</a>
+						</div>
+            </div>
+		</div>
+	
+		<script type="text/javascript">
+		$(function(){
+		 $("#btn1").click(function(){
+			
+			$('#loadingDiv').toggle();  
+			$('#popup').toggle(500);
+		  }); 
+		  });
+		  </script>
+		  <script type="text/javascript">
+		  
+		  
+		  
+		  
+		 $(function(){
+		 $("#loadingDiv").click(function(){
+			
+			$('#loadingDiv').hide(200);
+			$('#popup').hide(200);
+		  }); 
+		  
+		});
+		
+		</script>
+		<script type="text/javascript">
+			$(function(){
+		 $("#btn2").click(function(){ 
+			$('#popup1').toggle(500);
+			$("v1").style.width=$("btn2").style.width;
+			$("v2").style.width=$("btn2").style.width;
+			$("v3").style.width=$("btn2").style.width;
+		  }); 
+		  });
+		  
+		</script>
+		<div  id="popup1" align=center style="padding:0px 10px 10px 10px;;font-size:13px;background:#F0F0F0;display:none;right:0;position:absolute;top:45;z-index:1000;">
+				<li id="v1" align=center style="list-style-type:none;padding:5px 10px 5px 10px;height:20px;font-size:13px;color:#808080; border:1px solid #808080;" >按人气</li>
+				<li id="v2" align=center style="margin-top:10px;list-style-type:none;padding:5px 10px 5px 10px;height:20px;font-size:13px;color:#808080; border:1px solid #808080;" >按星级</li>
+				<li id="v3" align=center style="margin-top:10px;list-style-type:none;padding:5px 10px 5px 10px;height:20px;font-size:13px;color:#808080; border:1px solid #808080;" >按经验</li>
+		</div>
+	
+		 
+	
+	
+	
+	<!-- ui-page集合的容器，里面放多个平行的.ui-page，其他.ui-page作为内联页面由路由控制展示 -->
+	<div class="ui-page-group" style="margin-top:15px;">
+		<!-- 单个page ,第一个.page默认被展示-->
+		<div class="ui-page ui-page-current">
+			<!-- 页面内容区 开始-->
+			<div class="ui-content" id="scroll-page" >
+				<!--大师列表-->
+				<div class="master-list" id="members"  style='margin-bottom:90px;'>				
+					{loop $members['list'] $member}
+					{php $url = $this->createMobileUrl('tutor',array('openid'=>$member['openid']))}
+					<a class="master-333">
+					<div class="ui-cells master-content">
+						<div class="ui-cell" >
+							<div onClick="window.location.href='{$url}'" class="weui-cell__hd">
+									<img src="{php echo $member['avatar']}" style="margin:0 10px 0 0;border:1px solid #E0E0E0;border-radius:5px; width:65px;height:65px;display: block"/>
+							</div>
+							<div onClick="window.location.href='{$url}'"  class="detail" >
+								<div class="master-name">{$member['realname']}</div>
+								{if $member['isrecommend']=='1'}<i class="icon icon_vip"></i>{/if}
+								<div style="display:inline;" id="star{$member['id']}"></div>
+								<script>
+								$('#star{$member['id']}').raty({ readOnly: true, score: "{$member['score']}" });
+								</script>
+								<ul class="weui-media-box__info" style="margin-top:1px">
+								{php $category = M('category')->getInfo($member['category_id'])}
+								<p style="text-align:center;color:#808080; border-radius:3px;margin:0 10px 0 0;border:1px solid #808080;padding:1px 2px 1px 2px;width:45px " class="weui-media-box__info__meta">{$category['title']}</p>
+								</ul>
+							</div>
+							<div class="price">
+							
+								<div class="category" align=center>
+									{php $check = M('follow')->check($member['openid'])}
+									
+									{if !empty($check)}
+									<span act='unfollow'  data-openid="{$member['openid']}" class='focus' style="background-color:#FCFCFC;font-size:16px;color:#000;margin-top:5px;border-radius:3px;width:55px;height:20px;font-size:12px;padding:1px 2px 1px 2px;border:1px solid #808080;">已关注</span>
+									{else}
+									<span act='follow'  data-openid="{$member['openid']}" class='focus' style="background-color:#FCFCFC;font-size:16px;color:#000;margin-top:5px;border-radius:3px;width:55px;height:20px;font-size:12px;padding:1px 2px 1px 2px;border:1px solid #808080;" >+ 关注</span>
+									{/if}
+									
+									<p style="font-size:12px;margin:5px 0 2px 0;color:#808080">{php echo M('follow')->getTotal($member['openid'])}人关注</p>			
+									<p style="font-size:13px;margin:2px 0 0px 0;color:#808080">￥{$member['credit']}元</p>
+									
+									
+									<!--<span onclick="window.location.href='{php echo $this->createMobileUrl('making',array('openid'=>$member['openid']))}'">提问</span>-->
+								</div>
+								
+							</div>
+						</div>
+						<div onClick="window.location.href='{$url}'" class="ui-nowrap-2 master-info"> <span style="font-size:16px;">个人介绍：</span><span style="font-size:13px;">{$member['desc']}</span></div>
+						<!--<div onclick="window.location.href='{$url}'" class="ui-cell data-count">
+							<div class="ui-cell-primary">
+								<span class="ui-icon icon-jieda"></span>{php echo M('answer')->getAnsTotal(array('openid'=>$member['openid']))}解答
+							</div>
+							<div class="ui-cell-primary">
+								<span class="ui-icon icon-pingjia"></span>{php echo M('listen_log')->gettotalByOpenid($member['openid'])}{php echo $this->template['learnName']}
+							</div>
+							<div class="ui-cell-primary">
+								<span class="ui-icon icon-fensi"></span>{php echo M('follow')->getTotal($member['openid'])}粉丝
+							</div>
+						</div>-->
+					</div>
+				</a>
+				{/loop}
+				</div>
+			</div>
+			<div id="mask" class="mask" ></div>	
+        </div>
+        <!-- 页面内容区 结束-->
+    </div>
+    <!-- 单个page ,第一个.page默认被展示-->
+	<input type="hidden" name="share_title" value="{php echo $this->pro['share_title']}"/>
+	<input type="hidden" name="share_image" value="{php echo tomedia($this->pro['share_image'])}"/>
+	<input type="hidden" name="share_desc" value="{php echo $this->pro['share_desc']}"/>
+	<input type="hidden" name="share_link" value=""/>
+	<script src="{MODULE_URL}public/js/loadmore.js"></script>	
+	<script>	 
+	initload("{php echo $this->createMobileUrl('find',$url_params)}",callback);
+	loadmore("{php echo $this->createMobileUrl('find',$url_params)}",callback);
+	function callback(html){
+		$('#members').append(html);
+	}	
+	function callback(html){
+		$('#questions').append(html);
+	}
+	$('.focus').click(function(){
+		var _that = $(this);
+		var openid = _that.data('openid');
+		var act = _that.attr('act');
+		$.post("{php echo $this->createMobileUrl('members')}",{act:act,openid:openid},function(data){
+			if(data.status == 1){
+				bingo(data.message);
+				if('follow'==act){
+					_that.attr('act','unfollow');
+					_that.html('已关注');
+				}else if('unfollow'==act){
+					_that.attr('act','follow');
+					_that.html('加关注');
+				}
+			}else{
+				warn(data.message);
+			}
+		},'json');
+	});
+	$("#catemore,#mask").click(function(){
+		if($(".answers-list-header-ft").hasClass('show')){			
+			$(".answers-list-header-ft").removeClass("show");
+			$("#mask").hide();  
+		}else{
+			$(".answers-list-header-ft").addClass("show"); 
+			$("#mask").css("height",0);     
+			$("#mask").css("width",$(document).width()+28);     
+			$("#mask").show();  
+		}
+	});
+	
+	initshare();
+	function initshare(){
+		var title = $('input[name="share_title"]').val();
+		var imgUrl = $('input[name="share_image"]').val();
+		var desc = $('input[name="share_desc"]').val();
+		var link = $('input[name="share_link"]').val();
+		wx.ready(function(cb1,cb2){
+			wx.onMenuShareTimeline({
+				title: title, // 分享标题
+				link: link, // 分享链接
+				imgUrl: imgUrl, // 分享图标
+				success: function () {
+					// 用户确认分享后执行的回调函数
+					cb1();
+				},
+				cancel: function () {
+					// 用户取消分享后执行的回调函数
+					cb2();
+				}
+			});
+			wx.onMenuShareAppMessage({
+				title: title, // 分享标题
+				desc: desc, // 分享描述
+				link: link, // 分享链接
+				imgUrl: imgUrl, // 分享图标
+				type: '', // 分享类型,music、video或link，不填默认为link
+				dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+				success: function () {
+					// 用户确认分享后执行的回调函数
+					cb1()
+				},
+				cancel: function () {
+					// 用户取消分享后执行的回调函数
+					cb2();
+				}
+			});
+			wx.onMenuShareQQ({
+				title: title, // 分享标题
+				desc: desc, // 分享描述
+				link: link, // 分享链接
+				imgUrl: imgUrl, // 分享图标
+				success: function () {
+					// 用户确认分享后执行的回调函数
+					cb1();
+				},
+				cancel: function () {
+					// 用户取消分享后执行的回调函数
+					cb2();
+				}
+			});
+			wx.onMenuShareWeibo({
+				title: title, // 分享标题
+				desc: desc, // 分享描述
+				link:link, // 分享链接
+				imgUrl: imgUrl, // 分享图标
+				success: function () {
+					// 用户确认分享后执行的回调函数
+					cb1();
+				},
+				cancel: function () {
+					// 用户取消分享后执行的回调函数
+					cb2();
+				}
+			});
+			wx.onMenuShareQZone({
+				title: title, // 分享标题
+				desc: desc, // 分享描述
+				link: link, // 分享链接
+				imgUrl: imgUrl, // 分享图标
+				success: function () {
+					// 用户确认分享后执行的回调函数
+					cb1();
+				},
+				cancel: function () {
+					// 用户取消分享后执行的回调函数
+					cb2()
+				}
+			});
+		});
+	}
+	
+    $(function(){
+        var $searchBar = $('#searchBar'),
+            $searchResult = $('#searchResult'),
+            $searchText = $('#searchText'),
+            $searchInput = $('#searchInput'),
+            $searchClear = $('#searchClear'),
+            $searchCancel = $('#searchCancel');
+        function hideSearchResult(){
+            $searchResult.hide();
+            $searchInput.val('');
+        }
+        function cancelSearch(){
+            hideSearchResult();
+            $searchBar.removeClass('weui-search-bar_focusing');
+            $searchText.show();
+        }
+        $searchText.on('click', function(){
+            $searchBar.addClass('weui-search-bar_focusing');
+            $searchInput.focus();
+        });
+        $searchInput
+            .on('blur', function () {
+                if(!this.value.length) cancelSearch();
+            })
+            .on('input', function(){
+                if(this.value.length) {
+                    $searchResult.show();
+                } else {
+                    $searchResult.hide();
+                }
+            })
+        ;
+        $searchClear.on('click', function(){
+            hideSearchResult();
+            $searchInput.focus();
+        });
+        $searchCancel.on('click', function(){
+            cancelSearch();
+            $searchInput.blur();
+        });
+    });
+</script>
+</body>
+</html>

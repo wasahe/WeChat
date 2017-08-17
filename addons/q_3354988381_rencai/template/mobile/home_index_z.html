@@ -1,0 +1,115 @@
+{template 'common_header'}
+    <!--  幻灯片 -->
+    <script>
+    $(function() {
+      $('.am-slider').flexslider({
+          animation:"fade",
+          slideshow: true,
+          slideshowSpeed: '{$ad_speed}'
+      });
+    });
+    </script>
+<style>
+.am-gallery-default>li {
+    padding: 1px;
+}	
+</style>
+{if $big_ad_lists}
+	<!-- 幻灯片大 -->
+    <div data-am-widget="slider" class="am-slider am-slider-c2" data-am-slider='{directionNav:true}'>
+        <ul class="am-slides">
+            {loop $big_ad_lists $bigad}
+            <li>
+                <a href="{php echo $bigad['link'] != '' ? $this->createMobileUrl('AdGo', array('aid' => $bigad['id'])) : 'javascript:;';}">
+                <img src="{php echo $this->get_rencai_pic($bigad['url']);}" style="height: 180px">
+                {if $bigad['name']}<div class="am-slider-desc">{$bigad['name']}</div>{/if}
+                </a>
+            </li>
+            {/loop}
+        </ul>
+        <ol class="am-control-nav am-control-paging">
+            {loop $big_ad_lists $k $v}
+            <li><a class="">{$k}</a><i></i></li>
+            {/loop}
+        </ol>
+    </div>
+{/if}
+
+
+{if $companys_positions}
+    <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-gallery-default" data-am-gallery="{ pureview: true }" style="margin-top: 0.4rem;background-color:#FFF">
+        {loop $positiontype_list $p}
+        <li>
+            <div class="am-gallery-item">
+                <a href="{php echo $this->createMobileUrl('JobList', array('positiontype_id' => $p['id']));}"  style="display: block;position: relative">
+                    <div style="width: 100%;height: 100%;position: absolute;z-index: 1"></div>
+                    {if $p['logo']}
+                    <img src="{$atturl}{$p['logo']}" alt="{$p['name']}" style="width: 100%; height: 80px"/>
+                    {else}
+                    <div style="width: 160px; height: 80px;background-color: #d1d1d1;font-size:1.2rem ">{$p['name']}</div>
+                    {/if}
+                </a>
+            </div>
+        </li>
+        {/loop}
+    </ul>
+{/if}
+
+
+{if $companys_positions}
+<?php
+    if ($getFieldsSaveValArr[$sh_field_name]['show']) {
+        if ($getFieldsSaveValArr[$sh_field_name]['user_label']) {
+        	echo '<div class="am-btn am-btn-block am-btn-success am-text-left">&nbsp;&nbsp;';
+            echo $getFieldsSaveValArr[$sh_field_name]['user_label'];
+        } else {
+        	list($sh_field_name, $rmk) = explode('|', $allFieldsArr['sys'][$sh_field_name]);
+        	echo '<div class="am-btn am-btn-block am-btn-success am-text-left am-icon-hdd-o">&nbsp;&nbsp;';
+            echo $sh_field_name;
+        }
+        echo '</div>';
+    }
+?>
+    <ul data-am-widget="gallery" class="am-gallery am-avg-sm-4 am-gallery-default" data-am-gallery="{ pureview: true }" style="margin-top: 0.4rem;background-color:#FFF">
+        {loop $companys_positions $p}
+        <li>
+            <div class="am-gallery-item">
+                <a href="{php echo $this->createMobileUrl('CompanyShow', array('companyid' => $p['id']));}"  style="display: block;position: relative">
+                    <div style="width: 100%;height: 100%;position: absolute;z-index: 1"></div>
+                    {if $p['logo']}
+                    <img src="{$atturl}{$p['logo']}" alt="{$p['name']}" style="width: 80px; height: 100px"/>
+                    {else}
+                    <div style="width: 160px; height: 100px;background-color: #d1d1d1;font-size:1.2rem ">{$p['name']}</div>
+                    {/if}
+                </a>
+            </div>
+        </li>
+        {/loop}
+    </ul>
+{/if}
+    <script>
+        wx.ready(function () {
+            sharedata = {
+                title: "{$_W['mobile']['share']['index_title']}",
+                desc: "{$_W['mobile']['share']['index_desc']}",
+                link: "{$_W['siteroot']}app/{php echo $this->createMobileUrl('Index').$this->get_share_whoid();}",
+                imgUrl: "{php echo $this->get_rencai_pic($_W['mobile']['share']['index_pic']);}",
+                success: function(){
+	{if $_W['mobile']['share']['share_index_award_score'] > 0}				
+		$.post('{php echo $this->createMobileUrl('Shareaward', array());}', {share_item:'index'}, function(data) {
+				if (data.success == true) {
+					alert(data.msg);
+				} else {
+					alert(data.msg);
+				}
+			},"json")   
+	{/if} 					
+                },
+                cancel: function(){
+                }
+            };
+            wx.onMenuShareAppMessage(sharedata);
+            wx.onMenuShareTimeline(sharedata);
+        });
+    </script>
+{template 'common_footer'}

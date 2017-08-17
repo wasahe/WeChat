@@ -1,0 +1,73 @@
+﻿{template 'common_header'}
+<!-- 已领取任务 提交 -->
+<link rel="stylesheet" href="{CURR_UI_DIR}weui/style/weui.css"/>
+<script src="{CURR_UI_DIR}weui/weui.js"></script>
+<style type="text/css">
+    body,html{height:100%;-webkit-tap-highlight-color:transparent}.page,body{background-color:#fbf9fe}.page{overflow-y:auto;-webkit-overflow-scrolling:touch}.hd{padding:2em 0}.page_title{text-align:center;font-size:34px;color:#3cc51f;font-weight:400;margin:0 15%}
+p, hr, ul, ol, dl, blockquote, pre, address, fieldset, figure {
+    margin: 0 0 0 0;
+}
+</style>
+<style>
+.page_title {
+    font-size: 1.4rem;
+    color: #F96A0E;
+}
+.weui_media_box .weui_media_title {
+    color: #F96A0E;
+}
+
+.page_top_item {
+    text-align: center;
+}
+.page_top_item span{
+    width: 20%;
+    line-height: 25px;
+    border-radius: 3px;
+    border: 1px solid #ff5f27;
+    margin-top: 7px;
+    text-align: center;
+    color: #ff5f27;	
+    display: inline-block;	
+}
+.font_activity {
+    background: #ff5f27!important;
+    color: #fff!important;
+}
+
+</style>
+
+   
+    <div class="weui_panel">
+    	<div class="weui_panel_bd">
+        
+			{loop $list $row}     
+                <div class="weui_media_box weui_media_text" style=" margin-bottom:-30px">
+                </div>                      
+                <div class="weui_panel_bd">
+                    <a href="{php echo $this->createMobileUrl('ShowResumeInfo', array('person_id' => $row['person_id']));}" class="weui_media_box weui_media_appmsg">
+                        <div class="weui_media_bd">
+                            <p class="weui_media_desc">
+                            	<span>{$row['username']}</span>
+                                <span style="float:right;color:#F63;">{php echo '￥ '.$row['fee'];} 元</span>                            
+                            </p>
+                            <p class="weui_media_desc">
+                            	<span>{php echo $row['createat'];}</span>
+                                <span style="float:right;color:#{php echo $row['person_agree']=='Y'?'0C3':'F63';};">{php echo $row['person_agree']=='Y'?'已同意':($row['person_agree']=='N'?'已拒绝':'待处理');} </span>
+                            </p>
+                        </div>  
+                    </a>                 
+                </div>                            
+            {/loop}
+
+            {if empty($list)}
+                <div class="weui_media_box weui_media_text">
+                    <h4 class="weui_media_title">暂无记录</h4>
+                </div>       
+            {/if}        
+            
+            
+        </div>
+     </div> 
+    
+{template 'common_footer'}

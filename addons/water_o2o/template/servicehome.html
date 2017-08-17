@@ -1,0 +1,67 @@
+{template 'common/header'}
+
+<div class="servicehome">
+	<ul class="nav nav-tabs">
+		<li class="active"><a href="{php echo $this->createWebUrl('servicehome');}">上门服务列表</a></li>
+		<li><a href="{php echo $this->createWebUrl('addservicehome');}">新增上门服务</a></li>
+	</ul>
+	<div class="panel panel-info">
+		<div class="panel-heading">当前搜索条件下数量： {$total}</div>
+		    <div class="panel-body">
+        <form action="{php echo $this->createWebUrl('servicehome')}" method="post" class="form-horizontal" role="form">
+            <div class="form-group">          
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-1 control-label">服务名称</label>
+                <div class="col-sm-2 col-lg-2">
+                    <input class="form-control" name="shname" id="" type="text" value="{$shname}">
+            	</div>
+                <div class=" col-xs-12 col-sm-2 col-lg-2">
+                    <button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+                </div>
+            </div>
+        </form>
+    </div>
+		
+		
+	</div>
+
+	<div class="panel panel-default">
+		<div class="panel-body table-responsive">
+			<table class="table table-hover">
+				<thead class="navbar-inner">
+					<tr>
+						<th style="width: 50px;">序号</th>
+						<th style="width: 120px;">服务名称</th>
+						<th style="width: 150px;">服务简介</th>
+						<th style="width: 120px; text-align: right;">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					{loop $list $item}
+					<tr>
+						<td>{$item['id']}</td>
+						<td>{$item['shname']}</td>
+						<td>{$item['shdesc']}</td>
+						<td style="text-align: right;"><a
+							class="btn btn-success btn-sm"
+							href="{php echo $this->createWebUrl('addservicehome', array('servicehomeid'=>$item['id']))}"
+							title="编辑"><i class="icon-edit"></i>编辑</a> <a
+							class="btn btn-default btn-sm" href="#"
+							onclick="drop_confirm('确定要删除吗?','{php echo $this->createWebUrl('addservicehome',array('op'=>'delete','servicehomeid'=>$item['id']))}');"
+							title="删除"><i class="icon-remove"></i>删除</a></td>
+					</tr>
+					{/loop}
+				</tbody>
+			</table>
+		</div>
+		{$pager}
+	</div>
+</div>
+
+<script type="text/javascript">
+    function drop_confirm(msg, url){
+        if(confirm(msg)){
+            window.location = url;
+        }
+    }
+</script>
+{template 'common/footer'}

@@ -1,0 +1,277 @@
+{template 'common/header'}
+
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" id="setting-form">
+		<div class="panel panel-default">
+			<div class="panel-heading">七牛存储设置</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label"><span style="color:red;">*</span>七牛AccessKey</label>
+					<div class="col-sm-8">
+						<input type="text" name="qn_accesskey" class="form-control" value="{$settings['qn_accesskey']}" />
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label"><span style="color:red;">*</span>七牛SecretKey</label>
+					<div class="col-sm-8">
+						<input type="text" name="qn_secretkey" class="form-control" value="{$settings['qn_secretkey']}" />
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label"><span style="color:red;">*</span>七牛Bucket</label>
+					<div class="col-sm-8">
+						<input type="text" name="qn_bucket" class="form-control" value="{$settings['qn_bucket']}" />
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label"><span style="color:red;">*</span>七牛队列名</label>
+					<div class="col-sm-8">
+						<input type="text" name="qn_queuename" class="form-control" value="{$settings['qn_queuename']}" />
+					<div class="help-block">媒体转码队列名,声音文件需要转码后才能在安卓和苹果上使用</div>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label"><span style="color:red;">*</span>七牛访问域名</label>
+					<div class="col-sm-8">
+						<input type="text" name="qn_domain" class="form-control" value="{$settings['qn_domain']}" />
+					<div class="help-block">七牛上可以绑定自己的域名来访问资源,此处填写绑定到七牛的域名</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		
+		
+		<div class="panel panel-default">
+			<div class="panel-heading">分答设置</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">提问通知模板消息</label>
+					<div class="col-sm-8">
+						<input type="text" name="ask_templete" class="form-control" value="{$settings['ask_templete']}" />
+					<div class="help-block">有用户提问时被提问者收到的消息,模板为 互联网|电子商务>>用户提问通知</div>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">回答通知模板消息</label>
+					<div class="col-sm-8">
+						<input type="text" name="answer_templete" class="form-control" value="{$settings['answer_templete']}" />
+					<div class="help-block">被提问者回答提问后,提问者收到的消息,模板为 互联网|电子商务>>用户提问进展通知</div>
+					</div>
+				</div>
+				
+		  <div class="form-group">
+ 			<label class="col-xs-12 col-sm-3 col-md-2 control-label">首页问题列表显示条数</label>
+            <div class="col-sm-9 col-xs-6">
+				<div class="input-group">
+					<span class="input-group-addon">每页显示</span>
+					<input type="text" class="form-control" name="index_questions" value="{$settings['index_questions']}">
+					<span class="input-group-addon">条</span>
+				</div>
+            </div>
+            </div>
+				
+				<div class="form-group">
+ 			<label class="col-xs-12 col-sm-3 col-md-2 control-label">首页人才列表显示条数</label>
+            <div class="col-sm-9 col-xs-6">
+				<div class="input-group">
+					<span class="input-group-addon">每页显示</span>
+					<input type="text" class="form-control" name="index_users" value="{$settings['index_users']}">
+					<span class="input-group-addon">条</span>
+				</div>
+            </div>
+            </div>
+            
+            <div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">首页问题榜显示文字</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" name="ask_text" value="{$settings['ask_text']}">
+					</div>
+				</div>
+            
+            
+             <div class="form-group">
+ 			<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2  control-label">首页专家榜显示文字</label>
+           <div class="col-sm-8">
+					<input type="text" class="form-control" name="user_text" value="{$settings['user_text']}">
+            </div>
+            </div>
+            
+            
+      	  <div class="form-group">
+ 			<label class="col-xs-12 col-sm-3 col-md-2 control-label">首页问题排序方式</label>
+            <div class="col-sm-9 col-xs-6">
+				<div class="input-group">
+					<label class="radio-inline">
+                	<input type="radio" name="ask_order" value="1" {if $settings['ask_order']==1 }checked="checked"{/if}>提问时间倒序
+	                </label>
+	                <label class="radio-inline">
+	                	<input type="radio" name="ask_order" value="2" {if $settings['ask_order']==2 }checked="checked"{/if}>旁听人数倒序
+	                </label>
+	                <label class="radio-inline">
+	                	<input type="radio" name="ask_order" value="3" {if $settings['ask_order']==3 }checked="checked"{/if}>评分倒序
+	                </label>
+	                <label class="radio-inline" style="display:none;">
+	                	<input type="radio" name="ask_order" value="4" {if $settings['ask_order']==4 }checked="checked"{/if}>查看次数倒序
+	                </label>
+				</div>
+            </div>
+            </div>
+            
+            
+             <div class="form-group">
+ 			<label class="col-xs-12 col-sm-3 col-md-2 control-label">首页专家排序方式</label>
+            <div class="col-sm-9 col-xs-6">
+				<div class="input-group">
+					<label class="radio-inline">
+                	<input type="radio" name="user_order" value="1" {if $settings['user_order']==1 }checked="checked"{/if} >加入时间倒序
+	                </label>
+	                <label class="radio-inline">
+	                	<input type="radio" name="user_order" value="2" {if $settings['user_order']==2 }checked="checked"{/if}>关注人数倒序
+	                </label>
+	                <label class="radio-inline">
+	                	<input type="radio" name="user_order" value="3" {if $settings['user_order']==3 }checked="checked"{/if}>回答次数倒序
+	                </label>
+				</div>
+            </div>
+            </div>
+		
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-2 col-md-2  control-label">分答开启方式设置</label>
+			<div class="col-sm-8">					
+				<label class="radio-inline">
+                	<input type="radio" name="open_type" value="1" {if $settings['open_type']==1 }checked="checked"{/if}>手机端自助开通
+                </label>
+                <label class="radio-inline">
+                	<input type="radio" name="open_type" value="2" {if $settings['open_type']==2 }checked="checked"{/if}>由管理员后台开启
+                </label>
+			</div>
+		</div>
+		
+		<div class="form-group">
+ 			<label class="col-xs-12 col-sm-3 col-md-2 control-label">旁听金额设置</label>
+            <div class="col-sm-9 col-xs-6">
+				<div class="input-group">
+					<span class="input-group-addon">旁听需支付</span>
+					<input type="text" class="form-control" name="listen_money" value="{$settings['listen_money']}">
+					<span class="input-group-addon">元</span>
+				</div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+ 			<label class="col-xs-12 col-sm-3 col-md-2 control-label">提问金额设置</label>
+            <div class="col-sm-9 col-xs-6">
+				<div class="input-group">
+					<span class="input-group-addon">提问需支付最低金额</span>
+					<input type="text" class="form-control" name="ask_money" value="{$settings['ask_money']}">
+					<span class="input-group-addon">元</span>
+				</div>
+				<div class="help-block">开启分答的用户设置的金额不得低于此金额</div>
+            </div>
+          </div>
+          
+          
+          <div class="form-group">
+ 			<label class="col-xs-12 col-sm-3 col-md-2 control-label">平台分成(旁听金额)</label>
+            <div class="col-sm-9 col-xs-6">
+				<div class="input-group">
+					<span class="input-group-addon">平台分成</span>
+					<input type="text" class="form-control" name="pl_lis_percent" value="{$settings['pl_lis_percent']}">
+					<span class="input-group-addon">%</span>
+				</div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+ 			<label class="col-xs-12 col-sm-3 col-md-2 control-label">平台分成(提问金额)</label>
+            <div class="col-sm-9 col-xs-6">
+				<div class="input-group">
+					<span class="input-group-addon">平台分成</span>
+					<input type="text" class="form-control" name="pl_ask_percent" value="{$settings['pl_ask_percent']}">
+					<span class="input-group-addon">%</span>
+				</div>
+            </div>
+          </div>
+          
+          
+          <div class="form-group">
+			<label class="col-xs-12 col-sm-2 col-md-2  control-label">是否允许提现</label>
+			<div class="col-sm-8">					
+				<label class="radio-inline">
+                	<input type="radio" name="is_cash" value="1" {if $settings['is_cash']==1 }checked="checked"{/if}>允许提现
+                </label>
+                <label class="radio-inline">
+                	<input type="radio" name="is_cash" {if $settings['is_cash']==2 }checked="checked"{/if} value="2">不允许提现
+                </label>
+			</div>
+		  </div>
+          
+          <div class="form-group">
+ 			<label class="col-xs-12 col-sm-3 col-md-2 control-label">提现限额设置</label>
+            <div class="col-sm-9 col-xs-6">
+				<div class="input-group">
+					<span class="input-group-addon">满</span>
+					<input type="text" class="form-control" name="cash_money" value="{$settings['cash_money']}">
+					<span class="input-group-addon">元可提现</span>
+				</div>
+				<div class="help-block">设置专家提现的最低金额，当收入大于等于此金额后方可申请提现</div>
+            </div>
+          </div>
+          {if $_W['isfounder']}
+		  <div class="form-group">
+ 			<label class="col-xs-12 col-sm-3 col-md-2 control-label">自动进程执行</label>
+            <div class="col-sm-8">					
+				<label class="radio-inline">
+                	<input type="radio" name="is_process" value="1" {if $settings['is_process']==1 }checked="checked"{/if}>开启
+                </label>
+                <label class="radio-inline">
+                	<input type="radio" name="is_process" value="0" {if $settings['is_process']==0 }checked="checked"{/if}>关闭
+                </label>
+			</div>
+          </div>
+          {/if}
+		</div>
+	</div>
+
+		
+		<div class="form-group col-sm-12">
+			<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+			<input type="hidden" name="token" value="{$_W['token']}" />
+		</div>
+	</form>
+</div>
+
+<script>
+require(['jquery', 'util'], function($, util){
+	$(function(){
+		$('#setting-form').submit(function(){
+			var result = true;
+			if($('input[name="qn_accesskey"]').val() == ''){
+				result = false;
+				util.message('未填写accesskey.');
+			}
+			if($('input[name="qn_secretkey"]').val() == ''){
+				result = false;
+				util.message('未填写secretkey.');
+			}
+			if($('input[name="qn_bucket"]').val() == ''){
+				result = false;
+				util.message('未填写bucket.');
+			}
+			if($('input[name="qn_queuename"]').val() == ''){
+				result = false;
+				util.message('未填写队列名.');
+			}
+			return result;
+		});
+	});
+});
+</script>
+
+{template 'common/footer'}

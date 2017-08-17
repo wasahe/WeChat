@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>属于我的星座书</title>
+    <meta name="keywords" content="苏珊米勒星座书" />
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" type="text/css" href="../addons/aj_conste/style/css/style.css" />
+</head>
+<style type="text/css">
+body
+{
+    font:14px/25px 'microsoft yahei',Arial,Helvetica,sans-serif; min-width:320px; 
+    background:url('../attachment/{$list['bgpic']}');
+    background-size:100%; 
+    color:#dbe5ff;
+}
+</style>
+
+<body class="result">
+    <div class="black">
+        <span></span>
+    </div>
+    <img src="images/head.jpg" style="width:0px; height:0px; overflow:hidden; position:absolute;">
+        <div class="rearea">
+            <p class="c mb20">你的星座是</p>
+            <p class="c px20 yellow mb20">{$title}</p>
+        	<p><span>性格</span>{$natrue}</p>
+        	<p><span>爱情</span>{$love}</p>
+        	<p class="mb20"><span>事业</span>{$business}</p>
+            <p class="c mb20 yellow">关于{$conste[$month]}的优点</p>
+            <ul>
+            	{$strength}
+			</ul>
+            <p class="btngroup">
+                <a href="javascript:;" id="share" class="btn"><img src="../addons/aj_conste/style/images/icon.png" alt="">嘚瑟一下</a>
+                <img style="height:100px;width:100px;border:0" src="../attachment/{$list['qrcode']}" alt="">
+                {$list['instruction']}
+            </p>
+        </div>
+ {php echo register_jssdk(false);}
+<script type="text/javascript"> 
+  wx.ready(function () {
+        shareMeta = {           
+            imgUrl:"{php echo tomedia($list['thumb'])}",
+            desc : "{$list['description']}",
+            title : "我是{$title}，你呢？",
+            success: function(){ 
+                {if !empty($list['success_url'])}
+                window.location.href='{$list['success_url']}';
+                {/if}
+            },
+            cancel: function(){
+                // alert("分享失败，可能是网络问题，一会儿再试试？");
+            }
+        };
+        
+        wx.onMenuShareTimeline(shareMeta);
+         wx.onMenuShareAppMessage(shareMeta);
+     
+    });
+</script>
+
+<script src="../addons/aj_conste/style/js/zepto.js"></script>
+<script>
+    $('#share').click(function(){
+        $('.black').show();
+        $.ajax({
+            url:'../addons/aj_conste/style/images/share.png',
+            type:'get',
+            cache:true,
+            success:function(data){
+                
+            }
+        });
+    });
+    $('.black').click(function(){
+        $(this).hide();
+    });
+    $('.menu p').click(function(){
+        if($('.menu').hasClass('show')){
+            $('.menu').removeClass('show');
+            $('.menu').css('bottom','-125px');
+        }else{
+            $('.menu').addClass('show');
+            $('.menu').css('bottom','0');
+        }
+    });
+</script>
+</body>
+</html>

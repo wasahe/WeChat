@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com" versionCode="0.6">	
+    <application setting="false">
+        <name><![CDATA[疯狂语音红包]]></name>
+        <identifie><![CDATA[haoman_voice]]></identifie>
+        <version><![CDATA[4.2.3]]></version>
+        <type><![CDATA[customer]]></type>
+        <ability><![CDATA[疯狂语音红包]]></ability>
+        <description><![CDATA[疯狂语音红包]]></description>
+		<author><![CDATA[悟空源码网)]]></author>
+		<url><![CDATA[http://www.012wz.com]]></url>
+    </application>
+    <platform>
+        <subscribes>
+        </subscribes>
+        <handles>
+            <message type="text" />
+        </handles>
+        <rule embed="true" />
+    </platform>
+    <bindings>
+	    <cover>	
+		</cover>
+		<menu>
+			<entry title="活动管理" do="manage" state="" direct="false" />
+			<entry title="口令管理" do="cardmanage" state="" direct="false" />
+			<entry title="借用设置" do="jieyong" state="" direct="false" />
+			<entry title="红包设置" do="hb" state="" direct="false" />
+		</menu>
+		<home>
+		</home>
+    </bindings>
+    <install><![CDATA[install.php]]></install>
+    <uninstall><![CDATA[]]></uninstall>
+    <upgrade><![CDATA[upgrade.php]]></upgrade>
+</manifest>

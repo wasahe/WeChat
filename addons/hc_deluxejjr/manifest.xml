@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com" versionCode="0.6,0.7,0.8">
+	<application setting="true">
+		<name><![CDATA[全民经纪人豪华版]]></name>
+		<identifie><![CDATA[hc_deluxejjr]]></identifie>
+		<version><![CDATA[2.2]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[全民经纪人豪华版]]></ability>
+		<description><![CDATA[全民经纪人豪华版]]></description>
+		<author><![CDATA[微赞]]></author>
+		<url><![CDATA[http://www.012wz.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+			<message type="qr" />
+			<message type="subscribe" />
+			<message type="unsubscribe" />
+		</subscribes>
+		<handles>
+			<message type="text" />
+			<message type="subscribe" />
+		</handles>
+		<rule embed="true" />
+		<card embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="经纪人入口" do="index" state="" direct="false" />
+			<entry title="销售员入口" do="counselor" state="" direct="false" />
+			<entry title="经理入口" do="acmanager" state="" direct="false" />
+			<entry title="项目经理入口" do="promanager" state="" direct="false" />
+			<entry title="数据报表入口" do="report" state="" direct="false" />
+		</cover>
+		<menu>
+			<entry title="经纪人管理" do="member" state="" direct="false" />
+			<entry title="客户管理" do="customer" state="" direct="false" />
+			<entry title="客户池" do="cuspool" state="" direct="false" />
+			<entry title="经理管理" do="acmanagers" state="" direct="false" />
+			<entry title="销售人员管理" do="counselors" state="" direct="false" />
+			<entry title="项目总监管理" do="promanagers" state="" direct="false" />
+			<entry title="产品管理" do="loupan" state="" direct="false" />
+			<entry title="幻灯片管理" do="adv" state="" direct="false" />
+			<entry title="身份类型管理" do="identity" state="" direct="false" />
+			<entry title="佣金管理" do="commission" state="" direct="false" />
+			<entry title="数据分析" do="stat" state="" direct="false" />
+			<entry title="数据报表" do="report" state="" direct="false" />
+			<entry title="初始设置" do="rule" state="" direct="false" />
+			<entry title="问题管理" do="question" state="" direct="false" />
+			<entry title="经验分段" do="explevel" state="" direct="false" />
+			<entry title="个人海报" do="memberposter" state="" direct="false" />
+			<entry title="投诉与建议" do="complain" state="" direct="false" />
+			<entry title="模版消息设置" do="templatenews" state="" direct="false" />
+			<entry title="首页分享设置" do="share" state="" direct="false" />
+		</menu>
+	</bindings>
+	<permissions>
+	</permissions>
+	<install><![CDATA[install.php]]></install>
+	<uninstall><![CDATA[uninstall.php]]></uninstall>
+	<upgrade><![CDATA[update.php]]></upgrade>
+</manifest>

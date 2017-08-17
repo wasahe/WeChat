@@ -1,0 +1,165 @@
+{template 'common/header'}
+{php load()->func('tpl')}
+<style type="text/css">
+.form .alert{width:700px;}
+</style>
+<ul class="nav nav-tabs">
+	<li><a href="{php echo $this->createWebUrl('display')}">预约活动列表</a></li>
+	<li{if !$reid} class="active"{/if}><a href="{php echo $this->createWebUrl('post')}">新建预约活动</a></li>
+	{if $reid}<li class="active"><a href="{php echo $this->createWebUrl('post', array('id' => $reid))}">编辑预约活动</a></li>{/if}
+</ul>
+<div class="main">
+	<form class="form-horizontal form" action="" method="post" enctype="multipart/form-data" onsubmit="return validate(this);">
+    	<div class="panel panel-default">
+            <div class="panel-heading">
+                预约活动 <span class="text-muted">通过预约你可以实现服务预约, 在线咨询, 在线调查等功能</span>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">预约名称</label>
+                    <div class="col-xs-12 col-sm-9">
+                         <input type="text" class="form-control" placeholder="" name="activity" value="{$activity['title']}" />
+                    </div>
+                </div>
+                <div class="form-group" style="display:none">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">简介</label>
+                    <div class="col-xs-12 col-sm-9">
+                         <textarea style="height:200px;" class="form-control" id="description" name="description" cols="70">{$activity['description']}</textarea>
+                    </div>
+                </div>
+                <div class="form-group" style="display:none">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">预约内容</label>
+                    <div class="col-xs-12 col-sm-9">
+                        <textarea  id="content" type="text" class="form-control richtext-clone" placeholder="" name="content">{$activity['content']}</textarea>
+	        			<span class="help-block">此预约活动的说明信息. 例如: 请提交你的联系方式, 和要咨询的产品信息. 我们会尽快联系你</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">提交提示信息</label>
+                    <div class="col-xs-12 col-sm-9">
+                            <textarea type="text" class="form-control"  placeholder="" name="information">{$activity['information']}</textarea>
+                            <span class="help-block">预约提交成功以后提示的信息. 例如: 您的信息我们已经收到, 很快会有专人联系你. </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">预约活动封面</label>
+                    <div class="col-xs-12 col-sm-9">
+                         {php echo tpl_form_field_image('thumb',$activity['thumb']);}
+	      				<span class="help-block">用一张图片来更好的表现你的预约主题</span>
+                    </div>
+                </div>
+                <div class="form-group" style="display:none">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">每人可预约次数</label>
+                    <div class="col-xs-12 col-sm-9">
+                    	<input type="text" class="form-control" name="pretotal" value="{if !empty($activity['pretotal'])}{$activity['pretotal']}{else}100000{/if}" />
+                    </div>
+                </div>
+			{if !empty($reid)}
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">状态</label>
+                    <div class="col-xs-12 col-sm-9">
+                        <label class="radio-inline"><input type="radio" name="status" value="1" {if $activity['status'] == 1 || empty($activity['status'])} checked="checked"{/if} /> 开始</label>
+	         			<label class="radio-inline"><input type="radio" name="status" value="0" {if !empty($activity) && $activity['status'] == 0} checked="checked"{/if} /> 停止</label>
+                    </div>
+                </div>
+			{/if}
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">开始时间</label>
+                    <div class="col-xs-12 col-sm-9">
+                  		{php echo tpl_form_field_date('starttime', $activity['starttime'], true)}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">结束时间</label>
+                    <div class="col-xs-12 col-sm-9">
+                 		{php echo tpl_form_field_date('endtime', $activity['endtime'], true)}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">微站首页展示</label>
+                    <div class="col-xs-12 col-sm-9">
+                		<label class="radio-inline"><input type="radio" name="inhome" value="1" {if $activity['inhome'] == 1} checked="checked"{/if} /> 显示</label>
+		 				<label class="radio-inline"><input type="radio" name="inhome" value="0" {if empty($activity) || $activity['inhome'] == 0} checked="checked"{/if} /> 不显示</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+		
+    	<div class="panel panel-default">
+            <div class="panel-heading">
+                预约 <span class="text-muted">通知设置</span>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">模板消息</label>
+                    <div class="col-xs-12 col-sm-6">
+                    	<input type="text" class="form-control" name="m_templateid" value="{if !empty($activity['m_templateid'])}{$activity['m_templateid']}{else}{/if}" />
+                    </div>
+					<div class="col-xs-12 col-sm-3">参考模板消息ID：TM204158711</div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">短信accountsid</label>
+                    <div class="col-xs-12 col-sm-9">
+                    	<input type="text" class="form-control" name="accountsid" value="{if !empty($activity['accountsid'])}{$activity['accountsid']}{else}{/if}" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">短信token</label>
+                    <div class="col-xs-12 col-sm-9">
+                    	<input type="text" class="form-control" name="tokenid" value="{if !empty($activity['tokenid'])}{$activity['tokenid']}{else}{/if}" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">短信appId</label>
+                    <div class="col-xs-12 col-sm-9">
+                    	<input type="text" class="form-control" name="appId" value="{if !empty($activity['appId'])}{$activity['appId']}{else}{/if}" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">短信模板ID</label>
+                    <div class="col-xs-12 col-sm-2">
+                    	<input type="text" class="form-control" name="templateId" value="{if !empty($activity['templateId'])}{$activity['templateId']}{else}{/if}" />
+                    </div>
+					<div class="col-xs-12 col-sm-5">短信API接口是云之讯，5分一条，无套餐 官方网址：http://www.ucpaas.com/</div>
+                </div>
+            </div>
+        </div>
+			
+			
+			
+        <div class="form-group col-sm-12">
+			<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+			<input type="hidden" name="token" value="{$_W['token']}" />
+		</div>
+   </form>
+</div>
+
+<script type="text/javascript" src="./resource/script/jquery-ui-1.10.3.min.js"></script>
+<script text="text/javascript">
+	kindeditor($('.richtext-clone'));
+	var currentItem = null;
+	function validate() {
+		if($.trim($(':text[name="activity"]').val()) == '') {
+			message('必须填写预约活动标题.', '', 'error');
+			return false;
+		}
+		if($.trim($('textarea[name="information"]').val()) == '') {
+			message('必须填写预约活动成功提示信息.', '', 'error');
+			return false;
+		}
+		{if empty($reid)}
+		if($.trim($(':input[name="thumb"]').val()) == '') {
+			message('必须上传预约活动封面.', '', 'error');
+			return false;
+		}
+		{/if}
+		var isError = false;
+		$(':text[name="title[]"]').each(function(){
+			if($.trim($(this).val()) == '') {
+				isError = true;
+			}
+		});
+		return true;
+	}
+</script>
+{template 'common/footer'}

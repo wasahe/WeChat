@@ -1,0 +1,206 @@
+<div class="am-tabs" data-am-tabs>
+  <ul class="am-tabs-nav am-nav am-nav-tabs">
+    <li class="am-active"><a href="#tab1">热门信息</a></li>
+    <li><a href="#tab2">招聘求职</a></li>
+    <li><a href="#tab3">房屋租售</a></li>
+	<li><a href="#tab4">二手交易</a></li>
+    <li><a href="#tab5">车找人</a></li>
+	<li><a href="#tab6">人找车</a></li>
+	<li><a href="#tab7">临时工</a></li>
+  </ul>
+
+  <div class="am-tabs-bd">
+  <!--开始-->
+    <div class="am-tab-panel am-fade am-in am-active" id="tab1">
+	<div id="fengmian_one">热门信息</div>
+      {loop $all $key $all}
+	  <a href="{php echo $this->createMobileUrl('view',array('vid'=>$all['id']))}">
+	  <div id="fengmian_two">
+<div class="fengmian_two_a"><div class="fengmian_two_a_1">
+{if $all['list']=='1'}{$all['jobname']}
+{elseif $all['list']=='2'}{$all['housetype']}
+{elseif $all['list']=='3'}{$all['ershouname']}
+{elseif $all['list']=='4'}{$all['chestart']}->{$all['cheend']}
+{elseif $all['list']=='5'}{$all['chestart']}->{$all['cheend']}
+{elseif $all['list']=='6'}{$all['linshiname']}
+{else}
+{/if}</div><div class="fengmian_two_a_2">
+{if $all['pid'] == 1}未审核
+{elseif $all['pid'] == 2}真
+{elseif $all['pid'] == 3}假
+{elseif $all['pid'] == 4}已删除
+{else}
+{/if}
+</div></div>
+<div class="fengmian_two_b">
+{if $all['list']=='1'}{$all['jobsalary']}/{$all['jobcontent']}
+{elseif $all['list']=='2'}{$all['houseaddress']}
+{elseif $all['list']=='3'}{$all['ershoupinpai']}/{$all['ershounewor']}
+{elseif $all['list']=='4'}{$all['validity']}
+{elseif $all['list']=='5'}{$all['validity']}
+{elseif $all['list']=='6'}{$all['linshispecial']}
+{else}
+{/if}
+</div>
+<div class="fengmian_two_c"><div class="fengmian_two_c_1">
+{if $all['list']=='1'}{$all['jobaddress']}/{$all['jobfactory']}
+{elseif $all['list']=='2'}{$all['houseprice']}/{$all['housename']}
+{elseif $all['list']=='3'}{$all['ershouprice']}
+{elseif $all['list']=='4'}可带{$all['cheperson']}人/车牌号：{$all['chechepai']}
+{elseif $all['list']=='5'}有{$all['cheperson']}搭乘
+{elseif $all['list']=='6'}{$all['validity']}
+{else}
+{/if}
+</div><div class="fengmian_two_c_2">发布日期：{php echo date("m-d",$all['time']);}</div></div>
+</div>
+</a>
+	  {/loop}
+    </div>
+<!--结束-->
+
+    <div class="am-tab-panel am-fade" id="tab2">
+     <!--开始-->
+    <div class="am-tab-panel am-fade am-in am-active" id="tab1">
+	<div id="fengmian_one">招聘求职</div>
+      {loop $job $key $job}
+	  <a href="{php echo $this->createMobileUrl('view',array('vid'=>$job['id']))}">
+	  <div id="fengmian_two">
+<div class="fengmian_two_a"><div class="fengmian_two_a_1">{$job['jobname']}</div><div class="fengmian_two_a_2">
+{if $job['pid'] == 1}未审核
+{elseif $job['pid'] == 2}真
+{elseif $job['pid'] == 3}假
+{elseif $job['pid'] == 4}已删除
+{else}
+{/if}
+</div></div>
+<div class="fengmian_two_b">{$job['content']}{$job['jobaddress']}</div>
+<div class="fengmian_two_c"><div class="fengmian_two_c_1">{$job['jobsalary']}/{$job['jobfactory']}</div><div class="fengmian_two_c_2">发布日期：{php echo date("m-d",$job['time']);}</div></div>
+</div>
+</a>
+	  {/loop}
+    </div>
+<!--结束-->
+    </div>
+    <div class="am-tab-panel am-fade" id="tab3">
+    <!--开始-->
+    <div class="am-tab-panel am-fade am-in am-active" id="tab1">
+	<div id="fengmian_one">房屋租售</div>
+      {loop $house $key $house}
+	  <a href="{php echo $this->createMobileUrl('view',array('vid'=>$house['id']))}">
+	  <div id="fengmian_two">
+<div class="fengmian_two_a"><div class="fengmian_two_a_1">{$house['housetype']}</div><div class="fengmian_two_a_2">
+{if $house['pid'] == 1}未审核
+{elseif $house['pid'] == 2}真
+{elseif $house['pid'] == 3}假
+{elseif $house['pid'] == 4}已删除
+{else}
+{/if}
+</div></div>
+<div class="fengmian_two_b">{$house['houseaddress']}</div>
+<div class="fengmian_two_c"><div class="fengmian_two_c_1">{$house['houseprice']}/{$house['housename']}</div><div class="fengmian_two_c_2">发布日期：{php echo date("m-d",$house['time']);}</div></div>
+</div>
+</a>
+	  {/loop}
+    </div>
+<!--结束-->
+    </div>
+
+	<div class="am-tab-panel am-fade" id="tab4">
+    <!--开始-->
+    <div class="am-tab-panel am-fade am-in am-active" id="tab1">
+	<div id="fengmian_one">二手交易</div>
+      {loop $old $key $old}
+	  <a href="{php echo $this->createMobileUrl('view',array('vid'=>$old['id']))}">
+	  <div id="fengmian_two">
+<div class="fengmian_two_a"><div class="fengmian_two_a_1">{$old['ershouname']}</div><div class="fengmian_two_a_2">
+{if $old['pid'] == 1}未审核
+{elseif $old['pid'] == 2}真
+{elseif $old['pid'] == 3}假
+{elseif $old['pid'] == 4}已删除
+{else}
+{/if}
+</div></div>
+<div class="fengmian_two_b">{$old['ershoupinpai']}/{$old['ershounewor']}</div>
+<div class="fengmian_two_c"><div class="fengmian_two_c_1">{$old['ershouprice']}</div><div class="fengmian_two_c_2">发布日期：{php echo date("m-d",$old['time']);}</div></div>
+</div>
+</a>
+	  {/loop}
+    </div>
+<!--结束-->
+    </div>
+
+
+	   <div class="am-tab-panel am-fade" id="tab5">
+    <!--开始-->
+    <div class="am-tab-panel am-fade am-in am-active" id="tab1">
+	<div id="fengmian_one">车找人</div>
+      {loop $che1 $key $che1}
+	  <a href="{php echo $this->createMobileUrl('view',array('vid'=>$che1['id']))}">
+	  <div id="fengmian_two">
+<div class="fengmian_two_a"><div class="fengmian_two_a_1">{$che1['chestart']}->{$che1end}</div><div class="fengmian_two_a_2">
+{if $che1['pid'] == 1}未审核
+{elseif $che1['pid'] == 2}真
+{elseif $che1['pid'] == 3}假
+{elseif $che1['pid'] == 4}已删除
+{else}
+{/if}
+</div></div>
+<div class="fengmian_two_b">出发时间：{php echo date("Y-m-d,H:i:s",strtotime($che1['validity']))}</div>
+<div class="fengmian_two_c"><div class="fengmian_two_c_1">可带{$che1['cheperson']}人/车牌号：{$che1['chechepai']}</div><div class="fengmian_two_c_2">发布日期：{php echo date("m-d",$che1['time']);}</div></div>
+</div>
+</a>
+	  {/loop}
+    </div>
+<!--结束-->
+    </div>
+
+	   <div class="am-tab-panel am-fade" id="tab6">
+    <!--开始-->
+    <div class="am-tab-panel am-fade am-in am-active" id="tab1">
+	<div id="fengmian_one">人找车</div>
+      {loop $che2 $key $che2}
+	  <a href="{php echo $this->createMobileUrl('view',array('vid'=>$che2['id']))}">
+	  <div id="fengmian_two">
+<div class="fengmian_two_a"><div class="fengmian_two_a_1">{$che2['chestart']}->{$che2['cheend']}</div><div class="fengmian_two_a_2">
+{if $che2['pid'] == 1}未审核
+{elseif $che2['pid'] == 2}真
+{elseif $che2['pid'] == 3}假
+{elseif $che2['pid'] == 4}已删除
+{else}
+{/if}
+</div></div>
+<div class="fengmian_two_b">出发时间：{php echo date("Y-m-d,H:i:s",strtotime($che2['validity']))}</div>
+<div class="fengmian_two_c"><div class="fengmian_two_c_1">有{$che2['cheperson']}人搭乘</div><div class="fengmian_two_c_2">发布日期：{php echo date("m-d",$che2['time']);}</div></div>
+</div>
+</a>
+	  {/loop}
+    </div>
+<!--结束-->
+    </div>
+
+	   <div class="am-tab-panel am-fade" id="tab7">
+    <!--开始-->
+    <div class="am-tab-panel am-fade am-in am-active" id="tab1">
+	<div id="fengmian_one">临时工</div>
+      {loop $work $key $work}
+	  <a href="{php echo $this->createMobileUrl('view',array('vid'=>$work['id']))}">
+	  <div id="fengmian_two">
+<div class="fengmian_two_a"><div class="fengmian_two_a_1">{$work['linshiname']}</div><div class="fengmian_two_a_2">
+{if $work['pid'] == 1}未审核
+{elseif $work['pid'] == 2}真
+{elseif $work['pid'] == 3}假
+{elseif $work['pid'] == 4}已删除
+{else}
+{/if}
+</div></div>
+<div class="fengmian_two_b">{$work['linshispecial']}</div>
+<div class="fengmian_two_c"><div class="fengmian_two_c_1">有效期：{php echo date("Y-m-d H:i:s",strtotime($work['validity']));}</div><div class="fengmian_two_c_2">发布日期：{php echo date("m-d",$linshi['time']);}</div></div>
+</div>
+</a>
+	  {/loop}
+    </div>
+<!--结束-->
+    </div>
+
+  </div>
+</div>

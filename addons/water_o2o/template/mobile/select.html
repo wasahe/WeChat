@@ -1,0 +1,48 @@
+{template 'header'}
+<body ontouchstart="" class="platform_mobile">
+<div class="qsc-alert" style="display: none;">
+<i class="info-base64"></i><span></span>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-white icon-loading-base64"><i class="icon-white icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading-new">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-loading-base64"><i class="icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<div class="content project-support">
+<form action="{php echo $this->createMobileUrl('OrderWorker')}" method="POST" name="project-support" id="project-support">
+<input name="shopid" type="hidden" value="{$shopid}">
+<input name="orderid" type="hidden" value="{$orderid}">
+
+<div class="btn-group btn-block lib-radio reward-lib-radio" id="support-rewards" data-toggle="buttons">
+<h5 style="padding-top: 5px;">选择技师</h5>
+    {php $index = 1;}
+	{loop $list $item}
+	<label for="reward-12778"
+		class="btn btn-block is_reward is_money {if $index == "1"}first active{/if}" data-id="{$item['id']}">
+		 <input type="radio" id="wkerid-{$item['id']}" name="workerid" value="{$item['id']}" {if $index == "1"}checked="checked"{/if}> 
+		 <i class="icon">
+		 <img src="{$_W['attachurl']}{$item['wimg']}" width="32" height="32"></i> 
+		 <span><h5>{$item['wname']} {$item['wage']}岁</h5><small>{$item['wdesc']}</small>
+	</span>
+	</label>
+	{php $index++;}
+	{/loop}
+</div>
+<div class="footer-btn">
+<input type="submit" name="submit" class="btn btn-success btn-lg btn-block" value="确定">
+
+</div>
+</form>
+</div>
+<script type="text/javascript" src="../addons/water_o2o/template/js/project.min.js"></script>
+
+</body></html>

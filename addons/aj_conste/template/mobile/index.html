@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>星座书</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" type="text/css" href="../addons/aj_conste/style/css/style.css" tppabs="../addons/aj_conste/style/css/style.css" />
+</head>
+<style type="text/css">
+body
+{
+    font:14px/25px 'microsoft yahei',Arial,Helvetica,sans-serif; min-width:320px; 
+    background:url('../attachment/{$list['bgpic']}');
+    background-size:100%; 
+    color:#dbe5ff;
+}
+</style>
+
+<body>
+    <div class="title">
+        <span></span>
+    </div>
+    <form id="form1">
+        <div class="form">
+            <div class="pan"><img src="../addons/aj_conste/style/images/pan.png" tppabs="../addons/aj_conste/style/images/pan.png" /></div>
+            <p>输入阳历生日</p>
+            <div>
+                <label for="month">
+                    <select name="month" id="month">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                </label>
+                <label for="day">
+                    <select name="day" id="day">
+                    </select>
+                </label>
+            </div>
+            <a href="javascript:show();" class="btn">转动星盘</a>
+        </div>
+    </form>
+    <div class="copyright">
+        <a href="{$list['copyrighturl']}">{$list['copyright']}</a>
+    </div>
+
+ {php echo register_jssdk(false);}
+<script type="text/javascript"> 
+  wx.ready(function () {
+        shareMeta = {           
+            imgUrl:"{php echo tomedia($list['thumb'])}",
+            desc : "{$list['description']}",
+            title : "{$list['title']}",
+            success: function(){ 
+                 {if !empty($list['success_url'])}
+                window.location.href='{$list['success_url']}';
+                {/if}
+            },
+            cancel: function(){
+                // alert("分享失败，可能是网络问题，一会儿再试试？");
+            }
+        };
+        
+        wx.onMenuShareTimeline(shareMeta);
+         wx.onMenuShareAppMessage(shareMeta);
+     
+    });
+</script>
+<script src="../addons/aj_conste/style/js/zepto.js" tppabs="../addons/aj_conste/style/js/zepto.js"></script>
+<script>
+    $(function(){
+        setday();
+        
+        $('#month').change(function(){
+            setday();
+        });
+		
+        $('.btn').click(function(){
+            if($('#month').val() != "" && $('#day').val() != ""){
+                $('.pan img').animate({
+                    "-webkit-transform":"rotate(180deg)",
+                    "-o-transform":"rotate(180deg)",
+                    "-moz-transform":"rotate(180deg)"
+                },3000,"ease",function(){
+                    document.getElementById('form1').submit();
+                });
+            }else{
+                alert('请填写出生日期');
+            }
+        });
+    })
+
+    function setday(){
+        var month = $('#month').val();
+        if(month == 2){
+            var t = 29;
+        }else if(month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12){
+            var t = 31;
+        }else if(month == 4 || month == 6 || month == 9 || month == 11){
+           var t = 30;
+        }
+
+        var obj=document.getElementById('day');
+        obj.options.length=0; 
+        for(var i=1;i<=t;i++){
+           var opt=document.createElement("option");
+           opt.text=i;
+           opt.value=i;
+           obj.appendChild(opt);
+        }
+    }
+
+    function show(){
+        var month = $("#month").val();
+        var day   = $("#day").val();
+        window.location.href='{php echo $this->createMobileUrl('result')}&month='+month+"&day="+day;
+        
+    }
+</script>
+</body>
+</html>

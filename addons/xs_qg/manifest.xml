@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com" versionCode="0.6">
+	<application setting="false">
+		<name><![CDATA[限时抢购单页]]></name>
+		<identifie><![CDATA[xs_qg]]></identifie>
+		<version><![CDATA[1.0.1]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[单个商品的限时抢购单页插件]]></ability>
+		<description><![CDATA[单个商品的限时抢购单页插件]]></description>
+		<author><![CDATA[悟空源码网]]></author>
+		<url><![CDATA[http://www.012wz.com/]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="false" />
+		<card embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="首页" do="index" state="" direct="false" />
+		</cover>
+		<menu>
+			<entry title="单页添加" do="danyeadd" state="" direct="false" />
+			<entry title="单页列表" do="danye" state="" direct="false" />
+			<entry title="订单列表" do="order" state="" direct="false" />
+		</menu>
+	</bindings>
+	<install><![CDATA[CREATE TABLE IF NOT EXISTS `ims_xs_dy` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) NOT NULL,
+  `one` varchar(255) NOT NULL,
+  `shipin` varchar(255) NOT NULL,
+  `two` varchar(255) NOT NULL,
+  `three` varchar(255) NOT NULL,
+  `money` decimal(10,2) NOT NULL,
+  `tel` varchar(255) NOT NULL,
+  `createtime` varchar(20) NOT NULL,
+  `dtime` varchar(20) NOT NULL,
+  `uniacid` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_xs_order` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `goods_id` int(11) NOT NULL,
+  `goods_num` int(11) NOT NULL,
+  `tid` varchar(255) NOT NULL,
+  `money` decimal(10,2) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `tel` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `state` int(11) NOT NULL,
+  `goods_state` int(11) NOT NULL,
+  `createtime` varchar(20) NOT NULL,
+  `uniacid` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+]]></install>
+	<uninstall><![CDATA[DROP TABLE IF EXISTS `ims_xs_dy`;
+DROP TABLE IF EXISTS `ims_xs_order`;
+]]></uninstall>
+	<upgrade><![CDATA[upgrade.php]]></upgrade>
+</manifest>

@@ -1,0 +1,173 @@
+{template 'header'}
+<body ontouchstart="" class="platform_mobile">
+	<div class="qsc-alert" style="display: none;">
+		<i class="info-base64"></i><span id="info"></span>
+	</div>
+	<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading"
+		tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog middle">
+			<div class="modal-content">
+				<i class="icon-white icon-loading-base64"><i
+					class="icon-white icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+			</div>
+		</div>
+	</div>
+	<div class="modal qsc-modal qsc-modal-loading"
+		id="qsc-modal-loading-new">
+		<div class="modal-dialog middle">
+			<div class="modal-content">
+				<i class="icon-loading-base64"><i
+					class="icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+			</div>
+		</div>
+	</div>
+	<div class="content top bottom">
+		<form class="qsc-form" method="post" action="{php echo $this->createMobileUrl('doworkadditem')}" name="itemForm" id="itemForm">
+			<div class="input-row first">
+				<label for="holder" class="control-label">服务名称</label> <input
+					type="text" id="sname" name="sname" class="control-input"
+					placeholder="输入服务名称" value="{$service['sname']}">
+			</div>
+<!-- 			<div class="input-row">
+				<label for="address" class="control-label">服务LOGO</label>
+				<img alt="" src="../addons/water_o2o/template/img/grey.png" width="31%" style="display: inline;">
+			</div>	 -->		
+			<div class="input-row">
+				<label for="address" class="control-label">服务描述</label>
+				<textarea rows="2" id="sdesc" name="sdesc" class="control-input"
+					placeholder="输入服务描述">{$service['sdesc']}</textarea>
+			</div>
+			<div class="input-row">
+				<label for="address" class="control-label">服务内容</label>
+				<textarea rows="4" id="scontent" name="scontent" class="control-input"
+					placeholder="输入服务内容">{$service['scontent']}</textarea>
+			</div>
+			<div class="input-row">
+				<label for="address" class="control-label">预约须知</label>
+				<textarea rows="4" id="syynotice" name="syynotice" class="control-input"
+					placeholder="输入预约须知">{$service['syynotice']}</textarea>
+			</div>
+			<div class="input-row">
+				<label for="address" class="control-label">温馨提示</label>
+				<textarea rows="4" id="sreminder" name="sreminder" class="control-input"
+					placeholder="输入温馨提示">{$service['sreminder']}</textarea>
+			</div>
+			<div class="input-row">
+				<label for="phone" class="control-label">服务时长</label> <input
+					type="tel" id="sminute" name="sminute" class="control-input"
+					placeholder="输入服务时长" value="{$service['sminute']}">
+			</div>
+			<div class="input-row">
+				<label for="phone" class="control-label">服务价格</label> <input
+					type="tel" id="sprice" name="sprice" class="control-input"
+					placeholder="输入服务价格" value="{$service['sprice']}">
+			</div>										
+			<div class="input-row lib-options">
+				<input type="hidden" name="defaultstate" value="0"> 
+				<input type="checkbox" name="defaultstate" id="defaultstate" value="1"> 
+				<label for="defaultstate" class="radius pull-right"></label>
+				<p class="form-control-static">服务上架</p>
+			</div>
+			<div class="content-main footer-btn">
+				<input type="button" name="save-action"
+					class="btn btn-success btn-lg btn-block" onclick="tj()" value="保存">
+			</div>
+		</form>
+	</div>
+	<script type="text/javascript"
+		src="../addons/water_o2o/template/js/user.min.js"></script>
+		
+	<script type="text/javascript">
+	function tj(){
+		
+		 var sname = checksname();
+		 if(!sname){
+			 tishi('请填写完整服务名称');
+			 return false;
+		 }
+		
+		 var sminute = checksminute();
+		 if(!sminute){
+			 tishi('请填写完整服务时长');
+			 return false;
+		 }
+		 
+		 var sprice = checksprice();
+		 if(!sprice){
+			 tishi('请填写完整服务价格');
+			 return false;
+		 }
+		 
+		 
+		   $.ajax({
+				 type:'POST',
+				 data:{sname : $("#sname").val().trim(),sdesc : $("#sdesc").val().trim(),
+					   scontent : $("#scontent").val().trim(),syynotice : $("#syynotice").val().trim(),
+					   sminute : $("#sminute").val().trim(),sprice : $("#sprice").val().trim(),
+					   defaultstate : $("#defaultstate").val().trim()},
+				 url:'{php echo $this->createMobileUrl("Doworkadditem");}',
+				 success:function(data){
+					  var json = eval("("+data+")");
+					  if(json.result == 1){
+						  alertToUrl('新增成功',json.url);
+					  }else{	 
+						  tishi(json.msg);
+					  }
+				 }
+			 });
+		
+	}
+	
+	  function alertToUrl(info,url) {
+		    tishi(info);
+		    setTimeout("window.location.href='" + url + "'", 800);
+		  }
+	   
+	 function checksname(){
+			var sname = $("#sname").val();
+			if(sname.length < 3){
+				 return false;
+			}else{
+				return true;
+			}
+	 }
+	   
+	 function checksminute(){
+			var sminute = $("#sminute").val();
+			if(sminute.length == 0){
+				 return false;
+			}else{
+				var sminute = !!sminute.match(/^[0-9]*[1-9][0-9]*$/);
+				if (sminute) {
+					return true;
+				}else{
+					return false;
+				}
+			}
+	 }
+	 
+	 
+	 function checksprice(){
+			var sprice = $("#sprice").val();
+			if(sprice.length == 0){
+				 return false;
+			}else{
+				var sprice = !!sprice.match(/^[0-9]*[1-9][0-9]*$/);
+				if (sprice) {
+					return true;
+				}else{
+					return false;
+				}
+			}
+	 }
+	
+	 function tishi(content){
+		 $("#info").text(content);
+		 $(".qsc-alert").fadeIn(300).delay(1300).fadeOut(700);
+	 }
+	
+	</script>	
+
+</body>
+</html>

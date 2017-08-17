@@ -1,0 +1,16 @@
+{template 'header'}
+<div class="main " style="margin:auto;">
+        <div style='margin:20px 20px 0 20px'>{$reply['bill_hint']}</div>
+        <div class="thumbnail">
+          <img  src="{$QRCode}" data-holder-rendered="true" style=" width: 100%; display: block;">      
+        </div>
+</div>
+
+<style>
+.main{padding-bottom:55px;}
+.weui_loading_toast{display:none}
+a,a:hover{text-decoration:none;}
+.weui_tabbar {position: fixed;}
+.thumbnail{margin:20px;}
+</style>
+{template 'footer'} 

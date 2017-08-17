@@ -1,0 +1,203 @@
+{if empty($_W['isajax'])}
+{template 'common/header'}
+{template 'navs'}
+{/if}
+<div class="panel panel-default">
+    <div class="panel-heading">创建调研</div>
+    <div class="panel-body">
+        <form action="" method="post"  class="form-horizontal" enctype="multipart/form-data">
+			<div class="panel panel-info">
+				<div class="panel-heading">主体内容设置</div>
+				<div class="panel-body table-responsive">
+					<div class="form-group">
+						<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">调查标题</label>
+						<div class="col-sm-8 col-lg-9 col-xs-12">
+							<input type="text" name="title" id="title" placeholder="" value="{$item['title']}" class="form-control"/>
+							<span class="help-block"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">日期</label>
+						<div class="col-sm-8 col-lg-9 col-xs-12">
+							{php echo tpl_form_field_daterange('date',$_GPC['date'])}
+							<span class="help-block"></span>
+						</div>
+					</div><!--
+					<div class="form-group">
+						<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">内容</label>
+						<div class="col-sm-8 col-lg-9 col-xs-12">
+							<textarea name="contents"  class="form-control" id="" cols="30" rows="10">{$item['contents']}</textarea>
+							<span class="help-block"></span>
+						</div>
+					</div>-->
+				</div>
+			</div>
+			<div class="panel panel-info">
+				<div class="panel-heading">明细内容设置</div>
+				<div class="panel-body table-responsive">
+					<table class="table">
+						<thead class="navbar-inner">
+						<tr>
+							<th  class="row-first" style="width:50px;">排序</th>
+							<th  class="row-hover" style="width:200px;">名称 <span title="必填项" class="text-error">*</span><i></i></th>
+							<th style="width:100px">类型<i></i></th>
+							<th style="width:150px;">必填项<i></i></th>
+							<th style="width:200px;">操作</th>
+						</tr>
+						</thead>
+						<tbody id="form-items">
+						{loop $options $option}
+						<tr>
+							<td><input type="text" class="form-control" name="displayorders[{$option['id']}]" value="{$option['displayorder']}"></td>
+							<td><input type="text" class="form-control" name="titles[{$option['id']}]" value="{$option['title']}" placeholder="请认真填写名称"></td>
+							<td>
+								<select name="types[{$option['id']}]" class="form-control">
+									{loop $types $k $v}{if !empty($v)}<option {if $option['type'] == $k}selected{/if} value="{$k}">{$v}</option>{/if}{/loop}
+								</select>
+							</td>
+							<td><input type="checkbox" name="isrequireds[{$option['id']}]" {if $option['isrequired'] == '1'}checked{/if} value="1">必填</td>
+							<td  style="text-align:left;"><a onclick="$(this).parent().parent().next().remove();$(this).parent().parent().remove();" class="btn btn-small" title="删除"><i class="fa fa-times">删除</i></a></td>
+						</tr>
+						<tr class="moresetting"> 
+							<td></td>
+							<td colspan="4">
+								<div><textarea class='form-control' name="options[{$option['id']}]" style="width:820px; height:35px;" placeholder="请认真填写扩展项信息，每行一个扩展项">{$option['options']}</textarea></div>
+							</td>
+						</tr>
+						{/loop}
+						</tbody>
+						{if !$hasData}
+						<tr>
+							<td colspan="5">
+								<a href="javascript:;" onclick="addFormItem()"><i class="fa fa-arrows"></i> 添加新项目</a>
+							</td>
+						</tr>
+						{/if}
+					</table>
+				</div>
+			</div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-md-offset-2 col-lg-offset-2 col-xs-12 col-sm-10 col-md-10 col-lg-11">
+                    <input name="submit" type="submit" value="提交" class="btn btn-primary span3" />
+                    <input type="hidden" name="token" value="{$_W['token']}" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{if empty($_W['isajax'])}
+<script text="text/javascript">
+	function addFormItem() {
+		var html = '' +
+				'<tr>' +
+					'<td><input name="displayorders[]" type="text" class="form-control" placeholder="序号"/></td>' +
+					'<td><input name="titles[]" type="text" class="form-control" placeholder="请填写描述信息" /></td>' +
+					'<td>' +
+						'<select name="types[]" class="form-control">' +
+						{loop $types $k $v}{if !empty($v)}'<option {if $k=='radio'}selected{/if} value="{$k}">{$v}</option>' + {/if}{/loop}
+						'</select>' +
+					'</td>' +
+					'<td><input type="checkbox" name="isrequireds[]" value="1" checked/>必填</td>' +
+					'<td style="min-width:100px"><a href="javascript:;" onclick="$(this).parent().parent().next().remove();$(this).parent().parent().remove();" class="btn btn-default btn-small" title="删除"><i class="fa fa-times">删除</i></a></td>'+
+				'</tr>'+
+				'<tr class="moresetting">'+
+				'	<td></td>'+
+				'	<td colspan="4">'+
+				'		<div><textarea class="form-control" name="options[]" onfocus="" onfocusout="" style="width:820px; height:35px;" placeholder="请填写选项信息，用回车/换行分开"></textarea><span class="help-block"></span></div>'+
+				'	</td>'+
+				'</tr>';
+		$('#form-items').append(html);
+		//描述和扩展项
+		$(".moresetting").delegate("textarea", "focus", function(){
+			$(this).css("height", "90px");
+		});
+		$(".moresetting").delegate("textarea", "focusout", function() {
+			$(this).css("height", "35px");
+		});
+	}
+    require(['util'],function(util){
+       util.editor($('.richtext-clone')[0]); 
+    });
+    function message(msg){
+        require(['util'],function(util){
+            util.message(msg);
+        })
+    }
+    $(function(){
+	$('form').submit(function(){
+      /**
+		if($.trim($(':input[name="title"]').val()) == '') {
+			message('必须填写调研活动标题.', '', 'error');
+			return false;
+		}
+		if($.trim($("#description").val())==""){
+			message('必须填写调研活动简介.', '', 'error');
+			return false;
+		}
+//		if($.trim($("#content").val())==""){
+//			message('必须填写调研活动内容.', '', 'error');
+//			return false;
+//		}
+		if($.trim($('textarea[name="information"]').val()) == '') {
+			message('必须填写调研活动成功提示信息.', '', 'error');
+			return false;
+		}
+		//如果是新建调研项目
+		{if empty($sid)}
+			if($.trim($(':text[name="thumb"]').val()) == '') {
+				message('必须上传调研活动封面.', '', 'error');
+				return false;
+			}
+		{/if}
+		var num = $(':text[name="pertotal"]').val();
+			num = parseInt(num);
+			if(isNaN(num)) {
+				message('每人可参与调研次数必须为数字.', '', 'error');
+				return false;
+			}
+			{if !$hasData}
+			if($(':input[name^="title"]').length == 0) {
+				message('必须设定调研活动的调查条目.', '', 'error');
+				return false;
+			}
+			var isError = false;
+			$(':text[name^="titles"]').each(function(){
+				if($.trim($(this).val()) == '') {
+					isError = true;
+				}
+			});
+			if(isError) {
+				message('必须要设定每个调查条目的标题.', '', 'error');
+				return false;
+			}
+			var isError = false;
+			$('select[name^="type"]').each(function(index){
+				var t = $(this).val();
+				if(t == 'radio' || t == 'checkbox' || t == 'select') {
+					$('textarea[name^="options"]').each(function(index1){
+					if(index == index1){
+						if($.trim($(this).val()) == '') {
+							isError = true;
+						}
+					}
+					});
+				}
+			});
+			if(isError) {
+				message('单选, 多选或下拉选择项目必须要设定扩展项.', '', 'error');
+				return false;
+			}
+
+		{/if}*/
+		return true;
+	});
+		$(".moresetting").delegate("textarea", "focus", function(){
+			$(this).css("height", "90px");
+		});
+		$(".moresetting").delegate("textarea", "focusout", function() {
+			$(this).css("height", "35px");
+		});
+                });
+</script>
+{template 'common/footer'}
+{/if}

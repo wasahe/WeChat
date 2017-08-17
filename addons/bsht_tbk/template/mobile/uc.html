@@ -1,0 +1,124 @@
+{template 'header'}
+
+<div class="user-box">
+          <ul class="action-list user-show" style="text-align: center;">
+            <li>
+
+              <img src="{php echo tomedia($userinfo['avatar'])}" class="profile" style="width:60px;height:60px;">
+              <span>&nbsp;{php echo $this->emoji($userinfo['nickname']);}</span>
+            </li>
+			
+          </ul>
+          <ul class="action-list">
+			
+			{if $setting['qiandaourl']!='内置'}
+			<li>
+              <a href="{$setting['qiandaourl']}">
+                <em class="icon icon-address"></em>
+                <span>每日签到 <img src="{$res}images/jifen.png" style="width:20px"></span>
+                <em class="cur"></em>
+              </a>
+            </li>
+			{else}
+			<li>
+              <a href="javascript:" onclick="nbqdtip();">
+                <em class="icon icon-address"></em>
+                <span>每日签到 <img src="{$res}images/jifen.png" style="width:20px"></span>
+                <em class="cur"></em>
+              </a>
+            </li>
+			{/if}
+
+
+            <li>
+              <a href="{php echo $this->createMobileUrl('show_dan', array('op' => 'add'))}">
+                <em class="icon icon-temai"></em>
+                <span>有奖晒单 <img src="{$res}images/jifen.png" style="width:20px"></span>
+                <em class="cur"></em>
+              </a>
+            </li>
+            
+			{if $settings['isposter']==1}
+			<li>
+              <a href="{php echo $this->createMobileUrl('haibao', array('id' => $user['id']))}">
+                <em class="icon icon-yaoq"></em>
+                <span>邀请好友 <img src="{$res}images/jifen.png" style="width:20px"></span>
+                <em class="cur"></em>
+              </a>
+            </li>
+			{/if}
+
+            {if $setting['isdtk']==2}
+            <li>
+              <a href="{php echo $this->createMobileUrl('fav')}">
+                <em class="icon icon-bag"></em>
+                <span>我的收藏</span>
+                <em class="cur"></em>
+                <span class="rest"></span>
+              </a>
+            </li>
+			{/if}
+            <li>
+              <a href="{$_W['siteroot']}app/index.php?i={$_W['uniacid']}&c=mc&a=bond&do=credits&credittype=credit1&type=record&period=1">
+                <em class="icon icon-quan"></em>
+                <span>积分明细</span>
+                <em class="cur"></em>
+              </a>
+            </li>
+          </ul>
+          
+          <ul class="action-list">
+            <li>
+             
+			 {if $setting['duihuantype']==1 || empty($setting['duihuantype'])}
+              <a href="{$_W['siteroot']}app/index.php?i={$_W['uniacid']}&c=activity&a=coupon">
+			 {/if}
+
+			 {if $setting['duihuantype']==2}
+              <a href="{php echo $this->createMobileUrl('duiba')}">
+			 {/if}
+
+			 {if $setting['duihuantype']==3}
+              <a href="{$setting['duihuanurl']}">
+			 {/if}
+
+
+
+                <em class="icon icon-help"></em>
+                <span>积分兑换（总量：{php echo intval($_W['member']['credit1']);}）</span>
+                <em class="cur"></em>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+
+{if $follow!=1}
+<script>
+layer.open({
+	
+	title:'- 管理个人中心，请先长按下图 -',
+    content: '<center><div style="width:100%;"><br><img src="{$_W['account']['qrcode']}" width="100%"><br><font color="red">本功能仅限会员使用</font></div></center>',
+    btn: ['返回首页', '返回微信'],
+    shadeClose: false,
+	closeBtn: false,
+    yes: function(){
+       window.location.href='{php echo $this->createMobileUrl('index', array('op' => 'new'))}';	
+    }, no: function(){
+		WeixinJSBridge.call('closeWindow');
+    }
+});
+</script>
+{/if}
+
+<script>
+function nbqdtip()
+{
+ layer.open({
+    content: '请点击公众号底部菜单签到'
+    ,skin: 'msg'
+    ,time: 3
+  });
+}
+</script>
+{template 'footer'}

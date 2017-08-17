@@ -1,0 +1,52 @@
+<div class="panel panel-default">
+<div class="panel-heading">
+<div class="panel-title">
+<h3>房屋租售</h3>
+</div>
+</div>
+<div class="panel-body table-responsive">
+<table class="table">
+<thead>
+<tr>
+<th>信息编号</th>
+<th>房屋类型</th>
+<th>价格</th>
+<th>房主姓名</th>
+<th>房屋地址</th>
+<th>电话</th>
+<th>有效期</th>
+<th>发布时间</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+{loop $fangwuc $key $fangwuc}
+<tr>
+<td>
+<a href="{php echo $this->createMobileUrl('job',array('vid'=>$fangwuc['id']));}" target="_blank">{$fangwuc['id']}</a> | 
+{if $fangwuc['pid'] == 1}未审核
+{elseif $fangwuc['pid'] == 2}真
+{elseif $fangwuc['pid'] == 3}假
+{elseif $fangwuc['pid'] == 4}已删除
+{else}
+{/if}
+</td>
+<td>{$fangwuc['housetype']}</td>
+<td>{$fangwuc['houseprice']}</td>
+<td>{$fangwuc['housename']}</td>
+<td>{$fangwuc['houseaddress']}</td>
+<td>{$fangwuc['tel']}</td>
+<td>{php echo date("Y-m-d H:i:s",strtotime($fangwuc['validity']));}</td>
+<td>{php echo date('Y-m-d H:i:s',$fangwuc['time'])}</td>
+<td>
+<a href="{php echo $this->createWebUrl('infoedit',array('vid'=>$fangwuc['id'],'pid'=>'2'));}">真</a> | 
+<a href="{php echo $this->createWebUrl('infoedit',array('vid'=>$fangwuc['id'],'pid'=>'3'));}">假</a> | 
+<a href="{php echo $this->createWebUrl('infoedit',array('vid'=>$fangwuc['id'],'pid'=>'4'));}">删除</a> | 
+<a href="{php echo $this->createWebUrl('infoedit',array('vid'=>$fangwuc['id']));}">编辑</td>
+</tr>
+{/loop}
+</tbody>
+</table>
+</div>
+</div>
+

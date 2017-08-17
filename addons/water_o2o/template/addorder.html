@@ -1,0 +1,136 @@
+{template 'common/header'}
+<div class="order">
+    <ul class="nav nav-tabs">
+        <li><a href="{php echo $this->createWebUrl('order');}">订单列表</a></li>
+        <li class="active"><a href="javascript:void(0);">订单信息</a></li>
+    </ul>
+</div>       
+<style>
+.table td span{display:inline-block;margin-top:4px;}
+.table td input{margin-bottom:0;}
+</style>
+<div class="clearfix">
+<form class="form-horizontal form" action="" method="post" enctype="multipart/form-data">
+    <div class="panel panel-default">
+        <div class="panel-heading">订单信息详情</div>
+        <div class="panel-body">
+                <input type="hidden" name="orderid" value="{$order['id']}">
+                <input type="hidden" name="sid" value="{$order['id']}">
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">订单编号</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control"  placeholder="" readonly="readonly"  value="{$order['orderno']}">
+                    	<span class="help-block">订单编号</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">订单时间</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control"  placeholder="" readonly="readonly"  value="{$order['ordertime']}">
+                    	<span class="help-block">订单时间</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">服务项目</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control"  placeholder="" readonly="readonly" name="svname"  value="{$order['svname']}">
+                    	<span class="help-block">服务项目名称</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">服务时间</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control"  placeholder="" name="stime" readonly="readonly"  value="{$order['stime']}">
+                    	<span class="help-block">服务时间</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">服务类型</label>
+                    <div class="col-sm-3 col-xs-3">
+                        <input type="radio"  name="type" {if $order['type'] == 0}checked="checked"{/if} value="0">到店服务&nbsp;&nbsp;<input type="radio" name="type" {if $order['type'] == 1}checked="checked"{/if} value="1">上门服务
+                    	<span class="help-block">服务类型:到店or上门服务</span>
+                    </div>
+                </div>                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">订单金额</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control"  placeholder="" name="orderfee"  {if $order['paystate'] == 1}readonly="readonly"{/if}  value="{$order['orderfee']}">
+                    	<span class="help-block">订单金额，单位：元</span>
+                    </div>
+                </div>                                               
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">支付状态</label>
+                    <div class="col-sm-3 col-xs-3">
+                    	<div style="margin-top: 2px;">
+                        	<span>&nbsp;&nbsp;已支付 </span><input type="checkbox"  style="float: left;" name="paystate" {if $order['paystate'] == 1}checked="checked" disabled="disabled"{/if} value="1">
+                    	</div>
+                    	<span class="help-block">现金支付可勾选</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">是否结束</label>
+                    <div class="col-sm-3 col-xs-3">
+                    	<div style="margin-top: 2px;">
+                        	<span>&nbsp;&nbsp;服务结束 </span><input type="checkbox"  style="float: left;" name="state" {if $order['state'] == 4}checked="checked" disabled="disabled"{/if} value="4">
+                    	</div>
+                    	<span class="help-block">服务结束可勾选</span>
+                    </div>
+                </div>
+                <div class="form-group">
+					<label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">客户留言</label>
+					<div class="col-sm-9 col-xs-12">
+						<textarea style="height:70px; width:90%;" id='rule' class="form-control span7 richtext"  name="smsg" cols="70">{$order['smsg']}</textarea>
+						<span class="help-block">客户留言信息</span>
+					</div>
+				</div>                                                   
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">客户姓名</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control"  placeholder="" name="fname" readonly="readonly" value="{$order['fname']}">
+                    	<span class="help-block">客户名称</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">客户电话</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control"  placeholder="" name="fmobile"  value="{$order['fmobile']}">
+                    	<span class="help-block">客户联系电话</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">服务地址</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control"  placeholder="" name="faddress"  value="{$order['faddress']}">
+                    	<span class="help-block">服务地址信息</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">员工姓名</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control"  placeholder="" name="wname"  value="{$order['wname']}">
+                    	<span class="help-block">订单服务人员{if !empty($order['stitle'])}【独立员工】{/if}</span>
+                    </div>
+                </div>
+                {if !empty($order['stitle'])}
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">店铺名称</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control"  placeholder="" readonly="readonly"  value="{$order['stitle']}">
+                    	<span class="help-block">订单所属店铺</span>
+                    </div>
+                </div>              
+                {/if}
+                               
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-12">
+            <input name="submit" type="submit" value="提交" class="btn btn-primary col-lg-1">
+            <input type="hidden" name="token" value="{$_W['token']}" />
+        </div>
+    </div>
+</form>
+</div>
+{template 'common/footer'}

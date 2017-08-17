@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com" versionCode="0.6,0.7,0.8">
+	<application setting="true">
+		<name><![CDATA[万能表单]]></name>
+		<identifie><![CDATA[dayu_form]]></identifie>
+		<version><![CDATA[2.8]]></version>
+		<type><![CDATA[services]]></type>
+		<ability><![CDATA[行业通用万能表单]]></ability>
+		<description><![CDATA[万能表单]]></description>
+		<author><![CDATA[微赞]]></author>
+		<url><![CDATA[http://www.012wz.com/]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+		<card embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="管理入口" do="manageform" state="" direct="false" />
+		</cover>
+		<menu>
+			<entry title="表单列表" do="display" state="" direct="false" />
+			<entry title="新建表单" do="post" state="" direct="false" />
+			<entry title="快捷回复" do="Custom" state="" direct="false" />
+		</menu>
+		<profile>
+			<entry title="我的表单" do="mydayu_form" state="" direct="false" />
+		</profile>
+	</bindings>
+	<install><![CDATA[CREATE TABLE IF NOT EXISTS `ims_dayu_form` (
+  `reid` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `title` varchar(100) NOT NULL DEFAULT '',
+  `description` varchar(1000) NOT NULL,
+  `content` text NOT NULL,
+  `information` varchar(500) NOT NULL DEFAULT '',
+  `thumb` varchar(200) NOT NULL DEFAULT '',
+  `inhome` tinyint(4) NOT NULL DEFAULT '0',
+  `starttime` int(10) NOT NULL DEFAULT '0',
+  `endtime` int(10) unsigned NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '0',
+  `pretotal` int(10) unsigned NOT NULL DEFAULT '1',
+  `member` varchar(20) NOT NULL DEFAULT '姓名',
+  `phone` varchar(20) NOT NULL DEFAULT '手机',
+  `noticeemail` varchar(50) NOT NULL DEFAULT '',
+  `k_templateid` varchar(50) NOT NULL DEFAULT '',
+  `kfid` varchar(50) NOT NULL DEFAULT '',
+  `m_templateid` varchar(50) NOT NULL DEFAULT '',
+  `kfirst` varchar(100) NOT NULL COMMENT '客服模板页头',
+  `kfoot` varchar(100) NOT NULL COMMENT '客服模板页尾',
+  `mfirst` varchar(100) NOT NULL COMMENT '客户模板页头',
+  `mfoot` varchar(100) NOT NULL COMMENT '客户模板页尾',
+  `mobile` varchar(50) NOT NULL DEFAULT '',
+  `mname` varchar(10) NOT NULL DEFAULT '',
+  `kaishi` int(3) NOT NULL DEFAULT '1',
+  `jieshu` int(3) NOT NULL DEFAULT '22',
+  `tianshu` int(3) NOT NULL DEFAULT '15',
+  `skins` varchar(20) NOT NULL DEFAULT 'submit',
+  `custom_status` int(1) NOT NULL DEFAULT '0' COMMENT '客服消息状态',
+  `state1` varchar(20) NOT NULL DEFAULT '待受理',
+  `state2` varchar(20) NOT NULL DEFAULT '受理中',
+  `state3` varchar(20) NOT NULL DEFAULT '已完成',
+  `state4` varchar(20) NOT NULL DEFAULT '拒绝受理',
+  `state5` varchar(20) NOT NULL DEFAULT '已取消',
+  `mbgroup` int(10) unsigned NOT NULL,
+  `isdel` tinyint(1) NOT NULL DEFAULT '0',
+  `isrecord` tinyint(1) NOT NULL DEFAULT '0',
+  `isthumb` tinyint(1) NOT NULL DEFAULT '0',
+  `follow` tinyint(1) NOT NULL DEFAULT '0',
+  `createtime` int(10) NOT NULL DEFAULT '0',
+  `outlink` varchar(200) NOT NULL,
+  `ismember` tinyint(1) NOT NULL DEFAULT '0',
+  `isloc` tinyint(1) NOT NULL DEFAULT '0',
+  `adds` varchar(50) NOT NULL DEFAULT '',
+  `isvoice` tinyint(1) NOT NULL DEFAULT '0',
+  `ivoice` tinyint(1) NOT NULL DEFAULT '0',
+  `voice` varchar(50) NOT NULL DEFAULT '',
+  `voicedec` varchar(50) NOT NULL DEFAULT '',
+  `isrevoice` tinyint(1) NOT NULL DEFAULT '0',
+  `isinfo` tinyint(1) DEFAULT '0',
+  `business` varchar(50) NOT NULL DEFAULT '',
+  `address` varchar(200) NOT NULL DEFAULT '',
+  `tel` varchar(50) NOT NULL,
+  `loc_x` varchar(20) NOT NULL DEFAULT '',
+  `loc_y` varchar(20) NOT NULL DEFAULT '',
+  `isreplace` tinyint(1) NOT NULL DEFAULT '0',
+  `isrethumb` tinyint(1) NOT NULL DEFAULT '0',
+  `isget` tinyint(1) NOT NULL DEFAULT '0',
+  `var1` varchar(50) NOT NULL DEFAULT '',
+  `var1t` varchar(50) NOT NULL DEFAULT '',
+  `var2` varchar(50) NOT NULL DEFAULT '',
+  `var2t` varchar(50) NOT NULL DEFAULT '',
+  `var3` varchar(50) NOT NULL DEFAULT '',
+  `var3t` varchar(50) NOT NULL DEFAULT '',
+  `smsid` int(11) NOT NULL DEFAULT '0',
+  `credit` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `daynum` int(11) NOT NULL DEFAULT '0',
+  `paixu` int(1) NOT NULL DEFAULT '0',
+  `smsnotice` int(11) NOT NULL DEFAULT '0',
+  `smstype` int(1) NOT NULL DEFAULT '0',
+  `agreement` varchar(50) NOT NULL DEFAULT '',
+  `field` tinyint(1) NOT NULL DEFAULT '0',
+  `avatar` tinyint(1) NOT NULL DEFAULT '0',
+  `fields` text NOT NULL,
+  `titles` varchar(50) NOT NULL DEFAULT '',
+  `bcolor` varchar(10) NOT NULL DEFAULT '',
+  `pluraltit` varchar(50) NOT NULL DEFAULT '',
+  `plural` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`reid`),
+  KEY `weid` (`weid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_dayu_form_custom` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `raply` varchar(200) NOT NULL,
+  `displayorder` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_dayu_form_data` (
+  `redid` bigint(20) NOT NULL AUTO_INCREMENT,
+  `reid` int(11) NOT NULL,
+  `rerid` int(11) NOT NULL,
+  `refid` int(11) NOT NULL,
+  `data` varchar(800) NOT NULL,
+  `displayorder` int(11) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`redid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_dayu_form_fields` (
+  `refid` int(11) NOT NULL AUTO_INCREMENT,
+  `reid` int(11) NOT NULL DEFAULT '0',
+  `title` varchar(200) NOT NULL DEFAULT '',
+  `type` varchar(20) NOT NULL DEFAULT '',
+  `essential` tinyint(4) NOT NULL DEFAULT '0',
+  `bind` varchar(30) NOT NULL DEFAULT '',
+  `value` varchar(300) NOT NULL DEFAULT '',
+  `description` varchar(500) NOT NULL DEFAULT '',
+  `image` varchar(500) NOT NULL DEFAULT '',
+  `displayorder` int(11) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`refid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_dayu_form_info` (
+  `rerid` int(11) NOT NULL AUTO_INCREMENT,
+  `reid` int(11) NOT NULL,
+  `member` varchar(50) NOT NULL,
+  `mobile` varchar(11) NOT NULL,
+  `openid` varchar(50) NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态',
+  `yuyuetime` int(10) NOT NULL DEFAULT '0' COMMENT '客服确认时间',
+  `kfinfo` varchar(100) NOT NULL COMMENT '客服信息',
+  `createtime` int(10) NOT NULL DEFAULT '0',
+  `kf` varchar(50) NOT NULL DEFAULT '',
+  `loc_x` varchar(20) NOT NULL DEFAULT '',
+  `loc_y` varchar(20) NOT NULL DEFAULT '',
+  `address` varchar(100) NOT NULL DEFAULT '',
+  `voice` varchar(250) NOT NULL DEFAULT '',
+  `revoice` varchar(250) NOT NULL DEFAULT '',
+  `rethumb` varchar(250) NOT NULL,
+  `var1` varchar(50) NOT NULL DEFAULT '',
+  `var2` varchar(50) NOT NULL DEFAULT '',
+  `var3` varchar(50) NOT NULL DEFAULT '',
+  `file` text NOT NULL,
+  `thumb` text NOT NULL,
+  PRIMARY KEY (`rerid`),
+  KEY `reid` (`reid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_dayu_form_loc` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `openid` varchar(50) NOT NULL,
+  `loc_x` varchar(20) NOT NULL,
+  `loc_y` varchar(20) NOT NULL,
+  `createtime` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_dayu_form_reply` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rid` int(11) NOT NULL,
+  `reid` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_dayu_form_staff` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `reid` int(11) NOT NULL DEFAULT '0',
+  `nickname` varchar(50) NOT NULL,
+  `openid` varchar(50) NOT NULL,
+  `createtime` int(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;]]></install>
+	<uninstall><![CDATA[
+DROP TABLE IF EXISTS `ims_dayu_form`;
+DROP TABLE IF EXISTS `ims_dayu_form_custom`;
+DROP TABLE IF EXISTS `ims_dayu_form_data`;
+DROP TABLE IF EXISTS `ims_dayu_form_fields`;
+DROP TABLE IF EXISTS `ims_dayu_form_info`;
+DROP TABLE IF EXISTS `ims_dayu_form_loc`;
+DROP TABLE IF EXISTS `ims_dayu_form_reply`;
+DROP TABLE IF EXISTS `ims_dayu_form_staff`;
+	]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

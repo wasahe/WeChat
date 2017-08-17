@@ -1,0 +1,171 @@
+{template 'common/header'}
+<div class="main">
+    <ul class="nav nav-tabs">
+        <li><a href="{php echo $this->createWebUrl('worker');}">员工列表</a></li>
+        <li  class="active"><a href="javascript:void(0);">管理服务项目</a></li>
+    </ul>
+</div>       
+<style>
+.table td span{display:inline-block;margin-top:4px;}
+.table td input{margin-bottom:0;}
+</style>
+<style type="text/css">
+
+.clear{ display:block; height:0px; line-height:0px; font-size:0px; clear:both;}
+
+
+.ck_list_fd{ background:url(../addons/water_estate/template/images/bg_mj.png) no-repeat right -620px;}
+.touming_jq{ position:relative; z-index:1;}
+
+.shanchu{ width:14px; height:14px; margin:3px 17px; display:block; float:right; background:url(../addons/water_estate/template/images/bg_mj.png) no-repeat 0px -661px; cursor:pointer;}
+
+.zj_an{ display:block; }
+.zj_ts{display:block;  color:#ff075b; }
+.zj_bc{display:block;  color:#555555;}
+</style>
+<script type="text/javascript">
+$(document).ready(function(){
+$("*").click(function(){
+	$(".jq_lb").hide();
+});
+$(".zj_an").click(function(){
+  var x = $(".ck_list").size();
+ $(".ck").append('<div class="form-group ck_list" id="'
+		 +(x+1)+'" ><label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style="color: red">*</span>服务项'
+		 +(x+1)+'</label><div class="col-sm-4 col-xs-5"><input type="text" class="form-control" name="wname[]" value="费用名称_'
+		 +(x+1)+'"> <span class="help-block">此处为服务名称</span><input type="hidden" name="wid[]" value="0" ></div><div class="col-sm-3 col-xs-5"><input type="text" class="form-control" placeholder="" name="fee[]" value="0"><span class="help-block">此处为左边项目名对应大于0的金额</span></div><div class="col-sm-1 col-xs-1"><span class="shanchu" onclick="shanchu('
+		 +(x+1)+');"></span></div></div>');
+	$(".zj_ts").html("");
+	});
+  });
+  var lbxx = function(index){
+        $("#"+index).find(".span_fd").slideToggle(100);
+		$(".ck_list_fd").removeClass("touming_jq");
+		$("#"+index).find(".ck_list_fd").addClass("touming_jq");
+  }
+  var zjxx = function(index){
+        $("#"+index).find(".span_fd_zj").slideToggle(100);
+		$(".ck_list_fd").removeClass("touming_jq");
+		$("#"+index).find(".ck_list_fd").addClass("touming_jq");
+  }
+  var bxxx = function(index){
+        $("#"+index).find(".span_fd_bx").slideToggle(100);
+		$(".ck_list_fd").removeClass("touming_jq");
+		$("#"+index).find(".ck_list_fd").addClass("touming_jq");
+  }
+  var xxcss = function(){
+		$(".jq_lb span").hover(function(){
+		$(this).css({"background-color":"#0066CC","color":"#FFFFFF"})
+		},function(){
+		$(this).css({"background-color":"#ffffff","color":"#555555"})
+		});
+		$(".jq_lb span").click(function(){
+		 $(this).parent().siblings(".jq_val").val($(this).html())
+		});
+  }
+  var shanchu = function(index){
+      var x = $(".ck_list").size();
+	  var i = "";
+	      if (x > 1) {
+             $("#"+index).remove();
+		  for(i=index+1;i<=x;i++){
+		     $("#"+i).replaceWith(
+		    		 '<div class="form-group ck_list" id="'
+		    		 +(x-1)+'" ><label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style="color: red">*</span>服务项'
+		    		 +(x-1)+'</label><div class="col-sm-4 col-xs-5"><input type="text" class="form-control" name="wname[]" value="费用名称_'
+		    		 +(x-1)+'"> <span class="help-block">此处为服务名称</span><input type="hidden" name="wid[]" value="0" ></div><div class="col-sm-3 col-xs-5"><input type="text" class="form-control" placeholder="" name="fee[]" value="0"><span class="help-block">此处为左边项目名对应大于0的金额</span></div><div class="col-sm-1 col-xs-1"><span class="shanchu" onclick="shanchu('
+		    		 +(x-1)+');"></span></div></div>');
+	  }
+      } else {
+          $(".zj_ts").html("亲,至少保留1个条目吧");
+      }
+}
+</script>
+<div class="clearfix">
+<form class="form-horizontal form" action="" method="post" enctype="multipart/form-data">
+    <div class="panel panel-default">
+        <div class="panel-heading">设置服务种类信息</div>
+        <div class="panel-body">
+                <input type="hidden" name="workerid" value="{$worker['id']}">
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">员工姓名</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control" placeholder="" readonly="readonly" value="{$worker['wname']}">
+                    </div>
+                </div>
+			</div>
+			 <div class="panel-heading">自定义设置服务项目价格<span style="color: red;">（若金额置为0则表示该项目不在员工服务项目范围）</apan></div>
+        		<div class="panel-body">
+        		
+				<div class="box ck">
+				  {if empty($wsinfos)}
+						 {php $index = 1;}
+						 {loop $svlist $item}
+						 	<div class="form-group ck_list" id="{php echo $index;}" >
+							<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span
+								style='color: red'>*</span>服务项目{php echo $index++;}</label>
+							<div class="col-sm-3 col-xs-4">
+								<input type="text" class="form-control" readonly="readonly"
+									name="sname[]" value="{$item['sname']}"> <span
+									class="help-block">项目名称</span>
+									<input type="hidden" name="sid[]" value="{$item['id']}" >
+							</div>
+							<div class="col-sm-2 col-xs-2">
+								<input type="text" class="form-control" placeholder=""
+									name="fee[]" style="color: red;" value="{$item['sprice']}"> <span
+									class="help-block">服务金额(元)</span>
+							</div>
+							<div class="col-sm-2 col-xs-2">
+								<input type="text" class="form-control" placeholder=""
+									name="sminute[]" style="color: red;" value="{$item['sminute']}"> <span
+									class="help-block">服务时长(分钟)</span>
+							</div>					
+						</div>
+						 {/loop}	
+				   {else}
+						 {php $index = 1;}
+						 {loop $wsinfos $item}
+						 	<div class="form-group ck_list" id="{php echo $index;}" >
+							<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span
+								style='color: red'>*</span>服务项目{php echo $index++;}</label>
+							<div class="col-sm-3 col-xs-4">
+								<input type="text" class="form-control" readonly="readonly"
+									name="sname[]" value="{$item['sname']}"> <span
+									class="help-block">服务名称</span>
+									<input type="hidden" name="sid[]" value="{$item['sid']}" >
+							</div>
+							<div class="col-sm-2 col-xs-2">
+								<input type="text" class="form-control" placeholder=""
+									name="fee[]" {if $item['feevalue']>0}style="color: green;font-weight: bold;"{else}style="color: red;"{/if} value="{$item['feevalue']}"> <span
+									class="help-block">服务金额(元)</span>
+							</div>
+							<div class="col-sm-2 col-xs-2">
+								<input type="text" class="form-control" placeholder=""
+									name="sminute[]" {if $item['sminute']>0}style="color: green;font-weight: bold;"{else}style="color: red;"{/if} value="{$item['sminute']}"> <span
+									class="help-block">服务时长(分钟)</span>
+							</div>							
+						</div>
+						 {/loop}	
+				   {/if}
+					</div>
+        		
+        		</div>
+        	</div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-12">
+            <input name="submit" type="submit" value="提交" class="btn btn-primary col-lg-1">
+            <input type="hidden" name="token" value="{$_W['token']}" />
+        </div>
+    </div>
+</form>
+</div>
+ <script type="text/javascript">
+    require(['jquery', 'util'], function($, u){
+        $(function(){
+            u.editor($('.richtext')[0]);
+        });
+       
+    });
+</script>
+{template 'common/footer'}

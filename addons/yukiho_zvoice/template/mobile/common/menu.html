@@ -1,0 +1,22 @@
+<body class="dual-sidebar">
+	<style type="text/css">
+	.icon{box-shadow:0px 0px 0px;}
+	</style>
+    {php $footerbars = M('quickmenu')->getall();}
+	{if !empty($footerbars)}
+	<div id="footer-fixed" class="footer-menu footer-light">
+        {php $count = count($footerbars);}
+        {loop $footerbars $footer}
+		<a style="width:{php echo 100/$count}%" href="{php echo $footer['link']}" class="{if $_GPC['do']==$footer['ido']}active-footer-item{/if} footer-mobile"><i class="{php echo $footer['icon']}"></i>{$footer['title']}</a>
+        {if $_GPC['do']==$footer['ido']}
+		<script>
+		$(document).attr("title","{$footer['name']}");
+		</script>
+		{/if}
+		{/loop}
+	</div>
+	{else}
+	<style type="text/css">.snap-content{margin-bottom:0px;}</style>
+	{/if}
+	<div class="gallery-fix"></div>
+	<div class="all-elements">

@@ -1,0 +1,173 @@
+{template 'common/header'}
+
+<ul class="nav nav-tabs">
+<li {if $op == 'display'}class="active"{/if}><a href="{php echo url('site/entry/news',array('op'=>'display','m'=>'siyuan_vod'))}">视频列表</a></li>
+  <li {if $op == 'post'}class="active"{/if}><a href="{php echo url('site/entry/news',array('op'=>'post','m'=>'siyuan_vod'))}">添加视频</a></li>
+  
+</ul>
+<style>
+  .table td span{display:inline-block;margin-top:4px;}
+  .table td input{margin-bottom:0;}
+</style>
+
+{if $op == 'display'}
+<div class="panel panel-info">
+  <div class="panel-heading">筛选</div>
+  <div class="panel-body">
+    <form action="./index.php" method="get" class="form-horizontal" role="form">
+			<input type="hidden" name="c" value="site" />
+			<input type="hidden" name="a" value="entry" />
+			<input type="hidden" name="op" value="display" />
+			<input type="hidden" name="do" value="news" />
+			<input type="hidden" name="m" value="siyuan_vod" />
+      <div class="form-group">
+        <label class="col-xs-12 col-sm-2 col-md-2 control-label">关键字</label>
+        <div class="col-sm-8 col-md-8 col-lg-8 col-xs-12">
+          <input class="form-control" name="keyword" id="" type="text" value="{$_GPC['keyword']}" placeholder="请输入文章标题关键字">
+        </div>
+      </div>
+        <div class="pull-right col-xs-12 col-sm-2 col-md-2 col-lg-2">
+          <button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="table-responsive panel-body">
+    <table class="table">
+      <thead>
+        <tr>
+          <th style="width:80px">ID</th>
+          <th style="width:280px">标题</th>
+		  <th style="width:120px;">状态</th>
+          <th style="width:180px; text-align:center;">更新网址</th>
+		  <th style="width:180px;">视频接口</th>
+          <th style="width:180px;">日期</th>
+		  <th style="width:180px;">访问</th>
+		  <th style="width:100px;">点击</th>
+          <th style="width:100px; text-align:right;">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        {loop $list $item}
+        <tr>
+          <td>{$item['id']}</td>
+          <td>
+			<span class="cate">{if !empty($item['blei'])}<span class="text-error">[{$fenlei[$item['blei']]['name']}]</span>{/if}{if !empty($item['slei'])}<span class="text-info">[{$fenlei[$item['slei']]['name']}]</span>{/if}</span>
+            <a href="{php echo url('site/entry/news',array('op'=>'post', 'id' => $item['id'],'m'=>'siyuan_vod'))}" style="color:#333;">{$item['title']}</a>
+          </td>
+		  <td>{if $item['lianzai']}<span class="btn btn-info btn-sm">{$item['lianzai']}</span>{/if}</td>
+          <td class="text-center">{if $item['gx']}<a target="_blank" href="{$item['gx']}"><button type="button" class="btn btn-primary"><i class="fa fa-paper-plane"></i>访问</button></a>{/if}</td>
+		  <td><span class="btn btn-info btn-sm">{if $item['play'] == '0'}PlayM3u8{else}Video++{/if}</span></td>
+		  <td>{php echo date('m-d H:i', $item['time'])}</td>
+<td><a target="_blank" href="{$_W['siteroot']}app/{php echo $this->createMobileUrl('news', array('id' => $item['id']))}"><button type="button" class="btn btn-primary"><i class="fa fa-paper-plane"></i>访问</button></a></td>
+		  <td>{$item['yuedu']}</td>
+          <td style="text-align:center;">
+            <a href="{php echo url('site/entry/news',array('op'=>'post', 'id' => $item['id'],'m'=>'siyuan_vod'))}" title="编辑" class="btn btn-default btn-sm"><i class="fa fa-edit"></i></a>
+            <a onclick="return confirm('此操作不可恢复，确认吗？'); return false;" href="{php echo url('site/entry/news',array('op'=>'delete', 'id' => $item['id'],'m'=>'siyuan_vod'))}" title="删除" data-toggle="tooltip" data-placement="top" class="btn btn-default btn-sm"><i class="fa fa-times"></i></a>
+          </td>
+        </tr>
+        {/loop}
+      </tbody>
+    </table>
+    {$pager}
+  </div>
+</div>
+<script type="text/javascript">
+	require(['bootstrap'],function($){
+		$('.btn').hover(function(){
+			$(this).tooltip('show');
+		},function(){
+			$(this).tooltip('hide');
+		});
+	});
+</script>
+
+{elseif $op == 'post'}
+<div class="main">
+<div class="panel panel-info">
+<div class="panel-heading">网站导航(支持Video++解析的为绿色按钮，PlayM3u8支持所有站解析)</div>
+<div class="panel-body table-responsive">
+<a target="_blank" href="http://www.youku.com"><button type="button" class="btn btn-primary"><i class="fa fa-paper-plane"></i>优酷网+VIP</button></a>
+<a target="_blank" href="http://www.tudou.com"><button type="button" class="btn btn-primary"><i class="fa fa-paper-plane"></i>土豆视频+VIP</button></a>
+<a target="_blank" href="http://v.qq.com"><button type="button" class="btn btn-primary"><i class="fa fa-paper-plane"></i>腾讯视频+VIP</button></a>
+<a target="_blank" href="http://www.iqiyi.com"><button type="button" class="btn btn-info"><i class="fa fa-paper-plane"></i>爱奇艺</button></a>
+<a target="_blank" href="http://www.le.com"><button type="button" class="btn btn-info"><i class="fa fa-paper-plane"></i>乐视网</button></a>
+<a target="_blank" href="http://www.mgtv.com"><button type="button" class="btn btn-info"><i class="fa fa-paper-plane"></i>芒果TV</button></a>
+<a target="_blank" href="http://tv.sohu.com"><button type="button" class="btn btn-info"><i class="fa fa-paper-plane"></i>搜狐视频</button></a>
+<a target="_blank" href="http://www.pptv.com"><button type="button" class="btn btn-info"><i class="fa fa-paper-plane"></i>PPTV</button></a>
+<a target="_blank" href="http://www.acfun.tv"><button type="button" class="btn btn-info"><i class="fa fa-paper-plane"></i>acfun</button></a>
+<a target="_blank" href="http://www.bilibili.com"><button type="button" class="btn btn-info"><i class="fa fa-paper-plane"></i>bilibili</button></a>
+<a target="_blank" href="http://www.1905.com"><button type="button" class="btn btn-info"><i class="fa fa-paper-plane"></i>1905电影</button></a>
+</div></div>
+<script type="text/javascript" src="resource/js/lib/jquery-ui-1.10.3.min.js"></script>
+<form class="form-horizontal form" action="" method="post" enctype="multipart/form-data" id="form1">
+	<input type="hidden" name="id" value="{$item[id]}">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<ul class="nav nav-tabs" id="news_tabs_wrap">
+				<li class="active">
+					<a href="javascript:;" rel="base_wrap">基本信息</a>
+				</li>
+				<li class="">
+					<a href="javascript:;" rel="params_wrap">播放设置</a>
+				</li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane active" id="base_wrap">
+					{template 'web/news-base'}
+				</div>
+				<div class="tab-pane" id="params_wrap">
+					{template 'web/news-params'}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-12">
+			<input name="submit" type="submit" value="提交" class="btn btn-primary col-lg-2">
+			<input type="hidden" name="token" value="{$_W['token']}" />
+		</div>
+	</div>
+</form>
+<script>
+	require(['jquery', 'util'], function($, u){
+		//绑定tab切换
+		$('#news_tabs_wrap li a').bind('click', function(){
+			var id = $(this).attr('rel');
+			$('#news_tabs_wrap li').each(function(){
+				$(this).removeClass('active');
+			});
+			$('.tab-pane').each(function(){
+				$(this).hide();
+			});
+			$('#'+id).show();
+			$(this).parent().addClass('active');
+		});
+
+
+	});
+</script>
+<script type="text/javascript">
+  require(['jquery', 'util'], function($, u){
+    $('#form1').submit(function(){
+      if($("input[name=title]").val().length <= 0) {
+        u.message('没有填写标题', '', 'error');
+        return false;
+      }
+	  if($("input[name=thumb]").val().length <= 0) {
+        u.message('缩略图没有上传', '', 'error');
+        return false;
+      }
+	  if ($("select[id=fenlei_parent]").val() == "0"){
+        u.message('请选择分类', '', 'error');
+        return false;
+      }
+      return true;
+    });
+  });
+</script>
+{/if}
+{template 'common/footer'}

@@ -1,0 +1,92 @@
+{template 'head'}
+<section class="m-focus">
+<div class="m-wrap" id="m_focus">
+<ul class="inner-wrap f-cb" id="inner_wrap" style="transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0.001s; transform: translate(-8448px, 0px) translateZ(0px); width: 13824px;">
+{loop $flash $item} 
+<li class="item">
+<a class="pic" href="{$item['url']}">
+<img src="{$_W['attachurl']}{$item['attachment']}">
+<div class="sd">
+<p class="txt">{$item['title']}</p></div>
+</a>
+</li>
+{/loop}
+{loop $flash $item} 
+<li class="item">
+<a class="pic" href="{$item['url']}">
+<img src="{$_W['attachurl']}{$item['attachment']}">
+<div class="sd">
+<p class="txt">{$item['title']}</p></div>
+</a>
+</li>
+{/loop}
+{loop $flash $item} 
+<li class="item">
+<a class="pic" href="{$item['url']}">
+<img src="{$_W['attachurl']}{$item['attachment']}">
+<div class="sd">
+<p class="txt">{$item['title']}</p></div>
+</a>
+</li>
+{/loop}
+</ul>
+</div>
+<div class="info iScrollLoneScrollbar" id="indicator">
+<div class="dotTrue dots" id="dotTrue" style="transition-duration: 0.001s; display: block; transform: translate(0px, 0px) translateZ(0px); transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1);">
+<a href="javascript:;" class=""></a>
+<a href="javascript:;" class=""></a>
+<a href="javascript:;" class=""></a>
+<a href="javascript:;" class=""></a>
+<a href="javascript:;" class=""></a>
+<a href="javascript:;" class=""></a>
+<a href="javascript:;" class=""></a>
+<a href="javascript:;" class="current"></a>
+</div>
+</div>
+</section>
+{loop $reply $key $rep}
+<section class="g-con f-mgt-10">
+<h2 class="m-h2-tit f-cb">
+<a href="{php echo $this->createmobileUrl('list',array('id' => $mre['id']))}">
+<span class="tit">{$rep['name']}</span>
+</a>
+<a class="more" href="{php echo $this->createmobileUrl('list',array('id' => $rep['id']))}">更多></a>
+</h2>
+<div class="f-mgt-10 m-cd-list">
+{loop $rep['mreply'] $mre}
+<div class="m-cd-i-wrap poster">
+<a class="m-cd-i" href="{php echo $this->createmobileUrl('news',array('id' => $mre['id']))}">
+<div class="pic">
+<img src="{$mre['thumb']}">
+<span class="sd">{if $mre['lianzai']}{$mre['lianzai']}{/if}</span>
+<i class="ico-app">{$mre['shuxing']}</i>
+</div>
+<div class="info">
+<h3 class="tit">{$mre['title']}</h3>
+</div>
+</a>
+</div>
+{/loop}
+</div>
+</section>
+{/loop}
+{php echo register_jssdk(false);}
+<script type="text/javascript">
+wx.ready(function () {
+sharedata = {
+title: "{$set['name']}-{$set['ad']}",
+desc: "{$set['ad']}",
+link: "{if $set['share_url']}{$set['share_url']}{else}{$_W['siteroot']}app{php echo str_replace('./','/',$this->createMobileUrl('index'))}{/if}",
+imgUrl: "{$_W['attachurl']}{$set['logo']}",
+success: function (res) {},
+cancel: function(){
+}
+};
+wx.onMenuShareAppMessage(sharedata);
+wx.onMenuShareTimeline(sharedata);
+wx.onMenuShareQQ(sharedata);
+wx.onMenuShareWeibo(sharedata);
+wx.onMenuShareQZone(sharedata);
+});
+</script>
+{template 'end'}

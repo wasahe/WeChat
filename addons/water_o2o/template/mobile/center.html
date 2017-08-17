@@ -1,0 +1,85 @@
+{template 'header'}
+<body ontouchstart="" class="platform_mobile">
+<div class="qsc-alert" style="display: none;">
+<i class="info-base64"></i><span></span>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-white icon-loading-base64"><i class="icon-white icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<div class="modal qsc-modal qsc-modal-loading" id="qsc-modal-loading-new">
+<div class="modal-dialog middle">
+<div class="modal-content">
+<i class="icon-loading-base64"><i class="icon-loading-box-base64 icon-spin"></i></i><span>加载中</span>
+</div>
+</div>
+</div>
+<div class="mod-user-my">
+<div class="qsc-list-group">
+<a href="javascript:void(0);" class="list-item list-thumb list-thumb-md list-user-avatar">
+<span>
+<i class="icon"><img class="lazy-load" src="../addons/water_o2o/template/img/grey.png" 
+ 		 data-original="{$fans['headimg']}" width="48" height="48" style="display: block;"></i>
+{$fans['nickname']} </span>
+<p>手机号：{if empty($fans['mobile'])}暂无{else}{$fans['mobile']}{/if}</p>
+<label>
+<!-- <i class="icon icon-arrow-right"></i> -->
+</label>
+</a>
+</div>
+<div class="content bottom">
+<div class="qsc-list-group">
+<a href="{php echo $this->createMobileUrl('order')}" class="list-item list-thumb list-thumb-sm first">
+<span><i class="icon icon-project"></i>我的订单</span>
+<label>
+<label class="badge">{php echo  $this->getOrdersSumByFid($fans['id']);}</label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+<!--  <a href="{php echo $this->createMobileUrl('centersp')}" class="list-item list-thumb list-thumb-sm">
+<span><i class="icon icon-support"></i>我的服务</span>
+<label>
+<label class="badge">0</label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a> -->
+<!--
+<a href="{php echo $this->createMobileUrl('centerfl')}" class="list-item list-thumb list-thumb-sm">
+<span><i class="icon icon-follow-o"></i>我的地址</span>
+<label>
+<label class="badge">0</label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a> -->
+</div>
+<div class="qsc-list-group">
+<a href="{php echo $this->createMobileUrl('centeryhq')}" class="list-item list-thumb list-thumb-sm">
+<span><i class="icon icon-consumption"></i>优惠券</span>
+<label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+{php $info = $this->getAccountInfo($fans['openid']);}
+<a href="{php echo $this->createMobileUrl('centerqb')}" class="list-item list-thumb list-thumb-sm first">
+<span><i class="icon icon-wallet"></i>我的账户</span>
+<label>
+<em>{php echo $info['yue'];}元</em>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+<a href="{php echo $this->createMobileUrl('address')}" class="list-item list-thumb list-thumb-sm">
+<span><i class="icon icon-user-reward"></i>我的信息</span>
+<label>
+<i class="icon icon-arrow-right"></i>
+</label>
+</a>
+</div>
+</div>
+</div>
+{template 'footer'}
+<script type="text/javascript" src="../addons/water_o2o/template/js/user.min.js"></script>
+
+</body></html>

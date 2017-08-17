@@ -1,0 +1,90 @@
+/* CSS Document */
+/*字体颜色*/
+.whitezs{ color:#FFF}
+.purplezs{ color:#F0F}
+
+.cyanzs{ color:#0FF}
+.bluezs{ color:#00F;}
+.greenzs{ color:#0F0;}
+.yellowzs{ color:#FF0;}
+.pinkzs{ color:#F0F;}
+.qingse{ color:#3FF;}
+.redzs{ color:#F00;}
+.orangezs{color:#F90}
+
+/*字体大小*/
+.fz03em{font-size: 0.3em;}
+.fz04em{font-size: 0.4em;}
+.fz05em{font-size: 0.5em;}
+.fz65em{font-size: 0.65em;}
+.fz75em{font-size: 0.75em;}
+.fz80em{font-size: 0.8em;}
+.fz85em{font-size: 0.85em;}
+.fz90em{font-size: 0.9em;}
+.fz95em{font-size: 0.95em;}
+.fz1em{font-size: 1em;}
+.fz12em{font-size: 1.2em;}
+.fz13em{font-size: 1.3em;}
+.fz15em{font-size: 1.5em;}
+.fz2em{font-size: 2em;}
+.fz25em{font-size: 2.5em;}
+.fz3em{font-size: 3em;}
+
+/*顶部间距*/
+.pt10{ padding-top:10px; line-height:2px;}
+.pt20{ padding-top:20px;}
+.pt30{padding-top:30px;}
+
+/*行高*/
+.lh12em{ line-height:1.2em;}
+.lh15em{ line-height:1.5em;}
+.lh18em{ line-height:1.8em;}
+
+
+.reward_area {
+	padding:38px 5% 20px;
+	-webkit-box-sizing:border-box;
+	box-sizing:border-box;
+	margin:0 auto
+}
+.reward_area_inner {
+	margin:0 auto;
+	position:relative;
+	left:3px
+}
+.tc {
+	text-align:center
+}
+
+.reward_access {
+	display:inline-block;
+	padding:0 1.6em;
+	line-height:2;
+	border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	background-color:#FA0909;
+	color:#fff;
+	font-size:16px;
+	-webkit-tap-highlight-color:rgba(0,0,0,0)
+}
+.reward_access:active {
+	background-color:#be5041;
+	color:#e69990
+}
+
+.tips_global {
+	color:#8c8c8c
+}
+
+.reward_user_tips {
+	margin-top:1.4em
+}
+
+.reward_user_list {
+	padding-top:.5em;
+	overflow:hidden
+}
+
+
+
